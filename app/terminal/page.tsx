@@ -20,7 +20,7 @@ export default function TerminalPage() {
   const terminalRef = useRef<HTMLDivElement>(null)
 
   const availableCommands = {
-    help: "Available commands:\n  about      - Learn about my background\n  skills     - View technical skills\n  projects   - Browse project portfolio\n  experience - Work experience timeline\n  contact    - Get in touch\n  clear      - Clear terminal\n  resume     - Download resume\n  github     - Visit GitHub profile\n  linkedin   - Visit LinkedIn profile\n  matrix     - Enter the matrix...\n  whoami     - Who am I?\n  ls         - List available sections\n  cat [file] - View specific information",
+    help: "Available commands:\n  about      - Learn about my background\n  skills     - View technical skills\n  projects   - Browse project portfolio\n  repos      - Show GitHub repositories\n  experience - Work experience timeline\n  contact    - Get in touch\n  clear      - Clear terminal\n  resume     - Download resume\n  github     - Visit GitHub profile\n  linkedin   - Visit LinkedIn profile\n  matrix     - Enter the matrix...\n  whoami     - Who am I?\n  ls         - List available sections\n  cat [file] - View specific information",
     
     about: "Bradley.io - AI Data Engineering & Edge Computing Expert\n\n• 10+ years transforming enterprise data strategies\n• Specialized in edge computing with IoT integration\n• Fortune 500 experience with TransUnion SRG\n• Based in Grand Rapids, Michigan\n• Passionate about bridging enterprise architecture with hands-on innovation\n\nType 'skills' to see technical expertise or 'projects' for case studies.",
     
@@ -163,6 +163,40 @@ export default function TerminalPage() {
     </div>
   )
 
+  const reposOutput = () => (
+    <div className="space-y-3">
+      <div className="text-green-400">GitHub Repositories:</div>
+      
+      <div className="text-yellow-400">▸ TinyMachines Organization</div>
+      <div className="ml-4 space-y-2">
+        <div className="border-l-2 border-gray-600 pl-3">
+          <div className="text-cyan-400">vectl</div>
+          <div className="text-sm text-gray-300">
+            Language: C++ | Updated: June 2025
+          </div>
+        </div>
+        <div className="text-gray-400 text-sm">
+          + More repositories coming soon...
+        </div>
+      </div>
+      
+      <div className="text-yellow-400 mt-3">▸ Personal Projects</div>
+      <div className="ml-4 space-y-2">
+        <div className="border-l-2 border-gray-600 pl-3">
+          <div className="text-cyan-400">bradley.io</div>
+          <div className="text-sm text-gray-300">
+            This website! Built with Next.js, TypeScript, Tailwind
+          </div>
+        </div>
+      </div>
+      
+      <div className="text-gray-400 text-sm mt-3">
+        Visit github.com/tinymachines for full repository list
+        Type 'github' to open in browser
+      </div>
+    </div>
+  )
+
   const processCommand = (input: string) => {
     const cmd = input.toLowerCase().trim()
     const parts = cmd.split(" ")
@@ -182,6 +216,9 @@ export default function TerminalPage() {
         break
       case "projects":
         output = projectsOutput()
+        break
+      case "repos":
+        output = reposOutput()
         break
       case "experience":
         output = experienceOutput()
