@@ -324,7 +324,7 @@ export default function TerminalPage() {
       <MatrixRain active={matrixMode} />
       
       <motion.div 
-        className="terminal-container max-w-4xl mx-auto h-[calc(100vh-2rem)] bg-gray-900 rounded-lg border border-green-800 overflow-hidden flex flex-col relative"
+        className="terminal-container max-w-4xl mx-auto h-[calc(100vh-10rem)] bg-gray-900 rounded-lg border border-green-800 overflow-hidden flex flex-col relative"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
