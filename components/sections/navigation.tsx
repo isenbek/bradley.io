@@ -23,6 +23,7 @@ export function Navigation() {
     { href: "/case-studies", label: "Case Studies" },
     { href: "/blog", label: "Blog" },
     { href: "/terminal", label: "Terminal", icon: Terminal },
+    { href: "/wargames", label: "WOPR", icon: Terminal },
   ]
 
   return (
