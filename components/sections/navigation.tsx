@@ -2,24 +2,20 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { Menu, X, Terminal, Moon, Sun } from "lucide-react"
+import { Menu, X, Terminal, Palette } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { ThemeSelector } from "@/components/ui/theme-selector"
 import { cn } from "@/lib/utils"
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
-  const [isDark, setIsDark] = useState(false)
-
-  const toggleTheme = () => {
-    setIsDark(!isDark)
-    document.documentElement.classList.toggle("dark")
-  }
 
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/about", label: "About" },
     { href: "/services", label: "Services" },
     { href: "/projects", label: "Projects" },
+    { href: "/resume", label: "Resume" },
     { href: "/case-studies", label: "Case Studies" },
     { href: "/blog", label: "Blog" },
     { href: "/terminal", label: "Terminal", icon: Terminal },
@@ -52,18 +48,7 @@ export function Navigation() {
             ))}
           </div>
           <div className="flex items-center space-x-4">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={toggleTheme}
-              aria-label="Toggle theme"
-            >
-              {isDark ? (
-                <Sun className="h-5 w-5" />
-              ) : (
-                <Moon className="h-5 w-5" />
-              )}
-            </Button>
+            <ThemeSelector />
             <Button asChild>
               <Link href="/contact">Get Started</Link>
             </Button>
@@ -72,18 +57,6 @@ export function Navigation() {
 
         {/* Mobile Menu Button */}
         <div className="flex md:hidden ml-auto items-center space-x-2">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={toggleTheme}
-            aria-label="Toggle theme"
-          >
-            {isDark ? (
-              <Sun className="h-5 w-5" />
-            ) : (
-              <Moon className="h-5 w-5" />
-            )}
-          </Button>
           <Button
             variant="ghost"
             size="icon"
@@ -113,7 +86,8 @@ export function Navigation() {
                 {link.label}
               </Link>
             ))}
-            <div className="pt-3 border-t">
+            <div className="pt-3 border-t space-y-3">
+              <ThemeSelector />
               <Button asChild className="w-full">
                 <Link href="/contact">Get Started</Link>
               </Button>

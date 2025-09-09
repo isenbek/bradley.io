@@ -3,68 +3,40 @@
 @tailwind utilities;
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=SF+Mono:wght@400;500;600&display=swap');
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 10%;
+    /* Default theme colors - can be overridden by ThemeProvider */
+    --background: #ffffff;
+    --foreground: #0a0a0a;
+    --primary: #0f4c75;
+    --primary-foreground: #ffffff;
+    --secondary: #7acfd6;
+    --secondary-foreground: #ffffff;
+    --accent: #e0474c;
+    --accent-foreground: #ffffff;
+    --muted: #f5f5f5;
+    --muted-foreground: #737373;
+    --border: #e5e5e5;
+    --card: #ffffff;
+    --card-foreground: #0a0a0a;
+    --popover: #ffffff;
+    --popover-foreground: #0a0a0a;
+    --input: #e5e5e5;
+    --ring: #0f4c75;
+    --destructive: #e0474c;
+    --destructive-foreground: #ffffff;
+    --radius: 8px;
     
-    --primary: 202 46% 26%; /* Deep teal #0f4c75 */
-    --primary-foreground: 0 0% 100%;
-    
-    --secondary: 184 46% 66%; /* Mint #7acfd6 */
-    --secondary-foreground: 0 0% 100%;
-    
-    --accent: 358 63% 56%; /* Coral #e0474c */
-    --accent-foreground: 0 0% 100%;
-    
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%;
-    
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 10%;
-    
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 10%;
-    
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
-    --ring: 202 46% 26%;
-    
-    --destructive: 358 63% 56%;
-    --destructive-foreground: 0 0% 100%;
-    
-    --radius: 0.5rem;
-  }
-  
-  .dark {
-    --background: 0 0% 4%;
-    --foreground: 0 0% 93%;
-    
-    --primary: 184 46% 66%; /* Mint in dark mode */
-    --primary-foreground: 0 0% 4%;
-    
-    --secondary: 202 46% 26%; /* Deep teal in dark mode */
-    --secondary-foreground: 0 0% 100%;
-    
-    --accent: 0 72% 65%; /* Brighter coral in dark */
-    --accent-foreground: 0 0% 100%;
-    
-    --muted: 0 0% 10%;
-    --muted-foreground: 0 0% 61%;
-    
-    --card: 0 0% 4%;
-    --card-foreground: 0 0% 93%;
-    
-    --popover: 0 0% 4%;
-    --popover-foreground: 0 0% 93%;
-    
-    --border: 0 0% 22%;
-    --input: 0 0% 22%;
-    --ring: 184 46% 66%;
-    
-    --destructive: 0 72% 65%;
-    --destructive-foreground: 0 0% 100%;
+    /* Typography and spacing variables */
+    --font-family: 'Inter', system-ui, sans-serif;
+    --heading-font: 'Inter', system-ui, sans-serif;
+    --font-size: 16px;
+    --line-height: 1.6;
+    --container-max-width: 1200px;
+    --section-spacing: 80px;
+    --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
   }
 }
 
@@ -73,10 +45,77 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
-    font-family: 'Inter', system-ui, sans-serif;
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-family);
+    font-size: var(--font-size);
+    line-height: var(--line-height);
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
   html {
     scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  /* Theme-aware utility classes */
+  .theme-container {
+    max-width: var(--container-max-width);
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  .theme-section {
+    padding: var(--section-spacing) 0;
+  }
+  
+  .theme-heading {
+    font-family: var(--heading-font);
+  }
+  
+  .theme-card {
+    background-color: var(--card);
+    color: var(--card-foreground);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+  
+  .theme-button-primary {
+    background-color: var(--primary);
+    color: var(--primary-foreground);
+    border: 1px solid var(--primary);
+    border-radius: var(--radius);
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+  
+  .theme-button-primary:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+  
+  .theme-button-secondary {
+    background-color: var(--secondary);
+    color: var(--secondary-foreground);
+    border: 1px solid var(--secondary);
+    border-radius: var(--radius);
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+  
+  .theme-button-secondary:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+  
+  .theme-text-muted {
+    color: var(--muted-foreground);
+  }
+  
+  .theme-border {
+    border-color: var(--border);
   }
 }
