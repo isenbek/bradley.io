@@ -6,30 +6,30 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="relative py-24 px-4 text-center">
+      <section className="relative py-12 md:py-16 lg:py-24 px-4 text-center">
         <div className="max-w-5xl mx-auto">
           <div className="mb-4">
             <span className="font-mono text-sm text-primary font-bold tracking-wider">
               AI + DATA ENGINEERING + EDGE COMPUTING
             </span>
           </div>
-          <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-6 leading-tight">
-            Build <span className="text-primary">Intelligent Systems</span> That
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
+            <span className="text-primary">Airgapped AI Architect</span>
             <br />
-            Process <span className="text-secondary">Billions of Rows</span>
+            Building <span className="text-secondary">Secure Systems</span>
             <br />
-            at the <span className="text-accent">Speed of Thought</span>
+            at <span className="text-accent">Enterprise Scale</span>
           </h1>
-          <p className="text-xl text-muted-foreground mb-8 max-w-3xl mx-auto">
+          <p className="text-base md:text-lg lg:text-xl text-muted-foreground mb-6 md:mb-8 max-w-2xl md:max-w-3xl mx-auto">
             Senior architect with 10+ years transforming enterprise data into competitive advantage.
             From real-time ML pipelines to edge AI deployment, I turn complex data challenges 
             into scalable, production-ready solutions.
           </p>
-          <div className="flex gap-4 justify-center">
-            <Button size="lg">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
+            <Button size="lg" className="w-full sm:w-auto">
               Schedule Consultation
             </Button>
-            <Button variant="outline" size="lg">
+            <Button variant="outline" size="lg" className="w-full sm:w-auto">
               View Case Studies
             </Button>
           </div>
@@ -37,9 +37,9 @@ export default function Home() {
       </section>
 
       {/* Tech Stack Showcase */}
-      <section className="py-12 px-4 border-y">
+      <section className="py-8 md:py-12 px-4 border-y">
         <div className="max-w-6xl mx-auto">
-          <div className="flex flex-wrap justify-center gap-8 items-center opacity-60">
+          <div className="flex flex-wrap justify-center gap-4 md:gap-6 lg:gap-8 items-center opacity-60">
             <span className="font-mono text-sm">Python</span>
             <span className="font-mono text-sm">TensorFlow</span>
             <span className="font-mono text-sm">Apache Spark</span>
@@ -55,16 +55,16 @@ export default function Home() {
       </section>
 
       {/* Services Preview */}
-      <section className="py-16 px-4 bg-muted/50">
+      <section className="py-12 md:py-16 px-4 bg-muted/50">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-4">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-3 md:mb-4">
             Engineering Solutions for Modern Data Challenges
           </h2>
-          <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
+          <p className="text-sm md:text-base text-center text-muted-foreground mb-8 md:mb-12 max-w-xl md:max-w-2xl mx-auto">
             From petabyte-scale architectures to real-time ML systems, 
             I deliver production-ready solutions that scale.
           </p>
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             <Card className="border-2 hover:border-primary transition-colors">
               <CardHeader>
                 <div className="font-mono text-xs text-primary mb-2">01.</div>
@@ -123,52 +123,52 @@ export default function Home() {
       </section>
 
       {/* Impact Metrics */}
-      <section className="py-16 px-4">
+      <section className="py-12 md:py-16 px-4">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl font-bold text-center mb-4">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-3 md:mb-4">
             Engineering Impact at Scale
           </h2>
-          <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
+          <p className="text-sm md:text-base text-center text-muted-foreground mb-8 md:mb-12 max-w-xl md:max-w-2xl mx-auto">
             Real results from real projects. Every metric represents production systems 
             delivering business value today.
           </p>
-          <div className="grid md:grid-cols-4 gap-6">
-            <div className="text-center p-6 rounded-lg bg-muted/50">
-              <h3 className="text-4xl font-bold text-primary font-mono mb-2">2B+</h3>
-              <p className="text-sm text-muted-foreground">Rows Processed Daily</p>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+            <div className="text-center p-4 md:p-6 rounded-lg bg-muted/50">
+              <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-primary font-mono mb-1 md:mb-2">2B+</h3>
+              <p className="text-xs md:text-sm text-muted-foreground">Rows Processed Daily</p>
             </div>
-            <div className="text-center p-6 rounded-lg bg-muted/50">
-              <h3 className="text-4xl font-bold text-secondary font-mono mb-2">78%</h3>
-              <p className="text-sm text-muted-foreground">Faster Processing</p>
+            <div className="text-center p-4 md:p-6 rounded-lg bg-muted/50">
+              <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-secondary font-mono mb-1 md:mb-2">78%</h3>
+              <p className="text-xs md:text-sm text-muted-foreground">Faster Processing</p>
             </div>
-            <div className="text-center p-6 rounded-lg bg-muted/50">
-              <h3 className="text-4xl font-bold text-accent font-mono mb-2">$2.4M</h3>
-              <p className="text-sm text-muted-foreground">Annual Savings</p>
+            <div className="text-center p-4 md:p-6 rounded-lg bg-muted/50">
+              <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-accent font-mono mb-1 md:mb-2">$2.4M</h3>
+              <p className="text-xs md:text-sm text-muted-foreground">Annual Savings</p>
             </div>
-            <div className="text-center p-6 rounded-lg bg-muted/50">
-              <h3 className="text-4xl font-bold text-primary font-mono mb-2">99.99%</h3>
-              <p className="text-sm text-muted-foreground">System Uptime</p>
+            <div className="text-center p-4 md:p-6 rounded-lg bg-muted/50">
+              <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-primary font-mono mb-1 md:mb-2">99.99%</h3>
+              <p className="text-xs md:text-sm text-muted-foreground">System Uptime</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-4 bg-primary text-primary-foreground">
+      <section className="py-12 md:py-16 lg:py-20 px-4 bg-primary text-primary-foreground">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 md:mb-6">
             Ready to Transform Your Data Infrastructure?
           </h2>
-          <p className="text-xl mb-8 opacity-90">
+          <p className="text-base md:text-lg lg:text-xl mb-6 md:mb-8 opacity-90">
             Let's discuss how AI and modern data engineering can drive your business forward.
             <br />
             <span className="font-mono text-lg">Grand Rapids, Michigan | $150-275/hour</span>
           </p>
-          <div className="flex gap-4 justify-center">
-            <Button size="lg" variant="secondary">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center">
+            <Button size="lg" variant="secondary" className="w-full sm:w-auto">
               Schedule Consultation
             </Button>
-            <Button size="lg" variant="outline" className="bg-transparent text-white border-white hover:bg-white/10">
+            <Button size="lg" variant="outline" className="w-full sm:w-auto bg-transparent text-white border-white hover:bg-white/10">
               View Terminal Portfolio
             </Button>
           </div>

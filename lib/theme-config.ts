@@ -59,7 +59,7 @@ export const themes: Record<string, ThemeConfig> = {
     },
     spacing: {
       container: "1200px",
-      section: "80px",
+      section: "60px",
     },
     effects: {
       borderRadius: "8px",
@@ -92,7 +92,7 @@ export const themes: Record<string, ThemeConfig> = {
     },
     spacing: {
       container: "900px",
-      section: "60px",
+      section: "48px",
     },
     effects: {
       borderRadius: "4px",
@@ -125,7 +125,7 @@ export const themes: Record<string, ThemeConfig> = {
     },
     spacing: {
       container: "800px",
-      section: "100px",
+      section: "64px",
     },
     effects: {
       borderRadius: "0px",
