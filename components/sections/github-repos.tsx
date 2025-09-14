@@ -155,27 +155,44 @@ export function GitHubRepos({
                 <div className="flex-1">
                   <CardTitle className="text-lg flex items-center gap-2">
                     <Code className="h-4 w-4" />
-                    {repo.name}
+                    <a 
+                      href={`/projects/${repo.name}`}
+                      className="hover:text-primary transition-colors"
+                    >
+                      {repo.name}
+                    </a>
                   </CardTitle>
                   <CardDescription className="mt-1 line-clamp-2">
                     {repo.description || "No description available"}
                   </CardDescription>
                 </div>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  asChild
-                  className="opacity-0 group-hover:opacity-100 transition-opacity"
-                >
-                  <a 
-                    href={repo.html_url} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    aria-label={`View ${repo.name} on GitHub`}
+                <div className="flex gap-1">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    asChild
+                    className="opacity-0 group-hover:opacity-100 transition-opacity"
                   >
-                    <ExternalLink className="h-4 w-4" />
-                  </a>
-                </Button>
+                    <a href={`/projects/${repo.name}`}>
+                      <ExternalLink className="h-4 w-4" />
+                    </a>
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    asChild
+                    className="opacity-0 group-hover:opacity-100 transition-opacity"
+                  >
+                    <a 
+                      href={repo.html_url} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      aria-label={`View ${repo.name} on GitHub`}
+                    >
+                      <ExternalLink className="h-4 w-4" />
+                    </a>
+                  </Button>
+                </div>
               </div>
             </CardHeader>
             <CardContent>

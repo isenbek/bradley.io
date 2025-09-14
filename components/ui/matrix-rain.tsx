@@ -1,9 +1,9 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import React, { useEffect, useState } from "react"
 
 export function MatrixRain({ active }: { active: boolean }) {
-  const [columns, setColumns] = useState<JSX.Element[]>([])
+  const [columns, setColumns] = useState<React.ReactElement[]>([])
   
   useEffect(() => {
     if (!active) {

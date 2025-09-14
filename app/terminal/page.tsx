@@ -1,13 +1,13 @@
 "use client"
 
-import { useState, useEffect, useRef, KeyboardEvent } from "react"
+import React, { useState, useEffect, useRef, KeyboardEvent } from "react"
 import { motion } from "framer-motion"
 import { MatrixRain } from "@/components/ui/matrix-rain"
 import "./terminal.css"
 
 interface Command {
   input: string
-  output: string | JSX.Element
+  output: string | React.ReactElement
 }
 
 export default function TerminalPage() {
@@ -202,7 +202,7 @@ export default function TerminalPage() {
     const parts = cmd.split(" ")
     const baseCmd = parts[0]
     
-    let output: string | JSX.Element = ""
+    let output: string | React.ReactElement = ""
     
     switch (baseCmd) {
       case "help":

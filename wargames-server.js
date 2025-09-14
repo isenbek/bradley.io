@@ -166,7 +166,7 @@ CONCLUSION: MUTUAL ASSURED DESTRUCTION CONFIRMED`,
     try {
       // Check if Ollama is available
       const response = await ollama.chat({
-        model: 'llama3.2', // You can change this to any model you have installed
+        model: 'qwen3:8b', // You can change this to any model you have installed
         messages: [
           {
             role: 'system',
