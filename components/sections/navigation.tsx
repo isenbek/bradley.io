@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { Menu, X, Terminal, Palette } from "lucide-react"
+import { Menu, X, Terminal, Palette, Plane } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { ThemeSelector } from "@/components/ui/theme-selector"
 import { cn } from "@/lib/utils"
@@ -15,7 +15,6 @@ export function Navigation() {
     { href: "/", label: "Home" },
     { href: "/projects", label: "Projects" },
     { href: "/terminal", label: "Terminal", icon: Terminal },
-    { href: "/contact", label: "Contact" },
   ]
 
   // Secondary links for desktop/mobile menu
@@ -23,8 +22,7 @@ export function Navigation() {
     { href: "/about", label: "About" },
     { href: "/services", label: "Services" },
     { href: "/resume", label: "Resume" },
-    { href: "/case-studies", label: "Case Studies" },
-    { href: "/blog", label: "Blog" },
+    { href: "/ai-pilot", label: "AI Pilot", icon: Plane },
     { href: "/wargames", label: "WOPR", icon: Terminal },
   ]
 
@@ -57,9 +55,6 @@ export function Navigation() {
           </div>
           <div className="flex items-center space-x-3 xl:space-x-4">
             <ThemeSelector />
-            <Button asChild>
-              <Link href="/contact">Get Started</Link>
-            </Button>
           </div>
         </div>
 
@@ -129,9 +124,6 @@ export function Navigation() {
             
             <div className="pt-3 border-t space-y-3">
               <ThemeSelector />
-              <Button asChild className="w-full h-12">
-                <Link href="/contact">Get Started</Link>
-              </Button>
             </div>
           </div>
         </div>

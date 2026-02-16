@@ -1,209 +1,196 @@
-import { Badge } from "@/components/ui/badge"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { CheckCircle, TrendingUp, Users, Zap } from "lucide-react"
 
 export default function AboutPage() {
   const skills = {
-    "Programming": ["Python", "TypeScript", "SQL", "Scala", "R"],
-    "Cloud & Infrastructure": ["AWS", "Azure", "GCP", "Docker", "Kubernetes"],
-    "Data Engineering": ["Apache Spark", "Airflow", "Kafka", "Databricks", "Snowflake"],
-    "AI/ML": ["TensorFlow", "PyTorch", "Scikit-learn", "MLflow", "Hugging Face"],
-    "Edge Computing": ["Raspberry Pi", "Arduino", "MQTT", "Edge AI", "IoT Protocols"],
-    "Visualization": ["D3.js", "Tableau", "Power BI", "Grafana", "Plotly"],
+    "Languages": ["Python", "TypeScript", "C/C++", "Bash", "Go", "Rust"],
+    "Data": ["Snowflake", "PostgreSQL", "DynamoDB", "Redis", "SQLite", "Elasticsearch"],
+    "AI/ML": ["Ollama", "Claude", "PyTorch", "Hugging Face", "LangChain", "Vector DBs"],
+    "Infrastructure": ["AWS", "Docker", "Kubernetes", "FastAPI", "Nginx", "Linux"],
+    "Hardware": ["Raspberry Pi", "Arduino", "LoRa", "Edge TPU", "Custom Protocols"],
+    "Tools": ["Git", "Vim", "Playwright", "Jupyter", "Prometheus", "Grafana"],
   }
 
-  const experience = [
+  const timeline = [
     {
-      role: "Senior Data Architect",
+      period: "2022 - Present",
+      role: "Architect & Developer",
+      company: "VictoryText, LLC",
+      description: "High-volume messaging platform with FastAPI, DynamoDB, and multi-carrier integration.",
+    },
+    {
+      period: "2020 - 2022",
+      role: "Architect & Developer",
+      company: "ConservativeConnector",
+      description: "Data systems processing 100M+ contacts and 4.9B data points with Snowflake.",
+    },
+    {
+      period: "2014 - 2018",
+      role: "Senior Architect",
       company: "TransUnion SRG",
-      period: "2018-2023",
-      highlights: [
-        "Designed commission calculation systems processing $2B+ annually",
-        "Built real-time data pipelines handling 10M+ daily transactions",
-        "Reduced processing time by 78% through architecture optimization",
-        "Led team of 8 engineers in microservices migration",
-      ],
+      description: "Search infrastructure for Whitepages.com, classified government projects, ML modeling.",
     },
     {
-      role: "Data Engineering Consultant",
-      company: "NYC Headhunter Firm",
-      period: "2016-2018",
-      highlights: [
-        "Automated candidate matching algorithms improving placement rates by 45%",
-        "Developed predictive models for talent retention analytics",
-        "Created executive dashboards tracking key recruitment metrics",
-        "Integrated multiple ATS systems into unified data warehouse",
-      ],
+      period: "2012 - 2014",
+      role: "Senior Architect",
+      company: "NextSource / PeopleTicker",
+      description: "Global real-time labor-rate calculator with Java, Weka, and Apache Solr.",
     },
-  ]
-
-  const certifications = [
-    "AWS Certified Solutions Architect",
-    "Azure Data Engineer Associate",
-    "Google Cloud Professional Data Engineer",
-    "Databricks Certified Associate Developer",
+    {
+      period: "1997 - 2002",
+      role: "Co-Founder & CTO",
+      company: "PipeLive, LLC",
+      description: "Real-time collaboration software. 12 industry awards including PC Magazine Winner's Circle.",
+    },
   ]
 
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="py-16 px-4 bg-muted/50">
-        <div className="container max-w-4xl">
-          <h1 className="text-4xl font-bold mb-6">
-            Bridging Enterprise Architecture with Edge Innovation
+    <main className="min-h-screen bg-white">
+      {/* Header */}
+      <header className="border-b border-slate-200">
+        <div className="max-w-4xl mx-auto px-4 py-12">
+          <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+            About
           </h1>
-          <p className="text-xl text-muted-foreground mb-8">
-            With over a decade of experience transforming data strategies for Fortune 500 
-            companies, I specialize in the convergence of enterprise data architecture, 
-            AI/ML implementation, and hands-on edge computing solutions.
+          <p className="text-lg text-slate-600 leading-relaxed">
+            I'm your typical non-typical developer. While I've spent 15+ years architecting
+            production systems that process billions of data points, what really drives me
+            is the work I do in my garage lab—where I turn constraints into innovation
+            and curiosity into working systems.
           </p>
-          <div className="flex gap-4 flex-wrap">
-            <Badge variant="outline" className="px-4 py-2 text-base">
-              <TrendingUp className="h-4 w-4 mr-2" />
-              10+ Years Experience
-            </Badge>
-            <Badge variant="outline" className="px-4 py-2 text-base">
-              <Users className="h-4 w-4 mr-2" />
-              50+ Enterprise Projects
-            </Badge>
-            <Badge variant="outline" className="px-4 py-2 text-base">
-              <Zap className="h-4 w-4 mr-2" />
-              Edge Computing Expert
-            </Badge>
-          </div>
         </div>
-      </section>
+      </header>
 
-      {/* Professional Journey */}
-      <section className="py-16 px-4">
-        <div className="container max-w-6xl">
-          <h2 className="text-3xl font-bold mb-12 text-center">Professional Journey</h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            {experience.map((exp) => (
-              <Card key={exp.company}>
-                <CardHeader>
-                  <CardTitle className="text-xl">{exp.role}</CardTitle>
-                  <div className="flex justify-between text-sm text-muted-foreground">
-                    <span>{exp.company}</span>
-                    <span>{exp.period}</span>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <ul className="space-y-2">
-                    {exp.highlights.map((highlight, idx) => (
-                      <li key={idx} className="flex items-start gap-2">
-                        <CheckCircle className="h-4 w-4 text-primary mt-0.5 flex-shrink-0" />
-                        <span className="text-sm">{highlight}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-            ))}
+      <div className="max-w-4xl mx-auto px-4 py-12 space-y-16">
+        {/* Philosophy */}
+        <section>
+          <h2 className="text-xl font-semibold text-slate-900 mb-4">Philosophy</h2>
+          <div className="prose prose-slate max-w-none">
+            <p className="text-slate-600 leading-relaxed mb-4">
+              Case in point: I recently scored 60 Raspberry Pis from a failed business.
+              Most people would resell them. I built a distributed investigation tool with
+              40 Pi4 workers running a VPN cluster with Tor DNS lookup and headless browser
+              automation. It's messy, it's scrappy, and it works.
+            </p>
+            <p className="text-slate-600 leading-relaxed mb-4">
+              I'm an integrator at heart. I dumpster dive for gear because working within
+              constraints forces creative solutions. I run my own DNS server on a Frankenstein
+              Linux box I built from salvaged parts. I host everything locally because I want
+              to understand how it all fits together.
+            </p>
+            <p className="text-slate-600 leading-relaxed">
+              I bring this same mindset to production work: find elegant solutions, question
+              assumptions, build tools that last. Whether it's processing 4.9 billion data points,
+              architecting high-availability messaging platforms, or leading classified government
+              projects, I approach every problem as an opportunity to build something that actually works.
+            </p>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Technical Expertise */}
-      <section className="py-16 px-4 bg-muted/50">
-        <div className="container max-w-6xl">
-          <h2 className="text-3xl font-bold mb-12 text-center">Technical Expertise</h2>
+        {/* Skills */}
+        <section>
+          <h2 className="text-xl font-semibold text-slate-900 mb-6">Technical Skills</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {Object.entries(skills).map(([category, items]) => (
-              <Card key={category}>
-                <CardHeader>
-                  <CardTitle className="text-lg">{category}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex flex-wrap gap-2">
-                    {items.map((skill) => (
-                      <Badge key={skill} variant="secondary">
-                        {skill}
-                      </Badge>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
+              <div key={category}>
+                <h3 className="text-sm font-medium text-slate-500 uppercase tracking-wide mb-2">
+                  {category}
+                </h3>
+                <div className="flex flex-wrap gap-1.5">
+                  {items.map((skill) => (
+                    <span
+                      key={skill}
+                      className="px-2 py-1 text-sm bg-slate-100 text-slate-700 rounded"
+                    >
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
             ))}
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Unique Value Proposition */}
-      <section className="py-16 px-4">
-        <div className="container max-w-4xl">
-          <h2 className="text-3xl font-bold mb-8 text-center">Why Work With Me</h2>
-          <div className="grid md:grid-cols-3 gap-8 mb-12">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-bold text-primary">1</span>
+        {/* Timeline */}
+        <section>
+          <h2 className="text-xl font-semibold text-slate-900 mb-6">Experience</h2>
+          <div className="space-y-6">
+            {timeline.map((item, idx) => (
+              <div
+                key={idx}
+                className="relative pl-6 border-l-2 border-slate-200 hover:border-teal-400 transition-colors"
+              >
+                <div className="absolute -left-[9px] top-0 w-4 h-4 bg-white border-2 border-slate-300 rounded-full" />
+                <div className="text-sm text-teal-600 font-mono mb-1">{item.period}</div>
+                <div className="font-semibold text-slate-900">{item.role}</div>
+                <div className="text-sm text-slate-500 mb-2">{item.company}</div>
+                <p className="text-slate-600 text-sm">{item.description}</p>
               </div>
-              <h3 className="font-semibold mb-2">Enterprise Experience</h3>
-              <p className="text-sm text-muted-foreground">
-                Proven track record with Fortune 500 companies, handling billion-dollar 
-                data systems and mission-critical infrastructure.
+            ))}
+          </div>
+          <p className="mt-6 text-sm text-slate-500">
+            Full experience history available on the{" "}
+            <Link href="/resume" className="text-teal-600 hover:text-teal-800">
+              resume page
+            </Link>
+            .
+          </p>
+        </section>
+
+        {/* Current Projects */}
+        <section>
+          <h2 className="text-xl font-semibold text-slate-900 mb-4">Current Focus</h2>
+          <div className="grid md:grid-cols-2 gap-4">
+            <div className="p-4 rounded-lg border border-slate-200 hover:border-teal-300 transition-colors">
+              <h3 className="font-medium text-slate-900 mb-1">60-Node Pi Cluster</h3>
+              <p className="text-sm text-slate-600">
+                Distributed investigation tool with VPN/Tor architecture and headless automation.
               </p>
             </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-bold text-primary">2</span>
-              </div>
-              <h3 className="font-semibold mb-2">Edge Computing Pioneer</h3>
-              <p className="text-sm text-muted-foreground">
-                Unique expertise bridging enterprise architecture with hands-on IoT 
-                and edge device integration for real-time processing.
+            <div className="p-4 rounded-lg border border-slate-200 hover:border-amber-300 transition-colors">
+              <h3 className="font-medium text-slate-900 mb-1">Thorium TRNG</h3>
+              <p className="text-sm text-slate-600">
+                True random number generator passing NIST/Diehard tests from radioactive decay.
               </p>
             </div>
-            <div className="text-center">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-bold text-primary">3</span>
-              </div>
-              <h3 className="font-semibold mb-2">Business-First Approach</h3>
-              <p className="text-sm text-muted-foreground">
-                Focus on measurable ROI, with average client savings of $2.4M annually 
-                through optimized data strategies and predictive analytics.
+            <div className="p-4 rounded-lg border border-slate-200 hover:border-teal-300 transition-colors">
+              <h3 className="font-medium text-slate-900 mb-1">Custom 802.11 Protocol</h3>
+              <p className="text-sm text-slate-600">
+                Decentralized mesh networking for routing around traditional infrastructure.
+              </p>
+            </div>
+            <div className="p-4 rounded-lg border border-slate-200 hover:border-amber-300 transition-colors">
+              <h3 className="font-medium text-slate-900 mb-1">Claude Integration</h3>
+              <p className="text-sm text-slate-600">
+                Using AI as a collaborative development partner, not just code completion.
               </p>
             </div>
           </div>
+        </section>
 
-          {/* Certifications */}
-          <Card className="mb-12">
-            <CardHeader>
-              <CardTitle>Professional Certifications</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {certifications.map((cert) => (
-                  <div key={cert} className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-primary" />
-                    <span className="text-sm">{cert}</span>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* CTA */}
-          <div className="text-center">
-            <h3 className="text-2xl font-bold mb-4">
-              Ready to Transform Your Data Strategy?
-            </h3>
-            <p className="text-muted-foreground mb-6">
-              Let's discuss how edge computing and AI can drive your business forward.
-            </p>
-            <div className="flex gap-4 justify-center">
-              <Button size="lg" asChild>
-                <Link href="/contact">Schedule Consultation</Link>
-              </Button>
-              <Button size="lg" variant="outline" asChild>
-                <Link href="/case-studies">View Case Studies</Link>
-              </Button>
-            </div>
+        {/* Contact */}
+        <section className="border-t border-slate-200 pt-8">
+          <h2 className="text-xl font-semibold text-slate-900 mb-4">Get in Touch</h2>
+          <div className="flex flex-wrap gap-4 text-sm">
+            <a
+              href="mailto:brad@isenbek.io"
+              className="text-teal-600 hover:text-teal-800"
+            >
+              brad@isenbek.io
+            </a>
+            <span className="text-slate-300">•</span>
+            <a
+              href="https://github.com/tinymachines"
+              className="text-teal-600 hover:text-teal-800"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              github.com/tinymachines
+            </a>
+            <span className="text-slate-300">•</span>
+            <span className="text-slate-600">Grand Rapids, MI</span>
           </div>
-        </div>
-      </section>
-    </div>
+        </section>
+      </div>
+    </main>
   )
 }

@@ -1,179 +1,216 @@
 "use client"
 
-import { GitHubRepos } from "@/components/sections/github-repos"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { Terminal, Github, Briefcase, TrendingUp } from "lucide-react"
+import { GitHubRepos } from "@/components/sections/github-repos"
 
 export default function ProjectsPage() {
   const featuredProjects = [
     {
-      title: "Commission Calculation Engine",
-      company: "TransUnion SRG",
-      description: "Built real-time data pipeline processing $2B+ in annual transactions with 78% performance improvement",
-      impact: "$2.4M annual savings",
-      tech: ["Python", "Apache Spark", "AWS", "Kafka"],
-      metrics: {
-        transactions: "10M+ daily",
-        performance: "78% faster",
-        uptime: "99.99%",
-      },
+      name: "Plumbr",
+      tagline: "C++ distributed system management with lock-free task queuing",
+      category: "Distributed Systems",
+      technologies: ["C++", "IPv6", "mDNS", "Ed25519", "seccomp-bpf"],
+      highlight: "Lock-free circular buffer task queue with work stealing",
     },
     {
-      title: "Predictive Maintenance Platform",
-      company: "Manufacturing Client",
-      description: "IoT edge computing solution reducing equipment downtime through ML-powered failure prediction",
-      impact: "35% downtime reduction",
-      tech: ["Raspberry Pi", "TensorFlow Lite", "MQTT", "Python"],
-      metrics: {
-        sensors: "500+ devices",
-        latency: "<200ms",
-        accuracy: "94%",
-      },
+      name: "Zephyr",
+      tagline: "WiFi AI mesh network using raw 802.11 frames",
+      category: "Mesh Networks",
+      technologies: ["Python", "802.11", "LLM", "Ollama", "Vector Embeddings"],
+      highlight: "Custom wireless protocol for distributed AI communication",
     },
     {
-      title: "Patient Monitoring System",
-      company: "Healthcare Provider",
-      description: "HIPAA-compliant real-time monitoring with edge AI for critical patient alerts",
-      impact: "40% faster response",
-      tech: ["Arduino", "Edge AI", "Azure IoT", "React"],
-      metrics: {
-        patients: "1,000+ monitored",
-        alerts: "Sub-second",
-        compliance: "HIPAA certified",
-      },
+      name: "Spondr",
+      tagline: "Real-time aviation intelligence with ML pipeline",
+      category: "AI/ML",
+      technologies: ["Python", "ADS-B", "DuckDB", "scikit-learn", "WebSocket"],
+      highlight: "50+ aircraft/second processing with <100ms latency",
+    },
+    {
+      name: "Hotbits",
+      tagline: "True random number generator from hardware timing jitter",
+      category: "Cryptography",
+      technologies: ["Python", "FFT", "Signal Processing", "NIST STS"],
+      highlight: "Cryptographic-grade entropy passing dieharder tests",
+    },
+    {
+      name: "Lochness",
+      tagline: "Multi-schema data warehouse for email marketing analytics",
+      category: "Data Engineering",
+      technologies: ["Snowflake", "SQL", "S3", "ETL"],
+      highlight: "158M contacts and 14.5B events with fractional ownership",
+    },
+    {
+      name: "Sovereign",
+      tagline: "Assembly-like agentic programming language for self-improving systems",
+      category: "Language Design",
+      technologies: ["Python", "Lark Parser", "Ollama", "LLM"],
+      highlight: "32-instruction minimal language with error-driven evolution",
     },
   ]
 
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="py-16 px-4 bg-muted/50">
-        <div className="container max-w-4xl text-center">
-          <h1 className="text-4xl font-bold mb-6">
-            Projects & Open Source
+    <main className="min-h-screen bg-white">
+      {/* Header */}
+      <header className="border-b border-slate-200">
+        <div className="max-w-4xl mx-auto px-4 py-12">
+          <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
+            Projects
           </h1>
-          <p className="text-xl text-muted-foreground mb-8">
-            From billion-dollar enterprise systems to cutting-edge IoT solutions, 
-            explore the projects that demonstrate real-world impact.
+          <p className="text-lg text-slate-600 leading-relaxed">
+            A collection of production systems and experimental projects.
+            From enterprise data platforms to garage lab experiments—all built
+            with the same philosophy: elegant solutions to real problems.
           </p>
-          <div className="flex gap-4 justify-center flex-wrap">
-            <Button asChild>
-              <Link href="/terminal">
-                <Terminal className="mr-2 h-4 w-4" />
-                Interactive Terminal
-              </Link>
-            </Button>
-            <Button variant="outline" asChild>
-              <a href="https://github.com/tinymachines" target="_blank" rel="noopener noreferrer">
-                <Github className="mr-2 h-4 w-4" />
-                GitHub Organization
-              </a>
-            </Button>
-          </div>
         </div>
-      </section>
+      </header>
 
-      {/* Featured Projects */}
-      <section className="py-16 px-4">
-        <div className="container max-w-6xl">
-          <h2 className="text-3xl font-bold mb-12 text-center">Featured Enterprise Projects</h2>
-          <div className="grid lg:grid-cols-3 gap-8 mb-12">
-            {featuredProjects.map((project, idx) => (
-              <Card key={idx} className="relative overflow-hidden">
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary to-secondary"></div>
-                <CardHeader>
-                  <div className="flex items-start justify-between mb-2">
-                    <Badge variant="outline">
-                      <Briefcase className="mr-1 h-3 w-3" />
-                      {project.company}
-                    </Badge>
-                    <Badge variant="default">
-                      <TrendingUp className="mr-1 h-3 w-3" />
-                      {project.impact}
-                    </Badge>
-                  </div>
-                  <CardTitle className="text-xl">{project.title}</CardTitle>
-                  <CardDescription>{project.description}</CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="grid grid-cols-3 gap-2 text-center">
-                    {Object.entries(project.metrics).map(([key, value]) => (
-                      <div key={key} className="space-y-1">
-                        <p className="text-sm font-bold text-primary">{value}</p>
-                        <p className="text-xs text-muted-foreground capitalize">{key}</p>
-                      </div>
-                    ))}
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {project.tech.map((tech) => (
-                      <Badge key={tech} variant="secondary" className="text-xs">
-                        {tech}
-                      </Badge>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
+      <div className="max-w-4xl mx-auto px-4 py-12 space-y-16">
+        {/* Featured Projects */}
+        <section>
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-xl font-semibold text-slate-900">Featured Projects</h2>
+            <Link
+              href="/"
+              className="text-sm text-teal-600 hover:text-teal-800"
+            >
+              View all on resume →
+            </Link>
+          </div>
+          <div className="grid md:grid-cols-2 gap-4">
+            {featuredProjects.map((project) => (
+              <div
+                key={project.name}
+                className="p-5 rounded-lg border border-slate-200 hover:border-teal-300 transition-colors"
+              >
+                <div className="flex items-start justify-between mb-2">
+                  <h3 className="font-semibold text-slate-900">{project.name}</h3>
+                  <span className="text-xs px-2 py-0.5 bg-slate-100 text-slate-600 rounded">
+                    {project.category}
+                  </span>
+                </div>
+                <p className="text-sm text-slate-600 mb-3">{project.tagline}</p>
+                <p className="text-xs text-teal-700 bg-teal-50 px-2 py-1 rounded mb-3">
+                  {project.highlight}
+                </p>
+                <div className="flex flex-wrap gap-1">
+                  {project.technologies.slice(0, 4).map((tech) => (
+                    <span
+                      key={tech}
+                      className="text-xs px-1.5 py-0.5 bg-slate-50 text-slate-500 rounded"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                  {project.technologies.length > 4 && (
+                    <span className="text-xs text-slate-400">
+                      +{project.technologies.length - 4}
+                    </span>
+                  )}
+                </div>
+              </div>
             ))}
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* GitHub Repositories */}
-      <section className="py-16 px-4 bg-muted/50">
-        <div className="container max-w-6xl">
-          <h2 className="text-3xl font-bold mb-12 text-center">Open Source Contributions</h2>
-          
-          <Tabs defaultValue="org" className="w-full">
-            <TabsList className="grid w-full max-w-md mx-auto grid-cols-2">
-              <TabsTrigger value="org">TinyMachines Org</TabsTrigger>
-              <TabsTrigger value="personal">Personal Repos</TabsTrigger>
-            </TabsList>
-            
-            <TabsContent value="org" className="mt-8">
-              <div className="mb-6 text-center">
-                <p className="text-muted-foreground">
-                  Open source projects and tools from the TinyMachines organization
-                </p>
-              </div>
-              <GitHubRepos source="org" limit={6} showStats={true} />
-            </TabsContent>
-            
-            <TabsContent value="personal" className="mt-8">
-              <div className="mb-6 text-center">
-                <p className="text-muted-foreground">
-                  Personal repositories and experiments
-                </p>
-              </div>
-              <GitHubRepos source="user" username="isenbek" limit={6} showStats={true} />
-            </TabsContent>
-          </Tabs>
-        </div>
-      </section>
-
-      {/* Call to Action */}
-      <section className="py-16 px-4">
-        <div className="container max-w-4xl text-center">
-          <h3 className="text-2xl font-bold mb-4">
-            Let's Build Something Amazing Together
-          </h3>
-          <p className="text-muted-foreground mb-8">
-            Whether it's edge computing, data engineering, or AI implementation, 
-            I'm ready to tackle your most challenging projects.
-          </p>
-          <div className="flex gap-4 justify-center">
-            <Button size="lg" asChild>
-              <Link href="/contact">Start a Project</Link>
-            </Button>
-            <Button size="lg" variant="outline" asChild>
-              <Link href="/services">View Services</Link>
-            </Button>
+        {/* Stats */}
+        <section className="bg-slate-50 -mx-4 px-4 py-8 md:rounded-lg md:mx-0 md:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+            <div>
+              <div className="text-3xl font-mono font-bold text-teal-600">33</div>
+              <div className="text-sm text-slate-600">Documented Projects</div>
+            </div>
+            <div>
+              <div className="text-3xl font-mono font-bold text-teal-600">67</div>
+              <div className="text-sm text-slate-600">Total Repositories</div>
+            </div>
+            <div>
+              <div className="text-3xl font-mono font-bold text-amber-600">15+</div>
+              <div className="text-sm text-slate-600">Years Experience</div>
+            </div>
+            <div>
+              <div className="text-3xl font-mono font-bold text-amber-600">100%</div>
+              <div className="text-sm text-slate-600">Open Source</div>
+            </div>
           </div>
-        </div>
-      </section>
-    </div>
+        </section>
+
+        {/* GitHub Repos */}
+        <section>
+          <h2 className="text-xl font-semibold text-slate-900 mb-6">
+            GitHub Repositories
+          </h2>
+          <div className="space-y-8">
+            <div>
+              <h3 className="text-sm font-medium text-slate-500 uppercase tracking-wide mb-4">
+                TinyMachines Organization
+              </h3>
+              <GitHubRepos source="org" limit={6} showStats={true} />
+            </div>
+          </div>
+        </section>
+
+        {/* Categories */}
+        <section>
+          <h2 className="text-xl font-semibold text-slate-900 mb-6">
+            Project Categories
+          </h2>
+          <div className="grid md:grid-cols-3 gap-4">
+            {[
+              { name: "Distributed Systems", count: 8, color: "teal" },
+              { name: "Data Engineering", count: 6, color: "teal" },
+              { name: "AI/ML Integration", count: 7, color: "purple" },
+              { name: "Edge Computing", count: 5, color: "amber" },
+              { name: "Mesh Networks", count: 4, color: "amber" },
+              { name: "API Architecture", count: 6, color: "teal" },
+            ].map((cat) => (
+              <div
+                key={cat.name}
+                className="flex items-center justify-between p-3 rounded-lg border border-slate-200"
+              >
+                <span className="text-slate-700">{cat.name}</span>
+                <span
+                  className={`text-sm font-mono font-bold ${
+                    cat.color === "teal"
+                      ? "text-teal-600"
+                      : cat.color === "amber"
+                      ? "text-amber-600"
+                      : "text-purple-600"
+                  }`}
+                >
+                  {cat.count}
+                </span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* CTA */}
+        <section className="border-t border-slate-200 pt-8 text-center">
+          <h2 className="text-xl font-semibold text-slate-900 mb-2">
+            Interested in collaborating?
+          </h2>
+          <p className="text-slate-600 mb-6">
+            All projects are open source. Feel free to explore, fork, or reach out.
+          </p>
+          <div className="flex flex-wrap gap-4 justify-center">
+            <a
+              href="https://github.com/tinymachines"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-6 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors"
+            >
+              View on GitHub
+            </a>
+            <Link
+              href="/terminal"
+              className="px-6 py-2 border border-slate-300 text-slate-700 rounded-lg hover:border-slate-400 transition-colors"
+            >
+              Try the Terminal
+            </Link>
+          </div>
+        </section>
+      </div>
+    </main>
   )
 }
