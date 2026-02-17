@@ -31,7 +31,10 @@ ok "Build succeeded"
 
 # ── 3. Stage & Commit ─────────────────────────────────────────────
 step "Staging changes..."
-git add -A
+git add app/ components/ lib/ public/ scripts/ styles/ \
+       package.json package-lock.json next.config.ts \
+       tsconfig.json tailwind.config.ts postcss.config.mjs \
+       .gitignore CLAUDE.md deploy.sh 2>/dev/null || true
 
 if git diff --cached --quiet; then
   echo "  No changes to commit — skipping commit/push"

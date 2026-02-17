@@ -36,6 +36,23 @@ yarn-error.log*
 # generated data
 public/data/ai-pilot-data.json
 
+# build artifacts & binaries
+build-new/
+
+# PM2 logs
+logs/
+
+# Python virtual envs
+.pyenv
+
+# operational scripts (local-only)
+ecosystem.config.js
+monitor-services.sh
+start-services.sh
+
+# crash recovery notes
+CRASH_RECOVERY.md
+
 # vercel
 .vercel
 
