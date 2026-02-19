@@ -17,7 +17,7 @@ interface Leaf {
 
 function getLeafColor(): string {
   const style = getComputedStyle(document.documentElement);
-  return style.getPropertyValue("--secondary").trim() || "#7acfd6";
+  return style.getPropertyValue("--brand-secondary").trim() || "#7CB8C9";
 }
 
 function drawLeaf(
@@ -62,7 +62,7 @@ export function FloatingLeaves() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const leavesRef = useRef<Leaf[]>([]);
   const rafRef = useRef<number>(0);
-  const breezeTimerRef = useRef<ReturnType<typeof setTimeout>>();
+  const breezeTimerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
   const isAnimatingRef = useRef(false);
 
   useEffect(() => {

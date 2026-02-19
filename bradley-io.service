@@ -1,0 +1,28 @@
+[Unit]
+Description=Bradley.io Site (bradley.io)
+After=network.target
+
+[Service]
+Type=simple
+User=bisenbek
+Group=bisenbek
+WorkingDirectory=/home/bisenbek/projects/bradleyio
+Environment="NODE_ENV=production"
+Environment="PORT=32221"
+Environment="PATH=/home/bisenbek/.nvm/versions/node/v24.0.1/bin:/usr/local/bin:/usr/bin:/bin"
+ExecStart=/home/bisenbek/.nvm/versions/node/v24.0.1/bin/npm run start
+Restart=always
+RestartSec=5
+SyslogIdentifier=bradley-io
+StandardOutput=journal
+StandardError=journal
+
+# Security hardening
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=read-only
+ReadWritePaths=/home/bisenbek/projects/bradleyio/.next
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

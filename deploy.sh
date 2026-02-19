@@ -1,78 +1,86 @@
-#!/bin/bash
-set -e
-
-# Bradley.io Deploy Script
-# Usage: ./deploy.sh [commit message]
-# Runs: pipeline → build → commit → version bump → push → PM2 restart
+#!/usr/bin/env bash
+set -euo pipefail
 
 cd "$(dirname "$0")"
 
-YELLOW='\033[1;33m'
+# Colors
+ORANGE='\033[0;33m'
+CYAN='\033[0;36m'
 GREEN='\033[0;32m'
 RED='\033[0;31m'
 NC='\033[0m'
 
-step() { echo -e "\n${YELLOW}▸ $1${NC}"; }
-ok()   { echo -e "${GREEN}  ✓ $1${NC}"; }
-fail() { echo -e "${RED}  ✗ $1${NC}"; exit 1; }
+step() { echo -e "\n${ORANGE}▸${NC} $1"; }
+ok()   { echo -e "  ${GREEN}✓${NC} $1"; }
+fail() { echo -e "  ${RED}✗${NC} $1"; exit 1; }
 
-# ── 1. Run AI Pilot pipeline ──────────────────────────────────────
-step "Running AI Pilot data pipeline..."
-if python3 scripts/ai-pilot-pipeline.py 2>/dev/null; then
-  ok "Pipeline complete"
+# 1. Commit (if there are changes)
+step "Checking for changes..."
+if [[ -n "$(git status --porcelain)" ]]; then
+    git add app/ components/ lib/ public/ scripts/ \
+           package.json package-lock.json next.config.mjs \
+           tsconfig.json postcss.config.mjs mdx-components.tsx \
+           eslint.config.mjs .gitignore CLAUDE.md deploy.sh \
+           bradley-io.service ecosystem.config.js \
+           wargames-server.js .env 2>/dev/null || true
+    git commit -m "deploy: $(date '+%Y-%m-%d %H:%M:%S')"
+    ok "Committed"
 else
-  echo "  (pipeline skipped or failed — continuing)"
+    ok "Working tree clean"
 fi
 
-# ── 2. Build ──────────────────────────────────────────────────────
-step "Building for production..."
-npm run build || fail "Build failed"
-ok "Build succeeded"
+# 2. Bump patch version
+step "Bumping version..."
+OLD_VER=$(node -p "require('./package.json').version")
+NEW_VER=$(npm version patch --no-git-tag-version)
+git add package.json package-lock.json 2>/dev/null || git add package.json
+git commit -m "bump: ${NEW_VER}" --allow-empty
+ok "${OLD_VER} → ${NEW_VER}"
 
-# ── 3. Stage & Commit ─────────────────────────────────────────────
-step "Staging changes..."
-git add app/ components/ lib/ public/ scripts/ styles/ \
-       package.json package-lock.json next.config.ts \
-       tsconfig.json tailwind.config.ts postcss.config.mjs \
-       .gitignore CLAUDE.md deploy.sh 2>/dev/null || true
+# 3. Push
+step "Pushing to origin..."
+git push
+ok "Pushed"
 
-if git diff --cached --quiet; then
-  echo "  No changes to commit — skipping commit/push"
+# 4. Rebuild
+step "Building production..."
+npm run build
+ok "Build complete"
+
+# 5. Restart systemd service (Next.js)
+step "Restarting bradley-io service..."
+sudo systemctl restart bradley-io
+ok "Systemd service restarted"
+
+# 6. Restart PM2 wargames
+step "Restarting wargames server..."
+if pm2 describe bradley-io-wargames >/dev/null 2>&1; then
+    pm2 restart bradley-io-wargames
+    ok "Wargames restarted"
 else
-  MSG="${1:-Deploy: $(date '+%Y-%m-%d %H:%M')}"
-  step "Committing: $MSG"
-  git commit -m "$MSG"
-  ok "Committed"
-
-  # ── 4. Version bump ───────────────────────────────────────────
-  step "Bumping patch version..."
-  NEW_VER=$(npm version patch --no-git-tag-version)
-  git add package.json package-lock.json
-  git commit -m "chore: bump to $NEW_VER"
-  ok "Version: $NEW_VER"
-
-  # ── 5. Push ─────────────────────────────────────────────────────
-  step "Pushing to origin..."
-  git push origin main
-  ok "Pushed"
+    pm2 start ecosystem.config.js
+    pm2 save
+    ok "Wargames started"
 fi
 
-# ── 6. Restart PM2 services ──────────────────────────────────────
-step "Restarting PM2 services..."
-
-# Kill dev server if running
-pkill -f "next dev" 2>/dev/null || true
-sleep 1
-
-if pm2 describe bradley-io-web >/dev/null 2>&1; then
-  pm2 restart ecosystem.config.js
-  ok "PM2 services restarted"
+# 7. Health check
+step "Checking logs..."
+sleep 2
+if sudo journalctl -u bradley-io --since "5 seconds ago" --no-pager | grep -q "Ready"; then
+    ok "Server is ready"
 else
-  pm2 start ecosystem.config.js
-  pm2 save
-  ok "PM2 services started"
+    sudo journalctl -u bradley-io --since "10 seconds ago" --no-pager
+    fail "Server may not have started cleanly — check logs above"
 fi
 
-echo ""
-pm2 status
-echo -e "\n${GREEN}Deploy complete!${NC}"
+# 8. HTTP check
+step "Testing HTTP response..."
+STATUS=$(curl -s -o /dev/null -w "%{http_code}" --max-time 5 http://localhost:32221)
+if [[ "$STATUS" == "200" ]]; then
+    ok "http://localhost:32221 → ${STATUS}"
+else
+    fail "http://localhost:32221 → ${STATUS}"
+fi
+
+VER=$(node -p "require('./package.json').version")
+echo -e "\n${CYAN}🔥 Deployed v${VER} — bradley.io is live${NC}\n"

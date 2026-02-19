@@ -1,8 +1,6 @@
 "use client";
 
-import useSWR from "swr";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { DataRefreshIndicator } from "@/components/resume";
+import { useState, useEffect } from "react";
 import {
   LicenseCard,
   StreakBanner,
@@ -18,66 +16,80 @@ import {
 } from "@/components/ai-pilot";
 import type { AIPilotData } from "@/components/ai-pilot/types";
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+const TABS = [
+  { id: "activity", label: "Activity" },
+  { id: "competency", label: "Competency" },
+  { id: "missions", label: "Missions" },
+  { id: "models", label: "Models" },
+  { id: "style", label: "Style" },
+] as const;
+
+type TabId = (typeof TABS)[number]["id"];
 
 export default function AIPilotPage() {
-  const { data, error, isLoading, mutate } = useSWR<AIPilotData>(
-    "/api/ai-pilot",
-    fetcher,
-    {
-      refreshInterval: 300000, // 5-minute refresh
-      revalidateOnFocus: true,
-    }
-  );
+  const [data, setData] = useState<AIPilotData | null>(null);
+  const [error, setError] = useState(false);
+  const [activeTab, setActiveTab] = useState<TabId>("activity");
+
+  useEffect(() => {
+    fetch("/data/ai-pilot-data.json")
+      .then((res) => {
+        if (!res.ok) throw new Error("Not found");
+        return res.json();
+      })
+      .then(setData)
+      .catch(() => setError(true));
+  }, []);
 
   if (error) {
     return (
-      <main className="min-h-screen bg-background flex items-center justify-center">
+      <div className="pt-20 sm:pt-24 pb-10 sm:pb-16 flex items-center justify-center">
         <div className="text-center max-w-md px-4">
-          <h1 className="text-2xl font-bold text-destructive mb-2">
+          <h1 className="text-2xl font-bold mb-2" style={{ color: "var(--brand-error)" }}>
             Flight Data Unavailable
           </h1>
-          <p className="text-muted-foreground mb-4">
+          <p className="mb-4" style={{ color: "var(--brand-muted)" }}>
             Run the pipeline to generate flight data:
           </p>
-          <code className="block bg-muted rounded-md px-4 py-2 font-mono text-sm">
+          <code
+            className="block rounded-md px-4 py-2 font-mono text-sm"
+            style={{ background: "var(--brand-bg-alt)", border: "1px solid var(--brand-border)" }}
+          >
             python scripts/ai-pilot-pipeline.py
           </code>
         </div>
-      </main>
+      </div>
     );
   }
 
-  if (isLoading || !data) {
+  if (!data) {
     return (
-      <main className="min-h-screen bg-background">
-        <div className="max-w-5xl mx-auto px-4 py-12">
-          {/* Loading skeleton */}
-          <div className="space-y-6">
-            <div className="h-64 rounded-2xl bg-muted animate-pulse" />
-            <div className="h-12 rounded-lg bg-muted animate-pulse max-w-md" />
-            <div className="h-10 rounded-md bg-muted animate-pulse max-w-lg" />
-            <div className="h-96 rounded-lg bg-muted animate-pulse" />
+      <div className="pt-20 sm:pt-24 pb-10 sm:pb-16">
+        <div className="container-page">
+          <div className="space-y-4 sm:space-y-6">
+            <div className="h-64 rounded-2xl animate-pulse" style={{ background: "var(--brand-bg-alt)" }} />
+            <div className="h-12 rounded-lg animate-pulse max-w-md" style={{ background: "var(--brand-bg-alt)" }} />
+            <div className="h-10 rounded-md animate-pulse max-w-lg" style={{ background: "var(--brand-bg-alt)" }} />
+            <div className="h-96 rounded-lg animate-pulse" style={{ background: "var(--brand-bg-alt)" }} />
           </div>
         </div>
-      </main>
+      </div>
     );
   }
 
   return (
-    <main className="min-h-screen bg-background">
-      <div className="max-w-5xl mx-auto px-4 py-8 md:py-12 space-y-6">
-        {/* Data refresh indicator */}
-        <div className="flex items-center justify-between">
-          <h1 className="sr-only">AI Pilot License</h1>
-          {data.generated && (
-            <DataRefreshIndicator
-              lastUpdated={data.generated}
-              isLoading={isLoading}
-              onRefresh={() => mutate()}
-            />
-          )}
-        </div>
+    <div className="pt-20 sm:pt-24 pb-10 sm:pb-16">
+      <div className="container-page space-y-4 sm:space-y-6">
+        {/* Data freshness */}
+        {data.generated && (
+          <div className="text-right">
+            <span className="text-xs font-mono" style={{ color: "var(--brand-muted)" }}>
+              Last updated: {new Date(data.generated).toLocaleDateString("en-US", {
+                month: "short", day: "numeric", year: "numeric", hour: "2-digit", minute: "2-digit",
+              })}
+            </span>
+          </div>
+        )}
 
         {/* Hero: License Card */}
         <LicenseCard license={data.license} />
@@ -85,60 +97,63 @@ export default function AIPilotPage() {
         {/* Streak Banner */}
         <StreakBanner streaks={data.streaks} />
 
-        {/* Tabbed Content */}
-        <Tabs defaultValue="activity" className="w-full">
-          <TabsList className="w-full flex flex-wrap h-auto gap-1 p-1">
-            <TabsTrigger value="activity" className="flex-1 min-w-[80px]">
-              Activity
-            </TabsTrigger>
-            <TabsTrigger value="competency" className="flex-1 min-w-[80px]">
-              Competency
-            </TabsTrigger>
-            <TabsTrigger value="missions" className="flex-1 min-w-[80px]">
-              Missions
-            </TabsTrigger>
-            <TabsTrigger value="models" className="flex-1 min-w-[80px]">
-              Models
-            </TabsTrigger>
-            <TabsTrigger value="style" className="flex-1 min-w-[80px]">
-              Style
-            </TabsTrigger>
-          </TabsList>
+        {/* Tab Navigation */}
+        <div
+          className="flex gap-1 p-1 rounded-lg overflow-x-auto scrollbar-none"
+          style={{ background: "var(--brand-bg-alt)", border: "1px solid var(--brand-border)" }}
+        >
+          {TABS.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => setActiveTab(tab.id)}
+              className="flex-1 min-w-[64px] px-3 sm:px-4 py-1.5 sm:py-2 rounded-md text-xs sm:text-sm font-medium transition-all whitespace-nowrap"
+              style={{
+                background: activeTab === tab.id
+                  ? "color-mix(in srgb, var(--brand-primary) 15%, transparent)"
+                  : "transparent",
+                color: activeTab === tab.id ? "var(--brand-primary)" : "var(--brand-muted)",
+              }}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
 
-          {/* Activity Tab */}
-          <TabsContent value="activity" className="space-y-8 pt-4">
-            <ActivityHeatmap data={data.activityHeatmap} />
-            <HourlyDistribution data={data.hourlyDistribution} />
-          </TabsContent>
+        {/* Tab Content */}
+        <div className="pt-2">
+          {activeTab === "activity" && (
+            <div className="space-y-5 sm:space-y-8">
+              <ActivityHeatmap data={data.activityHeatmap} />
+              <HourlyDistribution data={data.hourlyDistribution} />
+            </div>
+          )}
 
-          {/* Competency Tab */}
-          <TabsContent value="competency" className="space-y-8 pt-4">
-            <div className="grid gap-8 lg:grid-cols-2">
+          {activeTab === "competency" && (
+            <div className="grid gap-5 sm:gap-8 lg:grid-cols-2">
               <CompetencyRadar data={data.competencyRadar} />
               <InstrumentRatings ratings={data.instrumentRatings} />
             </div>
-          </TabsContent>
+          )}
 
-          {/* Missions Tab */}
-          <TabsContent value="missions" className="pt-4">
+          {activeTab === "missions" && (
             <MissionLog missions={data.missionLog} />
-          </TabsContent>
+          )}
 
-          {/* Models Tab */}
-          <TabsContent value="models" className="space-y-8 pt-4">
-            <TypeRatings ratings={data.typeRatings} />
-            <TokenEconomy economy={data.tokenEconomy} />
-          </TabsContent>
+          {activeTab === "models" && (
+            <div className="space-y-5 sm:space-y-8">
+              <TypeRatings ratings={data.typeRatings} />
+              <TokenEconomy economy={data.tokenEconomy} />
+            </div>
+          )}
 
-          {/* Style Tab */}
-          <TabsContent value="style" className="space-y-8 pt-4">
-            <div className="grid gap-8 lg:grid-cols-2">
+          {activeTab === "style" && (
+            <div className="grid gap-5 sm:gap-8 lg:grid-cols-2">
               <PilotingStyle style={data.pilotingStyle} />
               <SkillsCloud skills={data.skillsCloud} />
             </div>
-          </TabsContent>
-        </Tabs>
+          )}
+        </div>
       </div>
-    </main>
+    </div>
   );
 }

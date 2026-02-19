@@ -1,196 +1,154 @@
-import Link from "next/link"
+"use client"
+
+import { useEffect, useState } from "react"
+import { Calendar, Code, Cpu, Database } from "lucide-react"
+import type { SiteData } from "@/lib/site-data"
 
 export default function AboutPage() {
-  const skills = {
-    "Languages": ["Python", "TypeScript", "C/C++", "Bash", "Go", "Rust"],
-    "Data": ["Snowflake", "PostgreSQL", "DynamoDB", "Redis", "SQLite", "Elasticsearch"],
-    "AI/ML": ["Ollama", "Claude", "PyTorch", "Hugging Face", "LangChain", "Vector DBs"],
-    "Infrastructure": ["AWS", "Docker", "Kubernetes", "FastAPI", "Nginx", "Linux"],
-    "Hardware": ["Raspberry Pi", "Arduino", "LoRa", "Edge TPU", "Custom Protocols"],
-    "Tools": ["Git", "Vim", "Playwright", "Jupyter", "Prometheus", "Grafana"],
-  }
+  const [data, setData] = useState<SiteData | null>(null)
 
-  const timeline = [
-    {
-      period: "2022 - Present",
-      role: "Architect & Developer",
-      company: "VictoryText, LLC",
-      description: "High-volume messaging platform with FastAPI, DynamoDB, and multi-carrier integration.",
-    },
-    {
-      period: "2020 - 2022",
-      role: "Architect & Developer",
-      company: "ConservativeConnector",
-      description: "Data systems processing 100M+ contacts and 4.9B data points with Snowflake.",
-    },
-    {
-      period: "2014 - 2018",
-      role: "Senior Architect",
-      company: "TransUnion SRG",
-      description: "Search infrastructure for Whitepages.com, classified government projects, ML modeling.",
-    },
-    {
-      period: "2012 - 2014",
-      role: "Senior Architect",
-      company: "NextSource / PeopleTicker",
-      description: "Global real-time labor-rate calculator with Java, Weka, and Apache Solr.",
-    },
-    {
-      period: "1997 - 2002",
-      role: "Co-Founder & CTO",
-      company: "PipeLive, LLC",
-      description: "Real-time collaboration software. 12 industry awards including PC Magazine Winner's Circle.",
-    },
-  ]
+  useEffect(() => {
+    fetch("/data/site-data.json")
+      .then((r) => r.json())
+      .then(setData)
+  }, [])
+
+  const about = data?.about
+  const stats = data?.stats
 
   return (
-    <main className="min-h-screen bg-white">
-      {/* Header */}
-      <header className="border-b border-slate-200">
-        <div className="max-w-4xl mx-auto px-4 py-12">
-          <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
-            About
-          </h1>
-          <p className="text-lg text-slate-600 leading-relaxed">
-            I'm your typical non-typical developer. While I've spent 15+ years architecting
-            production systems that process billions of data points, what really drives me
-            is the work I do in my garage lab—where I turn constraints into innovation
-            and curiosity into working systems.
-          </p>
+    <div className="pt-20 sm:pt-24 pb-10 sm:pb-16">
+      <section className="container-page text-center mb-8 sm:mb-16">
+        <div
+          className="text-xs font-semibold uppercase tracking-[3px] mb-3"
+          style={{ color: "var(--brand-secondary)" }}
+        >
+          About
         </div>
-      </header>
+        <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-4">
+          Brad Bradley
+        </h1>
+        <p className="text-base md:text-lg max-w-2xl mx-auto leading-relaxed" style={{ color: "var(--brand-muted)" }}>
+          Frontier Technologist — Grand Rapids, MI
+        </p>
+      </section>
 
-      <div className="max-w-4xl mx-auto px-4 py-12 space-y-16">
-        {/* Philosophy */}
-        <section>
-          <h2 className="text-xl font-semibold text-slate-900 mb-4">Philosophy</h2>
-          <div className="prose prose-slate max-w-none">
-            <p className="text-slate-600 leading-relaxed mb-4">
-              Case in point: I recently scored 60 Raspberry Pis from a failed business.
-              Most people would resell them. I built a distributed investigation tool with
-              40 Pi4 workers running a VPN cluster with Tor DNS lookup and headless browser
-              automation. It's messy, it's scrappy, and it works.
-            </p>
-            <p className="text-slate-600 leading-relaxed mb-4">
-              I'm an integrator at heart. I dumpster dive for gear because working within
-              constraints forces creative solutions. I run my own DNS server on a Frankenstein
-              Linux box I built from salvaged parts. I host everything locally because I want
-              to understand how it all fits together.
-            </p>
-            <p className="text-slate-600 leading-relaxed">
-              I bring this same mindset to production work: find elegant solutions, question
-              assumptions, build tools that last. Whether it's processing 4.9 billion data points,
-              architecting high-availability messaging platforms, or leading classified government
-              projects, I approach every problem as an opportunity to build something that actually works.
+      <div className="container-page grid lg:grid-cols-[1fr_300px] gap-6 sm:gap-10">
+        {/* Main */}
+        <div className="space-y-8">
+          {/* Bio */}
+          <div
+            className="rounded-xl p-5 sm:p-8"
+            style={{
+              background: "var(--brand-bg-alt)",
+              border: "1px solid var(--brand-border)",
+            }}
+          >
+            <h2 className="text-lg font-bold mb-4">Bio</h2>
+            <p className="leading-relaxed" style={{ color: "var(--brand-muted)" }}>
+              {about?.bio || "Loading..."}
             </p>
           </div>
-        </section>
 
-        {/* Skills */}
-        <section>
-          <h2 className="text-xl font-semibold text-slate-900 mb-6">Technical Skills</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {Object.entries(skills).map(([category, items]) => (
-              <div key={category}>
-                <h3 className="text-sm font-medium text-slate-500 uppercase tracking-wide mb-2">
-                  {category}
-                </h3>
-                <div className="flex flex-wrap gap-1.5">
-                  {items.map((skill) => (
-                    <span
-                      key={skill}
-                      className="px-2 py-1 text-sm bg-slate-100 text-slate-700 rounded"
+          {/* Timeline */}
+          <div
+            className="rounded-xl p-5 sm:p-8"
+            style={{
+              background: "var(--brand-bg-alt)",
+              border: "1px solid var(--brand-border)",
+            }}
+          >
+            <h2 className="text-lg font-bold mb-6">Timeline</h2>
+            <div className="space-y-6">
+              {(about?.timeline || []).map((entry, i) => (
+                <div key={i} className="flex gap-4">
+                  <div className="flex flex-col items-center">
+                    <div
+                      className="w-8 h-8 rounded-full flex items-center justify-center shrink-0"
+                      style={{
+                        background: "color-mix(in srgb, var(--brand-primary) 10%, transparent)",
+                        border: "1px solid color-mix(in srgb, var(--brand-primary) 25%, transparent)",
+                      }}
                     >
-                      {skill}
-                    </span>
-                  ))}
+                      <Calendar className="w-4 h-4" style={{ color: "var(--brand-primary)" }} />
+                    </div>
+                    {i < (about?.timeline.length || 0) - 1 && (
+                      <div className="w-px flex-1 mt-2" style={{ background: "var(--brand-border)" }} />
+                    )}
+                  </div>
+                  <div className="pb-6">
+                    <div className="text-xs font-mono mb-1" style={{ color: "var(--brand-primary)" }}>
+                      {entry.year}
+                    </div>
+                    <div className="text-base font-bold mb-1">{entry.title}</div>
+                    <div className="text-sm" style={{ color: "var(--brand-muted)" }}>
+                      {entry.description}
+                    </div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </section>
+        </div>
 
-        {/* Timeline */}
-        <section>
-          <h2 className="text-xl font-semibold text-slate-900 mb-6">Experience</h2>
-          <div className="space-y-6">
-            {timeline.map((item, idx) => (
-              <div
-                key={idx}
-                className="relative pl-6 border-l-2 border-slate-200 hover:border-teal-400 transition-colors"
-              >
-                <div className="absolute -left-[9px] top-0 w-4 h-4 bg-white border-2 border-slate-300 rounded-full" />
-                <div className="text-sm text-teal-600 font-mono mb-1">{item.period}</div>
-                <div className="font-semibold text-slate-900">{item.role}</div>
-                <div className="text-sm text-slate-500 mb-2">{item.company}</div>
-                <p className="text-slate-600 text-sm">{item.description}</p>
-              </div>
-            ))}
+        {/* Sidebar */}
+        <div className="space-y-6">
+          {/* Stats */}
+          <div
+            className="rounded-xl p-4 sm:p-6"
+            style={{
+              background: "var(--brand-bg-alt)",
+              border: "1px solid var(--brand-border)",
+            }}
+          >
+            <h3 className="text-sm font-bold uppercase tracking-widest mb-4" style={{ color: "var(--brand-muted)" }}>
+              By the Numbers
+            </h3>
+            <div className="space-y-4">
+              {[
+                { label: "Projects", value: stats?.totalProjects || 0, icon: Code },
+                { label: "AI Sessions", value: stats?.totalSessions || 0, icon: Cpu },
+                { label: "Messages", value: (stats?.totalMessages || 0).toLocaleString(), icon: Database },
+                { label: "Active Days", value: stats?.activeDays || 0, icon: Calendar },
+              ].map((stat) => (
+                <div key={stat.label} className="flex items-center gap-3">
+                  <stat.icon className="w-4 h-4" style={{ color: "var(--brand-primary)" }} />
+                  <span className="text-sm flex-1" style={{ color: "var(--brand-muted)" }}>{stat.label}</span>
+                  <span className="font-mono font-bold text-sm">{stat.value}</span>
+                </div>
+              ))}
+            </div>
           </div>
-          <p className="mt-6 text-sm text-slate-500">
-            Full experience history available on the{" "}
-            <Link href="/resume" className="text-teal-600 hover:text-teal-800">
-              resume page
-            </Link>
-            .
-          </p>
-        </section>
 
-        {/* Current Projects */}
-        <section>
-          <h2 className="text-xl font-semibold text-slate-900 mb-4">Current Focus</h2>
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="p-4 rounded-lg border border-slate-200 hover:border-teal-300 transition-colors">
-              <h3 className="font-medium text-slate-900 mb-1">60-Node Pi Cluster</h3>
-              <p className="text-sm text-slate-600">
-                Distributed investigation tool with VPN/Tor architecture and headless automation.
-              </p>
-            </div>
-            <div className="p-4 rounded-lg border border-slate-200 hover:border-amber-300 transition-colors">
-              <h3 className="font-medium text-slate-900 mb-1">Thorium TRNG</h3>
-              <p className="text-sm text-slate-600">
-                True random number generator passing NIST/Diehard tests from radioactive decay.
-              </p>
-            </div>
-            <div className="p-4 rounded-lg border border-slate-200 hover:border-teal-300 transition-colors">
-              <h3 className="font-medium text-slate-900 mb-1">Custom 802.11 Protocol</h3>
-              <p className="text-sm text-slate-600">
-                Decentralized mesh networking for routing around traditional infrastructure.
-              </p>
-            </div>
-            <div className="p-4 rounded-lg border border-slate-200 hover:border-amber-300 transition-colors">
-              <h3 className="font-medium text-slate-900 mb-1">Claude Integration</h3>
-              <p className="text-sm text-slate-600">
-                Using AI as a collaborative development partner, not just code completion.
-              </p>
+          {/* Skills */}
+          <div
+            className="rounded-xl p-4 sm:p-6"
+            style={{
+              background: "var(--brand-bg-alt)",
+              border: "1px solid var(--brand-border)",
+            }}
+          >
+            <h3 className="text-sm font-bold uppercase tracking-widest mb-4" style={{ color: "var(--brand-muted)" }}>
+              Skills
+            </h3>
+            <div className="flex flex-wrap gap-1.5">
+              {(about?.skills || []).map((skill) => (
+                <span
+                  key={skill}
+                  className="text-[11px] font-mono px-2.5 py-1 rounded-lg"
+                  style={{
+                    background: "color-mix(in srgb, var(--brand-primary) 8%, transparent)",
+                    border: "1px solid color-mix(in srgb, var(--brand-primary) 20%, transparent)",
+                    color: "var(--brand-primary)",
+                  }}
+                >
+                  {skill}
+                </span>
+              ))}
             </div>
           </div>
-        </section>
-
-        {/* Contact */}
-        <section className="border-t border-slate-200 pt-8">
-          <h2 className="text-xl font-semibold text-slate-900 mb-4">Get in Touch</h2>
-          <div className="flex flex-wrap gap-4 text-sm">
-            <a
-              href="mailto:brad@isenbek.io"
-              className="text-teal-600 hover:text-teal-800"
-            >
-              brad@isenbek.io
-            </a>
-            <span className="text-slate-300">•</span>
-            <a
-              href="https://github.com/tinymachines"
-              className="text-teal-600 hover:text-teal-800"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              github.com/tinymachines
-            </a>
-            <span className="text-slate-300">•</span>
-            <span className="text-slate-600">Grand Rapids, MI</span>
-          </div>
-        </section>
+        </div>
       </div>
-    </main>
+    </div>
   )
 }

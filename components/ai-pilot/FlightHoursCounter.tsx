@@ -27,7 +27,6 @@ export function FlightHoursCounter({
   const [display, setDisplay] = useState(() => formatVal(value));
   const prevValue = useRef(value);
 
-  // Animate only on value *changes* (e.g. SWR refresh), not on initial mount
   useEffect(() => {
     if (prevValue.current === value) {
       setDisplay(formatVal(value));
@@ -59,12 +58,12 @@ export function FlightHoursCounter({
       transition={{ duration: 0.5 }}
       className="text-center"
     >
-      <div className="font-mono text-2xl md:text-3xl font-bold text-primary">
+      <div className="font-mono text-xl sm:text-2xl md:text-3xl font-bold" style={{ color: "var(--brand-primary)" }}>
         {prefix}
         {display}
         {suffix}
       </div>
-      <div className="text-xs text-muted-foreground uppercase tracking-wide mt-1">
+      <div className="text-xs uppercase tracking-wide mt-1" style={{ color: "var(--brand-muted)" }}>
         {label}
       </div>
     </motion.div>

@@ -1,216 +1,227 @@
 "use client"
 
+import { useState, useEffect } from "react"
+import { motion, AnimatePresence } from "framer-motion"
 import Link from "next/link"
-import { GitHubRepos } from "@/components/sections/github-repos"
+import { GitBranch, MessageSquare, Bot } from "lucide-react"
+import type { SiteData, Project } from "@/lib/site-data"
+import type { CategoryId } from "@/lib/project-categories"
+import { categories, categoryMap } from "@/lib/project-categories"
 
-export default function ProjectsPage() {
-  const featuredProjects = [
-    {
-      name: "Plumbr",
-      tagline: "C++ distributed system management with lock-free task queuing",
-      category: "Distributed Systems",
-      technologies: ["C++", "IPv6", "mDNS", "Ed25519", "seccomp-bpf"],
-      highlight: "Lock-free circular buffer task queue with work stealing",
-    },
-    {
-      name: "Zephyr",
-      tagline: "WiFi AI mesh network using raw 802.11 frames",
-      category: "Mesh Networks",
-      technologies: ["Python", "802.11", "LLM", "Ollama", "Vector Embeddings"],
-      highlight: "Custom wireless protocol for distributed AI communication",
-    },
-    {
-      name: "Spondr",
-      tagline: "Real-time aviation intelligence with ML pipeline",
-      category: "AI/ML",
-      technologies: ["Python", "ADS-B", "DuckDB", "scikit-learn", "WebSocket"],
-      highlight: "50+ aircraft/second processing with <100ms latency",
-    },
-    {
-      name: "Hotbits",
-      tagline: "True random number generator from hardware timing jitter",
-      category: "Cryptography",
-      technologies: ["Python", "FFT", "Signal Processing", "NIST STS"],
-      highlight: "Cryptographic-grade entropy passing dieharder tests",
-    },
-    {
-      name: "Lochness",
-      tagline: "Multi-schema data warehouse for email marketing analytics",
-      category: "Data Engineering",
-      technologies: ["Snowflake", "SQL", "S3", "ETL"],
-      highlight: "158M contacts and 14.5B events with fractional ownership",
-    },
-    {
-      name: "Sovereign",
-      tagline: "Assembly-like agentic programming language for self-improving systems",
-      category: "Language Design",
-      technologies: ["Python", "Lark Parser", "Ollama", "LLM"],
-      highlight: "32-instruction minimal language with error-driven evolution",
-    },
-  ]
+function SourceBadge({ type, label }: { type: "claude-code" | "claude-web" | "github"; label: string }) {
+  const icons = {
+    "claude-code": <Bot className="w-3 h-3" />,
+    "claude-web": <MessageSquare className="w-3 h-3" />,
+    "github": <GitBranch className="w-3 h-3" />,
+  }
+  return (
+    <span
+      className="inline-flex items-center gap-1 text-[10px] font-mono px-2 py-0.5 rounded-full"
+      style={{
+        background: "color-mix(in srgb, var(--brand-primary) 8%, transparent)",
+        border: "1px solid color-mix(in srgb, var(--brand-primary) 20%, transparent)",
+        color: "var(--brand-primary)",
+      }}
+    >
+      {icons[type]}
+      {label}
+    </span>
+  )
+}
+
+function ProjectCard({ project }: { project: Project }) {
+  const cat = categoryMap[project.category]
 
   return (
-    <main className="min-h-screen bg-white">
-      {/* Header */}
-      <header className="border-b border-slate-200">
-        <div className="max-w-4xl mx-auto px-4 py-12">
-          <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
-            Projects
-          </h1>
-          <p className="text-lg text-slate-600 leading-relaxed">
-            A collection of production systems and experimental projects.
-            From enterprise data platforms to garage lab experiments—all built
-            with the same philosophy: elegant solutions to real problems.
+    <Link href={`/projects/${project.slug}`}>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="group rounded-xl overflow-hidden h-full"
+        style={{
+          background: "var(--brand-bg-alt)",
+          border: "1px solid var(--brand-border)",
+        }}
+      >
+        <div className="h-[3px] w-full" style={{ background: cat.color }} />
+        <div className="p-6 flex flex-col gap-3 h-full">
+          <div className="flex items-start justify-between">
+            <div>
+              <span
+                className="text-[10px] font-semibold uppercase tracking-[2px] px-2 py-0.5 rounded font-mono"
+                style={{
+                  color: cat.color,
+                  background: `color-mix(in srgb, ${cat.color} 10%, transparent)`,
+                }}
+              >
+                {cat.label}
+              </span>
+            </div>
+            {project.isResearch && (
+              <span
+                className="text-[10px] font-mono px-2 py-0.5 rounded-full"
+                style={{
+                  color: "var(--brand-warning)",
+                  background: "color-mix(in srgb, var(--brand-warning) 10%, transparent)",
+                }}
+              >
+                research
+              </span>
+            )}
+          </div>
+
+          <h3 className="text-lg font-bold group-hover:text-[var(--brand-primary)] transition-colors">
+            {project.name}
+          </h3>
+          <p className="text-sm leading-relaxed flex-1" style={{ color: "var(--brand-muted)" }}>
+            {project.tagline}
           </p>
+
+          <div className="flex flex-wrap gap-1.5">
+            {project.technologies.slice(0, 4).map((tech) => (
+              <span
+                key={tech}
+                className="text-[10px] font-mono px-2 py-0.5 rounded"
+                style={{
+                  background: "color-mix(in srgb, var(--brand-steel) 10%, transparent)",
+                  color: "var(--brand-steel)",
+                }}
+              >
+                {tech}
+              </span>
+            ))}
+            {project.technologies.length > 4 && (
+              <span className="text-[10px] font-mono" style={{ color: "var(--brand-muted)" }}>
+                +{project.technologies.length - 4}
+              </span>
+            )}
+          </div>
+
+          <div className="flex items-center gap-2 pt-3" style={{ borderTop: "1px solid var(--brand-border)" }}>
+            {project.sources.claudeCode && <SourceBadge type="claude-code" label="Code" />}
+            {project.sources.claudeWeb && <SourceBadge type="claude-web" label="Web" />}
+            {project.sources.github && <SourceBadge type="github" label="GitHub" />}
+            <span className="text-[11px] font-mono ml-auto" style={{ color: "var(--brand-muted)" }}>
+              {project.totalMessages.toLocaleString()} msgs
+            </span>
+          </div>
         </div>
-      </header>
+      </motion.div>
+    </Link>
+  )
+}
 
-      <div className="max-w-4xl mx-auto px-4 py-12 space-y-16">
-        {/* Featured Projects */}
-        <section>
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-semibold text-slate-900">Featured Projects</h2>
-            <Link
-              href="/"
-              className="text-sm text-teal-600 hover:text-teal-800"
-            >
-              View all on resume →
-            </Link>
-          </div>
-          <div className="grid md:grid-cols-2 gap-4">
-            {featuredProjects.map((project) => (
-              <div
-                key={project.name}
-                className="p-5 rounded-lg border border-slate-200 hover:border-teal-300 transition-colors"
-              >
-                <div className="flex items-start justify-between mb-2">
-                  <h3 className="font-semibold text-slate-900">{project.name}</h3>
-                  <span className="text-xs px-2 py-0.5 bg-slate-100 text-slate-600 rounded">
-                    {project.category}
-                  </span>
-                </div>
-                <p className="text-sm text-slate-600 mb-3">{project.tagline}</p>
-                <p className="text-xs text-teal-700 bg-teal-50 px-2 py-1 rounded mb-3">
-                  {project.highlight}
-                </p>
-                <div className="flex flex-wrap gap-1">
-                  {project.technologies.slice(0, 4).map((tech) => (
-                    <span
-                      key={tech}
-                      className="text-xs px-1.5 py-0.5 bg-slate-50 text-slate-500 rounded"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                  {project.technologies.length > 4 && (
-                    <span className="text-xs text-slate-400">
-                      +{project.technologies.length - 4}
-                    </span>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
+function CategoryFilter({
+  active,
+  onSelect,
+  counts,
+}: {
+  active: CategoryId | null
+  onSelect: (id: CategoryId | null) => void
+  counts: Record<CategoryId, number>
+}) {
+  return (
+    <div className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap sm:overflow-visible sm:pb-0 scrollbar-none">
+      <button
+        onClick={() => onSelect(null)}
+        className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-semibold transition-all border whitespace-nowrap shrink-0"
+        style={{
+          background: active === null ? "var(--brand-text)" : "transparent",
+          borderColor: active === null ? "var(--brand-text)" : "var(--brand-border)",
+          color: active === null ? "var(--brand-bg)" : "var(--brand-steel)",
+        }}
+      >
+        All ({Object.values(counts).reduce((a, b) => a + b, 0)})
+      </button>
+      {categories.map((cat) => {
+        const isActive = active === cat.id
+        return (
+          <button
+            key={cat.id}
+            onClick={() => onSelect(isActive ? null : cat.id)}
+            className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-semibold transition-all border whitespace-nowrap shrink-0"
+            style={{
+              background: isActive ? `color-mix(in srgb, ${cat.color} 15%, transparent)` : "transparent",
+              borderColor: isActive ? cat.color : "var(--brand-border)",
+              color: isActive ? cat.color : "var(--brand-steel)",
+            }}
+          >
+            {cat.label} ({counts[cat.id] || 0})
+          </button>
+        )
+      })}
+    </div>
+  )
+}
 
-        {/* Stats */}
-        <section className="bg-slate-50 -mx-4 px-4 py-8 md:rounded-lg md:mx-0 md:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-            <div>
-              <div className="text-3xl font-mono font-bold text-teal-600">33</div>
-              <div className="text-sm text-slate-600">Documented Projects</div>
-            </div>
-            <div>
-              <div className="text-3xl font-mono font-bold text-teal-600">67</div>
-              <div className="text-sm text-slate-600">Total Repositories</div>
-            </div>
-            <div>
-              <div className="text-3xl font-mono font-bold text-amber-600">15+</div>
-              <div className="text-sm text-slate-600">Years Experience</div>
-            </div>
-            <div>
-              <div className="text-3xl font-mono font-bold text-amber-600">100%</div>
-              <div className="text-sm text-slate-600">Open Source</div>
-            </div>
-          </div>
-        </section>
+export default function ProjectsPage() {
+  const [data, setData] = useState<SiteData | null>(null)
+  const [activeCategory, setActiveCategory] = useState<CategoryId | null>(null)
 
-        {/* GitHub Repos */}
-        <section>
-          <h2 className="text-xl font-semibold text-slate-900 mb-6">
-            GitHub Repositories
-          </h2>
-          <div className="space-y-8">
-            <div>
-              <h3 className="text-sm font-medium text-slate-500 uppercase tracking-wide mb-4">
-                TinyMachines Organization
-              </h3>
-              <GitHubRepos source="org" limit={6} showStats={true} />
-            </div>
-          </div>
-        </section>
+  useEffect(() => {
+    fetch("/data/site-data.json")
+      .then((r) => r.json())
+      .then(setData)
+  }, [])
 
-        {/* Categories */}
-        <section>
-          <h2 className="text-xl font-semibold text-slate-900 mb-6">
-            Project Categories
-          </h2>
-          <div className="grid md:grid-cols-3 gap-4">
-            {[
-              { name: "Distributed Systems", count: 8, color: "teal" },
-              { name: "Data Engineering", count: 6, color: "teal" },
-              { name: "AI/ML Integration", count: 7, color: "purple" },
-              { name: "Edge Computing", count: 5, color: "amber" },
-              { name: "Mesh Networks", count: 4, color: "amber" },
-              { name: "API Architecture", count: 6, color: "teal" },
-            ].map((cat) => (
-              <div
-                key={cat.name}
-                className="flex items-center justify-between p-3 rounded-lg border border-slate-200"
-              >
-                <span className="text-slate-700">{cat.name}</span>
-                <span
-                  className={`text-sm font-mono font-bold ${
-                    cat.color === "teal"
-                      ? "text-teal-600"
-                      : cat.color === "amber"
-                      ? "text-amber-600"
-                      : "text-purple-600"
-                  }`}
-                >
-                  {cat.count}
-                </span>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* CTA */}
-        <section className="border-t border-slate-200 pt-8 text-center">
-          <h2 className="text-xl font-semibold text-slate-900 mb-2">
-            Interested in collaborating?
-          </h2>
-          <p className="text-slate-600 mb-6">
-            All projects are open source. Feel free to explore, fork, or reach out.
-          </p>
-          <div className="flex flex-wrap gap-4 justify-center">
-            <a
-              href="https://github.com/tinymachines"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-6 py-2 bg-slate-900 text-white rounded-lg hover:bg-slate-800 transition-colors"
-            >
-              View on GitHub
-            </a>
-            <Link
-              href="/terminal"
-              className="px-6 py-2 border border-slate-300 text-slate-700 rounded-lg hover:border-slate-400 transition-colors"
-            >
-              Try the Terminal
-            </Link>
-          </div>
-        </section>
+  if (!data) {
+    return (
+      <div className="pt-20 sm:pt-24 pb-10 sm:pb-16 container-page text-center" style={{ color: "var(--brand-muted)" }}>
+        Loading projects...
       </div>
-    </main>
+    )
+  }
+
+  const counts = {} as Record<CategoryId, number>
+  for (const cat of categories) {
+    counts[cat.id] = data.projects.filter((p) => p.category === cat.id).length
+  }
+
+  const filtered = activeCategory
+    ? data.projects.filter((p) => p.category === activeCategory)
+    : data.projects
+
+  return (
+    <div className="pt-20 sm:pt-24 pb-10 sm:pb-16 overflow-x-hidden">
+      <section className="container-page text-center mb-8 sm:mb-12">
+        <div
+          className="text-xs font-semibold uppercase tracking-[3px] mb-2"
+          style={{ color: "var(--brand-primary)" }}
+        >
+          Projects
+        </div>
+        <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-4">
+          What I&apos;m building.
+        </h1>
+        <p
+          className="text-base md:text-lg max-w-2xl mx-auto leading-relaxed"
+          style={{ color: "var(--brand-muted)" }}
+        >
+          Hardware, AI, data pipelines, distributed systems, and frontier research —
+          all powered by intensive human-AI collaboration.
+        </p>
+      </section>
+
+      <section className="container-page mb-6 sm:mb-8">
+        <CategoryFilter active={activeCategory} onSelect={setActiveCategory} counts={counts} />
+      </section>
+
+      <section className="container-page">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeCategory ?? "all"}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="grid md:grid-cols-2 lg:grid-cols-3 gap-5"
+          >
+            {filtered.map((project) => (
+              <ProjectCard key={project.slug} project={project} />
+            ))}
+          </motion.div>
+        </AnimatePresence>
+      </section>
+    </div>
   )
 }

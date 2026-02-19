@@ -7,24 +7,24 @@ interface SkillsCloudProps {
   skills: SkillTag[];
 }
 
-const CATEGORY_COLORS: Record<string, string> = {
-  "Data Engineering": "bg-blue-50 text-blue-700 border-blue-200",
-  Frontend: "bg-teal-50 text-teal-700 border-teal-200",
-  Backend: "bg-emerald-50 text-emerald-700 border-emerald-200",
-  DevOps: "bg-orange-50 text-orange-700 border-orange-200",
-  "IoT / Edge": "bg-pink-50 text-pink-700 border-pink-200",
-  "AI / ML": "bg-purple-50 text-purple-700 border-purple-200",
-  Systems: "bg-slate-50 text-slate-700 border-slate-200",
-  Security: "bg-red-50 text-red-700 border-red-200",
-  General: "bg-gray-50 text-gray-700 border-gray-200",
+const CATEGORY_COLORS: Record<string, { bg: string; text: string; border: string }> = {
+  "Data Engineering": { bg: "color-mix(in srgb, var(--brand-info) 10%, transparent)", text: "var(--brand-info)", border: "color-mix(in srgb, var(--brand-info) 25%, transparent)" },
+  Frontend: { bg: "color-mix(in srgb, var(--brand-secondary) 10%, transparent)", text: "var(--brand-secondary)", border: "color-mix(in srgb, var(--brand-secondary) 25%, transparent)" },
+  Backend: { bg: "color-mix(in srgb, var(--brand-success) 10%, transparent)", text: "var(--brand-success)", border: "color-mix(in srgb, var(--brand-success) 25%, transparent)" },
+  DevOps: { bg: "color-mix(in srgb, var(--brand-warning) 10%, transparent)", text: "var(--brand-warning)", border: "color-mix(in srgb, var(--brand-warning) 25%, transparent)" },
+  "IoT / Edge": { bg: "color-mix(in srgb, var(--brand-primary) 10%, transparent)", text: "var(--brand-primary)", border: "color-mix(in srgb, var(--brand-primary) 25%, transparent)" },
+  "AI / ML": { bg: "color-mix(in srgb, var(--brand-glow-secondary) 10%, transparent)", text: "var(--brand-glow-secondary)", border: "color-mix(in srgb, var(--brand-glow-secondary) 25%, transparent)" },
+  Systems: { bg: "color-mix(in srgb, var(--brand-steel) 10%, transparent)", text: "var(--brand-steel)", border: "color-mix(in srgb, var(--brand-steel) 25%, transparent)" },
+  Security: { bg: "color-mix(in srgb, var(--brand-error) 10%, transparent)", text: "var(--brand-error)", border: "color-mix(in srgb, var(--brand-error) 25%, transparent)" },
+  General: { bg: "color-mix(in srgb, var(--brand-steel) 8%, transparent)", text: "var(--brand-steel)", border: "color-mix(in srgb, var(--brand-steel) 20%, transparent)" },
 };
 
 export function SkillsCloud({ skills }: SkillsCloudProps) {
   const maxCount = Math.max(...skills.map((s) => s.count), 1);
 
   return (
-    <div className="space-y-4">
-      <h3 className="text-sm font-medium text-muted-foreground">
+    <div className="space-y-3 sm:space-y-4">
+      <h3 className="text-xs sm:text-sm font-medium" style={{ color: "var(--brand-muted)" }}>
         Skills Cloud ({skills.length} technologies)
       </h3>
       <div className="flex flex-wrap gap-2">
@@ -36,13 +36,20 @@ export function SkillsCloud({ skills }: SkillsCloudProps) {
                 ? "text-xs px-2.5 py-1"
                 : "text-[11px] px-2 py-0.5";
 
+          const colors = CATEGORY_COLORS[skill.category] || CATEGORY_COLORS.General;
+
           return (
             <motion.span
               key={skill.name}
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.2, delay: i * 0.02 }}
-              className={`inline-flex items-center gap-1 rounded-full border font-mono transition-colors hover:shadow-sm ${sizeClass} ${CATEGORY_COLORS[skill.category] || CATEGORY_COLORS.General}`}
+              className={`inline-flex items-center gap-1 rounded-full font-mono transition-colors ${sizeClass}`}
+              style={{
+                background: colors.bg,
+                color: colors.text,
+                border: `1px solid ${colors.border}`,
+              }}
             >
               {skill.name}
               <span className="opacity-50 text-[9px]">({skill.count})</span>

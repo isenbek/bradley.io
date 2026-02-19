@@ -1,276 +1,444 @@
-"use client";
+"use client"
 
-import useSWR from "swr";
-import { ProjectCard, SkillBadge, DataRefreshIndicator } from "@/components/resume";
-import type { ResumeData } from "@/components/resume";
-import { TextShimmer } from "@/components/ambient/TextShimmer";
+import { useState, useEffect, useRef } from "react"
+import { motion, useInView } from "framer-motion"
+import Link from "next/link"
+import {
+  ArrowRight, Bot, MessageSquare, GitBranch, Flame,
+} from "lucide-react"
+import type { SiteData, ActivityItem as ActivityItemType, Project } from "@/lib/site-data"
+import { categoryMap } from "@/lib/project-categories"
+import { ClaudeCorner } from "@/components/home/ClaudeCorner"
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+// --- Particle Grid Background (theme-aware) ---
+function ParticleGrid() {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
 
-export default function ResumePage() {
-  const { data, error, isLoading, mutate } = useSWR<ResumeData>(
-    "/api/resume",
-    fetcher,
-    {
-      refreshInterval: 30000, // Auto-refresh every 30 seconds
-      revalidateOnFocus: true,
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const ctx = canvas.getContext("2d")
+    if (!ctx) return
+
+    let animId: number
+    const resize = () => {
+      canvas.width = canvas.offsetWidth * 2
+      canvas.height = canvas.offsetHeight * 2
+      ctx.scale(2, 2)
     }
-  );
+    resize()
+    window.addEventListener("resize", resize)
 
-  if (error) {
-    return (
-      <main className="min-h-screen bg-white flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-red-600 mb-2">Error Loading Resume</h1>
-          <p className="text-slate-600">Please try refreshing the page.</p>
-        </div>
-      </main>
-    );
-  }
+    const dots = Array.from({ length: 40 }, () => ({
+      x: Math.random() * canvas.offsetWidth,
+      y: Math.random() * canvas.offsetHeight,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: (Math.random() - 0.5) * 0.3,
+      r: Math.random() * 1.5 + 0.5,
+    }))
+
+    const draw = () => {
+      const style = getComputedStyle(document.documentElement)
+      const rgb = style.getPropertyValue("--brand-particle").trim()
+
+      ctx.clearRect(0, 0, canvas.offsetWidth, canvas.offsetHeight)
+      dots.forEach((d) => {
+        d.x += d.vx
+        d.y += d.vy
+        if (d.x < 0 || d.x > canvas.offsetWidth) d.vx *= -1
+        if (d.y < 0 || d.y > canvas.offsetHeight) d.vy *= -1
+        ctx.beginPath()
+        ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2)
+        ctx.fillStyle = `rgba(${rgb}, 0.25)`
+        ctx.fill()
+      })
+      dots.forEach((a, i) => {
+        dots.slice(i + 1).forEach((b) => {
+          const dist = Math.hypot(a.x - b.x, a.y - b.y)
+          if (dist < 120) {
+            ctx.beginPath()
+            ctx.moveTo(a.x, a.y)
+            ctx.lineTo(b.x, b.y)
+            ctx.strokeStyle = `rgba(${rgb}, ${(1 - dist / 120) * 0.15})`
+            ctx.lineWidth = 0.5
+            ctx.stroke()
+          }
+        })
+      })
+      animId = requestAnimationFrame(draw)
+    }
+    draw()
+    return () => {
+      cancelAnimationFrame(animId)
+      window.removeEventListener("resize", resize)
+    }
+  }, [])
+
+  return <canvas ref={canvasRef} className="absolute inset-0 w-full h-full opacity-60" />
+}
+
+// --- Animated Counter ---
+function Counter({ end, suffix = "", duration = 2000 }: { end: number; suffix?: string; duration?: number }) {
+  const [val, setVal] = useState(0)
+  const ref = useRef<HTMLSpanElement>(null)
+
+  useEffect(() => {
+    const el = ref.current
+    if (!el) return
+    const obs = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          let start = 0
+          const step = end / (duration / 16)
+          const tick = () => {
+            start += step
+            if (start >= end) { setVal(end); return }
+            setVal(Math.floor(start))
+            requestAnimationFrame(tick)
+          }
+          tick()
+          obs.disconnect()
+        }
+      },
+      { threshold: 0.5 }
+    )
+    obs.observe(el)
+    return () => obs.disconnect()
+  }, [end, duration])
+
+  return <span ref={ref}>{val.toLocaleString()}{suffix}</span>
+}
+
+// --- Section Fade-In ---
+function FadeSection({ children, className = "" }: { children: React.ReactNode; className?: string }) {
+  const ref = useRef(null)
+  const isInView = useInView(ref, { once: true, margin: "0px 0px -50px 0px" })
 
   return (
-    <main className="min-h-screen bg-white">
-      {/* Header */}
-      <header className="border-b border-slate-200">
-        <div className="max-w-4xl mx-auto px-4 py-8 md:py-12">
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-            <div>
-              <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-2">
-                <TextShimmer>Bradley S. Isenbek</TextShimmer>
-              </h1>
-              <p className="text-lg text-slate-600">
-                <TextShimmer minInterval={12000} maxInterval={25000}>
-                  Software Architect • Systems Integrator • Maker
-                </TextShimmer>
-              </p>
-              <p className="text-sm text-slate-500 mt-1">
-                Grand Rapids, MI • brad@isenbek.io
-              </p>
-            </div>
-            {data?.generated && (
-              <DataRefreshIndicator
-                lastUpdated={data.generated}
-                isLoading={isLoading}
-                onRefresh={() => mutate()}
-              />
-            )}
-          </div>
-        </div>
-      </header>
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 20 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className={className}
+    >
+      {children}
+    </motion.div>
+  )
+}
 
-      {/* Stats Bar */}
-      {data && (
-        <div className="border-b border-slate-200 bg-slate-50">
-          <div className="max-w-4xl mx-auto px-4 py-4">
-            <div className="flex flex-wrap gap-6 justify-center text-sm">
-              <div className="flex items-center gap-2">
-                <span className="font-mono text-2xl font-bold text-teal-600">
-                  {data.projectCount}
-                </span>
-                <span className="text-slate-600">Projects</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="font-mono text-2xl font-bold text-teal-600">
-                  {data.themes.distributedSystems}
-                </span>
-                <span className="text-slate-600">Distributed Systems</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="font-mono text-2xl font-bold text-amber-600">
-                  {data.themes.edgeComputing}
-                </span>
-                <span className="text-slate-600">Edge/IoT</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="font-mono text-2xl font-bold text-purple-600">
-                  {data.themes.aiMl}
-                </span>
-                <span className="text-slate-600">AI/ML</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="font-mono text-2xl font-bold text-orange-600">
-                  {data.claudeContributions.length}
-                </span>
-                <span className="text-slate-600">Claude Collabs</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+// --- Activity Feed Item ---
+function ActivityFeedItem({ item }: { item: ActivityItemType }) {
+  const typeIcons: Record<string, React.ReactNode> = {
+    "claude-code": <Bot className="w-4 h-4" style={{ color: "var(--brand-primary)" }} />,
+    "claude-web": <MessageSquare className="w-4 h-4" style={{ color: "var(--brand-secondary)" }} />,
+    "github": <GitBranch className="w-4 h-4" style={{ color: "var(--brand-steel)" }} />,
+    "milestone": <Flame className="w-4 h-4" style={{ color: "var(--brand-warning)" }} />,
+  }
 
-      {/* Loading State */}
-      {isLoading && !data && (
-        <div className="max-w-4xl mx-auto px-4 py-12">
-          <div className="animate-pulse space-y-8">
-            <div className="h-8 bg-slate-200 rounded w-1/3" />
-            <div className="grid gap-4">
-              {[1, 2, 3].map((i) => (
-                <div key={i} className="h-48 bg-slate-100 rounded-lg" />
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
+  const cat = item.category ? categoryMap[item.category] : null
+  const timeAgo = getTimeAgo(item.date)
 
-      {/* Main Content */}
-      {data && (
-        <div className="max-w-4xl mx-auto px-4 py-8 md:py-12 space-y-12">
-          {/* Introduction */}
-          <section>
-            <p className="text-lg text-slate-700 leading-relaxed">
-              Full Stack Developer with 15+ years architecting high-volume production systems.
-              Expert in distributed systems, data processing at scale, and cloud infrastructure.
-              Known for building elegant solutions to complex problems—whether processing billions
-              of data points in production or building distributed systems from salvaged hardware
-              in my garage lab.
-            </p>
-          </section>
-
-          {/* Top Technologies */}
-          <section>
-            <h2 className="text-xl font-semibold text-slate-900 mb-4">
-              Technologies
-            </h2>
-            <div className="flex flex-wrap gap-2">
-              {data.topTechnologies.slice(0, 15).map((tech) => (
-                <SkillBadge
-                  key={tech.name}
-                  name={tech.name}
-                  count={tech.count}
-                  variant="default"
-                />
-              ))}
-            </div>
-          </section>
-
-          {/* Professional Projects */}
-          <section>
-            <div className="flex items-center gap-3 mb-6">
-              <h2 className="text-xl font-semibold text-slate-900">
-                Professional Portfolio
-              </h2>
-              <span className="text-sm text-teal-600 font-mono">
-                {data.professionalProjects.length} projects
-              </span>
-            </div>
-            <div className="grid gap-4">
-              {data.professionalProjects.slice(0, 6).map((project) => (
-                <ProjectCard
-                  key={project.project_dir}
-                  project={project}
-                  variant="professional"
-                />
-              ))}
-            </div>
-            {data.professionalProjects.length > 6 && (
-              <p className="mt-4 text-sm text-slate-500 text-center">
-                + {data.professionalProjects.length - 6} more professional projects
-              </p>
-            )}
-          </section>
-
-          {/* Adventures */}
-          <section>
-            <div className="flex items-center gap-3 mb-6">
-              <h2 className="text-xl font-semibold text-slate-900">
-                Adventures in Computing
-              </h2>
-              <span className="text-sm text-amber-600 font-mono">
-                {data.adventureProjects.length + data.hybridProjects.length} projects
-              </span>
-            </div>
-            <p className="text-slate-600 mb-6">
-              Beyond production systems, I maintain an active maker practice. These projects
-              represent curiosity-driven exploration, hardware hacking, and experimental
-              systems that push boundaries.
-            </p>
-            <div className="grid gap-4">
-              {[...data.adventureProjects, ...data.hybridProjects]
-                .slice(0, 6)
-                .map((project) => (
-                  <ProjectCard
-                    key={project.project_dir}
-                    project={project}
-                    variant="adventure"
-                  />
-                ))}
-            </div>
-          </section>
-
-          {/* Claude Contributions */}
-          {data.claudeContributions.length > 0 && (
-            <section className="border-t border-slate-200 pt-8">
-              <h2 className="text-xl font-semibold text-slate-900 mb-4">
-                Claude as Co-Developer
-              </h2>
-              <p className="text-slate-600 mb-4">
-                A distinctive pattern emerges: Claude is used as a collaborative
-                development partner, not just a code completion tool.
-              </p>
-              <div className="grid gap-3">
-                {data.claudeContributions.map((contrib) => (
-                  <div
-                    key={contrib.project}
-                    className="flex items-start gap-3 p-3 rounded-lg bg-orange-50"
-                  >
-                    <span className="inline-block h-5 w-5 rounded bg-gradient-to-br from-orange-400 to-orange-600 flex-shrink-0 mt-0.5" />
-                    <div>
-                      <span className="font-medium text-slate-900">
-                        {contrib.project}
-                      </span>
-                      <p className="text-sm text-slate-600">{contrib.contribution}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </section>
-          )}
-
-          {/* TransUnion Connection */}
-          {data.transunionRelevance.length > 0 && (
-            <section className="border-t border-slate-200 pt-8">
-              <h2 className="text-xl font-semibold text-slate-900 mb-2">
-                TransUnion Experience (2014-2018)
-              </h2>
-              <p className="text-slate-600 mb-4">
-                Projects demonstrating continued expertise in areas developed at TransUnion SRG:
-              </p>
-              <div className="flex flex-wrap gap-2">
-                {data.transunionRelevance.slice(0, 8).map((item) => (
-                  <span
-                    key={item.project}
-                    className="px-3 py-1 text-sm bg-slate-100 text-slate-700 rounded-full"
-                  >
-                    {item.project}: {item.relevance.slice(0, 2).join(", ")}
-                  </span>
-                ))}
-              </div>
-            </section>
-          )}
-        </div>
-      )}
-
-      {/* Footer */}
-      <footer className="border-t border-slate-200 bg-slate-50">
-        <div className="max-w-4xl mx-auto px-4 py-8 text-center text-sm text-slate-500">
-          <p>
-            This resume is generated automatically from project documentation using{" "}
-            <code className="font-mono text-xs bg-slate-200 px-1 rounded">
-              autoresume.py
-            </code>
-          </p>
-          <p className="mt-2">
-            <a
-              href="https://github.com/tinymachines"
-              className="text-teal-600 hover:text-teal-800"
+  return (
+    <div
+      className="flex items-start gap-3 py-3"
+      style={{ borderBottom: "1px solid var(--brand-border)" }}
+    >
+      <div
+        className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mt-0.5"
+        style={{
+          background: "color-mix(in srgb, var(--brand-primary) 8%, transparent)",
+          border: "1px solid color-mix(in srgb, var(--brand-primary) 15%, transparent)",
+        }}
+      >
+        {typeIcons[item.type]}
+      </div>
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center gap-2 mb-0.5">
+          <span className="text-sm font-semibold truncate">{item.title}</span>
+          {cat && (
+            <span
+              className="text-[9px] font-semibold uppercase tracking-[1.5px] px-1.5 py-0.5 rounded font-mono shrink-0 hidden sm:inline"
+              style={{
+                color: cat.color,
+                background: `color-mix(in srgb, ${cat.color} 10%, transparent)`,
+              }}
             >
-              github.com/tinymachines
-            </a>
-            {" • "}
-            <span>Grand Rapids, MI</span>
+              {cat.label}
+            </span>
+          )}
+        </div>
+        <p className="text-[13px] leading-relaxed line-clamp-1 sm:line-clamp-2" style={{ color: "var(--brand-muted)" }}>
+          {item.description}
+        </p>
+      </div>
+      <span className="text-[11px] font-mono shrink-0 mt-1 hidden sm:block" style={{ color: "var(--brand-muted)" }}>
+        {timeAgo}
+      </span>
+    </div>
+  )
+}
+
+// --- Featured Project Card ---
+function FeaturedCard({ project }: { project: Project }) {
+  const cat = categoryMap[project.category]
+
+  return (
+    <Link href={`/projects/${project.slug}`} className="block group">
+      <div
+        className="rounded-xl overflow-hidden hover:-translate-y-1 transition-all h-full"
+        style={{
+          background: "var(--brand-bg-alt)",
+          border: "1px solid var(--brand-border)",
+        }}
+      >
+        <div className="h-[3px] w-full" style={{ background: cat.color }} />
+        <div className="p-4 sm:p-5">
+          <div className="flex items-center justify-between mb-2">
+            <span
+              className="text-[9px] font-semibold uppercase tracking-[2px] font-mono"
+              style={{ color: cat.color }}
+            >
+              {cat.label}
+            </span>
+            <span className="text-[10px] font-mono" style={{ color: "var(--brand-muted)" }}>
+              {project.totalMessages.toLocaleString()} msgs
+            </span>
+          </div>
+          <h3 className="text-base font-bold mb-1 group-hover:text-[var(--brand-primary)] transition-colors">
+            {project.name}
+          </h3>
+          <p className="text-[13px] line-clamp-2" style={{ color: "var(--brand-muted)" }}>
+            {project.tagline}
           </p>
         </div>
-      </footer>
-    </main>
-  );
+      </div>
+    </Link>
+  )
+}
+
+// --- Time Ago Helper ---
+function getTimeAgo(dateStr: string): string {
+  const now = new Date()
+  const date = new Date(dateStr)
+  const diffMs = now.getTime() - date.getTime()
+  const diffHours = Math.floor(diffMs / (1000 * 60 * 60))
+  if (diffHours < 1) return "just now"
+  if (diffHours < 24) return `${diffHours}h ago`
+  const diffDays = Math.floor(diffHours / 24)
+  if (diffDays === 1) return "yesterday"
+  if (diffDays < 7) return `${diffDays}d ago`
+  if (diffDays < 30) return `${Math.floor(diffDays / 7)}w ago`
+  return date.toLocaleDateString("en-US", { month: "short", day: "numeric" })
+}
+
+// --- Main Page ---
+export default function HomePage() {
+  const [data, setData] = useState<SiteData | null>(null)
+
+  useEffect(() => {
+    fetch("/data/site-data.json")
+      .then((r) => r.json())
+      .then(setData)
+  }, [])
+
+  const stats = data?.stats
+  const feed = data?.activityFeed || []
+  const featured = data?.projects.filter((p) => p.isFeatured) || []
+
+  return (
+    <div className="-mt-16 overflow-x-hidden">
+      {/* ===== HERO ===== */}
+      <section className="relative min-h-svh flex items-center overflow-hidden">
+        <ParticleGrid />
+        {/* Glow orbs — hidden on mobile to prevent overflow */}
+        <div
+          className="absolute top-[10%] right-[15%] w-[300px] h-[300px] rounded-full blur-[60px] hidden sm:block"
+          style={{ background: `radial-gradient(circle, color-mix(in srgb, var(--brand-primary) 7%, transparent), transparent 70%)` }}
+        />
+        <div
+          className="absolute bottom-[20%] left-[10%] w-[200px] h-[200px] rounded-full blur-[50px] hidden sm:block"
+          style={{ background: `radial-gradient(circle, color-mix(in srgb, var(--brand-secondary) 6%, transparent), transparent 70%)` }}
+        />
+
+        <div className="relative z-10 container-page w-full py-24 sm:py-32">
+          <FadeSection>
+            <div
+              className="inline-flex items-center gap-2 rounded-full px-3 py-1 mb-4 sm:mb-6 text-xs sm:text-sm font-medium"
+              style={{
+                background: "color-mix(in srgb, var(--brand-primary) 10%, transparent)",
+                border: "1px solid color-mix(in srgb, var(--brand-primary) 30%, transparent)",
+                color: "var(--brand-primary)",
+              }}
+            >
+              <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "var(--brand-primary)" }} />
+              Frontier Technologist
+            </div>
+
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-extrabold leading-[1.05] tracking-tight mb-4 sm:mb-6">
+              Hardware hacker.
+              <br />
+              <span style={{ color: "var(--brand-primary)" }}>Data architect.</span>
+              <br />
+              <span style={{ color: "var(--brand-secondary)" }}>AI pilot.</span>
+            </h1>
+
+            <p className="text-base sm:text-lg leading-relaxed max-w-[560px] mb-8 sm:mb-10" style={{ color: "var(--brand-steel)" }}>
+              Building at the intersection of enterprise scale and maker culture — from
+              ESP32 mesh networks to Fortune 500 data warehouses, with Claude as co-pilot.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Link
+                href="/projects"
+                className="px-6 py-3 sm:px-8 sm:py-3.5 rounded-lg text-sm sm:text-base font-semibold text-center transition-all"
+                style={{
+                  background: "var(--brand-primary)",
+                  color: "var(--brand-bg)",
+                }}
+              >
+                View Projects <ArrowRight className="inline w-4 h-4 ml-1" />
+              </Link>
+              <Link
+                href="/ai-pilot"
+                className="px-6 py-3 sm:px-8 sm:py-3.5 rounded-lg text-sm sm:text-base font-medium text-center transition-all"
+                style={{
+                  border: "1px solid color-mix(in srgb, var(--brand-secondary) 30%, transparent)",
+                  color: "var(--brand-secondary)",
+                }}
+              >
+                AI Pilot Dashboard <ArrowRight className="inline w-4 h-4 ml-1" />
+              </Link>
+            </div>
+          </FadeSection>
+        </div>
+      </section>
+
+      {/* ===== HERO STATS ===== */}
+      <section
+        className="py-6 sm:py-10"
+        style={{ background: "var(--brand-bg-alt)", borderTop: "1px solid var(--brand-border)", borderBottom: "1px solid var(--brand-border)" }}
+      >
+        <div className="container-page grid grid-cols-3 sm:grid-cols-5 gap-4 sm:gap-8 text-center">
+          {[
+            { val: stats?.totalProjects || 12, suffix: "", label: "Projects" },
+            { val: stats?.totalSessions || 847, suffix: "", label: "Sessions" },
+            { val: stats?.totalMessages || 24300, suffix: "", label: "Messages", hideOnMobile: true },
+            { val: stats?.activeDays || 189, suffix: "", label: "Active Days", hideOnMobile: true },
+            { val: stats?.streak || 14, suffix: "d", label: "Streak" },
+          ].map((s, i) => (
+            <div key={i} className={s.hideOnMobile ? "hidden sm:block" : ""}>
+              <div
+                className="text-xl sm:text-3xl md:text-4xl font-extrabold tracking-tight tabular-nums"
+                style={{ color: i % 2 === 0 ? "var(--brand-primary)" : "var(--brand-secondary)" }}
+              >
+                <Counter end={s.val} suffix={s.suffix} />
+              </div>
+              <div className="text-[10px] sm:text-xs font-medium mt-0.5 uppercase tracking-widest" style={{ color: "var(--brand-muted)" }}>
+                {s.label}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ===== ACTIVITY FEED ===== */}
+      <section className="py-10 sm:py-16">
+        <div className="container-page">
+          <FadeSection className="mb-6 sm:mb-10">
+            <div className="flex items-end justify-between">
+              <div>
+                <div className="text-xs font-semibold uppercase tracking-[3px] mb-1" style={{ color: "var(--brand-primary)" }}>
+                  Activity
+                </div>
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight">
+                  Recent work.
+                </h2>
+              </div>
+              <Link
+                href="/projects"
+                className="text-sm font-semibold hover:underline hidden sm:flex items-center gap-1"
+                style={{ color: "var(--brand-secondary)" }}
+              >
+                All projects <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </FadeSection>
+
+          <FadeSection>
+            <div>
+              {feed.length === 0 ? (
+                <div className="py-8 text-center" style={{ color: "var(--brand-muted)" }}>
+                  Loading activity...
+                </div>
+              ) : (
+                feed.slice(0, 15).map((item, i) => <ActivityFeedItem key={i} item={item} />)
+              )}
+            </div>
+            {feed.length > 15 && (
+              <Link
+                href="/projects"
+                className="block text-center text-sm font-semibold mt-4 py-3 rounded-lg transition-colors"
+                style={{
+                  color: "var(--brand-primary)",
+                  background: "color-mix(in srgb, var(--brand-primary) 5%, transparent)",
+                }}
+              >
+                View all activity <ArrowRight className="inline w-4 h-4 ml-1" />
+              </Link>
+            )}
+          </FadeSection>
+        </div>
+      </section>
+
+      {/* ===== CLAUDE'S CORNER ===== */}
+      {data?.claudeCorner && (
+        <section className="py-10 sm:py-16">
+          <div className="container-page">
+            <FadeSection>
+              <ClaudeCorner data={data.claudeCorner} />
+            </FadeSection>
+          </div>
+        </section>
+      )}
+
+      {/* ===== FEATURED PROJECTS ===== */}
+      <section className="py-10 sm:py-16" style={{ background: "var(--brand-bg-alt)" }}>
+        <div className="container-page">
+          <FadeSection className="mb-6 sm:mb-10">
+            <div className="flex items-end justify-between">
+              <div>
+                <div className="text-xs font-semibold uppercase tracking-[3px] mb-1" style={{ color: "var(--brand-secondary)" }}>
+                  Featured
+                </div>
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight">
+                  Active projects.
+                </h2>
+              </div>
+              <Link
+                href="/projects"
+                className="text-sm font-semibold hover:underline hidden sm:flex items-center gap-1"
+                style={{ color: "var(--brand-primary)" }}
+              >
+                View all <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </FadeSection>
+
+          <FadeSection>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {featured.length === 0 ? (
+                <div className="col-span-3 py-8 text-center" style={{ color: "var(--brand-muted)" }}>
+                  Loading projects...
+                </div>
+              ) : (
+                featured.map((project) => <FeaturedCard key={project.slug} project={project} />)
+              )}
+            </div>
+          </FadeSection>
+        </div>
+      </section>
+
+    </div>
+  )
 }

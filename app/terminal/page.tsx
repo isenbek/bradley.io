@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef, KeyboardEvent } from "react"
 import { motion } from "framer-motion"
 import { MatrixRain } from "@/components/ui/matrix-rain"
+import type { SiteData } from "@/lib/site-data"
 import "./terminal.css"
 
 interface Command {
@@ -16,200 +17,191 @@ export default function TerminalPage() {
   const [commandHistory, setCommandHistory] = useState<string[]>([])
   const [historyIndex, setHistoryIndex] = useState(-1)
   const [matrixMode, setMatrixMode] = useState(false)
+  const [siteData, setSiteData] = useState<SiteData | null>(null)
+  const [cursorVisible, setCursorVisible] = useState(true)
   const inputRef = useRef<HTMLInputElement>(null)
   const terminalRef = useRef<HTMLDivElement>(null)
 
-  const availableCommands = {
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCursorVisible((v) => !v)
+    }, 500)
+    return () => clearInterval(interval)
+  }, [])
+
+  useEffect(() => {
+    fetch("/data/site-data.json")
+      .then((res) => res.json())
+      .then((data: SiteData) => setSiteData(data))
+      .catch(() => {})
+  }, [])
+
+  const availableCommands: Record<string, string> = {
     help: "Available commands:\n  about      - Learn about my background\n  skills     - View technical skills\n  projects   - Browse project portfolio\n  repos      - Show GitHub repositories\n  experience - Work experience timeline\n  contact    - Get in touch\n  clear      - Clear terminal\n  resume     - Download resume\n  github     - Visit GitHub profile\n  linkedin   - Visit LinkedIn profile\n  matrix     - Enter the matrix...\n  whoami     - Who am I?\n  ls         - List available sections\n  cat [file] - View specific information",
-    
-    about: "Bradley.io - AI Data Engineering & Edge Computing Expert\n\n• 10+ years transforming enterprise data strategies\n• Specialized in edge computing with IoT integration\n• Fortune 500 experience with TransUnion SRG\n• Based in Grand Rapids, Michigan\n• Passionate about bridging enterprise architecture with hands-on innovation\n\nType 'skills' to see technical expertise or 'projects' for case studies.",
-    
+
     whoami: "$ whoami\nbradley\n\n$ groups\ndata-engineers ai-experts edge-computing iot-developers enterprise-architects",
-    
-    ls: "Available sections:\n\n📁 experience/\n📁 projects/\n📁 skills/\n📁 certifications/\n📁 blog/\n📄 resume.pdf\n📄 contact.txt\n\nUse 'cat [filename]' to view contents",
-    
-    clear: "CLEAR",
-    
-    matrix: "MATRIX",
+
+    ls: "Available sections:\n\n\u{1F4C1} experience/\n\u{1F4C1} projects/\n\u{1F4C1} skills/\n\u{1F4C1} certifications/\n\u{1F4C1} blog/\n\u{1F4C4} resume.pdf\n\u{1F4C4} contact.txt\n\nUse 'cat [filename]' to view contents",
   }
 
-  const skillsOutput = () => (
-    <div className="space-y-2">
-      <div className="text-green-400">Technical Skills Matrix:</div>
-      <div className="grid grid-cols-2 gap-4 mt-2">
-        <div>
-          <span className="text-yellow-400">▸ Languages:</span>
-          <div className="ml-4 text-sm">Python, TypeScript, SQL, Scala, R</div>
+  const aboutOutput = () => {
+    const bio = siteData?.about?.bio
+    return (
+      <div className="space-y-2">
+        <div style={{ color: "var(--brand-primary)" }}>Bradley.io - Frontier Technologist</div>
+        <div style={{ color: "var(--brand-muted)" }}>
+          {bio || "Loading..."}
         </div>
-        <div>
-          <span className="text-yellow-400">▸ Cloud:</span>
-          <div className="ml-4 text-sm">AWS, Azure, GCP, Docker, K8s</div>
-        </div>
-        <div>
-          <span className="text-yellow-400">▸ Data Engineering:</span>
-          <div className="ml-4 text-sm">Spark, Airflow, Kafka, Databricks</div>
-        </div>
-        <div>
-          <span className="text-yellow-400">▸ Edge/IoT:</span>
-          <div className="ml-4 text-sm">Raspberry Pi, Arduino, MQTT</div>
-        </div>
-        <div>
-          <span className="text-yellow-400">▸ AI/ML:</span>
-          <div className="ml-4 text-sm">TensorFlow, PyTorch, MLflow</div>
-        </div>
-        <div>
-          <span className="text-yellow-400">▸ Visualization:</span>
-          <div className="ml-4 text-sm">D3.js, Tableau, Power BI</div>
+        <div style={{ color: "var(--brand-muted)" }} className="text-sm mt-2">
+          Type &apos;skills&apos; to see technical expertise or &apos;projects&apos; for case studies.
         </div>
       </div>
-      <div className="text-gray-400 text-sm mt-2">
-        Proficiency: ████████░░ Expert in Edge Computing & Data Architecture
-      </div>
-    </div>
-  )
+    )
+  }
 
-  const projectsOutput = () => (
-    <div className="space-y-3">
-      <div className="text-green-400">Featured Projects:</div>
-      
-      <div className="border-l-2 border-primary pl-3">
-        <div className="text-yellow-400">1. Commission Calculation System - TransUnion</div>
-        <div className="text-sm text-gray-300">
-          • Processed $2B+ in annual transactions
-          • Reduced calculation time by 78%
-          • Built with: Python, Spark, AWS, Kafka
-        </div>
-      </div>
-      
-      <div className="border-l-2 border-primary pl-3">
-        <div className="text-yellow-400">2. Predictive Maintenance Platform - Manufacturing</div>
-        <div className="text-sm text-gray-300">
-          • 35% reduction in equipment downtime
-          • IoT sensors with edge processing
-          • Built with: Raspberry Pi, TensorFlow Lite, MQTT
-        </div>
-      </div>
-      
-      <div className="border-l-2 border-primary pl-3">
-        <div className="text-yellow-400">3. Real-time Patient Monitoring - Healthcare</div>
-        <div className="text-sm text-gray-300">
-          • HIPAA-compliant edge architecture
-          • Sub-200ms alert response time
-          • Built with: Arduino, Edge AI, Azure IoT
-        </div>
-      </div>
-      
-      <div className="text-gray-400 text-sm mt-2">
-        Type 'github' to explore code repositories
-      </div>
-    </div>
-  )
+  const skillsOutput = () => {
+    const skills = siteData?.about?.skills || []
+    const chunkSize = 5
+    const rows: string[][] = []
+    for (let i = 0; i < skills.length; i += chunkSize) {
+      rows.push(skills.slice(i, i + chunkSize))
+    }
 
-  const experienceOutput = () => (
-    <div className="space-y-3">
-      <div className="text-green-400">Professional Experience Timeline:</div>
-      
-      <div className="flex items-start gap-3">
-        <div className="text-primary">2018-2023</div>
-        <div>
-          <div className="text-yellow-400">Senior Data Architect @ TransUnion SRG</div>
-          <div className="text-sm text-gray-300">
-            • Led data architecture for commission systems
-            • Managed team of 8 engineers
-            • Designed real-time data pipelines
-          </div>
+    return (
+      <div className="space-y-2">
+        <div style={{ color: "var(--brand-primary)" }}>Technical Skills Matrix:</div>
+        <div className="ml-4 space-y-1">
+          {rows.map((row, i) => (
+            <div key={i}>
+              <span style={{ color: "var(--brand-warning)" }}>{"\u25B8"} </span>
+              <span style={{ color: "var(--brand-muted)" }}>{row.join(", ")}</span>
+            </div>
+          ))}
+        </div>
+        <div style={{ color: "var(--brand-muted)" }} className="text-sm mt-2">
+          {skills.length} technologies across {siteData?.stats?.totalProjects || 0} projects
         </div>
       </div>
-      
-      <div className="flex items-start gap-3">
-        <div className="text-primary">2016-2018</div>
-        <div>
-          <div className="text-yellow-400">Data Engineering Consultant @ NYC Headhunter</div>
-          <div className="text-sm text-gray-300">
-            • Built predictive talent matching algorithms
-            • Automated recruitment analytics
-            • Improved placement rates by 45%
+    )
+  }
+
+  const projectsOutput = () => {
+    const projects = (siteData?.projects || [])
+      .filter((p) => p.status === "active" && p.isFeatured)
+      .slice(0, 5)
+
+    return (
+      <div className="space-y-3">
+        <div style={{ color: "var(--brand-primary)" }}>Featured Projects:</div>
+
+        {projects.map((project, i) => (
+          <div key={project.slug} className="border-l-2 pl-3" style={{ borderColor: "var(--brand-border-hover)" }}>
+            <div style={{ color: "var(--brand-warning)" }}>
+              {i + 1}. {project.name}
+            </div>
+            <div className="text-sm" style={{ color: "var(--brand-muted)" }}>
+              {project.description || project.tagline || "No description"}
+              {project.sources?.github && (
+                <div>{"\u25B8"} {project.sources.github.repo} ({project.sources.github.language})</div>
+              )}
+            </div>
           </div>
+        ))}
+
+        {projects.length === 0 && (
+          <div style={{ color: "var(--brand-muted)" }}>No featured projects found.</div>
+        )}
+
+        <div style={{ color: "var(--brand-muted)" }} className="text-sm mt-2">
+          Type &apos;github&apos; to explore code repositories
         </div>
       </div>
-      
-      <div className="flex items-start gap-3">
-        <div className="text-primary">2014-2016</div>
-        <div>
-          <div className="text-yellow-400">Data Engineer @ Startup Ecosystem</div>
-          <div className="text-sm text-gray-300">
-            • Early-stage data infrastructure
-            • Built ETL pipelines from scratch
-            • Scaled systems from 0 to millions of records
+    )
+  }
+
+  const experienceOutput = () => {
+    const timeline = siteData?.about?.timeline || []
+
+    return (
+      <div className="space-y-3">
+        <div style={{ color: "var(--brand-primary)" }}>Professional Experience Timeline:</div>
+
+        {timeline.map((entry) => (
+          <div key={entry.year} className="flex items-start gap-3">
+            <div style={{ color: "var(--brand-info)" }}>{entry.year}</div>
+            <div>
+              <div style={{ color: "var(--brand-warning)" }}>{entry.title}</div>
+              <div className="text-sm" style={{ color: "var(--brand-muted)" }}>
+                {entry.description}
+              </div>
+            </div>
           </div>
-        </div>
+        ))}
       </div>
-    </div>
-  )
+    )
+  }
 
   const contactOutput = () => (
     <div className="space-y-2">
-      <div className="text-green-400">Contact Information:</div>
+      <div style={{ color: "var(--brand-primary)" }}>Contact Information:</div>
       <div className="ml-4">
-        <div>📧 Email: contact@bradley.io</div>
-        <div>📍 Location: Grand Rapids, Michigan</div>
-        <div>💼 LinkedIn: /in/bradley-io</div>
-        <div>🐙 GitHub: github.com/tinymachines</div>
-        <div>📅 Schedule consultation: bradley.io/contact</div>
+        <div>{"\u{1F4E7}"} Email: contact@bradley.io</div>
+        <div>{"\u{1F4CD}"} Location: Grand Rapids, Michigan</div>
+        <div>{"\u{1F4BC}"} LinkedIn: /in/bradley-io</div>
+        <div>{"\u{1F419}"} GitHub: github.com/tinymachines</div>
+        <div>{"\u{1F4C5}"} Schedule consultation: bradley.io/contact</div>
       </div>
-      <div className="text-gray-400 text-sm mt-2">
-        Available for consulting engagements: $150-275/hour
+      <div style={{ color: "var(--brand-muted)" }} className="text-sm mt-2">
+        Available for consulting engagements
       </div>
     </div>
   )
 
-  const reposOutput = () => (
-    <div className="space-y-3">
-      <div className="text-green-400">GitHub Repositories:</div>
-      
-      <div className="text-yellow-400">▸ TinyMachines Organization</div>
-      <div className="ml-4 space-y-2">
-        <div className="border-l-2 border-gray-600 pl-3">
-          <div className="text-cyan-400">vectl</div>
-          <div className="text-sm text-gray-300">
-            Language: C++ | Updated: June 2025
-          </div>
+  const reposOutput = () => {
+    const withGithub = (siteData?.projects || []).filter((p) => p.sources?.github)
+
+    return (
+      <div className="space-y-3">
+        <div style={{ color: "var(--brand-primary)" }}>GitHub Repositories:</div>
+
+        <div style={{ color: "var(--brand-warning)" }}>{"\u25B8"} TinyMachines & Projects</div>
+        <div className="ml-4 space-y-2">
+          {withGithub.slice(0, 6).map((p) => (
+            <div key={p.slug} className="border-l-2 pl-3" style={{ borderColor: "var(--brand-steel)" }}>
+              <div style={{ color: "var(--brand-info)" }}>{p.sources.github!.repo}</div>
+              <div className="text-sm" style={{ color: "var(--brand-muted)" }}>
+                Language: {p.sources.github!.language} | Stars: {p.sources.github!.stars} | Updated: {p.sources.github!.lastPush}
+              </div>
+            </div>
+          ))}
+          {withGithub.length > 6 && (
+            <div style={{ color: "var(--brand-muted)" }} className="text-sm">
+              + {withGithub.length - 6} more repositories...
+            </div>
+          )}
         </div>
-        <div className="text-gray-400 text-sm">
-          + More repositories coming soon...
+
+        <div style={{ color: "var(--brand-muted)" }} className="text-sm mt-3">
+          Visit github.com/tinymachines for full repository list
+          {"\n"}Type &apos;github&apos; to open in browser
         </div>
       </div>
-      
-      <div className="text-yellow-400 mt-3">▸ Personal Projects</div>
-      <div className="ml-4 space-y-2">
-        <div className="border-l-2 border-gray-600 pl-3">
-          <div className="text-cyan-400">bradley.io</div>
-          <div className="text-sm text-gray-300">
-            This website! Built with Next.js, TypeScript, Tailwind
-          </div>
-        </div>
-      </div>
-      
-      <div className="text-gray-400 text-sm mt-3">
-        Visit github.com/tinymachines for full repository list
-        Type 'github' to open in browser
-      </div>
-    </div>
-  )
+    )
+  }
 
   const processCommand = (input: string) => {
     const cmd = input.toLowerCase().trim()
     const parts = cmd.split(" ")
     const baseCmd = parts[0]
-    
+
     let output: string | React.ReactElement = ""
-    
+
     switch (baseCmd) {
       case "help":
         output = availableCommands.help
         break
       case "about":
-        output = availableCommands.about
+        output = aboutOutput()
         break
       case "skills":
         output = skillsOutput()
@@ -233,14 +225,13 @@ export default function TerminalPage() {
         output = availableCommands.ls
         break
       case "clear":
-        output = availableCommands.clear
+        output = "CLEAR"
         break
       case "matrix":
-        output = availableCommands.matrix
+        output = "MATRIX"
         break
       case "resume":
         output = "Downloading resume.pdf..."
-        // In real implementation, trigger download
         setTimeout(() => {
           window.open("/resume.pdf", "_blank")
         }, 500)
@@ -271,14 +262,14 @@ export default function TerminalPage() {
       default:
         output = `Command not found: ${baseCmd}\nType 'help' for available commands`
     }
-    
+
     return output
   }
 
   const handleCommand = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       const output = processCommand(currentInput)
-      
+
       if (output === "CLEAR") {
         setCommands([])
       } else if (output === "MATRIX") {
@@ -290,12 +281,12 @@ export default function TerminalPage() {
       } else if (output) {
         setCommands([...commands, { input: currentInput, output }])
       }
-      
+
       if (currentInput) {
         setCommandHistory([...commandHistory, currentInput])
         setHistoryIndex(-1)
       }
-      
+
       setCurrentInput("")
     } else if (e.key === "ArrowUp") {
       e.preventDefault()
@@ -328,94 +319,74 @@ export default function TerminalPage() {
   }, [commands])
 
   useEffect(() => {
-    // Initial welcome message
     setCommands([
       {
         input: "",
         output: (
-          <div className="space-y-2">
-            <pre className="text-green-400 text-xs sm:text-sm">
-{`
-██████╗ ██████╗  █████╗ ██████╗ ██╗     ███████╗██╗   ██╗   ██╗ ██████╗ 
-██╔══██╗██╔══██╗██╔══██╗██╔══██╗██║     ██╔════╝╚██╗ ██╔╝   ██║██╔═══██╗
-██████╔╝██████╔╝███████║██║  ██║██║     █████╗   ╚████╔╝    ██║██║   ██║
-██╔══██╗██╔══██╗██╔══██║██║  ██║██║     ██╔══╝    ╚██╔╝     ██║██║   ██║
-██████╔╝██║  ██║██║  ██║██████╔╝███████╗███████╗   ██║   ██╗██║╚██████╔╝
-╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ ╚══════╝╚══════╝   ╚═╝   ╚═╝╚═╝ ╚═════╝ 
-`}
-            </pre>
-            <div className="text-gray-300">
-              Welcome to Bradley.io Interactive Terminal v1.0.0
-            </div>
-            <div className="text-gray-400">
-              Type <span className="text-yellow-400">'help'</span> to see available commands
-            </div>
+          <div style={{ color: "var(--brand-steel)" }}>
+            Type <span style={{ color: "var(--brand-warning)" }}>&apos;help&apos;</span> to see available commands
           </div>
-        )
-      }
+        ),
+      },
     ])
   }, [])
 
   return (
-    <div className="min-h-screen bg-black text-green-400 font-mono p-4">
+    <div
+      className="min-h-screen font-mono pt-[4.25rem]"
+      style={{ background: "var(--brand-bg)", color: "var(--brand-primary)" }}
+    >
       <MatrixRain active={matrixMode} />
-      
-      <motion.div 
-        className="terminal-container max-w-4xl mx-auto h-[calc(100vh-10rem)] bg-gray-900 rounded-lg border border-green-800 overflow-hidden flex flex-col relative"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+
+      <motion.div
+        className="terminal-container h-[calc(100vh-4.25rem)] overflow-hidden flex flex-col relative"
+        style={{ background: "var(--brand-bg)" }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.4 }}
       >
-        {/* Terminal Header */}
-        <div className="bg-gray-800 px-4 py-2 flex items-center gap-2 border-b border-green-800">
-          <div className="flex gap-2">
-            <div className="w-3 h-3 rounded-full bg-red-500"></div>
-            <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-            <div className="w-3 h-3 rounded-full bg-green-500"></div>
-          </div>
-          <div className="flex-1 text-center text-sm text-gray-400">
-            bradley@io:~/terminal
-          </div>
-        </div>
-        
         {/* Terminal Body */}
-        <div 
+        <div
           ref={terminalRef}
-          className="flex-1 overflow-y-auto p-4 space-y-2"
+          className="flex-1 overflow-y-auto px-4 sm:px-6 pb-4 space-y-2 max-w-4xl mx-auto w-full"
           onClick={() => inputRef.current?.focus()}
         >
           {commands.map((cmd, index) => (
             <div key={index} className="space-y-1">
               {cmd.input && (
                 <div className="flex items-center gap-2">
-                  <span className="text-primary">bradley@io:~$</span>
-                  <span className="text-white">{cmd.input}</span>
+                  <span style={{ color: "var(--brand-primary)" }}>bradley@io:~$</span>
+                  <span style={{ color: "var(--brand-text)" }}>{cmd.input}</span>
                 </div>
               )}
-              <div className="text-gray-300 whitespace-pre-wrap">
+              <div className="whitespace-pre-wrap" style={{ color: "var(--brand-muted)" }}>
                 {typeof cmd.output === "string" ? cmd.output : cmd.output}
               </div>
             </div>
           ))}
-          
+
           {/* Current Input Line */}
-          <div className="flex items-center gap-2">
-            <span className="text-primary terminal-glow">bradley@io:~$</span>
+          <div className="relative">
             <input
               ref={inputRef}
               type="text"
               value={currentInput}
               onChange={(e) => setCurrentInput(e.target.value)}
               onKeyDown={handleCommand}
-              className="flex-1 bg-transparent outline-none text-white caret-green-400 terminal-glow"
+              className="absolute opacity-0 w-0 h-0"
               autoFocus
               spellCheck={false}
               autoComplete="off"
             />
-            <motion.span
-              className="inline-block w-2 h-4 bg-green-400"
-              animate={{ opacity: [1, 0] }}
-              transition={{ duration: 0.8, repeat: Infinity }}
+            <span className="terminal-glow" style={{ color: "var(--brand-primary)" }}>bradley@io:~$</span>
+            {" "}
+            <span className="terminal-glow" style={{ color: "var(--brand-text)" }}>{currentInput}</span>
+            <span
+              style={{
+                borderBottom: cursorVisible ? "2px solid var(--brand-primary)" : "2px solid transparent",
+                width: "0.6em",
+                display: "inline-block",
+              }}
             />
           </div>
         </div>

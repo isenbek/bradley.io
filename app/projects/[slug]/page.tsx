@@ -1,488 +1,303 @@
-'use client';
+"use client"
 
-import { useState, useEffect } from 'react';
-import { useParams } from 'next/navigation';
-import Link from 'next/link';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Progress } from '@/components/ui/progress';
-import { Separator } from '@/components/ui/separator';
-import { 
-  ArrowLeft,
-  Star, 
-  GitFork, 
-  Eye,
-  Calendar,
-  Code,
-  ExternalLink,
-  Github,
-  Download,
-  Activity,
-  TrendingUp,
-  Shield,
-  Users,
-  Clock,
-  FileText,
-  Tag,
-  BarChart3
-} from 'lucide-react';
-import { projectsParser, type GitHubRepo, type ProjectMetrics } from '@/lib/projects-parser';
+import { useEffect, useState } from "react"
+import { useParams } from "next/navigation"
+import Link from "next/link"
+import { ArrowLeft, GitBranch, MessageSquare, Bot } from "lucide-react"
+import type { SiteData, Project } from "@/lib/site-data"
+import { categoryMap } from "@/lib/project-categories"
+
+function StatusBadge({ status }: { status: Project["status"] }) {
+  const colors: Record<string, string> = {
+    active: "var(--brand-success)",
+    paused: "var(--brand-warning)",
+    completed: "var(--brand-info)",
+    archived: "var(--brand-muted)",
+  }
+  return (
+    <span
+      className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1 rounded-full"
+      style={{
+        color: colors[status],
+        background: `color-mix(in srgb, ${colors[status]} 12%, transparent)`,
+        border: `1px solid color-mix(in srgb, ${colors[status]} 25%, transparent)`,
+      }}
+    >
+      <span className="w-1.5 h-1.5 rounded-full" style={{ background: colors[status] }} />
+      {status}
+    </span>
+  )
+}
 
 export default function ProjectDetailPage() {
-  const params = useParams();
-  const slug = params.slug as string;
-  
-  const [project, setProject] = useState<GitHubRepo | null>(null);
-  const [metrics, setMetrics] = useState<ProjectMetrics | null>(null);
-  const [loading, setLoading] = useState(true);
+  const params = useParams()
+  const slug = params.slug as string
+  const [data, setData] = useState<SiteData | null>(null)
 
   useEffect(() => {
-    if (slug) {
-      // Try to find project by name or full name
-      let foundProject = projectsParser.getRepoByName(slug);
-      
-      if (!foundProject) {
-        // Try with full name format (org-repo or user-repo)
-        const possibleFullNames = [
-          `tinymachines/${slug}`,
-          `isenbek/${slug}`,
-          slug.replace('-', '/') // Handle slug format like "tinymachines-repo"
-        ];
-        
-        for (const fullName of possibleFullNames) {
-          foundProject = projectsParser.getRepoByFullName(fullName);
-          if (foundProject) break;
-        }
-      }
-      
-      if (foundProject) {
-        setProject(foundProject);
-        setMetrics(projectsParser.getProjectMetrics(foundProject));
-      }
-      
-      setLoading(false);
-    }
-  }, [slug]);
+    fetch("/data/site-data.json")
+      .then((r) => r.json())
+      .then(setData)
+  }, [])
 
-  if (loading) {
+  if (!data) {
     return (
-      <div className="min-h-screen bg-background">
-        <div className="container max-w-6xl py-8">
-          <div className="animate-pulse space-y-8">
-            <div className="h-8 bg-muted rounded w-1/4"></div>
-            <div className="h-32 bg-muted rounded"></div>
-            <div className="grid md:grid-cols-3 gap-6">
-              <div className="h-64 bg-muted rounded"></div>
-              <div className="h-64 bg-muted rounded"></div>
-              <div className="h-64 bg-muted rounded"></div>
-            </div>
-          </div>
-        </div>
+      <div className="pt-20 sm:pt-24 pb-10 sm:pb-16 container-page text-center" style={{ color: "var(--brand-muted)" }}>
+        Loading...
       </div>
-    );
+    )
   }
 
+  const project = data.projects.find((p) => p.slug === slug)
   if (!project) {
     return (
-      <div className="min-h-screen bg-background">
-        <div className="container max-w-6xl py-8">
-          <div className="text-center">
-            <h1 className="text-2xl font-bold mb-4">Project Not Found</h1>
-            <p className="text-muted-foreground mb-6">
-              The project "{slug}" could not be found.
-            </p>
-            <Button asChild>
-              <Link href="/projects">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Back to Projects
-              </Link>
-            </Button>
-          </div>
-        </div>
+      <div className="pt-20 sm:pt-24 pb-10 sm:pb-16 container-page text-center">
+        <h1 className="text-2xl font-bold mb-4">Project not found</h1>
+        <Link href="/projects" className="text-sm" style={{ color: "var(--brand-primary)" }}>
+          <ArrowLeft className="inline w-4 h-4 mr-1" /> Back to projects
+        </Link>
       </div>
-    );
+    )
   }
 
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    });
-  };
-
-  const getLanguageColor = (language: string) => {
-    const colors: { [key: string]: string } = {
-      TypeScript: '#3178c6',
-      JavaScript: '#f7df1e',
-      Python: '#3776ab',
-      Java: '#ed8b00',
-      'C#': '#239120',
-      Go: '#00add8',
-      Rust: '#dea584',
-      PHP: '#777bb4',
-      Ruby: '#cc342d',
-      Swift: '#fa7343',
-      Kotlin: '#7f52ff',
-      HTML: '#e34f26',
-      CSS: '#1572b6',
-      Shell: '#89e051'
-    };
-    return colors[language] || '#6b7280';
-  };
+  const cat = categoryMap[project.category]
+  const relatedActivity = data.activityFeed.filter((a) => a.projectSlug === project.slug)
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <div className="bg-muted/30 border-b">
-        <div className="container max-w-6xl py-8">
-          <div className="flex items-center gap-4 mb-6">
-            <Button variant="ghost" size="sm" asChild>
-              <Link href="/projects">
-                <ArrowLeft className="mr-2 h-4 w-4" />
-                Back to Projects
-              </Link>
-            </Button>
+    <div className="pt-20 sm:pt-24 pb-10 sm:pb-16">
+      <div className="container-page">
+        {/* Breadcrumb */}
+        <Link
+          href="/projects"
+          className="inline-flex items-center gap-1.5 text-sm mb-8 hover:underline"
+          style={{ color: "var(--brand-muted)" }}
+        >
+          <ArrowLeft className="w-4 h-4" /> All Projects
+        </Link>
+
+        {/* Header */}
+        <div className="mb-10">
+          <div className="flex flex-wrap items-center gap-3 mb-4">
+            <span
+              className="text-[10px] font-semibold uppercase tracking-[2px] px-2.5 py-1 rounded font-mono"
+              style={{
+                color: cat.color,
+                background: `color-mix(in srgb, ${cat.color} 10%, transparent)`,
+              }}
+            >
+              {cat.label}
+            </span>
+            <StatusBadge status={project.status} />
+            {project.isResearch && (
+              <span
+                className="text-[10px] font-mono px-2 py-0.5 rounded-full"
+                style={{
+                  color: "var(--brand-warning)",
+                  background: "color-mix(in srgb, var(--brand-warning) 10%, transparent)",
+                }}
+              >
+                research
+              </span>
+            )}
           </div>
-          
-          <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
-            <div className="flex-1">
-              <div className="flex items-center gap-3 mb-3">
-                <Code className="h-8 w-8 text-primary" />
-                <h1 className="text-3xl font-bold">{project.name}</h1>
-                {project.private && (
-                  <Badge variant="secondary">
-                    <Shield className="mr-1 h-3 w-3" />
-                    Private
-                  </Badge>
-                )}
-                {project.fork && (
-                  <Badge variant="outline">
-                    <GitFork className="mr-1 h-3 w-3" />
-                    Fork
-                  </Badge>
-                )}
-              </div>
-              
-              <p className="text-lg text-muted-foreground mb-4">
-                {project.description || 'No description available'}
+
+          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-3">
+            {project.name}
+          </h1>
+          <p className="text-lg md:text-xl" style={{ color: "var(--brand-muted)" }}>
+            {project.tagline}
+          </p>
+        </div>
+
+        <div className="grid lg:grid-cols-[1fr_300px] gap-6 sm:gap-10">
+          {/* Main content */}
+          <div>
+            <div
+              className="rounded-xl p-5 sm:p-8 mb-6 sm:mb-8"
+              style={{
+                background: "var(--brand-bg-alt)",
+                border: "1px solid var(--brand-border)",
+              }}
+            >
+              <h2 className="text-lg font-bold mb-4">About</h2>
+              <p className="leading-relaxed" style={{ color: "var(--brand-muted)" }}>
+                {project.description}
               </p>
-              
-              <div className="flex flex-wrap gap-2 mb-4">
-                {project.topics.map((topic) => (
-                  <Badge key={topic} variant="secondary">
-                    <Tag className="mr-1 h-3 w-3" />
-                    {topic}
-                  </Badge>
+            </div>
+
+            {/* AI Co-Developer Notes */}
+            {project.claudeInvolvement && (
+              <div
+                className="rounded-xl p-5 sm:p-8 mb-6 sm:mb-8"
+                style={{
+                  background: "var(--brand-bg-alt)",
+                  border: "1px solid var(--brand-border)",
+                }}
+              >
+                <div className="flex items-center gap-3 mb-4">
+                  <div
+                    className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0"
+                    style={{
+                      background: "color-mix(in srgb, var(--brand-secondary) 12%, transparent)",
+                      border: "1px solid color-mix(in srgb, var(--brand-secondary) 25%, transparent)",
+                    }}
+                  >
+                    <Bot className="w-4 h-4" style={{ color: "var(--brand-secondary)" }} />
+                  </div>
+                  <h2 className="text-lg font-bold">AI Co-Developer Notes</h2>
+                </div>
+                <p className="leading-relaxed text-sm" style={{ color: "var(--brand-muted)" }}>
+                  {project.claudeInvolvement}
+                </p>
+              </div>
+            )}
+
+            {/* Technologies */}
+            <div
+              className="rounded-xl p-5 sm:p-8 mb-6 sm:mb-8"
+              style={{
+                background: "var(--brand-bg-alt)",
+                border: "1px solid var(--brand-border)",
+              }}
+            >
+              <h2 className="text-lg font-bold mb-4">Technologies</h2>
+              <div className="flex flex-wrap gap-2">
+                {project.technologies.map((tech) => (
+                  <span
+                    key={tech}
+                    className="text-sm font-mono px-3 py-1.5 rounded-lg"
+                    style={{
+                      background: "color-mix(in srgb, var(--brand-primary) 8%, transparent)",
+                      border: "1px solid color-mix(in srgb, var(--brand-primary) 20%, transparent)",
+                      color: "var(--brand-primary)",
+                    }}
+                  >
+                    {tech}
+                  </span>
                 ))}
               </div>
-              
-              <div className="flex flex-wrap gap-4 text-sm text-muted-foreground">
-                <div className="flex items-center gap-1">
-                  <Calendar className="h-4 w-4" />
-                  Created {formatDate(project.created_at)}
-                </div>
-                <div className="flex items-center gap-1">
-                  <Clock className="h-4 w-4" />
-                  Updated {formatDate(project.updated_at)}
-                </div>
-                {project.language && (
-                  <div className="flex items-center gap-1">
-                    <div 
-                      className="w-3 h-3 rounded-full" 
-                      style={{ backgroundColor: getLanguageColor(project.language) }}
-                    />
-                    {project.language}
-                  </div>
-                )}
-              </div>
             </div>
-            
-            <div className="flex flex-col gap-3">
-              <Button asChild>
-                <a href={project.html_url} target="_blank" rel="noopener noreferrer">
-                  <Github className="mr-2 h-4 w-4" />
-                  View on GitHub
-                </a>
-              </Button>
-              <div className="flex gap-2">
-                <Button variant="outline" size="sm" asChild>
-                  <a href={project.clone_url} target="_blank" rel="noopener noreferrer">
-                    <Download className="mr-2 h-4 w-4" />
-                    Clone
-                  </a>
-                </Button>
-                {project.release_info?.latest_release && (
-                  <Button variant="outline" size="sm" asChild>
-                    <a 
-                      href={`${project.html_url}/releases`} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                    >
-                      <Tag className="mr-2 h-4 w-4" />
-                      {project.release_info.latest_release.tag_name}
-                    </a>
-                  </Button>
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      <div className="container max-w-6xl py-8">
-        <div className="grid lg:grid-cols-3 gap-8">
-          {/* Main Content */}
-          <div className="lg:col-span-2 space-y-8">
-            {/* README Summary */}
-            {project.readme && (
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <FileText className="h-5 w-5" />
-                    Project Overview
-                  </CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground leading-relaxed">
-                    {project.readme.summary}
-                  </p>
-                  <Button variant="outline" size="sm" className="mt-4" asChild>
-                    <a 
-                      href={`${project.html_url}#readme`} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
+            {/* Recent Activity */}
+            {relatedActivity.length > 0 && (
+              <div
+                className="rounded-xl p-5 sm:p-8"
+                style={{
+                  background: "var(--brand-bg-alt)",
+                  border: "1px solid var(--brand-border)",
+                }}
+              >
+                <h2 className="text-lg font-bold mb-4">Recent Activity</h2>
+                <div className="space-y-4">
+                  {relatedActivity.map((item, i) => (
+                    <div
+                      key={i}
+                      className="flex items-start gap-3 pb-4"
+                      style={{ borderBottom: i < relatedActivity.length - 1 ? "1px solid var(--brand-border)" : "none" }}
                     >
-                      Read Full README
-                      <ExternalLink className="ml-2 h-3 w-3" />
-                    </a>
-                  </Button>
-                </CardContent>
-              </Card>
-            )}
-
-            {/* Project Metrics */}
-            {metrics && (
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <BarChart3 className="h-5 w-5" />
-                    Project Health Metrics
-                  </CardTitle>
-                  <CardDescription>
-                    Automated analysis of code quality, activity, and maintenance
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <div className="space-y-4">
-                    <div>
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-sm font-medium">Overall Score</span>
-                        <span className="text-sm text-muted-foreground">{metrics.overall}/100</span>
+                      <div
+                        className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 mt-0.5"
+                        style={{
+                          background: "color-mix(in srgb, var(--brand-primary) 10%, transparent)",
+                        }}
+                      >
+                        {item.type === "claude-code" && <Bot className="w-4 h-4" style={{ color: "var(--brand-primary)" }} />}
+                        {item.type === "claude-web" && <MessageSquare className="w-4 h-4" style={{ color: "var(--brand-secondary)" }} />}
+                        {item.type === "github" && <GitBranch className="w-4 h-4" style={{ color: "var(--brand-steel)" }} />}
                       </div>
-                      <Progress value={metrics.overall} className="h-2" />
-                    </div>
-                    
-                    <Separator />
-                    
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <div className="flex items-center justify-between mb-2">
-                          <span className="text-sm">Code Quality</span>
-                          <span className="text-sm text-muted-foreground">{metrics.codeQuality}/100</span>
+                      <div className="flex-1 min-w-0">
+                        <div className="text-sm font-semibold">{item.title}</div>
+                        <div className="text-xs mt-0.5" style={{ color: "var(--brand-muted)" }}>
+                          {item.description}
                         </div>
-                        <Progress value={metrics.codeQuality} className="h-1" />
-                      </div>
-                      
-                      <div>
-                        <div className="flex items-center justify-between mb-2">
-                          <span className="text-sm">Activity</span>
-                          <span className="text-sm text-muted-foreground">{metrics.activity}/100</span>
+                        <div className="text-[11px] font-mono mt-1" style={{ color: "var(--brand-muted)" }}>
+                          {new Date(item.date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
                         </div>
-                        <Progress value={metrics.activity} className="h-1" />
-                      </div>
-                      
-                      <div>
-                        <div className="flex items-center justify-between mb-2">
-                          <span className="text-sm">Popularity</span>
-                          <span className="text-sm text-muted-foreground">{metrics.popularity}/100</span>
-                        </div>
-                        <Progress value={metrics.popularity} className="h-1" />
-                      </div>
-                      
-                      <div>
-                        <div className="flex items-center justify-between mb-2">
-                          <span className="text-sm">Maintenance</span>
-                          <span className="text-sm text-muted-foreground">{metrics.maintenance}/100</span>
-                        </div>
-                        <Progress value={metrics.maintenance} className="h-1" />
                       </div>
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
-            )}
-
-            {/* Language Statistics */}
-            {project.language_stats && (
-              <Card>
-                <CardHeader>
-                  <CardTitle>Language Breakdown</CardTitle>
-                  <CardDescription>
-                    Code composition by programming language
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-3">
-                    {Object.entries(project.language_stats.languages)
-                      .sort(([,a], [,b]) => b.percentage - a.percentage)
-                      .map(([language, stats]) => (
-                        <div key={language} className="flex items-center gap-3">
-                          <div 
-                            className="w-3 h-3 rounded-full flex-shrink-0" 
-                            style={{ backgroundColor: getLanguageColor(language) }}
-                          />
-                          <div className="flex-1">
-                            <div className="flex items-center justify-between mb-1">
-                              <span className="text-sm font-medium">{language}</span>
-                              <span className="text-sm text-muted-foreground">{stats.percentage}%</span>
-                            </div>
-                            <Progress value={stats.percentage} className="h-1" />
-                          </div>
-                        </div>
-                      ))}
-                  </div>
-                </CardContent>
-              </Card>
+                  ))}
+                </div>
+              </div>
             )}
           </div>
 
           {/* Sidebar */}
           <div className="space-y-6">
-            {/* Stats */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Repository Stats</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <Star className="h-4 w-4 text-yellow-500" />
-                    <span className="text-sm">Stars</span>
-                  </div>
-                  <span className="font-mono">{project.stargazers_count.toLocaleString()}</span>
+            {/* Stats card */}
+            <div
+              className="rounded-xl p-4 sm:p-6"
+              style={{
+                background: "var(--brand-bg-alt)",
+                border: "1px solid var(--brand-border)",
+              }}
+            >
+              <h3 className="text-sm font-bold uppercase tracking-widest mb-4" style={{ color: "var(--brand-muted)" }}>
+                Stats
+              </h3>
+              <div className="space-y-3">
+                <div className="flex justify-between text-sm">
+                  <span style={{ color: "var(--brand-muted)" }}>Total Messages</span>
+                  <span className="font-mono font-bold">{project.totalMessages.toLocaleString()}</span>
                 </div>
-                
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <GitFork className="h-4 w-4 text-primary" />
-                    <span className="text-sm">Forks</span>
-                  </div>
-                  <span className="font-mono">{project.forks_count.toLocaleString()}</span>
+                <div className="flex justify-between text-sm">
+                  <span style={{ color: "var(--brand-muted)" }}>Last Activity</span>
+                  <span className="font-mono text-xs">
+                    {new Date(project.lastActivity).toLocaleDateString("en-US", { month: "short", day: "numeric" })}
+                  </span>
                 </div>
-                
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <Eye className="h-4 w-4 text-primary" />
-                    <span className="text-sm">Watchers</span>
-                  </div>
-                  <span className="font-mono">{project.watchers_count.toLocaleString()}</span>
-                </div>
-                
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <Activity className="h-4 w-4 text-green-500" />
-                    <span className="text-sm">Open Issues</span>
-                  </div>
-                  <span className="font-mono">{project.open_issues_count.toLocaleString()}</span>
-                </div>
-                
-                <Separator />
-                
-                <div className="text-xs text-muted-foreground">
-                  <div>Repository size: {(project.size / 1024).toFixed(1)} MB</div>
-                  <div>Default branch: {project.default_branch}</div>
-                  {project.license && (
-                    <div>License: {project.license.name}</div>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
 
-            {/* Recent Activity */}
-            {project.commit_stats && (
-              <Card>
-                <CardHeader>
-                  <CardTitle>Recent Activity</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm">Commits this week</span>
-                    <span className="font-mono">{project.commit_stats.commit_frequency}</span>
-                  </div>
-                  
-                  {project.commit_stats.last_commit && (
-                    <div className="space-y-2">
-                      <div className="text-sm font-medium">Latest Commit</div>
-                      <div className="text-xs text-muted-foreground">
-                        <div className="font-mono bg-muted p-2 rounded text-xs">
-                          {project.commit_stats.last_commit.message.slice(0, 50)}
-                          {project.commit_stats.last_commit.message.length > 50 && '...'}
-                        </div>
-                        <div className="mt-1">
-                          by {project.commit_stats.last_commit.author} • {formatDate(project.commit_stats.last_commit.date)}
-                        </div>
+            {/* Sources card */}
+            <div
+              className="rounded-xl p-4 sm:p-6"
+              style={{
+                background: "var(--brand-bg-alt)",
+                border: "1px solid var(--brand-border)",
+              }}
+            >
+              <h3 className="text-sm font-bold uppercase tracking-widest mb-4" style={{ color: "var(--brand-muted)" }}>
+                Sources
+              </h3>
+              <div className="space-y-3">
+                {project.sources.claudeCode && (
+                  <div className="flex items-center gap-2">
+                    <Bot className="w-4 h-4" style={{ color: "var(--brand-primary)" }} />
+                    <div className="flex-1">
+                      <div className="text-sm font-semibold">Claude Code</div>
+                      <div className="text-[11px] font-mono" style={{ color: "var(--brand-muted)" }}>
+                        {project.sources.claudeCode.totalSessions} sessions · {project.sources.claudeCode.totalMessages} msgs
                       </div>
                     </div>
-                  )}
-                </CardContent>
-              </Card>
-            )}
-
-            {/* Releases */}
-            {project.release_info && project.release_info.total_releases > 0 && (
-              <Card>
-                <CardHeader>
-                  <CardTitle>Releases</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm">Total releases</span>
-                    <span className="font-mono">{project.release_info.total_releases}</span>
                   </div>
-                  
-                  <div className="space-y-2">
-                    <div className="text-sm font-medium">Latest Release</div>
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-2">
-                        <Badge variant="outline" className="text-xs">
-                          {project.release_info.latest_release.tag_name}
-                        </Badge>
-                        <span className="text-xs text-muted-foreground">
-                          {formatDate(project.release_info.latest_release.published_at)}
-                        </span>
+                )}
+                {project.sources.claudeWeb && (
+                  <div className="flex items-center gap-2">
+                    <MessageSquare className="w-4 h-4" style={{ color: "var(--brand-secondary)" }} />
+                    <div className="flex-1">
+                      <div className="text-sm font-semibold">Claude Web</div>
+                      <div className="text-[11px] font-mono" style={{ color: "var(--brand-muted)" }}>
+                        {project.sources.claudeWeb.conversationCount} convos · {project.sources.claudeWeb.totalMessages} msgs
                       </div>
-                      <div className="text-sm">{project.release_info.latest_release.name}</div>
                     </div>
                   </div>
-                  
-                  <Button variant="outline" size="sm" className="w-full" asChild>
-                    <a 
-                      href={`${project.html_url}/releases`} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                    >
-                      View All Releases
-                      <ExternalLink className="ml-2 h-3 w-3" />
-                    </a>
-                  </Button>
-                </CardContent>
-              </Card>
-            )}
+                )}
+                {project.sources.github && (
+                  <div className="flex items-center gap-2">
+                    <GitBranch className="w-4 h-4" style={{ color: "var(--brand-steel)" }} />
+                    <div className="flex-1">
+                      <div className="text-sm font-semibold">GitHub</div>
+                      <div className="text-[11px] font-mono" style={{ color: "var(--brand-muted)" }}>
+                        {project.sources.github.repo} · {project.sources.github.language}
+                      </div>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  );
+  )
 }

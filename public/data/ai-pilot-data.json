@@ -1,0 +1,1279 @@
+{
+  "generated": "2026-02-16T18:38:46.886647",
+  "pipelineVersion": "1.0.0",
+  "license": {
+    "number": "AIP-2026-0528",
+    "class": "ATP",
+    "issued": "2025-12-11",
+    "expires": "NEVER",
+    "totalSessions": 528,
+    "totalMessages": 388712,
+    "totalCostUSD": 252.16,
+    "totalInputTokens": 5419327,
+    "totalOutputTokens": 9569813,
+    "totalCacheTokens": 10742517439,
+    "modelCount": 3,
+    "projectCount": 37
+  },
+  "typeRatings": [
+    {
+      "modelId": "claude-opus-4-5-20251101",
+      "displayName": "Opus 4.5",
+      "inputTokens": 4921119,
+      "outputTokens": 6909508,
+      "cacheReadTokens": 8792362919,
+      "cacheCreationTokens": 715661811,
+      "costUSD": 0,
+      "costShare": 72.2,
+      "proficiency": "Expert",
+      "contextWindow": 0,
+      "maxOutputTokens": 0
+    },
+    {
+      "modelId": "claude-opus-4-6",
+      "displayName": "Opus 4.6",
+      "inputTokens": 478280,
+      "outputTokens": 2624926,
+      "cacheReadTokens": 1928725353,
+      "cacheCreationTokens": 84594862,
+      "costUSD": 0,
+      "costShare": 27.4,
+      "proficiency": "Proficient",
+      "contextWindow": 0,
+      "maxOutputTokens": 0
+    },
+    {
+      "modelId": "claude-sonnet-4-5-20250929",
+      "displayName": "Sonnet 4.5",
+      "inputTokens": 19928,
+      "outputTokens": 35379,
+      "cacheReadTokens": 21429167,
+      "cacheCreationTokens": 3792778,
+      "costUSD": 0,
+      "costShare": 0.4,
+      "proficiency": "Exposure",
+      "contextWindow": 0,
+      "maxOutputTokens": 0
+    },
+    {
+      "modelId": "claude-3-7-sonnet-20250219",
+      "displayName": "Sonnet 3.7",
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "cacheReadTokens": 0,
+      "cacheCreationTokens": 0,
+      "costUSD": 252.16,
+      "costShare": 0,
+      "proficiency": "Familiar",
+      "contextWindow": 0,
+      "maxOutputTokens": 0
+    }
+  ],
+  "activityHeatmap": [
+    {
+      "date": "2025-12-11",
+      "count": 109,
+      "sessions": 2,
+      "toolCalls": 42,
+      "intensity": 1
+    },
+    {
+      "date": "2025-12-19",
+      "count": 2945,
+      "sessions": 1,
+      "toolCalls": 933,
+      "intensity": 1
+    },
+    {
+      "date": "2025-12-20",
+      "count": 4678,
+      "sessions": 2,
+      "toolCalls": 1366,
+      "intensity": 1
+    },
+    {
+      "date": "2025-12-21",
+      "count": 646,
+      "sessions": 2,
+      "toolCalls": 218,
+      "intensity": 1
+    },
+    {
+      "date": "2025-12-23",
+      "count": 125,
+      "sessions": 1,
+      "toolCalls": 38,
+      "intensity": 1
+    },
+    {
+      "date": "2025-12-24",
+      "count": 847,
+      "sessions": 1,
+      "toolCalls": 267,
+      "intensity": 1
+    },
+    {
+      "date": "2025-12-25",
+      "count": 6385,
+      "sessions": 2,
+      "toolCalls": 1828,
+      "intensity": 1
+    },
+    {
+      "date": "2025-12-26",
+      "count": 9,
+      "sessions": 1,
+      "toolCalls": 0,
+      "intensity": 1
+    },
+    {
+      "date": "2025-12-27",
+      "count": 39,
+      "sessions": 2,
+      "toolCalls": 10,
+      "intensity": 1
+    },
+    {
+      "date": "2025-12-30",
+      "count": 6,
+      "sessions": 2,
+      "toolCalls": 0,
+      "intensity": 1
+    },
+    {
+      "date": "2025-12-31",
+      "count": 7977,
+      "sessions": 17,
+      "toolCalls": 2451,
+      "intensity": 1
+    },
+    {
+      "date": "2026-01-01",
+      "count": 733,
+      "sessions": 1,
+      "toolCalls": 223,
+      "intensity": 1
+    },
+    {
+      "date": "2026-01-02",
+      "count": 2591,
+      "sessions": 5,
+      "toolCalls": 792,
+      "intensity": 1
+    },
+    {
+      "date": "2026-01-03",
+      "count": 5600,
+      "sessions": 5,
+      "toolCalls": 1709,
+      "intensity": 1
+    },
+    {
+      "date": "2026-01-05",
+      "count": 843,
+      "sessions": 21,
+      "toolCalls": 219,
+      "intensity": 1
+    },
+    {
+      "date": "2026-01-06",
+      "count": 11370,
+      "sessions": 33,
+      "toolCalls": 3356,
+      "intensity": 2
+    },
+    {
+      "date": "2026-01-07",
+      "count": 2996,
+      "sessions": 7,
+      "toolCalls": 872,
+      "intensity": 1
+    },
+    {
+      "date": "2026-01-08",
+      "count": 4088,
+      "sessions": 12,
+      "toolCalls": 1190,
+      "intensity": 1
+    },
+    {
+      "date": "2026-01-09",
+      "count": 3110,
+      "sessions": 5,
+      "toolCalls": 915,
+      "intensity": 1
+    },
+    {
+      "date": "2026-01-10",
+      "count": 394,
+      "sessions": 2,
+      "toolCalls": 121,
+      "intensity": 1
+    },
+    {
+      "date": "2026-01-11",
+      "count": 4981,
+      "sessions": 12,
+      "toolCalls": 1508,
+      "intensity": 1
+    },
+    {
+      "date": "2026-01-12",
+      "count": 2928,
+      "sessions": 8,
+      "toolCalls": 860,
+      "intensity": 1
+    },
+    {
+      "date": "2026-01-13",
+      "count": 1621,
+      "sessions": 6,
+      "toolCalls": 472,
+      "intensity": 1
+    },
+    {
+      "date": "2026-01-14",
+      "count": 1732,
+      "sessions": 4,
+      "toolCalls": 507,
+      "intensity": 1
+    },
+    {
+      "date": "2026-01-15",
+      "count": 2682,
+      "sessions": 4,
+      "toolCalls": 809,
+      "intensity": 1
+    },
+    {
+      "date": "2026-01-16",
+      "count": 22818,
+      "sessions": 23,
+      "toolCalls": 4607,
+      "intensity": 3
+    },
+    {
+      "date": "2026-01-17",
+      "count": 5907,
+      "sessions": 5,
+      "toolCalls": 854,
+      "intensity": 1
+    },
+    {
+      "date": "2026-01-18",
+      "count": 4696,
+      "sessions": 12,
+      "toolCalls": 996,
+      "intensity": 1
+    },
+    {
+      "date": "2026-01-19",
+      "count": 392,
+      "sessions": 3,
+      "toolCalls": 78,
+      "intensity": 1
+    },
+    {
+      "date": "2026-01-20",
+      "count": 2018,
+      "sessions": 3,
+      "toolCalls": 288,
+      "intensity": 1
+    },
+    {
+      "date": "2026-01-21",
+      "count": 11490,
+      "sessions": 23,
+      "toolCalls": 1348,
+      "intensity": 2
+    },
+    {
+      "date": "2026-01-22",
+      "count": 15211,
+      "sessions": 14,
+      "toolCalls": 2241,
+      "intensity": 2
+    },
+    {
+      "date": "2026-01-23",
+      "count": 6665,
+      "sessions": 7,
+      "toolCalls": 1258,
+      "intensity": 1
+    },
+    {
+      "date": "2026-01-24",
+      "count": 1857,
+      "sessions": 1,
+      "toolCalls": 364,
+      "intensity": 1
+    },
+    {
+      "date": "2026-01-25",
+      "count": 1292,
+      "sessions": 2,
+      "toolCalls": 296,
+      "intensity": 1
+    },
+    {
+      "date": "2026-01-26",
+      "count": 12231,
+      "sessions": 5,
+      "toolCalls": 744,
+      "intensity": 2
+    },
+    {
+      "date": "2026-01-27",
+      "count": 34661,
+      "sessions": 34,
+      "toolCalls": 3835,
+      "intensity": 4
+    },
+    {
+      "date": "2026-01-28",
+      "count": 18776,
+      "sessions": 21,
+      "toolCalls": 2839,
+      "intensity": 3
+    },
+    {
+      "date": "2026-01-29",
+      "count": 10802,
+      "sessions": 8,
+      "toolCalls": 1442,
+      "intensity": 2
+    },
+    {
+      "date": "2026-01-30",
+      "count": 3313,
+      "sessions": 6,
+      "toolCalls": 511,
+      "intensity": 1
+    },
+    {
+      "date": "2026-01-31",
+      "count": 7523,
+      "sessions": 11,
+      "toolCalls": 1407,
+      "intensity": 1
+    },
+    {
+      "date": "2026-02-01",
+      "count": 5908,
+      "sessions": 21,
+      "toolCalls": 1107,
+      "intensity": 1
+    },
+    {
+      "date": "2026-02-02",
+      "count": 6195,
+      "sessions": 8,
+      "toolCalls": 1120,
+      "intensity": 1
+    },
+    {
+      "date": "2026-02-03",
+      "count": 13793,
+      "sessions": 5,
+      "toolCalls": 1383,
+      "intensity": 2
+    },
+    {
+      "date": "2026-02-04",
+      "count": 4318,
+      "sessions": 2,
+      "toolCalls": 757,
+      "intensity": 1
+    },
+    {
+      "date": "2026-02-05",
+      "count": 4216,
+      "sessions": 7,
+      "toolCalls": 621,
+      "intensity": 1
+    },
+    {
+      "date": "2026-02-06",
+      "count": 21047,
+      "sessions": 27,
+      "toolCalls": 2414,
+      "intensity": 3
+    },
+    {
+      "date": "2026-02-07",
+      "count": 6384,
+      "sessions": 14,
+      "toolCalls": 964,
+      "intensity": 1
+    },
+    {
+      "date": "2026-02-08",
+      "count": 8356,
+      "sessions": 13,
+      "toolCalls": 1110,
+      "intensity": 1
+    },
+    {
+      "date": "2026-02-09",
+      "count": 21544,
+      "sessions": 21,
+      "toolCalls": 2389,
+      "intensity": 3
+    },
+    {
+      "date": "2026-02-10",
+      "count": 22658,
+      "sessions": 16,
+      "toolCalls": 2973,
+      "intensity": 3
+    },
+    {
+      "date": "2026-02-11",
+      "count": 3691,
+      "sessions": 7,
+      "toolCalls": 582,
+      "intensity": 1
+    },
+    {
+      "date": "2026-02-12",
+      "count": 12148,
+      "sessions": 15,
+      "toolCalls": 1468,
+      "intensity": 2
+    },
+    {
+      "date": "2026-02-13",
+      "count": 9513,
+      "sessions": 11,
+      "toolCalls": 906,
+      "intensity": 2
+    },
+    {
+      "date": "2026-02-14",
+      "count": 7271,
+      "sessions": 9,
+      "toolCalls": 668,
+      "intensity": 1
+    },
+    {
+      "date": "2026-02-15",
+      "count": 12583,
+      "sessions": 16,
+      "toolCalls": 1521,
+      "intensity": 2
+    }
+  ],
+  "hourlyDistribution": {
+    "hours": [
+      {
+        "hour": 0,
+        "label": "00:00",
+        "count": 15
+      },
+      {
+        "hour": 1,
+        "label": "01:00",
+        "count": 3
+      },
+      {
+        "hour": 2,
+        "label": "02:00",
+        "count": 5
+      },
+      {
+        "hour": 3,
+        "label": "03:00",
+        "count": 3
+      },
+      {
+        "hour": 4,
+        "label": "04:00",
+        "count": 3
+      },
+      {
+        "hour": 5,
+        "label": "05:00",
+        "count": 4
+      },
+      {
+        "hour": 6,
+        "label": "06:00",
+        "count": 0
+      },
+      {
+        "hour": 7,
+        "label": "07:00",
+        "count": 2
+      },
+      {
+        "hour": 8,
+        "label": "08:00",
+        "count": 2
+      },
+      {
+        "hour": 9,
+        "label": "09:00",
+        "count": 2
+      },
+      {
+        "hour": 10,
+        "label": "10:00",
+        "count": 20
+      },
+      {
+        "hour": 11,
+        "label": "11:00",
+        "count": 29
+      },
+      {
+        "hour": 12,
+        "label": "12:00",
+        "count": 38
+      },
+      {
+        "hour": 13,
+        "label": "13:00",
+        "count": 36
+      },
+      {
+        "hour": 14,
+        "label": "14:00",
+        "count": 70
+      },
+      {
+        "hour": 15,
+        "label": "15:00",
+        "count": 50
+      },
+      {
+        "hour": 16,
+        "label": "16:00",
+        "count": 42
+      },
+      {
+        "hour": 17,
+        "label": "17:00",
+        "count": 26
+      },
+      {
+        "hour": 18,
+        "label": "18:00",
+        "count": 23
+      },
+      {
+        "hour": 19,
+        "label": "19:00",
+        "count": 32
+      },
+      {
+        "hour": 20,
+        "label": "20:00",
+        "count": 28
+      },
+      {
+        "hour": 21,
+        "label": "21:00",
+        "count": 37
+      },
+      {
+        "hour": 22,
+        "label": "22:00",
+        "count": 39
+      },
+      {
+        "hour": 23,
+        "label": "23:00",
+        "count": 19
+      }
+    ],
+    "peakHour": 14,
+    "peakCount": 70
+  },
+  "instrumentRatings": {
+    "Data Engineering": {
+      "score": 42,
+      "hits": 614,
+      "matchedKeywords": [
+        "sql",
+        "etl",
+        "duckdb",
+        "snowflake",
+        "pipeline",
+        "warehouse",
+        "kafka",
+        "delta"
+      ],
+      "keywordCoverage": 60.0
+    },
+    "Frontend": {
+      "score": 56,
+      "hits": 929,
+      "matchedKeywords": [
+        "react",
+        "next.js",
+        "tailwind",
+        "typescript",
+        "d3",
+        "css",
+        "html",
+        "framer motion"
+      ],
+      "keywordCoverage": 77.3
+    },
+    "Backend": {
+      "score": 88,
+      "hits": 2548,
+      "matchedKeywords": [
+        "fastapi",
+        "python",
+        "node",
+        "express",
+        "api",
+        "rest",
+        "django",
+        "flask"
+      ],
+      "keywordCoverage": 77.8
+    },
+    "DevOps": {
+      "score": 39,
+      "hits": 250,
+      "matchedKeywords": [
+        "docker",
+        "nginx",
+        "systemd",
+        "ci/cd",
+        "github actions",
+        "helm",
+        "deploy",
+        "monitoring"
+      ],
+      "keywordCoverage": 69.6
+    },
+    "IoT / Edge": {
+      "score": 35,
+      "hits": 486,
+      "matchedKeywords": [
+        "raspberry pi",
+        "arduino",
+        "mesh",
+        "lora",
+        "edge computing",
+        "iot",
+        "gpio",
+        "spi"
+      ],
+      "keywordCoverage": 52.6
+    },
+    "AI / ML": {
+      "score": 77,
+      "hits": 2354,
+      "matchedKeywords": [
+        "llm",
+        "ollama",
+        "embeddings",
+        "vector",
+        "rag",
+        "gpt",
+        "claude",
+        "openai"
+      ],
+      "keywordCoverage": 62.5
+    },
+    "Systems": {
+      "score": 58,
+      "hits": 427,
+      "matchedKeywords": [
+        "c/c++",
+        "rust",
+        "protocol",
+        "low-level",
+        "assembly",
+        "kernel",
+        "memory",
+        "performance"
+      ],
+      "keywordCoverage": 100.0
+    },
+    "Security": {
+      "score": 62,
+      "hits": 657,
+      "matchedKeywords": [
+        "tls",
+        "ed25519",
+        "trng",
+        "crypto",
+        "encryption",
+        "certificate",
+        "auth",
+        "oauth"
+      ],
+      "keywordCoverage": 100.0
+    }
+  },
+  "competencyRadar": [
+    {
+      "axis": "Planning",
+      "score": 69,
+      "detail": "72 plans created"
+    },
+    {
+      "axis": "Tool Mastery",
+      "score": 95,
+      "detail": "26 tools, 9318 calls"
+    },
+    {
+      "axis": "Debugging",
+      "score": 95,
+      "detail": "6015 debug tool calls"
+    },
+    {
+      "axis": "Architecture",
+      "score": 95,
+      "detail": "37 projects designed"
+    },
+    {
+      "axis": "Iteration",
+      "score": 68,
+      "detail": "736 msgs/session avg"
+    },
+    {
+      "axis": "Multi-Project",
+      "score": 94,
+      "detail": "0 context switches"
+    }
+  ],
+  "pilotingStyle": {
+    "directive": 39,
+    "collaborative": 61,
+    "planFirst": 69,
+    "iterate": 31,
+    "label": "Strategist",
+    "description": "Designs detailed plans then collaborates on implementation nuances."
+  },
+  "missionLog": [
+    {
+      "name": "frontend",
+      "sessions": 13,
+      "messages": 2873,
+      "complexity": 10,
+      "domain": "General",
+      "technologies": [],
+      "status": "archived",
+      "firstActive": "1970-01-21",
+      "lastActive": "1970-01-21"
+    },
+    {
+      "name": "maild",
+      "sessions": 6,
+      "messages": 1317,
+      "complexity": 10,
+      "domain": "General",
+      "technologies": [],
+      "status": "archived",
+      "firstActive": "1970-01-21",
+      "lastActive": "1970-01-21"
+    },
+    {
+      "name": "maild-exec",
+      "sessions": 6,
+      "messages": 1181,
+      "complexity": 10,
+      "domain": "General",
+      "technologies": [],
+      "status": "archived",
+      "firstActive": "1970-01-21",
+      "lastActive": "1970-01-21"
+    },
+    {
+      "name": "mapr",
+      "sessions": 4,
+      "messages": 873,
+      "complexity": 9,
+      "domain": "General",
+      "technologies": [],
+      "status": "archived",
+      "firstActive": "1970-01-20",
+      "lastActive": "1970-01-21"
+    },
+    {
+      "name": "maild-ui-fasthtml",
+      "sessions": 4,
+      "messages": 644,
+      "complexity": 9,
+      "domain": "General",
+      "technologies": [],
+      "status": "archived",
+      "firstActive": "1970-01-21",
+      "lastActive": "1970-01-21"
+    },
+    {
+      "name": "pocket",
+      "sessions": 2,
+      "messages": 557,
+      "complexity": 9,
+      "domain": "General",
+      "technologies": [],
+      "status": "archived",
+      "firstActive": "1970-01-21",
+      "lastActive": "1970-01-21"
+    },
+    {
+      "name": "nominate-www",
+      "sessions": 2,
+      "messages": 421,
+      "complexity": 8,
+      "domain": "General",
+      "technologies": [],
+      "status": "archived",
+      "firstActive": "1970-01-21",
+      "lastActive": "1970-01-21"
+    },
+    {
+      "name": "textcast",
+      "sessions": 3,
+      "messages": 412,
+      "complexity": 8,
+      "domain": "General",
+      "technologies": [],
+      "status": "archived",
+      "firstActive": "1970-01-20",
+      "lastActive": "1970-01-21"
+    },
+    {
+      "name": "meshnet",
+      "sessions": 2,
+      "messages": 401,
+      "complexity": 8,
+      "domain": "General",
+      "technologies": [],
+      "status": "archived",
+      "firstActive": "1970-01-20",
+      "lastActive": "1970-01-21"
+    },
+    {
+      "name": "backend",
+      "sessions": 2,
+      "messages": 381,
+      "complexity": 8,
+      "domain": "General",
+      "technologies": [],
+      "status": "archived",
+      "firstActive": "1970-01-21",
+      "lastActive": "1970-01-21"
+    },
+    {
+      "name": "curly",
+      "sessions": 1,
+      "messages": 253,
+      "complexity": 7,
+      "domain": "General",
+      "technologies": [],
+      "status": "archived",
+      "firstActive": "1970-01-20",
+      "lastActive": "1970-01-20"
+    },
+    {
+      "name": "invoice-hunter",
+      "sessions": 10,
+      "messages": 231,
+      "complexity": 7,
+      "domain": "General",
+      "technologies": [],
+      "status": "archived",
+      "firstActive": "1970-01-20",
+      "lastActive": "1970-01-21"
+    },
+    {
+      "name": "maild-ui",
+      "sessions": 1,
+      "messages": 211,
+      "complexity": 7,
+      "domain": "General",
+      "technologies": [],
+      "status": "archived",
+      "firstActive": "1970-01-21",
+      "lastActive": "1970-01-21"
+    },
+    {
+      "name": "routes",
+      "sessions": 1,
+      "messages": 209,
+      "complexity": 7,
+      "domain": "General",
+      "technologies": [],
+      "status": "archived",
+      "firstActive": "1970-01-21",
+      "lastActive": "1970-01-21"
+    },
+    {
+      "name": "myfw",
+      "sessions": 4,
+      "messages": 199,
+      "complexity": 7,
+      "domain": "Backend",
+      "technologies": [
+        "Python",
+        "Node.js",
+        "FastAPI",
+        "Bash",
+        "JSON"
+      ],
+      "status": "archived",
+      "firstActive": "1970-01-21",
+      "lastActive": "1970-01-21"
+    },
+    {
+      "name": "quantifi",
+      "sessions": 1,
+      "messages": 145,
+      "complexity": 7,
+      "domain": "General",
+      "technologies": [],
+      "status": "archived",
+      "firstActive": "1970-01-21",
+      "lastActive": "1970-01-21"
+    },
+    {
+      "name": "v2",
+      "sessions": 1,
+      "messages": 132,
+      "complexity": 7,
+      "domain": "General",
+      "technologies": [],
+      "status": "archived",
+      "firstActive": "1970-01-21",
+      "lastActive": "1970-01-21"
+    },
+    {
+      "name": "gmail-mirror",
+      "sessions": 1,
+      "messages": 99,
+      "complexity": 6,
+      "domain": "General",
+      "technologies": [],
+      "status": "archived",
+      "firstActive": "1970-01-21",
+      "lastActive": "1970-01-21"
+    },
+    {
+      "name": "overwatch",
+      "sessions": 1,
+      "messages": 95,
+      "complexity": 6,
+      "domain": "General",
+      "technologies": [],
+      "status": "archived",
+      "firstActive": "1970-01-21",
+      "lastActive": "1970-01-21"
+    },
+    {
+      "name": "gratefulpi",
+      "sessions": 2,
+      "messages": 87,
+      "complexity": 6,
+      "domain": "General",
+      "technologies": [
+        "Python",
+        "JSON",
+        "Pytest"
+      ],
+      "status": "archived",
+      "firstActive": "1970-01-20",
+      "lastActive": "1970-01-20"
+    }
+  ],
+  "tokenEconomy": {
+    "totalInputTokens": 5419327,
+    "totalOutputTokens": 9569813,
+    "totalCacheReadTokens": 10742517439,
+    "totalCacheCreateTokens": 804049451,
+    "totalCostUSD": 0,
+    "cacheEfficiency": 93.0,
+    "costPerSession": 0.0,
+    "webSearches": 0,
+    "dailyTokens": [
+      {
+        "date": "2026-01-17",
+        "tokens": 119097
+      },
+      {
+        "date": "2026-01-18",
+        "tokens": 186683
+      },
+      {
+        "date": "2026-01-19",
+        "tokens": 1566
+      },
+      {
+        "date": "2026-01-20",
+        "tokens": 11024
+      },
+      {
+        "date": "2026-01-21",
+        "tokens": 200562
+      },
+      {
+        "date": "2026-01-22",
+        "tokens": 199415
+      },
+      {
+        "date": "2026-01-23",
+        "tokens": 182655
+      },
+      {
+        "date": "2026-01-24",
+        "tokens": 16531
+      },
+      {
+        "date": "2026-01-25",
+        "tokens": 7532
+      },
+      {
+        "date": "2026-01-26",
+        "tokens": 67336
+      },
+      {
+        "date": "2026-01-27",
+        "tokens": 443760
+      },
+      {
+        "date": "2026-01-28",
+        "tokens": 461039
+      },
+      {
+        "date": "2026-01-29",
+        "tokens": 55160
+      },
+      {
+        "date": "2026-01-30",
+        "tokens": 12930
+      },
+      {
+        "date": "2026-01-31",
+        "tokens": 38192
+      },
+      {
+        "date": "2026-02-01",
+        "tokens": 34302
+      },
+      {
+        "date": "2026-02-02",
+        "tokens": 58965
+      },
+      {
+        "date": "2026-02-03",
+        "tokens": 61788
+      },
+      {
+        "date": "2026-02-04",
+        "tokens": 23094
+      },
+      {
+        "date": "2026-02-05",
+        "tokens": 159110
+      },
+      {
+        "date": "2026-02-06",
+        "tokens": 458179
+      },
+      {
+        "date": "2026-02-07",
+        "tokens": 218622
+      },
+      {
+        "date": "2026-02-08",
+        "tokens": 237004
+      },
+      {
+        "date": "2026-02-09",
+        "tokens": 420383
+      },
+      {
+        "date": "2026-02-10",
+        "tokens": 583431
+      },
+      {
+        "date": "2026-02-11",
+        "tokens": 101533
+      },
+      {
+        "date": "2026-02-12",
+        "tokens": 312661
+      },
+      {
+        "date": "2026-02-13",
+        "tokens": 170248
+      },
+      {
+        "date": "2026-02-14",
+        "tokens": 124825
+      },
+      {
+        "date": "2026-02-15",
+        "tokens": 405318
+      }
+    ]
+  },
+  "streaks": {
+    "current": 42,
+    "longest": 42,
+    "peakDay": "2026-01-27",
+    "peakDayCount": 34661,
+    "peakWeek": "2026-01-26",
+    "peakWeekCount": 93214,
+    "totalActiveDays": 56
+  },
+  "skillsCloud": [
+    {
+      "name": "Go",
+      "count": 485,
+      "category": "General"
+    },
+    {
+      "name": "Git",
+      "count": 350,
+      "category": "General"
+    },
+    {
+      "name": "Python",
+      "count": 244,
+      "category": "Backend"
+    },
+    {
+      "name": "JSON",
+      "count": 225,
+      "category": "General"
+    },
+    {
+      "name": "Bash",
+      "count": 189,
+      "category": "General"
+    },
+    {
+      "name": "FastAPI",
+      "count": 172,
+      "category": "Backend"
+    },
+    {
+      "name": "Nginx",
+      "count": 149,
+      "category": "DevOps"
+    },
+    {
+      "name": "systemd",
+      "count": 131,
+      "category": "DevOps"
+    },
+    {
+      "name": "Pytest",
+      "count": 112,
+      "category": "General"
+    },
+    {
+      "name": "TOML",
+      "count": 99,
+      "category": "General"
+    },
+    {
+      "name": "DuckDB",
+      "count": 94,
+      "category": "Data Engineering"
+    },
+    {
+      "name": "Pydantic",
+      "count": 92,
+      "category": "General"
+    },
+    {
+      "name": "Ollama",
+      "count": 64,
+      "category": "AI / ML"
+    },
+    {
+      "name": "HTML",
+      "count": 60,
+      "category": "Frontend"
+    },
+    {
+      "name": "YAML",
+      "count": 47,
+      "category": "General"
+    },
+    {
+      "name": "WebSocket",
+      "count": 47,
+      "category": "Backend"
+    },
+    {
+      "name": "CSS",
+      "count": 42,
+      "category": "Frontend"
+    },
+    {
+      "name": "React",
+      "count": 41,
+      "category": "Frontend"
+    },
+    {
+      "name": "Redis",
+      "count": 41,
+      "category": "General"
+    },
+    {
+      "name": "Snowflake",
+      "count": 40,
+      "category": "Data Engineering"
+    },
+    {
+      "name": "Markdown",
+      "count": 38,
+      "category": "General"
+    },
+    {
+      "name": "TypeScript",
+      "count": 33,
+      "category": "Frontend"
+    },
+    {
+      "name": "SQLite",
+      "count": 32,
+      "category": "Data Engineering"
+    },
+    {
+      "name": "PostgreSQL",
+      "count": 30,
+      "category": "General"
+    },
+    {
+      "name": "LoRa",
+      "count": 29,
+      "category": "IoT / Edge"
+    },
+    {
+      "name": "CSV",
+      "count": 27,
+      "category": "General"
+    },
+    {
+      "name": "Docker",
+      "count": 23,
+      "category": "DevOps"
+    },
+    {
+      "name": "Next.js",
+      "count": 22,
+      "category": "Frontend"
+    },
+    {
+      "name": "SSH",
+      "count": 22,
+      "category": "DevOps"
+    },
+    {
+      "name": "JavaScript",
+      "count": 22,
+      "category": "General"
+    }
+  ]
+}

@@ -1,19 +1,17 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import type { TypeRating } from "./types";
 
 interface TypeRatingsProps {
   ratings: TypeRating[];
 }
 
-const PROFICIENCY_COLORS: Record<string, string> = {
-  Expert: "bg-primary text-primary-foreground",
-  Proficient: "bg-teal-100 text-teal-800",
-  Familiar: "bg-blue-100 text-blue-800",
-  Exposure: "bg-slate-100 text-slate-700",
+const PROFICIENCY_COLORS: Record<string, { bg: string; text: string }> = {
+  Expert: { bg: "color-mix(in srgb, var(--brand-primary) 15%, transparent)", text: "var(--brand-primary)" },
+  Proficient: { bg: "color-mix(in srgb, var(--brand-secondary) 15%, transparent)", text: "var(--brand-secondary)" },
+  Familiar: { bg: "color-mix(in srgb, var(--brand-info) 15%, transparent)", text: "var(--brand-info)" },
+  Exposure: { bg: "color-mix(in srgb, var(--brand-steel) 15%, transparent)", text: "var(--brand-steel)" },
 };
 
 function formatTokens(n: number): string {
@@ -25,68 +23,55 @@ function formatTokens(n: number): string {
 
 export function TypeRatings({ ratings }: TypeRatingsProps) {
   return (
-    <div className="space-y-4">
-      <h3 className="text-sm font-medium text-muted-foreground">
+    <div className="space-y-3 sm:space-y-4">
+      <h3 className="text-xs sm:text-sm font-medium" style={{ color: "var(--brand-muted)" }}>
         Model Type Ratings
       </h3>
-      <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
-        {ratings.map((rating, i) => (
-          <motion.div
-            key={rating.modelId}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: i * 0.1 }}
-          >
-            <Card className="h-full">
-              <CardContent className="p-4">
-                <div className="flex items-start justify-between mb-3">
-                  <div>
-                    <h4 className="font-mono text-sm font-bold">
-                      {rating.displayName}
-                    </h4>
-                    <p className="text-[10px] text-muted-foreground font-mono truncate max-w-[180px]">
+      <div className="grid gap-2 sm:gap-3 grid-cols-2 lg:grid-cols-3">
+        {ratings.map((rating, i) => {
+          const prof = PROFICIENCY_COLORS[rating.proficiency] || PROFICIENCY_COLORS.Exposure;
+          return (
+            <motion.div
+              key={rating.modelId}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: i * 0.1 }}
+              className="rounded-xl h-full"
+              style={{ background: "var(--brand-bg-alt)", border: "1px solid var(--brand-border)" }}
+            >
+              <div className="p-3 sm:p-4">
+                <div className="flex items-start justify-between mb-2 sm:mb-3">
+                  <div className="min-w-0">
+                    <h4 className="font-mono text-xs sm:text-sm font-bold truncate">{rating.displayName}</h4>
+                    <p className="text-[9px] sm:text-[10px] font-mono truncate" style={{ color: "var(--brand-muted)" }}>
                       {rating.modelId}
                     </p>
                   </div>
-                  <Badge
-                    className={`text-[10px] ${PROFICIENCY_COLORS[rating.proficiency] || ""}`}
+                  <span
+                    className="text-[9px] sm:text-[10px] font-semibold px-1.5 sm:px-2 py-0.5 rounded-full flex-shrink-0 ml-1"
+                    style={{ background: prof.bg, color: prof.text }}
                   >
                     {rating.proficiency}
-                  </Badge>
+                  </span>
                 </div>
 
                 {/* Circular progress ring */}
-                <div className="flex items-center justify-center my-3">
-                  <div className="relative w-20 h-20">
+                <div className="flex items-center justify-center my-2 sm:my-3">
+                  <div className="relative w-16 h-16 sm:w-20 sm:h-20">
                     <svg className="w-full h-full -rotate-90" viewBox="0 0 36 36">
-                      <circle
-                        cx="18"
-                        cy="18"
-                        r="15.5"
-                        fill="none"
-                        stroke="var(--color-muted)"
-                        strokeWidth="2.5"
-                      />
+                      <circle cx="18" cy="18" r="15.5" fill="none" stroke="var(--brand-border)" strokeWidth="2.5" />
                       <motion.circle
-                        cx="18"
-                        cy="18"
-                        r="15.5"
-                        fill="none"
-                        stroke="#0f4c75"
-                        strokeWidth="2.5"
-                        strokeLinecap="round"
+                        cx="18" cy="18" r="15.5" fill="none"
+                        stroke="var(--brand-primary)"
+                        strokeWidth="2.5" strokeLinecap="round"
                         strokeDasharray={`${rating.costShare * 0.974} 97.4`}
                         initial={{ strokeDasharray: "0 97.4" }}
-                        animate={{
-                          strokeDasharray: `${rating.costShare * 0.974} 97.4`,
-                        }}
+                        animate={{ strokeDasharray: `${rating.costShare * 0.974} 97.4` }}
                         transition={{ duration: 1, delay: i * 0.1 + 0.3 }}
                       />
                     </svg>
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <span className="font-mono text-sm font-bold">
-                        {rating.costShare}%
-                      </span>
+                      <span className="font-mono text-xs sm:text-sm font-bold">{rating.costShare}%</span>
                     </div>
                   </div>
                 </div>
@@ -94,32 +79,26 @@ export function TypeRatings({ ratings }: TypeRatingsProps) {
                 {/* Token stats */}
                 <div className="space-y-1 text-xs">
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Input</span>
-                    <span className="font-mono">
-                      {formatTokens(rating.inputTokens)}
-                    </span>
+                    <span style={{ color: "var(--brand-muted)" }}>Input</span>
+                    <span className="font-mono">{formatTokens(rating.inputTokens)}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Output</span>
-                    <span className="font-mono">
-                      {formatTokens(rating.outputTokens)}
-                    </span>
+                    <span style={{ color: "var(--brand-muted)" }}>Output</span>
+                    <span className="font-mono">{formatTokens(rating.outputTokens)}</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-muted-foreground">Cache Read</span>
-                    <span className="font-mono">
-                      {formatTokens(rating.cacheReadTokens)}
-                    </span>
+                    <span style={{ color: "var(--brand-muted)" }}>Cache Read</span>
+                    <span className="font-mono">{formatTokens(rating.cacheReadTokens)}</span>
                   </div>
                   <div className="flex justify-between font-medium">
-                    <span className="text-muted-foreground">Cost</span>
+                    <span style={{ color: "var(--brand-muted)" }}>Cost</span>
                     <span className="font-mono">${rating.costUSD.toFixed(2)}</span>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
-          </motion.div>
-        ))}
+              </div>
+            </motion.div>
+          );
+        })}
       </div>
     </div>
   );

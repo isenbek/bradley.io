@@ -17,7 +17,7 @@ export function TextShimmer({
   maxInterval = 20000,
 }: TextShimmerProps) {
   const ref = useRef<HTMLSpanElement>(null);
-  const timerRef = useRef<ReturnType<typeof setTimeout>>();
+  const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   const triggerShimmer = useCallback(() => {
     const el = ref.current;

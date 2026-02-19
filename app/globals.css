@@ -1,242 +1,150 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=SF+Mono:wght@400;500;600&display=swap');
+/* ═══════════════════════════════════════════════════════════
+   Theme 1: Deep Sea (default)
+   "Depth of knowledge, calm steady hand navigating complex waters"
+   ═══════════════════════════════════════════════════════════ */
+:root,
+[data-theme="deep-sea"] {
+  --brand-primary: #00F5FF;
+  --brand-primary-light: #66F9FF;
+  --brand-secondary: #7CB8C9;
+  --brand-deep: #081012;
+  --brand-steel: #A3B8C3;
+  --brand-bg: #0B1215;
+  --brand-bg-alt: #111D22;
+  --brand-text: #F8FAFC;
+  --brand-muted: #8DA3B0;
+  --brand-success: #059669;
+  --brand-warning: #D97706;
+  --brand-error: #DC2626;
+  --brand-info: #0284C7;
+  --brand-particle: 0, 245, 255;
+  --brand-glow: #00F5FF;
+  --brand-glow-secondary: #7CB8C9;
+  --brand-border: rgba(139, 163, 176, 0.1);
+  --brand-border-hover: rgba(0, 245, 255, 0.4);
+  --brand-card-hover-shadow: rgba(0, 245, 255, 0.15);
+  --brand-btn-shadow: rgba(0, 245, 255, 0.27);
+}
 
-@layer base {
-  :root {
-    /* Default theme colors - can be overridden by ThemeProvider */
-    --background: #ffffff;
-    --foreground: #0a0a0a;
-    --primary: #0f4c75;
-    --primary-foreground: #ffffff;
-    --secondary: #7acfd6;
-    --secondary-foreground: #ffffff;
-    --accent: #e0474c;
-    --accent-foreground: #ffffff;
-    --muted: #f5f5f5;
-    --muted-foreground: #737373;
-    --border: #e5e5e5;
-    --card: #ffffff;
-    --card-foreground: #0a0a0a;
-    --popover: #ffffff;
-    --popover-foreground: #0a0a0a;
-    --input: #e5e5e5;
-    --ring: #0f4c75;
-    --destructive: #e0474c;
-    --destructive-foreground: #ffffff;
-    --radius: 8px;
-    
-    /* Typography and spacing variables */
-    --font-family: 'Inter', system-ui, sans-serif;
-    --heading-font: 'Inter', system-ui, sans-serif;
-    --font-size: 16px;
-    --line-height: 1.6;
-    --container-max-width: 1200px;
-    --section-spacing: 80px;
-    --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
-  }
+/* ═══════════════════════════════════════════════════════════
+   Theme 2: Analog-Future
+   "High-end audio equipment, early workstation terminals, 2026 polish"
+   ═══════════════════════════════════════════════════════════ */
+[data-theme="analog-future"] {
+  --brand-primary: #FF6B35;
+  --brand-primary-light: #FF8A5C;
+  --brand-secondary: #A3E635;
+  --brand-deep: #111113;
+  --brand-steel: #B4B4BC;
+  --brand-bg: #1A1A1B;
+  --brand-bg-alt: #232324;
+  --brand-text: #FAFAFA;
+  --brand-muted: #9A9AA3;
+  --brand-success: #059669;
+  --brand-warning: #D97706;
+  --brand-error: #DC2626;
+  --brand-info: #0284C7;
+  --brand-particle: 163, 230, 53;
+  --brand-glow: #FF6B35;
+  --brand-glow-secondary: #A3E635;
+  --brand-border: rgba(113, 113, 122, 0.15);
+  --brand-border-hover: rgba(255, 107, 53, 0.4);
+  --brand-card-hover-shadow: rgba(255, 107, 53, 0.15);
+  --brand-btn-shadow: rgba(255, 107, 53, 0.27);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Theme 3: Horizon
+   "Expansive, intelligent, lean. Clarity from complexity."
+   ═══════════════════════════════════════════════════════════ */
+[data-theme="horizon"] {
+  --brand-primary: #2563EB;
+  --brand-primary-light: #3B82F6;
+  --brand-secondary: #3730A3;
+  --brand-deep: #1E293B;
+  --brand-steel: #64748B;
+  --brand-bg: #FFFFFF;
+  --brand-bg-alt: #F1F5F9;
+  --brand-text: #1E293B;
+  --brand-muted: #64748B;
+  --brand-success: #059669;
+  --brand-warning: #D97706;
+  --brand-error: #DC2626;
+  --brand-info: #0284C7;
+  --brand-particle: 37, 99, 235;
+  --brand-glow: #2563EB;
+  --brand-glow-secondary: #3730A3;
+  --brand-border: rgba(226, 232, 240, 1);
+  --brand-border-hover: rgba(37, 99, 235, 0.4);
+  --brand-card-hover-shadow: rgba(37, 99, 235, 0.1);
+  --brand-btn-shadow: rgba(37, 99, 235, 0.27);
+}
+
+@theme {
+  /* Brand Colors — mapped to CSS custom properties for runtime switching */
+  --color-sf-orange: var(--brand-primary);
+  --color-sf-orange-light: var(--brand-primary-light);
+  --color-sf-cyan: var(--brand-secondary);
+  --color-sf-blue: var(--brand-deep);
+  --color-sf-steel: var(--brand-steel);
+  --color-sf-dark: var(--brand-bg);
+  --color-sf-dark-alt: var(--brand-bg-alt);
+  --color-sf-white: var(--brand-text);
+  --color-sf-muted: var(--brand-muted);
+
+  /* Semantic Colors */
+  --color-sf-success: var(--brand-success);
+  --color-sf-warning: var(--brand-warning);
+  --color-sf-error: var(--brand-error);
+  --color-sf-info: var(--brand-info);
+
+  /* Fonts */
+  --font-display: var(--font-family-display, 'Outfit', system-ui, sans-serif);
+  --font-mono: var(--font-family-mono, 'JetBrains Mono', monospace);
+
+  /* Custom font size */
+  --font-size-stat: 2.5rem;
+  --font-size-stat--line-height: 1;
+  --font-size-stat--font-weight: 700;
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    background-color: var(--background);
-    color: var(--foreground);
-    font-family: var(--font-family);
-    font-size: var(--font-size);
-    line-height: var(--line-height);
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+
+  body {
+    @apply bg-sf-dark text-sf-white font-display antialiased;
+    transition: background-color 0.4s ease, color 0.4s ease;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  h1, h2, h3 {
+    @apply font-display;
   }
 }
 
 @layer components {
-  /* Mobile-first responsive containers */
-  .container {
-    width: 100%;
-    margin: 0 auto;
-    padding: 0 1rem;
+  .container-page {
+    @apply max-w-5xl mx-auto px-4 sm:px-6;
   }
-  
-  @media (min-width: 640px) {
-    .container {
-      padding: 0 1.5rem;
-    }
+
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
-  
-  @media (min-width: 768px) {
-    .container {
-      padding: 0 2rem;
-    }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
   }
-  
-  @media (min-width: 1024px) {
-    .container {
-      max-width: var(--container-max-width);
-      padding: 0 2rem;
-    }
-  }
-  
-  /* Theme-aware utility classes */
-  .theme-container {
-    max-width: var(--container-max-width);
-    margin: 0 auto;
-    padding: 0 1rem;
-  }
-  
-  .theme-section {
-    padding: var(--section-spacing) 0;
-  }
-  
-  .theme-heading {
-    font-family: var(--heading-font);
-  }
-  
-  .theme-card {
-    background-color: var(--card);
-    color: var(--card-foreground);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-  }
-  
-  .theme-button-primary {
-    background-color: var(--primary);
-    color: var(--primary-foreground);
-    border: 1px solid var(--primary);
-    border-radius: var(--radius);
-    padding: 0.5rem 1rem;
-    font-weight: 500;
-    transition: all 0.3s ease;
-  }
-  
-  .theme-button-primary:hover {
-    opacity: 0.9;
-    transform: translateY(-1px);
-  }
-  
-  .theme-button-secondary {
-    background-color: var(--secondary);
-    color: var(--secondary-foreground);
-    border: 1px solid var(--secondary);
-    border-radius: var(--radius);
-    padding: 0.5rem 1rem;
-    font-weight: 500;
-    transition: all 0.3s ease;
-  }
-  
-  .theme-button-secondary:hover {
-    opacity: 0.9;
-    transform: translateY(-1px);
-  }
-  
-  .theme-text-muted {
-    color: var(--muted-foreground);
-  }
-  
-  .theme-border {
-    border-color: var(--border);
-  }
-  
-  /* Mobile-first responsive utilities */
-  .mobile-touch-target {
-    min-height: 44px;
-    min-width: 44px;
-  }
-  
-  .mobile-text-scale {
-    font-size: 0.875rem;
-  }
-  
-  @media (min-width: 768px) {
-    .mobile-text-scale {
-      font-size: 1rem;
-    }
-  }
-  
-  .mobile-spacing-tight {
-    padding: 0.75rem;
-  }
-  
-  @media (min-width: 768px) {
-    .mobile-spacing-tight {
-      padding: 1.5rem;
-    }
-  }
-  
-  /* Better mobile scrolling */
-  .mobile-scroll {
-    -webkit-overflow-scrolling: touch;
-    scroll-behavior: smooth;
-  }
-  
-  /* Responsive grid utilities */
-  .responsive-grid {
-    display: grid;
-    gap: 1rem;
-    grid-template-columns: 1fr;
-  }
-  
-  @media (min-width: 640px) {
-    .responsive-grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.5rem;
-    }
-  }
-  
-  @media (min-width: 768px) {
-    .responsive-grid {
-      gap: 2rem;
-    }
-  }
-  
-  @media (min-width: 1024px) {
-    .responsive-grid {
-      grid-template-columns: repeat(3, 1fr);
-    }
-  }
-  
-  /* Mobile-first typography */
-  .responsive-heading-xl {
-    font-size: 2rem;
-    line-height: 1.2;
-    font-weight: 700;
-  }
-  
-  @media (min-width: 768px) {
-    .responsive-heading-xl {
-      font-size: 2.5rem;
-    }
-  }
-  
-  @media (min-width: 1024px) {
-    .responsive-heading-xl {
-      font-size: 3rem;
-    }
-  }
-  
-  .responsive-heading-lg {
-    font-size: 1.5rem;
-    line-height: 1.3;
-    font-weight: 600;
-  }
-  
-  @media (min-width: 768px) {
-    .responsive-heading-lg {
-      font-size: 1.875rem;
-    }
-  }
-  
-  @media (min-width: 1024px) {
-    .responsive-heading-lg {
-      font-size: 2.25rem;
-    }
+
+  .text-gradient {
+    background: linear-gradient(to right, var(--brand-primary), var(--brand-secondary));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
 }

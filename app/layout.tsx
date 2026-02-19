@@ -1,55 +1,54 @@
-import type { Metadata } from "next";
-import { Inter, Fira_Code } from "next/font/google";
-import "./globals.css";
-import { Navigation } from "@/components/sections/navigation";
-import { Footer } from "@/components/sections/footer";
-import { ThemeProvider } from "@/components/ui/theme-provider";
-import { AmbientLayer } from "@/components/ambient/AmbientLayer";
+import type { Metadata } from "next"
+import { Outfit, JetBrains_Mono } from "next/font/google"
+import "./globals.css"
+import { RootLayoutWrapper } from "@/components/layout/RootLayoutWrapper"
 
-const inter = Inter({
-  variable: "--font-inter",
+const outfit = Outfit({
   subsets: ["latin"],
-});
+  weight: ["300", "400", "500", "600", "700", "800"],
+  variable: "--font-display",
+  display: "swap",
+})
 
-const firaCode = Fira_Code({
-  variable: "--font-fira-code",
+const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
-});
+  weight: ["400", "500"],
+  variable: "--font-mono",
+  display: "swap",
+})
 
 export const metadata: Metadata = {
-  title: "Bradley.io - AI Data Engineering & Edge Computing",
-  description: "Transform enterprise data strategies through intelligent edge computing. Combining Fortune 500 data architecture expertise with cutting-edge IoT integration.",
-  keywords: "AI consultant, data engineering, edge computing, IoT, Grand Rapids, Michigan, data architecture, predictive analytics",
-  authors: [{ name: "Bradley.io" }],
-  openGraph: {
-    title: "Bradley.io - AI Data Engineering & Edge Computing",
-    description: "Transform enterprise data strategies through intelligent edge computing",
-    type: "website",
-    locale: "en_US",
-    url: "https://bradley.io",
-    siteName: "Bradley.io",
+  title: {
+    default: "bradley.io | Frontier Technologist",
+    template: "%s | bradley.io",
   },
-};
+  description: "Hardware hacker, data architect, and AI pilot. Building at the intersection of enterprise scale and maker culture — from ESP32 mesh networks to Fortune 500 data warehouses.",
+  openGraph: {
+    title: "bradley.io",
+    description: "Frontier Technologist",
+    type: "website",
+  },
+}
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  viewportFit: "cover" as const,
+}
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: {
+  children: React.ReactNode
+}) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        className={`${inter.variable} ${firaCode.variable} font-sans antialiased`}
-      >
-        <ThemeProvider defaultTheme="default">
-          <div className="flex min-h-screen flex-col">
-            <Navigation />
-            <AmbientLayer />
-            <main className="flex-1">{children}</main>
-            <Footer />
-          </div>
-        </ThemeProvider>
+    <html lang="en" className={`${outfit.variable} ${jetbrainsMono.variable}`}>
+      <body>
+        <RootLayoutWrapper>
+          {children}
+        </RootLayoutWrapper>
       </body>
     </html>
-  );
+  )
 }

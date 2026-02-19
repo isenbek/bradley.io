@@ -4,155 +4,91 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Bradley.io is a professional website for an AI Data Engineering consultancy specializing in edge computing, enterprise data architecture, and IoT integration. The consultancy targets the Grand Rapids, Michigan market with focus on healthcare, manufacturing, and retail sectors.
+Bradley.io — personal/consultancy site for AI Data Engineering, edge computing, and IoT integration. Consolidated from `new-bradley-io` into this single repo.
 
-## Key Business Context
+## Architecture
 
-### Value Proposition
-"We transform enterprise data strategies through intelligent edge computing, combining Fortune 500 data architecture expertise with cutting-edge IoT device integration to deliver real-time insights where and when your business needs them most."
+### Tech Stack
+- **Framework**: Next.js 16 with App Router, Turbopack
+- **Styling**: Tailwind CSS 4 with `@theme` directive and CSS custom properties
+- **Language**: TypeScript (strict)
+- **Animations**: Framer Motion, custom ambient canvas (floating leaves, text shimmer)
+- **Data Viz**: D3.js, Recharts
+- **MDX**: `@next/mdx` for rich content pages
+- **Wargames**: Socket.io server with Ollama-powered WOPR AI
 
-### Target Market
-- **Primary**: Grand Rapids enterprises (Steelcase, Wolverine Worldwide, Meijer, Corewell Health)
-- **Consulting Rates**: $150-275/hour for specialized AI and edge computing work
-- **Differentiators**: Unique combination of enterprise data architecture with hands-on Raspberry Pi/Arduino integration
+### Theme System
+Three themes via `data-theme` attribute and `--brand-*` CSS custom properties:
+- **Deep Sea** (default): `--brand-primary: #00F5FF`
+- **Analog-Future**: `--brand-primary: #FF6B35`
+- **Horizon** (light): `--brand-primary: #2563EB`
 
-## Development Commands
-
-### Project Setup
-```bash
-# Initialize Next.js project with TypeScript
-npx create-next-app@latest bradley-io --typescript --tailwind --app
-
-# Install dependencies
-npm install
-
-# Run development server
-npm run dev
-
-# Build for production
-npm run build
-
-# Run production build
-npm start
-
-# Run linting
-npm run lint
-
-# Run type checking
-npm run type-check
-```
-
-### Deployment
-```bash
-# Deploy to Vercel
-vercel
-
-# Deploy to production
-vercel --prod
-```
-
-## Architecture & Technical Decisions
-
-### Technology Stack
-- **Framework**: Next.js 14+ with App Router for optimal performance and SEO
-- **Styling**: Tailwind CSS for utility-first responsive design
-- **Language**: TypeScript for type safety and better developer experience
-- **Animations**: Framer Motion for professional interactions
-- **Data Viz**: D3.js for complex visualizations, Recharts for simpler charts
-- **Deployment**: Vercel for automatic deployments and edge functions
-
-### Design System
-- **Colors**: Deep teal (#0F4C75), mint green (#7ACFD6), coral accent (#E0474C)
-- **Typography**: Inter for body text, Fira Code for technical/code content
-- **Dark Mode**: System preference detection with manual toggle
-- **Accessibility**: WCAG 2.1 AA compliance required
+Tailwind maps `--brand-*` vars to `sf-*` utility classes (e.g., `text-sf-orange`, `bg-sf-dark`).
 
 ### Project Structure
 ```
 bradley-io/
-├── app/                    # Next.js app directory
-│   ├── (marketing)/       # Marketing pages layout
-│   ├── blog/              # Blog posts and articles
-│   ├── case-studies/      # Detailed case studies
-│   ├── services/          # Service offering pages
-│   └── terminal/          # Interactive terminal portfolio
-├── components/            # Reusable React components
-│   ├── ui/               # Basic UI components
-│   ├── sections/         # Page sections
-│   └── visualizations/  # D3.js and data viz components
-├── lib/                   # Utility functions and helpers
-├── public/               # Static assets
-└── docs/                 # Documentation and planning
+├── app/                    # Next.js App Router pages
+│   ├── about/              # About page
+│   ├── ai-pilot/           # AI Pilot License dashboard
+│   ├── api/socket/         # Socket.io route for wargames
+│   ├── lab/                # Lab experiments
+│   ├── mcp/                # MCP Catalog page
+│   ├── projects/           # Projects listing + [slug]
+│   ├── services/           # Consulting services page
+│   ├── style-guide/        # Design system reference
+│   ├── terminal/           # Interactive CLI portfolio
+│   ├── wargames/           # WOPR Wargames client
+│   └── wargames-test/      # Wargames test page
+├── components/
+│   ├── ai-pilot/           # AI Pilot dashboard components
+│   ├── ambient/            # Ambient animations (shimmer, leaves)
+│   ├── home/               # Homepage components
+│   ├── layout/             # Navigation, RootLayoutWrapper, VersionFooter
+│   ├── mdx/                # MDX rendering components
+│   └── ui/                 # Shared UI primitives
+├── lib/                    # Utilities, data helpers
+├── scripts/                # Build info generation
+├── public/                 # Static assets
+├── wargames-server.js      # Standalone Socket.io + Ollama server
+├── ecosystem.config.js     # PM2 config (wargames only)
+├── bradley-io.service      # systemd unit (Next.js production)
+└── deploy.sh               # Full deploy script
 ```
 
-## Key Implementation Priorities
-
-### SEO & Performance
-- Target 95+ Lighthouse scores
-- Implement local SEO for Grand Rapids market
-- Use Next.js Image component for optimization
-- Configure proper meta tags and Open Graph data
-- Generate dynamic sitemap.xml
-
-### Lead Generation
-- Calendly integration for consultation scheduling
-- Multi-step contact forms with project type selection
-- Newsletter signup with email automation
-- Downloadable resources for lead capture
-
-### Content Strategy
-- Focus on edge computing and IoT expertise
-- Case studies with quantified business impact
-- Technical blog posts demonstrating thought leadership
-- Progressive disclosure for dual audience (technical + executive)
-
-## Testing Strategy
+## Development Commands
 
 ```bash
-# Run unit tests
-npm run test
-
-# Run E2E tests
-npm run test:e2e
-
-# Run accessibility audit
-npm run test:a11y
+npm install            # Install dependencies
+npm run dev            # Start Next.js + wargames server (concurrently)
+npm run dev:next       # Next.js dev only (port 32221)
+npm run dev:wargames   # Wargames server only
+npm run build          # Production build
+npm run lint           # ESLint
 ```
 
-## Important Business Rules
+## Deployment
 
-1. **Dual Audience**: Every page must appeal to both technical evaluators and business executives
-2. **Quantified Impact**: All case studies and achievements must include specific metrics and ROI
-3. **Local Focus**: Include Grand Rapids-specific content and keywords for local SEO
-4. **Terminal Feature**: Maintain interactive CLI interface for technical credibility
-5. **Mobile First**: All designs must be fully responsive and performant on mobile devices
+**Anti-Cloud. Host Local, Think Global.**
 
-## External Integrations
+```bash
+./deploy.sh            # Full deploy: commit, bump, push, build, systemd restart, health check
+```
 
-- **Analytics**: Google Analytics 4 + Microsoft Clarity
-- **Scheduling**: Calendly API
-- **Email**: SendGrid or Resend for transactional emails
-- **Chat**: Intercom for live chat support
-- **Monitoring**: Sentry for error tracking
+- **Next.js**: systemd service `bradley-io` on port 32221
+- **Wargames**: PM2 process `bradley-io-wargames`
+- **Nginx**: Both `bradley.io` and `new.bradley.io` proxy to 127.0.0.1:32221
 
-## Development Workflow
+## Key Conventions
 
-1. Always check existing components before creating new ones
-2. Follow the established color palette and typography system
-3. Ensure all new pages include proper SEO metadata
-4. Test on mobile devices before considering feature complete
-5. Maintain WCAG 2.1 AA accessibility standards
-6. Use TypeScript strictly - no `any` types without justification
-
-## Performance Budget
-
-- First Contentful Paint: < 1.5s
-- Time to Interactive: < 3.5s
-- Cumulative Layout Shift: < 0.1
-- Total bundle size: < 200KB (gzipped)
+1. Use `sf-*` Tailwind classes for themed colors (never hardcode hex in components)
+2. Use `--brand-*` CSS vars for inline styles that must be theme-aware
+3. Use `container-page` class for consistent page width
+4. All pages get Navigation + VersionFooter via RootLayoutWrapper
+5. Ambient animations (leaves, shimmer) render via AmbientLayer in the layout
+6. Font families: `font-display` (Outfit) and `font-mono` (JetBrains Mono)
 
 ## Contact & Resources
 
-- **GitHub Portfolio**: https://github.com/tinymachines
-- **Target Events**: Tech Week Grand Rapids (Sept 15-20, 2025)
-- **Key Networks**: Technology Council of West Michigan, Start Garden
+- **GitHub**: https://github.com/tinymachines
+- **Repo**: https://github.com/isenbek/bradley.io
