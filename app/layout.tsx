@@ -4,6 +4,7 @@ import "./globals.css";
 import { Navigation } from "@/components/sections/navigation";
 import { Footer } from "@/components/sections/footer";
 import { ThemeProvider } from "@/components/ui/theme-provider";
+import { AmbientLayer } from "@/components/ambient/AmbientLayer";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -43,6 +44,7 @@ export default function RootLayout({
         <ThemeProvider defaultTheme="default">
           <div className="flex min-h-screen flex-col">
             <Navigation />
+            <AmbientLayer />
             <main className="flex-1">{children}</main>
             <Footer />
           </div>

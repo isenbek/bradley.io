@@ -3,6 +3,7 @@
 import useSWR from "swr";
 import { ProjectCard, SkillBadge, DataRefreshIndicator } from "@/components/resume";
 import type { ResumeData } from "@/components/resume";
+import { TextShimmer } from "@/components/ambient/TextShimmer";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -35,10 +36,12 @@ export default function ResumePage() {
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
             <div>
               <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-2">
-                Bradley S. Isenbek
+                <TextShimmer>Bradley S. Isenbek</TextShimmer>
               </h1>
               <p className="text-lg text-slate-600">
-                Software Architect • Systems Integrator • Maker
+                <TextShimmer minInterval={12000} maxInterval={25000}>
+                  Software Architect • Systems Integrator • Maker
+                </TextShimmer>
               </p>
               <p className="text-sm text-slate-500 mt-1">
                 Grand Rapids, MI • brad@isenbek.io
