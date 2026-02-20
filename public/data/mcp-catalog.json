@@ -1,238 +1,35 @@
 {
-  "generated": "2026-02-17T00:00:00Z",
+  "generated": "2026-02-20T05:14:29.356900+00:00",
   "stats": {
-    "totalServices": 22,
-    "totalEndpoints": 164,
+    "totalServices": 0,
+    "totalEndpoints": 0,
     "totalCategories": 5
   },
   "categories": [
     {
       "id": "ai",
       "name": "AI & Intelligence",
-      "services": [
-        {
-          "id": "cbai",
-          "name": "AI API",
-          "url": "https://ai.nominate.ai",
-          "description": "Unified AI provider — Claude, Ollama, Mistral. Chat completions, embeddings, OCR, summarization, topic extraction.",
-          "auth": "Optional API key",
-          "capabilities": ["chat", "embeddings", "ocr", "summarization", "topics", "tool-use", "streaming"],
-          "endpointCount": 7
-        },
-        {
-          "id": "cbintel",
-          "name": "Intelligence API",
-          "url": "https://intel.nominate.ai",
-          "description": "Web crawling, screenshot capture, transcript generation, and intelligence gathering with vector search.",
-          "auth": "X-API-Key",
-          "capabilities": ["crawl", "screenshot", "transcript", "vector-search", "jobs"],
-          "endpointCount": 8
-        },
-        {
-          "id": "cbscout",
-          "name": "Agent Memory",
-          "url": "https://scout.nominate.ai",
-          "description": "Hierarchical memory for AI agents. Three layers: Resources (raw) → Items (facts) → Categories (summaries). Temporal awareness with decay.",
-          "auth": "X-Campaign-ID header",
-          "capabilities": ["memory-store", "memory-retrieve", "entity-profiles", "temporal-decay", "consolidation"],
-          "endpointCount": 9
-        },
-        {
-          "id": "cbindex",
-          "name": "Document Index",
-          "url": "https://index.nominate.ai",
-          "description": "Vectorless RAG document indexing using PageIndex. PDF/markdown indexing, YouTube transcripts, LLM-powered document chat.",
-          "auth": "X-API-Key",
-          "capabilities": ["index-pdf", "index-markdown", "ocr", "youtube-transcript", "rag-chat", "workspaces"],
-          "endpointCount": 12
-        },
-        {
-          "id": "cbunstruct",
-          "name": "Document Partitioning",
-          "url": "https://unstruct.nominate.ai",
-          "description": "Document parsing and element extraction via Unstructured library. PDF, DOCX, images, email, markdown.",
-          "auth": "None",
-          "capabilities": ["partition", "pdf", "docx", "images", "email"],
-          "endpointCount": 1
-        }
-      ]
+      "services": []
     },
     {
       "id": "data",
       "name": "Data & Analytics",
-      "services": [
-        {
-          "id": "cbdistricts",
-          "name": "Congressional Districts",
-          "url": "https://districts.nominate.ai",
-          "description": "119th Congress, 441 districts. Demographics, GeoJSON boundaries, radio coverage, state data.",
-          "auth": "None (public)",
-          "capabilities": ["districts", "demographics", "geojson", "states", "radio-coverage", "intersections"],
-          "endpointCount": 9
-        },
-        {
-          "id": "cbmodels",
-          "name": "Voter Analysis",
-          "url": "https://models.nominate.ai",
-          "description": "AI-powered voter segment analysis. Demographics vs baseline, behavioral enrichment, affinity scoring, donor propensity.",
-          "auth": "X-API-Key",
-          "capabilities": ["segment-analysis", "behavioral-enrichment", "affinity-scoring", "donor-propensity", "baseline-stats"],
-          "endpointCount": 7
-        },
-        {
-          "id": "cbsurveys",
-          "name": "Survey Platform (YASP)",
-          "url": "https://surveys.nominate.ai",
-          "description": "Create surveys, manage questions, collect and analyze responses.",
-          "auth": "X-API-Key",
-          "capabilities": ["surveys", "questions", "responses", "publish"],
-          "endpointCount": 8
-        },
-        {
-          "id": "cbfiles",
-          "name": "File Storage & CDN",
-          "url": "https://files.nominate.ai",
-          "description": "S3-compatible object storage via MinIO. Buckets, upload/download, presigned URLs, public CDN.",
-          "auth": "X-API-Key",
-          "capabilities": ["buckets", "upload", "download", "presigned-urls", "cdn"],
-          "endpointCount": 8
-        }
-      ]
+      "services": []
     },
     {
       "id": "communication",
       "name": "Communication",
-      "services": [
-        {
-          "id": "cbsms",
-          "name": "SMS/MMS Gateway",
-          "url": "https://sms.nominate.ai",
-          "description": "Unified SMS/MMS gateway for Ejoin devices. Single send, bulk send, device management.",
-          "auth": "Webhook secret",
-          "capabilities": ["sms-send", "mms-send", "bulk-sms", "device-control", "delivery-reports"],
-          "endpointCount": 8
-        },
-        {
-          "id": "cbsocial",
-          "name": "WhatsApp Ingestion",
-          "url": "https://social.nominate.ai",
-          "description": "WhatsApp message ingestion via Node.js relay. Message processing pipeline, AI gist generation.",
-          "auth": "None",
-          "capabilities": ["whatsapp-messages", "message-processing", "ai-gists"],
-          "endpointCount": 6
-        },
-        {
-          "id": "cbwebhook",
-          "name": "Webhook Router",
-          "url": "https://webhook.nominate.ai",
-          "description": "Centralized webhook ingestion (Typeform, GitHub, Stripe). HMAC verification, async persistence, consumer-scoped access.",
-          "auth": "X-API-Key / X-Admin-Key",
-          "capabilities": ["typeform-webhooks", "event-storage", "form-responses", "consumer-management"],
-          "endpointCount": 6
-        },
-        {
-          "id": "cblinks",
-          "name": "URL Shortener",
-          "url": "https://links.nominate.ai",
-          "description": "Short links with privacy-preserving click analytics. Custom/auto slugs, expiry, enable/disable.",
-          "auth": "X-API-Key",
-          "capabilities": ["short-links", "click-analytics", "custom-slugs", "link-expiry"],
-          "endpointCount": 6
-        }
-      ]
+      "services": []
     },
     {
       "id": "infrastructure",
       "name": "Infrastructure",
-      "services": [
-        {
-          "id": "cbvpn",
-          "name": "VPN Cluster",
-          "url": "https://network.nominate.ai",
-          "description": "Distributed VPN cluster with OpenWRT workers and WireGuard tunnels. Geographic routing for intelligence.",
-          "auth": "X-API-Key",
-          "capabilities": ["vpn-banks", "worker-management", "geographic-routing", "cluster-deploy", "health-check"],
-          "endpointCount": 11
-        },
-        {
-          "id": "cbtor",
-          "name": "TOR Cluster",
-          "url": "https://tor.nominate.ai",
-          "description": "Anonymous web fetching through Tor worker pool. Load balancing: round_robin, sticky, random, least_connections.",
-          "auth": "X-API-Key",
-          "capabilities": ["anonymous-fetch", "tor-workers", "load-balancing"],
-          "endpointCount": 6
-        },
-        {
-          "id": "cbauth",
-          "name": "PIN Gate Authentication",
-          "url": "https://auth.nominate.ai",
-          "description": "Domain-wide PIN authentication gateway for nominate.ai subdomains. HMAC-SHA256, 7-day sessions.",
-          "auth": "Session cookie",
-          "capabilities": ["pin-auth", "session-management", "nginx-auth-request"],
-          "endpointCount": 4
-        },
-        {
-          "id": "cboverseer",
-          "name": "System Monitor",
-          "url": "https://overseer.nominate.ai",
-          "description": "Central monitoring, 8 agents, incident management, SMS alerts, AI diagnosis, self-healing.",
-          "auth": "X-API-Key",
-          "capabilities": ["telemetry", "real-time-metrics", "incidents", "monitoring-agents", "sms-alerts", "dependency-map"],
-          "endpointCount": 8
-        },
-        {
-          "id": "cbmcp",
-          "name": "MCP Service Catalog",
-          "url": "https://mcp.nominate.ai",
-          "description": "MCP server exposing the CB service catalog to LLM agents. SSE transport for remote clients, Inspector UI for humans.",
-          "auth": "None (PIN gate via cbauth)",
-          "capabilities": ["service-discovery", "endpoint-search", "openapi-specs", "mcp-tools", "mcp-resources"],
-          "endpointCount": 2
-        }
-      ]
+      "services": []
     },
     {
       "id": "business",
       "name": "Business",
-      "services": [
-        {
-          "id": "cbworkflow",
-          "name": "Workflow Engine",
-          "url": "https://workflow.nominate.ai",
-          "description": "Lightweight JSON-backed CRM workflow automation. Contacts, templates, instances, multi-tenant, SMS/email routing.",
-          "auth": "None",
-          "capabilities": ["contacts", "workflow-templates", "workflow-instances", "tenants", "sms-routing", "email-routing"],
-          "endpointCount": 13
-        },
-        {
-          "id": "cbpayments",
-          "name": "Donation Processing",
-          "url": "https://payments.nominate.ai",
-          "description": "Campaign donation processing (Transaxt migration). Authorize.Net CIM, 4 portals, 595K donations.",
-          "auth": "Mixed (API key / JWT / public)",
-          "capabilities": ["donations", "campaigns", "donors", "reporting", "merchant-accounts"],
-          "endpointCount": 7
-        },
-        {
-          "id": "cbpulse",
-          "name": "Hospitality BI (VIP)",
-          "url": "https://pulse.nominate.ai",
-          "description": "Virgin Islands Pulse — hospitality portfolio BI. Clover POS, Homebase, Cloudbeds, WebRezPro integration.",
-          "auth": "JWT Bearer",
-          "capabilities": ["auth", "businesses", "alerts", "financials", "occupancy", "daily-summaries"],
-          "endpointCount": 9
-        },
-        {
-          "id": "cbissues",
-          "name": "Issue Tracking",
-          "url": "https://issues.nominate.ai",
-          "description": "Unified GitHub issue management across CB repositories. Full CRUD, comments, project boards.",
-          "auth": "X-API-Key",
-          "capabilities": ["issues-crud", "comments", "labels", "project-boards", "multi-repo"],
-          "endpointCount": 9
-        }
-      ]
+      "services": []
     }
   ]
 }
