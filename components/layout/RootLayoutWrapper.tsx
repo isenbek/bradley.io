@@ -4,7 +4,7 @@ import { useSearchParams } from "next/navigation"
 import { Suspense } from "react"
 import { Navigation } from "./Navigation"
 import { VersionFooter } from "./VersionFooter"
-import { AmbientLayer } from "@/components/ambient/AmbientLayer"
+// import { AmbientLayer } from "@/components/ambient/AmbientLayer"
 
 function LayoutContent({ children }: { children: React.ReactNode }) {
   const searchParams = useSearchParams()
@@ -21,7 +21,7 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
   return (
     <>
       <Navigation />
-      <AmbientLayer />
+      {/* <AmbientLayer /> */}
       <main className="min-h-dvh pt-16 pb-10 sm:pb-11">
         {children}
       </main>
