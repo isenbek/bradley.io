@@ -2,9 +2,14 @@
 
 import { useSearchParams } from "next/navigation"
 import { Suspense } from "react"
+import dynamic from "next/dynamic"
 import { Navigation } from "./Navigation"
 import { VersionFooter } from "./VersionFooter"
-// import { AmbientLayer } from "@/components/ambient/AmbientLayer"
+
+const AmbientLayer = dynamic(
+  () => import("@/components/ambient/AmbientLayer").then((m) => m.AmbientLayer),
+  { ssr: false }
+)
 
 function LayoutContent({ children }: { children: React.ReactNode }) {
   const searchParams = useSearchParams()
@@ -21,7 +26,7 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
   return (
     <>
       <Navigation />
-      {/* <AmbientLayer /> */}
+      <AmbientLayer />
       <main className="min-h-dvh pt-16 pb-10 sm:pb-11">
         {children}
       </main>
