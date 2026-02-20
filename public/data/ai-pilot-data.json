@@ -1,5 +1,5 @@
 {
-  "generated": "2026-02-20T00:14:35.149815",
+  "generated": "2026-02-20T12:00:20.002214",
   "pipelineVersion": "1.0.0",
   "license": {
     "number": "AIP-2026-0544",
@@ -598,8 +598,8 @@
   },
   "instrumentRatings": {
     "Data Engineering": {
-      "score": 43,
-      "hits": 614,
+      "score": 42,
+      "hits": 617,
       "matchedKeywords": [
         "sql",
         "etl",
@@ -614,7 +614,7 @@
     },
     "Frontend": {
       "score": 57,
-      "hits": 883,
+      "hits": 897,
       "matchedKeywords": [
         "react",
         "next.js",
@@ -628,8 +628,8 @@
       "keywordCoverage": 77.3
     },
     "Backend": {
-      "score": 88,
-      "hits": 2337,
+      "score": 91,
+      "hits": 2403,
       "matchedKeywords": [
         "fastapi",
         "python",
@@ -640,11 +640,11 @@
         "django",
         "websocket"
       ],
-      "keywordCoverage": 77.8
+      "keywordCoverage": 83.3
     },
     "DevOps": {
       "score": 37,
-      "hits": 250,
+      "hits": 243,
       "matchedKeywords": [
         "docker",
         "nginx",
@@ -658,8 +658,8 @@
       "keywordCoverage": 65.2
     },
     "IoT / Edge": {
-      "score": 36,
-      "hits": 454,
+      "score": 35,
+      "hits": 450,
       "matchedKeywords": [
         "raspberry pi",
         "mesh",
@@ -674,7 +674,7 @@
     },
     "AI / ML": {
       "score": 76,
-      "hits": 2130,
+      "hits": 2182,
       "matchedKeywords": [
         "llm",
         "ollama",
@@ -689,7 +689,7 @@
     },
     "Systems": {
       "score": 56,
-      "hits": 431,
+      "hits": 462,
       "matchedKeywords": [
         "c/c++",
         "rust",
@@ -703,8 +703,8 @@
       "keywordCoverage": 93.8
     },
     "Security": {
-      "score": 60,
-      "hits": 642,
+      "score": 59,
+      "hits": 599,
       "matchedKeywords": [
         "tls",
         "ed25519",
@@ -722,17 +722,17 @@
     {
       "axis": "Planning",
       "score": 69,
-      "detail": "70 plans created"
+      "detail": "71 plans created"
     },
     {
       "axis": "Tool Mastery",
       "score": 95,
-      "detail": "26 tools, 9649 calls"
+      "detail": "26 tools, 9638 calls"
     },
     {
       "axis": "Debugging",
       "score": 95,
-      "detail": "6246 debug tool calls"
+      "detail": "6168 debug tool calls"
     },
     {
       "axis": "Architecture",
@@ -751,12 +751,12 @@
     }
   ],
   "pilotingStyle": {
-    "directive": 39,
-    "collaborative": 61,
+    "directive": 40,
+    "collaborative": 60,
     "planFirst": 69,
     "iterate": 31,
-    "label": "Strategist",
-    "description": "Designs detailed plans then collaborates on implementation nuances."
+    "label": "Balanced",
+    "description": "Flexibly adapts between planning and iteration as the task demands."
   },
   "missionLog": [
     {
@@ -1134,78 +1134,83 @@
   "skillsCloud": [
     {
       "name": "Go",
-      "count": 555,
+      "count": 549,
       "category": "General"
     },
     {
       "name": "Git",
-      "count": 359,
+      "count": 366,
       "category": "General"
     },
     {
       "name": "Python",
-      "count": 257,
+      "count": 260,
       "category": "Backend"
     },
     {
       "name": "JSON",
-      "count": 247,
+      "count": 240,
       "category": "General"
     },
     {
       "name": "Bash",
-      "count": 199,
+      "count": 202,
       "category": "General"
     },
     {
       "name": "Nginx",
-      "count": 181,
+      "count": 176,
       "category": "DevOps"
     },
     {
       "name": "FastAPI",
-      "count": 159,
+      "count": 162,
       "category": "Backend"
     },
     {
       "name": "systemd",
-      "count": 134,
+      "count": 132,
       "category": "DevOps"
     },
     {
       "name": "Pytest",
-      "count": 104,
+      "count": 107,
       "category": "General"
     },
     {
       "name": "TOML",
-      "count": 100,
+      "count": 101,
       "category": "General"
     },
     {
       "name": "Pydantic",
-      "count": 91,
+      "count": 96,
       "category": "General"
     },
     {
       "name": "DuckDB",
-      "count": 88,
+      "count": 89,
       "category": "Data Engineering"
     },
     {
       "name": "HTML",
-      "count": 75,
+      "count": 76,
       "category": "Frontend"
     },
     {
       "name": "Ollama",
-      "count": 71,
+      "count": 70,
       "category": "AI / ML"
     },
     {
       "name": "YAML",
-      "count": 55,
+      "count": 54,
       "category": "General"
+    },
+    {
+      "name": "WebSocket",
+      "count": 51,
+      "category": "Backend"
     },
     {
       "name": "CSS",
@@ -1213,18 +1218,13 @@
       "category": "Frontend"
     },
     {
-      "name": "WebSocket",
-      "count": 49,
-      "category": "Backend"
-    },
-    {
       "name": "React",
-      "count": 42,
+      "count": 46,
       "category": "Frontend"
     },
     {
       "name": "LoRa",
-      "count": 34,
+      "count": 35,
       "category": "IoT / Edge"
     },
     {
@@ -1233,28 +1233,28 @@
       "category": "Frontend"
     },
     {
-      "name": "Redis",
-      "count": 32,
-      "category": "General"
-    },
-    {
       "name": "Snowflake",
-      "count": 31,
+      "count": 33,
       "category": "Data Engineering"
     },
     {
-      "name": "SSH",
-      "count": 31,
-      "category": "DevOps"
+      "name": "Next.js",
+      "count": 32,
+      "category": "Frontend"
     },
     {
-      "name": "Next.js",
+      "name": "SSH",
       "count": 30,
-      "category": "Frontend"
+      "category": "DevOps"
     },
     {
       "name": "PostgreSQL",
       "count": 30,
+      "category": "General"
+    },
+    {
+      "name": "Redis",
+      "count": 29,
       "category": "General"
     },
     {
