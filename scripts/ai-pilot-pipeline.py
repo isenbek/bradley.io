@@ -8,7 +8,6 @@ import argparse
 import json
 import os
 import re
-import sqlite3
 import sys
 from collections import Counter, defaultdict
 from datetime import datetime, timedelta
@@ -16,7 +15,6 @@ from pathlib import Path
 
 CLAUDE_DIR = Path.home() / ".claude"
 STATS_CACHE = CLAUDE_DIR / "stats-cache.json"
-STORE_DB = CLAUDE_DIR / "__store.db"
 PLANS_DIR = CLAUDE_DIR / "plans"
 PROJECTS_DIR = CLAUDE_DIR / "projects"
 HISTORY_FILE = CLAUDE_DIR / "history.jsonl"
@@ -109,63 +107,113 @@ def read_stats_cache(verbose=False):
         return json.load(f)
 
 
-def read_sqlite_data(verbose=False):
-    """Read structured data from the SQLite store."""
-    if not STORE_DB.exists():
-        log("__store.db not found", verbose)
-        return {"sessions": [], "projects": {}, "models": {}}
+def read_session_data(verbose=False):
+    """Read structured data from JSONL session files (replaces old SQLite store)."""
+    if not PROJECTS_DIR.exists():
+        log("Projects directory not found", verbose)
+        return {"sessions": [], "projects": [], "models": []}
 
-    log(f"Reading {STORE_DB}", verbose)
-    conn = sqlite3.connect(str(STORE_DB))
-    conn.row_factory = sqlite3.Row
+    # Collect all JSONL session files
+    jsonl_files = []
+    for proj_dir in PROJECTS_DIR.iterdir():
+        if not proj_dir.is_dir():
+            continue
+        for f in proj_dir.glob("*.jsonl"):
+            jsonl_files.append(f)
 
-    # Get per-session data with project info
-    sessions = conn.execute("""
-        SELECT
-            b.session_id,
-            b.cwd,
-            MIN(b.timestamp) as first_msg,
-            MAX(b.timestamp) as last_msg,
-            COUNT(*) as msg_count,
-            SUM(CASE WHEN b.message_type = 'user' THEN 1 ELSE 0 END) as user_msgs,
-            SUM(CASE WHEN b.message_type = 'assistant' THEN 1 ELSE 0 END) as asst_msgs
-        FROM base_messages b
-        GROUP BY b.session_id
-        ORDER BY first_msg DESC
-    """).fetchall()
+    log(f"Found {len(jsonl_files)} JSONL session files", verbose)
 
-    # Get per-model cost and usage
-    models = conn.execute("""
-        SELECT
-            a.model,
-            COUNT(*) as msg_count,
-            SUM(a.cost_usd) as total_cost,
-            SUM(a.duration_ms) as total_duration
-        FROM assistant_messages a
-        WHERE a.model != ''
-        GROUP BY a.model
-    """).fetchall()
+    sessions = []
+    project_agg = defaultdict(lambda: {
+        "sessions": 0, "messages": 0,
+        "first_active": None, "last_active": None,
+    })
+    model_agg = defaultdict(lambda: {"msg_count": 0, "total_cost": 0, "total_duration": 0})
 
-    # Get per-project aggregation
-    projects = conn.execute("""
-        SELECT
-            b.cwd,
-            COUNT(DISTINCT b.session_id) as sessions,
-            COUNT(*) as messages,
-            MIN(b.timestamp) as first_active,
-            MAX(b.timestamp) as last_active
-        FROM base_messages b
-        GROUP BY b.cwd
-        ORDER BY messages DESC
-    """).fetchall()
+    for filepath in jsonl_files:
+        try:
+            messages = []
+            cwd = None
+            with open(filepath, errors="replace") as f:
+                for line in f:
+                    line = line.strip()
+                    if not line:
+                        continue
+                    try:
+                        entry = json.loads(line)
+                    except json.JSONDecodeError:
+                        continue
+                    if entry.get("type") not in ("user", "assistant"):
+                        continue
+                    if entry.get("isSidechain"):
+                        continue
+                    messages.append(entry)
+                    if not cwd and entry.get("cwd"):
+                        cwd = entry["cwd"]
 
-    conn.close()
+            if not messages:
+                continue
 
-    return {
-        "sessions": [dict(s) for s in sessions],
-        "projects": [dict(p) for p in projects],
-        "models": [dict(m) for m in models],
-    }
+            session_id = filepath.stem
+            first_ts = messages[0].get("timestamp", "")
+            last_ts = messages[-1].get("timestamp", "")
+            user_msgs = sum(1 for m in messages if m.get("type") == "user")
+            asst_msgs = sum(1 for m in messages if m.get("type") == "assistant")
+
+            # Parse timestamps to epoch ms
+            first_epoch = None
+            last_epoch = None
+            try:
+                first_dt = datetime.fromisoformat(first_ts.replace("Z", "+00:00"))
+                last_dt = datetime.fromisoformat(last_ts.replace("Z", "+00:00"))
+                first_epoch = int(first_dt.timestamp() * 1000)
+                last_epoch = int(last_dt.timestamp() * 1000)
+            except (ValueError, TypeError):
+                pass
+
+            sessions.append({
+                "session_id": session_id,
+                "cwd": cwd or "",
+                "first_msg": first_epoch,
+                "last_msg": last_epoch,
+                "msg_count": len(messages),
+                "user_msgs": user_msgs,
+                "asst_msgs": asst_msgs,
+            })
+
+            # Aggregate per project
+            if cwd:
+                pa = project_agg[cwd]
+                pa["sessions"] += 1
+                pa["messages"] += len(messages)
+                if first_epoch and (pa["first_active"] is None or first_epoch < pa["first_active"]):
+                    pa["first_active"] = first_epoch
+                if last_epoch and (pa["last_active"] is None or last_epoch > pa["last_active"]):
+                    pa["last_active"] = last_epoch
+
+            # Aggregate per model
+            for msg in messages:
+                if msg.get("type") != "assistant":
+                    continue
+                model = msg.get("message", {}).get("model", "")
+                if not model or model == "<synthetic>":
+                    continue
+                model_agg[model]["msg_count"] += 1
+
+        except Exception as e:
+            log(f"Error reading {filepath}: {e}", verbose)
+
+    # Build project list sorted by messages
+    projects = sorted(
+        [{"cwd": cwd, **v} for cwd, v in project_agg.items()],
+        key=lambda p: p["messages"],
+        reverse=True,
+    )
+
+    models = [{"model": m, **v} for m, v in model_agg.items()]
+
+    log(f"Parsed {len(sessions)} sessions, {len(projects)} projects, {len(models)} models", verbose)
+    return {"sessions": sessions, "projects": projects, "models": models}
 
 
 def read_plan_files(verbose=False):
@@ -886,8 +934,8 @@ def main():
     print("Reading stats cache...", file=sys.stderr)
     stats = read_stats_cache(args.verbose)
 
-    print("Reading SQLite database...", file=sys.stderr)
-    db_data = read_sqlite_data(args.verbose)
+    print("Reading JSONL session files...", file=sys.stderr)
+    db_data = read_session_data(args.verbose)
 
     print("Reading plan files...", file=sys.stderr)
     plans = read_plan_files(args.verbose)
