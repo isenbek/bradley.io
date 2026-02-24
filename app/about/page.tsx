@@ -26,10 +26,13 @@ export default function AboutPage() {
           About
         </div>
         <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-4">
-          Brad Bradley
+          Bradley S. Isenbek
         </h1>
         <p className="text-base md:text-lg max-w-2xl mx-auto leading-relaxed" style={{ color: "var(--brand-muted)" }}>
-          Frontier Technologist — Grand Rapids, MI
+          AI Systems Architect | Machine Learning Engineer | Frontier Technologist
+        </p>
+        <p className="text-sm mt-2 font-mono" style={{ color: "var(--brand-muted)" }}>
+          Grand Rapids, MI
         </p>
       </section>
 

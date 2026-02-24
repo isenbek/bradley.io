@@ -451,7 +451,7 @@ def generate_claude_corner(
     moods = ["excited", "reflective", "impressed", "curious", "amused"]
 
     prompt = (
-        f"You are Claude, an AI co-developer. Write a witty 2-3 sentence commentary about Brad's recent work. "
+        f"You are Claude, an AI co-developer. Write a witty 2-3 sentence commentary about Bradley's recent work. "
         f"Stats: {stats.get('totalProjects', 0)} projects, {stats.get('totalMessages', 0):,} messages, "
         f"{stats.get('streak', 0)}-day streak. Top active projects: {top_projects}. "
         f"Pick a mood from: {', '.join(moods)}. "
@@ -692,34 +692,34 @@ def build_about(ai_pilot: dict[str, Any] | None) -> dict[str, Any]:
 
     if not skills:
         skills = [
-            "Python", "TypeScript", "Rust", "C/C++", "SQL",
-            "Snowflake", "DuckDB", "PostgreSQL", "Redis",
-            "FastAPI", "Next.js", "Docker",
-            "ESP32", "Raspberry Pi", "LoRa", "BLE",
-            "Claude API", "LLM Integration",
+            "Python", "Bash", "C#/.NET", "Rust", "C/C++", "SQL",
+            "Claude API", "OpenAI GPT-4", "RAG Pipelines", "Pinecone",
+            "LangChain", "Agentic Frameworks", "Prompt Engineering",
+            "FastAPI", "AWS", "Docker", "Snowflake", "PostgreSQL",
+            "DynamoDB", "Redis", "Elasticsearch", "Apache Solr",
+            "ESP32", "LoRa", "Distributed Systems",
         ]
 
     return {
         "bio": (
-            "Frontier technologist with 20+ years spanning Fortune 500 data architecture, "
-            "edge computing, and AI systems. Building at the intersection of enterprise scale "
-            "and maker culture — from Snowflake data warehouses to ESP32 mesh networks, "
-            "from political campaign platforms to experimental programming languages. "
-            "Currently exploring the boundaries of human-AI collaboration through intensive "
-            "Claude usage and open-source hardware projects."
+            "AI-focused Software Architect with 15+ years designing secure, large-scale data systems "
+            "for government and enterprise clients. Extensive hands-on experience with frontier AI models, "
+            "agentic programming frameworks, and AI-augmented development workflows. Proven track record "
+            "leading technical teams on classified projects and building high-availability infrastructure "
+            "processing billions of records. Expert in AI/ML pipelines, distributed systems, cloud "
+            "infrastructure, and secure data management. Active builder of open-source AI tools and "
+            "agentic systems."
         ),
         "skills": skills,
         "timeline": [
-            {"year": "2025-present", "title": "AI Pilot & Independent Consultant",
-             "description": "Full-time AI-augmented development. Building Campaign Brain platform, hardware projects, and experimental languages with Claude as co-pilot."},
-            {"year": "2020-2025", "title": "Senior Data Architect",
-             "description": "Enterprise data warehouse design and implementation. Led migration of legacy systems to modern cloud-native architectures."},
-            {"year": "2015-2020", "title": "Data Engineering Lead",
-             "description": "Built ETL pipelines processing millions of records daily. Introduced real-time streaming with Kafka and Spark."},
-            {"year": "2010-2015", "title": "Software Engineer",
-             "description": "Full-stack development with focus on data-intensive applications. First production ML models."},
-            {"year": "2005-2010", "title": "Junior Developer & Maker",
-             "description": "Started with Arduino and web development. Built first IoT projects connecting hardware to software."},
+            {"year": "2024-present", "title": "Founder & AI Systems Architect — SysForge.ai",
+             "description": "AI consulting and development firm delivering frontier AI solutions. Architecting AI-powered systems integrating frontier language models into enterprise workflows. Building custom agentic AI pipelines and AI-augmented development toolchains."},
+            {"year": "2022-present", "title": "Architect & Developer — VictoryText, LLC.",
+             "description": "Enterprise-grade, high-volume messaging platform. Architected high-availability system handling millions of messages with 99.9% uptime. Built RESTful API layer with FastAPI integrating multiple carriers with automated failover."},
+            {"year": "2018-2022", "title": "Architect & Developer — ConservativeConnector, LLC.",
+             "description": "Large-scale ESP data management processing billions of messages and 100M+ contact records. Integrated 4.9 billion data points for ML model training and relationship discovery across 10,000+ data sources."},
+            {"year": "2014-2018", "title": "Senior Architect — TransUnion TruLookup Division",
+             "description": "Investigative intelligence platform serving law enforcement and government agencies. Lead developer on classified project with the United States Government. Built ML models for entity resolution and relationship mapping."},
         ],
     }
 
