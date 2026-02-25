@@ -65,12 +65,20 @@ function MobileDrawer({
 
   useEffect(() => {
     if (isOpen) {
+      const scrollY = window.scrollY
+      document.body.style.position = "fixed"
+      document.body.style.top = `-${scrollY}px`
+      document.body.style.left = "0"
+      document.body.style.right = "0"
       document.body.style.overflow = "hidden"
-    } else {
-      document.body.style.overflow = ""
-    }
-    return () => {
-      document.body.style.overflow = ""
+      return () => {
+        document.body.style.position = ""
+        document.body.style.top = ""
+        document.body.style.left = ""
+        document.body.style.right = ""
+        document.body.style.overflow = ""
+        window.scrollTo(0, scrollY)
+      }
     }
   }, [isOpen])
 
@@ -79,7 +87,7 @@ function MobileDrawer({
       {isOpen && (
         <>
           <motion.div
-            className="fixed inset-0 bg-black/60 z-40 lg:hidden"
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -109,13 +117,13 @@ function MobileDrawer({
               </button>
             </div>
 
-            <div className="p-3 space-y-4">
+            <div className="p-3 space-y-3">
               {/* Home */}
               <Link
                 href="/"
                 onClick={onClose}
                 className={clsx(
-                  "block px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
+                  "block px-3 py-2 rounded-lg text-sm font-medium transition-colors",
                   pathname === "/"
                     ? "text-sf-white"
                     : "text-sf-steel hover:text-sf-white hover:bg-sf-white/5"
@@ -136,17 +144,17 @@ function MobileDrawer({
                   <div key={group.label}>
                     {/* Group header */}
                     <div
-                      className="flex items-center gap-2 px-3 pb-2 mb-1 border-b"
+                      className="flex items-center gap-2 px-3 pb-1.5 mb-0.5 border-b"
                       style={{ borderColor: `color-mix(in srgb, ${group.color} 40%, transparent)` }}
                     >
                       <div
-                        className="flex items-center justify-center w-6 h-6 rounded"
+                        className="flex items-center justify-center w-5 h-5 rounded"
                         style={{
                           background: `color-mix(in srgb, ${group.color} 12%, transparent)`,
                           border: `1px solid color-mix(in srgb, ${group.color} 25%, transparent)`,
                         }}
                       >
-                        <Icon className="w-3.5 h-3.5" style={{ color: group.color }} />
+                        <Icon className="w-3 h-3" style={{ color: group.color }} />
                       </div>
                       <span
                         className="text-xs font-bold uppercase tracking-wider"
@@ -157,7 +165,7 @@ function MobileDrawer({
                     </div>
 
                     {/* Group items */}
-                    <div className="space-y-0.5">
+                    <div>
                       {group.items.map((item) => {
                         const isActive = pathname === item.href
                         return (
@@ -166,7 +174,7 @@ function MobileDrawer({
                             href={item.href}
                             onClick={onClose}
                             className={clsx(
-                              "block px-3 py-2.5 rounded-lg text-sm transition-colors border-l-2",
+                              "block px-3 py-1.5 rounded-lg text-sm transition-colors border-l-2",
                               isActive
                                 ? "font-medium text-sf-white"
                                 : "border-transparent text-sf-steel hover:text-sf-white hover:bg-sf-white/5"
