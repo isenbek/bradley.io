@@ -3,9 +3,7 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState, useEffect } from "react"
-import Image from "next/image"
-import { X } from "lucide-react"
-import { Briefcase, User } from "lucide-react"
+import { X, Menu, Briefcase, User } from "lucide-react"
 import { ForgeIcon } from "@/components/ui/ForgeIcon"
 import { clsx } from "clsx"
 import { AnimatePresence, motion } from "framer-motion"
@@ -93,7 +91,8 @@ function MobileDrawer({
             onClick={onClose}
           />
           <motion.div
-            className="fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-sf-dark z-50 lg:hidden shadow-2xl overflow-y-auto"
+            className="fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-sf-dark z-50 lg:hidden shadow-2xl overflow-y-auto border-l"
+            style={{ borderColor: "color-mix(in srgb, var(--brand-primary) 25%, transparent)" }}
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
@@ -111,34 +110,28 @@ function MobileDrawer({
             </div>
 
             <div className="px-3 pb-3 space-y-3">
-              {/* Top-level links */}
-              <div>
-                {[
-                  { href: "/", label: "Home" },
-                  { href: "/about", label: "About" },
-                ].map((link) => {
-                  const isActive = pathname === link.href
-                  return (
-                    <Link
-                      key={link.href}
-                      href={link.href}
-                      onClick={onClose}
-                      className={clsx(
-                        "block px-3 py-1.5 rounded-lg text-base font-medium transition-colors",
-                        isActive
-                          ? "text-sf-white"
-                          : "text-sf-steel hover:text-sf-white hover:bg-sf-white/5"
-                      )}
-                      style={
-                        isActive
-                          ? { background: "color-mix(in srgb, var(--brand-primary) 12%, transparent)" }
-                          : undefined
-                      }
-                    >
-                      {link.label}
-                    </Link>
-                  )
-                })}
+              {/* About — standalone with palette color */}
+              <div className="pb-2 border-b" style={{ borderColor: "color-mix(in srgb, var(--brand-info) 30%, transparent)" }}>
+                <Link
+                  href="/about"
+                  onClick={onClose}
+                  className={clsx(
+                    "block px-3 py-1.5 rounded-lg text-base font-bold transition-colors",
+                    pathname === "/about"
+                      ? "text-sf-white"
+                      : "hover:bg-sf-white/5"
+                  )}
+                  style={
+                    pathname === "/about"
+                      ? {
+                          color: "var(--brand-info)",
+                          background: "color-mix(in srgb, var(--brand-info) 10%, transparent)",
+                        }
+                      : { color: "var(--brand-info)" }
+                  }
+                >
+                  About
+                </Link>
               </div>
 
               {/* Groups */}
@@ -263,11 +256,12 @@ export function Navigation() {
             </div>
 
             <button
-              className="lg:hidden p-2 text-sf-white hover:bg-sf-white/10 rounded-lg transition-colors"
+              className="lg:hidden p-2 hover:bg-sf-white/10 rounded-lg transition-colors"
               onClick={() => setMobileMenuOpen(true)}
               aria-label="Open menu"
+              style={{ color: "var(--brand-primary)" }}
             >
-              <Image src="/images/hamburger.svg" alt="Menu" width={28} height={28} className="invert" />
+              <Menu className="w-7 h-7" strokeWidth={2.5} />
             </button>
           </div>
         </nav>
