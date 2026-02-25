@@ -4,10 +4,15 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState, useEffect } from "react"
 import Image from "next/image"
-import { X, ChevronRight } from "lucide-react"
+import { X } from "lucide-react"
 import { ForgeIcon } from "@/components/ui/ForgeIcon"
 import { clsx } from "clsx"
 import { AnimatePresence, motion } from "framer-motion"
+
+const groupColors: Record<string, string> = {
+  Work: "var(--brand-primary)",
+  Profile: "var(--brand-secondary)",
+}
 
 const navGroups = [
   {
@@ -50,8 +55,6 @@ function MobileDrawer({
   onClose: () => void
   pathname: string
 }) {
-  const [expandedGroup, setExpandedGroup] = useState<string | null>(null)
-
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose()
@@ -114,47 +117,28 @@ function MobileDrawer({
                 Home
               </Link>
               {navGroups.map((group) => (
-                <div key={group.label} className="border-b border-sf-steel/10">
-                  <button
-                    onClick={() =>
-                      setExpandedGroup(expandedGroup === group.label ? null : group.label)
-                    }
-                    className="w-full flex items-center justify-between px-4 py-3 text-left hover:bg-sf-white/5 transition-colors"
+                <div key={group.label}>
+                  <div
+                    className="px-4 pt-4 pb-1 text-xs font-bold uppercase tracking-wider"
+                    style={{ color: groupColors[group.label] }}
                   >
-                    <span className="font-medium text-sf-white">{group.label}</span>
-                    <ChevronRight
+                    {group.label}
+                  </div>
+                  {group.items.map((item) => (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      onClick={onClose}
                       className={clsx(
-                        "w-4 h-4 text-sf-steel transition-transform",
-                        expandedGroup === group.label && "rotate-90"
+                        "block px-6 py-2.5 text-sm transition-colors border-l-2",
+                        pathname === item.href
+                          ? "bg-sf-orange/10 border-sf-orange text-sf-orange font-medium"
+                          : "border-transparent text-sf-steel hover:text-sf-white hover:bg-sf-white/5"
                       )}
-                    />
-                  </button>
-                  <AnimatePresence>
-                    {expandedGroup === group.label && (
-                      <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: "auto", opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        className="overflow-hidden bg-sf-dark"
-                      >
-                        {group.items.map((item) => (
-                          <Link
-                            key={item.href}
-                            href={item.href}
-                            onClick={onClose}
-                            className={clsx(
-                              "block px-6 py-2.5 text-sm transition-colors border-l-2",
-                              pathname === item.href
-                                ? "bg-sf-orange/10 border-sf-orange text-sf-orange font-medium"
-                                : "border-transparent text-sf-steel hover:text-sf-white hover:bg-sf-white/5"
-                            )}
-                          >
-                            {item.label}
-                          </Link>
-                        ))}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
                 </div>
               ))}
             </div>
