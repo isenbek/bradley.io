@@ -3,7 +3,8 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState, useEffect } from "react"
-import { X, Menu, Briefcase, User } from "lucide-react"
+import Image from "next/image"
+import { X, Briefcase, User } from "lucide-react"
 import { ForgeIcon } from "@/components/ui/ForgeIcon"
 import { clsx } from "clsx"
 import { AnimatePresence, motion } from "framer-motion"
@@ -259,9 +260,8 @@ export function Navigation() {
               className="lg:hidden p-2 hover:bg-sf-white/10 rounded-lg transition-colors"
               onClick={() => setMobileMenuOpen(true)}
               aria-label="Open menu"
-              style={{ color: "var(--brand-primary)" }}
             >
-              <Menu className="w-7 h-7" strokeWidth={2.5} />
+              <Image src="/images/hamburger.svg" alt="Menu" width={28} height={28} className="invert" />
             </button>
           </div>
         </nav>
