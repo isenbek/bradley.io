@@ -5,18 +5,16 @@ import { usePathname } from "next/navigation"
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import { X } from "lucide-react"
+import { Briefcase, User } from "lucide-react"
 import { ForgeIcon } from "@/components/ui/ForgeIcon"
 import { clsx } from "clsx"
 import { AnimatePresence, motion } from "framer-motion"
 
-const groupColors: Record<string, string> = {
-  Work: "var(--brand-primary)",
-  Profile: "var(--brand-secondary)",
-}
-
 const navGroups = [
   {
     label: "Work",
+    color: "var(--brand-primary)",
+    icon: Briefcase,
     items: [
       { href: "/projects", label: "Projects" },
       { href: "/services", label: "Services" },
@@ -27,6 +25,8 @@ const navGroups = [
   },
   {
     label: "Profile",
+    color: "var(--brand-warning)",
+    icon: User,
     items: [
       { href: "/about", label: "About" },
       { href: "/style-guide", label: "Style Guide" },
@@ -86,61 +86,109 @@ function MobileDrawer({
             onClick={onClose}
           />
           <motion.div
-            className="fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-sf-dark-alt z-50 lg:hidden shadow-2xl overflow-y-auto"
+            className="fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-sf-dark z-50 lg:hidden shadow-2xl overflow-y-auto"
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
           >
-            <div className="flex items-center justify-between p-4 border-b border-sf-steel/15 bg-sf-dark">
-              <span className="font-display font-bold text-sf-white">Navigation</span>
+            {/* Header with brand */}
+            <div className="flex items-center justify-between p-4 border-b border-sf-steel/15">
+              <Link href="/" onClick={onClose} className="flex items-center gap-2.5">
+                <ForgeIcon size={28} />
+                <span className="text-lg font-bold tracking-tight text-sf-white">
+                  bradley<span style={{ color: "var(--brand-primary)" }} className="font-normal">.io</span>
+                </span>
+              </Link>
               <button
                 onClick={onClose}
                 className="p-2 hover:bg-sf-white/10 rounded-lg transition-colors"
                 aria-label="Close menu"
               >
-                <X className="w-5 h-5 text-sf-white" />
+                <X className="w-5 h-5 text-sf-steel" />
               </button>
             </div>
-            <div className="py-2">
-              {/* Home link */}
+
+            <div className="p-3 space-y-4">
+              {/* Home */}
               <Link
                 href="/"
                 onClick={onClose}
                 className={clsx(
-                  "block px-4 py-3 text-sm transition-colors border-l-2",
+                  "block px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
                   pathname === "/"
-                    ? "border-sf-orange text-sf-orange bg-sf-orange/10 font-medium"
-                    : "border-transparent text-sf-steel hover:text-sf-white hover:bg-sf-white/5"
+                    ? "text-sf-white"
+                    : "text-sf-steel hover:text-sf-white hover:bg-sf-white/5"
                 )}
+                style={
+                  pathname === "/"
+                    ? { background: "color-mix(in srgb, var(--brand-primary) 12%, transparent)" }
+                    : undefined
+                }
               >
                 Home
               </Link>
-              {navGroups.map((group) => (
-                <div key={group.label}>
-                  <div
-                    className="px-4 pt-4 pb-1 text-xs font-bold uppercase tracking-wider"
-                    style={{ color: groupColors[group.label] }}
-                  >
-                    {group.label}
-                  </div>
-                  {group.items.map((item) => (
-                    <Link
-                      key={item.href}
-                      href={item.href}
-                      onClick={onClose}
-                      className={clsx(
-                        "block px-6 py-2.5 text-sm transition-colors border-l-2",
-                        pathname === item.href
-                          ? "bg-sf-orange/10 border-sf-orange text-sf-orange font-medium"
-                          : "border-transparent text-sf-steel hover:text-sf-white hover:bg-sf-white/5"
-                      )}
+
+              {/* Groups */}
+              {navGroups.map((group) => {
+                const Icon = group.icon
+                return (
+                  <div key={group.label}>
+                    {/* Group header */}
+                    <div
+                      className="flex items-center gap-2 px-3 pb-2 mb-1 border-b"
+                      style={{ borderColor: `color-mix(in srgb, ${group.color} 40%, transparent)` }}
                     >
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-              ))}
+                      <div
+                        className="flex items-center justify-center w-6 h-6 rounded"
+                        style={{
+                          background: `color-mix(in srgb, ${group.color} 12%, transparent)`,
+                          border: `1px solid color-mix(in srgb, ${group.color} 25%, transparent)`,
+                        }}
+                      >
+                        <Icon className="w-3.5 h-3.5" style={{ color: group.color }} />
+                      </div>
+                      <span
+                        className="text-xs font-bold uppercase tracking-wider"
+                        style={{ color: group.color }}
+                      >
+                        {group.label}
+                      </span>
+                    </div>
+
+                    {/* Group items */}
+                    <div className="space-y-0.5">
+                      {group.items.map((item) => {
+                        const isActive = pathname === item.href
+                        return (
+                          <Link
+                            key={item.href}
+                            href={item.href}
+                            onClick={onClose}
+                            className={clsx(
+                              "block px-3 py-2.5 rounded-lg text-sm transition-colors border-l-2",
+                              isActive
+                                ? "font-medium text-sf-white"
+                                : "border-transparent text-sf-steel hover:text-sf-white hover:bg-sf-white/5"
+                            )}
+                            style={
+                              isActive
+                                ? {
+                                    borderColor: group.color,
+                                    color: group.color,
+                                    background: `color-mix(in srgb, ${group.color} 10%, transparent)`,
+                                  }
+                                : undefined
+                            }
+                          >
+                            {item.label}
+                          </Link>
+                        )
+                      })}
+                    </div>
+                  </div>
+                )
+              })}
             </div>
           </motion.div>
         </>
