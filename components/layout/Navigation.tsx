@@ -100,30 +100,24 @@ function MobileDrawer({
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
           >
-            {/* Header with brand */}
-            <div className="flex items-center justify-between p-4 border-b border-sf-steel/15">
-              <Link href="/" onClick={onClose} className="flex items-center gap-2.5">
-                <ForgeIcon size={28} />
-                <span className="text-lg font-bold tracking-tight text-sf-white">
-                  bradley<span style={{ color: "var(--brand-primary)" }} className="font-normal">.io</span>
-                </span>
-              </Link>
+            {/* Close button */}
+            <div className="flex justify-end p-2">
               <button
                 onClick={onClose}
-                className="p-2 hover:bg-sf-white/10 rounded-lg transition-colors"
+                className="p-1.5 hover:bg-sf-white/10 rounded-lg transition-colors"
                 aria-label="Close menu"
               >
                 <X className="w-5 h-5 text-sf-steel" />
               </button>
             </div>
 
-            <div className="p-3 space-y-3">
+            <div className="px-3 pb-3 space-y-2">
               {/* Home */}
               <Link
                 href="/"
                 onClick={onClose}
                 className={clsx(
-                  "block px-3 py-2 rounded-lg text-sm font-medium transition-colors",
+                  "block px-3 py-1.5 rounded-lg text-sm font-medium transition-colors",
                   pathname === "/"
                     ? "text-sf-white"
                     : "text-sf-steel hover:text-sf-white hover:bg-sf-white/5"
@@ -144,20 +138,20 @@ function MobileDrawer({
                   <div key={group.label}>
                     {/* Group header */}
                     <div
-                      className="flex items-center gap-2 px-3 pb-1.5 mb-0.5 border-b"
+                      className="flex items-center gap-1.5 px-3 pb-1 border-b"
                       style={{ borderColor: `color-mix(in srgb, ${group.color} 40%, transparent)` }}
                     >
                       <div
-                        className="flex items-center justify-center w-5 h-5 rounded"
+                        className="flex items-center justify-center w-4 h-4 rounded"
                         style={{
                           background: `color-mix(in srgb, ${group.color} 12%, transparent)`,
                           border: `1px solid color-mix(in srgb, ${group.color} 25%, transparent)`,
                         }}
                       >
-                        <Icon className="w-3 h-3" style={{ color: group.color }} />
+                        <Icon className="w-2.5 h-2.5" style={{ color: group.color }} />
                       </div>
                       <span
-                        className="text-xs font-bold uppercase tracking-wider"
+                        className="text-[11px] font-bold uppercase tracking-wider"
                         style={{ color: group.color }}
                       >
                         {group.label}
@@ -174,7 +168,7 @@ function MobileDrawer({
                             href={item.href}
                             onClick={onClose}
                             className={clsx(
-                              "block px-3 py-1.5 rounded-lg text-sm transition-colors border-l-2",
+                              "block px-3 py-1 rounded-lg text-sm transition-colors border-l-2",
                               isActive
                                 ? "font-medium text-sf-white"
                                 : "border-transparent text-sf-steel hover:text-sf-white hover:bg-sf-white/5"
