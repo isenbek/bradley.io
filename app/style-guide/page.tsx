@@ -9,15 +9,14 @@ import { CalloutBox } from "@/components/mdx/CalloutBox"
 import { IntegrationBadges } from "@/components/mdx/IntegrationBadges"
 
 // --- Color Swatch ---
-function ColorSwatch({ name, hex, cssVar }: { name: string; hex: string; cssVar: string }) {
+function ColorSwatch({ name, cssVar }: { name: string; cssVar: string }) {
   return (
     <div className="flex flex-col">
       <div
         className="w-full h-20 rounded-lg border border-sf-steel/15 mb-3"
-        style={{ background: hex }}
+        style={{ background: `var(${cssVar})` }}
       />
       <div className="text-sm font-bold text-sf-white">{name}</div>
-      <div className="text-xs font-mono text-sf-cyan">{hex}</div>
       <div className="text-xs font-mono text-sf-muted">{cssVar}</div>
     </div>
   )
@@ -61,26 +60,26 @@ export default function StyleGuidePage() {
       <Section title="Color Palette" id="colors">
         <h3 className="text-lg font-bold text-sf-white mb-4">Brand Colors</h3>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-10">
-          <ColorSwatch name="Forge Orange" hex="#FF6B35" cssVar="--color-sf-orange" />
-          <ColorSwatch name="Deep Blue" hex="#0A2342" cssVar="--color-sf-blue" />
-          <ColorSwatch name="Cyan" hex="#00F5D4" cssVar="--color-sf-cyan" />
-          <ColorSwatch name="Steel" hex="#9AA5B1" cssVar="--color-sf-steel" />
+          <ColorSwatch name="Primary" cssVar="--brand-primary" />
+          <ColorSwatch name="Deep" cssVar="--brand-deep" />
+          <ColorSwatch name="Secondary" cssVar="--brand-secondary" />
+          <ColorSwatch name="Steel" cssVar="--brand-steel" />
         </div>
 
         <h3 className="text-lg font-bold text-sf-white mb-4">Backgrounds</h3>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-10">
-          <ColorSwatch name="Dark" hex="#060D1A" cssVar="--color-sf-dark" />
-          <ColorSwatch name="Dark Alt" hex="#0C1629" cssVar="--color-sf-dark-alt" />
-          <ColorSwatch name="White" hex="#F0F4F8" cssVar="--color-sf-white" />
-          <ColorSwatch name="Muted" hex="#6B7B8D" cssVar="--color-sf-muted" />
+          <ColorSwatch name="Dark" cssVar="--brand-bg" />
+          <ColorSwatch name="Dark Alt" cssVar="--brand-bg-alt" />
+          <ColorSwatch name="Text" cssVar="--brand-text" />
+          <ColorSwatch name="Muted" cssVar="--brand-muted" />
         </div>
 
         <h3 className="text-lg font-bold text-sf-white mb-4">Semantic Colors</h3>
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-10">
-          <ColorSwatch name="Success" hex="#059669" cssVar="--color-sf-success" />
-          <ColorSwatch name="Warning" hex="#D97706" cssVar="--color-sf-warning" />
-          <ColorSwatch name="Error" hex="#DC2626" cssVar="--color-sf-error" />
-          <ColorSwatch name="Info" hex="#0284C7" cssVar="--color-sf-info" />
+          <ColorSwatch name="Success" cssVar="--brand-success" />
+          <ColorSwatch name="Warning" cssVar="--brand-warning" />
+          <ColorSwatch name="Error" cssVar="--brand-error" />
+          <ColorSwatch name="Info" cssVar="--brand-info" />
         </div>
 
         <h3 className="text-lg font-bold text-sf-white mb-4">Gradient</h3>
@@ -190,13 +189,13 @@ export default function StyleGuidePage() {
       {/* ===== STATUS BADGES ===== */}
       <Section title="Status Badges" id="badges">
         <div className="flex flex-wrap gap-4 mb-6">
-          <span className="px-4 py-1.5 text-sm font-medium rounded-full bg-sf-success text-white">
+          <span className="px-4 py-1.5 text-sm font-medium rounded-full bg-sf-success text-sf-white">
             Production
           </span>
-          <span className="px-4 py-1.5 text-sm font-medium rounded-full bg-sf-warning text-white">
+          <span className="px-4 py-1.5 text-sm font-medium rounded-full bg-sf-warning text-sf-white">
             In Development
           </span>
-          <span className="px-4 py-1.5 text-sm font-medium rounded-full bg-sf-muted text-white">
+          <span className="px-4 py-1.5 text-sm font-medium rounded-full bg-sf-muted text-sf-white">
             Planned
           </span>
         </div>
@@ -208,7 +207,7 @@ export default function StyleGuidePage() {
       {/* ===== BUTTONS ===== */}
       <Section title="Button Styles" id="buttons">
         <div className="flex flex-wrap gap-4 mb-8">
-          <button className="bg-sf-orange text-sf-white px-6 py-3 rounded-lg text-sm font-semibold hover:shadow-[0_8px_30px_#FF6B3544] hover:-translate-y-0.5 transition-all">
+          <button className="bg-sf-orange text-sf-white px-6 py-3 rounded-lg text-sm font-semibold hover:shadow-[0_8px_30px_var(--brand-btn-shadow)] hover:-translate-y-0.5 transition-all">
             Primary Action
           </button>
           <button className="border border-sf-steel/30 text-sf-steel px-6 py-3 rounded-lg text-sm font-medium hover:bg-sf-cyan/5 hover:border-sf-cyan hover:text-sf-cyan transition-all">
@@ -321,16 +320,20 @@ export default function StyleGuidePage() {
 
         <h3 className="text-lg font-bold text-sf-white mb-6">Float Animation</h3>
         <div className="flex items-center justify-center gap-8 py-10 mb-10 bg-sf-dark rounded-xl border border-sf-steel/10">
-          {["#FF6B35", "#00F5D4", "#9AA5B1"].map((color, i) => (
+          {[
+            { var: "var(--brand-primary)", cls: "sf-orange" },
+            { var: "var(--brand-secondary)", cls: "sf-cyan" },
+            { var: "var(--brand-steel)", cls: "sf-steel" },
+          ].map((color, i) => (
             <motion.div
               key={i}
               className="rounded-md"
               style={{
                 width: 60,
                 height: 60,
-                background: `linear-gradient(135deg, ${color}CC, ${color}66)`,
-                border: `1px solid ${color}44`,
-                boxShadow: `0 0 20px ${color}22`,
+                background: `linear-gradient(135deg, color-mix(in srgb, ${color.var} 80%, transparent), color-mix(in srgb, ${color.var} 40%, transparent))`,
+                border: `1px solid color-mix(in srgb, ${color.var} 25%, transparent)`,
+                boxShadow: `0 0 20px color-mix(in srgb, ${color.var} 15%, transparent)`,
               }}
               animate={{ y: [0, -12, 0] }}
               transition={{
@@ -349,9 +352,9 @@ export default function StyleGuidePage() {
             className="w-4 h-4 rounded-full bg-sf-orange"
             animate={{
               boxShadow: [
-                "0 0 20px #FF6B3522",
-                "0 0 40px #FF6B3544",
-                "0 0 20px #FF6B3522",
+                "0 0 20px color-mix(in srgb, var(--brand-primary) 15%, transparent)",
+                "0 0 40px color-mix(in srgb, var(--brand-primary) 25%, transparent)",
+                "0 0 20px color-mix(in srgb, var(--brand-primary) 15%, transparent)",
               ],
             }}
             transition={{ duration: 2, repeat: Infinity }}

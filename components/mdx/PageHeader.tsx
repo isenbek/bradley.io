@@ -14,9 +14,9 @@ interface PageHeaderProps {
 }
 
 const statusConfig = {
-  production: { label: "Production", color: "bg-sf-success text-white" },
-  development: { label: "In Development", color: "bg-sf-warning text-white" },
-  planned: { label: "Planned", color: "bg-sf-muted text-white" },
+  production: { label: "Production", color: "bg-sf-success text-sf-white" },
+  development: { label: "In Development", color: "bg-sf-warning text-sf-white" },
+  planned: { label: "Planned", color: "bg-sf-muted text-sf-white" },
 }
 
 export function PageHeader({ icon, title, status, tagline }: PageHeaderProps) {

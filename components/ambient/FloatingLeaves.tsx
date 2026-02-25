@@ -17,7 +17,7 @@ interface Leaf {
 
 function getLeafColor(): string {
   const style = getComputedStyle(document.documentElement);
-  return style.getPropertyValue("--brand-secondary").trim() || "#7CB8C9";
+  return style.getPropertyValue("--brand-secondary").trim() || style.getPropertyValue("--brand-primary").trim() || "#7CB8C9";
 }
 
 function drawLeaf(
