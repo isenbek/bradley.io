@@ -28,7 +28,6 @@ const navGroups = [
     color: "var(--brand-warning)",
     icon: User,
     items: [
-      { href: "/about", label: "About" },
       { href: "/style-guide", label: "Style Guide" },
       { href: "/terminal", label: "Terminal" },
       { href: "/wargames", label: "Wargames" },
@@ -111,25 +110,36 @@ function MobileDrawer({
               </button>
             </div>
 
-            <div className="px-3 pb-3 space-y-2">
-              {/* Home */}
-              <Link
-                href="/"
-                onClick={onClose}
-                className={clsx(
-                  "block px-3 py-1.5 rounded-lg text-sm font-medium transition-colors",
-                  pathname === "/"
-                    ? "text-sf-white"
-                    : "text-sf-steel hover:text-sf-white hover:bg-sf-white/5"
-                )}
-                style={
-                  pathname === "/"
-                    ? { background: "color-mix(in srgb, var(--brand-primary) 12%, transparent)" }
-                    : undefined
-                }
-              >
-                Home
-              </Link>
+            <div className="px-3 pb-3 space-y-3">
+              {/* Top-level links */}
+              <div>
+                {[
+                  { href: "/", label: "Home" },
+                  { href: "/about", label: "About" },
+                ].map((link) => {
+                  const isActive = pathname === link.href
+                  return (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      onClick={onClose}
+                      className={clsx(
+                        "block px-3 py-1.5 rounded-lg text-base font-medium transition-colors",
+                        isActive
+                          ? "text-sf-white"
+                          : "text-sf-steel hover:text-sf-white hover:bg-sf-white/5"
+                      )}
+                      style={
+                        isActive
+                          ? { background: "color-mix(in srgb, var(--brand-primary) 12%, transparent)" }
+                          : undefined
+                      }
+                    >
+                      {link.label}
+                    </Link>
+                  )
+                })}
+              </div>
 
               {/* Groups */}
               {navGroups.map((group) => {
@@ -142,16 +152,16 @@ function MobileDrawer({
                       style={{ borderColor: `color-mix(in srgb, ${group.color} 40%, transparent)` }}
                     >
                       <div
-                        className="flex items-center justify-center w-4 h-4 rounded"
+                        className="flex items-center justify-center w-5 h-5 rounded"
                         style={{
                           background: `color-mix(in srgb, ${group.color} 12%, transparent)`,
                           border: `1px solid color-mix(in srgb, ${group.color} 25%, transparent)`,
                         }}
                       >
-                        <Icon className="w-2.5 h-2.5" style={{ color: group.color }} />
+                        <Icon className="w-3 h-3" style={{ color: group.color }} />
                       </div>
                       <span
-                        className="text-[11px] font-bold uppercase tracking-wider"
+                        className="text-xs font-bold uppercase tracking-wider"
                         style={{ color: group.color }}
                       >
                         {group.label}
@@ -168,7 +178,7 @@ function MobileDrawer({
                             href={item.href}
                             onClick={onClose}
                             className={clsx(
-                              "block px-3 py-1 rounded-lg text-sm transition-colors border-l-2",
+                              "block px-3 py-1.5 rounded-lg text-base transition-colors border-l-2",
                               isActive
                                 ? "font-medium text-sf-white"
                                 : "border-transparent text-sf-steel hover:text-sf-white hover:bg-sf-white/5"
