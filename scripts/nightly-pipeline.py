@@ -66,6 +66,11 @@ except json.JSONDecodeError:
 CBAI_URL = os.environ.get("CBAI_URL", "https://ai.nominate.ai")
 CBAI_PROVIDER = os.environ.get("CBAI_PROVIDER", "ollama")
 
+BIG_IDEAS_ORGS = os.environ.get(
+    "BIG_IDEAS_ORGS",
+    "Nominate-AI,meatballai,tinymachines,Sysforge-AI"
+).split(",")
+
 VERBOSE = "--verbose" in sys.argv or "-v" in sys.argv
 SKIP_AI = "--skip-ai" in sys.argv
 SKIP_GITHUB = "--skip-github" in sys.argv
@@ -724,6 +729,169 @@ def build_about(ai_pilot: dict[str, Any] | None) -> dict[str, Any]:
     }
 
 
+# ─── Stage: Big Ideas (Cross-Org Commit Intelligence) ────────────────
+
+def collect_cross_org_commits() -> list[dict[str, str]]:
+    """Fetch recent commits across all configured orgs."""
+    if SKIP_GITHUB:
+        log("Skipping cross-org commits (--skip-github)")
+        return []
+
+    since = (datetime.now(timezone.utc) - __import__("datetime").timedelta(days=7)).isoformat()
+    commits: list[dict[str, str]] = []
+    noise_prefixes = ("bump:", "deploy:", "nightly:", "merge ", "chore: bump", "chore: deploy")
+
+    for org in BIG_IDEAS_ORGS:
+        org = org.strip()
+        if not org:
+            continue
+
+        # Get active repos for this org
+        try:
+            result = subprocess.run(
+                ["gh", "api", f"/orgs/{org}/repos", "-q",
+                 '[.[] | select(.pushed_at > "' + since[:10] + '") | .full_name] | .[:10] | .[]'],
+                capture_output=True, text=True, timeout=15,
+            )
+            if result.returncode != 0:
+                # Try as user instead of org
+                result = subprocess.run(
+                    ["gh", "api", f"/users/{org}/repos?sort=pushed&per_page=10", "-q",
+                     '[.[] | select(.pushed_at > "' + since[:10] + '") | .full_name] | .[:10] | .[]'],
+                    capture_output=True, text=True, timeout=15,
+                )
+            if result.returncode != 0:
+                log(f"Big Ideas: failed to list repos for {org}")
+                continue
+
+            repo_names = [r.strip() for r in result.stdout.strip().splitlines() if r.strip()]
+            log(f"Big Ideas: {org} → {len(repo_names)} active repos")
+
+        except (subprocess.TimeoutExpired, FileNotFoundError) as e:
+            log(f"Big Ideas: error listing {org}: {e}")
+            continue
+
+        # Get recent commits for each repo
+        for repo_full in repo_names:
+            try:
+                result = subprocess.run(
+                    ["gh", "api", f"/repos/{repo_full}/commits?since={since}&per_page=20",
+                     "-q", '.[] | "\(.commit.message | split("\n") | .[0])\t\(.commit.author.date)\t\(.html_url)"'],
+                    capture_output=True, text=True, timeout=15,
+                )
+                if result.returncode != 0:
+                    continue
+
+                for line in result.stdout.strip().splitlines():
+                    parts = line.split("\t")
+                    if len(parts) < 2:
+                        continue
+                    msg = parts[0].strip()
+                    date = parts[1].strip() if len(parts) > 1 else ""
+
+                    # Filter noise
+                    if any(msg.lower().startswith(p) for p in noise_prefixes):
+                        continue
+                    if len(msg) < 10:
+                        continue
+
+                    commits.append({
+                        "repo": repo_full,
+                        "message": msg[:200],
+                        "date": date,
+                    })
+
+            except (subprocess.TimeoutExpired, FileNotFoundError):
+                continue
+
+    log(f"Big Ideas: collected {len(commits)} commits across {len(BIG_IDEAS_ORGS)} orgs")
+    return commits
+
+
+def generate_big_ideas(commits: list[dict[str, str]]) -> list[dict[str, Any]]:
+    """Use CBAI to synthesize top 3 big ideas from recent commits."""
+    if SKIP_AI:
+        log("Skipping Big Ideas generation (--skip-ai)")
+        return []
+
+    if not commits:
+        log("Big Ideas: no commits to analyze")
+        return []
+
+    # Check cache (keyed by today's date)
+    cache = load_cache()
+    today_key = f"big_ideas_{datetime.now(timezone.utc).strftime('%Y-%m-%d')}"
+    if today_key in cache:
+        log("Big Ideas: using cached result")
+        return cache[today_key]
+
+    import urllib.request
+
+    # Build commit summary for the prompt
+    commit_lines = []
+    for c in commits[:80]:  # Cap to avoid token limits
+        commit_lines.append(f"- [{c['repo']}] {c['message']}")
+    commit_text = "\n".join(commit_lines)
+
+    prompt = (
+        "You are analyzing recent git commits across multiple projects for a developer portfolio site. "
+        "Identify the TOP 3 most interesting themes or 'big ideas' emerging from this work. "
+        "Focus on what's genuinely novel or significant — new capabilities, architectural shifts, creative experiments. "
+        "Skip routine maintenance.\n\n"
+        f"Recent commits (last 7 days):\n{commit_text}\n\n"
+        "Return a JSON array of exactly 3 objects:\n"
+        '[{"title": "5-8 word punchy headline", "description": "1-2 sentence summary", '
+        '"repos": ["org/repo"], "category": "ai-ml|systems|creative|hardware|data"}]\n\n'
+        "Return ONLY the JSON array, no other text."
+    )
+
+    try:
+        payload = json.dumps({
+            "messages": [{"role": "user", "content": prompt}],
+            "provider": CBAI_PROVIDER,
+            "max_tokens": 800,
+        }).encode()
+        req = urllib.request.Request(
+            f"{CBAI_URL}/api/v1/chat",
+            data=payload,
+            headers={"Content-Type": "application/json"},
+        )
+        with urllib.request.urlopen(req, timeout=60) as resp:
+            result = json.loads(resp.read())
+            content = result.get("content", "")
+
+            # Parse JSON array from response
+            match = re.search(r'\[.*\]', content, re.DOTALL)
+            if match:
+                ideas = json.loads(match.group())
+                if isinstance(ideas, list) and len(ideas) > 0:
+                    # Normalize: take first category if pipe-separated
+                    for idea in ideas:
+                        cat = idea.get("category", "systems")
+                        idea["category"] = cat.split("|")[0].strip()
+
+                    # Add dates from most recent matching commit
+                    for idea in ideas:
+                        idea_repos = idea.get("repos", [])
+                        latest_date = ""
+                        for c in commits:
+                            if any(r in c["repo"] for r in idea_repos):
+                                if c["date"] > latest_date:
+                                    latest_date = c["date"]
+                        idea["date"] = latest_date or datetime.now(timezone.utc).isoformat()
+
+                    # Cache result
+                    cache[today_key] = ideas[:3]
+                    save_cache(cache)
+                    log(f"Big Ideas: generated {len(ideas[:3])} ideas")
+                    return ideas[:3]
+
+    except Exception as e:
+        log(f"Big Ideas generation failed: {e}")
+
+    return []
+
+
 def main():
     print("=" * 60)
     print(f"  new.bradley.io nightly pipeline")
@@ -754,8 +922,14 @@ def main():
     activity_feed = build_activity_feed(projects, claude_web, github_repos, ai_pilot)
     log(f"Activity feed: {len(activity_feed)} items")
 
-    # Stage 5: Output
-    print("\n[Stage 5] Writing output...")
+    # Stage 5: Big Ideas (Cross-Org Commit Intelligence)
+    print("\n[Stage 5] Cross-org commit analysis...")
+    cross_org_commits = collect_cross_org_commits()
+    big_ideas = generate_big_ideas(cross_org_commits)
+    log(f"Big Ideas: {len(big_ideas)} themes identified")
+
+    # Stage 6: Output
+    print("\n[Stage 6] Writing output...")
     stats = build_stats(projects, ai_pilot)
     claude_corner = generate_claude_corner(projects, stats)
 
@@ -768,6 +942,8 @@ def main():
         "about": build_about(ai_pilot),
         "labProjects": [p for p in projects if p.get("isResearch")],
     }
+    if big_ideas:
+        site_data["bigIdeas"] = big_ideas
     if claude_corner:
         site_data["claudeCorner"] = claude_corner
 
@@ -780,7 +956,7 @@ def main():
     # Refresh MCP catalog
     mcp_script = SCRIPT_DIR / "generate-mcp-catalog.py"
     if mcp_script.exists():
-        print("\n[Stage 6] Refreshing MCP catalog...")
+        print("\n[Stage 7] Refreshing MCP catalog...")
         try:
             args = [sys.executable, str(mcp_script)]
             if VERBOSE:

@@ -9,6 +9,14 @@ export interface ClaudeCorner {
   mood: "excited" | "reflective" | "impressed" | "curious" | "amused"
 }
 
+export interface BigIdea {
+  title: string        // Punchy 5-8 word headline
+  description: string  // 1-2 sentence summary of what's happening
+  repos: string[]      // ["meatballai/ComfyUI", "Nominate-AI/cbmesh"]
+  category: string     // "ai-ml" | "systems" | "creative" | "hardware" | "data"
+  date: string         // ISO date of most recent related commit
+}
+
 export interface SiteData {
   generated: string
   stats: SiteStats
@@ -18,6 +26,7 @@ export interface SiteData {
   about: AboutData
   labProjects: Project[]
   claudeCorner?: ClaudeCorner
+  bigIdeas?: BigIdea[]
 }
 
 export interface SiteStats {

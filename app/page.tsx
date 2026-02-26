@@ -9,6 +9,7 @@ import {
 import type { SiteData, ActivityItem as ActivityItemType, Project } from "@/lib/site-data"
 import { categoryMap } from "@/lib/project-categories"
 import { ClaudeCorner } from "@/components/home/ClaudeCorner"
+import { BigIdeas } from "@/components/home/BigIdeas"
 
 // --- Particle Grid Background (theme-aware) ---
 function ParticleGrid() {
@@ -313,6 +314,9 @@ export default function HomePage() {
           </FadeSection>
         </div>
       </section>
+
+      {/* ===== BIG IDEAS ===== */}
+      <BigIdeas ideas={data?.bigIdeas} />
 
       {/* ===== HERO STATS ===== */}
       <section
