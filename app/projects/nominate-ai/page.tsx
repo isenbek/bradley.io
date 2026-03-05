@@ -1,0 +1,95 @@
+import { readFileSync } from "fs"
+import { join } from "path"
+import type { Metadata } from "next"
+import type { NominateTimeline } from "@/lib/nominate-timeline-types"
+import { TimelineStats } from "@/components/timeline/TimelineStats"
+import { LanguageBar } from "@/components/timeline/LanguageBar"
+import { PhaseTimeline } from "@/components/timeline/PhaseTimeline"
+
+export const metadata: Metadata = {
+  title: "Nominate-AI Platform Timeline | Bradley.io",
+  description:
+    "Full development timeline of the Nominate-AI platform — 76 repos, synthesized into phase-based milestones.",
+}
+
+function loadTimeline(): NominateTimeline | null {
+  try {
+    const raw = readFileSync(
+      join(process.cwd(), "public/data/nominate-timeline.json"),
+      "utf-8"
+    )
+    return JSON.parse(raw)
+  } catch {
+    return null
+  }
+}
+
+export default function NominateAIPage() {
+  const data = loadTimeline()
+
+  if (!data) {
+    return (
+      <main className="container-page py-16 sm:py-24">
+        <h1 className="text-3xl font-extrabold mb-4">Nominate-AI Timeline</h1>
+        <p style={{ color: "var(--brand-muted)" }}>
+          Timeline data not yet generated. Run{" "}
+          <code className="font-mono text-sm px-1.5 py-0.5 rounded" style={{ background: "var(--brand-bg-alt)" }}>
+            python3 scripts/nominate-timeline-pipeline.py
+          </code>{" "}
+          to populate.
+        </p>
+      </main>
+    )
+  }
+
+  return (
+    <main className="container-page py-12 sm:py-20">
+      {/* Hero */}
+      <div className="mb-10 sm:mb-14">
+        <div
+          className="text-xs font-semibold uppercase tracking-[3px] mb-1"
+          style={{ color: "var(--brand-primary)" }}
+        >
+          Platform Timeline
+        </div>
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
+          Nominate-AI
+        </h1>
+        <p
+          className="text-base sm:text-lg max-w-2xl mb-6"
+          style={{ color: "var(--brand-muted)" }}
+        >
+          {data.totalRepos} repositories built from{" "}
+          {new Date(data.firstCommit).toLocaleDateString("en-US", {
+            month: "long",
+            year: "numeric",
+          })}{" "}
+          to present. AI-synthesized development phases across the full platform.
+        </p>
+        <TimelineStats
+          totalRepos={data.totalRepos}
+          totalCommits={data.totalCommits}
+          firstCommit={data.firstCommit}
+          latestCommit={data.latestCommit}
+          languageCount={Object.keys(data.languages).length}
+        />
+      </div>
+
+      {/* Language distribution */}
+      <section className="mb-10 sm:mb-14">
+        <h2 className="text-sm font-semibold uppercase tracking-[2px] mb-4" style={{ color: "var(--brand-muted)" }}>
+          Language Distribution
+        </h2>
+        <LanguageBar languages={data.languages} />
+      </section>
+
+      {/* Phase timeline */}
+      <section className="mb-10 sm:mb-14">
+        <h2 className="text-sm font-semibold uppercase tracking-[2px] mb-6" style={{ color: "var(--brand-muted)" }}>
+          Development Phases
+        </h2>
+        <PhaseTimeline phases={data.phases} repos={data.repos} />
+      </section>
+    </main>
+  )
+}

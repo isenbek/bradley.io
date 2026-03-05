@@ -20,6 +20,7 @@ const navGroups = [
       { href: "/ai-pilot", label: "AI Pilot" },
       { href: "/lab", label: "Lab" },
       { href: "/mcp", label: "MCP Catalog" },
+      { href: "/projects/nominate-ai", label: "Nominate-AI" },
     ],
   },
   {
