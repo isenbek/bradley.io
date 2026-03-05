@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { Server, Cpu, Database, MessageSquare, Shield, Briefcase, Lock, Globe, Hash } from "lucide-react"
+import { timeAgo } from "@/lib/time-ago"
 
 interface McpService {
   id: string
@@ -212,13 +213,9 @@ export default function McpPage() {
               <Globe className="w-4 h-4" style={{ color: "var(--brand-primary)" }} />
               <span className="text-sm font-bold">All services hosted at *.nominate.ai</span>
             </div>
-            <p className="text-[13px]" style={{ color: "var(--brand-muted)" }}>
-              Catalog last updated {new Date(catalog.generated).toLocaleDateString("en-US", {
-                month: "long",
-                day: "numeric",
-                year: "numeric",
-              })}
-            </p>
+            <span className="text-[10px] font-mono tracking-wide opacity-60" style={{ color: "var(--brand-muted)" }}>
+              updated {timeAgo(catalog.generated)}
+            </span>
           </div>
         )}
       </div>

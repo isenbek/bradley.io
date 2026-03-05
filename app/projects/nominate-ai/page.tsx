@@ -5,6 +5,8 @@ import type { NominateTimeline } from "@/lib/nominate-timeline-types"
 import { TimelineStats } from "@/components/timeline/TimelineStats"
 import { LanguageBar } from "@/components/timeline/LanguageBar"
 import { PhaseTimeline } from "@/components/timeline/PhaseTimeline"
+import { CommitHeatmap } from "@/components/timeline/CommitHeatmap"
+import { timeAgo } from "@/lib/time-ago"
 
 export const metadata: Metadata = {
   title: "Nominate-AI Platform Timeline | Bradley.io",
@@ -46,11 +48,19 @@ export default function NominateAIPage() {
     <main className="container-page py-12 sm:py-20">
       {/* Hero */}
       <div className="mb-10 sm:mb-14">
-        <div
-          className="text-xs font-semibold uppercase tracking-[3px] mb-1"
-          style={{ color: "var(--brand-primary)" }}
-        >
-          Platform Timeline
+        <div className="flex items-center gap-3 mb-1">
+          <div
+            className="text-xs font-semibold uppercase tracking-[3px]"
+            style={{ color: "var(--brand-primary)" }}
+          >
+            Platform Timeline
+          </div>
+          <span
+            className="text-[10px] font-mono tracking-wide opacity-60"
+            style={{ color: "var(--brand-muted)" }}
+          >
+            updated {timeAgo(data.generated)}
+          </span>
         </div>
         <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
           Nominate-AI
@@ -74,6 +84,13 @@ export default function NominateAIPage() {
           languageCount={Object.keys(data.languages).length}
         />
       </div>
+
+      {/* Commit activity heatmap */}
+      {data.activityHeatmap && data.activityHeatmap.length > 0 && (
+        <section className="mb-10 sm:mb-14">
+          <CommitHeatmap data={data.activityHeatmap} />
+        </section>
+      )}
 
       {/* Language distribution */}
       <section className="mb-10 sm:mb-14">

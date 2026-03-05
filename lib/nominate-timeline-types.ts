@@ -24,6 +24,13 @@ export interface TimelineRepo {
   phase: string
 }
 
+export interface CommitDay {
+  date: string
+  commits: number
+  repos: number
+  intensity: 0 | 1 | 2 | 3 | 4
+}
+
 export interface NominateTimeline {
   generated: string
   org: string
@@ -32,6 +39,7 @@ export interface NominateTimeline {
   latestCommit: string
   totalCommits: number
   languages: Record<string, number>
+  activityHeatmap: CommitDay[]
   phases: TimelinePhase[]
   repos: TimelineRepo[]
 }

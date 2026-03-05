@@ -425,16 +425,45 @@ def build_output(cache: dict) -> dict:
         if lang and lang != "Unknown":
             languages[lang] = languages.get(lang, 0) + 1
 
-    # All commit dates
+    # All commit dates + daily heatmap
     all_dates = []
     total_commits = 0
+    daily_counts: dict[str, dict] = {}
     for r in repos_raw:
         total_commits += r.get("total_commits", 0)
         for c in r.get("commits", []):
             if c.get("date"):
                 all_dates.append(c["date"])
+                day_key = c["date"][:10]
+                if day_key not in daily_counts:
+                    daily_counts[day_key] = {"date": day_key, "commits": 0, "repos": set()}
+                daily_counts[day_key]["commits"] += 1
+                daily_counts[day_key]["repos"].add(r["name"])
 
     all_dates.sort()
+
+    # Build heatmap with intensity levels (0-4)
+    max_commits = max((d["commits"] for d in daily_counts.values()), default=1)
+    heatmap = []
+    for day_key in sorted(daily_counts.keys()):
+        d = daily_counts[day_key]
+        ratio = d["commits"] / max_commits
+        if ratio == 0:
+            intensity = 0
+        elif ratio < 0.15:
+            intensity = 1
+        elif ratio < 0.35:
+            intensity = 2
+        elif ratio < 0.6:
+            intensity = 3
+        else:
+            intensity = 4
+        heatmap.append({
+            "date": d["date"],
+            "commits": d["commits"],
+            "repos": len(d["repos"]),
+            "intensity": intensity,
+        })
 
     # Build repo list
     repo_list = []
@@ -468,6 +497,7 @@ def build_output(cache: dict) -> dict:
         "latestCommit": all_dates[-1] if all_dates else "",
         "totalCommits": total_commits,
         "languages": dict(sorted(languages.items(), key=lambda x: -x[1])),
+        "activityHeatmap": heatmap,
         "phases": phases,
         "repos": sorted(repo_list, key=lambda r: r.get("firstCommit", "")),
     }

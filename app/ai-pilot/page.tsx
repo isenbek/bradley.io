@@ -15,6 +15,7 @@ import {
   SkillsCloud,
 } from "@/components/ai-pilot";
 import type { AIPilotData } from "@/components/ai-pilot/types";
+import { timeAgo } from "@/lib/time-ago";
 
 const TABS = [
   { id: "activity", label: "Activity" },
@@ -83,10 +84,8 @@ export default function AIPilotPage() {
         {/* Data freshness */}
         {data.generated && (
           <div className="text-right">
-            <span className="text-xs font-mono" style={{ color: "var(--brand-muted)" }}>
-              Last updated: {new Date(data.generated).toLocaleDateString("en-US", {
-                month: "short", day: "numeric", year: "numeric", hour: "2-digit", minute: "2-digit",
-              })}
+            <span className="text-[10px] font-mono tracking-wide opacity-60" style={{ color: "var(--brand-muted)" }}>
+              updated {timeAgo(data.generated)}
             </span>
           </div>
         )}
