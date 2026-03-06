@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """
-Nominate-AI Platform Timeline Pipeline
+Platform Timeline Pipeline
 
 Standalone script (not part of nightly pipeline — too heavy to run daily).
-Fetches all repos + commits from the Nominate-AI GitHub org,
+Fetches all repos + commits from a GitHub org or user,
 summarizes per-repo via CBAI, then synthesizes cross-repo phases.
 
 Usage:
   python3 scripts/nominate-timeline-pipeline.py [--verbose] [--skip-ai] [--skip-cache]
+  python3 scripts/nominate-timeline-pipeline.py --target tinymachines [--verbose] [--skip-ai]
 """
 
 import json
@@ -22,9 +23,17 @@ from pathlib import Path
 
 # ─── Config ──────────────────────────────────────────────────────────
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-CACHE_FILE = PROJECT_ROOT / ".nominate-timeline-cache.json"
-OUTPUT_FILE = PROJECT_ROOT / "public" / "data" / "nominate-timeline.json"
+
+# Parse --target flag (default: Nominate-AI)
 ORG = "Nominate-AI"
+for i, arg in enumerate(sys.argv):
+    if arg == "--target" and i + 1 < len(sys.argv):
+        ORG = sys.argv[i + 1]
+
+# Per-target file paths
+ORG_SLUG = ORG.lower().replace(" ", "-")
+CACHE_FILE = PROJECT_ROOT / f".{ORG_SLUG}-timeline-cache.json"
+OUTPUT_FILE = PROJECT_ROOT / "public" / "data" / f"{ORG_SLUG}-timeline.json"
 
 CBAI_URL = os.environ.get("CBAI_URL", "https://ai.nominate.ai")
 CBAI_PROVIDER = os.environ.get("CBAI_PROVIDER", "ollama")
@@ -80,11 +89,18 @@ def fetch_all_repos() -> list[dict]:
     page = 1
 
     while True:
+        # Try org API first, fall back to user API
         result = subprocess.run(
             ["gh", "api", f"/orgs/{ORG}/repos?per_page=100&page={page}",
              "-q", '.[] | "\(.name)\t\(.language // "Unknown")\t\(.created_at)\t\(.pushed_at)\t\(.description // "")"'],
             capture_output=True, text=True, timeout=30,
         )
+        if result.returncode != 0 or not result.stdout.strip():
+            result = subprocess.run(
+                ["gh", "api", f"/users/{ORG}/repos?per_page=100&page={page}",
+                 "-q", '.[] | "\(.name)\t\(.language // "Unknown")\t\(.created_at)\t\(.pushed_at)\t\(.description // "")"'],
+                capture_output=True, text=True, timeout=30,
+            )
         if result.returncode != 0 or not result.stdout.strip():
             break
 
@@ -516,7 +532,7 @@ def build_output(cache: dict) -> dict:
 # ─── Main ─────────────────────────────────────────────────────────────
 
 def main():
-    print(f"Nominate-AI Timeline Pipeline")
+    print(f"{ORG} Timeline Pipeline → {OUTPUT_FILE.name}")
     print(f"{'=' * 40}")
 
     cache = load_cache()

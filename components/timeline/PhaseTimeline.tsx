@@ -23,15 +23,16 @@ interface PhaseTimelineProps {
 }
 
 export function PhaseTimeline({ phases, repos }: PhaseTimelineProps) {
-  const [expandedPhase, setExpandedPhase] = useState<string | null>(null)
+  const reversed = [...phases].reverse()
+  const [expandedIdx, setExpandedIdx] = useState<number | null>(0)
 
   const repoMap = new Map(repos.map((r) => [r.name, r]))
 
   return (
     <div className="space-y-0">
-      {phases.map((phase, i) => {
+      {reversed.map((phase, i) => {
         const color = getPhaseColor(phase.category)
-        const isExpanded = expandedPhase === phase.name
+        const isExpanded = expandedIdx === i
         const phaseRepos = phase.repos
           .map((name) => repoMap.get(name))
           .filter(Boolean) as TimelineRepo[]
@@ -46,7 +47,7 @@ export function PhaseTimeline({ phases, repos }: PhaseTimelineProps) {
         })
 
         return (
-          <div key={phase.name} className="flex gap-4 sm:gap-6">
+          <div key={i} className="flex gap-4 sm:gap-6">
             {/* Timeline line + dot */}
             <div className="flex flex-col items-center shrink-0">
               <div
@@ -115,7 +116,7 @@ export function PhaseTimeline({ phases, repos }: PhaseTimelineProps) {
               {/* Repo badges + expand */}
               <button
                 onClick={() =>
-                  setExpandedPhase(isExpanded ? null : phase.name)
+                  setExpandedIdx(isExpanded ? null : i)
                 }
                 className="flex items-center gap-1.5 text-xs font-mono cursor-pointer"
                 style={{ color }}

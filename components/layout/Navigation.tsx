@@ -21,6 +21,7 @@ const navGroups = [
       { href: "/lab", label: "Lab" },
       { href: "/mcp", label: "MCP Catalog" },
       { href: "/projects/nominate-ai", label: "Nominate-AI" },
+      { href: "/projects/tinymachines", label: "tinymachines" },
     ],
   },
   {
@@ -29,8 +30,6 @@ const navGroups = [
     icon: User,
     items: [
       { href: "/style-guide", label: "Style Guide" },
-      { href: "/terminal", label: "Terminal" },
-      { href: "/wargames", label: "Wargames" },
     ],
   },
 ]
@@ -42,7 +41,6 @@ const topLevelLinks = [
   { href: "/lab", label: "Lab" },
   { href: "/mcp", label: "MCP" },
   { href: "/about", label: "About" },
-  { href: "/wargames", label: "Wargames" },
 ]
 
 function MobileDrawer({
