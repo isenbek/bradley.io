@@ -27,7 +27,7 @@ function LayoutContent({ children }: { children: React.ReactNode }) {
     <>
       <Navigation />
       <AmbientLayer />
-      <main className="min-h-dvh pt-16 pb-10 sm:pb-11">
+      <main className="min-h-dvh pt-16 pb-14 sm:pb-16">
         {children}
       </main>
       <VersionFooter />

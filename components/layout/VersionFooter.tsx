@@ -21,6 +21,21 @@ const themes = [
     label: "Horizon",
     swatch: ["#FFFFFF", "#2563EB", "#3730A3"],
   },
+  {
+    id: "ember",
+    label: "Ember",
+    swatch: ["#1C1412", "#F59E0B", "#EF4444"],
+  },
+  {
+    id: "chlorophyll",
+    label: "Chlorophyll",
+    swatch: ["#0A0F0D", "#22C55E", "#06B6D4"],
+  },
+  {
+    id: "ultraviolet",
+    label: "Ultraviolet",
+    swatch: ["#0F0A1A", "#A855F7", "#EC4899"],
+  },
 ]
 
 function ThemePicker() {
@@ -28,7 +43,7 @@ function ThemePicker() {
   const [current, setCurrent] = useState("deep-sea")
 
   useEffect(() => {
-    const saved = localStorage.getItem("bradley-theme") || "deep-sea"
+    const saved = localStorage.getItem("bradley-theme") || "ember"
     setCurrent(saved)
     document.documentElement.setAttribute("data-theme", saved)
   }, [])

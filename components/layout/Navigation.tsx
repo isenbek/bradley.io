@@ -4,24 +4,37 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useState, useEffect } from "react"
 import Image from "next/image"
-import { X, Briefcase, User } from "lucide-react"
+import { X, Folder, Cpu, GitBranch, User } from "lucide-react"
 import { ForgeIcon } from "@/components/ui/ForgeIcon"
 import { clsx } from "clsx"
 import { AnimatePresence, motion } from "framer-motion"
 
 const navGroups = [
   {
-    label: "Work",
+    label: "Projects",
     color: "var(--brand-primary)",
-    icon: Briefcase,
+    icon: Folder,
     items: [
-      { href: "/projects", label: "Projects" },
-      { href: "/services", label: "Services" },
-      { href: "/ai-pilot", label: "AI Pilot" },
+      { href: "/projects", label: "All Projects" },
       { href: "/lab", label: "Lab" },
-      { href: "/mcp", label: "MCP Catalog" },
+    ],
+  },
+  {
+    label: "Timelines",
+    color: "var(--brand-secondary)",
+    icon: GitBranch,
+    items: [
       { href: "/projects/nominate-ai", label: "Nominate-AI" },
       { href: "/projects/tinymachines", label: "tinymachines" },
+    ],
+  },
+  {
+    label: "Tools",
+    color: "var(--brand-info)",
+    icon: Cpu,
+    items: [
+      { href: "/ai-pilot", label: "AI Pilot" },
+      { href: "/mcp", label: "MCP Catalog" },
     ],
   },
   {
@@ -29,6 +42,8 @@ const navGroups = [
     color: "var(--brand-warning)",
     icon: User,
     items: [
+      { href: "/about", label: "About" },
+      { href: "/services", label: "Services" },
       { href: "/style-guide", label: "Style Guide" },
     ],
   },
@@ -84,117 +99,105 @@ function MobileDrawer({
       {isOpen && (
         <>
           <motion.div
-            className="fixed inset-0 bg-sf-dark/80 backdrop-blur-sm z-40 lg:hidden"
+            className="fixed inset-0 z-40 lg:hidden"
+            style={{ background: "color-mix(in srgb, var(--brand-bg) 90%, transparent)" }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
           />
           <motion.div
-            className="fixed top-0 right-0 bottom-0 w-80 max-w-[85vw] bg-sf-dark z-50 lg:hidden shadow-2xl overflow-y-auto border-l"
-            style={{ borderColor: "color-mix(in srgb, var(--brand-primary) 25%, transparent)" }}
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
-            transition={{ type: "spring", damping: 25, stiffness: 200 }}
+            className="fixed inset-0 z-50 lg:hidden flex items-center justify-center p-6"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={onClose}
           >
-            {/* Close button */}
-            <div className="flex justify-end p-2">
-              <button
-                onClick={onClose}
-                className="p-1.5 hover:bg-sf-white/10 rounded-lg transition-colors"
-                aria-label="Close menu"
+            <motion.div
+              className="w-full max-w-md rounded-2xl shadow-2xl overflow-hidden"
+              style={{
+                background: "var(--brand-bg-alt)",
+                border: "1px solid var(--brand-border)",
+              }}
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {/* Header */}
+              <div
+                className="flex items-center justify-between px-5 py-4"
+                style={{ borderBottom: "1px solid var(--brand-border)" }}
               >
-                <X className="w-5 h-5 text-sf-steel" />
-              </button>
-            </div>
-
-            <div className="px-3 pb-3 space-y-3">
-              {/* About — standalone with palette color */}
-              <div className="pb-2 border-b" style={{ borderColor: "color-mix(in srgb, var(--brand-info) 30%, transparent)" }}>
-                <Link
-                  href="/about"
+                <div className="flex items-center gap-2.5">
+                  <ForgeIcon size={24} />
+                  <span className="text-sm font-bold tracking-tight">
+                    bradley<span style={{ color: "var(--brand-primary)" }} className="font-normal">.io</span>
+                  </span>
+                </div>
+                <button
                   onClick={onClose}
-                  className={clsx(
-                    "block px-3 py-1.5 rounded-lg text-base font-bold transition-colors",
-                    pathname === "/about"
-                      ? "text-sf-white"
-                      : "hover:bg-sf-white/5"
-                  )}
-                  style={
-                    pathname === "/about"
-                      ? {
-                          color: "var(--brand-info)",
-                          background: "color-mix(in srgb, var(--brand-info) 10%, transparent)",
-                        }
-                      : { color: "var(--brand-info)" }
-                  }
+                  className="p-1.5 rounded-lg transition-colors"
+                  style={{ color: "var(--brand-muted)" }}
+                  aria-label="Close menu"
                 >
-                  About
-                </Link>
+                  <X className="w-5 h-5" />
+                </button>
               </div>
 
-              {/* Groups */}
-              {navGroups.map((group) => {
-                const Icon = group.icon
-                return (
-                  <div key={group.label}>
-                    {/* Group header */}
+              {/* Nav groups grid */}
+              <div className="grid grid-cols-2 gap-px" style={{ background: "var(--brand-border)" }}>
+                {navGroups.map((group) => {
+                  const Icon = group.icon
+                  return (
                     <div
-                      className="flex items-center gap-1.5 px-3 pb-1 border-b"
-                      style={{ borderColor: `color-mix(in srgb, ${group.color} 40%, transparent)` }}
+                      key={group.label}
+                      className="p-4"
+                      style={{ background: "var(--brand-bg-alt)" }}
                     >
-                      <div
-                        className="flex items-center justify-center w-5 h-5 rounded"
-                        style={{
-                          background: `color-mix(in srgb, ${group.color} 12%, transparent)`,
-                          border: `1px solid color-mix(in srgb, ${group.color} 25%, transparent)`,
-                        }}
-                      >
-                        <Icon className="w-3 h-3" style={{ color: group.color }} />
+                      <div className="flex items-center gap-1.5 mb-3">
+                        <Icon className="w-3.5 h-3.5" style={{ color: group.color }} />
+                        <span
+                          className="text-[10px] font-bold uppercase tracking-widest"
+                          style={{ color: group.color }}
+                        >
+                          {group.label}
+                        </span>
                       </div>
-                      <span
-                        className="text-xs font-bold uppercase tracking-wider"
-                        style={{ color: group.color }}
-                      >
-                        {group.label}
-                      </span>
+                      <div className="space-y-0.5">
+                        {group.items.map((item) => {
+                          const isActive = pathname === item.href
+                          return (
+                            <Link
+                              key={item.href}
+                              href={item.href}
+                              onClick={onClose}
+                              className={clsx(
+                                "block px-2.5 py-1.5 rounded-lg text-sm transition-colors",
+                                isActive
+                                  ? "font-medium"
+                                  : "hover:bg-sf-white/5"
+                              )}
+                              style={
+                                isActive
+                                  ? {
+                                      color: group.color,
+                                      background: `color-mix(in srgb, ${group.color} 10%, transparent)`,
+                                    }
+                                  : { color: "var(--brand-text)" }
+                              }
+                            >
+                              {item.label}
+                            </Link>
+                          )
+                        })}
+                      </div>
                     </div>
-
-                    {/* Group items */}
-                    <div>
-                      {group.items.map((item) => {
-                        const isActive = pathname === item.href
-                        return (
-                          <Link
-                            key={item.href}
-                            href={item.href}
-                            onClick={onClose}
-                            className={clsx(
-                              "block px-3 py-1.5 rounded-lg text-base transition-colors border-l-2",
-                              isActive
-                                ? "font-medium text-sf-white"
-                                : "border-transparent text-sf-steel hover:text-sf-white hover:bg-sf-white/5"
-                            )}
-                            style={
-                              isActive
-                                ? {
-                                    borderColor: group.color,
-                                    color: group.color,
-                                    background: `color-mix(in srgb, ${group.color} 10%, transparent)`,
-                                  }
-                                : undefined
-                            }
-                          >
-                            {item.label}
-                          </Link>
-                        )
-                      })}
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
+                  )
+                })}
+              </div>
+            </motion.div>
           </motion.div>
         </>
       )}
@@ -260,7 +263,7 @@ export function Navigation() {
               onClick={() => setMobileMenuOpen(true)}
               aria-label="Open menu"
             >
-              <Image src="/images/hamburger.svg" alt="Menu" width={28} height={28} className="invert" />
+              <Image src="/images/hamburger.svg" alt="Menu" width={28} height={28} style={{ filter: "var(--hamburger-filter, invert(1))" }} />
             </button>
           </div>
         </nav>

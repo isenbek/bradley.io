@@ -1,10 +1,37 @@
 @import "tailwindcss";
 
 /* ═══════════════════════════════════════════════════════════
-   Theme 1: Deep Sea (default)
-   "Depth of knowledge, calm steady hand navigating complex waters"
+   Default: Ember
+   "Warm minimalism. Firelight in a dark workshop."
    ═══════════════════════════════════════════════════════════ */
 :root,
+[data-theme="ember"] {
+  --brand-primary: #F59E0B;
+  --brand-primary-light: #FBBF24;
+  --brand-secondary: #EF4444;
+  --brand-deep: #1C1412;
+  --brand-steel: #A8A29E;
+  --brand-bg: #1C1412;
+  --brand-bg-alt: #262019;
+  --brand-text: #FEF3C7;
+  --brand-muted: #A8A29E;
+  --brand-success: #059669;
+  --brand-warning: #D97706;
+  --brand-error: #DC2626;
+  --brand-info: #0284C7;
+  --brand-particle: 245, 158, 11;
+  --brand-glow: #F59E0B;
+  --brand-glow-secondary: #EF4444;
+  --brand-border: rgba(168, 162, 158, 0.12);
+  --brand-border-hover: rgba(245, 158, 11, 0.4);
+  --brand-card-hover-shadow: rgba(245, 158, 11, 0.15);
+  --brand-btn-shadow: rgba(245, 158, 11, 0.27);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Theme: Deep Sea
+   "Depth of knowledge, calm steady hand navigating complex waters"
+   ═══════════════════════════════════════════════════════════ */
 [data-theme="deep-sea"] {
   --brand-primary: #00F5FF;
   --brand-primary-light: #66F9FF;
@@ -60,6 +87,7 @@
    "Expansive, intelligent, lean. Clarity from complexity."
    ═══════════════════════════════════════════════════════════ */
 [data-theme="horizon"] {
+  --hamburger-filter: invert(0);
   --brand-primary: #2563EB;
   --brand-primary-light: #3B82F6;
   --brand-secondary: #3730A3;
@@ -80,6 +108,60 @@
   --brand-border-hover: rgba(37, 99, 235, 0.4);
   --brand-card-hover-shadow: rgba(37, 99, 235, 0.1);
   --brand-btn-shadow: rgba(37, 99, 235, 0.27);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Theme 5: Chlorophyll
+   "Growth systems. Living infrastructure. Green on black."
+   ═══════════════════════════════════════════════════════════ */
+[data-theme="chlorophyll"] {
+  --brand-primary: #22C55E;
+  --brand-primary-light: #4ADE80;
+  --brand-secondary: #06B6D4;
+  --brand-deep: #0A0F0D;
+  --brand-steel: #94A3B8;
+  --brand-bg: #0A0F0D;
+  --brand-bg-alt: #131A16;
+  --brand-text: #F0FDF4;
+  --brand-muted: #86A393;
+  --brand-success: #059669;
+  --brand-warning: #D97706;
+  --brand-error: #DC2626;
+  --brand-info: #0284C7;
+  --brand-particle: 34, 197, 94;
+  --brand-glow: #22C55E;
+  --brand-glow-secondary: #06B6D4;
+  --brand-border: rgba(134, 163, 147, 0.12);
+  --brand-border-hover: rgba(34, 197, 94, 0.4);
+  --brand-card-hover-shadow: rgba(34, 197, 94, 0.15);
+  --brand-btn-shadow: rgba(34, 197, 94, 0.27);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Theme 6: Ultraviolet
+   "Neon lab. Synthetic. Midnight experiments."
+   ═══════════════════════════════════════════════════════════ */
+[data-theme="ultraviolet"] {
+  --brand-primary: #A855F7;
+  --brand-primary-light: #C084FC;
+  --brand-secondary: #EC4899;
+  --brand-deep: #0F0A1A;
+  --brand-steel: #A1A1AA;
+  --brand-bg: #0F0A1A;
+  --brand-bg-alt: #1A1228;
+  --brand-text: #FAF5FF;
+  --brand-muted: #9B8FBB;
+  --brand-success: #059669;
+  --brand-warning: #D97706;
+  --brand-error: #DC2626;
+  --brand-info: #0284C7;
+  --brand-particle: 168, 85, 247;
+  --brand-glow: #A855F7;
+  --brand-glow-secondary: #EC4899;
+  --brand-border: rgba(155, 143, 187, 0.12);
+  --brand-border-hover: rgba(168, 85, 247, 0.4);
+  --brand-card-hover-shadow: rgba(168, 85, 247, 0.15);
+  --brand-btn-shadow: rgba(168, 85, 247, 0.27);
 }
 
 @theme {

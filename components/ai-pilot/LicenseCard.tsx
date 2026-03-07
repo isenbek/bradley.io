@@ -3,9 +3,11 @@
 import { motion } from "framer-motion";
 import type { LicenseData } from "./types";
 import { FlightHoursCounter } from "./FlightHoursCounter";
+import { timeAgo } from "@/lib/time-ago";
 
 interface LicenseCardProps {
   license: LicenseData;
+  generated?: string;
 }
 
 const CLASS_COLORS: Record<string, string> = {
@@ -15,7 +17,7 @@ const CLASS_COLORS: Record<string, string> = {
   Student: "var(--brand-steel)",
 };
 
-export function LicenseCard({ license }: LicenseCardProps) {
+export function LicenseCard({ license, generated }: LicenseCardProps) {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
@@ -36,10 +38,7 @@ export function LicenseCard({ license }: LicenseCardProps) {
           className="text-center pb-3 mb-4 sm:pb-4 sm:mb-6"
           style={{ borderBottom: "1px solid color-mix(in srgb, var(--brand-primary) 20%, transparent)" }}
         >
-          <div className="text-[9px] sm:text-[10px] md:text-xs tracking-[0.3em] uppercase font-mono" style={{ color: "var(--brand-muted)" }}>
-            Federal AI Aviation Authority
-          </div>
-          <h2 className="text-base sm:text-lg md:text-xl font-bold mt-1 tracking-tight">
+          <h2 className="text-base sm:text-lg md:text-xl font-bold tracking-tight">
             AI Pilot License
           </h2>
           <div className="flex items-center justify-center gap-2 sm:gap-3 mt-1.5 sm:mt-2">
@@ -56,11 +55,10 @@ export function LicenseCard({ license }: LicenseCardProps) {
         </div>
 
         {/* Stats grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6">
-          <FlightHoursCounter value={license.totalSessions} label="Flight Sessions" />
-          <FlightHoursCounter value={license.totalMessages} label="Total Messages" />
-          <FlightHoursCounter value={license.totalCostUSD} label="API Investment" prefix="$" decimals={0} />
+        <div className="grid grid-cols-3 gap-3 sm:gap-6">
           <FlightHoursCounter value={license.projectCount} label="Projects" />
+          <FlightHoursCounter value={license.totalSessions} label="Sessions" />
+          <FlightHoursCounter value={license.totalMessages} label="Messages" />
         </div>
 
         {/* Footer */}
@@ -74,6 +72,9 @@ export function LicenseCard({ license }: LicenseCardProps) {
           <div><span className="uppercase tracking-wide">Issued: </span>{license.issued}</div>
           <div><span className="uppercase tracking-wide">Expires: </span>{license.expires}</div>
           <div><span className="uppercase tracking-wide">Models: </span>{license.modelCount}</div>
+          {generated && (
+            <div className="opacity-60">updated {timeAgo(generated)}</div>
+          )}
         </div>
       </div>
     </motion.div>

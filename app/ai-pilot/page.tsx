@@ -79,19 +79,10 @@ export default function AIPilotPage() {
   }
 
   return (
-    <div className="pt-20 sm:pt-24 pb-10 sm:pb-16">
+    <div className="pt-16 sm:pt-20 pb-10 sm:pb-16">
       <div className="container-page space-y-4 sm:space-y-6">
-        {/* Data freshness */}
-        {data.generated && (
-          <div className="text-right">
-            <span className="text-[10px] font-mono tracking-wide opacity-60" style={{ color: "var(--brand-muted)" }}>
-              updated {timeAgo(data.generated)}
-            </span>
-          </div>
-        )}
-
         {/* Hero: License Card */}
-        <LicenseCard license={data.license} />
+        <LicenseCard license={data.license} generated={data.generated} />
 
         {/* Streak Banner */}
         <StreakBanner streaks={data.streaks} />

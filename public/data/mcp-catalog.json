@@ -1,8 +1,8 @@
 {
-  "generated": "2026-03-06T13:00:40.370213+00:00",
+  "generated": "2026-03-07T05:00:35.926433+00:00",
   "stats": {
-    "totalServices": 22,
-    "totalEndpoints": 187,
+    "totalServices": 44,
+    "totalEndpoints": 351,
     "totalCategories": 5
   },
   "categories": [
@@ -87,6 +87,35 @@
             "email"
           ],
           "endpointCount": 5
+        },
+        {
+          "id": "cbcomfy",
+          "name": "Generative AI Proxy",
+          "url": "https://comfy.nominate.ai",
+          "description": "Thin FastAPI proxy for ComfyUI generative AI backend. Health checks, GPU status, sprite generation, output management.",
+          "auth": "None (PIN gate via cbauth)",
+          "capabilities": [
+            "image-generation",
+            "comfyui",
+            "gpu",
+            "sprites"
+          ],
+          "endpointCount": 10
+        },
+        {
+          "id": "cbtts",
+          "name": "Text-to-Speech",
+          "url": "https://tts.nominate.ai",
+          "description": "Real-time neural text-to-speech powered by VibeVoice. Multiple voice presets, streaming PCM16, complete WAV generation.",
+          "auth": "None",
+          "capabilities": [
+            "tts",
+            "speech-synthesis",
+            "audio",
+            "streaming",
+            "wav"
+          ],
+          "endpointCount": 5
         }
       ]
     },
@@ -94,6 +123,22 @@
       "id": "data",
       "name": "Data & Analytics",
       "services": [
+        {
+          "id": "cbetl",
+          "name": "Contact Data ETL",
+          "url": "https://etl.nominate.ai",
+          "description": "Contact data processing ETL. Address normalization and parsing via libpostal, batch processing, deduplication hashes.",
+          "auth": "None (PIN gate via cbauth)",
+          "capabilities": [
+            "etl",
+            "address-normalization",
+            "address-parsing",
+            "batch-processing",
+            "deduplication",
+            "mcp-tools"
+          ],
+          "endpointCount": 6
+        },
         {
           "id": "cbdistricts",
           "name": "Congressional Districts",
@@ -153,6 +198,108 @@
             "cdn"
           ],
           "endpointCount": 5
+        },
+        {
+          "id": "cbmaps",
+          "name": "City Map Posters",
+          "url": "https://maps.nominate.ai",
+          "description": "Minimalist city map poster generation from OpenStreetMap. Vector, raster, and district render modes, 17 themes, 300 DPI PNG output.",
+          "auth": "None (PIN gate via cbauth)",
+          "capabilities": [
+            "map-generation",
+            "poster",
+            "openstreetmap",
+            "geocoding",
+            "cartography",
+            "themes",
+            "mcp-tools"
+          ],
+          "endpointCount": 7
+        },
+        {
+          "id": "cbtiles",
+          "name": "Map Tile Cache",
+          "url": "https://tiles.nominate.ai",
+          "description": "CartoDB tile caching proxy with look-ahead prefetching. 9 basemap styles for CB mapping apps.",
+          "auth": "None (PIN gate via cbauth)",
+          "capabilities": [
+            "tiles",
+            "map-tiles",
+            "caching",
+            "cartodb",
+            "basemap",
+            "prefetch",
+            "mcp-tools"
+          ],
+          "endpointCount": 7
+        },
+        {
+          "id": "cbuserguide",
+          "name": "User Guide Generator",
+          "url": "https://userguide.nominate.ai",
+          "description": "Automated documentation generation for CB apps. Playwright-based crawling, screenshot capture, markdown generation.",
+          "auth": "None (PIN gate via cbauth)",
+          "capabilities": [
+            "documentation",
+            "screenshots",
+            "playwright",
+            "crawling",
+            "markdown",
+            "user-guide",
+            "mcp-tools"
+          ],
+          "endpointCount": 7
+        },
+        {
+          "id": "cbgeo",
+          "name": "Geocoding Service",
+          "url": "https://geo.nominate.ai",
+          "description": "Geocoding service using Nominatim with OpenStreetMap data. Forward geocoding, reverse geocoding, and OSM object lookup.",
+          "auth": "None (PIN gate via cbauth)",
+          "capabilities": [
+            "geocoding",
+            "reverse-geocoding",
+            "address-lookup",
+            "coordinates",
+            "osm",
+            "mcp-tools"
+          ],
+          "endpointCount": 6
+        },
+        {
+          "id": "cbiterable",
+          "name": "Iterable API Wrapper",
+          "url": "https://iterable.nominate.ai",
+          "description": "Multi-tenant Iterable API wrapper with local DuckDB sync. Email marketing projects, contacts, campaigns, lists.",
+          "auth": "None (PIN gate via cbauth)",
+          "capabilities": [
+            "iterable",
+            "email-marketing",
+            "contacts",
+            "campaigns",
+            "lists",
+            "templates",
+            "sync",
+            "duckdb"
+          ],
+          "endpointCount": 8
+        },
+        {
+          "id": "cbairtable",
+          "name": "Airtable API Wrapper",
+          "url": "https://airtable.nominate.ai",
+          "description": "Multi-tenant Airtable API wrapper with local DuckDB sync. Proxies CRUD operations, syncs bases/tables for fast SQL querying.",
+          "auth": "None (PIN gate via cbauth)",
+          "capabilities": [
+            "airtable",
+            "bases",
+            "tables",
+            "records",
+            "sync",
+            "duckdb",
+            "sql-query"
+          ],
+          "endpointCount": 7
         }
       ]
     },
@@ -200,7 +347,26 @@
             "form-responses",
             "consumer-management"
           ],
-          "endpointCount": 4
+          "endpointCount": 12
+        },
+        {
+          "id": "cbfront",
+          "name": "Front Email Proxy",
+          "url": "https://front.nominate.ai",
+          "description": "Front App email integration \u2014 inboxes, conversations, messages, drafts, contacts, tags, canned responses, teammates, analytics.",
+          "auth": "X-API-Key",
+          "capabilities": [
+            "email",
+            "conversations",
+            "messages",
+            "drafts",
+            "contacts",
+            "tags",
+            "templates",
+            "analytics",
+            "mcp-tools"
+          ],
+          "endpointCount": 9
         },
         {
           "id": "cblinks",
@@ -215,6 +381,23 @@
             "link-expiry"
           ],
           "endpointCount": 4
+        },
+        {
+          "id": "cbemail",
+          "name": "Headless Email Client",
+          "url": "https://email.nominate.ai",
+          "description": "Headless email client API for IMAP/SMTP mailbox management. Session-based access, folder management, message CRUD, send/batch-send.",
+          "auth": "X-API-Key",
+          "capabilities": [
+            "imap",
+            "smtp",
+            "email-send",
+            "email-read",
+            "mailbox",
+            "batch-send",
+            "mcp-tools"
+          ],
+          "endpointCount": 7
         }
       ]
     },
@@ -223,19 +406,37 @@
       "name": "Infrastructure",
       "services": [
         {
-          "id": "cbvpn",
-          "name": "VPN Cluster",
-          "url": "https://network.nominate.ai",
-          "description": "Distributed VPN cluster with OpenWRT workers and WireGuard tunnels. Geographic routing for intelligence.",
-          "auth": "X-API-Key",
+          "id": "cbinfra",
+          "name": "Infrastructure Manager",
+          "url": "https://infra.nominate.ai",
+          "description": "Infrastructure inventory, GitHub issues, project bootstrap, config management (nginx, systemd, DNS, certs), AI orchestration, deployment.",
+          "auth": "None (PIN gate via cbauth)",
           "capabilities": [
-            "vpn-banks",
-            "worker-management",
-            "geographic-routing",
-            "cluster-deploy",
-            "health-check"
+            "inventory",
+            "github-issues",
+            "bootstrap",
+            "config",
+            "nginx",
+            "systemd",
+            "dns",
+            "deploy",
+            "mcp-tools"
           ],
-          "endpointCount": 5
+          "endpointCount": 9
+        },
+        {
+          "id": "cbvpn",
+          "name": "Network Inventory",
+          "url": "https://network.nominate.ai",
+          "description": "Fleet management for OpenWRT router/VPN/Tor network. Inventory, topology, fleet status, device snapshots.",
+          "auth": "None (internal)",
+          "capabilities": [
+            "fleet-status",
+            "inventory",
+            "topology",
+            "device-snapshots"
+          ],
+          "endpointCount": 4
         },
         {
           "id": "cbtor",
@@ -252,7 +453,7 @@
         },
         {
           "id": "cbauth",
-          "name": "PIN Gate Authentication",
+          "name": "Authentication Platform",
           "url": "https://auth.nominate.ai",
           "description": "Domain-wide PIN authentication gateway for nominate.ai subdomains. HMAC-SHA256, 7-day sessions.",
           "auth": "Session cookie",
@@ -280,6 +481,23 @@
           "endpointCount": 6
         },
         {
+          "id": "cblogs",
+          "name": "Log Query & Analysis",
+          "url": "https://logs.nominate.ai",
+          "description": "Read-only log querying and analysis across DC0. 8 log groups, syslog analysis, nginx access/error logs, CB service journals.",
+          "auth": "None (PIN gate via cbauth)",
+          "capabilities": [
+            "log-query",
+            "log-analysis",
+            "system-logs",
+            "service-logs",
+            "nginx-logs",
+            "syslog-analysis",
+            "mcp-tools"
+          ],
+          "endpointCount": 7
+        },
+        {
           "id": "cbmcp",
           "name": "MCP Service Catalog",
           "url": "https://mcp.nominate.ai",
@@ -293,6 +511,86 @@
             "mcp-resources"
           ],
           "endpointCount": 5
+        },
+        {
+          "id": "cbcron",
+          "name": "Scheduled Task Engine",
+          "url": "https://cron.nominate.ai",
+          "description": "Configurable scheduled task engine. Cron-based HTTP dispatch with retry logic, overlap protection, run history, timezone support.",
+          "auth": "X-API-Key",
+          "capabilities": [
+            "cron-scheduling",
+            "http-dispatch",
+            "job-management",
+            "retry-logic",
+            "run-history",
+            "mcp-tools"
+          ],
+          "endpointCount": 6
+        },
+        {
+          "id": "cbdocs",
+          "name": "Documentation Site",
+          "url": "https://docs.nominate.ai",
+          "description": "MkDocs Material documentation hub for the Campaign Brain platform. Architecture guides, service docs, API catalog.",
+          "auth": "None (PIN gate via cbauth)",
+          "capabilities": [
+            "documentation",
+            "architecture",
+            "api-reference",
+            "guides",
+            "changelog"
+          ],
+          "endpointCount": 5
+        },
+        {
+          "id": "cbmesh",
+          "name": "API Mesh Gateway",
+          "url": "https://mesh.nominate.ai",
+          "description": "WebSocket gateway for the API Mesh network. Service discovery, cluster health, request proxying across all registered CB services.",
+          "auth": "None",
+          "capabilities": [
+            "service-mesh",
+            "service-discovery",
+            "request-proxy",
+            "websocket",
+            "cluster-health"
+          ],
+          "endpointCount": 5
+        },
+        {
+          "id": "cbos",
+          "name": "Claude Code Session Manager",
+          "url": "https://os.nominate.ai",
+          "description": "Claude Code operating system \u2014 manage interactive Claude sessions, stash/apply context, AI-powered task routing and prioritization.",
+          "auth": "None (PIN gate via cbauth)",
+          "capabilities": [
+            "claude-sessions",
+            "session-management",
+            "stash",
+            "task-routing",
+            "intelligence",
+            "mcp-tools"
+          ],
+          "endpointCount": 6
+        },
+        {
+          "id": "cbrouter",
+          "name": "OpenWRT Router Manager",
+          "url": "https://router.nominate.ai",
+          "description": "MCP/API frontend for OpenWRT router management. UCI config CRUD with rollback, network/firewall/wireless monitoring, VPN rotation.",
+          "auth": "None (PIN gate via cbauth)",
+          "capabilities": [
+            "openwrt",
+            "uci-config",
+            "network-monitoring",
+            "firewall",
+            "wireless",
+            "vpn",
+            "packages",
+            "mcp-tools"
+          ],
+          "endpointCount": 8
         }
       ]
     },
@@ -300,6 +598,78 @@
       "id": "business",
       "name": "Business",
       "services": [
+        {
+          "id": "cbapp",
+          "name": "Campaign Management Platform",
+          "url": "https://app.nominate.ai",
+          "description": "Core campaign management platform. Person/contact CRM, events, campaigns, surveys, walk lists, turf management, voter data, canvass forms.",
+          "auth": "JWT (POST /api/auth/login)",
+          "capabilities": [
+            "persons",
+            "contacts",
+            "events",
+            "campaigns",
+            "surveys",
+            "walk-lists",
+            "turf",
+            "voter-data",
+            "canvass",
+            "analytics"
+          ],
+          "endpointCount": 10
+        },
+        {
+          "id": "cbproject",
+          "name": "Project Management",
+          "url": "https://project.nominate.ai",
+          "description": "Project management and task tracking. Timeline views, kanban boards, resource allocation, milestones.",
+          "auth": "None (PIN gate via cbauth)",
+          "capabilities": [
+            "projects",
+            "tasks",
+            "milestones",
+            "kanban",
+            "timeline"
+          ],
+          "endpointCount": 5
+        },
+        {
+          "id": "cbradio",
+          "name": "Rural AM/FM Rate Ingestion",
+          "url": "https://radio.nominate.ai",
+          "description": "Radio station political advertising rates for AI-powered media buying. 2,000+ stations, rate cards with OCR extraction, proposals, FCC data, Nielsen ratings.",
+          "auth": "JWT (POST /api/auth/token)",
+          "capabilities": [
+            "stations",
+            "rate-cards",
+            "rates",
+            "proposals",
+            "radio-buys",
+            "fcc-data",
+            "nielsen-ratings",
+            "geo-coverage",
+            "ocr",
+            "mcp-tools"
+          ],
+          "endpointCount": 10
+        },
+        {
+          "id": "cbmobile",
+          "name": "Mobile Canvassing",
+          "url": "https://mobile.nominate.ai",
+          "description": "Progressive Web App for door-knocking and canvassing. Offline-first with RxDB sync, DuckDB analytics, offline maps.",
+          "auth": "None (PIN gate via cbauth)",
+          "capabilities": [
+            "contacts",
+            "canvassing",
+            "offline-sync",
+            "mobile-pwa",
+            "maps",
+            "websocket",
+            "mcp-tools"
+          ],
+          "endpointCount": 7
+        },
         {
           "id": "cbworkflow",
           "name": "Workflow Engine",

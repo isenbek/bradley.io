@@ -315,6 +315,17 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ===== CLAUDE'S CORNER ===== */}
+      {data?.claudeCorner && (
+        <section className="py-10 sm:py-16">
+          <div className="container-page">
+            <FadeSection>
+              <ClaudeCorner data={data.claudeCorner} />
+            </FadeSection>
+          </div>
+        </section>
+      )}
+
       {/* ===== BIG IDEAS ===== */}
       <BigIdeas ideas={data?.bigIdeas} />
 
@@ -394,17 +405,6 @@ export default function HomePage() {
           </FadeSection>
         </div>
       </section>
-
-      {/* ===== CLAUDE'S CORNER ===== */}
-      {data?.claudeCorner && (
-        <section className="py-10 sm:py-16">
-          <div className="container-page">
-            <FadeSection>
-              <ClaudeCorner data={data.claudeCorner} />
-            </FadeSection>
-          </div>
-        </section>
-      )}
 
       {/* ===== FEATURED PROJECTS ===== */}
       <section className="py-10 sm:py-16" style={{ background: "var(--brand-bg-alt)" }}>

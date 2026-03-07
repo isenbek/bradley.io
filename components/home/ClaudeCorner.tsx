@@ -58,16 +58,16 @@ export function ClaudeCorner({ data }: { data?: ClaudeCornerData }) {
           &ldquo;{data.quote}&rdquo;
         </blockquote>
 
-        <div className="flex items-center justify-between">
-          <span className="text-[11px] font-mono" style={{ color: "var(--brand-muted)" }}>
+        <div className="space-y-1">
+          <div className="text-[11px] font-mono" style={{ color: "var(--brand-muted)" }}>
             {data.context}
-          </span>
-          <span className="text-[11px] font-mono" style={{ color: "var(--brand-muted)" }}>
+          </div>
+          <div className="text-[11px] font-mono" style={{ color: "var(--brand-muted)" }}>
             {new Date(data.generatedAt).toLocaleDateString("en-US", {
               month: "short",
               day: "numeric",
             })}
-          </span>
+          </div>
         </div>
       </div>
     </div>
