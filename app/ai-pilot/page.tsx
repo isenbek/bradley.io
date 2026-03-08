@@ -15,7 +15,7 @@ import {
   SkillsCloud,
 } from "@/components/ai-pilot";
 import type { AIPilotData } from "@/components/ai-pilot/types";
-import { timeAgo } from "@/lib/time-ago";
+
 
 const TABS = [
   { id: "activity", label: "Activity" },
@@ -82,7 +82,11 @@ export default function AIPilotPage() {
     <div className="pt-16 sm:pt-20 pb-10 sm:pb-16">
       <div className="container-page space-y-4 sm:space-y-6">
         {/* Hero: License Card */}
-        <LicenseCard license={data.license} generated={data.generated} />
+        <LicenseCard
+          license={data.license}
+          generated={data.generated}
+          hourlyDistribution={data.hourlyDistribution}
+        />
 
         {/* Streak Banner */}
         <StreakBanner streaks={data.streaks} />

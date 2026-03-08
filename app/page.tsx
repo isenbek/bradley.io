@@ -315,6 +315,9 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ===== BIG IDEAS ===== */}
+      <BigIdeas ideas={data?.bigIdeas} />
+
       {/* ===== CLAUDE'S CORNER ===== */}
       {data?.claudeCorner && (
         <section className="py-10 sm:py-16">
@@ -325,9 +328,6 @@ export default function HomePage() {
           </div>
         </section>
       )}
-
-      {/* ===== BIG IDEAS ===== */}
-      <BigIdeas ideas={data?.bigIdeas} />
 
       {/* ===== HERO STATS ===== */}
       <section

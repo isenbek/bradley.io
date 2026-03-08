@@ -1,13 +1,14 @@
 "use client";
 
 import { motion } from "framer-motion";
-import type { LicenseData } from "./types";
+import type { LicenseData, HourlyDistribution } from "./types";
 import { FlightHoursCounter } from "./FlightHoursCounter";
 import { timeAgo } from "@/lib/time-ago";
 
 interface LicenseCardProps {
   license: LicenseData;
   generated?: string;
+  hourlyDistribution?: HourlyDistribution;
 }
 
 const CLASS_COLORS: Record<string, string> = {
@@ -17,7 +18,82 @@ const CLASS_COLORS: Record<string, string> = {
   Student: "var(--brand-steel)",
 };
 
-export function LicenseCard({ license, generated }: LicenseCardProps) {
+function Sparkline({ hours }: { hours: { hour: number; count: number }[] }) {
+  const max = Math.max(...hours.map((h) => h.count), 1);
+  const now = new Date().getHours();
+  return (
+    <div className="flex items-end gap-px h-6" title="24hr activity distribution">
+      {hours.map((h) => {
+        const pct = Math.max(2, (h.count / max) * 100);
+        const isNow = h.hour === now;
+        return (
+          <div
+            key={h.hour}
+            className="flex-1 rounded-t-sm transition-all"
+            style={{
+              height: `${pct}%`,
+              background: isNow
+                ? "var(--brand-primary)"
+                : h.count > 0
+                  ? "color-mix(in srgb, var(--brand-primary) 40%, transparent)"
+                  : "color-mix(in srgb, var(--brand-border) 40%, transparent)",
+              boxShadow: isNow ? "0 0 4px var(--brand-primary)" : "none",
+            }}
+          />
+        );
+      })}
+    </div>
+  );
+}
+
+function AirtimeRing({ hours }: { hours: { hour: number; count: number }[] }) {
+  const total = hours.reduce((s, h) => s + h.count, 0) || 1;
+  const activeHours = hours.filter((h) => h.count > 0).length;
+  const pct = Math.round((activeHours / 24) * 100);
+  const r = 14;
+  const circ = 2 * Math.PI * r;
+  const offset = circ * (1 - activeHours / 24);
+  return (
+    <div className="flex items-center gap-2" title={`${activeHours}/24 hours active (${total} total interactions)`}>
+      <svg width="36" height="36" viewBox="0 0 36 36">
+        <circle
+          cx="18" cy="18" r={r}
+          fill="none"
+          stroke="color-mix(in srgb, var(--brand-border) 50%, transparent)"
+          strokeWidth="3"
+        />
+        <circle
+          cx="18" cy="18" r={r}
+          fill="none"
+          stroke="var(--brand-primary)"
+          strokeWidth="3"
+          strokeLinecap="round"
+          strokeDasharray={circ}
+          strokeDashoffset={offset}
+          transform="rotate(-90 18 18)"
+          style={{ transition: "stroke-dashoffset 0.6s ease" }}
+        />
+        <text
+          x="18" y="18"
+          textAnchor="middle"
+          dominantBaseline="central"
+          fontSize="8"
+          fontFamily="var(--font-mono)"
+          fontWeight="bold"
+          fill="var(--brand-primary)"
+        >
+          {pct}%
+        </text>
+      </svg>
+      <div className="text-[10px] font-mono leading-tight" style={{ color: "var(--brand-muted)" }}>
+        <div style={{ color: "var(--brand-text)" }}>{activeHours}h airtime</div>
+        <div>of 24h cycle</div>
+      </div>
+    </div>
+  );
+}
+
+export function LicenseCard({ license, generated, hourlyDistribution }: LicenseCardProps) {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
@@ -53,6 +129,28 @@ export function LicenseCard({ license, generated }: LicenseCardProps) {
             </span>
           </div>
         </div>
+
+        {/* Sparkline row */}
+        {hourlyDistribution && (
+          <div
+            className="flex items-center gap-3 sm:gap-4 mb-4 sm:mb-6 px-2 py-2.5 rounded-lg"
+            style={{ background: "color-mix(in srgb, var(--brand-border) 15%, transparent)" }}
+          >
+            {hourlyDistribution && (
+              <div className="flex-1 min-w-0">
+                <div className="text-[9px] font-mono uppercase tracking-wider mb-1" style={{ color: "var(--brand-muted)" }}>
+                  24hr pattern
+                </div>
+                <Sparkline hours={hourlyDistribution.hours} />
+              </div>
+            )}
+            {hourlyDistribution && (
+              <div className="flex-shrink-0">
+                <AirtimeRing hours={hourlyDistribution.hours} />
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Stats grid */}
         <div className="grid grid-cols-3 gap-3 sm:gap-6">

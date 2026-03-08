@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from 'next/server'
 // This endpoint returns information about the WebSocket server
 
 
-export async function GET(request: NextRequest) {
+export async function GET(_request: NextRequest) {
   // This endpoint returns information about the WebSocket server
   // The actual WebSocket server is running separately via wargames-server.js
   return NextResponse.json({

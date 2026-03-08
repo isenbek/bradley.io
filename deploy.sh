@@ -14,7 +14,12 @@ step() { echo -e "\n${ORANGE}▸${NC} $1"; }
 ok()   { echo -e "  ${GREEN}✓${NC} $1"; }
 fail() { echo -e "  ${RED}✗${NC} $1"; exit 1; }
 
-# 1. Commit (if there are changes)
+# 1. Lint
+step "Running lint..."
+npm run lint
+ok "Lint passed"
+
+# 2. Commit (if there are changes)
 step "Checking for changes..."
 if [[ -n "$(git status --porcelain)" ]]; then
     git add app/ components/ lib/ public/ scripts/ \
@@ -29,7 +34,7 @@ else
     ok "Working tree clean"
 fi
 
-# 2. Bump patch version
+# 3. Bump patch version
 step "Bumping version..."
 OLD_VER=$(node -p "require('./package.json').version")
 NEW_VER=$(npm version patch --no-git-tag-version)
@@ -37,22 +42,22 @@ git add package.json package-lock.json 2>/dev/null || git add package.json
 git commit -m "bump: ${NEW_VER}" --allow-empty
 ok "${OLD_VER} → ${NEW_VER}"
 
-# 3. Push
-step "Pushing to origin..."
-git push
-ok "Pushed"
-
-# 4. Rebuild
+# 4. Build (before push — fail fast)
 step "Building production..."
 npm run build
 ok "Build complete"
 
-# 5. Restart systemd service (Next.js)
+# 5. Push
+step "Pushing to origin..."
+git push
+ok "Pushed"
+
+# 6. Restart systemd service (Next.js)
 step "Restarting bradley-io service..."
 sudo systemctl restart bradley-io
 ok "Systemd service restarted"
 
-# 6. Restart PM2 wargames
+# 7. Restart PM2 wargames
 step "Restarting wargames server..."
 if pm2 describe bradley-io-wargames >/dev/null 2>&1; then
     pm2 restart bradley-io-wargames
@@ -63,7 +68,7 @@ else
     ok "Wargames started"
 fi
 
-# 7. Health check
+# 8. Health check
 step "Checking logs..."
 sleep 2
 if sudo journalctl -u bradley-io --since "5 seconds ago" --no-pager | grep -q "Ready"; then
@@ -73,7 +78,7 @@ else
     fail "Server may not have started cleanly — check logs above"
 fi
 
-# 8. HTTP check
+# 9. HTTP check
 step "Testing HTTP response..."
 STATUS=$(curl -s -o /dev/null -w "%{http_code}" --max-time 5 http://localhost:32221)
 if [[ "$STATUS" == "200" ]]; then

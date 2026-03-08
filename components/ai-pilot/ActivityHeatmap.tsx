@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import * as d3 from "d3";
 import type { HeatmapDay } from "./types";
 
@@ -16,6 +16,16 @@ const INTENSITY_COLORS = [
   "var(--brand-primary)",
 ];
 
+const TIME_WINDOWS = [
+  { id: "1m", label: "1M", days: 30 },
+  { id: "3m", label: "3M", days: 90 },
+  { id: "6m", label: "6M", days: 180 },
+  { id: "1y", label: "1Y", days: 365 },
+  { id: "all", label: "All", days: Infinity },
+] as const;
+
+type WindowId = (typeof TIME_WINDOWS)[number]["id"];
+
 export function ActivityHeatmap({ data }: ActivityHeatmapProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -25,16 +35,33 @@ export function ActivityHeatmap({ data }: ActivityHeatmapProps) {
     y: number;
     day: HeatmapDay;
   } | null>(null);
+  const [window, setWindow] = useState<WindowId>("all");
+
+  const filteredData = useMemo(() => {
+    if (window === "all") return data;
+    const w = TIME_WINDOWS.find((t) => t.id === window)!;
+    const cutoff = new Date();
+    cutoff.setDate(cutoff.getDate() - w.days);
+    const cutoffStr = cutoff.toISOString().slice(0, 10);
+    return data.filter((d) => d.date >= cutoffStr);
+  }, [data, window]);
+
+  const windowStats = useMemo(() => {
+    const totalMessages = filteredData.reduce((s, d) => s + d.count, 0);
+    const totalSessions = filteredData.reduce((s, d) => s + d.sessions, 0);
+    const activeDays = filteredData.filter((d) => d.count > 0).length;
+    return { totalMessages, totalSessions, activeDays };
+  }, [filteredData]);
 
   const draw = useCallback(() => {
-    if (!svgRef.current || !wrapRef.current || !data.length) return;
+    if (!svgRef.current || !wrapRef.current || !filteredData.length) return;
 
     const svg = d3.select(svgRef.current);
     svg.selectAll("*").remove();
 
     const containerWidth = wrapRef.current.clientWidth;
 
-    const days = data.map((d) => ({
+    const days = filteredData.map((d) => ({
       ...d,
       date: new Date(d.date + "T00:00:00"),
     }));
@@ -98,7 +125,7 @@ export function ActivityHeatmap({ data }: ActivityHeatmapProps) {
         .text((d) => d3.timeFormat("%b")(d));
     }
 
-    const dayMap = new Map(data.map((d) => [d.date, d]));
+    const dayMap = new Map(filteredData.map((d) => [d.date, d]));
     const allDates = d3.timeDays(firstDate, d3.timeDay.offset(lastDate, 1));
 
     svg
@@ -136,7 +163,7 @@ export function ActivityHeatmap({ data }: ActivityHeatmapProps) {
         }
       })
       .on("mouseleave", () => setTooltip(null));
-  }, [data]);
+  }, [filteredData]);
 
   useEffect(() => {
     draw();
@@ -154,9 +181,40 @@ export function ActivityHeatmap({ data }: ActivityHeatmapProps) {
         border: "1px solid var(--brand-border)",
       }}
     >
-      <h3 className="text-xs sm:text-sm font-medium mb-3" style={{ color: "var(--brand-muted)" }}>
-        AI Activity Heatmap
-      </h3>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
+        <div className="flex items-center gap-3">
+          <h3 className="text-xs sm:text-sm font-medium" style={{ color: "var(--brand-muted)" }}>
+            AI Activity Heatmap
+          </h3>
+          <div className="flex items-center gap-1.5 font-mono text-[10px]" style={{ color: "var(--brand-muted)" }}>
+            <span>{windowStats.activeDays}d active</span>
+            <span style={{ opacity: 0.4 }}>·</span>
+            <span>{windowStats.totalMessages.toLocaleString()} msgs</span>
+            <span style={{ opacity: 0.4 }}>·</span>
+            <span>{windowStats.totalSessions} sessions</span>
+          </div>
+        </div>
+        <div
+          className="flex gap-0.5 p-0.5 rounded-md self-end sm:self-auto"
+          style={{ background: "color-mix(in srgb, var(--brand-border) 50%, transparent)" }}
+        >
+          {TIME_WINDOWS.map((tw) => (
+            <button
+              key={tw.id}
+              onClick={() => setWindow(tw.id)}
+              className="px-2 py-0.5 rounded text-[10px] font-mono font-medium transition-all"
+              style={{
+                background: window === tw.id
+                  ? "color-mix(in srgb, var(--brand-primary) 20%, transparent)"
+                  : "transparent",
+                color: window === tw.id ? "var(--brand-primary)" : "var(--brand-muted)",
+              }}
+            >
+              {tw.label}
+            </button>
+          ))}
+        </div>
+      </div>
 
       <div ref={wrapRef}>
         <svg ref={svgRef} className="w-full" style={{ display: "block" }} />
