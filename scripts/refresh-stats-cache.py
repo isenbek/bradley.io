@@ -18,7 +18,10 @@ from datetime import datetime, timedelta
 from pathlib import Path
 
 CLAUDE_DIR = Path.home() / ".claude"
-PROJECTS_DIR = CLAUDE_DIR / "projects"
+CLAUDE_DC1_DIR = Path.home() / ".claude-dc1"
+PROJECTS_DIRS = [CLAUDE_DIR / "projects"]
+if (CLAUDE_DC1_DIR / "projects").exists():
+    PROJECTS_DIRS.append(CLAUDE_DC1_DIR / "projects")
 STATS_CACHE = CLAUDE_DIR / "stats-cache.json"
 CACHE_VERSION = 2
 
@@ -32,26 +35,34 @@ def log(msg):
 
 
 def collect_jsonl_files():
-    """Find all JSONL session files across all project directories."""
+    """Find all JSONL session files across all project directories (DC-0 + DC-1)."""
     files = []
-    if not PROJECTS_DIR.exists():
-        return files
+    seen_stems = set()
+    total_projects = 0
 
-    for proj_dir in PROJECTS_DIR.iterdir():
-        if not proj_dir.is_dir():
+    for projects_dir in PROJECTS_DIRS:
+        if not projects_dir.exists():
             continue
-        # Main session files
-        for f in proj_dir.glob("*.jsonl"):
-            files.append(f)
-        # Subagent files
-        for session_dir in proj_dir.iterdir():
-            if session_dir.is_dir():
-                subagents_dir = session_dir / "subagents"
-                if subagents_dir.exists():
-                    for f in subagents_dir.glob("agent-*.jsonl"):
-                        files.append(f)
+        for proj_dir in projects_dir.iterdir():
+            if not proj_dir.is_dir():
+                continue
+            total_projects += 1
+            # Main session files
+            for f in proj_dir.glob("*.jsonl"):
+                if f.stem not in seen_stems:
+                    seen_stems.add(f.stem)
+                    files.append(f)
+            # Subagent files
+            for session_dir in proj_dir.iterdir():
+                if session_dir.is_dir():
+                    subagents_dir = session_dir / "subagents"
+                    if subagents_dir.exists():
+                        for f in subagents_dir.glob("agent-*.jsonl"):
+                            if f.stem not in seen_stems:
+                                seen_stems.add(f.stem)
+                                files.append(f)
 
-    log(f"Found {len(files)} JSONL files across {sum(1 for d in PROJECTS_DIR.iterdir() if d.is_dir())} projects")
+    log(f"Found {len(files)} JSONL files across {total_projects} projects ({len(PROJECTS_DIRS)} sources)")
     return files
 
 

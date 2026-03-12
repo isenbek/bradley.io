@@ -14,10 +14,19 @@ from datetime import datetime, timedelta
 from pathlib import Path
 
 CLAUDE_DIR = Path.home() / ".claude"
+CLAUDE_DC1_DIR = Path.home() / ".claude-dc1"
 STATS_CACHE = CLAUDE_DIR / "stats-cache.json"
-PLANS_DIR = CLAUDE_DIR / "plans"
-PROJECTS_DIR = CLAUDE_DIR / "projects"
-HISTORY_FILE = CLAUDE_DIR / "history.jsonl"
+PLANS_DIRS = [CLAUDE_DIR / "plans"]
+PROJECTS_DIRS = [CLAUDE_DIR / "projects"]
+HISTORY_FILES = [CLAUDE_DIR / "history.jsonl"]
+if CLAUDE_DC1_DIR.exists():
+    if (CLAUDE_DC1_DIR / "plans").exists():
+        PLANS_DIRS.append(CLAUDE_DC1_DIR / "plans")
+    if (CLAUDE_DC1_DIR / "projects").exists():
+        PROJECTS_DIRS.append(CLAUDE_DC1_DIR / "projects")
+    dc1_history = CLAUDE_DC1_DIR / "history.jsonl"
+    if dc1_history.exists():
+        HISTORY_FILES.append(dc1_history)
 USER_PROJECTS = Path.home() / "projects"
 
 DEFAULT_OUTPUT = Path(__file__).parent.parent / "public" / "data" / "ai-pilot-data.json"
@@ -108,20 +117,26 @@ def read_stats_cache(verbose=False):
 
 
 def read_session_data(verbose=False):
-    """Read structured data from JSONL session files (replaces old SQLite store)."""
-    if not PROJECTS_DIR.exists():
-        log("Projects directory not found", verbose)
+    """Read structured data from JSONL session files across DC-0 + DC-1."""
+    # Collect all JSONL session files, deduplicating by stem
+    jsonl_files = []
+    seen_stems = set()
+    for projects_dir in PROJECTS_DIRS:
+        if not projects_dir.exists():
+            continue
+        for proj_dir in projects_dir.iterdir():
+            if not proj_dir.is_dir():
+                continue
+            for f in proj_dir.glob("*.jsonl"):
+                if f.stem not in seen_stems:
+                    seen_stems.add(f.stem)
+                    jsonl_files.append(f)
+
+    if not jsonl_files:
+        log("No JSONL session files found", verbose)
         return {"sessions": [], "projects": [], "models": []}
 
-    # Collect all JSONL session files
-    jsonl_files = []
-    for proj_dir in PROJECTS_DIR.iterdir():
-        if not proj_dir.is_dir():
-            continue
-        for f in proj_dir.glob("*.jsonl"):
-            jsonl_files.append(f)
-
-    log(f"Found {len(jsonl_files)} JSONL session files", verbose)
+    log(f"Found {len(jsonl_files)} JSONL session files ({len(PROJECTS_DIRS)} sources)", verbose)
 
     sessions = []
     project_agg = defaultdict(lambda: {
@@ -217,25 +232,28 @@ def read_session_data(verbose=False):
 
 
 def read_plan_files(verbose=False):
-    """Read plan files for competency evidence."""
-    if not PLANS_DIR.exists():
-        log("Plans directory not found", verbose)
-        return []
-
+    """Read plan files for competency evidence across DC-0 + DC-1."""
     plans = []
-    for f in sorted(PLANS_DIR.glob("*.md")):
-        try:
-            content = f.read_text(errors="replace")
-            plans.append({
-                "name": f.stem,
-                "size": len(content),
-                "modified": datetime.fromtimestamp(f.stat().st_mtime).isoformat(),
-                "content_lower": content.lower(),
-            })
-        except Exception:
-            pass
+    seen_names = set()
+    for plans_dir in PLANS_DIRS:
+        if not plans_dir.exists():
+            continue
+        for f in sorted(plans_dir.glob("*.md")):
+            if f.stem in seen_names:
+                continue
+            seen_names.add(f.stem)
+            try:
+                content = f.read_text(errors="replace")
+                plans.append({
+                    "name": f.stem,
+                    "size": len(content),
+                    "modified": datetime.fromtimestamp(f.stat().st_mtime).isoformat(),
+                    "content_lower": content.lower(),
+                })
+            except Exception:
+                pass
 
-    log(f"Read {len(plans)} plan files", verbose)
+    log(f"Read {len(plans)} plan files ({len(PLANS_DIRS)} sources)", verbose)
     return plans
 
 
@@ -257,18 +275,19 @@ def read_claude_md_files(verbose=False):
             pass
 
     # Also check .claude/projects for additional CLAUDE.md refs
-    for proj_dir in PROJECTS_DIR.glob("*/"):
-        claude_md = proj_dir / "CLAUDE.md"
-        if claude_md.exists():
-            try:
-                content = claude_md.read_text(errors="replace")
-                texts.append({
-                    "project": proj_dir.name,
-                    "content_lower": content.lower(),
-                    "size": len(content),
-                })
-            except Exception:
-                pass
+    for projects_dir in PROJECTS_DIRS:
+        for proj_dir in projects_dir.glob("*/"):
+            claude_md = proj_dir / "CLAUDE.md"
+            if claude_md.exists():
+                try:
+                    content = claude_md.read_text(errors="replace")
+                    texts.append({
+                        "project": proj_dir.name,
+                        "content_lower": content.lower(),
+                        "size": len(content),
+                    })
+                except Exception:
+                    pass
 
     log(f"Read {len(texts)} CLAUDE.md files", verbose)
     return texts
@@ -285,15 +304,16 @@ def sample_jsonl_files(verbose=False, quick=False):
     files_sampled = 0
     max_files = 100
 
-    # Collect JSONL files from all projects
+    # Collect JSONL files from all projects across DC-0 + DC-1
     all_jsonl = []
-    for proj_dir in PROJECTS_DIR.glob("*/"):
-        jsonl_files = sorted(proj_dir.glob("*.jsonl"), key=lambda f: f.stat().st_mtime)
-        if len(jsonl_files) >= 2:
-            all_jsonl.append(jsonl_files[0])   # oldest
-            all_jsonl.append(jsonl_files[-1])  # newest
-        elif jsonl_files:
-            all_jsonl.append(jsonl_files[0])
+    for projects_dir in PROJECTS_DIRS:
+        for proj_dir in projects_dir.glob("*/"):
+            jsonl_files = sorted(proj_dir.glob("*.jsonl"), key=lambda f: f.stat().st_mtime)
+            if len(jsonl_files) >= 2:
+                all_jsonl.append(jsonl_files[0])   # oldest
+                all_jsonl.append(jsonl_files[-1])  # newest
+            elif jsonl_files:
+                all_jsonl.append(jsonl_files[0])
 
     all_jsonl = all_jsonl[:max_files]
     log(f"Sampling {len(all_jsonl)} JSONL files", verbose)
@@ -344,35 +364,35 @@ def sample_jsonl_files(verbose=False, quick=False):
 
 
 def read_history_file(verbose=False):
-    """Read history.jsonl for command patterns."""
-    if not HISTORY_FILE.exists():
-        return {"project_switches": 0, "total_commands": 0}
-
+    """Read history.jsonl for command patterns across DC-0 + DC-1."""
     project_switches = 0
     total_commands = 0
     last_cwd = None
 
-    try:
-        with open(HISTORY_FILE, errors="replace") as f:
-            for line in f:
-                line = line.strip()
-                if not line:
-                    continue
-                try:
-                    entry = json.loads(line)
-                except json.JSONDecodeError:
-                    continue
+    for history_file in HISTORY_FILES:
+        if not history_file.exists():
+            continue
+        try:
+            with open(history_file, errors="replace") as f:
+                for line in f:
+                    line = line.strip()
+                    if not line:
+                        continue
+                    try:
+                        entry = json.loads(line)
+                    except json.JSONDecodeError:
+                        continue
 
-                if entry.get("type") == "user":
-                    total_commands += 1
-                    cwd = entry.get("cwd", "")
-                    if cwd and cwd != last_cwd:
-                        project_switches += 1
-                        last_cwd = cwd
-    except Exception:
-        pass
+                    if entry.get("type") == "user":
+                        total_commands += 1
+                        cwd = entry.get("cwd", "")
+                        if cwd and cwd != last_cwd:
+                            project_switches += 1
+                            last_cwd = cwd
+        except Exception:
+            pass
 
-    log(f"History: {total_commands} commands, {project_switches} project switches", verbose)
+    log(f"History: {total_commands} commands, {project_switches} project switches ({len(HISTORY_FILES)} sources)", verbose)
     return {"project_switches": project_switches, "total_commands": total_commands}
 
 
