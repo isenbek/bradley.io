@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 function loadTimeline(): NominateTimeline | null {
   try {
     const raw = readFileSync(
-      join(process.cwd(), "public/data/nominate-timeline.json"),
+      join(process.cwd(), "public/data/nominate-ai-timeline.json"),
       "utf-8"
     )
     return JSON.parse(raw)

@@ -63,7 +63,7 @@ try:
 except json.JSONDecodeError:
     PROJECT_ALIASES = {}
 
-CBAI_URL = os.environ.get("CBAI_URL", "https://ai.nominate.ai")
+CBAI_URL = os.environ.get("CBAI_URL", "http://127.0.0.1:3220")
 CBAI_PROVIDER = os.environ.get("CBAI_PROVIDER", "ollama")
 
 BIG_IDEAS_ORGS = os.environ.get(

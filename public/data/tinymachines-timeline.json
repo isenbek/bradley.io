@@ -1,5 +1,5 @@
 {
-  "generated": "2026-03-06T15:49:08.262296+00:00",
+  "generated": "2026-03-17T09:12:28.853979+00:00",
   "org": "tinymachines",
   "totalRepos": 56,
   "firstCommit": "2016-02-27T16:07:26Z",
@@ -5917,45 +5917,40 @@
   ],
   "phases": [
     {
-      "name": "Nominate-AI Core Development",
+      "name": "Platform Development Phase",
       "startDate": "2025-03-11",
       "endDate": "2025-04-18",
-      "description": "This repository represents the foundational development phase of the Nominate-AI platform, encompassing the initial setup and core functionality of the knowledge network library, Vectl, and the document OCR LLM processor, jfk. It focuses on establishing a stable and functional basis for the platform's core components, with a gradual expansion of features and integrations.",
-      "category": "ai-ml",
+      "description": "This phase of development focused on building and releasing several key components for the Nominate-AI platform. The repos created during this time laid the groundwork for the platform's functionality, including vector store bindings, document OCR processing, and screen session management.",
+      "category": "systems",
       "milestones": [
         {
           "date": "2025-03-11",
-          "title": "Knowynet - Initial Development",
-          "repo": "knowynet"
+          "title": "Initial Commit: knowsynet",
+          "repo": "knowsynet"
         },
         {
           "date": "2025-03-29",
-          "title": "Vectl - Vector Comparison Library",
+          "title": "Initial Commit: vectl",
           "repo": "vectl"
         },
         {
           "date": "2025-04-01",
-          "title": "jfk - Document OCR LLM Processor",
+          "title": "Initial Commit: jfk",
           "repo": "jfk"
         },
         {
           "date": "2025-04-14",
-          "title": "Scream - Screen Session Manager",
-          "repo": "scream"
-        },
-        {
-          "date": "2025-04-14",
-          "title": "Psjson - Linux Process Viewing",
-          "repo": "psjson"
+          "title": "Initial Commit: scream and psjson",
+          "repo": "scream,psjson"
         },
         {
           "date": "2025-04-17",
-          "title": "Ari - AWS Inventory",
+          "title": "Initial Commit: ari",
           "repo": "ari"
         },
         {
           "date": "2025-04-18",
-          "title": "Shelldown - Markdown to Ncurses",
+          "title": "Initial Commit: shelldown",
           "repo": "shelldown"
         }
       ],
@@ -5970,48 +5965,11 @@
       ]
     },
     {
-      "name": "Data Pipeline & Tooling",
+      "name": "Development Phase: Nomination and Proof-of-Concept",
       "startDate": "2025-04-23",
-      "endDate": "2025-04-30",
-      "description": "This repository represents the core infrastructure and tools for managing and processing data within the Nominate-AI platform. It encompasses the foundational elements needed to ingest, analyze, and potentially export data, focusing on the development of the Genetic Evolution Engine (GEE) and associated data handling components.",
-      "category": "systems",
-      "milestones": [
-        {
-          "date": "2025-04-23",
-          "title": "evolve - Python Project",
-          "repo": "evolve"
-        },
-        {
-          "date": "2025-04-23",
-          "title": "rando - Python Project",
-          "repo": "rando"
-        },
-        {
-          "date": "2025-04-23",
-          "title": "bilders - HTML Project",
-          "repo": "bilders"
-        },
-        {
-          "date": "2025-04-23",
-          "title": "sleepr - C Project",
-          "repo": "sleepr"
-        },
-        {
-          "date": "2025-04-23",
-          "title": "tix - Python Project",
-          "repo": "tix"
-        },
-        {
-          "date": "2025-04-30",
-          "title": "curly - C Project",
-          "repo": "curly"
-        },
-        {
-          "date": "2025-04-30",
-          "title": "textcast - TypeScript Project",
-          "repo": "textcast"
-        }
-      ],
+      "endDate": "2025-05-01",
+      "description": "During this period, seven repositories were created as part of the Nominate-AI platform to test and validate various ideas for a new project. These early experiments focused on implementing fundamental components such as random number generators, data parallel processing, and basic software frameworks.",
+      "category": "ai-ml",
       "repos": [
         "evolve",
         "rando",
@@ -6020,48 +5978,49 @@
         "tix",
         "curly",
         "textcast"
-      ]
+      ],
+      "milestones": []
     },
     {
-      "name": "Development of Autonomous Agent Platforms",
+      "name": "Platform Development Phase",
       "startDate": "2025-06-04",
       "endDate": "2025-07-07",
-      "description": "This repository represents the core development of the Nominate-AI platform, which encompasses a series of projects focused on building autonomous agent platforms. It includes experimentation with EEG monitoring, a bootstrap guide for ARM assembly, a web browser extension focused on stealth, and a sophisticated agentic programming language.  The project also covers foundational elements for data extraction and a crucial framework for Raft consensus.",
-      "category": "ai-ml",
+      "description": "The Nominate-AI platform was developed during this phase, with various repositories created to focus on different aspects such as assembly languages, web browsers, distributed web scraping, and consensus systems. The platforms built during this phase aim to enhance stealth, system optimization, data extraction, and self-improvement capabilities.",
+      "category": "systems",
       "milestones": [
         {
           "date": "2025-06-04",
-          "title": "Addai: EEG Monitor Experimentation Platform",
+          "title": "addai (EEG monitor experimentation platform)",
           "repo": "addai"
         },
         {
           "date": "2025-06-10",
-          "title": "RPI5-ARM Assembly: Bootstrap Guide",
+          "title": "rpi5-arm-assembly (Bootstrap guide for learning assembly for the ARM64 on a Raspberry Pi 5)",
           "repo": "rpi5-arm-assembly"
         },
         {
           "date": "2025-06-12",
-          "title": "Spydr: Tardus Web Browser Extension",
+          "title": "spydr (Tardus, a TypeScript-based web browser extension)",
           "repo": "spydr"
         },
         {
           "date": "2025-06-14",
-          "title": "Investigations: Commits",
+          "title": "investigations",
           "repo": "investigations"
         },
         {
           "date": "2025-06-18",
-          "title": "Sovereign: Python-Based Agentic Programming",
+          "title": "sovereign (Python-based agentic programming language)",
           "repo": "sovereign"
         },
         {
           "date": "2025-06-24",
-          "title": "Spidr: Distributed Web Scraping Framework",
+          "title": "spidr (Python-based distributed web scraping framework)",
           "repo": "spidr"
         },
         {
           "date": "2025-07-07",
-          "title": "Plumbr: Raft Consensus and KV Storage Foundations",
+          "title": "plumbr (C-language Raft consensus and KV storage foundations)",
           "repo": "plumbr"
         }
       ],
@@ -6076,31 +6035,16 @@
       ]
     },
     {
-      "name": "Nominate-AI System Development",
+      "name": "Nominate-AI Platform Development Phase",
       "startDate": "2025-07-11",
       "endDate": "2025-08-13",
-      "description": "This repository represents the core development of the Nominate-AI platform, encompassing a series of iterative phases focused on building the foundational infrastructure and features required for system testing and validation. It spans from initial setup and initial development to significant refactoring and expansion of key functionalities. The project is designed to support the testing and validation of the AI model\u2019s performance.",
+      "description": "The Nominate-AI platform development phase involved creating seven repositories, including gcombinatr, llisp, watr, zephyr, classic-rock, llarp, and blossom. These projects demonstrate the platform's capabilities in deep learning, wireless networking, shell scripting, DNS privacy infrastructure, and Python-based system development. The development phase laid the foundation for the platform's future applications.",
       "category": "systems",
       "milestones": [
         {
           "date": "2025-07-11",
-          "title": "Initial Project Setup",
+          "title": "Initial repository creation",
           "repo": "gcombinatr"
-        },
-        {
-          "date": "2025-07-15",
-          "title": "Refactoring and Expansion",
-          "repo": "classic-rock"
-        },
-        {
-          "date": "2025-08-02",
-          "title": "DNS Privacy Infrastructure",
-          "repo": "llarp"
-        },
-        {
-          "date": "2025-08-13",
-          "title": "Bloom",
-          "repo": "blossom"
         }
       ],
       "repos": [
@@ -6114,43 +6058,11 @@
       ]
     },
     {
-      "name": "Data Analysis & Visualization Pipeline",
+      "name": "Pre-Production Phase",
       "startDate": "2025-08-14",
-      "endDate": "2025-09-02",
-      "description": "This repository represents the core development of a system for tracking and visualizing aircraft data, specifically targeting the avia domain. It encompasses the creation of a Python-based repository focused on comprehensive data analysis and automated web crawling, including the development of a key data visualization tool, Spondr.",
-      "category": "Data",
-      "milestones": [
-        {
-          "date": "2025-08-14",
-          "title": "Hotbits - TypeScript Web App",
-          "repo": "hotbits"
-        },
-        {
-          "date": "2025-08-14",
-          "title": "Yeet - SMS Gateway Wrapper",
-          "repo": "yeet"
-        },
-        {
-          "date": "2025-08-16",
-          "title": "Guzl - HTML Output Support",
-          "repo": "guzl"
-        },
-        {
-          "date": "2025-08-16",
-          "title": "Spondr - Python Repository for Aircraft Data Tracking",
-          "repo": "spondr"
-        },
-        {
-          "date": "2025-09-02",
-          "title": "Stats - First Commit",
-          "repo": "stats"
-        },
-        {
-          "date": "2025-09-11",
-          "title": "Lamarcairc - Unknown Repository",
-          "repo": "llamirc"
-        }
-      ],
+      "endDate": "2025-09-11",
+      "description": "During this period, the foundation of the Nominate-AI platform was laid. The initial repositories were created to focus on various aspects such as mobile optimization, aircraft data tracking, web crawling, and SMS gateway development.",
+      "category": "systems",
       "repos": [
         "hotbits",
         "yeet",
@@ -6159,48 +6071,49 @@
         "crawwwl",
         "stats",
         "llamirc"
-      ]
+      ],
+      "milestones": []
     },
     {
-      "name": "Development Pipeline",
+      "name": "Initial Platform Development",
       "startDate": "2025-09-12",
       "endDate": "2025-11-01",
-      "description": "This repository represents the core development pipeline for the Nominate-AI platform, encompassing the evolution of key components from initial concept to functional implementation. It spans the creation of foundational tools like Umbra, Aihelp, Swarm, and Ferret, culminating in the development of TinyGrad and its associated tooling. The pipeline highlights a phased approach to software development and testing.",
+      "description": "This phase marked the creation of the core foundation of the Nominate-AI platform, focusing on setting up initial infrastructure and tools for future development. The platforms built during this phase provided essential services such as VDI management, shell scripting, and AI/ML tooling. These early developments laid the groundwork for further expansion and improvement.",
       "category": "systems",
       "milestones": [
         {
           "date": "2025-09-12",
-          "title": "Dragonfli - Initial Draft",
+          "title": "Initial Platform Creation",
           "repo": "dragonfli"
         },
         {
           "date": "2025-09-27",
-          "title": "Umbra - TypeScript Development",
-          "repo": "umbre"
+          "title": "VDI Management Improvement",
+          "repo": "umbra"
         },
         {
           "date": "2025-09-29",
-          "title": "Aihelp - Core Functionality",
+          "title": "Basic AI Helper Creation",
           "repo": "aihelp"
         },
         {
           "date": "2025-10-17",
-          "title": "Swarm - Stability and Monitoring",
+          "title": "Sworm Stability and Monitoring Improvements",
           "repo": "swrm"
         },
         {
           "date": "2025-10-27",
-          "title": "Leaks - Database Usage Guide",
+          "title": "TypeScript Database System Development",
           "repo": "leaks"
         },
         {
           "date": "2025-10-30",
-          "title": "Ferret - Client Library Improvements",
+          "title": "Ferret SWRM Client Library Improvement",
           "repo": "ferret"
         },
         {
           "date": "2025-11-01",
-          "title": "Tiny - Python Tool Development",
+          "title": "TinyGrad Development Workflow Tool Creation",
           "repo": "tiny"
         }
       ],
@@ -6215,45 +6128,45 @@
       ]
     },
     {
-      "name": "Development Pipeline",
+      "name": "Feature Development",
       "startDate": "2025-11-04",
       "endDate": "2025-11-27",
-      "description": "This repository represents the core development pipeline for the Nominate-AI platform, encompassing the creation and refinement of various components \u2013 from initial setup to detailed implementation and testing \u2013 in chronological order. It's a comprehensive collection of code changes representing the evolution of the platform\u2019s key features and functionalities, spanning from initial setup to refinements and updates.",
-      "category": "systems",
+      "description": "During this phase, various features were developed and integrated into the Nominate-AI platform. This includes enhancing gameplay experience through UI improvements (cascade), developing a web-based framework for machine learning models (tgmi), building a network scanner and deployment tool (scout), simplifying documentation management in Rust projects (rustforhaters), and creating a command-line tool for searching through files recursively (ripgrep).",
+      "category": "ai-ml",
       "milestones": [
         {
           "date": "2025-11-04",
-          "title": "Initial Setup & README",
+          "title": "Initial Resume Repository Creation",
           "repo": "resume"
         },
         {
           "date": "2025-11-06",
-          "title": "6502 Processor Expert Agent",
+          "title": "Introduction of 6502 Processor Expert Agent with RAG System",
           "repo": "6502"
         },
         {
           "date": "2025-11-14",
-          "title": "Cascade - UI Enhancements",
+          "title": "Cascade Repository Development Begins",
           "repo": "cascade"
         },
         {
           "date": "2025-11-14",
-          "title": "tgmi - Web-Based Machine Learning Framework",
+          "title": "tgmi Framework for Machine Learning Models Created",
           "repo": "tgmi"
         },
         {
           "date": "2025-11-21",
-          "title": "Scout - Shell Script Network Scanner",
+          "title": "Scout Network Scanner and Deployment Tool Developed",
           "repo": "scout"
         },
         {
           "date": "2025-11-24",
-          "title": "RustForHaters - Python Documentation Simplification",
+          "title": "rustforhaters Simplifies Documentation Management in Rust Projects",
           "repo": "rustforhaters"
         },
         {
           "date": "2025-11-27",
-          "title": "ripgrep - Command-Line Search Tool",
+          "title": "Initial ripgrep Command-Line Tool Creation",
           "repo": "ripgrep"
         }
       ],
@@ -6268,45 +6181,20 @@
       ]
     },
     {
-      "name": "AI-ML Development Pipeline",
+      "name": "Alpha Development Phase",
       "startDate": "2025-11-30",
       "endDate": "2026-02-21",
-      "description": "This repository represents the core development phase of the Nominate-AI platform, encompassing the initial creation of key components like deox, gnomes, collidr, spicy, orator, esp32, and gene-pool. It\u2019s a sequential progression of features focused on visual representation, AI-driven content creation, and data curation, reflecting the iterative development of a comprehensive platform.",
-      "category": "ai-ml",
+      "description": "During this phase, the Nominate-AI platform underwent its initial development, focusing on building foundational tools and systems. The team created repos such as deox, gnomes, collidr, spicy, orator, esp32, and gene-pool, which laid the groundwork for later AI and ML advancements.",
+      "category": "systems",
       "milestones": [
         {
           "date": "2025-11-30",
-          "title": "deox - Automatic PDF Generation",
+          "title": "Initial commit in deox repo",
           "repo": "deox"
         },
         {
-          "date": "2025-12-11",
-          "title": "gnomes - Visual Gnome Lifecycle",
-          "repo": "gnomes"
-        },
-        {
-          "date": "2026-01-11",
-          "title": "collidr - Unknown Project",
-          "repo": "collidr"
-        },
-        {
-          "date": "2026-02-01",
-          "title": "spicy - Async AI Platform",
-          "repo": "spicy"
-        },
-        {
-          "date": "2026-02-02",
-          "title": "orator - Educational Content Platform",
-          "repo": "orator"
-        },
-        {
-          "date": "2026-02-09",
-          "title": "esp32 - ESP32 Microcontroller Project",
-          "repo": "esp32"
-        },
-        {
           "date": "2026-02-21",
-          "title": "gene-pool - AI Coding Agent Prompt Set",
+          "title": "Final milestone of gene-pool repo",
           "repo": "gene-pool"
         }
       ],
@@ -6329,7 +6217,7 @@
       "commits": 2204,
       "firstCommit": "2016-02-27T16:07:26Z",
       "lastCommit": "2025-10-30T17:30:14Z",
-      "phase": "Development Pipeline"
+      "phase": "Feature Development"
     },
     {
       "name": "knowsynet",
@@ -6338,7 +6226,7 @@
       "commits": 19,
       "firstCommit": "2025-03-11T01:39:27Z",
       "lastCommit": "2025-03-30T08:47:43Z",
-      "phase": "Nominate-AI Core Development"
+      "phase": "Platform Development Phase"
     },
     {
       "name": "gene-pool",
@@ -6347,7 +6235,7 @@
       "commits": 479,
       "firstCommit": "2025-03-26T06:58:25Z",
       "lastCommit": "2026-02-21T23:00:06Z",
-      "phase": "AI-ML Development Pipeline"
+      "phase": "Alpha Development Phase"
     },
     {
       "name": "vectl",
@@ -6356,7 +6244,7 @@
       "commits": 14,
       "firstCommit": "2025-03-29T02:45:34Z",
       "lastCommit": "2026-01-11T20:43:17Z",
-      "phase": "Nominate-AI Core Development"
+      "phase": "Platform Development Phase"
     },
     {
       "name": "jfk",
@@ -6365,7 +6253,7 @@
       "commits": 13,
       "firstCommit": "2025-04-01T03:36:08Z",
       "lastCommit": "2026-03-06T02:14:52Z",
-      "phase": "Nominate-AI Core Development"
+      "phase": "Platform Development Phase"
     },
     {
       "name": "scream",
@@ -6374,7 +6262,7 @@
       "commits": 3,
       "firstCommit": "2025-04-14T22:26:10Z",
       "lastCommit": "2025-04-18T03:42:05Z",
-      "phase": "Nominate-AI Core Development"
+      "phase": "Platform Development Phase"
     },
     {
       "name": "psjson",
@@ -6383,7 +6271,7 @@
       "commits": 2,
       "firstCommit": "2025-04-14T22:35:10Z",
       "lastCommit": "2025-04-15T23:57:01Z",
-      "phase": "Nominate-AI Core Development"
+      "phase": "Platform Development Phase"
     },
     {
       "name": "curly",
@@ -6392,7 +6280,7 @@
       "commits": 8,
       "firstCommit": "2025-04-15T16:42:25Z",
       "lastCommit": "2025-04-30T05:49:03Z",
-      "phase": "Data Pipeline & Tooling"
+      "phase": "Development Phase: Nomination and Proof-of-Concept"
     },
     {
       "name": "ari",
@@ -6401,7 +6289,7 @@
       "commits": 6,
       "firstCommit": "2025-04-17T21:33:36Z",
       "lastCommit": "2025-04-17T23:19:03Z",
-      "phase": "Nominate-AI Core Development"
+      "phase": "Platform Development Phase"
     },
     {
       "name": "shelldown",
@@ -6410,7 +6298,7 @@
       "commits": 2,
       "firstCommit": "2025-04-18T03:19:25Z",
       "lastCommit": "2025-04-23T08:51:36Z",
-      "phase": "Nominate-AI Core Development"
+      "phase": "Platform Development Phase"
     },
     {
       "name": "evolve",
@@ -6419,7 +6307,7 @@
       "commits": 10,
       "firstCommit": "2025-04-23T02:18:54Z",
       "lastCommit": "2025-04-24T23:19:45Z",
-      "phase": "Data Pipeline & Tooling"
+      "phase": "Development Phase: Nomination and Proof-of-Concept"
     },
     {
       "name": "sleepr",
@@ -6428,7 +6316,7 @@
       "commits": 1,
       "firstCommit": "2025-04-23T08:50:48Z",
       "lastCommit": "2025-04-23T08:50:48Z",
-      "phase": "Data Pipeline & Tooling"
+      "phase": "Development Phase: Nomination and Proof-of-Concept"
     },
     {
       "name": "bilder",
@@ -6437,7 +6325,7 @@
       "commits": 1,
       "firstCommit": "2025-04-23T08:51:17Z",
       "lastCommit": "2025-04-23T08:51:17Z",
-      "phase": "Data Pipeline & Tooling"
+      "phase": "Development Phase: Nomination and Proof-of-Concept"
     },
     {
       "name": "rando",
@@ -6446,7 +6334,7 @@
       "commits": 1,
       "firstCommit": "2025-04-23T09:12:42Z",
       "lastCommit": "2025-04-23T09:12:42Z",
-      "phase": "Data Pipeline & Tooling"
+      "phase": "Development Phase: Nomination and Proof-of-Concept"
     },
     {
       "name": "tix",
@@ -6455,7 +6343,7 @@
       "commits": 13,
       "firstCommit": "2025-04-23T21:18:08Z",
       "lastCommit": "2025-04-24T22:11:02Z",
-      "phase": "Data Pipeline & Tooling"
+      "phase": "Development Phase: Nomination and Proof-of-Concept"
     },
     {
       "name": "textcast",
@@ -6464,7 +6352,7 @@
       "commits": 5,
       "firstCommit": "2025-04-30T18:28:53Z",
       "lastCommit": "2025-05-01T02:18:17Z",
-      "phase": "Data Pipeline & Tooling"
+      "phase": "Development Phase: Nomination and Proof-of-Concept"
     },
     {
       "name": "addai",
@@ -6473,7 +6361,7 @@
       "commits": 5,
       "firstCommit": "2025-06-04T02:06:24Z",
       "lastCommit": "2025-06-10T05:01:32Z",
-      "phase": "Development of Autonomous Agent Platforms"
+      "phase": "Platform Development Phase"
     },
     {
       "name": "rpi5-arm-assembly",
@@ -6482,7 +6370,7 @@
       "commits": 5,
       "firstCommit": "2025-06-10T17:32:01Z",
       "lastCommit": "2025-06-10T22:20:06Z",
-      "phase": "Development of Autonomous Agent Platforms"
+      "phase": "Platform Development Phase"
     },
     {
       "name": "spydr",
@@ -6491,7 +6379,7 @@
       "commits": 6,
       "firstCommit": "2025-06-12T14:19:41Z",
       "lastCommit": "2025-06-13T21:52:05Z",
-      "phase": "Development of Autonomous Agent Platforms"
+      "phase": "Platform Development Phase"
     },
     {
       "name": "investigations",
@@ -6500,7 +6388,7 @@
       "commits": 0,
       "firstCommit": "2025-06-14T17:35:31Z",
       "lastCommit": "2025-06-14T17:35:31Z",
-      "phase": "Development of Autonomous Agent Platforms"
+      "phase": "Platform Development Phase"
     },
     {
       "name": "sovereign",
@@ -6509,7 +6397,7 @@
       "commits": 13,
       "firstCommit": "2025-06-18T00:55:54Z",
       "lastCommit": "2025-06-20T19:53:29Z",
-      "phase": "Development of Autonomous Agent Platforms"
+      "phase": "Platform Development Phase"
     },
     {
       "name": "spidr",
@@ -6518,7 +6406,7 @@
       "commits": 40,
       "firstCommit": "2025-06-24T22:38:01Z",
       "lastCommit": "2025-06-28T18:01:09Z",
-      "phase": "Development of Autonomous Agent Platforms"
+      "phase": "Platform Development Phase"
     },
     {
       "name": "plumbr",
@@ -6527,7 +6415,7 @@
       "commits": 140,
       "firstCommit": "2025-07-06T18:04:01Z",
       "lastCommit": "2025-07-16T19:50:30Z",
-      "phase": "Development of Autonomous Agent Platforms"
+      "phase": "Platform Development Phase"
     },
     {
       "name": "gcombinatr",
@@ -6536,7 +6424,7 @@
       "commits": 4,
       "firstCommit": "2025-07-11T01:27:18Z",
       "lastCommit": "2025-07-11T04:11:12Z",
-      "phase": "Nominate-AI System Development"
+      "phase": "Nominate-AI Platform Development Phase"
     },
     {
       "name": "llisp",
@@ -6545,7 +6433,7 @@
       "commits": 7,
       "firstCommit": "2025-07-11T03:48:05Z",
       "lastCommit": "2025-07-16T06:37:47Z",
-      "phase": "Nominate-AI System Development"
+      "phase": "Nominate-AI Platform Development Phase"
     },
     {
       "name": "watr",
@@ -6554,7 +6442,7 @@
       "commits": 87,
       "firstCommit": "2025-07-15T06:41:59Z",
       "lastCommit": "2025-07-29T19:48:11Z",
-      "phase": "Nominate-AI System Development"
+      "phase": "Nominate-AI Platform Development Phase"
     },
     {
       "name": "zephyr",
@@ -6563,7 +6451,7 @@
       "commits": 120,
       "firstCommit": "2025-07-29T21:48:29Z",
       "lastCommit": "2025-08-13T02:33:30Z",
-      "phase": "Nominate-AI System Development"
+      "phase": "Nominate-AI Platform Development Phase"
     },
     {
       "name": "classic-rock",
@@ -6572,7 +6460,7 @@
       "commits": 3,
       "firstCommit": "2025-07-31T03:02:38Z",
       "lastCommit": "2025-07-31T03:23:01Z",
-      "phase": "Nominate-AI System Development"
+      "phase": "Nominate-AI Platform Development Phase"
     },
     {
       "name": "llarp",
@@ -6581,7 +6469,7 @@
       "commits": 168,
       "firstCommit": "2025-08-02T02:10:38Z",
       "lastCommit": "2025-10-29T22:36:27Z",
-      "phase": "Nominate-AI System Development"
+      "phase": "Nominate-AI Platform Development Phase"
     },
     {
       "name": "blossom",
@@ -6590,7 +6478,7 @@
       "commits": 3,
       "firstCommit": "2025-08-13T04:51:01Z",
       "lastCommit": "2025-08-15T12:36:35Z",
-      "phase": "Nominate-AI System Development"
+      "phase": "Nominate-AI Platform Development Phase"
     },
     {
       "name": "hotbits",
@@ -6599,7 +6487,7 @@
       "commits": 53,
       "firstCommit": "2025-08-14T04:28:56Z",
       "lastCommit": "2025-10-07T04:47:00Z",
-      "phase": "Data Analysis & Visualization Pipeline"
+      "phase": "Pre-Production Phase"
     },
     {
       "name": "yeet",
@@ -6608,7 +6496,7 @@
       "commits": 2,
       "firstCommit": "2025-08-14T05:19:41Z",
       "lastCommit": "2025-08-14T19:45:08Z",
-      "phase": "Data Analysis & Visualization Pipeline"
+      "phase": "Pre-Production Phase"
     },
     {
       "name": "guzl",
@@ -6617,7 +6505,7 @@
       "commits": 3,
       "firstCommit": "2025-08-16T00:42:08Z",
       "lastCommit": "2025-08-24T05:49:24Z",
-      "phase": "Data Analysis & Visualization Pipeline"
+      "phase": "Pre-Production Phase"
     },
     {
       "name": "spondr",
@@ -6626,7 +6514,7 @@
       "commits": 176,
       "firstCommit": "2025-08-17T21:48:35Z",
       "lastCommit": "2025-09-12T02:10:02Z",
-      "phase": "Data Analysis & Visualization Pipeline"
+      "phase": "Pre-Production Phase"
     },
     {
       "name": "crawwwl",
@@ -6635,7 +6523,7 @@
       "commits": 42,
       "firstCommit": "2025-08-24T03:29:38Z",
       "lastCommit": "2025-09-20T06:24:13Z",
-      "phase": "Data Analysis & Visualization Pipeline"
+      "phase": "Pre-Production Phase"
     },
     {
       "name": "stats",
@@ -6644,7 +6532,7 @@
       "commits": 1,
       "firstCommit": "2025-09-02T21:34:03Z",
       "lastCommit": "2025-09-02T21:34:03Z",
-      "phase": "Data Analysis & Visualization Pipeline"
+      "phase": "Pre-Production Phase"
     },
     {
       "name": "llamirc",
@@ -6653,7 +6541,7 @@
       "commits": 0,
       "firstCommit": "2025-09-11T19:05:20Z",
       "lastCommit": "2025-09-11T19:05:21Z",
-      "phase": "Data Analysis & Visualization Pipeline"
+      "phase": "Pre-Production Phase"
     },
     {
       "name": "dragonfli",
@@ -6662,7 +6550,7 @@
       "commits": 0,
       "firstCommit": "2025-09-12T02:39:41Z",
       "lastCommit": "2025-09-12T02:39:41Z",
-      "phase": "Development Pipeline"
+      "phase": "Initial Platform Development"
     },
     {
       "name": "umbra",
@@ -6671,7 +6559,7 @@
       "commits": 17,
       "firstCommit": "2025-09-29T02:38:48Z",
       "lastCommit": "2025-10-13T22:07:35Z",
-      "phase": "Development Pipeline"
+      "phase": "Initial Platform Development"
     },
     {
       "name": "aihelp",
@@ -6680,7 +6568,7 @@
       "commits": 2,
       "firstCommit": "2025-09-29T20:06:11Z",
       "lastCommit": "2026-01-15T21:23:25Z",
-      "phase": "Development Pipeline"
+      "phase": "Initial Platform Development"
     },
     {
       "name": "swrm",
@@ -6689,7 +6577,7 @@
       "commits": 27,
       "firstCommit": "2025-10-17T22:46:28Z",
       "lastCommit": "2025-10-21T16:34:19Z",
-      "phase": "Development Pipeline"
+      "phase": "Initial Platform Development"
     },
     {
       "name": "leaks",
@@ -6698,7 +6586,7 @@
       "commits": 6,
       "firstCommit": "2025-10-27T19:44:47Z",
       "lastCommit": "2025-10-28T03:00:55Z",
-      "phase": "Development Pipeline"
+      "phase": "Initial Platform Development"
     },
     {
       "name": "ferret",
@@ -6707,7 +6595,7 @@
       "commits": 18,
       "firstCommit": "2025-10-30T18:54:40Z",
       "lastCommit": "2026-01-26T03:36:31Z",
-      "phase": "Development Pipeline"
+      "phase": "Initial Platform Development"
     },
     {
       "name": "tiny",
@@ -6716,7 +6604,7 @@
       "commits": 73,
       "firstCommit": "2025-11-01T15:50:31Z",
       "lastCommit": "2025-11-15T00:41:51Z",
-      "phase": "Development Pipeline"
+      "phase": "Initial Platform Development"
     },
     {
       "name": "resume",
@@ -6725,7 +6613,7 @@
       "commits": 6,
       "firstCommit": "2025-11-04T02:20:51Z",
       "lastCommit": "2025-11-04T03:22:58Z",
-      "phase": "Development Pipeline"
+      "phase": "Feature Development"
     },
     {
       "name": "6502",
@@ -6734,7 +6622,7 @@
       "commits": 1,
       "firstCommit": "2025-11-07T01:17:49Z",
       "lastCommit": "2025-11-07T01:17:49Z",
-      "phase": "Development Pipeline"
+      "phase": "Feature Development"
     },
     {
       "name": "cascade",
@@ -6743,7 +6631,7 @@
       "commits": 41,
       "firstCommit": "2025-11-14T04:24:16Z",
       "lastCommit": "2025-11-28T17:23:27Z",
-      "phase": "Development Pipeline"
+      "phase": "Feature Development"
     },
     {
       "name": "tgmi",
@@ -6752,7 +6640,7 @@
       "commits": 140,
       "firstCommit": "2025-11-14T23:36:30Z",
       "lastCommit": "2025-12-20T03:11:04Z",
-      "phase": "Development Pipeline"
+      "phase": "Feature Development"
     },
     {
       "name": "scout",
@@ -6761,7 +6649,7 @@
       "commits": 15,
       "firstCommit": "2025-11-22T23:06:30Z",
       "lastCommit": "2025-11-26T17:25:19Z",
-      "phase": "Development Pipeline"
+      "phase": "Feature Development"
     },
     {
       "name": "rustforhaters",
@@ -6770,7 +6658,7 @@
       "commits": 18,
       "firstCommit": "2025-11-24T22:10:45Z",
       "lastCommit": "2025-12-03T02:56:09Z",
-      "phase": "Development Pipeline"
+      "phase": "Feature Development"
     },
     {
       "name": "deox",
@@ -6779,7 +6667,7 @@
       "commits": 3,
       "firstCommit": "2025-12-01T21:07:42Z",
       "lastCommit": "2025-12-03T16:20:42Z",
-      "phase": "AI-ML Development Pipeline"
+      "phase": "Alpha Development Phase"
     },
     {
       "name": "gnomes",
@@ -6788,7 +6676,7 @@
       "commits": 18,
       "firstCommit": "2025-12-13T05:43:45Z",
       "lastCommit": "2025-12-19T22:49:55Z",
-      "phase": "AI-ML Development Pipeline"
+      "phase": "Alpha Development Phase"
     },
     {
       "name": "collidr",
@@ -6797,7 +6685,7 @@
       "commits": 0,
       "firstCommit": "2026-01-11T21:59:35Z",
       "lastCommit": "2026-01-11T21:59:35Z",
-      "phase": "AI-ML Development Pipeline"
+      "phase": "Alpha Development Phase"
     },
     {
       "name": "spicy",
@@ -6806,7 +6694,7 @@
       "commits": 3,
       "firstCommit": "2026-02-01T03:57:55Z",
       "lastCommit": "2026-02-06T18:19:14Z",
-      "phase": "AI-ML Development Pipeline"
+      "phase": "Alpha Development Phase"
     },
     {
       "name": "orator",
@@ -6815,7 +6703,7 @@
       "commits": 5,
       "firstCommit": "2026-02-02T01:27:12Z",
       "lastCommit": "2026-02-03T21:31:20Z",
-      "phase": "AI-ML Development Pipeline"
+      "phase": "Alpha Development Phase"
     },
     {
       "name": "esp32",
@@ -6824,7 +6712,7 @@
       "commits": 50,
       "firstCommit": "2026-02-10T01:11:37Z",
       "lastCommit": "2026-02-18T21:12:09Z",
-      "phase": "AI-ML Development Pipeline"
+      "phase": "Alpha Development Phase"
     }
   ]
 }

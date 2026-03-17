@@ -35,7 +35,7 @@ ORG_SLUG = ORG.lower().replace(" ", "-")
 CACHE_FILE = PROJECT_ROOT / f".{ORG_SLUG}-timeline-cache.json"
 OUTPUT_FILE = PROJECT_ROOT / "public" / "data" / f"{ORG_SLUG}-timeline.json"
 
-CBAI_URL = os.environ.get("CBAI_URL", "https://ai.nominate.ai")
+CBAI_URL = os.environ.get("CBAI_URL", "http://127.0.0.1:3220")
 CBAI_PROVIDER = os.environ.get("CBAI_PROVIDER", "ollama")
 
 VERBOSE = "--verbose" in sys.argv
