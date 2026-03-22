@@ -26,6 +26,8 @@ const navGroups = [
     items: [
       { href: "/projects/nominate-ai", label: "Nominate-AI" },
       { href: "/projects/tinymachines", label: "tinymachines" },
+      { href: "/projects/sysforge-ai", label: "Sysforge-AI" },
+      { href: "/projects/isenbek", label: "isenbek" },
     ],
   },
   {

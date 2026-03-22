@@ -336,7 +336,7 @@ def synthesize_phases(cache: dict) -> dict:
 
         prompt = (
             f"These {len(batch)} repos were created in chronological order as part of the "
-            f"Nominate-AI platform. What development phase do they represent?\n\n"
+            f"{ORG} project ecosystem. What development phase do they represent?\n\n"
             f"{repo_descriptions}\n\n"
             f"Give the phase a descriptive name, the date range it covers, "
             f"a 2-3 sentence narrative of what was built, and categorize it as one of: "
@@ -504,6 +504,21 @@ def build_output(cache: dict) -> dict:
             "lastCommit": commit_dates[-1] if commit_dates else r.get("pushed_at", ""),
             "phase": phase_name,
         })
+
+    # Sanitize milestones — AI sometimes returns repo as object or list
+    for p in phases:
+        clean = []
+        for m in p.get("milestones", []):
+            repo_val = m.get("repo", "")
+            if isinstance(repo_val, dict):
+                repo_val = repo_val.get("name", "")
+            elif isinstance(repo_val, list):
+                repo_val = ", ".join(str(x) for x in repo_val)
+            m["repo"] = str(repo_val)
+            m["title"] = str(m.get("title", ""))
+            m["date"] = str(m.get("date", ""))
+            clean.append(m)
+        p["milestones"] = clean
 
     output = {
         "generated": datetime.now(timezone.utc).isoformat(),
