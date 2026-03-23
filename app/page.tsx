@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react"
 import { motion, useInView } from "framer-motion"
 import Link from "next/link"
 import {
-  ArrowRight, Bot, MessageSquare, GitBranch, Flame,
+  ArrowRight, Bot, MessageSquare, GitBranch, Flame, Sparkles,
 } from "lucide-react"
 import type { SiteData, ActivityItem as ActivityItemType, Project } from "@/lib/site-data"
 import { categoryMap } from "@/lib/project-categories"
@@ -233,6 +233,85 @@ function getTimeAgo(dateStr: string): string {
   return date.toLocaleDateString("en-US", { month: "short", day: "numeric" })
 }
 
+// --- Just Added Banner ---
+const ANNOUNCEMENTS = [
+  {
+    title: "Research Papers",
+    description: "13 active studies in seismology, space weather, and climate — powered by TerraPulse.",
+    href: "/papers",
+    color: "var(--brand-secondary)",
+    addedAt: "2026-03-23",
+    ttlDays: 14,
+  },
+]
+
+function JustAdded() {
+  const now = new Date()
+  const active = ANNOUNCEMENTS.filter((a) => {
+    const added = new Date(a.addedAt)
+    const expiresAt = new Date(added.getTime() + a.ttlDays * 86400000)
+    return now < expiresAt
+  })
+
+  if (active.length === 0) return null
+
+  return (
+    <section className="py-4 sm:py-6">
+      <div className="container-page">
+        {active.map((a) => {
+          const added = new Date(a.addedAt)
+          const daysAgo = Math.floor((now.getTime() - added.getTime()) / 86400000)
+          const label = daysAgo === 0 ? "Today" : daysAgo === 1 ? "Yesterday" : `${daysAgo}d ago`
+
+          return (
+            <Link
+              key={a.href}
+              href={a.href}
+              className="group flex items-center gap-3 sm:gap-4 rounded-xl px-4 sm:px-6 py-3 sm:py-4 transition-all hover:-translate-y-0.5"
+              style={{
+                background: `color-mix(in srgb, ${a.color} 6%, transparent)`,
+                border: `1px solid color-mix(in srgb, ${a.color} 20%, transparent)`,
+              }}
+            >
+              <div
+                className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg flex items-center justify-center shrink-0"
+                style={{
+                  background: `color-mix(in srgb, ${a.color} 15%, transparent)`,
+                }}
+              >
+                <Sparkles className="w-4 h-4" style={{ color: a.color }} />
+              </div>
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2">
+                  <span
+                    className="text-[10px] font-bold uppercase tracking-[2px]"
+                    style={{ color: a.color }}
+                  >
+                    Just Added
+                  </span>
+                  <span className="text-[10px] font-mono" style={{ color: "var(--brand-muted)" }}>
+                    {label}
+                  </span>
+                </div>
+                <div className="text-sm sm:text-base font-semibold">
+                  {a.title}
+                  <span className="hidden sm:inline font-normal ml-2" style={{ color: "var(--brand-muted)" }}>
+                    — {a.description}
+                  </span>
+                </div>
+              </div>
+              <ArrowRight
+                className="w-4 h-4 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                style={{ color: a.color }}
+              />
+            </Link>
+          )
+        })}
+      </div>
+    </section>
+  )
+}
+
 // --- Main Page ---
 export default function HomePage() {
   const [data, setData] = useState<SiteData | null>(null)
@@ -314,6 +393,9 @@ export default function HomePage() {
           </FadeSection>
         </div>
       </section>
+
+      {/* ===== JUST ADDED ===== */}
+      <JustAdded />
 
       {/* ===== BIG IDEAS ===== */}
       <BigIdeas ideas={data?.bigIdeas} />
