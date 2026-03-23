@@ -36,12 +36,21 @@ export const metadata: Metadata = {
     siteName: "bradley.io",
     locale: "en_US",
     type: "website",
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "bradley.io — Hardware hacker, data architect, AI pilot",
+      },
+    ],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: "bradley.io | Frontier Technologist",
     description:
       "Hardware hacker, data architect, and AI pilot. Building at the intersection of enterprise scale and maker culture.",
+    images: ["/og-image.png"],
   },
   robots: {
     index: true,
@@ -91,27 +100,71 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "Person",
-              name: "Bradley Isenbek",
-              url: "https://bradley.io",
-              jobTitle: "Frontier Technologist",
-              description:
-                "Hardware hacker, data architect, and AI pilot. Building at the intersection of enterprise scale and maker culture.",
-              knowsAbout: [
-                "AI Engineering",
-                "Data Architecture",
-                "Edge Computing",
-                "IoT",
-                "ESP32",
-                "Claude AI",
+              "@graph": [
+                {
+                  "@type": "Person",
+                  "@id": "https://bradley.io/#person",
+                  name: "Bradley Isenbek",
+                  url: "https://bradley.io",
+                  jobTitle: "Frontier Technologist",
+                  description:
+                    "Hardware hacker, data architect, and AI pilot. Building at the intersection of enterprise scale and maker culture.",
+                  knowsAbout: [
+                    "AI Engineering",
+                    "Data Architecture",
+                    "Edge Computing",
+                    "IoT",
+                    "ESP32",
+                    "Claude AI",
+                    "Distributed Systems",
+                    "Machine Learning",
+                    "Python",
+                    "TypeScript",
+                  ],
+                  sameAs: [
+                    "https://github.com/tinymachines",
+                    "https://github.com/isenbek",
+                  ],
+                  address: {
+                    "@type": "PostalAddress",
+                    addressLocality: "Grand Rapids",
+                    addressRegion: "MI",
+                    addressCountry: "US",
+                  },
+                  image: "https://bradley.io/og-image.png",
+                },
+                {
+                  "@type": "ProfessionalService",
+                  "@id": "https://bradley.io/#service",
+                  name: "Bradley Isenbek — AI & Data Engineering Consulting",
+                  url: "https://bradley.io/services",
+                  provider: { "@id": "https://bradley.io/#person" },
+                  description:
+                    "Consulting in data engineering, distributed systems, AI/ML integration, and edge computing.",
+                  areaServed: "US",
+                  serviceType: [
+                    "Data Engineering",
+                    "Distributed Systems Architecture",
+                    "AI/ML Integration",
+                    "Edge Computing & IoT",
+                    "API Design & Development",
+                  ],
+                  address: {
+                    "@type": "PostalAddress",
+                    addressLocality: "Grand Rapids",
+                    addressRegion: "MI",
+                    addressCountry: "US",
+                  },
+                },
+                {
+                  "@type": "WebSite",
+                  "@id": "https://bradley.io/#website",
+                  url: "https://bradley.io",
+                  name: "bradley.io",
+                  publisher: { "@id": "https://bradley.io/#person" },
+                  inLanguage: "en-US",
+                },
               ],
-              sameAs: ["https://github.com/tinymachines"],
-              address: {
-                "@type": "PostalAddress",
-                addressLocality: "Grand Rapids",
-                addressRegion: "MI",
-                addressCountry: "US",
-              },
             }),
           }}
         />

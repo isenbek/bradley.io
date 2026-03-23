@@ -9,9 +9,16 @@ import { CommitHeatmap } from "@/components/timeline/CommitHeatmap"
 import { timeAgo } from "@/lib/time-ago"
 
 export const metadata: Metadata = {
-  title: "isenbek Project Timeline | Bradley.io",
+  title: "isenbek Project Timeline",
   description:
     "Full development timeline of isenbek — Terrapulse and personal infrastructure projects.",
+  alternates: { canonical: "/projects/isenbek" },
+  openGraph: {
+    title: "isenbek Project Timeline | bradley.io",
+    description:
+      "Full development timeline of isenbek — Terrapulse and personal infrastructure projects.",
+    url: "https://bradley.io/projects/isenbek",
+  },
 }
 
 function loadTimeline(): NominateTimeline | null {

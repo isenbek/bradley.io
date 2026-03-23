@@ -9,9 +9,16 @@ import { CommitHeatmap } from "@/components/timeline/CommitHeatmap"
 import { timeAgo } from "@/lib/time-ago"
 
 export const metadata: Metadata = {
-  title: "Nominate-AI Platform Timeline | Bradley.io",
+  title: "Nominate-AI Platform Timeline",
   description:
-    "Full development timeline of the Nominate-AI platform — 76 repos, synthesized into phase-based milestones.",
+    "Full development timeline of the Nominate-AI platform — 87 repos, 10,000+ commits, synthesized into AI-generated phase-based milestones.",
+  alternates: { canonical: "/projects/nominate-ai" },
+  openGraph: {
+    title: "Nominate-AI Platform Timeline | bradley.io",
+    description:
+      "Full development timeline of the Nominate-AI platform — 87 repos synthesized into phase-based milestones.",
+    url: "https://bradley.io/projects/nominate-ai",
+  },
 }
 
 function loadTimeline(): NominateTimeline | null {

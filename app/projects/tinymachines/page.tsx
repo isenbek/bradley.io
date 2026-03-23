@@ -9,9 +9,16 @@ import { CommitHeatmap } from "@/components/timeline/CommitHeatmap"
 import { timeAgo } from "@/lib/time-ago"
 
 export const metadata: Metadata = {
-  title: "tinymachines Platform Timeline | Bradley.io",
+  title: "tinymachines Platform Timeline",
   description:
-    "Full development timeline of tinymachines — hardware hacking, systems programming, and maker projects.",
+    "Full development timeline of tinymachines — 56 repos spanning hardware hacking, systems programming, and maker projects.",
+  alternates: { canonical: "/projects/tinymachines" },
+  openGraph: {
+    title: "tinymachines Platform Timeline | bradley.io",
+    description:
+      "Full development timeline of tinymachines — hardware hacking, systems programming, and maker projects.",
+    url: "https://bradley.io/projects/tinymachines",
+  },
 }
 
 function loadTimeline(): NominateTimeline | null {

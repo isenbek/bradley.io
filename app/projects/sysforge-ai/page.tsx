@@ -9,9 +9,16 @@ import { CommitHeatmap } from "@/components/timeline/CommitHeatmap"
 import { timeAgo } from "@/lib/time-ago"
 
 export const metadata: Metadata = {
-  title: "Sysforge-AI Platform Timeline | Bradley.io",
+  title: "Sysforge-AI Platform Timeline",
   description:
     "Full development timeline of Sysforge-AI — AI-powered systems engineering and infrastructure tooling.",
+  alternates: { canonical: "/projects/sysforge-ai" },
+  openGraph: {
+    title: "Sysforge-AI Platform Timeline | bradley.io",
+    description:
+      "Full development timeline of Sysforge-AI — AI-powered systems engineering and infrastructure tooling.",
+    url: "https://bradley.io/projects/sysforge-ai",
+  },
 }
 
 function loadTimeline(): NominateTimeline | null {

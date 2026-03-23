@@ -1,5 +1,5 @@
 {
-  "generated": "2026-03-22T17:30:21.012719+00:00",
+  "generated": "2026-03-23T09:07:12.336990+00:00",
   "org": "isenbek",
   "totalRepos": 10,
   "firstCommit": "2014-10-16T10:45:09Z",
@@ -3920,11 +3920,11 @@
   ],
   "phases": [
     {
-      "name": "Ecosystem Development Phase",
+      "name": "Maturity Phase",
       "startDate": "2017-01-26",
       "endDate": "2025-01-15",
-      "description": "This phase represents the development of various components and tools that make up the Isenbek project ecosystem. It began with the creation of a custom CSS file, followed by the implementation of a Bloom filter data structure, and continued with the automation of ngrok start-up using systemd. The phase also saw the development of several interactive examples and tools, including Streamlit apps and Jupyter Notebooks.",
-      "category": "systems",
+      "description": "The Isenbek project ecosystem has matured over time, with a focus on building reusable and versatile tools. The early years saw the development of CSS and data structure libraries, while later years focused on AI/ML and SaaS solutions.",
+      "category": "systems, ai-ml, data",
       "milestones": [
         {
           "date": "2017-01-26",
@@ -3933,32 +3933,32 @@
         },
         {
           "date": "2017-05-24",
-          "title": "Bloomfilter",
+          "title": "bloomfilter",
           "repo": "bloomfilter"
         },
         {
           "date": "2021-05-30",
-          "title": "Systemd-ngrok",
+          "title": "systemd-ngrok",
           "repo": "systemd-ngrok"
         },
         {
           "date": "2023-05-07",
-          "title": "Streamlit-example",
+          "title": "streamlit-example",
           "repo": "streamlit-example"
         },
         {
           "date": "2023-11-16",
-          "title": "Meatball",
+          "title": "meatball",
           "repo": "meatball"
         },
         {
           "date": "2024-05-17",
-          "title": "Pincone-examples",
+          "title": "pincone-examples",
           "repo": "pincone-examples"
         },
         {
           "date": "2025-01-15",
-          "title": "SaaS-myfw",
+          "title": "saas-myfw",
           "repo": "saas-myfw"
         }
       ],
@@ -3973,33 +3973,17 @@
       ]
     },
     {
-      "name": "Product Development Phase",
+      "name": "Alpha Prototyping",
       "startDate": "2025-01-15",
       "endDate": "2025-10-23",
-      "description": "This phase represents the development of a full-stack starter application using Vite, React, and Chakra UI, with initial commits in January 2025. Later updates introduced additional features such as a War Games-style terminal emulator, file uploads, and deletions. By October 2025, the project had reached a more developed stage.",
+      "description": "The alpha prototyping phase involved creating a basic starter project with Vite, React, and Chakra UI. This allowed for the development of a functional frontend with minimal files and commits. The focus was on demonstrating the core functionality of the ecosystem.",
       "category": "systems",
-      "milestones": [
-        {
-          "date": "2025-01-15",
-          "title": "Initial commit with Vite setup",
-          "repo": "vite-react-chakra-starter"
-        },
-        {
-          "date": "2025-08-13",
-          "title": "Major updates and additions to the project",
-          "repo": "bradley.io"
-        },
-        {
-          "date": "2025-10-23",
-          "title": "Refinement of the project's features and UI",
-          "repo": "mike"
-        }
-      ],
       "repos": [
         "vite-react-chakra-starter",
         "bradley.io",
         "mike"
-      ]
+      ],
+      "milestones": []
     }
   ],
   "repos": [
@@ -4010,7 +3994,7 @@
       "commits": 6,
       "firstCommit": "2014-10-16T10:45:09Z",
       "lastCommit": "2015-08-10T07:46:32Z",
-      "phase": "Ecosystem Development Phase"
+      "phase": "Maturity Phase"
     },
     {
       "name": "bloomfilter",
@@ -4019,7 +4003,7 @@
       "commits": 31,
       "firstCommit": "2017-03-22T02:59:47Z",
       "lastCommit": "2017-05-11T19:46:53Z",
-      "phase": "Ecosystem Development Phase"
+      "phase": "Maturity Phase"
     },
     {
       "name": "systemd-ngrok",
@@ -4028,7 +4012,7 @@
       "commits": 13,
       "firstCommit": "2017-04-10T04:37:02Z",
       "lastCommit": "2020-12-13T14:31:26Z",
-      "phase": "Ecosystem Development Phase"
+      "phase": "Maturity Phase"
     },
     {
       "name": "streamlit-example",
@@ -4037,7 +4021,7 @@
       "commits": 4,
       "firstCommit": "2020-11-03T06:29:22Z",
       "lastCommit": "2022-06-29T01:03:06Z",
-      "phase": "Ecosystem Development Phase"
+      "phase": "Maturity Phase"
     },
     {
       "name": "pincone-examples",
@@ -4046,7 +4030,7 @@
       "commits": 1000,
       "firstCommit": "2021-03-11T23:44:58Z",
       "lastCommit": "2024-05-16T12:50:29Z",
-      "phase": "Ecosystem Development Phase"
+      "phase": "Maturity Phase"
     },
     {
       "name": "saas-myfw",
@@ -4055,7 +4039,7 @@
       "commits": 1962,
       "firstCommit": "2022-07-13T12:44:33Z",
       "lastCommit": "2025-01-10T13:09:02Z",
-      "phase": "Ecosystem Development Phase"
+      "phase": "Maturity Phase"
     },
     {
       "name": "meatball",
@@ -4064,7 +4048,7 @@
       "commits": 1,
       "firstCommit": "2023-11-13T02:24:21Z",
       "lastCommit": "2023-11-13T02:24:21Z",
-      "phase": "Ecosystem Development Phase"
+      "phase": "Maturity Phase"
     },
     {
       "name": "vite-react-chakra-starter",
@@ -4073,7 +4057,7 @@
       "commits": 1,
       "firstCommit": "2025-01-15T21:53:02Z",
       "lastCommit": "2025-01-15T21:53:02Z",
-      "phase": "Product Development Phase"
+      "phase": "Alpha Prototyping"
     },
     {
       "name": "bradley.io",
@@ -4082,7 +4066,7 @@
       "commits": 64,
       "firstCommit": "2025-08-13T04:48:37Z",
       "lastCommit": "2026-03-17T18:52:04Z",
-      "phase": "Product Development Phase"
+      "phase": "Alpha Prototyping"
     },
     {
       "name": "mike",
@@ -4091,7 +4075,7 @@
       "commits": 5,
       "firstCommit": "2025-09-19T22:43:17Z",
       "lastCommit": "2025-10-23T01:21:37Z",
-      "phase": "Product Development Phase"
+      "phase": "Alpha Prototyping"
     }
   ]
 }
