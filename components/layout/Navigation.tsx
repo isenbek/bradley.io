@@ -37,6 +37,7 @@ const navGroups = [
     items: [
       { href: "/ai-pilot", label: "AI Pilot" },
       { href: "/mcp", label: "MCP Catalog" },
+      { href: "/papers", label: "Papers" },
     ],
   },
   {

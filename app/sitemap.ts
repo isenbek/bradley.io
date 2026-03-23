@@ -24,6 +24,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/ai-pilot`, changeFrequency: "daily", priority: 0.7, lastModified: now },
     { url: `${base}/lab`, changeFrequency: "weekly", priority: 0.6, lastModified: now },
     { url: `${base}/mcp`, changeFrequency: "weekly", priority: 0.7, lastModified: now },
+    { url: `${base}/papers`, changeFrequency: "weekly", priority: 0.8, lastModified: now },
     { url: `${base}/terminal`, changeFrequency: "monthly", priority: 0.5, lastModified: now },
     { url: `${base}/wargames`, changeFrequency: "monthly", priority: 0.5, lastModified: now },
     { url: `${base}/style-guide`, changeFrequency: "monthly", priority: 0.3, lastModified: now },

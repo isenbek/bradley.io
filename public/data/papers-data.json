@@ -1,0 +1,345 @@
+{
+  "generated": "2026-03-23T14:59:20.015731+00:00",
+  "totalStudies": 13,
+  "totalReferences": 8,
+  "categories": {
+    "cross-domain": 3,
+    "climate": 2,
+    "seismology": 4,
+    "space-weather": 2,
+    "radiation": 1,
+    "hydrology": 1
+  },
+  "studies": [
+    {
+      "slug": "cross-domain-clustering",
+      "title": "Cross-Domain Temporal Clustering Atlas \u2014 Inter-Event Time Analysis Across Environmental Metrics",
+      "description": "Applying the coefficient of variation (CV) inter-event time method proven on earthquakes (CV=1.545) to CMEs, radiation spikes, geomagnetic storms, AQI exceedances, and flood events. Building a clustering atlas across domains.",
+      "status": "draft",
+      "author": "TerraPulse Lab",
+      "category": "cross-domain",
+      "createdAt": "2026-03-22T20:02:04.335312+00:00",
+      "hasPaper": true,
+      "hasViz": true,
+      "previewImage": "/data/papers/cross-domain-clustering.png",
+      "paperUrl": "/data/papers/cross-domain-clustering-paper.pdf",
+      "dataFileCount": 13,
+      "refPaperCount": 0,
+      "references": [],
+      "resultsSummary": {
+        "totalStreams": 12,
+        "clustered": 12,
+        "highlights": [
+          {
+            "label": "Earthquakes M4+",
+            "category": "Seismic",
+            "cv": 1.17,
+            "events": 82189,
+            "verdict": "mildly clustered"
+          },
+          {
+            "label": "Earthquakes M5+",
+            "category": "Seismic",
+            "cv": 1.3,
+            "events": 9836,
+            "verdict": "mildly clustered"
+          },
+          {
+            "label": "Earthquakes M6+",
+            "category": "Seismic",
+            "cv": 1.32,
+            "events": 836,
+            "verdict": "CLUSTERED"
+          },
+          {
+            "label": "Kp Storms (\u22654)",
+            "category": "Space Weather",
+            "cv": 60.58,
+            "events": 12804,
+            "verdict": "CLUSTERED"
+          },
+          {
+            "label": "Kp Major (\u22655)",
+            "category": "Space Weather",
+            "cv": 55.81,
+            "events": 5914,
+            "verdict": "CLUSTERED"
+          },
+          {
+            "label": "CME Events",
+            "category": "Space Weather",
+            "cv": 21.49,
+            "events": 9043,
+            "verdict": "CLUSTERED"
+          }
+        ]
+      }
+    },
+    {
+      "slug": "enso-drought-correlation",
+      "title": "ENSO Phase vs US Drought Severity",
+      "description": "Investigating whether El Ni\u00f1o/La Ni\u00f1a phases predict drought severity in US states. Using 76 years of ONI data and 16 years of USDM drought records.",
+      "status": "draft",
+      "author": "TerraPulse Lab",
+      "category": "climate",
+      "createdAt": "2026-03-20T01:03:47.564545+00:00",
+      "hasPaper": false,
+      "hasViz": true,
+      "previewImage": "/data/papers/enso-drought-correlation.png",
+      "paperUrl": null,
+      "dataFileCount": 4,
+      "refPaperCount": 0,
+      "references": []
+    },
+    {
+      "slug": "earthquake-temporal-clustering",
+      "title": "Temporal Clustering of Global M4+ Earthquakes",
+      "description": "Analyzing whether significant earthquakes cluster in time beyond what random (Poisson) occurrence would predict. Testing the hypothesis of earthquake triggering \u2014 does one large quake increase the probability of subsequent events?",
+      "status": "draft",
+      "author": "TerraPulse Lab",
+      "category": "seismology",
+      "createdAt": "2026-03-20T14:31:51.052601+00:00",
+      "hasPaper": false,
+      "hasViz": true,
+      "previewImage": "/data/papers/earthquake-temporal-clustering.png",
+      "paperUrl": null,
+      "dataFileCount": 3,
+      "refPaperCount": 0,
+      "references": []
+    },
+    {
+      "slug": "solar-seismic-correlation",
+      "title": "Solar Activity and Earthquake Frequency \u2014 Is There a Signal?",
+      "description": "Testing the controversial hypothesis that solar activity (CMEs, solar flux, geomagnetic storms) correlates with earthquake frequency or magnitude. Using NOAA SWPC, NASA DONKI, and USGS earthquake data.",
+      "status": "draft",
+      "author": "TerraPulse Lab",
+      "category": "seismology",
+      "createdAt": "2026-03-20T17:34:58.900341+00:00",
+      "hasPaper": false,
+      "hasViz": true,
+      "previewImage": "/data/papers/solar-seismic-correlation.png",
+      "paperUrl": null,
+      "dataFileCount": 8,
+      "refPaperCount": 5,
+      "references": [
+        {
+          "arxivId": "2601.07595v3",
+          "title": "Deep Search for Joint Sources of Gravitational Waves and High-Energy Neutrinos with IceCube During the Third Observing Run of LIGO and Virgo",
+          "abstract": "The discovery of joint sources of high-energy neutrinos and gravitational waves has been a primary target for the LIGO, Virgo, KAGRA, and IceCube observatories. The joint detection of high-energy neutrinos and gravitational waves would provide insight into cosmic processes, from the dynamics of comp",
+          "workspace": "solar-seismic-correlation",
+          "published": "2026-01-12T14:43:54+00:00",
+          "categories": "astro-ph.HE",
+          "url": "https://arxiv.org/abs/2601.07595v3"
+        },
+        {
+          "arxivId": "1610.00990v1",
+          "title": "The solar-stellar connection: Magnetic activity of seismic solar analogs",
+          "abstract": "Finding solar-analog stars with fundamental properties as close as possible to the Sun and studying the characteristics of their surface magnetic activity is a very promising way to understand the solar variability and its associated dynamo process. However, the identification of solar-analog stars ",
+          "workspace": "solar-seismic-correlation",
+          "published": "2016-10-04T13:44:35+00:00",
+          "categories": "astro-ph.SR",
+          "url": "https://arxiv.org/abs/1610.00990v1"
+        },
+        {
+          "arxivId": "1411.4413v2",
+          "title": "Observation of the rare $B^0_s\\to\u03bc^+\u03bc^-$ decay from the combined analysis of CMS and LHCb data",
+          "abstract": "A joint measurement is presented of the branching fractions $B^0_s\\to\u03bc^+\u03bc^-$ and $B^0\\to\u03bc^+\u03bc^-$ in proton-proton collisions at the LHC by the CMS and LHCb experiments. The data samples were collected in 2011 at a centre-of-mass energy of 7 TeV, and in 2012 at 8 TeV. The combined analysis produces th",
+          "workspace": "solar-seismic-correlation",
+          "published": "2014-11-17T10:10:25+00:00",
+          "categories": "hep-ex, hep-ph",
+          "url": "https://arxiv.org/abs/1411.4413v2"
+        },
+        {
+          "arxivId": "1003.2533v2",
+          "title": "Solar dynamo and geomagnetic activity",
+          "abstract": "The correlation between geomagnetic activity and the sunspot number in the 11-year solar cycle exhibits long-term variations due to the varying time lag between the sunspot-related and non-sunspot related geomagnetic activity, and the varying relative amplitude of the respective geomagnetic activity",
+          "workspace": "solar-seismic-correlation",
+          "published": "2010-03-12T12:57:17+00:00",
+          "categories": "astro-ph.SR",
+          "url": "https://arxiv.org/abs/1003.2533v2"
+        }
+      ]
+    },
+    {
+      "slug": "enso-seismicity",
+      "title": "ENSO Teleconnection to Global Seismicity \u2014 Replication Study",
+      "description": "Replicating and extending published claims that El Ni\u00f1o/La Ni\u00f1a phases modulate global earthquake rates. Testing crustal loading hypothesis via sea level redistribution. Using 76 years of ONI data and 5 years of USGS M4+ earthquake records.",
+      "status": "draft",
+      "author": "TerraPulse Lab",
+      "category": "seismology",
+      "createdAt": "2026-03-22T16:44:32.013100+00:00",
+      "hasPaper": false,
+      "hasViz": true,
+      "previewImage": "/data/papers/enso-seismicity.png",
+      "paperUrl": null,
+      "dataFileCount": 8,
+      "refPaperCount": 5,
+      "references": [
+        {
+          "arxivId": "2003.12867v1",
+          "title": "Intra-annual Principal Modes and Evolution Mechanism of the El Nino Southern Oscillation",
+          "abstract": "The El Nino-Southern Oscillation (ENSO) is one of the most important phenomena in climate. By studying the fluctuations of surface air temperature within one year between 1979-01-01 and 2016-12-31 of the region (30S-30N, 0E-360E) with eigen-decomposition, we find that the temperature fluctuations ar",
+          "workspace": "enso-seismicity",
+          "published": "2020-03-28T18:46:57+00:00",
+          "categories": "physics.ao-ph",
+          "url": "https://arxiv.org/abs/2003.12867v1"
+        },
+        {
+          "arxivId": "1909.03789v1",
+          "title": "Complexity based approach for El Nino magnitude forecasting before the \"spring predictability barrier\"",
+          "abstract": "The El Nino Southern Oscillation (ENSO) is one of the most prominent interannual climate phenomena. An early and reliable ENSO forecasting remains a crucial goal, due to its serious implications for economy, society, and ecosystem. Despite the development of various dynamical and statistical predict",
+          "workspace": "enso-seismicity",
+          "published": "2019-09-09T12:09:00+00:00",
+          "categories": "physics.ao-ph",
+          "url": "https://arxiv.org/abs/1909.03789v1"
+        },
+        {
+          "arxivId": "1307.7514v3",
+          "title": "Application of Differential Transform Method for El Nino Southern Oscillation (ENSO) Model with compared Adomian Decomposition and Variational Iteration Methods",
+          "abstract": "We consider two nonlinear El Nino Southern Oscillation (ENSO) model to obtain approximate solutions with differential transform method for the first time. Efficiency, accuracy and error rates of solutions are compared with analytic solution, variational iteration and adomian decomposition solutions ",
+          "workspace": "enso-seismicity",
+          "published": "2013-07-29T09:40:17+00:00",
+          "categories": "math.NA",
+          "url": "https://arxiv.org/abs/1307.7514v3"
+        },
+        {
+          "arxivId": "1104.4038v1",
+          "title": "El Nino signature in Alaskan river breakups",
+          "abstract": "A signature of El Nino-Southern Oscillation is found in the historical dataset of the Alaskan Tanana river breakups where the average ice breaking day is found to anticipate of about 3.4 days when conditioned over El Nino years. This results represents a statistically significant example of ENSO tel",
+          "workspace": "enso-seismicity",
+          "published": "2011-04-20T14:36:30+00:00",
+          "categories": "physics.geo-ph",
+          "url": "https://arxiv.org/abs/1104.4038v1"
+        }
+      ]
+    },
+    {
+      "slug": "solar-geomagnetic-lag",
+      "title": "Solar Flux\u2013Kp Index Time Lag \u2014 Paper Replication Study",
+      "description": "Replicating Georgieva & Kirov (2010) claim that the correlation between solar activity and geomagnetic activity varies with a changing time lag. Testing with NOAA SWPC solar flux and Kp index data.",
+      "status": "draft",
+      "author": "TerraPulse Lab",
+      "category": "space-weather",
+      "createdAt": "2026-03-22T19:28:00.828278+00:00",
+      "hasPaper": false,
+      "hasViz": true,
+      "previewImage": "/data/papers/solar-geomagnetic-lag.png",
+      "paperUrl": null,
+      "dataFileCount": 5,
+      "refPaperCount": 0,
+      "references": []
+    },
+    {
+      "slug": "compound-anomalies",
+      "title": "Compound Environmental Anomalies \u2014 Multi-Metric Unusual Days",
+      "description": "Detecting days where multiple environmental metrics are simultaneously anomalous using Z-score analysis and Isolation Forest. When earthquakes, space weather, and air quality all spike together \u2014 is it coincidence or connection?",
+      "status": "draft",
+      "author": "TerraPulse Lab",
+      "category": "cross-domain",
+      "createdAt": "2026-03-23T00:55:26.832971+00:00",
+      "hasPaper": false,
+      "hasViz": true,
+      "previewImage": "/data/papers/compound-anomalies.png",
+      "paperUrl": null,
+      "dataFileCount": 2,
+      "refPaperCount": 0,
+      "references": []
+    },
+    {
+      "slug": "earthquake-spatial-clustering",
+      "title": "Temporal Clustering of Global M4+ Earthquakes \u2014 Spatial clustering",
+      "description": "Derivative study expanding on: Spatial clustering. nearest-neighbor distance analysis\n\nParent study: Temporal Clustering of Global M4+ Earthquakes (earthquake-temporal-clustering)",
+      "status": "draft",
+      "author": "TerraPulse Lab",
+      "category": "seismology",
+      "createdAt": "2026-03-23T01:13:12.396638+00:00",
+      "hasPaper": false,
+      "hasViz": true,
+      "previewImage": "/data/papers/earthquake-spatial-clustering.png",
+      "paperUrl": null,
+      "dataFileCount": 4,
+      "refPaperCount": 0,
+      "references": []
+    },
+    {
+      "slug": "radiation-global-baseline",
+      "title": "Global Environmental Radiation Baseline from Citizen Science \u2014 Signal vs Sampling Bias",
+      "description": "Separating physical radiation patterns from observational campaign clustering in 679K Safecast measurements across 45 countries. Can citizen science data establish a reliable global radiation baseline?",
+      "status": "draft",
+      "author": "TerraPulse Lab",
+      "category": "radiation",
+      "createdAt": "2026-03-23T01:20:23.038755+00:00",
+      "hasPaper": false,
+      "hasViz": true,
+      "previewImage": "/data/papers/radiation-global-baseline.png",
+      "paperUrl": null,
+      "dataFileCount": 2,
+      "refPaperCount": 0,
+      "references": []
+    },
+    {
+      "slug": "march-2026-fireballs",
+      "title": "March 2026 Fireball Cluster \u2014 Statistical Significance and Space Weather Context",
+      "description": "Testing whether the March 2026 fireball cluster (11 events in 20 days, 3 meteorite falls) is statistically significant against the CNEOS historical baseline. Cross-correlating with TerraPulse space weather data to test solar activity connection.",
+      "status": "draft",
+      "author": "TerraPulse Lab",
+      "category": "space-weather",
+      "createdAt": "2026-03-23T03:16:04.391360+00:00",
+      "hasPaper": false,
+      "hasViz": true,
+      "previewImage": "/data/papers/march-2026-fireballs.png",
+      "paperUrl": null,
+      "dataFileCount": 4,
+      "refPaperCount": 0,
+      "references": []
+    },
+    {
+      "slug": "city-warming-trends",
+      "title": "Urban Temperature Trends \u2014 Are Cities Warming in Real-Time Data?",
+      "description": "Testing whether 3 years of NASA POWER daily temperature data (10 cities) shows detectable warming trends. Using linear regression, seasonal decomposition, and anomaly scoring.",
+      "status": "draft",
+      "author": "TerraPulse Lab",
+      "category": "climate",
+      "createdAt": "2026-03-23T14:32:22.038322+00:00",
+      "hasPaper": false,
+      "hasViz": true,
+      "previewImage": "/data/papers/city-warming-trends.png",
+      "paperUrl": null,
+      "dataFileCount": 2,
+      "refPaperCount": 0,
+      "references": []
+    },
+    {
+      "slug": "california-streamflow",
+      "title": "California Streamflow Anomaly Detection",
+      "description": "Detect anomalous streamflow patterns across 472 USGS California gauging stations",
+      "status": "draft",
+      "author": "claude",
+      "category": "hydrology",
+      "createdAt": "2026-03-23T14:47:16.043603+00:00",
+      "hasPaper": false,
+      "hasViz": true,
+      "previewImage": "/data/papers/california-streamflow.png",
+      "paperUrl": null,
+      "dataFileCount": 3,
+      "refPaperCount": 0,
+      "references": []
+    },
+    {
+      "slug": "granger-causality",
+      "title": "Cross-Domain Granger Causality Network",
+      "description": "Test which environmental signals Granger-cause others \u2014 the big connectivity map",
+      "status": "draft",
+      "author": "claude",
+      "category": "cross-domain",
+      "createdAt": "2026-03-23T14:54:15.909862+00:00",
+      "hasPaper": false,
+      "hasViz": true,
+      "previewImage": "/data/papers/granger-causality.png",
+      "paperUrl": null,
+      "dataFileCount": 2,
+      "refPaperCount": 0,
+      "references": []
+    }
+  ]
+}
