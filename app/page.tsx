@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react"
 import { motion, useInView } from "framer-motion"
 import Link from "next/link"
 import {
-  ArrowRight, Bot, MessageSquare, GitBranch, Flame, Sparkles,
+  ArrowRight, Bot, MessageSquare, GitBranch, Flame, Sparkles, Server,
 } from "lucide-react"
 import type { SiteData, ActivityItem as ActivityItemType, Project } from "@/lib/site-data"
 import { categoryMap } from "@/lib/project-categories"
@@ -233,13 +233,31 @@ function getTimeAgo(dateStr: string): string {
   return date.toLocaleDateString("en-US", { month: "short", day: "numeric" })
 }
 
-// --- Just Added Banner ---
-const ANNOUNCEMENTS = [
+// --- Just Added Cards ---
+const ANNOUNCEMENTS: {
+  title: string
+  description: string
+  href: string
+  color: string
+  icon: React.ComponentType<{ className?: string; style?: React.CSSProperties }>
+  addedAt: string
+  ttlDays: number
+}[] = [
   {
     title: "Research Papers",
-    description: "13 active studies in seismology, space weather, and climate — powered by TerraPulse.",
+    description: "13 active studies in seismology, space weather, and climate.",
     href: "/papers",
     color: "var(--brand-secondary)",
+    icon: Sparkles,
+    addedAt: "2026-03-23",
+    ttlDays: 14,
+  },
+  {
+    title: "MCP Catalog",
+    description: "Live service catalog with OpenAPI specs and endpoint search.",
+    href: "/mcp",
+    color: "var(--brand-info)",
+    icon: Server,
     addedAt: "2026-03-23",
     ttlDays: 14,
   },
@@ -256,8 +274,9 @@ function JustAdded() {
   if (active.length === 0) return null
 
   return (
-    <div className="mt-5 sm:mt-6 space-y-2">
+    <div className="mt-5 sm:mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-lg">
       {active.map((a) => {
+        const Icon = a.icon
         const added = new Date(a.addedAt)
         const daysAgo = Math.floor((now.getTime() - added.getTime()) / 86400000)
         const label = daysAgo === 0 ? "Today" : daysAgo === 1 ? "Yesterday" : `${daysAgo}d ago`
@@ -266,27 +285,43 @@ function JustAdded() {
           <Link
             key={a.href}
             href={a.href}
-            className="group inline-flex items-center gap-2.5 sm:gap-3 rounded-lg px-3 sm:px-4 py-2 sm:py-2.5 transition-all hover:-translate-y-0.5"
+            className="group relative rounded-xl p-4 transition-all hover:-translate-y-0.5"
             style={{
-              background: `color-mix(in srgb, ${a.color} 6%, transparent)`,
-              border: `1px solid color-mix(in srgb, ${a.color} 20%, transparent)`,
+              background: `color-mix(in srgb, ${a.color} 5%, transparent)`,
+              border: `1px solid color-mix(in srgb, ${a.color} 18%, transparent)`,
             }}
           >
-            <Sparkles className="w-3.5 h-3.5 shrink-0" style={{ color: a.color }} />
-            <span
-              className="text-[10px] font-bold uppercase tracking-[1.5px]"
+            <div className="flex items-center justify-between mb-2.5">
+              <div
+                className="w-8 h-8 rounded-lg flex items-center justify-center"
+                style={{
+                  background: `color-mix(in srgb, ${a.color} 12%, transparent)`,
+                  border: `1px solid color-mix(in srgb, ${a.color} 20%, transparent)`,
+                }}
+              >
+                <Icon className="w-4 h-4" style={{ color: a.color }} />
+              </div>
+              <span
+                className="text-[9px] font-bold uppercase tracking-[1.5px] px-2 py-0.5 rounded-full"
+                style={{
+                  color: a.color,
+                  background: `color-mix(in srgb, ${a.color} 10%, transparent)`,
+                }}
+              >
+                {label}
+              </span>
+            </div>
+            <div className="text-sm font-bold mb-1">{a.title}</div>
+            <div className="text-[11px] leading-relaxed mb-3" style={{ color: "var(--brand-muted)" }}>
+              {a.description}
+            </div>
+            <div
+              className="flex items-center gap-1.5 text-[11px] font-semibold"
               style={{ color: a.color }}
             >
-              Just Added
-            </span>
-            <span className="text-sm font-semibold">{a.title}</span>
-            <span className="text-[10px] font-mono hidden sm:inline" style={{ color: "var(--brand-muted)" }}>
-              {label}
-            </span>
-            <ArrowRight
-              className="w-3.5 h-3.5 shrink-0 transition-transform group-hover:translate-x-0.5"
-              style={{ color: a.color }}
-            />
+              Explore
+              <ArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-0.5" />
+            </div>
           </Link>
         )
       })}
