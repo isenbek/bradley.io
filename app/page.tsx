@@ -256,59 +256,41 @@ function JustAdded() {
   if (active.length === 0) return null
 
   return (
-    <section className="py-4 sm:py-6">
-      <div className="container-page">
-        {active.map((a) => {
-          const added = new Date(a.addedAt)
-          const daysAgo = Math.floor((now.getTime() - added.getTime()) / 86400000)
-          const label = daysAgo === 0 ? "Today" : daysAgo === 1 ? "Yesterday" : `${daysAgo}d ago`
+    <div className="mt-5 sm:mt-6 space-y-2">
+      {active.map((a) => {
+        const added = new Date(a.addedAt)
+        const daysAgo = Math.floor((now.getTime() - added.getTime()) / 86400000)
+        const label = daysAgo === 0 ? "Today" : daysAgo === 1 ? "Yesterday" : `${daysAgo}d ago`
 
-          return (
-            <Link
-              key={a.href}
-              href={a.href}
-              className="group flex items-center gap-3 sm:gap-4 rounded-xl px-4 sm:px-6 py-3 sm:py-4 transition-all hover:-translate-y-0.5"
-              style={{
-                background: `color-mix(in srgb, ${a.color} 6%, transparent)`,
-                border: `1px solid color-mix(in srgb, ${a.color} 20%, transparent)`,
-              }}
+        return (
+          <Link
+            key={a.href}
+            href={a.href}
+            className="group inline-flex items-center gap-2.5 sm:gap-3 rounded-lg px-3 sm:px-4 py-2 sm:py-2.5 transition-all hover:-translate-y-0.5"
+            style={{
+              background: `color-mix(in srgb, ${a.color} 6%, transparent)`,
+              border: `1px solid color-mix(in srgb, ${a.color} 20%, transparent)`,
+            }}
+          >
+            <Sparkles className="w-3.5 h-3.5 shrink-0" style={{ color: a.color }} />
+            <span
+              className="text-[10px] font-bold uppercase tracking-[1.5px]"
+              style={{ color: a.color }}
             >
-              <div
-                className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg flex items-center justify-center shrink-0"
-                style={{
-                  background: `color-mix(in srgb, ${a.color} 15%, transparent)`,
-                }}
-              >
-                <Sparkles className="w-4 h-4" style={{ color: a.color }} />
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2">
-                  <span
-                    className="text-[10px] font-bold uppercase tracking-[2px]"
-                    style={{ color: a.color }}
-                  >
-                    Just Added
-                  </span>
-                  <span className="text-[10px] font-mono" style={{ color: "var(--brand-muted)" }}>
-                    {label}
-                  </span>
-                </div>
-                <div className="text-sm sm:text-base font-semibold">
-                  {a.title}
-                  <span className="hidden sm:inline font-normal ml-2" style={{ color: "var(--brand-muted)" }}>
-                    — {a.description}
-                  </span>
-                </div>
-              </div>
-              <ArrowRight
-                className="w-4 h-4 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity"
-                style={{ color: a.color }}
-              />
-            </Link>
-          )
-        })}
-      </div>
-    </section>
+              Just Added
+            </span>
+            <span className="text-sm font-semibold">{a.title}</span>
+            <span className="text-[10px] font-mono hidden sm:inline" style={{ color: "var(--brand-muted)" }}>
+              {label}
+            </span>
+            <ArrowRight
+              className="w-3.5 h-3.5 shrink-0 transition-transform group-hover:translate-x-0.5"
+              style={{ color: a.color }}
+            />
+          </Link>
+        )
+      })}
+    </div>
   )
 }
 
@@ -390,12 +372,12 @@ export default function HomePage() {
                 AI Pilot Dashboard <ArrowRight className="inline w-4 h-4 ml-1" />
               </Link>
             </div>
+
+            {/* Just Added — inline under hero buttons */}
+            <JustAdded />
           </FadeSection>
         </div>
       </section>
-
-      {/* ===== JUST ADDED ===== */}
-      <JustAdded />
 
       {/* ===== BIG IDEAS ===== */}
       <BigIdeas ideas={data?.bigIdeas} />
