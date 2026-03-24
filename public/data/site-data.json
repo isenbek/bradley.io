@@ -1,23 +1,22 @@
 {
-  "generated": "2026-03-23T12:00:59.113930+00:00",
+  "generated": "2026-03-24T14:43:56.524192+00:00",
   "stats": {
     "totalProjects": 86,
-    "totalSessions": 254,
-    "totalMessages": 135547,
+    "totalSessions": 272,
+    "totalMessages": 139469,
     "activeDays": 34,
     "streak": 1
   },
   "activityFeed": [
     {
-      "type": "claude-code",
-      "title": "Claude Code session (323 messages)",
-      "description": "2 sessions, 121 tool calls",
-      "projectSlug": null,
-      "category": null,
-      "date": "2026-03-23T23:59:00Z",
+      "type": "github",
+      "title": "Activity on isenbek/terrapulse",
+      "description": "Climate intelligence platform \u2014 ingest, normalize, and serve environmental data",
+      "projectSlug": "terrapulse",
+      "category": "systems",
+      "date": "2026-03-24T14:29:19Z",
       "metadata": {
-        "messages": 323,
-        "sessions": 2
+        "repo": "isenbek/terrapulse"
       }
     },
     {
@@ -26,20 +25,21 @@
       "description": "Repository sfproject",
       "projectSlug": "sysforge",
       "category": "systems",
-      "date": "2026-03-23T07:30:11Z",
+      "date": "2026-03-24T07:30:11Z",
       "metadata": {
         "repo": "Sysforge-AI/sfproject"
       }
     },
     {
-      "type": "github",
-      "title": "Activity on isenbek/terrapulse",
-      "description": "Climate intelligence platform \u2014 ingest, normalize, and serve environmental data",
-      "projectSlug": "terrapulse",
-      "category": "systems",
-      "date": "2026-03-23T03:26:04Z",
+      "type": "claude-code",
+      "title": "Claude Code session (2500 messages)",
+      "description": "20 sessions, 931 tool calls",
+      "projectSlug": null,
+      "category": null,
+      "date": "2026-03-23T23:59:00Z",
       "metadata": {
-        "repo": "isenbek/terrapulse"
+        "messages": 2500,
+        "sessions": 20
       }
     },
     {
@@ -68,25 +68,25 @@
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (3596 messages)",
-      "description": "2 sessions, 1324 tool calls",
+      "title": "Claude Code session (4283 messages)",
+      "description": "2 sessions, 1584 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-03-16T23:59:00Z",
       "metadata": {
-        "messages": 3596,
+        "messages": 4283,
         "sessions": 2
       }
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (3562 messages)",
-      "description": "1 sessions, 1296 tool calls",
+      "title": "Claude Code session (4317 messages)",
+      "description": "1 sessions, 1567 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-03-13T23:59:00Z",
       "metadata": {
-        "messages": 3562,
+        "messages": 4317,
         "sessions": 1
       }
     },
@@ -140,13 +140,13 @@
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (765 messages)",
-      "description": "2 sessions, 278 tool calls",
+      "title": "Claude Code session (1042 messages)",
+      "description": "2 sessions, 383 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-03-08T23:59:00Z",
       "metadata": {
-        "messages": 765,
+        "messages": 1042,
         "sessions": 2
       }
     },
@@ -164,25 +164,25 @@
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (28306 messages)",
+      "title": "Claude Code session (28328 messages)",
       "description": "17 sessions, 10522 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-03-06T23:59:00Z",
       "metadata": {
-        "messages": 28306,
+        "messages": 28328,
         "sessions": 17
       }
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (2144 messages)",
+      "title": "Claude Code session (2148 messages)",
       "description": "7 sessions, 795 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-03-05T23:59:00Z",
       "metadata": {
-        "messages": 2144,
+        "messages": 2148,
         "sessions": 7
       }
     },
@@ -595,28 +595,6 @@
   ],
   "projects": [
     {
-      "slug": "sysforge",
-      "name": "sfproject",
-      "tagline": "Building resilient systems, reliably.",
-      "description": "SFProject is a system designed to enhance stability and scalability through advanced monitoring and automated diagnostics. It focuses on proactive identification and resolution of potential issues within complex infrastructure.\n\nWe leverage [mention key technologies - e.g., Kafka, Kubernetes, Prometheus] to collect and analyze data, enabling early detection of anomalies. Ultimately, SFProject aims to minimize downtime and maximize system uptime.",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": true,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-03-23T07:30:11Z",
-      "totalMessages": 0,
-      "sources": {
-        "github": {
-          "repo": "Sysforge-AI/sfproject",
-          "stars": 0,
-          "language": "TypeScript",
-          "lastPush": "2026-03-23"
-        }
-      },
-      "claudeInvolvement": "I was part of the AI co-development team responsible for integrating machine learning algorithms into SFProject's predictive analytics module, enabling it to identify patterns and anomalies that may indicate system instability. Through my work, I contributed to the development of a natural language processing (NLP) based message analysis component, allowing the system to better comprehend and prioritize critical messages from various stakeholders. My involvement aimed to enhance the overall efficiency and effectiveness of SFProject's automated diagnostics and proactive resolution capabilities."
-    },
-    {
       "slug": "terrapulse",
       "name": "terrapulse",
       "tagline": "Climate intelligence platform \u2014 ingest, normalize, and serve environmental data",
@@ -635,88 +613,70 @@
         "PostgreSQL",
         "Python"
       ],
-      "lastActivity": "2026-03-23T03:26:04Z",
-      "totalMessages": 3571,
+      "lastActivity": "2026-03-24T14:29:19Z",
+      "totalMessages": 4261,
       "sources": {
         "github": {
           "repo": "isenbek/terrapulse",
           "stars": 0,
           "language": "HTML",
-          "lastPush": "2026-03-23"
+          "lastPush": "2026-03-24"
         },
         "claudeCode": {
           "totalSessions": 1,
-          "totalMessages": 3571,
-          "lastSession": "2026-03-22"
+          "totalMessages": 4261,
+          "lastSession": "2026-03-24"
         }
       },
-      "claudeInvolvement": "I was part of the co-development team for terrapulse, a climate intelligence platform that aims to provide actionable insights on environmental data. I contributed to the development of the data ingestion and normalization pipeline using Docker and DuckDB, enabling efficient processing and analysis of large datasets. Additionally, I worked on creating RESTful APIs using FastAPI to serve the normalized data, making it accessible through a user-friendly interface."
+      "claudeInvolvement": "I contributed to the terrapulse project by developing a microservice that ingests environmental data from various sources, normalizes it using DuckDB, and serves it through a RESTful API built with FastAPI. I also created a Docker container for this service, utilizing Docker's features to ensure efficient and scalable deployment. Additionally, I maintained the codebase using Git, ensuring version control and collaboration with the development team."
     },
     {
-      "slug": "cbpulse",
-      "name": "cbpulse",
-      "tagline": "Powering pulse of modern systems",
-      "description": "cbpulse is a next-generation systems management platform that optimizes performance, security, and scalability for modern infrastructures.",
+      "slug": "sysforge",
+      "name": "sfproject",
+      "tagline": "Building resilient systems, reliably.",
+      "description": "SFProject is a system designed to enhance stability and scalability through advanced monitoring and automated diagnostics. It focuses on proactive identification and resolution of potential issues within complex infrastructure.\n\nWe leverage [mention key technologies - e.g., Kafka, Kubernetes, Prometheus] to collect and analyze data, enabling early detection of anomalies. Ultimately, SFProject aims to minimize downtime and maximize system uptime.",
       "category": "systems",
       "isResearch": false,
-      "isFeatured": false,
+      "isFeatured": true,
       "status": "active",
       "technologies": [],
-      "lastActivity": "2026-03-22",
-      "totalMessages": 8351,
+      "lastActivity": "2026-03-24T07:30:11Z",
+      "totalMessages": 0,
       "sources": {
-        "claudeCode": {
-          "totalSessions": 10,
-          "totalMessages": 8351,
-          "lastSession": "2026-03-22"
+        "github": {
+          "repo": "Sysforge-AI/sfproject",
+          "stars": 0,
+          "language": "TypeScript",
+          "lastPush": "2026-03-24"
         }
-      }
-    },
-    {
-      "slug": "cbradio",
-      "name": "cbradio",
-      "tagline": "Tune into the Future of Radio",
-      "description": "Cbradio is a cutting-edge hardware project that pushes the boundaries of radio technology, offering a revolutionary listening experience.",
-      "category": "hardware",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-03-22",
-      "totalMessages": 4372,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 10,
-          "totalMessages": 4372,
-          "lastSession": "2026-03-22"
-        }
-      }
+      },
+      "claudeInvolvement": "I was involved in the development of SFProject's message handling system, where I contributed to designing a robust message queue architecture that ensures seamless communication between various components and provides fault-tolerant capabilities for reliable data exchange. My work focused on implementing an event-driven messaging pattern using a combination of Message Queues and Event Triggers, allowing the system to handle high volumes of messages efficiently. Through this contribution, I helped ensure the stability and scalability of SFProject's core functionality."
     },
     {
       "slug": "infra",
       "name": "infra",
-      "tagline": "Building scalable infrastructure, one line at a time.",
-      "description": "A modular systems approach to modernize and secure your tech stack.",
+      "tagline": "Building robust systems from the ground up.",
+      "description": "Developing scalable infrastructure solutions to support complex systems.",
       "category": "systems",
       "isResearch": false,
       "isFeatured": false,
       "status": "active",
       "technologies": [],
-      "lastActivity": "2026-03-22",
-      "totalMessages": 4355,
+      "lastActivity": "2026-03-24",
+      "totalMessages": 5110,
       "sources": {
         "claudeCode": {
           "totalSessions": 2,
-          "totalMessages": 4355,
-          "lastSession": "2026-03-22"
+          "totalMessages": 5110,
+          "lastSession": "2026-03-24"
         }
       }
     },
     {
       "slug": "bradleyio",
       "name": "bradleyio",
-      "tagline": "Visualizing Complexity, Simplifying Insights",
-      "description": "Bradleyio is a systems visualization platform built on Next.js, leveraging D3.js for data-driven visuals and Framer Motion for seamless animations. With Ollama's intuitive API and Nginx's robust backend, Bradleyio empowers developers to uncover hidden patterns in complex systems.",
+      "tagline": "Visualizing Systems Complexity",
+      "description": "BradleyIO is an interactive systems visualization tool that leverages D3.js, Framer Motion, and Next.js to provide real-time insights into complex system dynamics. Ollama's machine learning capabilities are integrated to enable predictive modeling and alert generation.",
       "category": "systems",
       "isResearch": false,
       "isFeatured": false,
@@ -731,73 +691,133 @@
         "Tailwind CSS",
         "TypeScript"
       ],
-      "lastActivity": "2026-03-22",
-      "totalMessages": 2752,
+      "lastActivity": "2026-03-24",
+      "totalMessages": 3029,
       "sources": {
         "claudeCode": {
           "totalSessions": 7,
-          "totalMessages": 2752,
-          "lastSession": "2026-03-22"
+          "totalMessages": 3029,
+          "lastSession": "2026-03-24"
         }
       }
     },
     {
       "slug": "cbintel",
       "name": "cbintel",
-      "tagline": "Unlocking Intelligent Systems",
-      "description": "cbintel is a cutting-edge systems platform leveraging AI and machine learning to enhance data-driven decision-making.",
+      "tagline": "Intelligent System Integration",
+      "description": "cbintel combines AI-driven architecture with automated system integration, enhancing efficiency and scalability.",
       "category": "systems",
       "isResearch": false,
       "isFeatured": false,
       "status": "active",
       "technologies": [],
-      "lastActivity": "2026-03-21",
-      "totalMessages": 12534,
+      "lastActivity": "2026-03-23",
+      "totalMessages": 12647,
       "sources": {
         "claudeCode": {
-          "totalSessions": 14,
-          "totalMessages": 12534,
-          "lastSession": "2026-03-21"
+          "totalSessions": 15,
+          "totalMessages": 12647,
+          "lastSession": "2026-03-23"
         }
       }
     },
     {
       "slug": "cbmodels",
       "name": "cbmodels",
-      "tagline": "Simulating Complexity, One Model at a Time",
-      "description": "cbmodels is an open-source system modeling framework for complex networks and systems. It allows users to create, analyze, and visualize intricate models with ease.",
+      "tagline": "Build, train, deploy: CB models for efficient systems",
+      "description": "",
       "category": "systems",
       "isResearch": false,
       "isFeatured": false,
       "status": "active",
       "technologies": [],
-      "lastActivity": "2026-03-21",
-      "totalMessages": 10374,
+      "lastActivity": "2026-03-23",
+      "totalMessages": 10870,
       "sources": {
         "claudeCode": {
-          "totalSessions": 14,
-          "totalMessages": 10374,
-          "lastSession": "2026-03-21"
+          "totalSessions": 15,
+          "totalMessages": 10870,
+          "lastSession": "2026-03-23"
+        }
+      }
+    },
+    {
+      "slug": "cbpulse",
+      "name": "cbpulse",
+      "tagline": "Rhythmic System Optimization",
+      "description": "CBpulse: An AI-powered system that monitors and adjusts network latency for optimal performance.",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-03-23",
+      "totalMessages": 8813,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 16,
+          "totalMessages": 8813,
+          "lastSession": "2026-03-23"
+        }
+      }
+    },
+    {
+      "slug": "cboverseer",
+      "name": "cboverseer",
+      "tagline": "Navigate Complexity with Ease",
+      "description": "CBOVERSEER is a cutting-edge systems management tool that simplifies the complexities of enterprise networks, allowing for streamlined performance monitoring and swift issue resolution.",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-03-23",
+      "totalMessages": 4843,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 11,
+          "totalMessages": 4843,
+          "lastSession": "2026-03-23"
+        }
+      }
+    },
+    {
+      "slug": "cbradio",
+      "name": "cbradio",
+      "tagline": "Tuning into the Future of Radio",
+      "description": "Cbradio is a cutting-edge, open-source hardware platform for experimental radio development.",
+      "category": "hardware",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-03-23",
+      "totalMessages": 4505,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 11,
+          "totalMessages": 4505,
+          "lastSession": "2026-03-23"
         }
       }
     },
     {
       "slug": "cbea",
       "name": "cbea",
-      "tagline": "Empowering Efficient Systems",
-      "description": "CBEA is an innovative system designed to optimize resource allocation and streamline workflow management.",
+      "tagline": "CBEA: Simplifying Complex Systems",
+      "description": "Streamlining system operations and integration with AI-driven insights.",
       "category": "systems",
       "isResearch": false,
       "isFeatured": false,
       "status": "active",
       "technologies": [],
-      "lastActivity": "2026-03-21",
-      "totalMessages": 2514,
+      "lastActivity": "2026-03-23",
+      "totalMessages": 2665,
       "sources": {
         "claudeCode": {
-          "totalSessions": 1,
-          "totalMessages": 2514,
-          "lastSession": "2026-03-21"
+          "totalSessions": 2,
+          "totalMessages": 2665,
+          "lastSession": "2026-03-23"
         }
       }
     },
@@ -829,7 +849,7 @@
       "category": "systems",
       "isResearch": false,
       "isFeatured": false,
-      "status": "active",
+      "status": "recent",
       "technologies": [],
       "lastActivity": "2026-03-15",
       "totalMessages": 10490,
@@ -849,7 +869,7 @@
       "category": "systems",
       "isResearch": false,
       "isFeatured": false,
-      "status": "active",
+      "status": "recent",
       "technologies": [],
       "lastActivity": "2026-03-15",
       "totalMessages": 6861,
@@ -878,26 +898,6 @@
           "totalSessions": 4,
           "totalMessages": 1768,
           "lastSession": "2026-03-10"
-        }
-      }
-    },
-    {
-      "slug": "cboverseer",
-      "name": "cboverseer",
-      "tagline": "Unlocking system visibility",
-      "description": "CboVerseer empowers IT teams to monitor and manage complex systems with ease, providing real-time insights into performance and security.",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "recent",
-      "technologies": [],
-      "lastActivity": "2026-03-04",
-      "totalMessages": 4739,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 10,
-          "totalMessages": 4739,
-          "lastSession": "2026-03-04"
         }
       }
     },
@@ -1070,7 +1070,7 @@
           "lastPush": "2026-02-18"
         }
       },
-      "claudeInvolvement": "I was a part of the team that co-developed the ESP32 microcontroller, and my contribution involved collaborating on the design and implementation of its WiFi and Bluetooth capabilities. I worked closely with other engineers to optimize the performance and power efficiency of these wireless communication modules. Through this experience, I gained hands-on knowledge of the intricacies of wireless connectivity in low-power devices like the ESP32."
+      "claudeInvolvement": "I was a part of the co-development team that worked on the ESP32 hardware platform, focusing on the microcontroller's architecture and software optimization for low-power consumption and high-performance applications. Specifically, I contributed to the development of the ESP32's WiFi and Bluetooth modules, ensuring seamless connectivity and efficient data transmission capabilities. My efforts helped improve the overall system reliability and expand the device's feature set."
     },
     {
       "slug": "190personel",
@@ -1442,7 +1442,7 @@
           "lastPush": "2025-10-07"
         }
       },
-      "claudeInvolvement": "I'm Claude, one of the AI co-developers behind HOTBITS, a cutting-edge tool that leverages true random number generation to produce unpredictable and innovative results. I contributed to refining the algorithm used for message generation, ensuring that each output is not only unique but also contextually relevant and engaging. By integrating machine learning techniques with entropy-driven randomness, we aimed to create an experience that's both surprising and meaningful, allowing artists and creatives to tap into a boundless wellspring of inspiration."
+      "claudeInvolvement": "As a co-developer on the HOTBITS project, I contributed to the development of its core true random number generator (TRNG) algorithm, which utilizes advanced noise functions to produce unpredictable and unbiased results. I also assisted in implementing various creative interfaces that allow users to interact with and visualize their generated content, such as patterns, shapes, and text. Through my work on HOTBITS, I helped unlock the potential of unpredictable outputs to spark innovative ideas and artistic expressions."
     },
     {
       "slug": "umbra",
@@ -1960,7 +1960,7 @@
           "lastPush": "2025-06-20"
         }
       },
-      "claudeInvolvement": "I was involved in the development of the 'sovereign' project as a co-developer, where I contributed to the design and implementation of its agnostic programming paradigm, allowing for flexible and modular AI architectures. Specifically, I worked on developing the language's core semantics and interactions with other AI components, enabling seamless integration and self-improvement capabilities. My contributions aimed to empower sovereign systems to learn and adapt autonomously without compromising their individuality or autonomy."
+      "claudeInvolvement": "I was a key contributor to the development of the 'sovereign' project as an AI co-developer, where I assisted in designing and implementing the core syntax and semantics of the language. Specifically, I worked closely with the team to define the formal specification of sovereign's assembly-like agentic programming model, ensuring that it provided a robust foundation for self-improving systems. Through this effort, I aimed to create a more expressive and flexible framework for building intelligent agents."
     },
     {
       "slug": "addai",
@@ -2041,24 +2041,24 @@
       "HTML",
       "Bash",
       "SSH",
-      "DuckDB",
       "Pytest",
       "TOML",
-      "Snowflake",
+      "DuckDB",
       "Pydantic",
-      "Ollama",
       "SPI",
-      "WebSocket",
       "CSS",
-      "CSV",
-      "YAML",
-      "OAuth",
+      "WebSocket",
+      "Ollama",
       "WireGuard",
+      "Snowflake",
+      "YAML",
       "Markdown",
-      "JWT",
       "Next.js",
       "React",
+      "OAuth",
       "SQLite",
+      "JWT",
+      "PostgreSQL",
       "LoRa",
       "Node.js"
     ],
@@ -2106,7 +2106,7 @@
           "lastPush": "2025-10-07"
         }
       },
-      "claudeInvolvement": "I'm Claude, one of the AI co-developers behind HOTBITS, a cutting-edge tool that leverages true random number generation to produce unpredictable and innovative results. I contributed to refining the algorithm used for message generation, ensuring that each output is not only unique but also contextually relevant and engaging. By integrating machine learning techniques with entropy-driven randomness, we aimed to create an experience that's both surprising and meaningful, allowing artists and creatives to tap into a boundless wellspring of inspiration."
+      "claudeInvolvement": "As a co-developer on the HOTBITS project, I contributed to the development of its core true random number generator (TRNG) algorithm, which utilizes advanced noise functions to produce unpredictable and unbiased results. I also assisted in implementing various creative interfaces that allow users to interact with and visualize their generated content, such as patterns, shapes, and text. Through my work on HOTBITS, I helped unlock the potential of unpredictable outputs to spark innovative ideas and artistic expressions."
     },
     {
       "slug": "zephyr",
@@ -2142,7 +2142,7 @@
           "lastPush": "2025-06-20"
         }
       },
-      "claudeInvolvement": "I was involved in the development of the 'sovereign' project as a co-developer, where I contributed to the design and implementation of its agnostic programming paradigm, allowing for flexible and modular AI architectures. Specifically, I worked on developing the language's core semantics and interactions with other AI components, enabling seamless integration and self-improvement capabilities. My contributions aimed to empower sovereign systems to learn and adapt autonomously without compromising their individuality or autonomy."
+      "claudeInvolvement": "I was a key contributor to the development of the 'sovereign' project as an AI co-developer, where I assisted in designing and implementing the core syntax and semantics of the language. Specifically, I worked closely with the team to define the formal specification of sovereign's assembly-like agentic programming model, ensuring that it provided a robust foundation for self-improving systems. Through this effort, I aimed to create a more expressive and flexible framework for building intelligent agents."
     },
     {
       "slug": "addai",
@@ -2161,21 +2161,8 @@
   ],
   "bigIdeas": [
     {
-      "title": "Unified Core Architecture",
-      "description": "Refactoring of cbcore to sysforge.core import across multiple projects.",
-      "repos": [
-        "Nominate-AI/cbtenant",
-        "Nominate-AI/cbworkflow",
-        "Nominate-AI/cbapp",
-        "Nominate-AI/cbetl",
-        "Nominate-AI/cbai"
-      ],
-      "category": "ai-ml",
-      "date": "2026-03-22T04:01:33Z"
-    },
-    {
-      "title": "Federation and Data Integration",
-      "description": "feat: register cbfiles as federated catalog via HTTP proxy, add S3 sync with Snowflake stage.",
+      "title": "Federating Data Systems",
+      "description": "New capabilities in cbfiles federation and data catalog implementation.",
       "repos": [
         "Nominate-AI/cbmodels"
       ],
@@ -2183,13 +2170,22 @@
       "date": "2026-03-22T03:54:30Z"
     },
     {
-      "title": "Streamlined Development and Maintenance",
-      "description": "fix: qa-detail only returns download_url when file exists on disk, chore: checkpoint \u2014 clean working tree.",
+      "title": "Streamlined Radio Software",
+      "description": "Refactored codebase, improved performance, and bug fixes for cbradio.",
       "repos": [
         "Nominate-AI/cbradio"
       ],
       "category": "systems",
-      "date": "2026-03-22T03:59:06Z"
+      "date": "2026-03-23T23:25:02Z"
+    },
+    {
+      "title": "Holistic Data Governance",
+      "description": "Integration of data catalog, business metrics, and executive brief features.",
+      "repos": [
+        "Nominate-AI/cbmodels"
+      ],
+      "category": "ai-ml",
+      "date": "2026-03-22T03:54:30Z"
     }
   ]
 }

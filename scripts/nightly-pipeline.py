@@ -776,7 +776,7 @@ def collect_cross_org_commits() -> list[dict[str, str]]:
             try:
                 result = subprocess.run(
                     ["gh", "api", f"/repos/{repo_full}/commits?since={since}&per_page=20",
-                     "-q", '.[] | "\(.commit.message | split("\n") | .[0])\t\(.commit.author.date)\t\(.html_url)"'],
+                     "-q", r'.[] | "\(.commit.message | split("\n") | .[0])\t\(.commit.author.date)\t\(.html_url)"'],
                     capture_output=True, text=True, timeout=15,
                 )
                 if result.returncode != 0:

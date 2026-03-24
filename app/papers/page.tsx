@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import Image from "next/image"
 import {
   FileText, ExternalLink, FlaskConical, Database,
   BookOpen, ChevronDown, ChevronRight,
@@ -116,13 +115,12 @@ function StudyCard({ study }: { study: Study }) {
         {/* Preview image */}
         {study.previewImage && (
           <div className="mb-4 rounded-lg overflow-hidden" style={{ border: "1px solid var(--brand-border)" }}>
-            <Image
+            <img
               src={study.previewImage}
               alt={`Visualization for ${study.title}`}
-              width={800}
-              height={400}
               className="w-full h-auto"
               style={{ background: "var(--brand-bg)" }}
+              loading="lazy"
             />
           </div>
         )}
@@ -273,9 +271,12 @@ export default function PapersPage() {
     )
   }
 
+  const sorted = [...data.studies].sort(
+    (a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  )
   const filtered = activeCategory
-    ? data.studies.filter((s) => s.category === activeCategory)
-    : data.studies
+    ? sorted.filter((s) => s.category === activeCategory)
+    : sorted
 
   return (
     <div className="pt-20 sm:pt-24 pb-10 sm:pb-16">
