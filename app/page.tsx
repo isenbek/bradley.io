@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react"
 import { motion, useInView } from "framer-motion"
 import Link from "next/link"
 import {
-  ArrowRight, Bot, MessageSquare, GitBranch, Flame, Sparkles, Server,
+  ArrowRight, Bot, MessageSquare, GitBranch, Flame, Sparkles, Server, Activity,
 } from "lucide-react"
 import type { SiteData, ActivityItem as ActivityItemType, Project } from "@/lib/site-data"
 import { categoryMap } from "@/lib/project-categories"
@@ -329,6 +329,134 @@ function JustAdded() {
   )
 }
 
+// --- 24h Activity Pulse Sparkline ---
+interface PulseBucket {
+  hour: string
+  minutes: number
+}
+
+interface PulseData {
+  generated: string
+  windowHours: number
+  totalActiveMinutes: number
+  buckets: PulseBucket[]
+}
+
+function ActivityPulse() {
+  const [pulse, setPulse] = useState<PulseData | null>(null)
+
+  useEffect(() => {
+    fetch("/data/activity-pulse.json")
+      .then((r) => r.json())
+      .then(setPulse)
+      .catch(() => {})
+  }, [])
+
+  if (!pulse || pulse.buckets.length === 0) return null
+
+  const buckets = pulse.buckets
+  const max = Math.max(...buckets.map((b) => b.minutes), 1)
+  const w = 600
+  const h = 64
+  const padY = 4
+  const barW = w / buckets.length
+
+  // Build area path + line path
+  const points = buckets.map((b, i) => ({
+    x: i * barW + barW / 2,
+    y: h - padY - ((b.minutes / max) * (h - padY * 2)),
+  }))
+
+  // Smooth curve using cardinal spline
+  const lineD = points.reduce((acc, p, i) => {
+    if (i === 0) return `M${p.x},${p.y}`
+    const prev = points[i - 1]
+    const cpx = (prev.x + p.x) / 2
+    return `${acc} C${cpx},${prev.y} ${cpx},${p.y} ${p.x},${p.y}`
+  }, "")
+  const areaD = `${lineD} L${points[points.length - 1].x},${h} L${points[0].x},${h} Z`
+
+  // Determine which bucket is "now" (last one with data or the final bucket)
+  const lastActive = buckets.reduce((last, b, i) => (b.minutes > 0 ? i : last), -1)
+  const isLive = lastActive >= buckets.length - 2 // active in last 2 hours
+
+  // Hour labels (every 6h)
+  const hourLabels = buckets
+    .map((b, i) => ({ i, label: new Date(b.hour + ":00Z").toLocaleTimeString([], { hour: "numeric" }) }))
+    .filter((_, i) => i % 6 === 0)
+
+  return (
+    <FadeSection>
+      <div
+        className="rounded-xl p-4 sm:p-5"
+        style={{
+          background: "var(--brand-bg-alt)",
+          border: "1px solid var(--brand-border)",
+        }}
+      >
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-2">
+            <Activity className="w-4 h-4" style={{ color: "var(--brand-primary)" }} />
+            <span className="text-xs font-bold uppercase tracking-[2px]" style={{ color: "var(--brand-primary)" }}>
+              24h Activity Pulse
+            </span>
+            {isLive && (
+              <span className="flex items-center gap-1.5 text-[10px] font-semibold px-2 py-0.5 rounded-full"
+                style={{
+                  color: "var(--brand-success, #22c55e)",
+                  background: "color-mix(in srgb, var(--brand-success, #22c55e) 10%, transparent)",
+                }}
+              >
+                <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: "var(--brand-success, #22c55e)" }} />
+                Live
+              </span>
+            )}
+          </div>
+          <span className="text-[10px] font-mono" style={{ color: "var(--brand-muted)" }}>
+            {pulse.totalActiveMinutes}m active
+          </span>
+        </div>
+
+        <svg viewBox={`0 0 ${w} ${h}`} className="w-full" style={{ height: "64px" }} preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="pulse-grad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="var(--brand-primary)" stopOpacity="0.3" />
+              <stop offset="100%" stopColor="var(--brand-primary)" stopOpacity="0" />
+            </linearGradient>
+          </defs>
+          {/* Area fill */}
+          <path d={areaD} fill="url(#pulse-grad)" />
+          {/* Line */}
+          <path d={lineD} fill="none" stroke="var(--brand-primary)" strokeWidth="2" strokeLinecap="round" />
+          {/* Dots on active hours */}
+          {points.map((p, i) => (
+            buckets[i].minutes > 0 && (
+              <circle key={i} cx={p.x} cy={p.y} r="3" fill="var(--brand-primary)" opacity="0.8" />
+            )
+          ))}
+          {/* Glow on most recent active */}
+          {lastActive >= 0 && (
+            <circle cx={points[lastActive].x} cy={points[lastActive].y} r="5" fill="var(--brand-primary)" opacity="0.4">
+              <animate attributeName="r" values="4;7;4" dur="2s" repeatCount="indefinite" />
+              <animate attributeName="opacity" values="0.4;0.1;0.4" dur="2s" repeatCount="indefinite" />
+            </circle>
+          )}
+        </svg>
+
+        {/* Hour labels */}
+        <div className="flex justify-between mt-1.5 px-1">
+          {hourLabels.map((h) => (
+            <span key={h.i} className="text-[9px] font-mono" style={{ color: "var(--brand-muted)" }}>
+              {h.label}
+            </span>
+          ))}
+          <span className="text-[9px] font-mono" style={{ color: "var(--brand-muted)" }}>Now</span>
+        </div>
+      </div>
+    </FadeSection>
+  )
+}
+
 // --- Main Page ---
 export default function HomePage() {
   const [data, setData] = useState<SiteData | null>(null)
@@ -453,6 +581,13 @@ export default function HomePage() {
               </div>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* ===== 24H ACTIVITY PULSE ===== */}
+      <section className="py-6 sm:py-10">
+        <div className="container-page">
+          <ActivityPulse />
         </div>
       </section>
 
