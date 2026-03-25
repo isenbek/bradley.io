@@ -3,7 +3,7 @@ import type { Metadata } from "next"
 export const metadata: Metadata = {
   title: "Research Papers",
   description:
-    "TerraPulse research — 13 active studies in seismology, space weather, climate, and cross-domain environmental analysis. Powered by open government data and reproducible methods.",
+    "TerraPulse research — 18 active studies in seismology, space weather, climate, and cross-domain environmental analysis. Powered by open government data and reproducible methods.",
   alternates: { canonical: "/papers" },
   keywords: [
     "environmental data science",
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Research Papers | bradley.io",
     description:
-      "TerraPulse research — 13 active studies in seismology, space weather, climate, and cross-domain environmental data analysis.",
+      "TerraPulse research — 18 active studies in seismology, space weather, climate, and cross-domain environmental data analysis.",
     url: "https://bradley.io/papers",
     type: "website",
   },

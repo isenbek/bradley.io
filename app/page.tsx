@@ -245,7 +245,7 @@ const ANNOUNCEMENTS: {
 }[] = [
   {
     title: "Research Papers",
-    description: "13 active studies in seismology, space weather, and climate.",
+    description: "18 active studies in seismology, space weather, and climate.",
     href: "/papers",
     color: "var(--brand-secondary)",
     icon: Sparkles,

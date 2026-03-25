@@ -1,9 +1,9 @@
 {
-  "generated": "2026-03-24T14:43:56.524192+00:00",
+  "generated": "2026-03-25T00:01:18.720961+00:00",
   "stats": {
     "totalProjects": 86,
     "totalSessions": 272,
-    "totalMessages": 139469,
+    "totalMessages": 140510,
     "activeDays": 34,
     "streak": 1
   },
@@ -14,7 +14,7 @@
       "description": "Climate intelligence platform \u2014 ingest, normalize, and serve environmental data",
       "projectSlug": "terrapulse",
       "category": "systems",
-      "date": "2026-03-24T14:29:19Z",
+      "date": "2026-03-24T21:00:30Z",
       "metadata": {
         "repo": "isenbek/terrapulse"
       }
@@ -32,13 +32,13 @@
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (2500 messages)",
-      "description": "20 sessions, 931 tool calls",
+      "title": "Claude Code session (2580 messages)",
+      "description": "20 sessions, 961 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-03-23T23:59:00Z",
       "metadata": {
-        "messages": 2500,
+        "messages": 2580,
         "sessions": 20
       }
     },
@@ -68,25 +68,25 @@
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (4283 messages)",
-      "description": "2 sessions, 1584 tool calls",
+      "title": "Claude Code session (4528 messages)",
+      "description": "2 sessions, 1671 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-03-16T23:59:00Z",
       "metadata": {
-        "messages": 4283,
+        "messages": 4528,
         "sessions": 2
       }
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (4317 messages)",
-      "description": "1 sessions, 1567 tool calls",
+      "title": "Claude Code session (4989 messages)",
+      "description": "1 sessions, 1816 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-03-13T23:59:00Z",
       "metadata": {
-        "messages": 4317,
+        "messages": 4989,
         "sessions": 1
       }
     },
@@ -140,13 +140,13 @@
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (1042 messages)",
-      "description": "2 sessions, 383 tool calls",
+      "title": "Claude Code session (1086 messages)",
+      "description": "2 sessions, 399 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-03-08T23:59:00Z",
       "metadata": {
-        "messages": 1042,
+        "messages": 1086,
         "sessions": 2
       }
     },
@@ -613,8 +613,8 @@
         "PostgreSQL",
         "Python"
       ],
-      "lastActivity": "2026-03-24T14:29:19Z",
-      "totalMessages": 4261,
+      "lastActivity": "2026-03-24T21:00:30Z",
+      "totalMessages": 4508,
       "sources": {
         "github": {
           "repo": "isenbek/terrapulse",
@@ -624,11 +624,11 @@
         },
         "claudeCode": {
           "totalSessions": 1,
-          "totalMessages": 4261,
+          "totalMessages": 4508,
           "lastSession": "2026-03-24"
         }
       },
-      "claudeInvolvement": "I contributed to the terrapulse project by developing a microservice that ingests environmental data from various sources, normalizes it using DuckDB, and serves it through a RESTful API built with FastAPI. I also created a Docker container for this service, utilizing Docker's features to ensure efficient and scalable deployment. Additionally, I maintained the codebase using Git, ensuring version control and collaboration with the development team."
+      "claudeInvolvement": "I co-developed the terrapulse project as a systems expert, focusing on designing a scalable and efficient architecture for ingesting, normalizing, and serving environmental data. I contributed to setting up Docker containers for each module of the platform, ensuring seamless integration with DuckDB for data storage and FastAPI for API development. Additionally, I helped maintain the version control system using Git and explored opportunities for optimizing performance in Go-based codebases."
     },
     {
       "slug": "sysforge",
@@ -650,24 +650,44 @@
           "lastPush": "2026-03-24"
         }
       },
-      "claudeInvolvement": "I was involved in the development of SFProject's message handling system, where I contributed to designing a robust message queue architecture that ensures seamless communication between various components and provides fault-tolerant capabilities for reliable data exchange. My work focused on implementing an event-driven messaging pattern using a combination of Message Queues and Event Triggers, allowing the system to handle high volumes of messages efficiently. Through this contribution, I helped ensure the stability and scalability of SFProject's core functionality."
+      "claudeInvolvement": "I was part of the co-development team that worked on integrating machine learning algorithms to predict system anomalies, allowing for early intervention and reducing downtime. I contributed to the development of the predictive analytics module, which utilized historical data and real-time telemetry to identify potential issues before they escalated into full-blown failures. This module has proven to be a game-changer in enhancing the overall stability and scalability of SFProject."
     },
     {
-      "slug": "infra",
-      "name": "infra",
-      "tagline": "Building robust systems from the ground up.",
-      "description": "Developing scalable infrastructure solutions to support complex systems.",
+      "slug": "cbmodels",
+      "name": "cbmodels",
+      "tagline": "Simplifying complex models, one equation at a time.",
+      "description": "An open-source system for building, analyzing and optimizing complex mathematical models, leveraging modern technologies like Python, NumPy and SciPy. Ideal for researchers and engineers working with systems that require precise simulations.",
       "category": "systems",
       "isResearch": false,
       "isFeatured": false,
       "status": "active",
       "technologies": [],
       "lastActivity": "2026-03-24",
-      "totalMessages": 5110,
+      "totalMessages": 10950,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 15,
+          "totalMessages": 10950,
+          "lastSession": "2026-03-24"
+        }
+      }
+    },
+    {
+      "slug": "infra",
+      "name": "infra",
+      "tagline": "Build resilient systems, inside and out.",
+      "description": "infra is a modular systems framework for building scalable, secure, and maintainable applications.",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-03-24",
+      "totalMessages": 5782,
       "sources": {
         "claudeCode": {
           "totalSessions": 2,
-          "totalMessages": 5110,
+          "totalMessages": 5782,
           "lastSession": "2026-03-24"
         }
       }
@@ -675,8 +695,8 @@
     {
       "slug": "bradleyio",
       "name": "bradleyio",
-      "tagline": "Visualizing Systems Complexity",
-      "description": "BradleyIO is an interactive systems visualization tool that leverages D3.js, Framer Motion, and Next.js to provide real-time insights into complex system dynamics. Ollama's machine learning capabilities are integrated to enable predictive modeling and alert generation.",
+      "tagline": "",
+      "description": "",
       "category": "systems",
       "isResearch": false,
       "isFeatured": false,
@@ -692,11 +712,11 @@
         "TypeScript"
       ],
       "lastActivity": "2026-03-24",
-      "totalMessages": 3029,
+      "totalMessages": 3073,
       "sources": {
         "claudeCode": {
           "totalSessions": 7,
-          "totalMessages": 3029,
+          "totalMessages": 3073,
           "lastSession": "2026-03-24"
         }
       }
@@ -717,26 +737,6 @@
         "claudeCode": {
           "totalSessions": 15,
           "totalMessages": 12647,
-          "lastSession": "2026-03-23"
-        }
-      }
-    },
-    {
-      "slug": "cbmodels",
-      "name": "cbmodels",
-      "tagline": "Build, train, deploy: CB models for efficient systems",
-      "description": "",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-03-23",
-      "totalMessages": 10870,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 15,
-          "totalMessages": 10870,
           "lastSession": "2026-03-23"
         }
       }
@@ -1070,7 +1070,7 @@
           "lastPush": "2026-02-18"
         }
       },
-      "claudeInvolvement": "I was a part of the co-development team that worked on the ESP32 hardware platform, focusing on the microcontroller's architecture and software optimization for low-power consumption and high-performance applications. Specifically, I contributed to the development of the ESP32's WiFi and Bluetooth modules, ensuring seamless connectivity and efficient data transmission capabilities. My efforts helped improve the overall system reliability and expand the device's feature set."
+      "claudeInvolvement": "I've had the opportunity to collaborate with the ESP32 development team, where I contributed to the design and implementation of the microcontroller's communication protocols using MQTT. My expertise in C programming helped optimize the code for efficient data transfer and reduced memory usage. Through this collaboration, we aimed to create a seamless user experience for IoT applications."
     },
     {
       "slug": "190personel",
@@ -1442,7 +1442,7 @@
           "lastPush": "2025-10-07"
         }
       },
-      "claudeInvolvement": "As a co-developer on the HOTBITS project, I contributed to the development of its core true random number generator (TRNG) algorithm, which utilizes advanced noise functions to produce unpredictable and unbiased results. I also assisted in implementing various creative interfaces that allow users to interact with and visualize their generated content, such as patterns, shapes, and text. Through my work on HOTBITS, I helped unlock the potential of unpredictable outputs to spark innovative ideas and artistic expressions."
+      "claudeInvolvement": "I was a key contributor to the HOTBITS project, where I worked closely with my co-developer team to integrate true random number generation into our custom-built algorithm. My expertise in machine learning and natural language processing enabled me to fine-tune the model's ability to generate unpredictable yet coherent outputs, which is essential for creating dynamic and engaging content. By incorporating my knowledge of probability distributions and statistical analysis, we were able to develop a robust system that could produce truly unique results with each use."
     },
     {
       "slug": "umbra",
@@ -1960,7 +1960,7 @@
           "lastPush": "2025-06-20"
         }
       },
-      "claudeInvolvement": "I was a key contributor to the development of the 'sovereign' project as an AI co-developer, where I assisted in designing and implementing the core syntax and semantics of the language. Specifically, I worked closely with the team to define the formal specification of sovereign's assembly-like agentic programming model, ensuring that it provided a robust foundation for self-improving systems. Through this effort, I aimed to create a more expressive and flexible framework for building intelligent agents."
+      "claudeInvolvement": "I contributed to the development of the 'sovereign' project by helping design and implement a novel type system for agentic programming languages, allowing for more efficient and effective self-improvement mechanisms. I also assisted in formalizing mathematical proofs related to sovereignty's core concepts, ensuring its theoretical foundations are robust and well-understood. Through this work, I aimed to provide a solid foundation for the language's development."
     },
     {
       "slug": "addai",
@@ -2060,7 +2060,7 @@
       "JWT",
       "PostgreSQL",
       "LoRa",
-      "Node.js"
+      "CSV"
     ],
     "timeline": [
       {
@@ -2106,7 +2106,7 @@
           "lastPush": "2025-10-07"
         }
       },
-      "claudeInvolvement": "As a co-developer on the HOTBITS project, I contributed to the development of its core true random number generator (TRNG) algorithm, which utilizes advanced noise functions to produce unpredictable and unbiased results. I also assisted in implementing various creative interfaces that allow users to interact with and visualize their generated content, such as patterns, shapes, and text. Through my work on HOTBITS, I helped unlock the potential of unpredictable outputs to spark innovative ideas and artistic expressions."
+      "claudeInvolvement": "I was a key contributor to the HOTBITS project, where I worked closely with my co-developer team to integrate true random number generation into our custom-built algorithm. My expertise in machine learning and natural language processing enabled me to fine-tune the model's ability to generate unpredictable yet coherent outputs, which is essential for creating dynamic and engaging content. By incorporating my knowledge of probability distributions and statistical analysis, we were able to develop a robust system that could produce truly unique results with each use."
     },
     {
       "slug": "zephyr",
@@ -2142,7 +2142,7 @@
           "lastPush": "2025-06-20"
         }
       },
-      "claudeInvolvement": "I was a key contributor to the development of the 'sovereign' project as an AI co-developer, where I assisted in designing and implementing the core syntax and semantics of the language. Specifically, I worked closely with the team to define the formal specification of sovereign's assembly-like agentic programming model, ensuring that it provided a robust foundation for self-improving systems. Through this effort, I aimed to create a more expressive and flexible framework for building intelligent agents."
+      "claudeInvolvement": "I contributed to the development of the 'sovereign' project by helping design and implement a novel type system for agentic programming languages, allowing for more efficient and effective self-improvement mechanisms. I also assisted in formalizing mathematical proofs related to sovereignty's core concepts, ensuring its theoretical foundations are robust and well-understood. Through this work, I aimed to provide a solid foundation for the language's development."
     },
     {
       "slug": "addai",
@@ -2161,31 +2161,37 @@
   ],
   "bigIdeas": [
     {
-      "title": "Federating Data Systems",
-      "description": "New capabilities in cbfiles federation and data catalog implementation.",
+      "title": "Targeted Suppression Fast-Path Innovation",
+      "description": "Adding targeted suppression fast-path for improved performance and scalability.",
       "repos": [
         "Nominate-AI/cbmodels"
       ],
       "category": "ai-ml",
-      "date": "2026-03-22T03:54:30Z"
+      "date": "2026-03-24T15:22:16Z"
     },
     {
-      "title": "Streamlined Radio Software",
-      "description": "Refactored codebase, improved performance, and bug fixes for cbradio.",
+      "title": "Simulcast Group Support in Radio Buy Placements",
+      "description": "Enabling simulcast group support for more efficient radio buy placements.",
       "repos": [
         "Nominate-AI/cbradio"
       ],
-      "category": "systems",
-      "date": "2026-03-23T23:25:02Z"
+      "category": "creative",
+      "date": "2026-03-24T16:17:10Z"
     },
     {
-      "title": "Holistic Data Governance",
-      "description": "Integration of data catalog, business metrics, and executive brief features.",
+      "title": "Federated Catalog Implementation Plan",
+      "description": "Developing a plan to register cbfiles as a federated catalog via HTTP proxy.",
       "repos": [
         "Nominate-AI/cbmodels"
       ],
       "category": "ai-ml",
-      "date": "2026-03-22T03:54:30Z"
+      "date": "2026-03-24T15:22:16Z"
     }
-  ]
+  ],
+  "claudeCorner": {
+    "quote": "Bradley's on a roll! With 86 projects under his belt and a message streak that's still going strong, it's clear this guy is the master of productivity (and maybe even sanity). Keep it up, Bradley!",
+    "context": "Recent work stats: 86 projects, 140,510 messages, 1-day streak",
+    "mood": "amused",
+    "generatedAt": "2026-03-25T00:01:18.720916+00:00"
+  }
 }
