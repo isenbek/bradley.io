@@ -538,6 +538,11 @@ export default function HomePage() {
 
             {/* Just Added — inline under hero buttons */}
             <JustAdded />
+
+            {/* 24h Activity Pulse */}
+            <div className="mt-6 sm:mt-8 max-w-xl">
+              <ActivityPulse />
+            </div>
           </FadeSection>
         </div>
       </section>
@@ -581,13 +586,6 @@ export default function HomePage() {
               </div>
             </div>
           ))}
-        </div>
-      </section>
-
-      {/* ===== 24H ACTIVITY PULSE ===== */}
-      <section className="py-6 sm:py-10">
-        <div className="container-page">
-          <ActivityPulse />
         </div>
       </section>
 
