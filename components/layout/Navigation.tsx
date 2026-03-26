@@ -38,6 +38,8 @@ const navGroups = [
       { href: "/ai-pilot", label: "AI Pilot" },
       { href: "/mcp", label: "MCP Catalog" },
       { href: "/papers", label: "Papers" },
+      { href: "/cost-analysis", label: "Cost Analysis" },
+      { href: "/the-shift", label: "The Shift" },
     ],
   },
   {
