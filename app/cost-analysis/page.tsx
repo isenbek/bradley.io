@@ -251,16 +251,14 @@ function CostCurveChart({ timeSeries }: { timeSeries: TSEntry[] }) {
   const chartH = h - padT - padB
   const n = timeSeries.length
 
-  // Extend legacy curve beyond scope to show where it keeps going
+  // Short 4-week projection beyond "now" to hint at divergence
   const lastLegacy = timeSeries[n - 1].cumulativeCostLegacy
   const legacyRate = lastLegacy / n
-  const extraWeeks = Math.ceil((lastLegacy * 2 - lastLegacy) / legacyRate)  // project to 2x
-  const totalWeeks = n + Math.min(extraWeeks, n) // don't extend more than double
+  const projWeeks = 4
+  const totalWeeks = n + projWeeks
 
-  const maxCost = Math.max(
-    timeSeries[n - 1].cumulativeCostLegacy * 1.8,
-    timeSeries[n - 1].cumulativeCostActual * 3,
-  )
+  const projectedLegacyMax = lastLegacy + legacyRate * projWeeks
+  const maxCost = projectedLegacyMax * 1.15
 
   const xScale = (i: number) => padL + (i / (totalWeeks - 1)) * chartW
   const yScale = (v: number) => padT + chartH - (v / maxCost) * chartH
