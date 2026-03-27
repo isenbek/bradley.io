@@ -57,6 +57,28 @@ interface CostModel {
     aiProductivityMultiplier: { conservative: number; aggressive: number }
     studies: { source: string; finding: string }[]
   }
+  timeSeries: {
+    week: string
+    weekStart: string
+    commits: number
+    cumulativeCommits: number
+    messages: number
+    sessions: number
+    toolCalls: number
+    issuesOpened: number
+    issuesClosed: number
+    cumulativeIssuesOpened: number
+    cumulativeIssuesClosed: number
+    cumulativeCostActual: number
+    cumulativeCostLegacy: number
+  }[]
+  issues: {
+    opened: number
+    closed: number
+    bugs: number
+    features: number
+    other: number
+  }
 }
 
 // --- Animated Counter ---
@@ -206,6 +228,259 @@ function TimeDonut({ segments, size = 120 }: {
   )
 }
 
+// --- Number formatting helpers ---
+const fmt = (n: number) => n.toLocaleString("en-US")
+const fmtK = (n: number) => `$${(n / 1000).toLocaleString("en-US", { maximumFractionDigits: 0 })}K`
+
+// --- SVG Line Chart Helper ---
+function buildSmoothPath(points: { x: number; y: number }[]): string {
+  return points.reduce((acc, p, i) => {
+    if (i === 0) return `M${p.x},${p.y}`
+    const prev = points[i - 1]
+    const cpx = (prev.x + p.x) / 2
+    return `${acc} C${cpx},${prev.y} ${cpx},${p.y} ${p.x},${p.y}`
+  }, "")
+}
+
+type TSEntry = CostModel["timeSeries"][number]
+
+// --- Cost Curve Chart ---
+function CostCurveChart({ timeSeries }: { timeSeries: TSEntry[] }) {
+  const w = 700, h = 220, padL = 60, padR = 20, padT = 20, padB = 40
+  const chartW = w - padL - padR
+  const chartH = h - padT - padB
+  const n = timeSeries.length
+
+  // Extend legacy curve beyond scope to show where it keeps going
+  const lastLegacy = timeSeries[n - 1].cumulativeCostLegacy
+  const legacyRate = lastLegacy / n
+  const extraWeeks = Math.ceil((lastLegacy * 2 - lastLegacy) / legacyRate)  // project to 2x
+  const totalWeeks = n + Math.min(extraWeeks, n) // don't extend more than double
+
+  const maxCost = Math.max(
+    timeSeries[n - 1].cumulativeCostLegacy * 1.8,
+    timeSeries[n - 1].cumulativeCostActual * 3,
+  )
+
+  const xScale = (i: number) => padL + (i / (totalWeeks - 1)) * chartW
+  const yScale = (v: number) => padT + chartH - (v / maxCost) * chartH
+
+  const legacyPoints = Array.from({ length: totalWeeks }, (_, i) => ({
+    x: xScale(i),
+    y: yScale(i < n ? timeSeries[i].cumulativeCostLegacy : legacyRate * (i + 1)),
+  }))
+
+  const actualPoints = timeSeries.map((d, i) => ({
+    x: xScale(i),
+    y: yScale(d.cumulativeCostActual),
+  }))
+
+  const actualPath = buildSmoothPath(actualPoints)
+
+  // Y-axis ticks
+  const yTicks = [0, 0.25, 0.5, 0.75, 1].map((f) => ({
+    y: yScale(f * maxCost),
+    label: `$${((f * maxCost) / 1000).toFixed(0)}K`,
+  }))
+
+  // X-axis labels (every 4 weeks)
+  const xLabels = timeSeries
+    .filter((_, i) => i % 4 === 0)
+    .map((d, i) => ({
+      x: xScale(i * 4),
+      label: d.week.replace(/^\d{4}-/, ""),
+    }))
+
+  return (
+    <div
+      className="rounded-xl p-4 sm:p-5"
+      style={{ background: "var(--brand-bg-alt)", border: "1px solid var(--brand-border)" }}
+    >
+      <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center gap-2">
+          <DollarSign className="w-4 h-4" style={{ color: "var(--brand-primary)" }} />
+          <span className="text-sm font-bold">Cumulative Cost Over Time</span>
+        </div>
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-1.5">
+            <span className="w-3 h-0.5 rounded" style={{ background: "var(--brand-secondary)" }} />
+            <span className="text-[10px] font-mono" style={{ color: "var(--brand-muted)" }}>Legacy</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <span className="w-3 h-0.5 rounded" style={{ background: "var(--brand-primary)" }} />
+            <span className="text-[10px] font-mono" style={{ color: "var(--brand-muted)" }}>AI-Assisted</span>
+          </div>
+        </div>
+      </div>
+      <svg viewBox={`0 0 ${w} ${h}`} className="w-full" style={{ height: "220px" }}>
+        {/* Grid lines */}
+        {yTicks.map((t) => (
+          <g key={t.label}>
+            <line x1={padL} y1={t.y} x2={w - padR} y2={t.y} stroke="var(--brand-border)" strokeWidth="1" />
+            <text x={padL - 8} y={t.y + 4} textAnchor="end" fill="var(--brand-muted)" fontSize="10" fontFamily="monospace">{t.label}</text>
+          </g>
+        ))}
+        {/* X labels */}
+        {xLabels.map((t) => (
+          <text key={t.label} x={t.x} y={h - 8} textAnchor="middle" fill="var(--brand-muted)" fontSize="9" fontFamily="monospace">{t.label}</text>
+        ))}
+        {/* "Now" marker */}
+        <line x1={xScale(n - 1)} y1={padT} x2={xScale(n - 1)} y2={h - padB} stroke="var(--brand-border)" strokeWidth="1" strokeDasharray="4,4" />
+        <text x={xScale(n - 1)} y={padT - 5} textAnchor="middle" fill="var(--brand-muted)" fontSize="9" fontFamily="monospace">NOW</text>
+        {/* Legacy curve (dashed after "now") */}
+        <path d={buildSmoothPath(legacyPoints.slice(0, n))} fill="none" stroke="var(--brand-secondary)" strokeWidth="2.5" />
+        <path d={buildSmoothPath(legacyPoints.slice(n - 1))} fill="none" stroke="var(--brand-secondary)" strokeWidth="2" strokeDasharray="6,4" opacity="0.5" />
+        {/* Actual curve */}
+        <path d={actualPath} fill="none" stroke="var(--brand-primary)" strokeWidth="2.5" />
+        {/* End dots */}
+        <circle cx={actualPoints[n - 1].x} cy={actualPoints[n - 1].y} r="4" fill="var(--brand-primary)" />
+        <circle cx={legacyPoints[n - 1].x} cy={legacyPoints[n - 1].y} r="4" fill="var(--brand-secondary)" />
+        {/* Gap annotation */}
+        <line
+          x1={xScale(n - 1) + 12} y1={actualPoints[n - 1].y}
+          x2={xScale(n - 1) + 12} y2={legacyPoints[n - 1].y}
+          stroke="var(--brand-warning)" strokeWidth="2"
+        />
+        <text
+          x={xScale(n - 1) + 20}
+          y={(actualPoints[n - 1].y + legacyPoints[n - 1].y) / 2 + 4}
+          fill="var(--brand-warning)" fontSize="11" fontWeight="bold" fontFamily="monospace"
+        >
+          ${((timeSeries[n - 1].cumulativeCostLegacy - timeSeries[n - 1].cumulativeCostActual) / 1000).toFixed(0)}K saved
+        </text>
+      </svg>
+    </div>
+  )
+}
+
+// --- Velocity Chart (commits + sessions) ---
+function VelocityChart({ timeSeries }: { timeSeries: TSEntry[] }) {
+  const w = 400, h = 180, padL = 10, padR = 10, padT = 10, padB = 30
+  const chartW = w - padL - padR
+  const chartH = h - padT - padB
+  const n = timeSeries.length
+  const maxCommits = Math.max(...timeSeries.map((d) => d.commits), 1)
+  const barW = (chartW / n) * 0.7
+  const gap = (chartW / n) * 0.3
+
+  return (
+    <div
+      className="rounded-xl p-4 sm:p-5"
+      style={{ background: "var(--brand-bg-alt)", border: "1px solid var(--brand-border)" }}
+    >
+      <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center gap-2">
+          <BarChart3 className="w-4 h-4" style={{ color: "var(--brand-warning)" }} />
+          <span className="text-sm font-bold">Weekly Commit Velocity</span>
+        </div>
+        <span className="text-[10px] font-mono" style={{ color: "var(--brand-muted)" }}>
+          {fmt(timeSeries.reduce((s, d) => s + d.commits, 0))} total
+        </span>
+      </div>
+      <svg viewBox={`0 0 ${w} ${h}`} className="w-full" style={{ height: "180px" }}>
+        {timeSeries.map((d, i) => {
+          const barH = (d.commits / maxCommits) * chartH
+          const x = padL + i * (barW + gap)
+          const y = padT + chartH - barH
+          return (
+            <g key={d.week}>
+              <rect
+                x={x} y={y} width={barW} height={barH}
+                rx="3"
+                fill={d.sessions > 0
+                  ? "var(--brand-primary)"
+                  : "color-mix(in srgb, var(--brand-warning) 60%, transparent)"
+                }
+                opacity={d.sessions > 0 ? 0.9 : 0.5}
+              />
+              {i % 4 === 0 && (
+                <text x={x + barW / 2} y={h - 8} textAnchor="middle" fill="var(--brand-muted)" fontSize="8" fontFamily="monospace">
+                  {d.week.replace(/^\d{4}-/, "")}
+                </text>
+              )}
+            </g>
+          )
+        })}
+      </svg>
+      <div className="flex items-center gap-4 mt-1 justify-center">
+        <div className="flex items-center gap-1.5">
+          <span className="w-2.5 h-2.5 rounded-sm" style={{ background: "var(--brand-primary)" }} />
+          <span className="text-[9px] font-mono" style={{ color: "var(--brand-muted)" }}>With Claude</span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <span className="w-2.5 h-2.5 rounded-sm opacity-50" style={{ background: "var(--brand-warning)" }} />
+          <span className="text-[9px] font-mono" style={{ color: "var(--brand-muted)" }}>Pre-Claude</span>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// --- Issues Chart ---
+function IssuesChart({ timeSeries, issues }: { timeSeries: TSEntry[]; issues: CostModel["issues"] }) {
+  const w = 400, h = 180, padL = 10, padR = 10, padT = 10, padB = 30
+  const chartW = w - padL - padR
+  const chartH = h - padT - padB
+  const n = timeSeries.length
+  const maxIssues = Math.max(...timeSeries.map((d) => Math.max(d.issuesOpened, d.issuesClosed)), 1)
+  const barW = (chartW / n) * 0.35
+  const groupW = chartW / n
+
+  return (
+    <div
+      className="rounded-xl p-4 sm:p-5"
+      style={{ background: "var(--brand-bg-alt)", border: "1px solid var(--brand-border)" }}
+    >
+      <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center gap-2">
+          <Zap className="w-4 h-4" style={{ color: "var(--brand-info)" }} />
+          <span className="text-sm font-bold">Issues Throughput</span>
+        </div>
+        <span className="text-[10px] font-mono" style={{ color: "var(--brand-muted)" }}>
+          {fmt(issues.opened)} opened · {fmt(issues.closed)} closed
+        </span>
+      </div>
+      <svg viewBox={`0 0 ${w} ${h}`} className="w-full" style={{ height: "180px" }}>
+        {timeSeries.map((d, i) => {
+          const openH = (d.issuesOpened / maxIssues) * chartH
+          const closeH = (d.issuesClosed / maxIssues) * chartH
+          const x = padL + i * groupW
+          return (
+            <g key={d.week}>
+              <rect
+                x={x} y={padT + chartH - openH} width={barW} height={openH}
+                rx="2" fill="var(--brand-info)" opacity="0.7"
+              />
+              <rect
+                x={x + barW + 2} y={padT + chartH - closeH} width={barW} height={closeH}
+                rx="2" fill="var(--brand-success, #22c55e)" opacity="0.7"
+              />
+              {i % 4 === 0 && (
+                <text x={x + groupW / 2} y={h - 8} textAnchor="middle" fill="var(--brand-muted)" fontSize="8" fontFamily="monospace">
+                  {d.week.replace(/^\d{4}-/, "")}
+                </text>
+              )}
+            </g>
+          )
+        })}
+      </svg>
+      <div className="flex items-center gap-4 mt-1 justify-center">
+        <div className="flex items-center gap-1.5">
+          <span className="w-2.5 h-2.5 rounded-sm" style={{ background: "var(--brand-info)", opacity: 0.7 }} />
+          <span className="text-[9px] font-mono" style={{ color: "var(--brand-muted)" }}>Opened</span>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <span className="w-2.5 h-2.5 rounded-sm" style={{ background: "var(--brand-success, #22c55e)", opacity: 0.7 }} />
+          <span className="text-[9px] font-mono" style={{ color: "var(--brand-muted)" }}>Closed</span>
+        </div>
+        <span className="text-[9px] font-mono" style={{ color: "var(--brand-muted)" }}>
+          {issues.bugs} bugs · {issues.features} features
+        </span>
+      </div>
+    </div>
+  )
+}
+
 // --- Main Page ---
 export default function CostAnalysisPage() {
   const [data, setData] = useState<CostModel | null>(null)
@@ -234,8 +509,6 @@ export default function CostAnalysisPage() {
   const legacyMid = Math.round((data.legacy.totalCost.low + data.legacy.totalCost.high) / 2)
   const actualCost = data.actual.totalCost
   const legacyMonthsMid = Math.round((data.legacy.estimatedMonths.low + data.legacy.estimatedMonths.high) / 2)
-  const fmt = (n: number) => n.toLocaleString("en-US")
-  const fmtK = (n: number) => `$${(n / 1000).toLocaleString("en-US", { maximumFractionDigits: 0 })}K`
 
   const legacyTimeBreakdown = [
     { label: "Writing code", pct: data.industryBenchmarks.codingTimePercent, color: "var(--brand-primary)" },
@@ -306,6 +579,29 @@ export default function CostAnalysisPage() {
           </div>
         </FadeSection>
       </section>
+
+      {/* ===== LIFECYCLE CURVES ===== */}
+      {data.timeSeries && data.timeSeries.length > 0 && (
+        <section className="container-page mb-10 sm:mb-16">
+          <FadeSection>
+            <div className="text-xs font-semibold uppercase tracking-[3px] mb-1" style={{ color: "var(--brand-primary)" }}>
+              Live Data
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight mb-6">
+              The curves don&apos;t lie.
+            </h2>
+
+            {/* Cost curves */}
+            <CostCurveChart timeSeries={data.timeSeries} />
+
+            {/* Velocity + Issues */}
+            <div className="grid lg:grid-cols-2 gap-4 mt-4">
+              <VelocityChart timeSeries={data.timeSeries} />
+              <IssuesChart timeSeries={data.timeSeries} issues={data.issues} />
+            </div>
+          </FadeSection>
+        </section>
+      )}
 
       {/* ===== WHAT WAS BUILT ===== */}
       <section className="container-page mb-10 sm:mb-16">

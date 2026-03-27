@@ -8,7 +8,9 @@ Standard library only.
 """
 
 import json
-from datetime import datetime, date
+import subprocess
+from collections import defaultdict
+from datetime import datetime, date, timedelta
 from pathlib import Path
 
 # ---------- paths ----------------------------------------------------------
@@ -191,7 +193,132 @@ velocity_multiplier = round((legacy_pm_midpoint * 20) / active_days, 1) if activ
 legacy_months_midpoint = (est_months_low + est_months_high) / 2
 time_compression = f"{legacy_months_midpoint:.0f} months -> {active_days} days"
 
-# ---------- 10. Industry benchmarks ----------------------------------------
+# ---------- 10. Time-series curves (weekly buckets) -----------------------
+
+# Generate week labels for the full scope
+def iso_week(d: date) -> str:
+    return f"{d.isocalendar()[0]}-W{d.isocalendar()[1]:02d}"
+
+def week_start_date(iso: str) -> str:
+    """Return Monday date for an ISO week string like '2026-W05'."""
+    year, week = iso.split("-W")
+    d = date.fromisocalendar(int(year), int(week), 1)
+    return d.isoformat()
+
+# Collect all weeks in scope
+scope_weeks = []
+d = SCOPE_START
+while d <= SCOPE_END:
+    wk = iso_week(d)
+    if not scope_weeks or scope_weeks[-1] != wk:
+        scope_weeks.append(wk)
+    d += timedelta(days=1)
+
+# --- Commit curve from activityHeatmap ---
+commit_heatmap = timeline.get("activityHeatmap", [])
+commits_by_week = defaultdict(int)
+for entry in commit_heatmap:
+    ed = entry.get("date", "")
+    if ed >= SCOPE_START.isoformat() and ed <= SCOPE_END.isoformat():
+        c = entry.get("commits", 0)
+        if c > 0:
+            wk = iso_week(date.fromisoformat(ed))
+            commits_by_week[wk] += c
+
+# --- Claude session curve from ai-pilot heatmap ---
+claude_by_week = defaultdict(lambda: {"messages": 0, "sessions": 0, "toolCalls": 0})
+for entry in pilot_heatmap:
+    ed = entry.get("date", "")
+    if ed >= SCOPE_START.isoformat():
+        wk = iso_week(date.fromisoformat(ed))
+        claude_by_week[wk]["messages"] += entry.get("count", 0)
+        claude_by_week[wk]["sessions"] += entry.get("sessions", 0)
+        claude_by_week[wk]["toolCalls"] += entry.get("toolCalls", 0)
+
+# --- GitHub Issues (pull live from gh CLI) ---
+issues_by_week = defaultdict(lambda: {"opened": 0, "closed": 0})
+total_issues = {"opened": 0, "closed": 0, "bugs": 0, "features": 0, "other": 0}
+
+try:
+    # Get all cb* repos
+    cb_repo_names = [r["name"] for r in cb_repos_in_scope[:20]]  # top 20
+
+    for repo_name in cb_repo_names:
+        try:
+            result = subprocess.run(
+                ["gh", "issue", "list", "-R", f"nominate-ai/{repo_name}",
+                 "--state", "all", "--limit", "500",
+                 "--json", "number,state,labels,createdAt,closedAt"],
+                capture_output=True, text=True, timeout=15,
+            )
+            if result.returncode != 0:
+                continue
+            issues = json.loads(result.stdout)
+            for issue in issues:
+                created = issue.get("createdAt", "")[:10]
+                closed = issue.get("closedAt")
+                labels = [l.get("name", "").lower() for l in issue.get("labels", [])]
+
+                if created >= SCOPE_START.isoformat():
+                    total_issues["opened"] += 1
+                    wk = iso_week(date.fromisoformat(created))
+                    issues_by_week[wk]["opened"] += 1
+
+                    # Categorize
+                    if any("bug" in l for l in labels):
+                        total_issues["bugs"] += 1
+                    elif any(l in ("feature", "enhancement") for l in labels):
+                        total_issues["features"] += 1
+                    else:
+                        total_issues["other"] += 1
+
+                if closed and closed[:10] >= SCOPE_START.isoformat():
+                    total_issues["closed"] += 1
+                    wk = iso_week(date.fromisoformat(closed[:10]))
+                    issues_by_week[wk]["closed"] += 1
+        except Exception:
+            continue
+except Exception:
+    pass  # gh CLI may not be available
+
+# --- Build weekly time-series ---
+cumulative_actual = 0
+cumulative_legacy = 0
+weekly_actual_rate = actual_total_cost / len(scope_weeks) if scope_weeks else 0
+weekly_legacy_rate = legacy_midpoint / (legacy_months_midpoint * 4.33) if legacy_months_midpoint else 0
+cumulative_commits = 0
+cumulative_issues_opened = 0
+cumulative_issues_closed = 0
+
+time_series = []
+for wk in scope_weeks:
+    wk_commits = commits_by_week.get(wk, 0)
+    wk_claude = claude_by_week.get(wk, {"messages": 0, "sessions": 0, "toolCalls": 0})
+    wk_issues = issues_by_week.get(wk, {"opened": 0, "closed": 0})
+
+    cumulative_actual += weekly_actual_rate
+    cumulative_legacy += weekly_legacy_rate
+    cumulative_commits += wk_commits
+    cumulative_issues_opened += wk_issues["opened"]
+    cumulative_issues_closed += wk_issues["closed"]
+
+    time_series.append({
+        "week": wk,
+        "weekStart": week_start_date(wk),
+        "commits": wk_commits,
+        "cumulativeCommits": cumulative_commits,
+        "messages": wk_claude["messages"],
+        "sessions": wk_claude["sessions"],
+        "toolCalls": wk_claude["toolCalls"],
+        "issuesOpened": wk_issues["opened"],
+        "issuesClosed": wk_issues["closed"],
+        "cumulativeIssuesOpened": cumulative_issues_opened,
+        "cumulativeIssuesClosed": cumulative_issues_closed,
+        "cumulativeCostActual": round(cumulative_actual),
+        "cumulativeCostLegacy": round(cumulative_legacy),
+    })
+
+# ---------- 11. Industry benchmarks ----------------------------------------
 
 industry_benchmarks = {
     "locPerDevPerDay": {"low": 50, "high": 100},
@@ -249,6 +376,8 @@ output = {
         "timeCompression": time_compression,
     },
     "industryBenchmarks": industry_benchmarks,
+    "timeSeries": time_series,
+    "issues": total_issues,
 }
 
 # ---------- 12. Write output -----------------------------------------------
@@ -267,6 +396,10 @@ print(f"  Tool calls (all): {total_tool_calls}")
 print(f"  Legacy team: {legacy_team_size} people, {person_months_low}-{person_months_high} person-months")
 print(f"  Legacy cost: ${total_legacy_low:,} - ${total_legacy_high:,}")
 print(f"  Actual cost: ${actual_total_cost:,} (operator ${actual_operator_cost:,} + AI ${actual_ai_cost:,})")
+print(f"  Time-series: {len(time_series)} weeks")
+print(f"  Issues: {total_issues['opened']} opened, {total_issues['closed']} closed ({total_issues['bugs']} bugs, {total_issues['features']} features)")
+print(f"  Velocity multiplier: {velocity_multiplier}x")
+print(f"  Time compression: {time_compression}")
 print(f"  Cost savings: {cost_savings_pct}%")
 print(f"  Velocity multiplier: {velocity_multiplier}x")
 print(f"  Time compression: {time_compression}")
