@@ -6,6 +6,7 @@ import {
   DollarSign, Users, Zap, Clock, TrendingDown, BarChart3,
   ArrowRight, ChevronDown, ChevronUp, BookOpen,
 } from "lucide-react"
+import { timeAgo } from "@/lib/time-ago"
 
 // --- Types ---
 interface Role {
@@ -1016,6 +1017,13 @@ export default function CostAnalysisPage() {
           </div>
         </FadeSection>
       </section>
+
+      {/* Last updated */}
+      <div className="text-center py-6">
+        <span className="text-[10px] font-mono tracking-wide opacity-60" style={{ color: "var(--brand-muted)" }}>
+          updated {timeAgo(data.generated)}
+        </span>
+      </div>
     </div>
   )
 }
