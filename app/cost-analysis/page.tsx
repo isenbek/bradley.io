@@ -1003,16 +1003,6 @@ export default function CostAnalysisPage() {
               >
                 View AI Pilot Dashboard <ArrowRight className="w-4 h-4" />
               </a>
-              <a
-                href="/the-shift"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-sm font-medium transition-all"
-                style={{
-                  border: "1px solid color-mix(in srgb, var(--brand-secondary) 30%, transparent)",
-                  color: "var(--brand-secondary)",
-                }}
-              >
-                Read: The Shift <ArrowRight className="w-4 h-4" />
-              </a>
             </div>
           </div>
         </FadeSection>

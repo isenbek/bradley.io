@@ -5,7 +5,7 @@ import { motion, useInView } from "framer-motion"
 import Link from "next/link"
 import {
   ArrowRight, Bot, MessageSquare, GitBranch, Flame, Sparkles, Server, Activity,
-  DollarSign, Zap,
+  DollarSign,
 } from "lucide-react"
 import type { SiteData, ActivityItem as ActivityItemType, Project } from "@/lib/site-data"
 import { categoryMap } from "@/lib/project-categories"
@@ -268,15 +268,6 @@ const ANNOUNCEMENTS: {
     href: "/cost-analysis",
     color: "var(--brand-warning)",
     icon: DollarSign,
-    addedAt: "2026-03-26",
-    ttlDays: 21,
-  },
-  {
-    title: "The Shift",
-    description: "How AI rewrites the economics of building software.",
-    href: "/the-shift",
-    color: "var(--brand-primary)",
-    icon: Zap,
     addedAt: "2026-03-26",
     ttlDays: 21,
   },

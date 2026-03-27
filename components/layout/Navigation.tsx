@@ -39,7 +39,6 @@ const navGroups = [
       { href: "/mcp", label: "MCP Catalog" },
       { href: "/papers", label: "Papers" },
       { href: "/cost-analysis", label: "Cost Analysis" },
-      { href: "/the-shift", label: "The Shift" },
     ],
   },
   {

@@ -26,7 +26,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/mcp`, changeFrequency: "weekly", priority: 0.7, lastModified: now },
     { url: `${base}/papers`, changeFrequency: "weekly", priority: 0.8, lastModified: now },
     { url: `${base}/cost-analysis`, changeFrequency: "weekly", priority: 0.8, lastModified: now },
-    { url: `${base}/the-shift`, changeFrequency: "monthly", priority: 0.8, lastModified: now },
     { url: `${base}/terminal`, changeFrequency: "monthly", priority: 0.5, lastModified: now },
     { url: `${base}/wargames`, changeFrequency: "monthly", priority: 0.5, lastModified: now },
     { url: `${base}/style-guide`, changeFrequency: "monthly", priority: 0.3, lastModified: now },
