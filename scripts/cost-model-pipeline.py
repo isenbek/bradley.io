@@ -149,17 +149,20 @@ legacy_roles = [
     {"title": "ML/AI Engineer", "count": 1, "annualSalary": 155000, "loadedCost": 217000},
     {"title": "QA Engineer", "count": 1, "annualSalary": 95000, "loadedCost": 133000},
     {"title": "Project Manager", "count": 1, "annualSalary": 145000, "loadedCost": 203000},
+    {"title": "Biz/Workflow SME + UI Builder", "count": 1, "annualSalary": 130000, "loadedCost": 182000, "halfTime": True},
 ]
 
-legacy_team_size = sum(r["count"] for r in legacy_roles)
+# Half-time roles count as 0.5 headcount
+legacy_team_size = sum(0.5 if r.get("halfTime") else r["count"] for r in legacy_roles)
 est_months_low = 6
 est_months_high = 12
-person_months_low = legacy_team_size * est_months_low
-person_months_high = legacy_team_size * est_months_high
+# Person-months: full headcount (half-time roles contribute half)
+effective_headcount = sum(0.5 if r.get("halfTime") else r["count"] for r in legacy_roles)
+person_months_low = effective_headcount * est_months_low
+person_months_high = effective_headcount * est_months_high
 
-# Cost per person-month: industry-standard loaded rate
-# (weighted avg loaded salary / 12, rounded to nearest $100)
-cost_per_person_month = 15800
+# Cost per person-month: blended compensation rate
+cost_per_person_month = 15000
 
 overhead_multiplier = 1.4
 # totalCost = person-months * costPerPersonMonth (overhead already baked

@@ -13,6 +13,7 @@ interface Role {
   count: number
   annualSalary: number
   loadedCost: number
+  halfTime?: boolean
 }
 
 interface CostModel {
@@ -123,7 +124,7 @@ function WaterfallBar({ label, value, max, color, delay = 0 }: {
     <div ref={ref} className="space-y-1.5">
       <div className="flex items-center justify-between">
         <span className="text-xs font-semibold">{label}</span>
-        <span className="text-xs font-mono" style={{ color }}>${(value / 1000).toFixed(0)}K</span>
+        <span className="text-xs font-mono" style={{ color }}>${(value / 1000).toLocaleString("en-US", { maximumFractionDigits: 0 })}K</span>
       </div>
       <div className="h-3 rounded-full overflow-hidden" style={{ background: "var(--brand-bg)" }}>
         <div
@@ -142,6 +143,7 @@ function WaterfallBar({ label, value, max, color, delay = 0 }: {
 // --- Role Row ---
 function RoleRow({ role }: { role: Role }) {
   const monthly = Math.round(role.loadedCost / 12)
+  const label = role.halfTime ? "½" : `${role.count}x`
   return (
     <div
       className="flex items-center justify-between py-2.5 px-3 rounded-lg"
@@ -155,13 +157,13 @@ function RoleRow({ role }: { role: Role }) {
             color: "var(--brand-secondary)",
           }}
         >
-          {role.count}x
+          {label}
         </span>
         <span className="text-sm font-medium">{role.title}</span>
       </div>
       <div className="text-right">
-        <div className="text-sm font-mono font-semibold">${role.loadedCost.toLocaleString()}<span className="text-[10px] font-normal" style={{ color: "var(--brand-muted)" }}>/yr</span></div>
-        <div className="text-[10px] font-mono" style={{ color: "var(--brand-muted)" }}>${monthly.toLocaleString()}/mo</div>
+        <div className="text-sm font-mono font-semibold">${role.loadedCost.toLocaleString("en-US")}<span className="text-[10px] font-normal" style={{ color: "var(--brand-muted)" }}>/yr</span></div>
+        <div className="text-[10px] font-mono" style={{ color: "var(--brand-muted)" }}>${monthly.toLocaleString("en-US")}/mo</div>
       </div>
     </div>
   )
@@ -229,8 +231,10 @@ export default function CostAnalysisPage() {
   }
 
   const legacyMid = Math.round((data.legacy.totalCost.low + data.legacy.totalCost.high) / 2)
-  const actualCost = data.actual.subscriptionCost * Math.ceil(data.timespan.days / 30)
+  const actualCost = data.actual.subscriptionCost
   const legacyMonthsMid = Math.round((data.legacy.estimatedMonths.low + data.legacy.estimatedMonths.high) / 2)
+  const fmt = (n: number) => n.toLocaleString("en-US")
+  const fmtK = (n: number) => `$${(n / 1000).toLocaleString("en-US", { maximumFractionDigits: 0 })}K`
 
   const legacyTimeBreakdown = [
     { label: "Writing code", pct: data.industryBenchmarks.codingTimePercent, color: "var(--brand-primary)" },
@@ -278,10 +282,10 @@ export default function CostAnalysisPage() {
           {/* Hero stat cards */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {[
-              { label: "Legacy Estimate", value: `$${(legacyMid / 1000).toFixed(0)}K`, sub: `${data.legacy.teamSize}-person team`, color: "var(--brand-secondary)" },
-              { label: "Actual Cost", value: `$${actualCost}`, sub: "1 person + Claude", color: "var(--brand-primary)" },
-              { label: "Time Saved", value: data.comparison.timeCompression.split("→")[0].trim(), sub: `→ ${data.timespan.days} days`, color: "var(--brand-warning)" },
-              { label: "Cost Reduction", value: `${data.comparison.costSavingsPercent}%`, sub: "savings", color: "var(--brand-success, #22c55e)" },
+              { label: "Legacy Estimate", value: fmtK(legacyMid), sub: `${data.legacy.teamSize}-person team · ${legacyMonthsMid} months`, color: "var(--brand-secondary)" },
+              { label: "Actual Cost", value: `$${fmt(actualCost)}`, sub: "1 person + Claude", color: "var(--brand-primary)" },
+              { label: "Velocity", value: `${data.comparison.velocityMultiplier}x`, sub: `${data.timespan.activeDays} active days`, color: "var(--brand-warning)" },
+              { label: "Cost Reduction", value: `${data.comparison.costSavingsPercent}%`, sub: `$${fmt(legacyMid - actualCost)} saved`, color: "var(--brand-success, #22c55e)" },
             ].map((s) => (
               <div
                 key={s.label}
@@ -351,7 +355,7 @@ export default function CostAnalysisPage() {
                 >
                   <span className="text-sm font-mono font-semibold">{p.name}</span>
                   <span className="text-[10px] font-mono" style={{ color: "var(--brand-muted)" }}>
-                    {p.sessions}s · {p.messages.toLocaleString()}m
+                    {fmt(p.sessions)}s · {fmt(p.messages)}m
                   </span>
                 </div>
               ))}
@@ -649,7 +653,7 @@ export default function CostAnalysisPage() {
               className="flex items-center gap-1.5 text-xs font-mono cursor-pointer"
               style={{ color: "var(--brand-muted)" }}
             >
-              {showStudies ? <ChevronDown className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
+              {showStudies ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
               <BookOpen className="w-3 h-3" />
               {data.industryBenchmarks.studies.length} published studies
               <ArrowRight className="w-3 h-3" />
@@ -687,11 +691,11 @@ export default function CostAnalysisPage() {
               Bottom Line
             </div>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight mb-3">
-              {data.actual.messages.toLocaleString()} messages. ${actualCost} total.
+              {fmt(data.actual.messages)} messages. ${fmt(actualCost)} total.
             </h2>
             <p className="text-base sm:text-lg max-w-[560px] mx-auto mb-6" style={{ color: "var(--brand-muted)" }}>
               One person with Claude built what a {data.legacy.teamSize}-person team would quote
-              ${(data.legacy.totalCost.low / 1000).toFixed(0)}K–${(data.legacy.totalCost.high / 1000).toFixed(0)}K
+              {" "}{fmtK(data.legacy.totalCost.low)}–{fmtK(data.legacy.totalCost.high)}{" "}
               to deliver in {data.legacy.estimatedMonths.low}–{data.legacy.estimatedMonths.high} months.
               Shipped in {data.timespan.days} days.
             </p>
