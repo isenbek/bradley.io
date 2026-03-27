@@ -173,14 +173,15 @@ legacy_midpoint = (total_legacy_low + total_legacy_high) / 2
 
 # ---------- 8. Actual costs -----------------------------------------------
 
-actual_api_cost = 0
 months_elapsed = max(1, round(total_days / 30))
-actual_subscription_cost = 200 * months_elapsed  # Claude Max plan ($200/mo)
+actual_operator_cost = 15000 * months_elapsed     # Operator compensation ($15K/mo)
+actual_ai_cost = 200 * months_elapsed              # Claude Max plan ($200/mo)
+actual_total_cost = actual_operator_cost + actual_ai_cost
 
 # ---------- 9. Comparison metrics ------------------------------------------
 
-# Cost savings: 1 - (actual / legacy midpoint), cap at 99.9%
-cost_savings_pct = min(99.9, round((1 - actual_subscription_cost / legacy_midpoint) * 100, 1))
+# Cost savings: 1 - (actual / legacy midpoint)
+cost_savings_pct = round((1 - actual_total_cost / legacy_midpoint) * 100, 1)
 
 # Velocity multiplier: (legacy person-months midpoint * 20 workdays) / actual active days
 legacy_pm_midpoint = (person_months_low + person_months_high) / 2
@@ -226,8 +227,9 @@ output = {
         "commits": total_cb_commits,
         "repos": total_cb_repo_count,
         "projects": len(cb_projects),
-        "apiCost": actual_api_cost,
-        "subscriptionCost": actual_subscription_cost,
+        "operatorCost": actual_operator_cost,
+        "aiCost": actual_ai_cost,
+        "totalCost": actual_total_cost,
         "domains": domains,
         "skills": skills,
         "topProjects": top_projects_out,
@@ -264,7 +266,7 @@ print(f"  cb* sessions: {total_cb_sessions}, messages: {total_cb_messages}")
 print(f"  Tool calls (all): {total_tool_calls}")
 print(f"  Legacy team: {legacy_team_size} people, {person_months_low}-{person_months_high} person-months")
 print(f"  Legacy cost: ${total_legacy_low:,} - ${total_legacy_high:,}")
-print(f"  Actual cost: ${actual_subscription_cost}")
+print(f"  Actual cost: ${actual_total_cost:,} (operator ${actual_operator_cost:,} + AI ${actual_ai_cost:,})")
 print(f"  Cost savings: {cost_savings_pct}%")
 print(f"  Velocity multiplier: {velocity_multiplier}x")
 print(f"  Time compression: {time_compression}")

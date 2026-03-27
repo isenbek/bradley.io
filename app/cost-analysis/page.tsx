@@ -28,8 +28,9 @@ interface CostModel {
     commits: number
     repos: number
     projects: number
-    apiCost: number
-    subscriptionCost: number
+    operatorCost: number
+    aiCost: number
+    totalCost: number
     domains: { name: string; score: number }[]
     skills: { name: string; count: number }[]
     topProjects: { name: string; sessions: number; messages: number }[]
@@ -231,7 +232,7 @@ export default function CostAnalysisPage() {
   }
 
   const legacyMid = Math.round((data.legacy.totalCost.low + data.legacy.totalCost.high) / 2)
-  const actualCost = data.actual.subscriptionCost
+  const actualCost = data.actual.totalCost
   const legacyMonthsMid = Math.round((data.legacy.estimatedMonths.low + data.legacy.estimatedMonths.high) / 2)
   const fmt = (n: number) => n.toLocaleString("en-US")
   const fmtK = (n: number) => `$${(n / 1000).toLocaleString("en-US", { maximumFractionDigits: 0 })}K`
@@ -283,7 +284,7 @@ export default function CostAnalysisPage() {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
             {[
               { label: "Legacy Estimate", value: fmtK(legacyMid), sub: `${data.legacy.teamSize}-person team · ${legacyMonthsMid} months`, color: "var(--brand-secondary)" },
-              { label: "Actual Cost", value: `$${fmt(actualCost)}`, sub: "1 person + Claude", color: "var(--brand-primary)" },
+              { label: "Actual Cost", value: `$${fmt(actualCost)}`, sub: `$${fmt(data.actual.operatorCost)} + $${fmt(data.actual.aiCost)} AI`, color: "var(--brand-primary)" },
               { label: "Velocity", value: `${data.comparison.velocityMultiplier}x`, sub: `${data.timespan.activeDays} active days`, color: "var(--brand-warning)" },
               { label: "Cost Reduction", value: `${data.comparison.costSavingsPercent}%`, sub: `$${fmt(legacyMid - actualCost)} saved`, color: "var(--brand-success, #22c55e)" },
             ].map((s) => (
