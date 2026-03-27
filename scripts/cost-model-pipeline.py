@@ -241,7 +241,7 @@ total_issues = {"opened": 0, "closed": 0, "bugs": 0, "features": 0, "other": 0}
 
 try:
     # Get all cb* repos
-    cb_repo_names = [r["name"] for r in cb_repos_in_scope[:20]]  # top 20
+    cb_repo_names = [r["name"] for r in cb_repos_in_scope]  # all cb* repos
 
     for repo_name in cb_repo_names:
         try:
@@ -339,7 +339,7 @@ industry_benchmarks = {
 
 output = {
     "generated": datetime.now().isoformat(),
-    "scope": "Campaign Brain (cb*) — Last 3-4 months",
+    "scope": "Campaign Brain Last 3 Months",
     "timespan": {
         "start": SCOPE_START.isoformat(),
         "end": SCOPE_END.isoformat(),
