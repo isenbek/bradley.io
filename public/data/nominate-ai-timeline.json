@@ -1,5 +1,5 @@
 {
-  "generated": "2026-03-26T09:08:37.372549+00:00",
+  "generated": "2026-03-27T09:04:19.646614+00:00",
   "org": "Nominate-AI",
   "totalRepos": 88,
   "firstCommit": "2022-12-09T19:55:42Z",
@@ -6912,11 +6912,33 @@
   ],
   "phases": [
     {
-      "name": "Prototyping Phase",
+      "name": "Prototyping",
       "startDate": "2025-04-14",
-      "endDate": "2025-04-26",
-      "description": "During this phase, a small team developed and showcased individual tools and ideas as part of the Nominate-AI project ecosystem. The focus was on proof-of-concept and experimentation.",
+      "endDate": "2025-05-26",
+      "description": "In this phase, seven repositories were created to develop and test individual components of the Nominate-AI project ecosystem. The focus was on building functional prototypes for various use cases, including data processing, messaging platforms, lead finding, email scanning, polling, web crawling, and header mapping.",
       "category": "ai-ml",
+      "milestones": [
+        {
+          "date": "2025-04-14",
+          "title": "Quantifi repository created",
+          "repo": "quantifi"
+        },
+        {
+          "date": "2025-04-16",
+          "title": "Meshnet and Weeds repositories created",
+          "repo": "meshnet, weeds"
+        },
+        {
+          "date": "2025-04-17",
+          "title": "Invoicehunter, Pollstar, Spydr, and Mapr repositories created",
+          "repo": "invoicehunter, pollstar, spydr, mapr"
+        },
+        {
+          "date": "2025-04-26",
+          "title": "Mapr repository completed with 13 commits",
+          "repo": "mapr"
+        }
+      ],
       "repos": [
         "quantifi",
         "meshnet",
@@ -6925,15 +6947,31 @@
         "pollstar",
         "spydr",
         "mapr"
-      ],
-      "milestones": []
+      ]
     },
     {
-      "name": "Alpha Prototyping",
+      "name": "Alpha Development Phase",
       "startDate": "2025-05-06",
       "endDate": "2025-08-16",
-      "description": "This phase focused on rapid prototyping and building minimal viable products (MVPs) for the Nominate-AI project ecosystem. The initial commits in maild, lochness, cryptid, and mog laid the groundwork for the subsequent development phases.",
-      "category": "systems",
+      "description": "During this phase, the core infrastructure and UI components of the Nominate-AI project ecosystem were developed. The development focused on setting up pipelines, creating a modern README.md, and implementing email integration with Gmail IMAP. The project also saw the creation of various tools and libraries for tasks such as URL encoding and batch processing.",
+      "category": "ai-ml",
+      "milestones": [
+        {
+          "date": "2025-05-06",
+          "title": "Initial Commit: Refactor Pipeline Scripts and Service Setup",
+          "repo": "maild"
+        },
+        {
+          "date": "2025-05-07",
+          "title": "Update README with Comprehensive Documentation",
+          "repo": "maild-ui"
+        },
+        {
+          "date": "2025-05-07",
+          "title": "Fix URL Encoding in Gmail IMAP Connection and Improve Error Handling",
+          "repo": "maild-exec"
+        }
+      ],
       "repos": [
         "maild",
         "maild-ui",
@@ -6942,49 +6980,43 @@
         "lochness",
         "cryptid",
         "mog"
-      ],
-      "milestones": []
+      ]
     },
     {
-      "name": "Nominate-AI Project Ecosystem Development Phase",
+      "name": "Initial Project Setup",
       "startDate": "2025-08-22",
       "endDate": "2025-11-25",
-      "description": "This development phase represents the creation of a set of core repositories for the Nominate-AI project ecosystem, focusing on foundational frameworks and tools. The phase saw the establishment of comprehensive testing infrastructure and documentation, as well as initial work on AI and ML components.",
+      "description": "The foundation for the Nominate-AI project was laid during this phase.",
       "category": "systems",
       "milestones": [
         {
-          "date": "2025-08-22",
-          "title": "Initial repository creation (flock)",
-          "repo": "flock"
-        },
-        {
           "date": "2025-09-17",
-          "title": "Lazarus (Python) - Initial development",
+          "title": "Lazarus Python Project",
           "repo": "lazarus"
         },
         {
           "date": "2025-09-23",
-          "title": "Seedbed (Python) - Comprehensive testing and documentation",
+          "title": "Seedbed Comprehensive Testing Infrastructure and Documentation",
           "repo": "seedbed"
         },
         {
           "date": "2025-10-13",
-          "title": "Clarion (TypeScript) - Initial development",
+          "title": "Clarion TypeScript Project",
           "repo": "clarion"
         },
         {
           "date": "2025-10-30",
-          "title": "CampaignBrain (Unknown)",
+          "title": "Campainbrain Unknown Project",
           "repo": "campainbrain"
         },
         {
           "date": "2025-11-11",
-          "title": "Oym (TypeScript) - Initial development",
+          "title": "Oym TypeScript Project",
           "repo": "oym"
         },
         {
           "date": "2025-11-25",
-          "title": "Cbtenant (Python) - Initial development",
+          "title": "Cbtenant Python Project",
           "repo": "cbtenant"
         }
       ],
@@ -6999,25 +7031,30 @@
       ]
     },
     {
-      "name": "Refactoring and Foundation Development",
+      "name": "Refactoring and Initial Development",
       "startDate": "2025-12-02",
       "endDate": "2025-12-13",
-      "description": "The development phase focuses on laying down a solid foundation for the Nominate-AI project, with the creation of core modules such as cbworkflow, cbapp, and the initial setup of sub-modules like cbetl, cbai, cbpublic, and cbdistricts. These repositories represent the backbone of the project's architecture.",
+      "description": "The first weeks of Nominate-AI project ecosystem development focused on refactoring and initializing core components.",
       "category": "systems",
       "milestones": [
         {
           "date": "2025-12-02",
-          "title": "Initial Creation of Core Modules",
+          "title": "Initial commit for cbworkflow and cbapp",
           "repo": "cbworkflow"
         },
         {
+          "date": "2025-12-10",
+          "title": "Initial commit for system",
+          "repo": "system"
+        },
+        {
           "date": "2025-12-11",
-          "title": "Completion of cbetl and cbai Sub-modules",
+          "title": "Initial commits for cbetl and cbai",
           "repo": "cbetl, cbai"
         },
         {
           "date": "2025-12-13",
-          "title": "Completion of cbpublic and cbdistricts Sub-modules",
+          "title": "['Initial commit for cbpublic', 'Initial commit for cbdistricts']",
           "repo": "cbpublic, cbdistricts"
         }
       ],
@@ -7032,11 +7069,43 @@
       ]
     },
     {
-      "name": "Initial Development",
+      "name": "Infrastructure Development",
       "startDate": "2025-12-17",
       "endDate": "2025-12-26",
-      "description": "The Nominate-AI project ecosystem was initialized with the creation of seven repositories, laying the groundwork for future AI and machine learning development.",
+      "description": "A series of repositories were created to provide foundational components for the Nominate-AI project ecosystem, including infrastructure tools and core libraries.",
       "category": "systems",
+      "milestones": [
+        {
+          "date": "2025-12-17",
+          "title": "Initial cbmodels repository created",
+          "repo": "cbmodels"
+        },
+        {
+          "date": "2025-12-18",
+          "title": "Initial cbradio repository created",
+          "repo": "cbradio"
+        },
+        {
+          "date": "2025-12-21",
+          "title": "Initial cbinfra and cbsurveys repositories created",
+          "repo": "cbinfra"
+        },
+        {
+          "date": "2025-12-22",
+          "title": "Initial cbfiles repository created with image and video processing features",
+          "repo": "cbfiles"
+        },
+        {
+          "date": "2025-12-24",
+          "title": "Initial cbdocs shell repository created",
+          "repo": "cbdocs"
+        },
+        {
+          "date": "2025-12-26",
+          "title": "Initial cbmesh Python repository created",
+          "repo": "cbmesh"
+        }
+      ],
       "repos": [
         "cbmodels",
         "cbradio",
@@ -7045,49 +7114,38 @@
         "cbfiles",
         "cbdocs",
         "cbmesh"
-      ],
-      "milestones": []
+      ]
     },
     {
-      "name": "Development Maturity",
+      "name": "Development of Nominate-AI Project Ecosystem",
       "startDate": "2026-01-02",
-      "endDate": "2026-01-31",
-      "description": "The Development Maturity phase saw the creation of various projects, including cbos and cbsms, which demonstrate a high level of development and maintenance. These repositories showcase the growth and maturity of the Nominate-AI project ecosystem.",
+      "endDate": "2026-01-16",
+      "description": "The development phase represented by these repositories focuses on building various components and tools for the Nominate-AI project ecosystem. This includes authentication, SMS gateway APIs, testing, and other foundational elements.",
       "category": "systems",
       "milestones": [
         {
-          "date": "2025-12-30",
-          "title": "",
-          "repo": "cbintel"
-        },
-        {
-          "date": "2025-12-31",
-          "title": "",
-          "repo": "cbproject"
-        },
-        {
           "date": "2026-01-02",
-          "title": "",
+          "title": "Initial cbos repository creation",
           "repo": "cbos"
         },
         {
           "date": "2026-01-02",
-          "title": "",
+          "title": "Initial cbauth repository creation",
           "repo": "cbauth"
         },
         {
           "date": "2026-01-11",
-          "title": "",
+          "title": "Initial cbmaintain repository creation",
           "repo": "cbmaintain"
         },
         {
           "date": "2026-01-15",
-          "title": "",
+          "title": "Initial cbtest repository creation",
           "repo": "cbtest"
         },
         {
           "date": "2026-01-16",
-          "title": "",
+          "title": "Initial cbsms repository creation",
           "repo": "cbsms"
         }
       ],
@@ -7102,48 +7160,10 @@
       ]
     },
     {
-      "name": "Development of Nominate-AI Project Ecosystem",
+      "name": "Phase 7",
       "startDate": "2026-01-16",
       "endDate": "2026-01-25",
-      "description": "This phase represents the initial development of the Nominate-AI project ecosystem, focusing on setting up the foundation for various APIs and tools.",
-      "category": "systems",
-      "milestones": [
-        {
-          "date": "2026-01-16",
-          "title": "cbunstruct - Unstructured Document Processing API",
-          "repo": "cbunstruct"
-        },
-        {
-          "date": "2026-01-18",
-          "title": "cbtor - WireGuard-to-TOR tunnel infrastructure",
-          "repo": "cbtor"
-        },
-        {
-          "date": "2026-01-18",
-          "title": "cbmobile - Mobile Application Development",
-          "repo": "cbmobile"
-        },
-        {
-          "date": "2026-01-20",
-          "title": "cbuserguide - Automated User Guide Generator",
-          "repo": "cbuserguide"
-        },
-        {
-          "date": "2026-01-22",
-          "title": "cbemail - Headless Email Client API",
-          "repo": "cbemail"
-        },
-        {
-          "date": "2026-01-23",
-          "title": "cbindex - FastAPI Wrapper for PageIndex",
-          "repo": "cbindex"
-        },
-        {
-          "date": "2026-01-25",
-          "title": "cbtiles - CartoDB Tile Caching Proxy",
-          "repo": "cbtiles"
-        }
-      ],
+      "description": "Development of cbunstruct, cbtor, cbmobile and 4 more repos.",
       "repos": [
         "cbunstruct",
         "cbtor",
@@ -7152,36 +7172,15 @@
         "cbemail",
         "cbindex",
         "cbtiles"
-      ]
+      ],
+      "milestones": [],
+      "category": "systems"
     },
     {
-      "name": "Campaign Brain Ecosystem Development",
+      "name": "Phase 8",
       "startDate": "2026-01-26",
-      "endDate": "2026-02-01",
-      "description": "The development of the Campaign Brain ecosystem involved creating seven key repositories that provide a unified framework for Nominate-AI services. The campaign brain geocoding service was built on top of Nominatim, while the core library and URL shortener services provided essential functionality for the other components. This phase focused on laying the foundation for the ecosystem.",
-      "category": "ai-ml",
-      "milestones": [
-        {
-          "date": "2026-01-26",
-          "title": "Initial Campaign Brain Services Released",
-          "repo": "cbgeo, cbmaps, cbcli"
-        },
-        {
-          "date": "2026-01-28",
-          "title": "Campaign Brain Self-Hosted CDN Assets Created",
-          "repo": "cbcdn"
-        },
-        {
-          "date": "2026-01-29",
-          "title": "Core Library for Campaign Brain FastAPI Services Released",
-          "repo": "cbcore"
-        },
-        {
-          "date": "2026-01-31",
-          "title": "FastAPI URL Shortener Service and Agent Memory Service Launched",
-          "repo": "cblinks, cbscout"
-        }
-      ],
+      "endDate": "2026-01-31",
+      "description": "Development of cbgeo, cbmaps, cbcli and 4 more repos.",
       "repos": [
         "cbgeo",
         "cbmaps",
@@ -7190,48 +7189,50 @@
         "cbcore",
         "cblinks",
         "cbscout"
-      ]
+      ],
+      "milestones": [],
+      "category": "systems"
     },
     {
-      "name": "Initial Setup and Infrastructure",
+      "name": "System Development Phase",
       "startDate": "2026-02-02",
       "endDate": "2026-02-10",
-      "description": "The Nominate-AI project ecosystem was established with the creation of seven repositories, setting up the foundation for a robust campaign management system. This initial setup included distributed monitoring and self-healing infrastructure, as well as basic issue tracking and API access layers.",
+      "description": "The system development phase of the Nominate-AI project ecosystem saw the creation of seven repositories, each focusing on a distinct aspect of the campaign brain system. These repos included a webhooks ingestion service, an issue tracking dashboard, real-time monitoring dashboards, VPN cluster management APIs, online payment systems, and API access layers for social media accounts. This phase aimed to establish the foundation for the overall system.",
       "category": "systems",
       "milestones": [
         {
           "date": "2026-02-02",
-          "title": "cboverseer (Campaign Brain System Manager)",
+          "title": "Campaign Brain System Manager - Distributed monitoring and self-healing infrastructure",
           "repo": "cboverseer"
         },
         {
           "date": "2026-02-05",
-          "title": "cbwebhook (Webhook Ingestion Service)",
+          "title": "Webhook Ingestion Service",
           "repo": "cbwebhook"
         },
         {
           "date": "2026-02-05",
-          "title": "cbissues (Issue Tracking Dashboard)",
+          "title": "Issue Tracking Dashboard",
           "repo": "cbissues"
         },
         {
           "date": "2026-02-06",
-          "title": "cbpulse (Real-time System Health Monitoring)",
+          "title": "Real-time System Health and Activity Monitoring Dashboard",
           "repo": "cbpulse"
         },
         {
           "date": "2026-02-07",
-          "title": "cbvpn (VPN Cluster Management API)",
+          "title": "VPN Cluster Management API - Geographic Routing through OpenWRT Workers",
           "repo": "cbvpn"
         },
         {
           "date": "2026-02-07",
-          "title": "cbpayments (Online Payment System)",
+          "title": "Online Payment System",
           "repo": "cbpayments"
         },
         {
           "date": "2026-02-10",
-          "title": "cbsocial (API Access Layer for Social Media Accounts)",
+          "title": "API Access Layer for Social Media Accounts",
           "repo": "cbsocial"
         }
       ],
@@ -7246,48 +7247,10 @@
       ]
     },
     {
-      "name": "System Development Phase",
+      "name": "Phase 10",
       "startDate": "2026-02-15",
       "endDate": "2026-02-22",
-      "description": "This system development phase focuses on building various components of the Nominate-AI project ecosystem, including the Campaign Brain service catalog, a CLI toolkit for managing VPN networks, and internal tools for managing political radio advertising rates.",
-      "category": "systems",
-      "milestones": [
-        {
-          "date": "2026-02-15",
-          "title": "cbmcp (MCP server)",
-          "repo": "cbmcp"
-        },
-        {
-          "date": "2026-02-17",
-          "title": "cbnetwork (CLI toolkit)",
-          "repo": "cbnetwork"
-        },
-        {
-          "date": "2026-02-20",
-          "title": "CB Executive Summaries",
-          "repo": "cbexecutive"
-        },
-        {
-          "date": "2026-02-20",
-          "title": "RCI-Frontend (political radio advertising rates)",
-          "repo": "RCI-Frontend"
-        },
-        {
-          "date": "2026-02-21",
-          "title": "CBPulse UI (business intelligence dashboard)",
-          "repo": "cbpulse-ui"
-        },
-        {
-          "date": "2026-02-21",
-          "title": "CBfront (email integration service)",
-          "repo": "cbfront"
-        },
-        {
-          "date": "2026-02-22",
-          "title": "vip-frontend (financial dashboard)",
-          "repo": "vip-frontend"
-        }
-      ],
+      "description": "Development of cbmcp, cbnetwork, cbexecutive and 4 more repos.",
       "repos": [
         "cbmcp",
         "cbnetwork",
@@ -7296,38 +7259,40 @@
         "cbpulse-ui",
         "cbfront",
         "vip-frontend"
-      ]
+      ],
+      "milestones": [],
+      "category": "systems"
     },
     {
       "name": "Campaign Brain Development Phase",
       "startDate": "2026-02-22",
       "endDate": "2026-03-01",
-      "description": "This phase saw the creation of core components for Campaign Brain, including UI frameworks, router management tools, and generative AI backends.",
-      "category": "ai-ml",
+      "description": "This phase saw the creation of foundational components for the Nominate-AI project ecosystem, including UI and backend tools for CBRadio, router management, and template generation. The development phase also included the launch of ComfyUI's generative AI backend. This marked a significant milestone in the project's development.",
+      "category": "systems",
       "milestones": [
         {
           "date": "2026-02-22",
-          "title": "Initial commit of CBRadio UI, cbrouter, cbtemplates, and cbradio-web",
-          "repo": "cbradio-ui, cbrouter, cbtemplates, cbradio-web"
+          "title": "Initial CBRadio UI and Router Setup",
+          "repo": "cbradio-ui"
         },
         {
           "date": "2026-02-23",
-          "title": "Added new starter project templates for Campaign Brain services (cbtemplates)",
-          "repo": "cbtemplates"
+          "title": "Launch of CBRadio Web and Template Generation Tools",
+          "repo": "cbradio-web, cbtemplates"
         },
         {
           "date": "2026-02-26",
-          "title": "Released Configurable Scheduled Task Engine (cbcron)",
+          "title": "Deployment of Configurable Scheduled Task Engine (cbcron)",
           "repo": "cbcron"
         },
         {
           "date": "2026-02-27",
-          "title": "Added CBlogs",
+          "title": "Launch of Campaign Brain Blogging Platform (cblogs)",
           "repo": "cblogs"
         },
         {
           "date": "2026-02-28",
-          "title": "Released ComfyUI generative AI backend with FastAPI proxy, sprite generation, and CDN integration (cbcomfy)",
+          "title": "Launch of ComfyUI Generative AI Backend with FastAPI Proxy and CDN Integration",
           "repo": "cbcomfy"
         }
       ],
@@ -7342,11 +7307,48 @@
       ]
     },
     {
-      "name": "Campaign Brain Ecosystem Development",
-      "startDate": "2026-02-28",
-      "endDate": "2026-03-12",
-      "description": "The development of the Campaign Brain ecosystem involved creating various services and infrastructure to support its AI-powered capabilities. The team focused on building tools for data management, AI model integration, and user guides. This phase laid the groundwork for the ecosystem's future growth.",
-      "category": "ai-ml",
+      "name": "Campaign Brain Foundation",
+      "startDate": "2026-03-01",
+      "endDate": "2026-03-28",
+      "description": "The Nominate-AI project ecosystem's foundation, focusing on Campaign Brain's infrastructure and supporting services.",
+      "category": "systems",
+      "milestones": [
+        {
+          "date": "2026-02-28",
+          "title": "Campaign Brain TTS service wrapping VibeVoice-Realtime-0.5B",
+          "repo": "cbtts"
+        },
+        {
+          "date": "2026-03-01",
+          "title": "Campaign Brain data center infrastructure \u2014 systemd units, SOPS scripts, health daemon, certbot hooks",
+          "repo": "cbdc"
+        },
+        {
+          "date": "2026-03-03",
+          "title": "Initial CBQA CLI with full DC1 regression results",
+          "repo": "cbqa"
+        },
+        {
+          "date": "2026-03-03",
+          "title": "Multi-tenant Airtable API wrapper with DuckDB sync",
+          "repo": "cbairtable"
+        },
+        {
+          "date": "2026-03-03",
+          "title": "Multi-tenant Iterable API wrapper with DuckDB sync",
+          "repo": "cbiterable"
+        },
+        {
+          "date": "2026-03-12",
+          "title": "User guides and ops handbooks for Campaign Brain services",
+          "repo": "cbhandbook"
+        },
+        {
+          "date": "2026-03-12",
+          "title": "Campaign Brain infrastructure monorepo \u2014 consolidates infra services as submodules",
+          "repo": "infrastructure"
+        }
+      ],
       "repos": [
         "cbtts",
         "cbdc",
@@ -7355,20 +7357,34 @@
         "cbiterable",
         "cbhandbook",
         "infrastructure"
-      ],
-      "milestones": []
+      ]
     },
     {
-      "name": "Project Planning and Development Phase",
+      "name": "Campaign Brain Infrastructure Development",
       "startDate": "2026-03-17",
       "endDate": "2026-03-26",
-      "description": "The Project Planning and Development Phase involves the creation of foundational tools and services for the Nominate-AI project ecosystem. This phase saw the development of AI-powered task management and scheduling, infrastructure standards updates, operations dashboards, and an e-signature service. These early components laid the groundwork for the subsequent phases of development.",
+      "description": "This development phase focused on building the infrastructure and tools necessary to support Campaign Brain, including AI-powered task management and scheduling, campaign brain infrastructure standards, operations dashboards, and an e-signature service.",
       "category": "systems",
       "milestones": [
         {
           "date": "2026-03-17",
-          "title": "cbea (AI-powered task management and scheduling tool)",
+          "title": "cbea: Task Management and Scheduling Tool",
           "repo": "cbea"
+        },
+        {
+          "date": "2026-03-18",
+          "title": "cb infrasays: Campaign Brain Infrastructure Standards & Updates",
+          "repo": "cb infrasays"
+        },
+        {
+          "date": "2026-03-19",
+          "title": "CB Ops: Operations Dashboard",
+          "repo": "cb ops"
+        },
+        {
+          "date": "2026-03-26",
+          "title": "cbesig: E-Signature Service",
+          "repo": "cbesig"
         }
       ],
       "repos": [
@@ -7387,7 +7403,7 @@
       "commits": 324,
       "firstCommit": "2022-12-09T19:55:42Z",
       "lastCommit": "2026-03-22T03:26:07Z",
-      "phase": "Development of Nominate-AI Project Ecosystem"
+      "phase": "Phase 7"
     },
     {
       "name": "cbcomfy",
@@ -7405,7 +7421,7 @@
       "commits": 50,
       "firstCommit": "2025-04-14T06:55:51Z",
       "lastCommit": "2026-03-06T02:22:21Z",
-      "phase": "Prototyping Phase"
+      "phase": "Prototyping"
     },
     {
       "name": "meshnet",
@@ -7414,7 +7430,7 @@
       "commits": 3,
       "firstCommit": "2025-04-16T05:42:20Z",
       "lastCommit": "2025-04-17T08:01:53Z",
-      "phase": "Prototyping Phase"
+      "phase": "Prototyping"
     },
     {
       "name": "weeds",
@@ -7423,7 +7439,7 @@
       "commits": 4,
       "firstCommit": "2025-04-16T06:35:57Z",
       "lastCommit": "2025-04-17T06:28:41Z",
-      "phase": "Prototyping Phase"
+      "phase": "Prototyping"
     },
     {
       "name": "invoicehunter",
@@ -7432,7 +7448,7 @@
       "commits": 49,
       "firstCommit": "2025-04-17T04:44:23Z",
       "lastCommit": "2026-03-06T02:15:44Z",
-      "phase": "Prototyping Phase"
+      "phase": "Prototyping"
     },
     {
       "name": "pollstar",
@@ -7441,7 +7457,7 @@
       "commits": 2,
       "firstCommit": "2025-04-17T06:07:17Z",
       "lastCommit": "2025-04-17T07:59:57Z",
-      "phase": "Prototyping Phase"
+      "phase": "Prototyping"
     },
     {
       "name": "spydr",
@@ -7450,7 +7466,7 @@
       "commits": 4,
       "firstCommit": "2025-04-17T08:03:11Z",
       "lastCommit": "2026-03-06T02:19:22Z",
-      "phase": "Prototyping Phase"
+      "phase": "Prototyping"
     },
     {
       "name": "mapr",
@@ -7459,7 +7475,7 @@
       "commits": 13,
       "firstCommit": "2025-04-27T04:28:53Z",
       "lastCommit": "2025-04-29T02:29:25Z",
-      "phase": "Prototyping Phase"
+      "phase": "Prototyping"
     },
     {
       "name": "pocket",
@@ -7468,7 +7484,7 @@
       "commits": 8,
       "firstCommit": "2025-05-01T21:48:30Z",
       "lastCommit": "2025-06-12T06:09:18Z",
-      "phase": "Alpha Prototyping"
+      "phase": "Alpha Development Phase"
     },
     {
       "name": "maild",
@@ -7477,7 +7493,7 @@
       "commits": 6,
       "firstCommit": "2025-05-06T16:30:35Z",
       "lastCommit": "2026-03-06T02:16:36Z",
-      "phase": "Alpha Prototyping"
+      "phase": "Alpha Development Phase"
     },
     {
       "name": "maild-ui",
@@ -7486,7 +7502,7 @@
       "commits": 2,
       "firstCommit": "2025-05-07T01:59:23Z",
       "lastCommit": "2025-05-07T03:05:39Z",
-      "phase": "Alpha Prototyping"
+      "phase": "Alpha Development Phase"
     },
     {
       "name": "maild-exec",
@@ -7495,7 +7511,7 @@
       "commits": 2,
       "firstCommit": "2025-05-07T03:43:27Z",
       "lastCommit": "2025-05-07T04:16:42Z",
-      "phase": "Alpha Prototyping"
+      "phase": "Alpha Development Phase"
     },
     {
       "name": "lochness",
@@ -7504,7 +7520,7 @@
       "commits": 144,
       "firstCommit": "2025-08-01T00:35:43Z",
       "lastCommit": "2025-09-20T02:45:55Z",
-      "phase": "Alpha Prototyping"
+      "phase": "Alpha Development Phase"
     },
     {
       "name": "cryptid",
@@ -7513,7 +7529,7 @@
       "commits": 6,
       "firstCommit": "2025-08-15T17:03:08Z",
       "lastCommit": "2025-08-15T19:33:34Z",
-      "phase": "Alpha Prototyping"
+      "phase": "Alpha Development Phase"
     },
     {
       "name": "mog",
@@ -7522,7 +7538,7 @@
       "commits": 33,
       "firstCommit": "2025-08-16T18:25:39Z",
       "lastCommit": "2026-03-06T02:15:18Z",
-      "phase": "Alpha Prototyping"
+      "phase": "Alpha Development Phase"
     },
     {
       "name": "flock",
@@ -7531,7 +7547,7 @@
       "commits": 0,
       "firstCommit": "2025-08-22T18:36:57Z",
       "lastCommit": "2025-08-22T18:36:57Z",
-      "phase": "Nominate-AI Project Ecosystem Development Phase"
+      "phase": "Initial Project Setup"
     },
     {
       "name": "lazarus",
@@ -7540,7 +7556,7 @@
       "commits": 55,
       "firstCommit": "2025-09-17T03:05:51Z",
       "lastCommit": "2025-10-27T14:14:27Z",
-      "phase": "Nominate-AI Project Ecosystem Development Phase"
+      "phase": "Initial Project Setup"
     },
     {
       "name": "seedbed",
@@ -7549,7 +7565,7 @@
       "commits": 2,
       "firstCommit": "2025-09-23T22:30:56Z",
       "lastCommit": "2025-09-24T05:08:14Z",
-      "phase": "Nominate-AI Project Ecosystem Development Phase"
+      "phase": "Initial Project Setup"
     },
     {
       "name": "clarion",
@@ -7558,7 +7574,7 @@
       "commits": 125,
       "firstCommit": "2025-10-13T20:09:18Z",
       "lastCommit": "2025-11-11T19:48:32Z",
-      "phase": "Nominate-AI Project Ecosystem Development Phase"
+      "phase": "Initial Project Setup"
     },
     {
       "name": "oym",
@@ -7567,7 +7583,7 @@
       "commits": 140,
       "firstCommit": "2025-10-13T20:09:18Z",
       "lastCommit": "2025-11-13T21:54:06Z",
-      "phase": "Nominate-AI Project Ecosystem Development Phase"
+      "phase": "Initial Project Setup"
     },
     {
       "name": "campainbrain",
@@ -7576,7 +7592,7 @@
       "commits": 0,
       "firstCommit": "2025-10-30T14:29:06Z",
       "lastCommit": "2025-10-30T14:29:06Z",
-      "phase": "Nominate-AI Project Ecosystem Development Phase"
+      "phase": "Initial Project Setup"
     },
     {
       "name": "cbtenant",
@@ -7585,7 +7601,7 @@
       "commits": 172,
       "firstCommit": "2025-10-30T16:58:15Z",
       "lastCommit": "2026-03-22T04:01:33Z",
-      "phase": "Nominate-AI Project Ecosystem Development Phase"
+      "phase": "Initial Project Setup"
     },
     {
       "name": "cbworkflow",
@@ -7594,7 +7610,7 @@
       "commits": 70,
       "firstCommit": "2025-12-02T21:07:30Z",
       "lastCommit": "2026-03-23T14:34:50Z",
-      "phase": "Refactoring and Foundation Development"
+      "phase": "Refactoring and Initial Development"
     },
     {
       "name": "cbapp",
@@ -7603,7 +7619,7 @@
       "commits": 434,
       "firstCommit": "2025-12-02T23:55:28Z",
       "lastCommit": "2026-03-22T03:58:41Z",
-      "phase": "Refactoring and Foundation Development"
+      "phase": "Refactoring and Initial Development"
     },
     {
       "name": "system",
@@ -7612,7 +7628,7 @@
       "commits": 7,
       "firstCommit": "2025-12-10T18:05:37Z",
       "lastCommit": "2025-12-13T18:04:58Z",
-      "phase": "Refactoring and Foundation Development"
+      "phase": "Refactoring and Initial Development"
     },
     {
       "name": "cbdistricts",
@@ -7621,7 +7637,7 @@
       "commits": 89,
       "firstCommit": "2025-12-13T21:24:17Z",
       "lastCommit": "2026-03-22T03:53:14Z",
-      "phase": "Refactoring and Foundation Development"
+      "phase": "Refactoring and Initial Development"
     },
     {
       "name": "cbpublic",
@@ -7630,7 +7646,7 @@
       "commits": 31,
       "firstCommit": "2025-12-14T18:55:03Z",
       "lastCommit": "2026-03-22T03:25:57Z",
-      "phase": "Refactoring and Foundation Development"
+      "phase": "Refactoring and Initial Development"
     },
     {
       "name": "cbetl",
@@ -7639,7 +7655,7 @@
       "commits": 21,
       "firstCommit": "2025-12-15T23:30:50Z",
       "lastCommit": "2026-03-22T03:53:22Z",
-      "phase": "Refactoring and Foundation Development"
+      "phase": "Refactoring and Initial Development"
     },
     {
       "name": "cbai",
@@ -7648,7 +7664,7 @@
       "commits": 62,
       "firstCommit": "2025-12-15T23:30:50Z",
       "lastCommit": "2026-03-22T03:53:01Z",
-      "phase": "Refactoring and Foundation Development"
+      "phase": "Refactoring and Initial Development"
     },
     {
       "name": "cbmodels",
@@ -7657,7 +7673,7 @@
       "commits": 183,
       "firstCommit": "2025-12-17T05:45:49Z",
       "lastCommit": "2026-03-26T02:12:51Z",
-      "phase": "Initial Development"
+      "phase": "Infrastructure Development"
     },
     {
       "name": "cbradio",
@@ -7666,7 +7682,7 @@
       "commits": 277,
       "firstCommit": "2025-12-19T06:37:50Z",
       "lastCommit": "2026-03-26T04:35:01Z",
-      "phase": "Initial Development"
+      "phase": "Infrastructure Development"
     },
     {
       "name": "RCI-Frontend",
@@ -7675,7 +7691,7 @@
       "commits": 478,
       "firstCommit": "2025-12-20T17:38:55Z",
       "lastCommit": "2026-02-22T01:51:13Z",
-      "phase": "System Development Phase"
+      "phase": "Phase 10"
     },
     {
       "name": "cbsurveys",
@@ -7684,7 +7700,7 @@
       "commits": 12,
       "firstCommit": "2025-12-21T06:06:49Z",
       "lastCommit": "2026-03-22T03:58:21Z",
-      "phase": "Initial Development"
+      "phase": "Infrastructure Development"
     },
     {
       "name": "cbinfra",
@@ -7693,7 +7709,7 @@
       "commits": 199,
       "firstCommit": "2025-12-21T21:41:51Z",
       "lastCommit": "2026-03-15T01:54:01Z",
-      "phase": "Initial Development"
+      "phase": "Infrastructure Development"
     },
     {
       "name": "cbfiles",
@@ -7702,7 +7718,7 @@
       "commits": 53,
       "firstCommit": "2025-12-22T17:44:17Z",
       "lastCommit": "2026-03-26T00:39:18Z",
-      "phase": "Initial Development"
+      "phase": "Infrastructure Development"
     },
     {
       "name": "cbdocs",
@@ -7711,7 +7727,7 @@
       "commits": 122,
       "firstCommit": "2025-12-24T20:06:09Z",
       "lastCommit": "2026-03-26T04:00:19Z",
-      "phase": "Initial Development"
+      "phase": "Infrastructure Development"
     },
     {
       "name": "cbintel",
@@ -7720,7 +7736,7 @@
       "commits": 432,
       "firstCommit": "2025-12-31T00:33:04Z",
       "lastCommit": "2026-03-26T04:48:08Z",
-      "phase": "Development Maturity"
+      "phase": "Development of Nominate-AI Project Ecosystem"
     },
     {
       "name": "cbproject",
@@ -7729,7 +7745,7 @@
       "commits": 86,
       "firstCommit": "2025-12-31T22:45:20Z",
       "lastCommit": "2026-03-26T03:00:07Z",
-      "phase": "Development Maturity"
+      "phase": "Development of Nominate-AI Project Ecosystem"
     },
     {
       "name": "cbauth",
@@ -7738,7 +7754,7 @@
       "commits": 105,
       "firstCommit": "2026-01-02T03:19:11Z",
       "lastCommit": "2026-03-22T03:58:44Z",
-      "phase": "Development Maturity"
+      "phase": "Development of Nominate-AI Project Ecosystem"
     },
     {
       "name": "cbos",
@@ -7747,7 +7763,7 @@
       "commits": 50,
       "firstCommit": "2026-01-02T04:53:04Z",
       "lastCommit": "2026-03-14T20:21:06Z",
-      "phase": "Development Maturity"
+      "phase": "Development of Nominate-AI Project Ecosystem"
     },
     {
       "name": "cbmesh",
@@ -7756,7 +7772,7 @@
       "commits": 57,
       "firstCommit": "2026-01-09T17:03:41Z",
       "lastCommit": "2026-03-22T03:25:54Z",
-      "phase": "Initial Development"
+      "phase": "Infrastructure Development"
     },
     {
       "name": "cbmaintain",
@@ -7765,7 +7781,7 @@
       "commits": 9,
       "firstCommit": "2026-01-14T21:39:09Z",
       "lastCommit": "2026-03-13T00:52:58Z",
-      "phase": "Development Maturity"
+      "phase": "Development of Nominate-AI Project Ecosystem"
     },
     {
       "name": "cbtest",
@@ -7774,7 +7790,7 @@
       "commits": 11,
       "firstCommit": "2026-01-15T03:08:56Z",
       "lastCommit": "2026-03-06T13:49:27Z",
-      "phase": "Development Maturity"
+      "phase": "Development of Nominate-AI Project Ecosystem"
     },
     {
       "name": "cbsms",
@@ -7783,7 +7799,7 @@
       "commits": 23,
       "firstCommit": "2026-01-16T21:25:04Z",
       "lastCommit": "2026-03-23T16:00:03Z",
-      "phase": "Development Maturity"
+      "phase": "Development of Nominate-AI Project Ecosystem"
     },
     {
       "name": "cbtor",
@@ -7792,7 +7808,7 @@
       "commits": 32,
       "firstCommit": "2026-01-18T01:04:19Z",
       "lastCommit": "2026-03-23T16:00:04Z",
-      "phase": "Development of Nominate-AI Project Ecosystem"
+      "phase": "Phase 7"
     },
     {
       "name": "cbmobile",
@@ -7801,7 +7817,7 @@
       "commits": 216,
       "firstCommit": "2026-01-18T04:44:02Z",
       "lastCommit": "2026-03-22T03:54:25Z",
-      "phase": "Development of Nominate-AI Project Ecosystem"
+      "phase": "Phase 7"
     },
     {
       "name": "cbuserguide",
@@ -7810,7 +7826,7 @@
       "commits": 27,
       "firstCommit": "2026-01-20T23:28:03Z",
       "lastCommit": "2026-03-22T04:01:30Z",
-      "phase": "Development of Nominate-AI Project Ecosystem"
+      "phase": "Phase 7"
     },
     {
       "name": "cbemail",
@@ -7819,7 +7835,7 @@
       "commits": 14,
       "firstCommit": "2026-01-22T18:50:39Z",
       "lastCommit": "2026-03-22T03:53:18Z",
-      "phase": "Development of Nominate-AI Project Ecosystem"
+      "phase": "Phase 7"
     },
     {
       "name": "cbindex",
@@ -7828,7 +7844,7 @@
       "commits": 19,
       "firstCommit": "2026-01-23T01:44:28Z",
       "lastCommit": "2026-03-22T03:54:04Z",
-      "phase": "Development of Nominate-AI Project Ecosystem"
+      "phase": "Phase 7"
     },
     {
       "name": "cbtiles",
@@ -7837,7 +7853,7 @@
       "commits": 24,
       "firstCommit": "2026-01-25T18:46:34Z",
       "lastCommit": "2026-03-22T03:58:25Z",
-      "phase": "Development of Nominate-AI Project Ecosystem"
+      "phase": "Phase 7"
     },
     {
       "name": "cbgeo",
@@ -7846,7 +7862,7 @@
       "commits": 23,
       "firstCommit": "2026-01-26T00:04:25Z",
       "lastCommit": "2026-03-22T03:48:22Z",
-      "phase": "Campaign Brain Ecosystem Development"
+      "phase": "Phase 8"
     },
     {
       "name": "cbmaps",
@@ -7855,7 +7871,7 @@
       "commits": 17,
       "firstCommit": "2026-01-26T16:39:27Z",
       "lastCommit": "2026-03-22T03:54:21Z",
-      "phase": "Campaign Brain Ecosystem Development"
+      "phase": "Phase 8"
     },
     {
       "name": "cbcli",
@@ -7864,7 +7880,7 @@
       "commits": 24,
       "firstCommit": "2026-01-26T17:26:41Z",
       "lastCommit": "2026-03-25T19:06:04Z",
-      "phase": "Campaign Brain Ecosystem Development"
+      "phase": "Phase 8"
     },
     {
       "name": "cbcdn",
@@ -7873,7 +7889,7 @@
       "commits": 8,
       "firstCommit": "2026-01-28T19:25:59Z",
       "lastCommit": "2026-03-18T19:41:55Z",
-      "phase": "Campaign Brain Ecosystem Development"
+      "phase": "Phase 8"
     },
     {
       "name": "cbcore",
@@ -7882,7 +7898,7 @@
       "commits": 34,
       "firstCommit": "2026-01-29T18:27:34Z",
       "lastCommit": "2026-03-15T01:50:54Z",
-      "phase": "Campaign Brain Ecosystem Development"
+      "phase": "Phase 8"
     },
     {
       "name": "cblinks",
@@ -7891,7 +7907,7 @@
       "commits": 19,
       "firstCommit": "2026-01-31T01:15:27Z",
       "lastCommit": "2026-03-22T03:54:17Z",
-      "phase": "Campaign Brain Ecosystem Development"
+      "phase": "Phase 8"
     },
     {
       "name": "cbscout",
@@ -7900,7 +7916,7 @@
       "commits": 21,
       "firstCommit": "2026-01-31T02:31:31Z",
       "lastCommit": "2026-03-22T03:58:13Z",
-      "phase": "Campaign Brain Ecosystem Development"
+      "phase": "Phase 8"
     },
     {
       "name": "cboverseer",
@@ -7909,7 +7925,7 @@
       "commits": 70,
       "firstCommit": "2026-02-02T00:35:45Z",
       "lastCommit": "2026-03-25T02:14:23Z",
-      "phase": "Initial Setup and Infrastructure"
+      "phase": "System Development Phase"
     },
     {
       "name": "vip-frontend",
@@ -7918,7 +7934,7 @@
       "commits": 40,
       "firstCommit": "2026-02-02T23:33:40Z",
       "lastCommit": "2026-02-19T03:51:56Z",
-      "phase": "System Development Phase"
+      "phase": "Phase 10"
     },
     {
       "name": "cbwebhook",
@@ -7927,7 +7943,7 @@
       "commits": 23,
       "firstCommit": "2026-02-06T00:40:11Z",
       "lastCommit": "2026-03-26T02:17:26Z",
-      "phase": "Initial Setup and Infrastructure"
+      "phase": "System Development Phase"
     },
     {
       "name": "cbissues",
@@ -7936,7 +7952,7 @@
       "commits": 14,
       "firstCommit": "2026-02-06T00:40:12Z",
       "lastCommit": "2026-03-22T03:54:08Z",
-      "phase": "Initial Setup and Infrastructure"
+      "phase": "System Development Phase"
     },
     {
       "name": "cbpulse",
@@ -7945,7 +7961,7 @@
       "commits": 204,
       "firstCommit": "2026-02-06T17:48:36Z",
       "lastCommit": "2026-03-26T04:51:53Z",
-      "phase": "Initial Setup and Infrastructure"
+      "phase": "System Development Phase"
     },
     {
       "name": "cbvpn",
@@ -7954,7 +7970,7 @@
       "commits": 17,
       "firstCommit": "2026-02-07T03:01:44Z",
       "lastCommit": "2026-03-23T16:00:05Z",
-      "phase": "Initial Setup and Infrastructure"
+      "phase": "System Development Phase"
     },
     {
       "name": "cbpayments",
@@ -7963,7 +7979,7 @@
       "commits": 77,
       "firstCommit": "2026-02-07T15:19:19Z",
       "lastCommit": "2026-03-22T03:58:52Z",
-      "phase": "Initial Setup and Infrastructure"
+      "phase": "System Development Phase"
     },
     {
       "name": "cbsocial",
@@ -7972,7 +7988,7 @@
       "commits": 14,
       "firstCommit": "2026-02-10T18:14:28Z",
       "lastCommit": "2026-03-22T03:58:17Z",
-      "phase": "Initial Setup and Infrastructure"
+      "phase": "System Development Phase"
     },
     {
       "name": "cbmcp",
@@ -7981,7 +7997,7 @@
       "commits": 89,
       "firstCommit": "2026-02-15T03:31:21Z",
       "lastCommit": "2026-03-22T03:25:54Z",
-      "phase": "System Development Phase"
+      "phase": "Phase 10"
     },
     {
       "name": "cbnetwork",
@@ -7990,7 +8006,7 @@
       "commits": 57,
       "firstCommit": "2026-02-17T05:31:05Z",
       "lastCommit": "2026-03-14T20:21:04Z",
-      "phase": "System Development Phase"
+      "phase": "Phase 10"
     },
     {
       "name": "cbexecutive",
@@ -7999,7 +8015,7 @@
       "commits": 35,
       "firstCommit": "2026-02-20T15:15:58Z",
       "lastCommit": "2026-03-26T05:00:02Z",
-      "phase": "System Development Phase"
+      "phase": "Phase 10"
     },
     {
       "name": "cbfront",
@@ -8008,7 +8024,7 @@
       "commits": 38,
       "firstCommit": "2026-02-21T19:35:45Z",
       "lastCommit": "2026-03-22T03:54:00Z",
-      "phase": "System Development Phase"
+      "phase": "Phase 10"
     },
     {
       "name": "cbradio-ui",
@@ -8026,7 +8042,7 @@
       "commits": 46,
       "firstCommit": "2026-02-22T05:09:51Z",
       "lastCommit": "2026-03-24T21:36:52Z",
-      "phase": "System Development Phase"
+      "phase": "Phase 10"
     },
     {
       "name": "cbrouter",
@@ -8080,7 +8096,7 @@
       "commits": 16,
       "firstCommit": "2026-02-28T05:21:48Z",
       "lastCommit": "2026-03-22T03:26:06Z",
-      "phase": "Campaign Brain Ecosystem Development"
+      "phase": "Campaign Brain Foundation"
     },
     {
       "name": "cbdc",
@@ -8089,7 +8105,7 @@
       "commits": 83,
       "firstCommit": "2026-03-01T15:16:40Z",
       "lastCommit": "2026-03-22T19:29:39Z",
-      "phase": "Campaign Brain Ecosystem Development"
+      "phase": "Campaign Brain Foundation"
     },
     {
       "name": "cbqa",
@@ -8098,7 +8114,7 @@
       "commits": 1,
       "firstCommit": "2026-03-03T16:00:09Z",
       "lastCommit": "2026-03-03T16:00:09Z",
-      "phase": "Campaign Brain Ecosystem Development"
+      "phase": "Campaign Brain Foundation"
     },
     {
       "name": "cbairtable",
@@ -8107,7 +8123,7 @@
       "commits": 25,
       "firstCommit": "2026-03-03T23:16:57Z",
       "lastCommit": "2026-03-22T03:53:05Z",
-      "phase": "Campaign Brain Ecosystem Development"
+      "phase": "Campaign Brain Foundation"
     },
     {
       "name": "cbiterable",
@@ -8116,7 +8132,7 @@
       "commits": 15,
       "firstCommit": "2026-03-03T23:21:49Z",
       "lastCommit": "2026-03-22T03:54:12Z",
-      "phase": "Campaign Brain Ecosystem Development"
+      "phase": "Campaign Brain Foundation"
     },
     {
       "name": "cbhandbook",
@@ -8125,7 +8141,7 @@
       "commits": 3,
       "firstCommit": "2026-03-12T18:58:49Z",
       "lastCommit": "2026-03-12T21:07:54Z",
-      "phase": "Campaign Brain Ecosystem Development"
+      "phase": "Campaign Brain Foundation"
     },
     {
       "name": "infrastructure",
@@ -8134,7 +8150,7 @@
       "commits": 64,
       "firstCommit": "2026-03-12T22:38:20Z",
       "lastCommit": "2026-03-25T16:54:13Z",
-      "phase": "Campaign Brain Ecosystem Development"
+      "phase": "Campaign Brain Foundation"
     },
     {
       "name": "cbea",
@@ -8143,7 +8159,7 @@
       "commits": 52,
       "firstCommit": "2026-03-17T05:22:49Z",
       "lastCommit": "2026-03-23T14:34:51Z",
-      "phase": "Project Planning and Development Phase"
+      "phase": "Campaign Brain Infrastructure Development"
     },
     {
       "name": "cbinfrasays",
@@ -8152,7 +8168,7 @@
       "commits": 8,
       "firstCommit": "2026-03-18T05:40:33Z",
       "lastCommit": "2026-03-20T00:16:33Z",
-      "phase": "Project Planning and Development Phase"
+      "phase": "Campaign Brain Infrastructure Development"
     },
     {
       "name": "cbops",
@@ -8161,7 +8177,7 @@
       "commits": 2,
       "firstCommit": "2026-03-19T21:15:01Z",
       "lastCommit": "2026-03-19T21:18:26Z",
-      "phase": "Project Planning and Development Phase"
+      "phase": "Campaign Brain Infrastructure Development"
     },
     {
       "name": "cbesig",
@@ -8170,7 +8186,7 @@
       "commits": 3,
       "firstCommit": "2026-03-26T03:50:55Z",
       "lastCommit": "2026-03-26T04:33:25Z",
-      "phase": "Project Planning and Development Phase"
+      "phase": "Campaign Brain Infrastructure Development"
     }
   ]
 }
