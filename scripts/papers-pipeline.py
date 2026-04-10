@@ -34,6 +34,9 @@ def load_workspaces() -> list[dict]:
             continue
 
         ws = json.loads(ws_file.read_text())
+        if not ws.get("slug") or not ws.get("title"):
+            continue
+
         www_dir = ws_dir / "www"
         data_dir = ws_dir / "data"
 
@@ -42,9 +45,9 @@ def load_workspaces() -> list[dict]:
         has_viz = any(f.suffix == ".html" for f in www_dir.iterdir()) if www_dir.is_dir() else False
         preview_png = None
         if www_dir.is_dir():
-            pngs = [f for f in www_dir.iterdir() if f.suffix == ".png"]
-            if pngs:
-                preview_png = pngs[0].name
+            imgs = [f for f in www_dir.iterdir() if f.suffix in (".png", ".jpg", ".jpeg")]
+            if imgs:
+                preview_png = imgs[0].name
 
         # Count data files
         data_files = list(data_dir.iterdir()) if data_dir.is_dir() else []
@@ -63,7 +66,7 @@ def load_workspaces() -> list[dict]:
         workspaces.append({
             "slug": ws["slug"],
             "title": ws["title"],
-            "description": ws["description"],
+            "description": ws.get("description", ""),
             "status": ws.get("status", "draft"),
             "author": ws.get("author", "TerraPulse Lab"),
             "createdAt": ws.get("created_at", ""),
