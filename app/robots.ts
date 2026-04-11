@@ -8,5 +8,6 @@ export default function robots(): MetadataRoute.Robots {
       disallow: ["/api/", "/wargames-test/"],
     },
     sitemap: "https://bradley.io/sitemap.xml",
+    host: "https://bradley.io",
   }
 }

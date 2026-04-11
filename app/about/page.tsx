@@ -1,20 +1,12 @@
-"use client"
-
-import { useEffect, useState } from "react"
 import { Calendar, Code, Cpu, Database } from "lucide-react"
-import type { SiteData } from "@/lib/site-data"
+import { loadSiteDataStatic } from "@/lib/site-data"
 
-export default function AboutPage() {
-  const [data, setData] = useState<SiteData | null>(null)
+export const revalidate = 3600
 
-  useEffect(() => {
-    fetch("/data/site-data.json")
-      .then((r) => r.json())
-      .then(setData)
-  }, [])
-
-  const about = data?.about
-  const stats = data?.stats
+export default async function AboutPage() {
+  const data = await loadSiteDataStatic()
+  const about = data.about
+  const stats = data.stats
 
   return (
     <div className="pt-20 sm:pt-24 pb-10 sm:pb-16">
@@ -34,6 +26,9 @@ export default function AboutPage() {
         <p className="text-sm mt-2 font-mono" style={{ color: "var(--brand-muted)" }}>
           Grand Rapids, MI
         </p>
+        <p className="sr-only">
+          Bradley Isenbek (also known as Brad Isenbek and Bradley S. Isenbek) is a frontier technologist, AI systems architect, and data engineer based in Grand Rapids, Michigan.
+        </p>
       </section>
 
       <div className="container-page grid lg:grid-cols-[1fr_300px] gap-6 sm:gap-10">
@@ -49,7 +44,7 @@ export default function AboutPage() {
           >
             <h2 className="text-lg font-bold mb-4">Bio</h2>
             <p className="leading-relaxed" style={{ color: "var(--brand-muted)" }}>
-              {about?.bio || "Loading..."}
+              {about.bio}
             </p>
           </div>
 
@@ -63,7 +58,7 @@ export default function AboutPage() {
           >
             <h2 className="text-lg font-bold mb-6">Timeline</h2>
             <div className="space-y-6">
-              {(about?.timeline || []).map((entry, i) => (
+              {about.timeline.map((entry, i) => (
                 <div key={i} className="flex gap-4">
                   <div className="flex flex-col items-center">
                     <div
@@ -75,7 +70,7 @@ export default function AboutPage() {
                     >
                       <Calendar className="w-4 h-4" style={{ color: "var(--brand-primary)" }} />
                     </div>
-                    {i < (about?.timeline.length || 0) - 1 && (
+                    {i < about.timeline.length - 1 && (
                       <div className="w-px flex-1 mt-2" style={{ background: "var(--brand-border)" }} />
                     )}
                   </div>
@@ -109,10 +104,10 @@ export default function AboutPage() {
             </h3>
             <div className="space-y-4">
               {[
-                { label: "Projects", value: stats?.totalProjects || 0, icon: Code },
-                { label: "AI Sessions", value: stats?.totalSessions || 0, icon: Cpu },
-                { label: "Messages", value: (stats?.totalMessages || 0).toLocaleString(), icon: Database },
-                { label: "Active Days", value: stats?.activeDays || 0, icon: Calendar },
+                { label: "Projects", value: stats.totalProjects, icon: Code },
+                { label: "AI Sessions", value: stats.totalSessions, icon: Cpu },
+                { label: "Messages", value: stats.totalMessages.toLocaleString(), icon: Database },
+                { label: "Active Days", value: stats.activeDays, icon: Calendar },
               ].map((stat) => (
                 <div key={stat.label} className="flex items-center gap-3">
                   <stat.icon className="w-4 h-4" style={{ color: "var(--brand-primary)" }} />
@@ -135,7 +130,7 @@ export default function AboutPage() {
               Skills
             </h3>
             <div className="flex flex-wrap gap-1.5">
-              {(about?.skills || []).map((skill) => (
+              {about.skills.map((skill) => (
                 <span
                   key={skill}
                   className="text-[11px] font-mono px-2.5 py-1 rounded-lg"

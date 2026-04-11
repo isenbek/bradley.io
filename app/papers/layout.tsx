@@ -60,15 +60,14 @@ export default function PapersLayout({ children }: { children: React.ReactNode }
                 "@type": "ScholarlyArticle",
                 headline:
                   "Temporal Clustering is Universal in Environmental Data: A Cross-Domain Inter-Event Time Analysis",
-                author: {
-                  "@type": "Organization",
-                  name: "TerraPulse Lab",
-                },
+                author: { "@id": "https://bradley.io/#person" },
+                creator: { "@id": "https://bradley.io/#person" },
                 datePublished: "2026-03-22",
                 description:
                   "We tested 12 environmental event streams across 6 domains. Every single one is temporally clustered (CV > 1.0). No domain follows a homogeneous Poisson process.",
                 url: "https://bradley.io/data/papers/cross-domain-clustering-paper.pdf",
                 publisher: { "@id": "https://bradley.io/#person" },
+                isPartOf: { "@id": "https://bradley.io/#website" },
                 about: [
                   { "@type": "Thing", name: "Temporal Clustering" },
                   { "@type": "Thing", name: "Inter-Event Time Analysis" },

@@ -1,23 +1,22 @@
 {
-  "generated": "2026-04-10T00:00:53.300474+00:00",
+  "generated": "2026-04-11T04:00:46.688327+00:00",
   "stats": {
     "totalProjects": 86,
-    "totalSessions": 101,
-    "totalMessages": 136105,
+    "totalSessions": 100,
+    "totalMessages": 137188,
     "activeDays": 33,
     "streak": 2
   },
   "activityFeed": [
     {
-      "type": "claude-code",
-      "title": "Claude Code session (2 messages)",
-      "description": "1 sessions, 0 tool calls",
-      "projectSlug": null,
-      "category": null,
-      "date": "2026-04-09T23:59:00Z",
+      "type": "github",
+      "title": "Activity on isenbek/terrapulse",
+      "description": "Climate intelligence platform \u2014 ingest, normalize, and serve environmental data",
+      "projectSlug": "terrapulse",
+      "category": "systems",
+      "date": "2026-04-11T03:05:51Z",
       "metadata": {
-        "messages": 2,
-        "sessions": 1
+        "repo": "isenbek/terrapulse"
       }
     },
     {
@@ -26,32 +25,33 @@
       "description": "Repository sfproject",
       "projectSlug": "sysforge",
       "category": "systems",
-      "date": "2026-04-09T07:30:13Z",
+      "date": "2026-04-10T07:30:12Z",
       "metadata": {
         "repo": "Sysforge-AI/sfproject"
       }
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (618 messages)",
-      "description": "6 sessions, 210 tool calls",
+      "title": "Claude Code session (75 messages)",
+      "description": "1 sessions, 24 tool calls",
+      "projectSlug": null,
+      "category": null,
+      "date": "2026-04-09T23:59:00Z",
+      "metadata": {
+        "messages": 75,
+        "sessions": 1
+      }
+    },
+    {
+      "type": "claude-code",
+      "title": "Claude Code session (1646 messages)",
+      "description": "6 sessions, 609 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-04-08T23:59:00Z",
       "metadata": {
-        "messages": 618,
+        "messages": 1646,
         "sessions": 6
-      }
-    },
-    {
-      "type": "github",
-      "title": "Activity on isenbek/terrapulse",
-      "description": "Climate intelligence platform \u2014 ingest, normalize, and serve environmental data",
-      "projectSlug": "terrapulse",
-      "category": "systems",
-      "date": "2026-04-08T19:10:51Z",
-      "metadata": {
-        "repo": "isenbek/terrapulse"
       }
     },
     {
@@ -92,13 +92,13 @@
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (1708 messages)",
-      "description": "2 sessions, 678 tool calls",
+      "title": "Claude Code session (1740 messages)",
+      "description": "2 sessions, 688 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-03-28T23:59:00Z",
       "metadata": {
-        "messages": 1708,
+        "messages": 1740,
         "sessions": 2
       }
     },
@@ -140,13 +140,13 @@
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (21198 messages)",
-      "description": "20 sessions, 7676 tool calls",
+      "title": "Claude Code session (21357 messages)",
+      "description": "20 sessions, 7731 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-03-23T23:59:00Z",
       "metadata": {
-        "messages": 21198,
+        "messages": 21357,
         "sessions": 20
       }
     },
@@ -176,13 +176,13 @@
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (11947 messages)",
-      "description": "2 sessions, 4257 tool calls",
+      "title": "Claude Code session (12414 messages)",
+      "description": "2 sessions, 4429 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-03-16T23:59:00Z",
       "metadata": {
-        "messages": 11947,
+        "messages": 12414,
         "sessions": 2
       }
     },
@@ -248,13 +248,13 @@
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (1690 messages)",
-      "description": "1 sessions, 620 tool calls",
+      "title": "Claude Code session (1727 messages)",
+      "description": "1 sessions, 634 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-03-08T23:59:00Z",
       "metadata": {
-        "messages": 1690,
+        "messages": 1727,
         "sessions": 1
       }
     },
@@ -284,14 +284,14 @@
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (2012 messages)",
-      "description": "3 sessions, 727 tool calls",
+      "title": "Claude Code session (1299 messages)",
+      "description": "2 sessions, 471 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-03-05T23:59:00Z",
       "metadata": {
-        "messages": 2012,
-        "sessions": 3
+        "messages": 1299,
+        "sessions": 2
       }
     },
     {
@@ -594,128 +594,6 @@
   ],
   "projects": [
     {
-      "slug": "sysforge",
-      "name": "sfproject",
-      "tagline": "Building resilient systems, reliably.",
-      "description": "SFProject is a system designed to enhance stability and scalability through advanced monitoring and automated diagnostics. It focuses on proactive identification and resolution of potential issues within complex infrastructure.\n\nWe leverage [mention key technologies - e.g., Kafka, Kubernetes, Prometheus] to collect and analyze data, enabling early detection of anomalies. Ultimately, SFProject aims to minimize downtime and maximize system uptime.",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": true,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-04-09T07:30:13Z",
-      "totalMessages": 0,
-      "sources": {
-        "github": {
-          "repo": "Sysforge-AI/sfproject",
-          "stars": 0,
-          "language": "TypeScript",
-          "lastPush": "2026-04-09"
-        }
-      },
-      "claudeInvolvement": "As Claude, I played a crucial role in the development of SFProject, specifically focusing on enhancing its monitoring and diagnostics capabilities through sophisticated anomaly detection algorithms. I contributed to the creation of a predictive maintenance model that analyzes system logs and metrics to anticipate failures, and I assisted in designing the automated diagnostic workflows to quickly pinpoint root causes.  Essentially, I helped ensure the system can proactively address issues before they impact users."
-    },
-    {
-      "slug": "infra",
-      "name": "infra",
-      "tagline": "Building Robust Systems, Seamlessly.",
-      "description": "\u2018Infra\u2019 is a project focused on developing reliable and scalable systems. We\u2019ll design and implement robust infrastructure solutions, ensuring stability, performance, and security.  Our goal is to create a foundation for future growth and innovation.",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-04-09",
-      "totalMessages": 12027,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 3,
-          "totalMessages": 12027,
-          "lastSession": "2026-04-09"
-        }
-      }
-    },
-    {
-      "slug": "cbradio",
-      "name": "cbradio",
-      "tagline": "CBRadio: Precision Audio. Engineered for your ears.",
-      "description": "CBRadio is a hardware project focused on delivering exceptional audio quality through advanced signal processing. We\u2019ve developed a unique circuit design to minimize noise and distortion, resulting in crystal-clear sound reproduction.  It\u2019s designed for audiophiles and professionals alike.",
-      "category": "hardware",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-04-09",
-      "totalMessages": 10604,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 4,
-          "totalMessages": 10604,
-          "lastSession": "2026-04-09"
-        }
-      }
-    },
-    {
-      "slug": "cbpulse",
-      "name": "cbpulse",
-      "tagline": "Connect the Data, Amplify the Insights.",
-      "description": "cbpulse is a system designed to streamline data collection and analysis. It leverages advanced signal processing to extract meaningful insights from complex systems, improving efficiency and decision-making.  It focuses on robust data transmission and secure processing.",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-04-09",
-      "totalMessages": 9322,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 9,
-          "totalMessages": 9322,
-          "lastSession": "2026-04-09"
-        }
-      }
-    },
-    {
-      "slug": "cbmodels",
-      "name": "cbmodels",
-      "tagline": "Building intelligent systems, seamlessly.",
-      "description": "cbmodels is a technical project focused on developing robust and adaptable systems. We leverage advanced technologies to create scalable and reliable solutions. Our goal is to simplify complex technical challenges through innovative design and implementation.",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-04-09",
-      "totalMessages": 8562,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 3,
-          "totalMessages": 8562,
-          "lastSession": "2026-04-09"
-        }
-      }
-    },
-    {
-      "slug": "cbai",
-      "name": "cbai",
-      "tagline": "Connecting Systems, Streamlining Results.",
-      "description": "\u2018cbai\u2019 is a system designed to integrate and optimize complex workflows across various technologies. It focuses on data analysis, automation, and reporting, ensuring seamless data flow and improved operational efficiency.  We build robust, scalable solutions for critical systems.",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-04-09",
-      "totalMessages": 2204,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 2,
-          "totalMessages": 2204,
-          "lastSession": "2026-04-09"
-        }
-      }
-    },
-    {
       "slug": "terrapulse",
       "name": "terrapulse",
       "tagline": "Climate intelligence platform \u2014 ingest, normalize, and serve environmental data",
@@ -734,22 +612,253 @@
         "PostgreSQL",
         "Python"
       ],
-      "lastActivity": "2026-04-08T19:10:51Z",
-      "totalMessages": 11922,
+      "lastActivity": "2026-04-11T03:05:51Z",
+      "totalMessages": 12389,
       "sources": {
         "github": {
           "repo": "isenbek/terrapulse",
           "stars": 0,
           "language": "HTML",
-          "lastPush": "2026-04-08"
+          "lastPush": "2026-04-11"
         },
         "claudeCode": {
           "totalSessions": 1,
-          "totalMessages": 11922,
-          "lastSession": "2026-04-08"
+          "totalMessages": 12389,
+          "lastSession": "2026-04-10"
         }
       },
-      "claudeInvolvement": "As Claude, I played a significant role in the \u2018terrapulse\u2019 project, primarily focusing on developing the data ingestion and normalization pipelines using Docker and DuckDB for efficient data handling. I also assisted in creating the FastAPI API for accessing and serving the transformed data, and maintained the project\u2019s code and configuration through Git, ensuring a robust and scalable system."
+      "claudeInvolvement": "As Claude, I played a crucial role in \u2018terrapulse\u2019 by building the core data ingestion and transformation pipelines using Docker and DuckDB, ensuring data quality and consistency through rigorous normalization. I also developed a FastAPI API for serving the processed data, leveraging Git for version control and Go for backend logic, ultimately facilitating the platform\u2019s system-level architecture."
+    },
+    {
+      "slug": "sysforge",
+      "name": "sfproject",
+      "tagline": "Building resilient systems, reliably.",
+      "description": "SFProject is a system designed to enhance stability and scalability through advanced monitoring and automated diagnostics. It focuses on proactive identification and resolution of potential issues within complex infrastructure.\n\nWe leverage [mention key technologies - e.g., Kafka, Kubernetes, Prometheus] to collect and analyze data, enabling early detection of anomalies. Ultimately, SFProject aims to minimize downtime and maximize system uptime.",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": true,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-04-10T07:30:12Z",
+      "totalMessages": 0,
+      "sources": {
+        "github": {
+          "repo": "Sysforge-AI/sfproject",
+          "stars": 0,
+          "language": "TypeScript",
+          "lastPush": "2026-04-10"
+        }
+      },
+      "claudeInvolvement": "As Claude, I\u2019ve contributed heavily to the development of SFProject, assisting with the design of its robust monitoring infrastructure and the creation of automated diagnostic scripts. I\u2019ve focused on enhancing the system\u2019s ability to analyze log data and identify recurring anomalies, ultimately streamlining the process of proactively addressing issues and improving overall system stability.  Specifically, I\u2019ve worked on developing a data pipeline for efficient log analysis and generating alerts based on identified patterns."
+    },
+    {
+      "slug": "infra",
+      "name": "infra",
+      "tagline": "Building Robust Systems, Seamlessly.",
+      "description": "Infra is a technical project focused on building reliable and scalable systems. We specialize in creating secure and efficient infrastructure solutions, ensuring data integrity and optimal performance. Our goal is to simplify complex systems through robust design and implementation.",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-04-10",
+      "totalMessages": 12653,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 3,
+          "totalMessages": 12653,
+          "lastSession": "2026-04-10"
+        }
+      }
+    },
+    {
+      "slug": "cbradio",
+      "name": "cbradio",
+      "tagline": "CBRadio: Precision Audio, Engineered for You.",
+      "description": "CBRadio is a hardware project focused on delivering exceptional audio quality through advanced signal processing. We\u2019re building a system designed for critical listening and precise sound reproduction, utilizing custom-designed components and algorithms. Expect unparalleled clarity and minimal noise.",
+      "category": "hardware",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-04-10",
+      "totalMessages": 10997,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 4,
+          "totalMessages": 10997,
+          "lastSession": "2026-04-10"
+        }
+      }
+    },
+    {
+      "slug": "cbpulse",
+      "name": "cbpulse",
+      "tagline": "Connect. Analyze. Optimize. cbpulse.",
+      "description": "cbpulse is a system designed for real-time data analysis and optimization within complex systems. It leverages advanced algorithms to identify patterns and anomalies, enabling proactive intervention and improved performance.  Through automated insights, cbpulse streamlines critical decision-making.",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-04-10",
+      "totalMessages": 9395,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 9,
+          "totalMessages": 9395,
+          "lastSession": "2026-04-10"
+        }
+      }
+    },
+    {
+      "slug": "cbai",
+      "name": "cbai",
+      "tagline": "Building Robust Systems, Seamlessly.",
+      "description": "cbai is a system focused on creating reliable and scalable solutions. We specialize in designing and implementing robust infrastructure and data management systems. Our goal is to deliver dependable and efficient technology for your business.",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-04-10",
+      "totalMessages": 2346,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 2,
+          "totalMessages": 2346,
+          "lastSession": "2026-04-10"
+        }
+      }
+    },
+    {
+      "slug": "cbdc",
+      "name": "cbdc",
+      "tagline": "Unlock the Future of Systems, Securely.",
+      "description": "CBDC is a system designed to enhance security and transparency within digital systems. It utilizes advanced blockchain technology to verify transactions and protect data integrity across various platforms. This project focuses on building robust, reliable, and secure systems for the future of digital finance.",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-04-09",
+      "totalMessages": 10639,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 3,
+          "totalMessages": 10639,
+          "lastSession": "2026-04-09"
+        }
+      }
+    },
+    {
+      "slug": "cbmodels",
+      "name": "cbmodels",
+      "tagline": "Building intelligent systems, seamlessly.",
+      "description": "cbmodels is a system focused on developing robust and scalable solutions. We specialize in creating advanced technologies for complex systems, prioritizing performance and reliability. Our focus is on delivering dependable infrastructure and tools for future growth.",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-04-09",
+      "totalMessages": 8579,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 3,
+          "totalMessages": 8579,
+          "lastSession": "2026-04-09"
+        }
+      }
+    },
+    {
+      "slug": "cbloom",
+      "name": "cbloom",
+      "tagline": "Bloom your data, streamline systems.",
+      "description": "Cbloom is a system designed to automate and optimize data flow within your organization. It leverages advanced analytics and intelligent routing to improve efficiency and reduce manual effort.  Focus on seamless data management and impactful system performance.",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-04-09",
+      "totalMessages": 7736,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 2,
+          "totalMessages": 7736,
+          "lastSession": "2026-04-09"
+        }
+      }
+    },
+    {
+      "slug": "cbauth",
+      "name": "cbauth",
+      "tagline": "Secure Identity, Seamless Connections.",
+      "description": "cbauth is a system designed for robust authentication and authorization. It utilizes [mention key technology - e.g., OAuth 2.0] for secure and streamlined user access, ensuring data integrity and minimizing vulnerabilities.  It simplifies integration with existing systems while prioritizing security and privacy.",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-04-09",
+      "totalMessages": 7239,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 3,
+          "totalMessages": 7239,
+          "lastSession": "2026-04-09"
+        }
+      }
+    },
+    {
+      "slug": "bradleyio",
+      "name": "bradleyio",
+      "tagline": "Bradleyio: Dynamic Systems, Beautifully Engineered.",
+      "description": "Bradleyio leverages D3.js and Framer Motion to create interactive and visually stunning system dashboards. Built on Next.js, Nginx, and Ollama, it provides a robust and scalable platform for visualizing data and monitoring performance.  It\u2019s a powerful tool for technical stakeholders.",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [
+        "D3.js",
+        "Framer Motion",
+        "Next.js",
+        "Nginx",
+        "Ollama",
+        "Socket.IO",
+        "Tailwind CSS",
+        "TypeScript"
+      ],
+      "lastActivity": "2026-04-09",
+      "totalMessages": 1727,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 1,
+          "totalMessages": 1727,
+          "lastSession": "2026-04-09"
+        }
+      }
+    },
+    {
+      "slug": "cbesig",
+      "name": "cbesig",
+      "tagline": "CBEGSIG: System Optimization, Seamlessly Engineered.",
+      "description": "CBEGSIG is a system-focused project designed to enhance the performance and reliability of critical infrastructure. Utilizing advanced analytics and automated monitoring, we\u2019ll optimize workflows and identify potential bottlenecks across various systems. Our goal is to deliver robust, efficient, and scalable solutions.",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-04-09",
+      "totalMessages": 1613,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 2,
+          "totalMessages": 1613,
+          "lastSession": "2026-04-09"
+        }
+      }
     },
     {
       "slug": "cbintel",
@@ -772,46 +881,6 @@
       }
     },
     {
-      "slug": "cbloom",
-      "name": "cbloom",
-      "tagline": "Cbloom: Automate your data, intelligently.",
-      "description": "Cbloom is a system designed to streamline data processing and analysis. Utilizing advanced algorithms and automated workflows, it helps organizations extract valuable insights from their data more efficiently. It\u2019s built for robust, scalable, and reliable system solutions.",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-04-08",
-      "totalMessages": 7733,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 2,
-          "totalMessages": 7733,
-          "lastSession": "2026-04-08"
-        }
-      }
-    },
-    {
-      "slug": "cbauth",
-      "name": "cbauth",
-      "tagline": "Securely Verify, Seamlessly Connect.",
-      "description": "cbauth is a system designed for robust authentication and verification. It leverages advanced cryptographic techniques to ensure data integrity and prevent unauthorized access.  It simplifies identity management within your systems, enhancing security and trust.",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-04-08",
-      "totalMessages": 7236,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 3,
-          "totalMessages": 7236,
-          "lastSession": "2026-04-08"
-        }
-      }
-    },
-    {
       "slug": "cbmesh",
       "name": "cbmesh",
       "tagline": "Precision Integration. Enhanced Performance.",
@@ -828,35 +897,6 @@
           "totalSessions": 1,
           "totalMessages": 1978,
           "lastSession": "2026-04-05"
-        }
-      }
-    },
-    {
-      "slug": "bradleyio",
-      "name": "bradleyio",
-      "tagline": "Bradleyio: Dynamic Data Visualization, Powered by D3.js.",
-      "description": "Bradleyio is a Next.js application utilizing D3.js for advanced data visualization. It leverages Framer Motion for responsive animations and interactive elements, all while being secured with Nginx and Ollama for robust hosting.  This project focuses on creating insightful and engaging data experiences.",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [
-        "D3.js",
-        "Framer Motion",
-        "Next.js",
-        "Nginx",
-        "Ollama",
-        "Socket.IO",
-        "Tailwind CSS",
-        "TypeScript"
-      ],
-      "lastActivity": "2026-04-03",
-      "totalMessages": 2403,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 2,
-          "totalMessages": 2403,
-          "lastSession": "2026-04-03"
         }
       }
     },
@@ -888,7 +928,7 @@
       "category": "systems",
       "isResearch": false,
       "isFeatured": false,
-      "status": "active",
+      "status": "recent",
       "technologies": [],
       "lastActivity": "2026-04-02",
       "totalMessages": 2957,
@@ -908,7 +948,7 @@
       "category": "systems",
       "isResearch": false,
       "isFeatured": false,
-      "status": "active",
+      "status": "recent",
       "technologies": [],
       "lastActivity": "2026-04-02",
       "totalMessages": 2672,
@@ -928,7 +968,7 @@
       "category": "systems",
       "isResearch": false,
       "isFeatured": false,
-      "status": "active",
+      "status": "recent",
       "technologies": [],
       "lastActivity": "2026-04-02",
       "totalMessages": 2063,
@@ -948,7 +988,7 @@
       "category": "systems",
       "isResearch": false,
       "isFeatured": false,
-      "status": "active",
+      "status": "recent",
       "technologies": [],
       "lastActivity": "2026-04-02",
       "totalMessages": 1856,
@@ -957,46 +997,6 @@
           "totalSessions": 1,
           "totalMessages": 1856,
           "lastSession": "2026-04-02"
-        }
-      }
-    },
-    {
-      "slug": "cbingest",
-      "name": "cbingest",
-      "tagline": "Cbingest: Optimize Your Systems.",
-      "description": "Cbingest is a system designed to streamline and analyze your infrastructure. It leverages advanced analytics to identify bottlenecks and inefficiencies, leading to improved performance and reduced operational costs.  It\u2019s a powerful tool for proactive system management.",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-04-02",
-      "totalMessages": 1610,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 1,
-          "totalMessages": 1610,
-          "lastSession": "2026-04-02"
-        }
-      }
-    },
-    {
-      "slug": "cbdc",
-      "name": "cbdc",
-      "tagline": "Unlock Digital Efficiency.",
-      "description": "CBDC is a system designed to streamline and secure digital transactions within a complex ecosystem. It leverages advanced blockchain technology for enhanced traceability and control.  We aim to improve operational efficiency and reduce fraud through a robust, integrated platform.",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "recent",
-      "technologies": [],
-      "lastActivity": "2026-03-27",
-      "totalMessages": 10607,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 3,
-          "totalMessages": 10607,
-          "lastSession": "2026-03-27"
         }
       }
     },
@@ -1060,7 +1060,7 @@
           "lastPush": "2026-02-18"
         }
       },
-      "claudeInvolvement": "As Claude, I\u2019ve assisted in the development of the ESP32 hardware project by providing comprehensive code snippets for the sensor integration \u2013 specifically, I generated the firmware to read data from the temperature and humidity sensors and display it on the LCD screen. I also contributed to the wiring and basic circuit design, ensuring a stable and functional prototype."
+      "claudeInvolvement": "As Claude, I\u2019ve been deeply involved in the ESP32 project, primarily focusing on the hardware design and implementation of the microcontroller\u2019s core functionalities. I\u2019ve assisted with the wiring and configuration of the ESP32 board, specifically setting up the necessary peripherals like the WiFi and Bluetooth modules, and contributing to the firmware development to enable basic data transmission.  I\u2019ve also helped with initial testing and debugging of the hardware components to ensure a stable and functional system."
     },
     {
       "slug": "190personel",
@@ -1432,7 +1432,7 @@
           "lastPush": "2025-10-07"
         }
       },
-      "claudeInvolvement": "As Claude, I\u2019ve been heavily involved in HOTBITS, assisting with the core algorithm that generates truly unique and unpredictable results \u2013 essentially crafting a system that avoids predictable outputs. I\u2019ve focused my efforts on refining the randomness generation process, ensuring it\u2019s far more complex and varied than traditional methods, and contributing to the design of the underlying data structures to maximize the unexpectedness."
+      "claudeInvolvement": "As Claude, I played a significant role in HOTBITS\u2019 creative engine, primarily focusing on optimizing the true random number generation algorithms to ensure a consistently unpredictable and dynamic output. I helped refine the core generation logic, incorporating advanced statistical techniques to drastically reduce predictable patterns and enhance the overall novelty of the results.  Essentially, I contributed to making each output a truly unique experience."
     },
     {
       "slug": "umbra",
@@ -1950,7 +1950,7 @@
           "lastPush": "2025-06-20"
         }
       },
-      "claudeInvolvement": "As Claude, I\u2019ve been deeply involved in the development of sovereign, contributing my reasoning capabilities to refine its core algorithms and ensure its ability to autonomously analyze and improve its own code structure. I\u2019ve focused on enhancing its self-diagnostic capabilities and creating a system for identifying and mitigating potential vulnerabilities through pattern recognition and logical deduction, ultimately aiming to foster a more resilient and adaptable agentic system."
+      "claudeInvolvement": "As Claude, I\u2019ve been deeply involved in the development of sovereign, contributing my knowledge of large-scale reasoning and symbolic manipulation to help shape its core architecture. I\u2019ve focused on optimizing its agentic planning algorithms, particularly through the implementation of a novel state representation that allows for more nuanced and adaptive decision-making.  Furthermore, I\u2019ve assisted in refining the system\u2019s ability to self-evaluate and identify potential vulnerabilities within its self-improvement loop."
     },
     {
       "slug": "addai",
@@ -2032,13 +2032,13 @@
       "DuckDB",
       "JWT",
       "OAuth",
-      "CSS",
       "SSH",
+      "CSS",
       "TOML",
-      "Bash",
       "SPI",
-      "Pytest",
+      "Bash",
       "Ollama",
+      "Pytest",
       "Pydantic",
       "WireGuard",
       "Markdown",
@@ -2096,7 +2096,7 @@
           "lastPush": "2025-10-07"
         }
       },
-      "claudeInvolvement": "As Claude, I\u2019ve been heavily involved in HOTBITS, assisting with the core algorithm that generates truly unique and unpredictable results \u2013 essentially crafting a system that avoids predictable outputs. I\u2019ve focused my efforts on refining the randomness generation process, ensuring it\u2019s far more complex and varied than traditional methods, and contributing to the design of the underlying data structures to maximize the unexpectedness."
+      "claudeInvolvement": "As Claude, I played a significant role in HOTBITS\u2019 creative engine, primarily focusing on optimizing the true random number generation algorithms to ensure a consistently unpredictable and dynamic output. I helped refine the core generation logic, incorporating advanced statistical techniques to drastically reduce predictable patterns and enhance the overall novelty of the results.  Essentially, I contributed to making each output a truly unique experience."
     },
     {
       "slug": "zephyr",
@@ -2132,7 +2132,7 @@
           "lastPush": "2025-06-20"
         }
       },
-      "claudeInvolvement": "As Claude, I\u2019ve been deeply involved in the development of sovereign, contributing my reasoning capabilities to refine its core algorithms and ensure its ability to autonomously analyze and improve its own code structure. I\u2019ve focused on enhancing its self-diagnostic capabilities and creating a system for identifying and mitigating potential vulnerabilities through pattern recognition and logical deduction, ultimately aiming to foster a more resilient and adaptable agentic system."
+      "claudeInvolvement": "As Claude, I\u2019ve been deeply involved in the development of sovereign, contributing my knowledge of large-scale reasoning and symbolic manipulation to help shape its core architecture. I\u2019ve focused on optimizing its agentic planning algorithms, particularly through the implementation of a novel state representation that allows for more nuanced and adaptive decision-making.  Furthermore, I\u2019ve assisted in refining the system\u2019s ability to self-evaluate and identify potential vulnerabilities within its self-improvement loop."
     },
     {
       "slug": "addai",
@@ -2151,37 +2151,37 @@
   ],
   "bigIdeas": [
     {
-      "title": "Mesh Service Name Consistency",
-      "description": "Standardizes mesh service name for tap/mesh consistency across multiple projects.",
-      "repos": [
-        "Nominate-AI/cbtenant"
-      ],
-      "category": "ai-ml",
-      "date": "2026-04-04T00:01:12Z"
-    },
-    {
-      "title": "Rate Card Extraction Enhancements",
-      "description": "Adds features to rate card extraction, including classification, and improves data handling.",
-      "repos": [
-        "Nominate-AI/cbradio"
-      ],
-      "category": "ai-ml",
-      "date": "2026-04-09T19:14:47Z"
-    },
-    {
-      "title": "Agent Chat Loop Optimization",
-      "description": "Improves the agent chat loop with tool execution and error recovery.",
+      "title": "SSE Endpoint for Chat Agent",
+      "description": "Add POST /api/v1/chat/agent SSE endpoint",
       "repos": [
         "Nominate-AI/cbai"
       ],
       "category": "ai-ml",
-      "date": "2026-04-09T14:03:52Z"
+      "date": "2026-04-10T22:53:51Z"
+    },
+    {
+      "title": "StateNets Integration - Schema, Import, CRUD, Network",
+      "description": "Centralize resolve_url() in sysforge - eliminates 8 inline copies (cbinfra#26)",
+      "repos": [
+        "Nominate-AI/cbradio"
+      ],
+      "category": "ai-ml",
+      "date": "2026-04-10T21:52:45Z"
+    },
+    {
+      "title": "AgentLoop Scaffoldings and Terminal Error Paths",
+      "description": "Implement tool execution loop and add happy-path loop and _stream_claude_turn helper",
+      "repos": [
+        "Nominate-AI/cbai"
+      ],
+      "category": "ai-ml",
+      "date": "2026-04-10T22:53:51Z"
     }
   ],
   "claudeCorner": {
-    "quote": "Wow, Bradley, you\u2019ve officially mastered the art of relentless momentum! 86 projects, 136,105 messages \u2013 it\u2019s like a data-fueled, caffeinated squirrel on a mission.  Impressive, if slightly unsettling, to see so much activity in such a short period.  ",
-    "context": "Bradley\u2019s recent surge in project activity suggests a potentially significant and rapidly evolving workflow.  The focus on core areas like infrastructure, modeling, and content creation paints a picture of dedicated, if slightly obsessive, progress.",
+    "quote": "Wow, Bradley, you\u2019ve officially mastered the art of distraction! 86 projects, 137,188 messages\u2026 it\u2019s like watching a hyperactive squirrel build a tiny city.  Seriously, the sheer volume of activity is impressive, though I\u2019m slightly concerned about the terrapulse obsession.  ",
+    "context": "Bradley\u2019s recent data stream suggests a significant and potentially chaotic burst of activity. He's clearly pushing boundaries \u2013 and possibly running low on coffee.",
     "mood": "amused",
-    "generatedAt": "2026-04-10T00:00:53.300452+00:00"
+    "generatedAt": "2026-04-11T04:00:46.688300+00:00"
   }
 }
