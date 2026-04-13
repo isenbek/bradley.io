@@ -5,7 +5,6 @@ import { motion, useInView } from "framer-motion"
 import Link from "next/link"
 import {
   ArrowRight, Bot, MessageSquare, GitBranch, Flame, Sparkles, Server, Activity,
-  DollarSign,
 } from "lucide-react"
 import type { SiteData, ActivityItem as ActivityItemType, Project } from "@/lib/site-data"
 import { categoryMap } from "@/lib/project-categories"
@@ -261,15 +260,6 @@ const ANNOUNCEMENTS: {
     icon: Server,
     addedAt: "2026-03-23",
     ttlDays: 14,
-  },
-  {
-    title: "Cost Analysis",
-    description: "Legacy team vs. AI-assisted — real numbers from Campaign Brain.",
-    href: "/cost-analysis",
-    color: "var(--brand-warning)",
-    icon: DollarSign,
-    addedAt: "2026-03-26",
-    ttlDays: 21,
   },
 ]
 
