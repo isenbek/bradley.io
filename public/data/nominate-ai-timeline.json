@@ -1,10 +1,10 @@
 {
-  "generated": "2026-04-10T09:01:25.747340+00:00",
+  "generated": "2026-04-13T09:05:53.065645+00:00",
   "org": "Nominate-AI",
   "totalRepos": 94,
   "firstCommit": "2022-12-09T19:55:42Z",
-  "latestCommit": "2026-04-09T09:00:01Z",
-  "totalCommits": 11601,
+  "latestCommit": "2026-04-13T09:00:38Z",
+  "totalCommits": 11828,
   "languages": {
     "Python": 63,
     "TypeScript": 10,
@@ -6990,7 +6990,31 @@
     },
     {
       "date": "2026-04-09",
-      "commits": 10,
+      "commits": 29,
+      "repos": 8,
+      "intensity": 2
+    },
+    {
+      "date": "2026-04-10",
+      "commits": 44,
+      "repos": 10,
+      "intensity": 2
+    },
+    {
+      "date": "2026-04-11",
+      "commits": 100,
+      "repos": 52,
+      "intensity": 3
+    },
+    {
+      "date": "2026-04-12",
+      "commits": 49,
+      "repos": 21,
+      "intensity": 2
+    },
+    {
+      "date": "2026-04-13",
+      "commits": 15,
       "repos": 5,
       "intensity": 1
     }
@@ -7000,22 +7024,22 @@
       "name": "Nominate-AI Core Infrastructure",
       "startDate": "2025-04-14",
       "endDate": "2025-04-26",
-      "description": "This project represents the foundational development phase for the Nominate-AI ecosystem, focusing on building the core tools and infrastructure needed to support data processing, model training, and deployment. It encompasses the initial development of the key components \u2013 quantifi, meshnet, weeds, invoicehunter, pollstar, and spydr \u2013 establishing the basis for future iterations and expansions within the system.",
+      "description": "This project represents the foundational development and integration of the core components necessary for the Nominate-AI ecosystem. It encompasses the initial setup, data pipelines, and key modules required for processing and managing the various data sources and tools within the project, focusing on establishing a stable and scalable infrastructure.",
       "category": "systems",
       "milestones": [
         {
           "date": "2025-04-14",
-          "title": "Quantifi - Initial Python Framework",
+          "title": "Quantifi - Initial Python Project Setup",
           "repo": "quantifi"
         },
         {
           "date": "2025-04-16",
-          "title": "Meshnet - Messaging Platform Core",
+          "title": "Meshnet - Backplane Messaging Platform",
           "repo": "meshnet"
         },
         {
-          "date": "2025-04-17",
-          "title": "Weeds - Lead Finder Prototype",
+          "date": "2025-04-16",
+          "title": "Weeds - Lead Finder - Core Functionality",
           "repo": "weeds"
         },
         {
@@ -7029,8 +7053,8 @@
           "repo": "pollstar"
         },
         {
-          "date": "2025-04-26",
-          "title": "Spydr - Crawler & Snapshot Implementation",
+          "date": "2025-04-17",
+          "title": "Spydr - Crawler / Web Snapshot Management",
           "repo": "spydr"
         },
         {
@@ -7053,51 +7077,56 @@
       "name": "Nominate-AI Core Infrastructure & Development",
       "startDate": "2025-05-06",
       "endDate": "2025-08-16",
-      "description": "This project represents the core development phase of the Nominate-AI ecosystem, focusing on establishing the foundational infrastructure and building essential components. It encompasses initial system setup, documentation, and critical bug fixes, culminating in the creation of several key tools and a working MVP for the 'Pocket' feature.",
+      "description": "This project represents the foundational development phase of the Nominate-AI ecosystem, focusing on establishing the core infrastructure and initial development of the key components \u2013 maild, maild-ui, pocket, lochness, cryptid, and mog. It\u2019s a period of intensive work on initial setup, testing, and establishing a basic operational framework for the project.",
       "category": "systems",
       "milestones": [
         {
           "date": "2025-05-06",
-          "title": "Maild - Initial Infrastructure Setup",
+          "title": "Initial Infrastructure Setup",
           "repo": "maild"
         },
         {
           "date": "2025-05-07",
-          "title": "Maild - Comprehensive README",
+          "title": "Documentation Enhancement - README",
           "repo": "maild"
         },
         {
           "date": "2025-05-07",
-          "title": "Maild - Gmail IMAP Connection Fix",
+          "title": "Core Infrastructure & Testing",
           "repo": "maild"
         },
         {
           "date": "2025-05-07",
-          "title": "Maild - Error Handling Improvement",
+          "title": "Gmail IMAP Connection Improvement",
           "repo": "maild"
         },
         {
-          "date": "2025-05-08",
-          "title": "Pocket - Field Kit Development",
+          "date": "2025-05-07",
+          "title": "Google Mirror Project Initialization",
+          "repo": "maild"
+        },
+        {
+          "date": "2025-06-10",
+          "title": "Pocket Field Kit Development",
           "repo": "pocket"
         },
         {
           "date": "2025-06-10",
-          "title": "Pocket - Documentation Update",
+          "title": "Comprehensive Documentation Update",
           "repo": "pocket"
         },
         {
-          "date": "2025-06-15",
-          "title": "Maild - MVP Completion",
-          "repo": "maild"
-        },
-        {
           "date": "2025-07-31",
-          "title": "lochness - Deep Lake Monsters",
+          "title": "Deep Lake Monsters - Initial Development",
           "repo": "lochness"
         },
         {
           "date": "2025-08-15",
+          "title": "Conversion Documentation & Batch Processing Tool Complete",
+          "repo": "lochness"
+        },
+        {
+          "date": "2025-08-16",
           "title": "Mog - Production-Ready System",
           "repo": "mog"
         }
@@ -7113,21 +7142,21 @@
       ]
     },
     {
-      "name": "Core Infrastructure & Testing",
+      "name": "Data Infrastructure & Core Components",
       "startDate": "2025-08-22",
       "endDate": "2025-11-25",
-      "description": "This repository represents the foundational components of the Nominate-AI project ecosystem, focusing on building robust testing infrastructure and comprehensive documentation for all key modules. It's a critical phase dedicated to ensuring the quality and stability of the AI models and data pipelines before they can be deployed and utilized.",
+      "description": "This phase focuses on establishing the foundational infrastructure for the Nominate-AI project, including the development of key components like `flock`, `larus`, `seedbed`, `clarion`, and `campainbrain`. It involves building comprehensive testing frameworks and documentation to support future development and maintenance of the system.",
       "category": "systems",
       "milestones": [
         {
           "date": "2025-08-22",
-          "title": "Initial Infrastructure Setup",
+          "title": "Initial Development - Flock",
           "repo": "flock"
         },
         {
           "date": "2025-09-17",
-          "title": "Lazarus - Core Testing Framework",
-          "repo": "lazarus"
+          "title": "Lazarus - Core Infrastructure",
+          "repo": "larus"
         },
         {
           "date": "2025-09-23",
@@ -7136,17 +7165,22 @@
         },
         {
           "date": "2025-10-13",
-          "title": "Clarion - Testing Documentation",
+          "title": "Clarion - TypeScript Implementation",
           "repo": "clarion"
         },
         {
+          "date": "2025-10-30",
+          "title": "Campainbrain - Initial Draft",
+          "repo": "campainbrain"
+        },
+        {
           "date": "2025-11-11",
-          "title": "Oym - TypeScript Testing",
+          "title": "Oym - TypeScript Development",
           "repo": "oym"
         },
         {
           "date": "2025-11-25",
-          "title": "cbtenant - Python Testing",
+          "title": "CBTenant - Python Implementation",
           "repo": "cbtenant"
         }
       ],
@@ -7161,45 +7195,45 @@
       ]
     },
     {
-      "name": "Core Infrastructure & API Development",
+      "name": "Core Infrastructure & API Components",
       "startDate": "2025-12-02",
       "endDate": "2025-12-13",
-      "description": "This project represents the foundational components of the Nominate-AI ecosystem, including the core API infrastructure and the initial development of key modules like cbworkflow, cbapp, system, cbetl, cbai, cbpublic, and cbdistricts. It focuses on building the necessary tools and systems to support the data collection, processing, and AI models that underpin the project.",
+      "description": "This repository represents the foundational components of the Nominate-AI project ecosystem, including the backend API for cbapp, the core workflow engine (cbworkflow), and essential data handling infrastructure (cbpublic). It focuses on building reliable and scalable systems to support the project\u2019s functionality.",
       "category": "systems",
       "milestones": [
         {
           "date": "2025-12-02",
-          "title": "cbworkflow - Initial Development",
-          "repo": "cbworkflow"
-        },
-        {
-          "date": "2025-12-02",
-          "title": "cbapp - Initial Development",
+          "title": "cbapp - Initial Python Development",
           "repo": "cbapp"
         },
         {
+          "date": "2025-12-02",
+          "title": "cbworkflow - Initial Python Development",
+          "repo": "cbworkflow"
+        },
+        {
           "date": "2025-12-10",
-          "title": "system - Initial Implementation",
+          "title": "system - Initial Shell Development",
           "repo": "system"
         },
         {
           "date": "2025-12-11",
-          "title": "cbetl - Initial Development",
+          "title": "cbetl - Python Development",
           "repo": "cbetl"
         },
         {
           "date": "2025-12-11",
-          "title": "cbai - Initial Development",
+          "title": "cbai - Python Development",
           "repo": "cbai"
         },
         {
           "date": "2025-12-13",
-          "title": "cbpublic - Initial Development",
+          "title": "cbpublic - Python Development",
           "repo": "cbpublic"
         },
         {
           "date": "2025-12-13",
-          "title": "cbdistricts - Initial Development",
+          "title": "cbdistricts - Python Development",
           "repo": "cbdistricts"
         }
       ],
@@ -7214,41 +7248,36 @@
       ]
     },
     {
-      "name": "Core Image Processing & Analysis Pipeline",
+      "name": "Core Image Processing & Analysis Components",
       "startDate": "2025-12-17",
       "endDate": "2025-12-26",
-      "description": "This project represents the foundational infrastructure for the Nominate-AI system. It encompasses the core image and video processing functionalities \u2013 vision inference, search, and basic file handling \u2013 developed in stages, gradually building upon each other. The focus is on creating a robust and adaptable environment for analyzing and processing image and video data, which is crucial for the AI model's operation.",
+      "description": "This repository represents the foundational components of the Nominate-AI project, focusing on essential image and video processing functionalities. It includes the initial development of `cbmodels`, `cbradio`, `cbsurveys`, `cbinfra`, `cbfiles`, and `cbdocs`, establishing the basic infrastructure for image analysis and inference. These components are crucial for the project\u2019s core operations.",
       "category": "data",
       "milestones": [
         {
           "date": "2025-12-17",
-          "title": "cbmodels - Initial Image Processing Core",
+          "title": "Initial Model & Infrastructure Setup",
           "repo": "cbmodels"
         },
         {
           "date": "2025-12-18",
-          "title": "cbradio - Basic Radio Station Functionality",
+          "title": "Develop Basic Image Processing Capabilities",
           "repo": "cbradio"
         },
         {
           "date": "2025-12-21",
-          "title": "cbsurveys - Survey Creation and Initial Setup",
+          "title": "Implement Survey Functionality",
           "repo": "cbsurveys"
         },
         {
           "date": "2025-12-22",
-          "title": "cbfiles - Initial File Handling & Data Structures",
+          "title": "Develop Basic File Handling",
           "repo": "cbfiles"
         },
         {
           "date": "2025-12-24",
-          "title": "cbdocs - Basic Vision Inference",
+          "title": "Implement Basic Image Inference",
           "repo": "cbdocs"
-        },
-        {
-          "date": "2025-12-26",
-          "title": "cbmesh - Core Data Structure for Image Analysis",
-          "repo": "cbmesh"
         }
       ],
       "repos": [
@@ -7262,41 +7291,41 @@
       ]
     },
     {
-      "name": "Core Infrastructure & API Components",
+      "name": "Alpha-Phase",
       "startDate": "2025-12-30",
       "endDate": "2026-01-16",
-      "description": "This collection of repositories represents the foundational elements of the Nominate-AI project ecosystem. It encompasses the core systems and components needed to support the project's functionality, including the API gateway, test framework, and basic SMS gateway integration.  It focuses on building robust and reliable infrastructure for data handling and communication within the project.",
-      "category": "systems",
+      "description": "This phase represents the initial development and refinement of the Nominate-AI project ecosystem. It encompasses the creation of core components like cbintel, cbproject, cbauth, cbos, cbmaintain, cbtest, and cbsms, focusing on establishing a functional and stable foundation for the project. The focus is on building the fundamental building blocks for the AI-powered name suggestion system.",
+      "category": "ai-ml",
       "milestones": [
         {
           "date": "2025-12-30",
-          "title": "cbintel - Python API Gateway",
+          "title": "cbintel - Initial Python Implementation",
           "repo": "cbintel"
         },
         {
           "date": "2025-12-31",
-          "title": "cbproject - TypeScript API",
+          "title": "cbproject - TypeScript Development",
           "repo": "cbproject"
         },
         {
           "date": "2026-01-02",
-          "title": "cbos - Python SMS Gateway",
+          "title": "cbos - Python Project Launch",
           "repo": "cbos"
         },
         {
           "date": "2026-01-02",
-          "title": "cbmaintain - Shell Script for API Testing",
+          "title": "cbmaintain - Shell Scripting & Documentation",
           "repo": "cbmaintain"
         },
         {
           "date": "2026-01-11",
-          "title": "cbtest - Python Test Suite",
+          "title": "cbtest - Initial API Testing",
           "repo": "cbtest"
         },
         {
           "date": "2026-01-15",
-          "title": "cbintel - Python Data Processing Pipeline",
-          "repo": "cbintel"
+          "title": "cbms - SMS Gateway API Development",
+          "repo": "cbms"
         }
       ],
       "repos": [
@@ -7310,10 +7339,48 @@
       ]
     },
     {
-      "name": "Phase 7",
+      "name": "Data Processing & Indexing Pipeline",
       "startDate": "2026-01-16",
       "endDate": "2026-01-25",
-      "description": "Development of cbunstruct, cbtor, cbmobile and 4 more repos.",
+      "description": "This project represents the core data processing and indexing pipeline for the Nominate-AI ecosystem. It encompasses the creation of several crucial components, including a document processing API (cbunstruct), a tunnel infrastructure (cbtor), a user guide generator (cbmobile), and a vectorless RAG document indexing system (cbindex).  Furthermore, the project includes a caching proxy (cbtails) focused on improving performance.",
+      "category": "Data",
+      "milestones": [
+        {
+          "date": "2026-01-16",
+          "title": "cbunstruct - Initial Document Processing API",
+          "repo": "cbunstruct"
+        },
+        {
+          "date": "2026-01-18",
+          "title": "cbtor - WireGuard-to-TOR tunnel infrastructure",
+          "repo": "cbtor"
+        },
+        {
+          "date": "2026-01-18",
+          "title": "cbmobile - TypeScript 35-Commit Automated User Guide Generator",
+          "repo": "cbmobile"
+        },
+        {
+          "date": "2026-01-20",
+          "title": "cbmobile - Campaign Brain web application guide generator",
+          "repo": "cbmobile"
+        },
+        {
+          "date": "2026-01-22",
+          "title": "cbemail - Headless email client API",
+          "repo": "cbemail"
+        },
+        {
+          "date": "2026-01-23",
+          "title": "cbindex - FastAPI wrapper for PageIndex - vectorless RAG document indexing",
+          "repo": "cbindex"
+        },
+        {
+          "date": "2026-01-25",
+          "title": "cbtiles - CBTiles - CartoDB tile caching proxy with look-ahead prefetching",
+          "repo": "cbtiles"
+        }
+      ],
       "repos": [
         "cbunstruct",
         "cbtor",
@@ -7322,15 +7389,13 @@
         "cbemail",
         "cbindex",
         "cbtiles"
-      ],
-      "milestones": [],
-      "category": "systems"
+      ]
     },
     {
       "name": "Campaign Brain Development Pipeline",
       "startDate": "2026-01-26",
       "endDate": "2026-01-31",
-      "description": "This project represents the evolution of the Nominate-AI ecosystem, focusing on building and refining the core components for Campaign Brain. It encompasses initial campaign brain geocoding, a foundational CLI, a self-hosted CDN, a core library for API services, a URL shortener, and a management tool.  The development is a critical step towards a fully functional and scalable Nominate AI platform.",
+      "description": "This project represents the evolution of the Nominate-AI ecosystem, encompassing the core components necessary for building and deploying the Campaign Brain AI service. From initial campaign brain geocoding to a comprehensive suite of tools, this pipeline focuses on creating a robust and scalable infrastructure for data management, AI model deployment, and client interaction.",
       "category": "ai-ml",
       "milestones": [
         {
@@ -7340,7 +7405,7 @@
         },
         {
           "date": "2026-01-26",
-          "title": "cbmaps - 3-way Geo-location Service",
+          "title": "cbmaps - 3D Mapping Visualization",
           "repo": "cbmaps"
         },
         {
@@ -7355,22 +7420,17 @@
         },
         {
           "date": "2026-01-28",
-          "title": "cbmaps - 2-way Geo-location Service",
-          "repo": "cbmaps"
-        },
-        {
-          "date": "2026-01-29",
-          "title": "cbcore - Campaign Brain FastAPI Service Library",
-          "repo": "cbcore"
-        },
-        {
-          "date": "2026-01-31",
           "title": "cblinks - FastAPI URL Shortener Service",
           "repo": "cblinks"
         },
         {
+          "date": "2026-01-29",
+          "title": "cbcore - Core Library for Campaign Brain FastAPI Services",
+          "repo": "cbcore"
+        },
+        {
           "date": "2026-01-31",
-          "title": "cbscout - CBScout Agent Memory and Knowledge Management Service",
+          "title": "cbscout - Agent Memory and Knowledge Management Service",
           "repo": "cbscout"
         }
       ],
@@ -7388,38 +7448,43 @@
       "name": "Campaign Brain Ecosystem",
       "startDate": "2026-02-02",
       "endDate": "2026-02-07",
-      "description": "This project represents the core development phase of the Nominate-AI system, focusing on building the foundational components for campaign brain analysis. It encompasses the creation of several key modules \u2013 from a campaign brain system manager to a webhook ingestion service, issue tracker, real-time monitoring dashboard, VPN management API, and a payment system \u2013 all designed to support the system's overall functionality.",
-      "category": "ai-ml",
+      "description": "This project represents the core development phase of the Nominate-AI system, encompassing the initial setup and foundational components of the campaign brain system. It involves building and testing the core modules \u2013 Campaign Brain System Manager, cbwebhook, cbissues, cbpulse, cbvpn, and cbpayments \u2013 that form the basis of the distributed monitoring and self-healing infrastructure and the various tools for managing campaign data.  The development phase focuses on establishing a robust and scalable system for analyzing and optimizing campaign performance.",
+      "category": "systems",
       "milestones": [
         {
           "date": "2026-02-02",
-          "title": "cboverseer (Python, created 2026-02-02, 74 commits)",
+          "title": "cboverseer - Campaign Brain System Manager - Distributed monitoring and self-healing infrastructure",
           "repo": "cboverseer"
         },
         {
           "date": "2026-02-05",
-          "title": "cbwebhook (Python, created 2026-02-05, 25 commits)",
+          "title": "cbwebhook - The cbwebhook repository is a Python-based webhook ingestion service.",
           "repo": "cbwebhook"
         },
         {
           "date": "2026-02-05",
-          "title": "cbissues (Python, created 2026-02-05, 16 commits)",
+          "title": "cbissues - The cbissues repository is an issue tracking dashboard built with Python, aiming to provide a centralized system for managing and tracking issues.",
           "repo": "cbissues"
         },
         {
           "date": "2026-02-06",
-          "title": "cbpulse (Python, created 2026-02-06, 313 commits)",
+          "title": "cbpulse - Campaign Brain Pulse - Real-time system health and activity monitoring dashboard",
           "repo": "cbpulse"
         },
         {
           "date": "2026-02-07",
-          "title": "cbvpn (Python, created 2026-02-07, 19 commits)",
+          "title": "cbvpn - VPN Cluster Management API - Geographic routing through OpenWRT workers",
           "repo": "cbvpn"
         },
         {
           "date": "2026-02-07",
-          "title": "cbpayments (Python, created 2026-02-07, 80 commits)",
+          "title": "cbpayments - The cbpayments repository is an online payment system with recent commits focused on improving documentation, adding new features, and enhancing user",
           "repo": "cbpayments"
+        },
+        {
+          "date": "2026-02-10",
+          "title": "cbsocial - API access layer for social media accounts",
+          "repo": "cbsocial"
         }
       ],
       "repos": [
@@ -7436,37 +7501,37 @@
       "name": "Campaign Brain Core Development",
       "startDate": "2026-02-15",
       "endDate": "2026-02-22",
-      "description": "This repository represents the foundational development of the Campaign Brain project, encompassing core services like the MCP server, cbnetwork CLI, CB Executive Summaries, and the initial UI elements. It\u2019s a period of focused effort on establishing the core infrastructure and initial functionalities for the LLM agent campaign management system.",
+      "description": "This project represents the foundational development of the Campaign Brain ecosystem, focusing on the core components that enable LLM agent management and data collection. It includes essential tools like the MCP server, cbnetwork for VPN/Tor network management, and the core CB Executive Summaries and Dashboard applications.  The development phase highlights the initial building blocks of the system, ensuring a stable and functional foundation for future expansion.",
       "category": "systems",
       "milestones": [
         {
           "date": "2026-02-15",
-          "title": "cbmcp - MCP server - Campaign Brain service catalog for LLM agents",
+          "title": "cbmcp - MCP Server",
           "repo": "cbmcp"
         },
         {
           "date": "2026-02-17",
-          "title": "cbnetwork - Python-based CLI toolkit for managing OpenWRT VPN/Tor network clusters",
+          "title": "cbnetwork - CLI Toolkit",
           "repo": "cbnetwork"
         },
         {
           "date": "2026-02-20",
-          "title": "cbexecutive - CB Executive Summaries",
+          "title": "cbexecutive - Summaries",
           "repo": "cbexecutive"
         },
         {
           "date": "2026-02-20",
-          "title": "RCI-Frontend - TypeScript tool for political radio advertising rates across 1,900+ radio stations",
+          "title": "RCI-Frontend - Political Radio Advertising",
           "repo": "RCI-Frontend"
         },
         {
           "date": "2026-02-21",
-          "title": "cbpulse-ui - TypeScript UI for CBPulse business intelligence and system monitoring dashboard",
+          "title": "cbpulse-ui - UI Dashboard",
           "repo": "cbpulse-ui"
         },
         {
           "date": "2026-02-22",
-          "title": "cbfront - Python app for email integration service",
+          "title": "cbfront - Email Integration",
           "repo": "cbfront"
         }
       ],
@@ -7481,10 +7546,10 @@
       ]
     },
     {
-      "name": "Core Infrastructure & Tooling",
+      "name": "Core Infrastructure & Initial Development",
       "startDate": "2026-02-22",
       "endDate": "2026-02-28",
-      "description": "This collection of repositories represents the foundational systems and tools necessary for the Nominate-AI project. It encompasses the core infrastructure for the CBRadio UI, CBRouter, CBTemplates, and CBlogs, alongside essential components like the CBCron scheduler and the ComfyUI backend.  These are the essential building blocks that allow for the development, testing, and deployment of the AI-powered recommendation engine.",
+      "description": "This phase represents the foundational development of the Nominate-AI project ecosystem, focusing on establishing the core components and initial functionality of each repository. It began with the initial creation of CBRadio UI, followed by the addition of OpenWRT router management via MCP and FastAPI, and then the creation of templates and the campaign brain tools.  The focus is on building a basic, functional system for rate control and media buying.",
       "category": "systems",
       "milestones": [
         {
@@ -7494,43 +7559,33 @@
         },
         {
           "date": "2026-02-22",
-          "title": "CBRouter - OpenWRT Router Management via MCP and FastAPI",
+          "title": "cbrouter - OpenWRT Router Management via MCP & FastAPI",
           "repo": "cbrouter"
         },
         {
           "date": "2026-02-23",
-          "title": "CBTemplates - Starter Project Templates for Campaign Brain Services",
+          "title": "cbtemplates - Campaign Brain Services Starter Project",
           "repo": "cbtemplates"
         },
         {
           "date": "2026-02-23",
-          "title": "CBRadio-Web - Campaign Brain Website Tools",
+          "title": "cbradio-web - Campaign Brain Website Tools",
           "repo": "cbradio-web"
         },
         {
           "date": "2026-02-23",
-          "title": "CBCron - Configurable Scheduled Task Engine",
+          "title": "cbcron - Configurable Scheduled Task Engine",
           "repo": "cbcron"
         },
         {
           "date": "2026-02-26",
-          "title": "CBCrouter - OpenWRT Router Management via MCP and FastAPI",
-          "repo": "cbrouter"
-        },
-        {
-          "date": "2026-02-26",
-          "title": "Cblogs - Starter Project Templates for Campaign Brain Services",
+          "title": "cblogs - 1st Project Template",
           "repo": "cblogs"
         },
         {
           "date": "2026-02-27",
-          "title": "CBCron - Configurable Scheduled Task Engine",
-          "repo": "cbcron"
-        },
-        {
-          "date": "2026-02-28",
-          "title": "Cblogs - Generative AI Backend with FastAPI Proxy, Sprite Generation, and CDN Integration",
-          "repo": "cblogs"
+          "title": "cbcomfy - ComfyUI Generative AI Backend",
+          "repo": "cbcomfy"
         }
       ],
       "repos": [
@@ -7544,36 +7599,41 @@
       ]
     },
     {
-      "name": "Core Infrastructure & Tooling",
-      "startDate": "2026-03-12",
+      "name": "Core Services & Infrastructure",
+      "startDate": "2026-02-28",
       "endDate": "2026-03-12",
-      "description": "This repository represents the foundational infrastructure and tooling developed as part of the Nominate-AI project. It encompasses the core systems required for deploying and managing the Campaign Brain services, including the data center infrastructure, API wrappers, and the user guides.  It\u2019s a critical phase focused on establishing a stable and scalable environment.",
-      "category": "hardware, systems",
+      "description": "This repository represents the foundational components of the Nominate-AI project ecosystem. It encompasses the core services \u2013 Campaign Brain TTS, CBDC, and CBQA \u2013 and the underlying infrastructure necessary to support their operation. The development phase focuses on building and consolidating the essential systems and data structures that underpin the entire project.",
+      "category": "systems",
       "milestones": [
         {
-          "date": "2026-03-12",
-          "title": "Infrastructure Monorepo Consolidation",
-          "repo": "infrastructure"
+          "date": "2026-02-28",
+          "title": "cbtts - Campaign Brain TTS service wrapping VibeVoice-Realtime-0.5B",
+          "repo": "cbtts"
+        },
+        {
+          "date": "2026-03-01",
+          "title": "cbdc - Campaign Brain data center infrastructure \u2014 systemd units, SOPS scripts, health daemon, certbot hooks",
+          "repo": "cbdc"
         },
         {
           "date": "2026-03-03",
-          "title": "CBQA CLI Development",
+          "title": "cbqa - Python - Commits: feat: initial CBQA CLI with full DC1 regression results",
           "repo": "cbqa"
         },
         {
           "date": "2026-03-03",
-          "title": "Multi-Tenant Airtable API Wrapper",
+          "title": "cbairtable - Python - Multi-tenant Airtable API wrapper with DuckDB sync",
           "repo": "cbairtable"
         },
         {
           "date": "2026-03-03",
-          "title": "CBhandbook User Guides",
+          "title": "cbhandbook - Python - User guides and ops handbooks for Campaign Brain services",
           "repo": "cbhandbook"
         },
         {
-          "date": "2026-02-28",
-          "title": "Campaign Brain TTS Service Wrapper",
-          "repo": "cbtts"
+          "date": "2026-03-12",
+          "title": "infrastructure - Python - Campaign Brain infrastructure monorepo \u2014 consolidates infra services as submodules",
+          "repo": "infrastructure"
         }
       ],
       "repos": [
@@ -7590,22 +7650,22 @@
       "name": "Campaign Brain Core Infrastructure",
       "startDate": "2026-03-17",
       "endDate": "2026-03-28",
-      "description": "This repository represents the foundational infrastructure and core components of the Nominate-AI project, encompassing the essential tools and systems required for campaign management and scheduling. It includes the AI-powered task management and scheduling tool, the Infra Says standards & updates, the CB Ops dashboard for monitoring, the E-Signature Service, and the Cbloom engine \u2013 all crucial for the overall operation of the campaign brain.",
+      "description": "This repository represents the foundational infrastructure and core components of the Nominate-AI project ecosystem. It encompasses the essential tools and data pipelines needed to support the AI-powered task management and scheduling tool, cbea, and its associated infrastructure standards, including the Infra Says and CB Ops dashboards. The focus is on building a robust and scalable system for data management and operational monitoring.",
       "category": "systems",
       "milestones": [
         {
           "date": "2026-03-17",
-          "title": "Cbea - AI-powered task management and scheduling tool for Campaign Brain",
+          "title": "cbea - AI-powered Task Management and Scheduling Tool",
           "repo": "cbea"
         },
         {
           "date": "2026-03-18",
-          "title": "cbinfrasays - Infra Says \u2014 Campaign Brain Infrastructure Standards & Updates (MDX)",
+          "title": "cbinfrasays - Infra Says - Campaign Brain Infrastructure Standards & Updates",
           "repo": "cbinfrasays"
         },
         {
           "date": "2026-03-19",
-          "title": "cbops - CB Ops \u2014 Operations Dashboard (errors, issues, code scan, platform state)",
+          "title": "cbops - CB Ops \u2014 Operations Dashboard",
           "repo": "cbops"
         },
         {
@@ -7615,7 +7675,7 @@
         },
         {
           "date": "2026-03-27",
-          "title": "cbloom - Cbloom is a TypeScript-based campaign content and narrative engine focusing on responsive tile layouts and data integration. Recent commits highlight...",
+          "title": "cbloom - Cbloom is a TypeScript-based campaign content and narrative engine focusing on responsive tile layouts and data integration.",
           "repo": "cbloom"
         },
         {
@@ -7626,7 +7686,7 @@
         {
           "date": "2026-03-28",
           "title": "cbingest - This GitHub repository, developed by cbingest, is a data ingestion pipeline service focused on automating the extraction of text from Claude JSON resp",
-          "repo": ""
+          "repo": "cbingest"
         }
       ],
       "repos": [
@@ -7640,20 +7700,20 @@
       ]
     },
     {
-      "name": "Mission Control",
+      "name": "Supply Chain Security & Operational Layer",
       "startDate": "2026-04-02",
       "endDate": "2026-04-03",
-      "description": "This repository represents the initial development of CJ's personal operating layer, focusing on morning briefing and decision queue functionality for the Campaign Brain application. It\u2019s a foundational layer for CJ\u2019s workflow, establishing a central hub for intelligence and prioritization within the application. It\u2019s a critical early stage in the development of a system designed to streamline decision-making.",
-      "category": "ai-ml",
+      "description": "This repository represents the core development of the cbskills system, a centralized resource for managing Claude skills with a strong emphasis on supply chain security. It\u2019s a foundational layer built to manage and integrate Claude\u2019s capabilities, providing a structured environment for data management and workflow optimization. CJ\u2019s personal operating layer, mission-control, is a supporting component focused on immediate decision-making and intelligence gathering.",
+      "category": "systems",
       "milestones": [
         {
           "date": "2026-04-02",
-          "title": "Initial Mission Control - Core Functionality",
+          "title": "Initial cbskills Repository Setup",
           "repo": "cbskills"
         },
         {
-          "date": "2026-04-03",
-          "title": "Refinement and Integration",
+          "date": "2026-04-02",
+          "title": "Claude Skill Management Core",
           "repo": "cbskills"
         }
       ],
@@ -7669,19 +7729,19 @@
       "name": "cbunstruct",
       "description": "Unstructured Document Processing API - FastAPI wrapper for the unstructured library",
       "language": "Python",
-      "commits": 325,
+      "commits": 326,
       "firstCommit": "2022-12-09T19:55:42Z",
-      "lastCommit": "2026-04-03T00:44:07Z",
-      "phase": "Phase 7"
+      "lastCommit": "2026-04-11T17:56:58Z",
+      "phase": "Data Processing & Indexing Pipeline"
     },
     {
       "name": "cbcomfy",
       "description": "ComfyUI generative AI backend with FastAPI proxy, sprite generation, and CDN integration",
       "language": "Python",
-      "commits": 4817,
+      "commits": 4818,
       "firstCommit": "2023-01-03T06:53:32Z",
-      "lastCommit": "2026-04-03T00:44:05Z",
-      "phase": "Core Infrastructure & Tooling"
+      "lastCommit": "2026-04-11T18:01:33Z",
+      "phase": "Core Infrastructure & Initial Development"
     },
     {
       "name": "quantifi",
@@ -7816,7 +7876,7 @@
       "commits": 0,
       "firstCommit": "2025-08-22T18:36:57Z",
       "lastCommit": "2025-08-22T18:36:57Z",
-      "phase": "Core Infrastructure & Testing"
+      "phase": "Data Infrastructure & Core Components"
     },
     {
       "name": "lazarus",
@@ -7825,7 +7885,7 @@
       "commits": 55,
       "firstCommit": "2025-09-17T03:05:51Z",
       "lastCommit": "2025-10-27T14:14:27Z",
-      "phase": "Core Infrastructure & Testing"
+      "phase": "Data Infrastructure & Core Components"
     },
     {
       "name": "seedbed",
@@ -7834,7 +7894,7 @@
       "commits": 2,
       "firstCommit": "2025-09-23T22:30:56Z",
       "lastCommit": "2025-09-24T05:08:14Z",
-      "phase": "Core Infrastructure & Testing"
+      "phase": "Data Infrastructure & Core Components"
     },
     {
       "name": "clarion",
@@ -7843,7 +7903,7 @@
       "commits": 125,
       "firstCommit": "2025-10-13T20:09:18Z",
       "lastCommit": "2025-11-11T19:48:32Z",
-      "phase": "Core Infrastructure & Testing"
+      "phase": "Data Infrastructure & Core Components"
     },
     {
       "name": "oym",
@@ -7852,7 +7912,7 @@
       "commits": 140,
       "firstCommit": "2025-10-13T20:09:18Z",
       "lastCommit": "2025-11-13T21:54:06Z",
-      "phase": "Core Infrastructure & Testing"
+      "phase": "Data Infrastructure & Core Components"
     },
     {
       "name": "campainbrain",
@@ -7861,34 +7921,34 @@
       "commits": 0,
       "firstCommit": "2025-10-30T14:29:06Z",
       "lastCommit": "2025-10-30T14:29:06Z",
-      "phase": "Core Infrastructure & Testing"
+      "phase": "Data Infrastructure & Core Components"
     },
     {
       "name": "cbtenant",
       "description": "",
       "language": "Python",
-      "commits": 176,
+      "commits": 177,
       "firstCommit": "2025-10-30T16:58:15Z",
-      "lastCommit": "2026-04-04T00:01:12Z",
-      "phase": "Core Infrastructure & Testing"
+      "lastCommit": "2026-04-11T08:22:30Z",
+      "phase": "Data Infrastructure & Core Components"
     },
     {
       "name": "cbworkflow",
       "description": "",
       "language": "Python",
-      "commits": 74,
+      "commits": 75,
       "firstCommit": "2025-12-02T21:07:30Z",
-      "lastCommit": "2026-04-03T23:55:02Z",
-      "phase": "Core Infrastructure & API Development"
+      "lastCommit": "2026-04-11T08:22:29Z",
+      "phase": "Core Infrastructure & API Components"
     },
     {
       "name": "cbapp",
       "description": "The cbapp repository appears to be a Python-based project that has undergone significant updates and refactoring, including domain migrations, API additions, and feature enhancements. Recent commits have focused on improving the user interface, adding new features such as Typeform integration, and fixing bugs. The repository is now in a state of active development.",
       "language": "Python",
-      "commits": 437,
+      "commits": 439,
       "firstCommit": "2025-12-02T23:55:28Z",
-      "lastCommit": "2026-04-03T23:54:59Z",
-      "phase": "Core Infrastructure & API Development"
+      "lastCommit": "2026-04-12T01:15:37Z",
+      "phase": "Core Infrastructure & API Components"
     },
     {
       "name": "system",
@@ -7897,61 +7957,61 @@
       "commits": 7,
       "firstCommit": "2025-12-10T18:05:37Z",
       "lastCommit": "2025-12-13T18:04:58Z",
-      "phase": "Core Infrastructure & API Development"
+      "phase": "Core Infrastructure & API Components"
     },
     {
       "name": "cbdistricts",
       "description": "",
       "language": "Python",
-      "commits": 97,
+      "commits": 98,
       "firstCommit": "2025-12-13T21:24:17Z",
-      "lastCommit": "2026-04-03T23:55:00Z",
-      "phase": "Core Infrastructure & API Development"
+      "lastCommit": "2026-04-11T00:09:44Z",
+      "phase": "Core Infrastructure & API Components"
     },
     {
       "name": "cbpublic",
       "description": "",
       "language": "Python",
-      "commits": 32,
+      "commits": 33,
       "firstCommit": "2025-12-14T18:55:03Z",
-      "lastCommit": "2026-04-03T00:43:16Z",
-      "phase": "Core Infrastructure & API Development"
+      "lastCommit": "2026-04-11T17:57:04Z",
+      "phase": "Core Infrastructure & API Components"
     },
     {
       "name": "cbetl",
       "description": "",
       "language": "Python",
-      "commits": 23,
+      "commits": 24,
       "firstCommit": "2025-12-15T23:30:50Z",
-      "lastCommit": "2026-04-06T18:15:25Z",
-      "phase": "Core Infrastructure & API Development"
+      "lastCommit": "2026-04-11T17:57:03Z",
+      "phase": "Core Infrastructure & API Components"
     },
     {
       "name": "cbai",
       "description": "",
       "language": "Python",
-      "commits": 100,
+      "commits": 107,
       "firstCommit": "2025-12-15T23:30:50Z",
-      "lastCommit": "2026-04-09T00:45:49Z",
-      "phase": "Core Infrastructure & API Development"
+      "lastCommit": "2026-04-12T21:49:53Z",
+      "phase": "Core Infrastructure & API Components"
     },
     {
       "name": "cbmodels",
       "description": "",
       "language": "Python",
-      "commits": 209,
+      "commits": 229,
       "firstCommit": "2025-12-17T05:45:49Z",
-      "lastCommit": "2026-04-08T16:16:36Z",
-      "phase": "Core Image Processing & Analysis Pipeline"
+      "lastCommit": "2026-04-12T21:47:21Z",
+      "phase": "Core Image Processing & Analysis Components"
     },
     {
       "name": "cbradio",
       "description": "",
       "language": "Python",
-      "commits": 340,
+      "commits": 359,
       "firstCommit": "2025-12-19T06:37:50Z",
-      "lastCommit": "2026-04-08T19:43:09Z",
-      "phase": "Core Image Processing & Analysis Pipeline"
+      "lastCommit": "2026-04-12T00:19:02Z",
+      "phase": "Core Image Processing & Analysis Components"
     },
     {
       "name": "RCI-Frontend",
@@ -7966,64 +8026,64 @@
       "name": "cbsurveys",
       "description": "",
       "language": "Python",
-      "commits": 14,
+      "commits": 15,
       "firstCommit": "2025-12-21T06:06:49Z",
-      "lastCommit": "2026-04-03T23:55:01Z",
-      "phase": "Core Image Processing & Analysis Pipeline"
+      "lastCommit": "2026-04-11T17:56:57Z",
+      "phase": "Core Image Processing & Analysis Components"
     },
     {
       "name": "cbinfra",
       "description": "",
       "language": "Python",
-      "commits": 206,
+      "commits": 207,
       "firstCommit": "2025-12-21T21:41:51Z",
-      "lastCommit": "2026-04-04T18:38:49Z",
-      "phase": "Core Image Processing & Analysis Pipeline"
+      "lastCommit": "2026-04-11T06:12:19Z",
+      "phase": "Core Image Processing & Analysis Components"
     },
     {
       "name": "cbfiles",
       "description": "The cbfiles repository appears to be a Python project that provides various features for image and video processing, including vision inference, search, and media asset management. Recent commits have focused on improving performance, adding new features such as HEIC support, and enhancing compatibility with different platforms. The repository has also undergone domain migrations and refactorings.",
       "language": "Python",
-      "commits": 58,
+      "commits": 60,
       "firstCommit": "2025-12-22T17:44:17Z",
-      "lastCommit": "2026-04-06T00:22:56Z",
-      "phase": "Core Image Processing & Analysis Pipeline"
+      "lastCommit": "2026-04-12T01:15:39Z",
+      "phase": "Core Image Processing & Analysis Components"
     },
     {
       "name": "cbdocs",
       "description": "",
       "language": "Shell",
-      "commits": 138,
+      "commits": 142,
       "firstCommit": "2025-12-24T20:06:09Z",
-      "lastCommit": "2026-04-09T08:00:01Z",
-      "phase": "Core Image Processing & Analysis Pipeline"
+      "lastCommit": "2026-04-13T08:00:38Z",
+      "phase": "Core Image Processing & Analysis Components"
     },
     {
       "name": "cbintel",
       "description": "",
       "language": "Python",
-      "commits": 492,
+      "commits": 509,
       "firstCommit": "2025-12-31T00:33:04Z",
-      "lastCommit": "2026-04-08T19:39:47Z",
-      "phase": "Core Infrastructure & API Components"
+      "lastCommit": "2026-04-12T01:32:25Z",
+      "phase": "Alpha-Phase"
     },
     {
       "name": "cbproject",
       "description": "cbproject repository with ongoing development and maintenance",
       "language": "TypeScript",
-      "commits": 105,
+      "commits": 108,
       "firstCommit": "2025-12-31T22:45:20Z",
-      "lastCommit": "2026-04-09T07:00:07Z",
-      "phase": "Core Infrastructure & API Components"
+      "lastCommit": "2026-04-13T07:00:44Z",
+      "phase": "Alpha-Phase"
     },
     {
       "name": "cbauth",
       "description": "",
       "language": "Python",
-      "commits": 123,
+      "commits": 124,
       "firstCommit": "2026-01-02T03:19:11Z",
-      "lastCommit": "2026-04-07T23:57:45Z",
-      "phase": "Core Infrastructure & API Components"
+      "lastCommit": "2026-04-11T08:22:31Z",
+      "phase": "Alpha-Phase"
     },
     {
       "name": "cbos",
@@ -8032,25 +8092,25 @@
       "commits": 50,
       "firstCommit": "2026-01-02T04:53:04Z",
       "lastCommit": "2026-03-14T20:21:06Z",
-      "phase": "Core Infrastructure & API Components"
+      "phase": "Alpha-Phase"
     },
     {
       "name": "cbmesh",
       "description": "",
       "language": "Python",
-      "commits": 63,
+      "commits": 64,
       "firstCommit": "2026-01-09T17:03:41Z",
-      "lastCommit": "2026-04-06T19:19:40Z",
-      "phase": "Core Image Processing & Analysis Pipeline"
+      "lastCommit": "2026-04-11T17:56:55Z",
+      "phase": "Core Image Processing & Analysis Components"
     },
     {
       "name": "cbmaintain",
       "description": "",
       "language": "Shell",
-      "commits": 10,
+      "commits": 12,
       "firstCommit": "2026-01-14T21:39:09Z",
-      "lastCommit": "2026-04-03T00:41:44Z",
-      "phase": "Core Infrastructure & API Components"
+      "lastCommit": "2026-04-11T04:23:51Z",
+      "phase": "Alpha-Phase"
     },
     {
       "name": "cbtest",
@@ -8059,25 +8119,25 @@
       "commits": 11,
       "firstCommit": "2026-01-15T03:08:56Z",
       "lastCommit": "2026-03-06T13:49:27Z",
-      "phase": "Core Infrastructure & API Components"
+      "phase": "Alpha-Phase"
     },
     {
       "name": "cbsms",
       "description": "SMS Gateway API for Ejoin SMS/MMS devices",
       "language": "Python",
-      "commits": 30,
+      "commits": 31,
       "firstCommit": "2026-01-16T21:25:04Z",
-      "lastCommit": "2026-04-06T19:19:42Z",
-      "phase": "Core Infrastructure & API Components"
+      "lastCommit": "2026-04-11T18:01:36Z",
+      "phase": "Alpha-Phase"
     },
     {
       "name": "cbtor",
       "description": "WireGuard-to-TOR tunnel infrastructure for distributed TOR routing",
       "language": "Python",
-      "commits": 34,
+      "commits": 35,
       "firstCommit": "2026-01-18T01:04:19Z",
-      "lastCommit": "2026-04-04T00:01:13Z",
-      "phase": "Phase 7"
+      "lastCommit": "2026-04-11T18:01:35Z",
+      "phase": "Data Processing & Indexing Pipeline"
     },
     {
       "name": "cbmobile",
@@ -8086,78 +8146,78 @@
       "commits": 218,
       "firstCommit": "2026-01-18T04:44:02Z",
       "lastCommit": "2026-04-03T00:43:13Z",
-      "phase": "Phase 7"
+      "phase": "Data Processing & Indexing Pipeline"
     },
     {
       "name": "cbuserguide",
       "description": "Automated user guide generator for Campaign Brain web applications",
       "language": "Python",
-      "commits": 28,
+      "commits": 29,
       "firstCommit": "2026-01-20T23:28:03Z",
-      "lastCommit": "2026-04-03T00:43:23Z",
-      "phase": "Phase 7"
+      "lastCommit": "2026-04-11T17:57:05Z",
+      "phase": "Data Processing & Indexing Pipeline"
     },
     {
       "name": "cbemail",
       "description": "Headless email client API for IMAP/SMTP operations",
       "language": "Python",
-      "commits": 17,
+      "commits": 18,
       "firstCommit": "2026-01-22T18:50:39Z",
-      "lastCommit": "2026-04-06T00:22:55Z",
-      "phase": "Phase 7"
+      "lastCommit": "2026-04-11T17:57:01Z",
+      "phase": "Data Processing & Indexing Pipeline"
     },
     {
       "name": "cbindex",
       "description": "FastAPI wrapper for PageIndex - vectorless RAG document indexing with workspace management",
       "language": "Python",
-      "commits": 21,
+      "commits": 23,
       "firstCommit": "2026-01-23T01:44:28Z",
-      "lastCommit": "2026-04-06T00:23:00Z",
-      "phase": "Phase 7"
+      "lastCommit": "2026-04-12T01:15:38Z",
+      "phase": "Data Processing & Indexing Pipeline"
     },
     {
       "name": "cbtiles",
       "description": "CBTiles - CartoDB tile caching proxy with look-ahead prefetching",
       "language": "Python",
-      "commits": 27,
+      "commits": 28,
       "firstCommit": "2026-01-25T18:46:34Z",
-      "lastCommit": "2026-04-03T23:55:01Z",
-      "phase": "Phase 7"
+      "lastCommit": "2026-04-11T17:57:02Z",
+      "phase": "Data Processing & Indexing Pipeline"
     },
     {
       "name": "cbgeo",
       "description": "Campaign Brain Geocoding Service (Nominatim-based)",
       "language": "Python",
-      "commits": 24,
+      "commits": 25,
       "firstCommit": "2026-01-26T00:04:25Z",
-      "lastCommit": "2026-04-03T00:43:04Z",
+      "lastCommit": "2026-04-11T17:57:05Z",
       "phase": "Campaign Brain Development Pipeline"
     },
     {
       "name": "cbmaps",
       "description": "",
       "language": "Python",
-      "commits": 19,
+      "commits": 20,
       "firstCommit": "2026-01-26T16:39:27Z",
-      "lastCommit": "2026-04-03T23:55:00Z",
+      "lastCommit": "2026-04-11T17:57:01Z",
       "phase": "Campaign Brain Development Pipeline"
     },
     {
       "name": "cbcli",
       "description": "Unified CLI for Nominate AI services (AWS CLI style)",
       "language": "Python",
-      "commits": 26,
+      "commits": 27,
       "firstCommit": "2026-01-26T17:26:41Z",
-      "lastCommit": "2026-04-03T22:11:46Z",
+      "lastCommit": "2026-04-11T06:12:21Z",
       "phase": "Campaign Brain Development Pipeline"
     },
     {
       "name": "cbcdn",
       "description": "Campaign Brain self-hosted CDN assets",
       "language": "JavaScript",
-      "commits": 8,
+      "commits": 9,
       "firstCommit": "2026-01-28T19:25:59Z",
-      "lastCommit": "2026-03-18T19:41:55Z",
+      "lastCommit": "2026-04-11T19:39:25Z",
       "phase": "Campaign Brain Development Pipeline"
     },
     {
@@ -8173,27 +8233,27 @@
       "name": "cblinks",
       "description": "FastAPI URL shortener service",
       "language": "Python",
-      "commits": 21,
+      "commits": 22,
       "firstCommit": "2026-01-31T01:15:27Z",
-      "lastCommit": "2026-04-06T00:23:03Z",
+      "lastCommit": "2026-04-11T17:56:58Z",
       "phase": "Campaign Brain Development Pipeline"
     },
     {
       "name": "cbscout",
       "description": "CBScout repository: agent memory and knowledge management service",
       "language": "Python",
-      "commits": 28,
+      "commits": 30,
       "firstCommit": "2026-01-31T02:31:31Z",
-      "lastCommit": "2026-04-07T20:34:21Z",
+      "lastCommit": "2026-04-12T01:15:39Z",
       "phase": "Campaign Brain Development Pipeline"
     },
     {
       "name": "cboverseer",
       "description": "Campaign Brain System Manager - Distributed monitoring and self-healing infrastructure",
       "language": "Python",
-      "commits": 74,
+      "commits": 77,
       "firstCommit": "2026-02-02T00:35:45Z",
-      "lastCommit": "2026-04-07T15:15:22Z",
+      "lastCommit": "2026-04-12T02:22:59Z",
       "phase": "Campaign Brain Ecosystem"
     },
     {
@@ -8209,145 +8269,145 @@
       "name": "cbwebhook",
       "description": "The cbwebhook repository is a Python-based webhook ingestion service.",
       "language": "Python",
-      "commits": 25,
+      "commits": 26,
       "firstCommit": "2026-02-06T00:40:11Z",
-      "lastCommit": "2026-04-06T00:23:10Z",
+      "lastCommit": "2026-04-11T17:56:56Z",
       "phase": "Campaign Brain Ecosystem"
     },
     {
       "name": "cbissues",
       "description": "The cbissues repository is an issue tracking dashboard built with Python, aiming to provide a centralized system for managing and tracking issues. The project has undergone various refactorings, fixes, and feature additions, including integration with MCP (Campaign Brain) and sysadmin operations handbook. Recent changes have focused on improving the user experience, security, and functionality of the application.",
       "language": "Python",
-      "commits": 16,
+      "commits": 17,
       "firstCommit": "2026-02-06T00:40:12Z",
-      "lastCommit": "2026-04-06T00:23:02Z",
+      "lastCommit": "2026-04-11T17:57:00Z",
       "phase": "Campaign Brain Ecosystem"
     },
     {
       "name": "cbpulse",
       "description": "Campaign Brain Pulse - Real-time system health and activity monitoring dashboard",
       "language": "Python",
-      "commits": 313,
+      "commits": 332,
       "firstCommit": "2026-02-06T17:48:36Z",
-      "lastCommit": "2026-04-09T00:30:21Z",
+      "lastCommit": "2026-04-12T04:06:03Z",
       "phase": "Campaign Brain Ecosystem"
     },
     {
       "name": "cbvpn",
       "description": "VPN Cluster Management API - Geographic routing through OpenWRT workers",
       "language": "Python",
-      "commits": 19,
+      "commits": 22,
       "firstCommit": "2026-02-07T03:01:44Z",
-      "lastCommit": "2026-04-03T23:55:03Z",
+      "lastCommit": "2026-04-12T02:25:22Z",
       "phase": "Campaign Brain Ecosystem"
     },
     {
       "name": "cbpayments",
       "description": "The cbpayments repository is an online payment system with recent commits focused on improving documentation, adding new features, and enhancing user experience.",
       "language": "Python",
-      "commits": 80,
+      "commits": 81,
       "firstCommit": "2026-02-07T15:19:19Z",
-      "lastCommit": "2026-04-04T18:38:48Z",
+      "lastCommit": "2026-04-11T17:56:53Z",
       "phase": "Campaign Brain Ecosystem"
     },
     {
       "name": "cbsocial",
       "description": "API access layer for social media accounts",
       "language": "Python",
-      "commits": 20,
+      "commits": 22,
       "firstCommit": "2026-02-10T18:14:28Z",
-      "lastCommit": "2026-04-08T16:16:34Z",
+      "lastCommit": "2026-04-12T01:15:40Z",
       "phase": "Campaign Brain Ecosystem"
     },
     {
       "name": "cbmcp",
       "description": "MCP server \u2014 Campaign Brain service catalog for LLM agents",
       "language": "Python",
-      "commits": 90,
+      "commits": 92,
       "firstCommit": "2026-02-15T03:31:21Z",
-      "lastCommit": "2026-04-03T00:43:12Z",
+      "lastCommit": "2026-04-12T23:45:36Z",
       "phase": "Campaign Brain Core Development"
     },
     {
       "name": "cbnetwork",
       "description": "The cbnetwork repository is a Python-based CLI toolkit for managing OpenWRT VPN/Tor network clusters.",
       "language": "Python",
-      "commits": 59,
+      "commits": 60,
       "firstCommit": "2026-02-17T05:31:05Z",
-      "lastCommit": "2026-04-06T16:37:32Z",
+      "lastCommit": "2026-04-11T06:12:21Z",
       "phase": "Campaign Brain Core Development"
     },
     {
       "name": "cbexecutive",
       "description": "CB Executive Summaries",
       "language": "Unknown",
-      "commits": 50,
+      "commits": 53,
       "firstCommit": "2026-02-20T15:15:58Z",
-      "lastCommit": "2026-04-09T09:00:01Z",
+      "lastCommit": "2026-04-13T09:00:38Z",
       "phase": "Campaign Brain Core Development"
     },
     {
       "name": "cbfront",
       "description": "Campaign Brain Front App email integration service",
       "language": "Python",
-      "commits": 40,
+      "commits": 41,
       "firstCommit": "2026-02-21T19:35:45Z",
-      "lastCommit": "2026-04-06T00:22:57Z",
+      "lastCommit": "2026-04-11T17:56:52Z",
       "phase": "Campaign Brain Core Development"
     },
     {
       "name": "cbradio-ui",
       "description": "CBRadio UI \u2014 Rural AM/FM rate console and media buying platform",
       "language": "TypeScript",
-      "commits": 332,
+      "commits": 368,
       "firstCommit": "2026-02-22T03:58:16Z",
-      "lastCommit": "2026-04-08T20:46:21Z",
-      "phase": "Core Infrastructure & Tooling"
+      "lastCommit": "2026-04-12T22:26:25Z",
+      "phase": "Core Infrastructure & Initial Development"
     },
     {
       "name": "cbpulse-ui",
       "description": "CBPulse UI \u2014 VIP business intelligence and system monitoring dashboard",
       "language": "TypeScript",
-      "commits": 60,
+      "commits": 61,
       "firstCommit": "2026-02-22T05:09:51Z",
-      "lastCommit": "2026-04-04T19:19:44Z",
+      "lastCommit": "2026-04-12T22:23:58Z",
       "phase": "Campaign Brain Core Development"
     },
     {
       "name": "cbrouter",
       "description": "OpenWRT router management via MCP and FastAPI",
       "language": "Python",
-      "commits": 13,
+      "commits": 14,
       "firstCommit": "2026-02-22T18:16:48Z",
-      "lastCommit": "2026-04-06T00:23:10Z",
-      "phase": "Core Infrastructure & Tooling"
+      "lastCommit": "2026-04-11T06:12:20Z",
+      "phase": "Core Infrastructure & Initial Development"
     },
     {
       "name": "cbradio-web",
       "description": "Campaign Brain website tools \u2013 site copier, refactoring, and creation",
       "language": "TypeScript",
-      "commits": 16,
+      "commits": 17,
       "firstCommit": "2026-02-23T03:34:14Z",
-      "lastCommit": "2026-04-03T22:10:20Z",
-      "phase": "Core Infrastructure & Tooling"
+      "lastCommit": "2026-04-11T17:57:03Z",
+      "phase": "Core Infrastructure & Initial Development"
     },
     {
       "name": "cbtemplates",
       "description": "Starter project templates for Campaign Brain services",
       "language": "TypeScript",
-      "commits": 14,
+      "commits": 15,
       "firstCommit": "2026-02-23T15:19:26Z",
-      "lastCommit": "2026-04-03T22:12:24Z",
-      "phase": "Core Infrastructure & Tooling"
+      "lastCommit": "2026-04-11T19:39:26Z",
+      "phase": "Core Infrastructure & Initial Development"
     },
     {
       "name": "cbcron",
       "description": "Configurable Scheduled Task Engine",
       "language": "Python",
-      "commits": 38,
+      "commits": 39,
       "firstCommit": "2026-02-26T16:28:21Z",
-      "lastCommit": "2026-04-06T19:19:41Z",
-      "phase": "Core Infrastructure & Tooling"
+      "lastCommit": "2026-04-11T17:56:56Z",
+      "phase": "Core Infrastructure & Initial Development"
     },
     {
       "name": "cblogs",
@@ -8356,25 +8416,25 @@
       "commits": 21,
       "firstCommit": "2026-02-27T05:20:59Z",
       "lastCommit": "2026-04-04T00:01:13Z",
-      "phase": "Core Infrastructure & Tooling"
+      "phase": "Core Infrastructure & Initial Development"
     },
     {
       "name": "cbtts",
       "description": "Campaign Brain TTS service wrapping VibeVoice-Realtime-0.5B",
       "language": "Python",
-      "commits": 17,
+      "commits": 18,
       "firstCommit": "2026-02-28T05:21:48Z",
-      "lastCommit": "2026-04-03T00:44:07Z",
-      "phase": "Core Infrastructure & Tooling"
+      "lastCommit": "2026-04-11T18:01:34Z",
+      "phase": "Core Services & Infrastructure"
     },
     {
       "name": "cbdc",
       "description": "Campaign Brain data center infrastructure \u2014 systemd units, SOPS scripts, health daemon, certbot hooks",
       "language": "Shell",
-      "commits": 98,
+      "commits": 100,
       "firstCommit": "2026-03-01T15:16:40Z",
-      "lastCommit": "2026-04-08T01:25:16Z",
-      "phase": "Core Infrastructure & Tooling"
+      "lastCommit": "2026-04-11T21:34:00Z",
+      "phase": "Core Services & Infrastructure"
     },
     {
       "name": "cbqa",
@@ -8383,25 +8443,25 @@
       "commits": 1,
       "firstCommit": "2026-03-03T16:00:09Z",
       "lastCommit": "2026-03-03T16:00:09Z",
-      "phase": "Core Infrastructure & Tooling"
+      "phase": "Core Services & Infrastructure"
     },
     {
       "name": "cbairtable",
       "description": "Multi-tenant Airtable API wrapper with DuckDB sync",
       "language": "Python",
-      "commits": 28,
+      "commits": 33,
       "firstCommit": "2026-03-03T23:16:57Z",
-      "lastCommit": "2026-04-06T00:22:54Z",
-      "phase": "Core Infrastructure & Tooling"
+      "lastCommit": "2026-04-13T01:46:13Z",
+      "phase": "Core Services & Infrastructure"
     },
     {
       "name": "cbiterable",
       "description": "Multi-tenant Iterable API wrapper with DuckDB sync",
       "language": "Python",
-      "commits": 17,
+      "commits": 18,
       "firstCommit": "2026-03-03T23:21:49Z",
-      "lastCommit": "2026-04-06T00:23:02Z",
-      "phase": "Core Infrastructure & Tooling"
+      "lastCommit": "2026-04-11T17:56:54Z",
+      "phase": "Core Services & Infrastructure"
     },
     {
       "name": "cbhandbook",
@@ -8410,24 +8470,24 @@
       "commits": 3,
       "firstCommit": "2026-03-12T18:58:49Z",
       "lastCommit": "2026-03-12T21:07:54Z",
-      "phase": "Core Infrastructure & Tooling"
+      "phase": "Core Services & Infrastructure"
     },
     {
       "name": "infrastructure",
       "description": "Campaign Brain infrastructure monorepo \u2014 consolidates infra services as submodules",
       "language": "Python",
-      "commits": 87,
+      "commits": 97,
       "firstCommit": "2026-03-12T22:38:20Z",
-      "lastCommit": "2026-04-08T21:26:22Z",
-      "phase": "Core Infrastructure & Tooling"
+      "lastCommit": "2026-04-12T22:26:47Z",
+      "phase": "Core Services & Infrastructure"
     },
     {
       "name": "cbea",
       "description": "AI-powered task management and scheduling tool for Campaign Brain",
       "language": "Python",
-      "commits": 54,
+      "commits": 55,
       "firstCommit": "2026-03-17T05:22:49Z",
-      "lastCommit": "2026-04-04T20:19:37Z",
+      "lastCommit": "2026-04-11T17:57:06Z",
       "phase": "Campaign Brain Core Infrastructure"
     },
     {
@@ -8452,18 +8512,18 @@
       "name": "cbesig",
       "description": "E-Signature Service (BoldSign integration)",
       "language": "Python",
-      "commits": 33,
+      "commits": 34,
       "firstCommit": "2026-03-26T03:50:55Z",
-      "lastCommit": "2026-04-08T16:16:35Z",
+      "lastCommit": "2026-04-11T04:13:23Z",
       "phase": "Campaign Brain Core Infrastructure"
     },
     {
       "name": "cbloom",
       "description": "Cbloom is a TypeScript-based campaign content and narrative engine focusing on responsive tile layouts and data integration. Recent commits highlight improvements to the core loom functionality, including enhanced responsive grid design, new loom types, data access, and API development. The repository emphasizes a focus on building a robust and flexible campaign content pipeline.",
       "language": "HTML",
-      "commits": 315,
+      "commits": 340,
       "firstCommit": "2026-03-27T14:52:52Z",
-      "lastCommit": "2026-04-08T20:42:46Z",
+      "lastCommit": "2026-04-13T03:45:30Z",
       "phase": "Campaign Brain Core Infrastructure"
     },
     {
@@ -8479,9 +8539,9 @@
       "name": "cbingest",
       "description": "This GitHub repository, developed by cbingest, is a data ingestion pipeline service focused on automating the extraction of text from Claude JSON responses. Recent commits highlight improvements in extraction, data persistence, UI enhancements, and documentation. Key milestones include implementing full document extraction, adding documentation, and establishing a maintenance pass for the API.",
       "language": "Python",
-      "commits": 26,
+      "commits": 28,
       "firstCommit": "2026-03-28T18:25:40Z",
-      "lastCommit": "2026-04-08T21:39:17Z",
+      "lastCommit": "2026-04-12T01:15:36Z",
       "phase": "Campaign Brain Core Infrastructure"
     },
     {
@@ -8491,7 +8551,7 @@
       "commits": 1,
       "firstCommit": "2026-04-02T20:17:27Z",
       "lastCommit": "2026-04-02T20:17:27Z",
-      "phase": "Mission Control"
+      "phase": "Supply Chain Security & Operational Layer"
     },
     {
       "name": "cbskills",
@@ -8500,7 +8560,7 @@
       "commits": 7,
       "firstCommit": "2026-04-02T20:30:49Z",
       "lastCommit": "2026-04-03T00:43:20Z",
-      "phase": "Mission Control"
+      "phase": "Supply Chain Security & Operational Layer"
     },
     {
       "name": "loomjs",
@@ -8509,7 +8569,7 @@
       "commits": 3,
       "firstCommit": "2026-04-03T01:57:45Z",
       "lastCommit": "2026-04-03T02:32:14Z",
-      "phase": "Mission Control"
+      "phase": "Supply Chain Security & Operational Layer"
     }
   ]
 }
