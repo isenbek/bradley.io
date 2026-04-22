@@ -8,7 +8,7 @@ export default function ServicesPage() {
       title: "Distributed Systems Architecture",
       description: "Design and implementation of systems that process billions of records with high availability and fault tolerance.",
       skills: ["Distributed Databases", "Message Queues", "Load Balancing", "Fault Tolerance"],
-      examples: ["Search infrastructure at TransUnion scale", "High-volume messaging platforms", "Multi-region data replication"],
+      examples: ["Search infrastructure at Fortune 500 scale", "High-volume messaging platforms", "Multi-region data replication"],
     },
     {
       title: "Data Engineering",
@@ -176,7 +176,7 @@ export default function ServicesPage() {
               <div>
                 <h3 className="font-medium text-sf-white">Production Experience</h3>
                 <p className="text-sm text-sf-muted">
-                  Built systems processing billions of records at TransUnion, not just prototypes.
+                  Built systems processing billions of records at Fortune 500 scale, not just prototypes.
                 </p>
               </div>
             </div>

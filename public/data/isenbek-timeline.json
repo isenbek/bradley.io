@@ -1,10 +1,10 @@
 {
-  "generated": "2026-04-15T09:06:54.486026+00:00",
+  "generated": "2026-04-22T09:02:31.323860+00:00",
   "org": "isenbek",
   "totalRepos": 10,
   "firstCommit": "2014-10-16T10:45:09Z",
-  "latestCommit": "2026-04-13T18:52:06Z",
-  "totalCommits": 3138,
+  "latestCommit": "2026-04-16T01:41:07Z",
+  "totalCommits": 3140,
   "languages": {
     "Python": 2,
     "TypeScript": 2,
@@ -3976,49 +3976,55 @@
       "commits": 4,
       "repos": 1,
       "intensity": 1
+    },
+    {
+      "date": "2026-04-16",
+      "commits": 2,
+      "repos": 1,
+      "intensity": 1
     }
   ],
   "phases": [
     {
-      "name": "Early Development & Experimentation",
+      "name": "Data & Infrastructure Pipelines",
       "startDate": "2017-01-26",
-      "endDate": "2023-05-07",
-      "description": "This repository collection represents the initial phases of the isenbek project, focusing on core functionality and experimentation. It encompasses foundational components like the CSS stylesheet for Bootstrap, a Python Bloom filter, and a systemd-ngrok utility.  The development also includes a demonstration of Streamlit and a collection of example Jupyter Notebooks focused on Pinecone vector databases, showcasing early efforts in data and creative applications.",
-      "category": "systems",
+      "endDate": "2025-01-15",
+      "description": "This repository collection represents the core infrastructure and data-related components built as part of the isenbek project ecosystem. It encompasses essential tools for data management, system automation, and application development, reflecting a focus on building robust systems for processing and sharing data. The projects range from foundational CSS files to advanced Python libraries and tooling, showcasing a continuous evolution of the development workflow.",
+      "category": "data",
       "milestones": [
         {
           "date": "2017-01-26",
-          "title": "BootstrapXL CSS File",
-          "repo": "BootstrapXL"
+          "title": "BootstrapXL - CSS File for Screen Size",
+          "repo": "bootstrapxl"
         },
         {
           "date": "2017-05-24",
-          "title": "Bloomfilter Python Implementation",
+          "title": "bloomfilter - Python Bloom Filter Implementation",
           "repo": "bloomfilter"
         },
         {
           "date": "2021-05-30",
-          "title": "systemd-ngrok",
+          "title": "systemd-ngrok - Systemd Triggered ngrok",
           "repo": "systemd-ngrok"
         },
         {
           "date": "2023-05-07",
-          "title": "Streamlit Example",
+          "title": "streamlit-example - Streamlit App for Sharing",
           "repo": "streamlit-example"
         },
         {
           "date": "2023-11-16",
-          "title": "Meatball JARVIS",
+          "title": "meatball - Minecraft-Inspired JARVIS Agent",
           "repo": "meatball"
         },
         {
           "date": "2024-05-17",
-          "title": "Pincone Examples",
+          "title": "pincone-examples - Jupyter Notebooks for Pinecone",
           "repo": "pincone-examples"
         },
         {
           "date": "2025-01-15",
-          "title": "SaaS MyFW Starter Kit",
+          "title": "saas-myfw - Enterprise SaaS Starter Kit",
           "repo": "saas-myfw"
         }
       ],
@@ -4033,25 +4039,25 @@
       ]
     },
     {
-      "name": "Frontend Development & Terminal Emulator",
+      "name": "Frontend Development & Core Infrastructure",
       "startDate": "2025-01-15",
       "endDate": "2025-10-23",
-      "description": "This project represents the initial stages of building the core frontend functionality for the isenbek project, focusing on a reactive UI and a terminal emulator. It started with a basic React frontend and gradually added War Games-style terminal capabilities, file upload functionality, and cleanup operations, laying the groundwork for the complete ecosystem.",
-      "category": "creative",
+      "description": "This project represents the initial stages of building the core frontend functionality for the isenbek ecosystem, focusing on a React-based user interface and establishing the foundational infrastructure for future features. It encompasses the creation of a basic terminal emulator, file upload functionality, and key components for the initial development workflow, all while leveraging TypeScript and Git for version control.",
+      "category": "systems",
       "milestones": [
         {
           "date": "2025-01-15",
-          "title": "Initial React Frontend",
+          "title": "Initial React Frontend Core",
           "repo": "vite-react-chakra-starter"
         },
         {
           "date": "2025-08-13",
-          "title": "War Games Terminal Emulator",
+          "title": "War Games Terminal Emulator - Initial Build",
           "repo": "bradley.io"
         },
         {
           "date": "2025-10-23",
-          "title": "Add React Frontend & File Upload",
+          "title": "File Upload & Update - Initial Implementation",
           "repo": "mike"
         }
       ],
@@ -4070,7 +4076,7 @@
       "commits": 6,
       "firstCommit": "2014-10-16T10:45:09Z",
       "lastCommit": "2015-08-10T07:46:32Z",
-      "phase": "Early Development & Experimentation"
+      "phase": "Data & Infrastructure Pipelines"
     },
     {
       "name": "bloomfilter",
@@ -4079,7 +4085,7 @@
       "commits": 31,
       "firstCommit": "2017-03-22T02:59:47Z",
       "lastCommit": "2017-05-11T19:46:53Z",
-      "phase": "Early Development & Experimentation"
+      "phase": "Data & Infrastructure Pipelines"
     },
     {
       "name": "systemd-ngrok",
@@ -4088,7 +4094,7 @@
       "commits": 13,
       "firstCommit": "2017-04-10T04:37:02Z",
       "lastCommit": "2020-12-13T14:31:26Z",
-      "phase": "Early Development & Experimentation"
+      "phase": "Data & Infrastructure Pipelines"
     },
     {
       "name": "streamlit-example",
@@ -4097,7 +4103,7 @@
       "commits": 4,
       "firstCommit": "2020-11-03T06:29:22Z",
       "lastCommit": "2022-06-29T01:03:06Z",
-      "phase": "Early Development & Experimentation"
+      "phase": "Data & Infrastructure Pipelines"
     },
     {
       "name": "pincone-examples",
@@ -4106,7 +4112,7 @@
       "commits": 1000,
       "firstCommit": "2021-03-11T23:44:58Z",
       "lastCommit": "2024-05-16T12:50:29Z",
-      "phase": "Early Development & Experimentation"
+      "phase": "Data & Infrastructure Pipelines"
     },
     {
       "name": "saas-myfw",
@@ -4115,7 +4121,7 @@
       "commits": 1962,
       "firstCommit": "2022-07-13T12:44:33Z",
       "lastCommit": "2025-01-10T13:09:02Z",
-      "phase": "Early Development & Experimentation"
+      "phase": "Data & Infrastructure Pipelines"
     },
     {
       "name": "meatball",
@@ -4124,7 +4130,7 @@
       "commits": 1,
       "firstCommit": "2023-11-13T02:24:21Z",
       "lastCommit": "2023-11-13T02:24:21Z",
-      "phase": "Early Development & Experimentation"
+      "phase": "Data & Infrastructure Pipelines"
     },
     {
       "name": "vite-react-chakra-starter",
@@ -4133,16 +4139,16 @@
       "commits": 1,
       "firstCommit": "2025-01-15T21:53:02Z",
       "lastCommit": "2025-01-15T21:53:02Z",
-      "phase": "Frontend Development & Terminal Emulator"
+      "phase": "Frontend Development & Core Infrastructure"
     },
     {
       "name": "bradley.io",
       "description": "",
       "language": "TypeScript",
-      "commits": 115,
+      "commits": 117,
       "firstCommit": "2025-08-13T04:48:37Z",
-      "lastCommit": "2026-04-13T18:52:06Z",
-      "phase": "Frontend Development & Terminal Emulator"
+      "lastCommit": "2026-04-16T01:41:07Z",
+      "phase": "Frontend Development & Core Infrastructure"
     },
     {
       "name": "mike",
@@ -4151,7 +4157,7 @@
       "commits": 5,
       "firstCommit": "2025-09-19T22:43:17Z",
       "lastCommit": "2025-10-23T01:21:37Z",
-      "phase": "Frontend Development & Terminal Emulator"
+      "phase": "Frontend Development & Core Infrastructure"
     }
   ]
 }

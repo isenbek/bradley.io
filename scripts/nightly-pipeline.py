@@ -719,11 +719,11 @@ def build_about(ai_pilot: dict[str, Any] | None) -> dict[str, Any]:
         "timeline": [
             {"year": "2024-present", "title": "Founder & AI Systems Architect — SysForge.ai",
              "description": "AI consulting and development firm delivering frontier AI solutions. Architecting AI-powered systems integrating frontier language models into enterprise workflows. Building custom agentic AI pipelines and AI-augmented development toolchains."},
-            {"year": "2022-present", "title": "Architect & Developer — VictoryText, LLC.",
+            {"year": "2022-present", "title": "Architect & Developer — Enterprise Messaging Platform",
              "description": "Enterprise-grade, high-volume messaging platform. Architected high-availability system handling millions of messages with 99.9% uptime. Built RESTful API layer with FastAPI integrating multiple carriers with automated failover."},
-            {"year": "2018-2022", "title": "Architect & Developer — ConservativeConnector, LLC.",
+            {"year": "2018-2022", "title": "Architect & Developer — Enterprise Data Platform",
              "description": "Large-scale ESP data management processing billions of messages and 100M+ contact records. Integrated 4.9 billion data points for ML model training and relationship discovery across 10,000+ data sources."},
-            {"year": "2014-2018", "title": "Senior Architect — TransUnion TruLookup Division",
+            {"year": "2014-2018", "title": "Senior Architect — Fortune 500 Financial Services",
              "description": "Investigative intelligence platform serving law enforcement and government agencies. Lead developer on classified project with the United States Government. Built ML models for entity resolution and relationship mapping."},
         ],
     }

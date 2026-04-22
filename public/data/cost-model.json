@@ -1,19 +1,19 @@
 {
-  "generated": "2026-04-15T21:38:50.820164",
+  "generated": "2026-04-22T16:06:00.112693",
   "scope": "Campaign Brain Last 3 Months",
   "timespan": {
     "start": "2025-12-01",
     "end": "2026-03-26",
     "days": 117,
-    "activeDays": 22
+    "activeDays": 14
   },
   "actual": {
     "teamSize": 1,
-    "sessions": 44,
-    "messages": 93499,
-    "toolCalls": 49259,
-    "commits": 10724,
-    "repos": 67,
+    "sessions": 39,
+    "messages": 89757,
+    "toolCalls": 49423,
+    "commits": 11335,
+    "repos": 69,
     "projects": 17,
     "operatorCost": 60000,
     "aiCost": 800,
@@ -32,12 +32,12 @@
         "score": 61
       },
       {
-        "name": "Security",
+        "name": "Frontend",
         "score": 56
       },
       {
-        "name": "Frontend",
-        "score": 53
+        "name": "Security",
+        "score": 56
       },
       {
         "name": "Data Engineering",
@@ -55,155 +55,150 @@
     "skills": [
       {
         "name": "Go",
-        "count": 3144
+        "count": 3151
       },
       {
         "name": "Git",
-        "count": 1227
+        "count": 1315
       },
       {
         "name": "JSON",
-        "count": 999
+        "count": 1042
       },
       {
         "name": "Nginx",
-        "count": 926
+        "count": 913
       },
       {
         "name": "HTML",
-        "count": 622
+        "count": 711
       },
       {
         "name": "Python",
-        "count": 618
+        "count": 595
       },
       {
         "name": "systemd",
-        "count": 534
+        "count": 543
       },
       {
         "name": "DuckDB",
-        "count": 420
+        "count": 398
       },
       {
         "name": "JWT",
-        "count": 353
-      },
-      {
-        "name": "FastAPI",
-        "count": 308
+        "count": 349
       },
       {
         "name": "CSS",
-        "count": 275
+        "count": 344
       },
       {
         "name": "OAuth",
-        "count": 251
+        "count": 276
+      },
+      {
+        "name": "FastAPI",
+        "count": 272
       },
       {
         "name": "SPI",
-        "count": 249
-      },
-      {
-        "name": "SSH",
-        "count": 218
-      },
-      {
-        "name": "Ollama",
-        "count": 211
+        "count": 252
       },
       {
         "name": "Bash",
-        "count": 196
+        "count": 232
       },
       {
-        "name": "TOML",
-        "count": 169
+        "name": "SSH",
+        "count": 203
+      },
+      {
+        "name": "Ollama",
+        "count": 184
       },
       {
         "name": "Pydantic",
-        "count": 162
+        "count": 160
       },
       {
         "name": "WireGuard",
-        "count": 152
-      },
-      {
-        "name": "Markdown",
-        "count": 148
-      },
-      {
-        "name": "Pytest",
-        "count": 142
+        "count": 151
       },
       {
         "name": "YAML",
-        "count": 123
+        "count": 149
+      },
+      {
+        "name": "Pytest",
+        "count": 140
+      },
+      {
+        "name": "Markdown",
+        "count": 139
+      },
+      {
+        "name": "TOML",
+        "count": 131
       },
       {
         "name": "Redis",
-        "count": 117
-      },
-      {
-        "name": "SQLite",
-        "count": 115
+        "count": 131
       },
       {
         "name": "WebSocket",
-        "count": 113
+        "count": 128
       },
       {
-        "name": "PostgreSQL",
-        "count": 88
+        "name": "SQLite",
+        "count": 117
       },
       {
         "name": "AWS",
-        "count": 88
+        "count": 114
       },
       {
         "name": "React",
-        "count": 79
+        "count": 96
+      },
+      {
+        "name": "PostgreSQL",
+        "count": 95
+      },
+      {
+        "name": "Rust",
+        "count": 92
       },
       {
         "name": "CSV",
-        "count": 75
-      },
-      {
-        "name": "MDX",
-        "count": 75
+        "count": 84
       }
     ],
     "topProjects": [
       {
         "name": "cbloom",
         "sessions": 2,
-        "messages": 12529
-      },
-      {
-        "name": "cbradio",
-        "sessions": 5,
-        "messages": 12502
-      },
-      {
-        "name": "cbintel",
-        "sessions": 3,
-        "messages": 11917
-      },
-      {
-        "name": "cbpulse",
-        "sessions": 10,
-        "messages": 11233
+        "messages": 18840
       },
       {
         "name": "cbmodels",
         "sessions": 4,
-        "messages": 10909
+        "messages": 13263
+      },
+      {
+        "name": "cbradio",
+        "sessions": 4,
+        "messages": 11970
       },
       {
         "name": "cbauth",
         "sessions": 3,
-        "messages": 7636
+        "messages": 8727
+      },
+      {
+        "name": "cbpulse",
+        "sessions": 9,
+        "messages": 7793
       },
       {
         "name": "cbdc",
@@ -211,29 +206,19 @@
         "messages": 5286
       },
       {
+        "name": "cbintel",
+        "sessions": 2,
+        "messages": 5160
+      },
+      {
         "name": "cbmcp",
         "sessions": 2,
         "messages": 3070
       },
       {
-        "name": "cbea",
+        "name": "cbfront",
         "sessions": 2,
-        "messages": 2672
-      },
-      {
-        "name": "cbai",
-        "sessions": 2,
-        "messages": 2398
-      },
-      {
-        "name": "cbfiles",
-        "sessions": 2,
-        "messages": 2353
-      },
-      {
-        "name": "cbairtable",
-        "sessions": 1,
-        "messages": 2043
+        "messages": 2157
       },
       {
         "name": "cbmesh",
@@ -246,9 +231,14 @@
         "messages": 1856
       },
       {
+        "name": "cbai",
+        "sessions": 1,
+        "messages": 1832
+      },
+      {
         "name": "cbingest",
         "sessions": 1,
-        "messages": 1814
+        "messages": 1823
       },
       {
         "name": "cbtenant",
@@ -258,7 +248,17 @@
       {
         "name": "cbesig",
         "sessions": 2,
-        "messages": 1613
+        "messages": 1617
+      },
+      {
+        "name": "cbquickbooks",
+        "sessions": 1,
+        "messages": 1416
+      },
+      {
+        "name": "cbcron",
+        "sessions": 1,
+        "messages": 1279
       }
     ]
   },
@@ -332,8 +332,8 @@
   },
   "comparison": {
     "costSavingsPercent": 95.3,
-    "velocityMultiplier": 77.7,
-    "timeCompression": "9 months -> 22 days"
+    "velocityMultiplier": 122.1,
+    "timeCompression": "9 months -> 14 days"
   },
   "industryBenchmarks": {
     "locPerDevPerDay": {
@@ -556,9 +556,9 @@
       "weekStart": "2026-02-23",
       "commits": 464,
       "cumulativeCommits": 3921,
-      "messages": 13520,
-      "sessions": 4,
-      "toolCalls": 5004,
+      "messages": 7287,
+      "sessions": 2,
+      "toolCalls": 2634,
       "issuesOpened": 91,
       "issuesClosed": 74,
       "cumulativeIssuesOpened": 610,
@@ -571,9 +571,9 @@
       "weekStart": "2026-03-02",
       "commits": 375,
       "cumulativeCommits": 4296,
-      "messages": 36869,
-      "sessions": 15,
-      "toolCalls": 13706,
+      "messages": 22593,
+      "sessions": 10,
+      "toolCalls": 8358,
       "issuesOpened": 109,
       "issuesClosed": 62,
       "cumulativeIssuesOpened": 719,
@@ -586,9 +586,9 @@
       "weekStart": "2026-03-09",
       "commits": 395,
       "cumulativeCommits": 4691,
-      "messages": 13673,
-      "sessions": 6,
-      "toolCalls": 5148,
+      "messages": 11903,
+      "sessions": 2,
+      "toolCalls": 4484,
       "issuesOpened": 171,
       "issuesClosed": 70,
       "cumulativeIssuesOpened": 890,
@@ -601,9 +601,9 @@
       "weekStart": "2026-03-16",
       "commits": 488,
       "cumulativeCommits": 5179,
-      "messages": 16985,
-      "sessions": 3,
-      "toolCalls": 6085,
+      "messages": 15785,
+      "sessions": 1,
+      "toolCalls": 5547,
       "issuesOpened": 298,
       "issuesClosed": 309,
       "cumulativeIssuesOpened": 1188,
@@ -616,9 +616,9 @@
       "weekStart": "2026-03-23",
       "commits": 232,
       "cumulativeCommits": 5411,
-      "messages": 36243,
+      "messages": 37944,
       "sessions": 26,
-      "toolCalls": 13224,
+      "toolCalls": 13818,
       "issuesOpened": 306,
       "issuesClosed": 202,
       "cumulativeIssuesOpened": 1494,
@@ -628,10 +628,10 @@
     }
   ],
   "issues": {
-    "opened": 1975,
-    "closed": 1402,
-    "bugs": 156,
-    "features": 289,
-    "other": 1530
+    "opened": 2089,
+    "closed": 1491,
+    "bugs": 178,
+    "features": 325,
+    "other": 1586
   }
 }
