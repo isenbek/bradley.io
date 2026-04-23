@@ -1,5 +1,5 @@
 {
-  "generated": "2026-04-22T16:06:00.112693",
+  "generated": "2026-04-23T16:09:46.236810",
   "scope": "Campaign Brain Last 3 Months",
   "timespan": {
     "start": "2025-12-01",
@@ -9,11 +9,11 @@
   },
   "actual": {
     "teamSize": 1,
-    "sessions": 39,
-    "messages": 89757,
-    "toolCalls": 49423,
-    "commits": 11335,
-    "repos": 69,
+    "sessions": 30,
+    "messages": 88614,
+    "toolCalls": 49258,
+    "commits": 11510,
+    "repos": 70,
     "projects": 17,
     "operatorCost": 60000,
     "aiCost": 800,
@@ -55,160 +55,160 @@
     "skills": [
       {
         "name": "Go",
-        "count": 3151
+        "count": 3566
       },
       {
         "name": "Git",
-        "count": 1315
+        "count": 1426
       },
       {
         "name": "JSON",
-        "count": 1042
+        "count": 1143
       },
       {
         "name": "Nginx",
-        "count": 913
+        "count": 1023
       },
       {
         "name": "HTML",
-        "count": 711
+        "count": 745
       },
       {
         "name": "Python",
-        "count": 595
+        "count": 654
       },
       {
         "name": "systemd",
-        "count": 543
+        "count": 567
       },
       {
         "name": "DuckDB",
-        "count": 398
+        "count": 551
       },
       {
         "name": "JWT",
-        "count": 349
+        "count": 376
       },
       {
         "name": "CSS",
-        "count": 344
+        "count": 349
       },
       {
         "name": "OAuth",
-        "count": 276
-      },
-      {
-        "name": "FastAPI",
-        "count": 272
+        "count": 293
       },
       {
         "name": "SPI",
-        "count": 252
+        "count": 281
+      },
+      {
+        "name": "FastAPI",
+        "count": 280
       },
       {
         "name": "Bash",
-        "count": 232
+        "count": 259
       },
       {
         "name": "SSH",
-        "count": 203
+        "count": 202
       },
       {
         "name": "Ollama",
-        "count": 184
+        "count": 185
       },
       {
         "name": "Pydantic",
-        "count": 160
-      },
-      {
-        "name": "WireGuard",
-        "count": 151
+        "count": 179
       },
       {
         "name": "YAML",
-        "count": 149
+        "count": 157
       },
       {
-        "name": "Pytest",
-        "count": 140
+        "name": "WireGuard",
+        "count": 153
       },
       {
         "name": "Markdown",
-        "count": 139
-      },
-      {
-        "name": "TOML",
-        "count": 131
-      },
-      {
-        "name": "Redis",
-        "count": 131
+        "count": 151
       },
       {
         "name": "WebSocket",
-        "count": 128
+        "count": 144
       },
       {
-        "name": "SQLite",
-        "count": 117
+        "name": "Pytest",
+        "count": 141
+      },
+      {
+        "name": "Redis",
+        "count": 138
+      },
+      {
+        "name": "TOML",
+        "count": 137
       },
       {
         "name": "AWS",
-        "count": 114
+        "count": 137
       },
       {
-        "name": "React",
-        "count": 96
+        "name": "SQLite",
+        "count": 136
       },
       {
-        "name": "PostgreSQL",
-        "count": 95
-      },
-      {
-        "name": "Rust",
-        "count": 92
+        "name": "Snowflake",
+        "count": 113
       },
       {
         "name": "CSV",
-        "count": 84
+        "count": 111
+      },
+      {
+        "name": "React",
+        "count": 109
+      },
+      {
+        "name": "Rust",
+        "count": 104
       }
     ],
     "topProjects": [
       {
         "name": "cbloom",
         "sessions": 2,
-        "messages": 18840
-      },
-      {
-        "name": "cbmodels",
-        "sessions": 4,
-        "messages": 13263
+        "messages": 20428
       },
       {
         "name": "cbradio",
-        "sessions": 4,
-        "messages": 11970
+        "sessions": 3,
+        "messages": 12793
+      },
+      {
+        "name": "cbmodels",
+        "sessions": 2,
+        "messages": 9029
       },
       {
         "name": "cbauth",
         "sessions": 3,
-        "messages": 8727
+        "messages": 8827
       },
       {
         "name": "cbpulse",
-        "sessions": 9,
-        "messages": 7793
+        "sessions": 3,
+        "messages": 7337
+      },
+      {
+        "name": "cbintel",
+        "sessions": 2,
+        "messages": 5802
       },
       {
         "name": "cbdc",
         "sessions": 2,
         "messages": 5286
-      },
-      {
-        "name": "cbintel",
-        "sessions": 2,
-        "messages": 5160
       },
       {
         "name": "cbmcp",
@@ -219,6 +219,11 @@
         "name": "cbfront",
         "sessions": 2,
         "messages": 2157
+      },
+      {
+        "name": "cbtenant",
+        "sessions": 1,
+        "messages": 2084
       },
       {
         "name": "cbmesh",
@@ -239,11 +244,6 @@
         "name": "cbingest",
         "sessions": 1,
         "messages": 1823
-      },
-      {
-        "name": "cbtenant",
-        "sessions": 1,
-        "messages": 1690
       },
       {
         "name": "cbesig",
@@ -571,9 +571,9 @@
       "weekStart": "2026-03-02",
       "commits": 375,
       "cumulativeCommits": 4296,
-      "messages": 22593,
-      "sessions": 10,
-      "toolCalls": 8358,
+      "messages": 17739,
+      "sessions": 8,
+      "toolCalls": 6606,
       "issuesOpened": 109,
       "issuesClosed": 62,
       "cumulativeIssuesOpened": 719,
@@ -616,9 +616,9 @@
       "weekStart": "2026-03-23",
       "commits": 232,
       "cumulativeCommits": 5411,
-      "messages": 37944,
-      "sessions": 26,
-      "toolCalls": 13818,
+      "messages": 36805,
+      "sessions": 14,
+      "toolCalls": 13395,
       "issuesOpened": 306,
       "issuesClosed": 202,
       "cumulativeIssuesOpened": 1494,
@@ -628,10 +628,10 @@
     }
   ],
   "issues": {
-    "opened": 2089,
-    "closed": 1491,
-    "bugs": 178,
-    "features": 325,
-    "other": 1586
+    "opened": 2113,
+    "closed": 1509,
+    "bugs": 181,
+    "features": 331,
+    "other": 1601
   }
 }

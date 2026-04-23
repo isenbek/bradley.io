@@ -1,5 +1,5 @@
 {
-  "generated": "2026-04-22T09:02:15.556354+00:00",
+  "generated": "2026-04-23T09:43:57.437386+00:00",
   "org": "tinymachines",
   "totalRepos": 56,
   "firstCommit": "2016-02-27T16:07:26Z",
@@ -5917,43 +5917,10 @@
   ],
   "phases": [
     {
-      "name": "Core Infrastructure & Tooling",
+      "name": "Phase 1",
       "startDate": "2025-03-11",
       "endDate": "2025-04-18",
-      "description": "This collection of repositories represents the foundational elements of the tinymachines project, focusing on essential tools and components needed for development, testing, and operation. It encompasses small knowledge networks, vector comparison utilities, document processing, and rudimentary management systems, all critical to the project's functionality and stability.",
-      "category": "systems, ai-ml, data, hardware",
-      "milestones": [
-        {
-          "date": "2025-03-11",
-          "title": "knowynet",
-          "repo": "knowynet"
-        },
-        {
-          "date": "2025-03-29",
-          "title": "vectl",
-          "repo": "vectl"
-        },
-        {
-          "date": "2025-04-01",
-          "title": "jfk",
-          "repo": "jfk"
-        },
-        {
-          "date": "2025-04-14",
-          "title": "psjson",
-          "repo": "psjson"
-        },
-        {
-          "date": "2025-04-17",
-          "title": "ari",
-          "repo": "ari"
-        },
-        {
-          "date": "2025-04-18",
-          "title": "shelldown",
-          "repo": "shelldown"
-        }
-      ],
+      "description": "Development of knowsynet, vectl, jfk and 4 more repos.",
       "repos": [
         "knowsynet",
         "vectl",
@@ -5962,41 +5929,15 @@
         "psjson",
         "ari",
         "shelldown"
-      ]
+      ],
+      "milestones": [],
+      "category": "systems"
     },
     {
-      "name": "Core Infrastructure & Initial Development",
+      "name": "Phase 2",
       "startDate": "2025-04-23",
       "endDate": "2025-04-30",
-      "description": "This repository represents the foundational development of the tinymachines ecosystem, encompassing the core components that allow for the project's functionality. It began with the initial implementation of the Python scripts for the fundamental building blocks \u2013 a rudimentary TRNG Generator and a sleep implementation.  The development phase focused on establishing a stable and usable base for future expansion.",
-      "category": "systems",
-      "milestones": [
-        {
-          "date": "2025-04-23",
-          "title": "Develop TRNG Generator",
-          "repo": "evolve"
-        },
-        {
-          "date": "2025-04-23",
-          "title": "Develop Sleep Implementation",
-          "repo": "sleepr"
-        },
-        {
-          "date": "2025-04-23",
-          "title": "Develop Tiny Squared",
-          "repo": "rando"
-        },
-        {
-          "date": "2025-04-23",
-          "title": "Develop Bilders",
-          "repo": "bilders"
-        },
-        {
-          "date": "2025-04-23",
-          "title": "Develop Textcast",
-          "repo": "tix"
-        }
-      ],
+      "description": "Development of evolve, rando, bilder and 4 more repos.",
       "repos": [
         "evolve",
         "rando",
@@ -6005,51 +5946,15 @@
         "tix",
         "curly",
         "textcast"
-      ]
+      ],
+      "milestones": [],
+      "category": "systems"
     },
     {
-      "name": "Development Pipeline",
+      "name": "Phase 3",
       "startDate": "2025-06-04",
       "endDate": "2025-07-07",
-      "description": "This repository collection represents the iterative development process within the tinymachines ecosystem. It spans the initial experimentation with EEG monitoring, followed by foundational learning resources for ARM assembly, a prototype agentic programming language, and ultimately, a brute-force web scraping tool. The projects demonstrate a progression from foundational elements to more complex implementations and testing.",
-      "category": "systems",
-      "milestones": [
-        {
-          "date": "2025-06-04",
-          "title": "addai - EEG monitor experimentation platform",
-          "repo": "addai"
-        },
-        {
-          "date": "2025-06-10",
-          "title": "rpi5-arm-assembly - Bootstrap guide",
-          "repo": "rpi5-arm-assembly"
-        },
-        {
-          "date": "2025-06-12",
-          "title": "spydr - Tardus",
-          "repo": "spydr"
-        },
-        {
-          "date": "2025-06-14",
-          "title": "investigations - Unknown",
-          "repo": "investigations"
-        },
-        {
-          "date": "2025-06-18",
-          "title": "spydr - Sovereign",
-          "repo": "spydr"
-        },
-        {
-          "date": "2025-06-24",
-          "title": "spidr - Distributed, brute force web scraping",
-          "repo": "spidr"
-        },
-        {
-          "date": "2025-07-07",
-          "title": "plumbr - 140 commits",
-          "repo": "plumbr"
-        }
-      ],
+      "description": "Development of addai, rpi5-arm-assembly, spydr and 4 more repos.",
       "repos": [
         "addai",
         "rpi5-arm-assembly",
@@ -6058,46 +5963,15 @@
         "sovereign",
         "spidr",
         "plumbr"
-      ]
+      ],
+      "milestones": [],
+      "category": "systems"
     },
     {
-      "name": "Tinymachines Core Development",
+      "name": "Phase 4",
       "startDate": "2025-07-11",
       "endDate": "2025-08-13",
-      "description": "This collection of repositories represents the core development of the Tinymachines project, focusing on establishing the foundational structure, dependencies, and initial implementation of the project\u2019s key features. It encompasses setup, initial testing, and the creation of essential components needed for future expansion and maintenance, representing the initial phases of building a functional project ecosystem.",
-      "category": "systems",
-      "milestones": [
-        {
-          "date": "2025-07-11",
-          "title": "Initial project setup with structure and dependencies",
-          "repo": "gcombinatr"
-        },
-        {
-          "date": "2025-07-15",
-          "title": "Add success_rate to all return paths in test harness",
-          "repo": "llisp"
-        },
-        {
-          "date": "2025-07-29",
-          "title": "Classic-Rock (Shell) - The greatest hits edition",
-          "repo": "classic-rock"
-        },
-        {
-          "date": "2025-08-02",
-          "title": "LLisp - Add slimmed-down Ollama test harness with raw API support",
-          "repo": "llisp"
-        },
-        {
-          "date": "2025-08-13",
-          "title": "Blossom - Python - Fix KeyError: Add success_rate to all return paths in test harness",
-          "repo": "blossom"
-        },
-        {
-          "date": "2025-08-13",
-          "title": "Blossom - Python - Add slimmed-down Ollama test harness with raw API support",
-          "repo": "blossom"
-        }
-      ],
+      "description": "Development of gcombinatr, llisp, watr and 4 more repos.",
       "repos": [
         "gcombinatr",
         "llisp",
@@ -6106,41 +5980,15 @@
         "classic-rock",
         "llarp",
         "blossom"
-      ]
+      ],
+      "milestones": [],
+      "category": "systems"
     },
     {
-      "name": "Hotbits - Initial Development",
+      "name": "Phase 5",
       "startDate": "2025-08-14",
-      "endDate": "2025-08-16",
-      "description": "This phase represents the initial development of the `hotbits` project, focused on establishing a foundational interface for the SMS gateway and core functionalities. It involved implementing the complete SMS gateway wrapper, adding the CLAUDE.md project, and setting up initial infrastructure for the project, showcasing the core components of the system.",
-      "category": "systems",
-      "milestones": [
-        {
-          "date": "2025-08-14",
-          "title": "Implement complete SMS gateway wrapper with CLI and MCP server",
-          "repo": "hotbits"
-        },
-        {
-          "date": "2025-08-14",
-          "title": "Add CLAUDE.md for SMS gateway wrapper project",
-          "repo": "hotbits"
-        },
-        {
-          "date": "2025-08-16",
-          "title": "Add HTML output default for stdout and compilation support",
-          "repo": "hotbits"
-        },
-        {
-          "date": "2025-08-16",
-          "title": "Add user agent, cookie jar, and stream output support",
-          "repo": "hotbits"
-        },
-        {
-          "date": "2025-08-16",
-          "title": "Initial project setup for spondr",
-          "repo": ""
-        }
-      ],
+      "endDate": "2025-09-11",
+      "description": "Development of hotbits, yeet, guzl and 4 more repos.",
       "repos": [
         "hotbits",
         "yeet",
@@ -6149,51 +5997,15 @@
         "crawwwl",
         "stats",
         "llamirc"
-      ]
+      ],
+      "milestones": [],
+      "category": "systems"
     },
     {
-      "name": "Development Pipeline",
+      "name": "Phase 6",
       "startDate": "2025-09-12",
       "endDate": "2025-11-01",
-      "description": "This repository represents the core development pipeline for the tinymachines project, encompassing the evolution of key components from initial concepts to functional versions. It chronicles the creation and refinement of the dragonfli, umbra, aihelp, swrm, leaks, ferret, and tiny projects, each building upon previous work and incorporating new features and improvements. It\u2019s a sustained effort to create and test a robust ecosystem for computer vision and machine learning.",
-      "category": "systems",
-      "milestones": [
-        {
-          "date": "2025-09-12",
-          "title": "Initial Draft - Dragonfli",
-          "repo": "dragonfli"
-        },
-        {
-          "date": "2025-09-27",
-          "title": "Umbra - TypeScript",
-          "repo": "umbra"
-        },
-        {
-          "date": "2025-09-29",
-          "title": "AiHelp - C",
-          "repo": "aihelp"
-        },
-        {
-          "date": "2025-10-17",
-          "title": "Swrm - Shell",
-          "repo": "swrm"
-        },
-        {
-          "date": "2025-10-27",
-          "title": "Leaks - TypeScript",
-          "repo": "leaks"
-        },
-        {
-          "date": "2025-10-30",
-          "title": "Ferret - Shell",
-          "repo": "ferret"
-        },
-        {
-          "date": "2025-11-01",
-          "title": "Tiny - Python",
-          "repo": "tiny"
-        }
-      ],
+      "description": "Development of dragonfli, umbra, aihelp and 4 more repos.",
       "repos": [
         "dragonfli",
         "umbra",
@@ -6202,51 +6014,15 @@
         "leaks",
         "ferret",
         "tiny"
-      ]
+      ],
+      "milestones": [],
+      "category": "systems"
     },
     {
-      "name": "Core Infrastructure & Initial Tooling",
+      "name": "Phase 7",
       "startDate": "2025-11-04",
       "endDate": "2025-11-27",
-      "description": "This phase focuses on establishing the foundational infrastructure and initial tooling for the tinymachines project. It includes the creation of essential files and scripts, such as the resume, 6502 Processor Expert Agent, cascade, tgmi, scout, rustforhaters, and ripgrep, designed to facilitate the project\u2019s core functionality. It represents the early stages of development and setup.",
-      "category": "systems, ai-ml, data, hardware",
-      "milestones": [
-        {
-          "date": "2025-11-04",
-          "title": "Create README.md and initial project files",
-          "repo": "resume"
-        },
-        {
-          "date": "2025-11-06",
-          "title": "Add 6502 Processor Expert Agent with RAG system",
-          "repo": "6502"
-        },
-        {
-          "date": "2025-11-14",
-          "title": "Cascade - HTML",
-          "repo": "cascade"
-        },
-        {
-          "date": "2025-11-14",
-          "title": "Add tgmi - HTML",
-          "repo": "tgmi"
-        },
-        {
-          "date": "2025-11-21",
-          "title": "Scout - Shell",
-          "repo": "scout"
-        },
-        {
-          "date": "2025-11-24",
-          "title": "RustforHaters - Python",
-          "repo": "rustforhaters"
-        },
-        {
-          "date": "2025-11-27",
-          "title": "Rippgrep - Unknown",
-          "repo": "ripgrep"
-        }
-      ],
+      "description": "Development of resume, 6502, cascade and 4 more repos.",
       "repos": [
         "resume",
         "6502",
@@ -6255,46 +6031,15 @@
         "scout",
         "rustforhaters",
         "ripgrep"
-      ]
+      ],
+      "milestones": [],
+      "category": "systems"
     },
     {
-      "name": "AI Content & Platform Development",
+      "name": "Phase 8",
       "startDate": "2025-11-30",
       "endDate": "2026-02-21",
-      "description": "This repository ecosystem represents the core development of the tinymachines project, focusing on building AI-powered content creation tools and platforms. It spans from initial framework development and feature additions to a robust AI model architecture and a curated archive of learning resources, demonstrating a progression from foundational Python code to sophisticated AI applications.",
-      "category": "ai-ml",
-      "milestones": [
-        {
-          "date": "2025-11-30",
-          "title": "Automatic PDF Generation and .env Support",
-          "repo": "deox"
-        },
-        {
-          "date": "2025-12-11",
-          "title": "Gnomes - Core AI System",
-          "repo": "gnomes"
-        },
-        {
-          "date": "2026-01-11",
-          "title": "Collidr - Initial Implementation",
-          "repo": "collidr"
-        },
-        {
-          "date": "2026-02-01",
-          "title": "Spicy - Async Human-in-the-Loop AI",
-          "repo": "spicy"
-        },
-        {
-          "date": "2026-02-02",
-          "title": "Orator - Educational Content Platform",
-          "repo": "orator"
-        },
-        {
-          "date": "2026-02-21",
-          "title": "Gene-Pool - AI Coding Agent Archive",
-          "repo": "gene-pool"
-        }
-      ],
+      "description": "Development of deox, gnomes, collidr and 4 more repos.",
       "repos": [
         "deox",
         "gnomes",
@@ -6303,7 +6048,9 @@
         "orator",
         "esp32",
         "gene-pool"
-      ]
+      ],
+      "milestones": [],
+      "category": "systems"
     }
   ],
   "repos": [
@@ -6314,7 +6061,7 @@
       "commits": 2204,
       "firstCommit": "2016-02-27T16:07:26Z",
       "lastCommit": "2025-10-30T17:30:14Z",
-      "phase": "Core Infrastructure & Initial Tooling"
+      "phase": "Phase 7"
     },
     {
       "name": "knowsynet",
@@ -6323,7 +6070,7 @@
       "commits": 19,
       "firstCommit": "2025-03-11T01:39:27Z",
       "lastCommit": "2025-03-30T08:47:43Z",
-      "phase": "Core Infrastructure & Tooling"
+      "phase": "Phase 1"
     },
     {
       "name": "gene-pool",
@@ -6332,7 +6079,7 @@
       "commits": 479,
       "firstCommit": "2025-03-26T06:58:25Z",
       "lastCommit": "2026-02-21T23:00:06Z",
-      "phase": "AI Content & Platform Development"
+      "phase": "Phase 8"
     },
     {
       "name": "vectl",
@@ -6341,7 +6088,7 @@
       "commits": 14,
       "firstCommit": "2025-03-29T02:45:34Z",
       "lastCommit": "2026-01-11T20:43:17Z",
-      "phase": "Core Infrastructure & Tooling"
+      "phase": "Phase 1"
     },
     {
       "name": "jfk",
@@ -6350,7 +6097,7 @@
       "commits": 13,
       "firstCommit": "2025-04-01T03:36:08Z",
       "lastCommit": "2026-03-06T02:14:52Z",
-      "phase": "Core Infrastructure & Tooling"
+      "phase": "Phase 1"
     },
     {
       "name": "scream",
@@ -6359,7 +6106,7 @@
       "commits": 3,
       "firstCommit": "2025-04-14T22:26:10Z",
       "lastCommit": "2025-04-18T03:42:05Z",
-      "phase": "Core Infrastructure & Tooling"
+      "phase": "Phase 1"
     },
     {
       "name": "psjson",
@@ -6368,7 +6115,7 @@
       "commits": 2,
       "firstCommit": "2025-04-14T22:35:10Z",
       "lastCommit": "2025-04-15T23:57:01Z",
-      "phase": "Core Infrastructure & Tooling"
+      "phase": "Phase 1"
     },
     {
       "name": "curly",
@@ -6377,7 +6124,7 @@
       "commits": 8,
       "firstCommit": "2025-04-15T16:42:25Z",
       "lastCommit": "2025-04-30T05:49:03Z",
-      "phase": "Core Infrastructure & Initial Development"
+      "phase": "Phase 2"
     },
     {
       "name": "ari",
@@ -6386,7 +6133,7 @@
       "commits": 6,
       "firstCommit": "2025-04-17T21:33:36Z",
       "lastCommit": "2025-04-17T23:19:03Z",
-      "phase": "Core Infrastructure & Tooling"
+      "phase": "Phase 1"
     },
     {
       "name": "shelldown",
@@ -6395,7 +6142,7 @@
       "commits": 2,
       "firstCommit": "2025-04-18T03:19:25Z",
       "lastCommit": "2025-04-23T08:51:36Z",
-      "phase": "Core Infrastructure & Tooling"
+      "phase": "Phase 1"
     },
     {
       "name": "evolve",
@@ -6404,7 +6151,7 @@
       "commits": 10,
       "firstCommit": "2025-04-23T02:18:54Z",
       "lastCommit": "2025-04-24T23:19:45Z",
-      "phase": "Core Infrastructure & Initial Development"
+      "phase": "Phase 2"
     },
     {
       "name": "sleepr",
@@ -6413,7 +6160,7 @@
       "commits": 1,
       "firstCommit": "2025-04-23T08:50:48Z",
       "lastCommit": "2025-04-23T08:50:48Z",
-      "phase": "Core Infrastructure & Initial Development"
+      "phase": "Phase 2"
     },
     {
       "name": "bilder",
@@ -6422,7 +6169,7 @@
       "commits": 1,
       "firstCommit": "2025-04-23T08:51:17Z",
       "lastCommit": "2025-04-23T08:51:17Z",
-      "phase": "Core Infrastructure & Initial Development"
+      "phase": "Phase 2"
     },
     {
       "name": "rando",
@@ -6431,7 +6178,7 @@
       "commits": 1,
       "firstCommit": "2025-04-23T09:12:42Z",
       "lastCommit": "2025-04-23T09:12:42Z",
-      "phase": "Core Infrastructure & Initial Development"
+      "phase": "Phase 2"
     },
     {
       "name": "tix",
@@ -6440,7 +6187,7 @@
       "commits": 13,
       "firstCommit": "2025-04-23T21:18:08Z",
       "lastCommit": "2025-04-24T22:11:02Z",
-      "phase": "Core Infrastructure & Initial Development"
+      "phase": "Phase 2"
     },
     {
       "name": "textcast",
@@ -6449,7 +6196,7 @@
       "commits": 5,
       "firstCommit": "2025-04-30T18:28:53Z",
       "lastCommit": "2025-05-01T02:18:17Z",
-      "phase": "Core Infrastructure & Initial Development"
+      "phase": "Phase 2"
     },
     {
       "name": "addai",
@@ -6458,7 +6205,7 @@
       "commits": 5,
       "firstCommit": "2025-06-04T02:06:24Z",
       "lastCommit": "2025-06-10T05:01:32Z",
-      "phase": "Development Pipeline"
+      "phase": "Phase 3"
     },
     {
       "name": "rpi5-arm-assembly",
@@ -6467,7 +6214,7 @@
       "commits": 5,
       "firstCommit": "2025-06-10T17:32:01Z",
       "lastCommit": "2025-06-10T22:20:06Z",
-      "phase": "Development Pipeline"
+      "phase": "Phase 3"
     },
     {
       "name": "spydr",
@@ -6476,7 +6223,7 @@
       "commits": 6,
       "firstCommit": "2025-06-12T14:19:41Z",
       "lastCommit": "2025-06-13T21:52:05Z",
-      "phase": "Development Pipeline"
+      "phase": "Phase 3"
     },
     {
       "name": "investigations",
@@ -6485,7 +6232,7 @@
       "commits": 0,
       "firstCommit": "2025-06-14T17:35:31Z",
       "lastCommit": "2025-06-14T17:35:31Z",
-      "phase": "Development Pipeline"
+      "phase": "Phase 3"
     },
     {
       "name": "sovereign",
@@ -6494,7 +6241,7 @@
       "commits": 13,
       "firstCommit": "2025-06-18T00:55:54Z",
       "lastCommit": "2025-06-20T19:53:29Z",
-      "phase": "Development Pipeline"
+      "phase": "Phase 3"
     },
     {
       "name": "spidr",
@@ -6503,7 +6250,7 @@
       "commits": 40,
       "firstCommit": "2025-06-24T22:38:01Z",
       "lastCommit": "2025-06-28T18:01:09Z",
-      "phase": "Development Pipeline"
+      "phase": "Phase 3"
     },
     {
       "name": "plumbr",
@@ -6512,7 +6259,7 @@
       "commits": 140,
       "firstCommit": "2025-07-06T18:04:01Z",
       "lastCommit": "2025-07-16T19:50:30Z",
-      "phase": "Development Pipeline"
+      "phase": "Phase 3"
     },
     {
       "name": "gcombinatr",
@@ -6521,7 +6268,7 @@
       "commits": 4,
       "firstCommit": "2025-07-11T01:27:18Z",
       "lastCommit": "2025-07-11T04:11:12Z",
-      "phase": "Tinymachines Core Development"
+      "phase": "Phase 4"
     },
     {
       "name": "llisp",
@@ -6530,7 +6277,7 @@
       "commits": 7,
       "firstCommit": "2025-07-11T03:48:05Z",
       "lastCommit": "2025-07-16T06:37:47Z",
-      "phase": "Tinymachines Core Development"
+      "phase": "Phase 4"
     },
     {
       "name": "watr",
@@ -6539,7 +6286,7 @@
       "commits": 87,
       "firstCommit": "2025-07-15T06:41:59Z",
       "lastCommit": "2025-07-29T19:48:11Z",
-      "phase": "Tinymachines Core Development"
+      "phase": "Phase 4"
     },
     {
       "name": "zephyr",
@@ -6548,7 +6295,7 @@
       "commits": 120,
       "firstCommit": "2025-07-29T21:48:29Z",
       "lastCommit": "2025-08-13T02:33:30Z",
-      "phase": "Tinymachines Core Development"
+      "phase": "Phase 4"
     },
     {
       "name": "classic-rock",
@@ -6557,7 +6304,7 @@
       "commits": 3,
       "firstCommit": "2025-07-31T03:02:38Z",
       "lastCommit": "2025-07-31T03:23:01Z",
-      "phase": "Tinymachines Core Development"
+      "phase": "Phase 4"
     },
     {
       "name": "llarp",
@@ -6566,7 +6313,7 @@
       "commits": 168,
       "firstCommit": "2025-08-02T02:10:38Z",
       "lastCommit": "2025-10-29T22:36:27Z",
-      "phase": "Tinymachines Core Development"
+      "phase": "Phase 4"
     },
     {
       "name": "blossom",
@@ -6575,7 +6322,7 @@
       "commits": 3,
       "firstCommit": "2025-08-13T04:51:01Z",
       "lastCommit": "2025-08-15T12:36:35Z",
-      "phase": "Tinymachines Core Development"
+      "phase": "Phase 4"
     },
     {
       "name": "hotbits",
@@ -6584,7 +6331,7 @@
       "commits": 53,
       "firstCommit": "2025-08-14T04:28:56Z",
       "lastCommit": "2025-10-07T04:47:00Z",
-      "phase": "Hotbits - Initial Development"
+      "phase": "Phase 5"
     },
     {
       "name": "yeet",
@@ -6593,7 +6340,7 @@
       "commits": 2,
       "firstCommit": "2025-08-14T05:19:41Z",
       "lastCommit": "2025-08-14T19:45:08Z",
-      "phase": "Hotbits - Initial Development"
+      "phase": "Phase 5"
     },
     {
       "name": "guzl",
@@ -6602,7 +6349,7 @@
       "commits": 3,
       "firstCommit": "2025-08-16T00:42:08Z",
       "lastCommit": "2025-08-24T05:49:24Z",
-      "phase": "Hotbits - Initial Development"
+      "phase": "Phase 5"
     },
     {
       "name": "spondr",
@@ -6611,7 +6358,7 @@
       "commits": 176,
       "firstCommit": "2025-08-17T21:48:35Z",
       "lastCommit": "2025-09-12T02:10:02Z",
-      "phase": "Hotbits - Initial Development"
+      "phase": "Phase 5"
     },
     {
       "name": "crawwwl",
@@ -6620,7 +6367,7 @@
       "commits": 42,
       "firstCommit": "2025-08-24T03:29:38Z",
       "lastCommit": "2025-09-20T06:24:13Z",
-      "phase": "Hotbits - Initial Development"
+      "phase": "Phase 5"
     },
     {
       "name": "stats",
@@ -6629,7 +6376,7 @@
       "commits": 1,
       "firstCommit": "2025-09-02T21:34:03Z",
       "lastCommit": "2025-09-02T21:34:03Z",
-      "phase": "Hotbits - Initial Development"
+      "phase": "Phase 5"
     },
     {
       "name": "llamirc",
@@ -6638,7 +6385,7 @@
       "commits": 0,
       "firstCommit": "2025-09-11T19:05:20Z",
       "lastCommit": "2025-09-11T19:05:21Z",
-      "phase": "Hotbits - Initial Development"
+      "phase": "Phase 5"
     },
     {
       "name": "dragonfli",
@@ -6647,7 +6394,7 @@
       "commits": 0,
       "firstCommit": "2025-09-12T02:39:41Z",
       "lastCommit": "2025-09-12T02:39:41Z",
-      "phase": "Development Pipeline"
+      "phase": "Phase 6"
     },
     {
       "name": "umbra",
@@ -6656,7 +6403,7 @@
       "commits": 17,
       "firstCommit": "2025-09-29T02:38:48Z",
       "lastCommit": "2025-10-13T22:07:35Z",
-      "phase": "Development Pipeline"
+      "phase": "Phase 6"
     },
     {
       "name": "aihelp",
@@ -6665,7 +6412,7 @@
       "commits": 2,
       "firstCommit": "2025-09-29T20:06:11Z",
       "lastCommit": "2026-01-15T21:23:25Z",
-      "phase": "Development Pipeline"
+      "phase": "Phase 6"
     },
     {
       "name": "swrm",
@@ -6674,7 +6421,7 @@
       "commits": 27,
       "firstCommit": "2025-10-17T22:46:28Z",
       "lastCommit": "2025-10-21T16:34:19Z",
-      "phase": "Development Pipeline"
+      "phase": "Phase 6"
     },
     {
       "name": "leaks",
@@ -6683,7 +6430,7 @@
       "commits": 6,
       "firstCommit": "2025-10-27T19:44:47Z",
       "lastCommit": "2025-10-28T03:00:55Z",
-      "phase": "Development Pipeline"
+      "phase": "Phase 6"
     },
     {
       "name": "ferret",
@@ -6692,7 +6439,7 @@
       "commits": 18,
       "firstCommit": "2025-10-30T18:54:40Z",
       "lastCommit": "2026-01-26T03:36:31Z",
-      "phase": "Development Pipeline"
+      "phase": "Phase 6"
     },
     {
       "name": "tiny",
@@ -6701,7 +6448,7 @@
       "commits": 73,
       "firstCommit": "2025-11-01T15:50:31Z",
       "lastCommit": "2025-11-15T00:41:51Z",
-      "phase": "Development Pipeline"
+      "phase": "Phase 6"
     },
     {
       "name": "resume",
@@ -6710,7 +6457,7 @@
       "commits": 6,
       "firstCommit": "2025-11-04T02:20:51Z",
       "lastCommit": "2025-11-04T03:22:58Z",
-      "phase": "Core Infrastructure & Initial Tooling"
+      "phase": "Phase 7"
     },
     {
       "name": "6502",
@@ -6719,7 +6466,7 @@
       "commits": 1,
       "firstCommit": "2025-11-07T01:17:49Z",
       "lastCommit": "2025-11-07T01:17:49Z",
-      "phase": "Core Infrastructure & Initial Tooling"
+      "phase": "Phase 7"
     },
     {
       "name": "cascade",
@@ -6728,7 +6475,7 @@
       "commits": 41,
       "firstCommit": "2025-11-14T04:24:16Z",
       "lastCommit": "2025-11-28T17:23:27Z",
-      "phase": "Core Infrastructure & Initial Tooling"
+      "phase": "Phase 7"
     },
     {
       "name": "tgmi",
@@ -6737,7 +6484,7 @@
       "commits": 140,
       "firstCommit": "2025-11-14T23:36:30Z",
       "lastCommit": "2025-12-20T03:11:04Z",
-      "phase": "Core Infrastructure & Initial Tooling"
+      "phase": "Phase 7"
     },
     {
       "name": "scout",
@@ -6746,7 +6493,7 @@
       "commits": 15,
       "firstCommit": "2025-11-22T23:06:30Z",
       "lastCommit": "2025-11-26T17:25:19Z",
-      "phase": "Core Infrastructure & Initial Tooling"
+      "phase": "Phase 7"
     },
     {
       "name": "rustforhaters",
@@ -6755,7 +6502,7 @@
       "commits": 18,
       "firstCommit": "2025-11-24T22:10:45Z",
       "lastCommit": "2025-12-03T02:56:09Z",
-      "phase": "Core Infrastructure & Initial Tooling"
+      "phase": "Phase 7"
     },
     {
       "name": "deox",
@@ -6764,7 +6511,7 @@
       "commits": 3,
       "firstCommit": "2025-12-01T21:07:42Z",
       "lastCommit": "2025-12-03T16:20:42Z",
-      "phase": "AI Content & Platform Development"
+      "phase": "Phase 8"
     },
     {
       "name": "gnomes",
@@ -6773,7 +6520,7 @@
       "commits": 18,
       "firstCommit": "2025-12-13T05:43:45Z",
       "lastCommit": "2025-12-19T22:49:55Z",
-      "phase": "AI Content & Platform Development"
+      "phase": "Phase 8"
     },
     {
       "name": "collidr",
@@ -6782,7 +6529,7 @@
       "commits": 0,
       "firstCommit": "2026-01-11T21:59:35Z",
       "lastCommit": "2026-01-11T21:59:35Z",
-      "phase": "AI Content & Platform Development"
+      "phase": "Phase 8"
     },
     {
       "name": "spicy",
@@ -6791,7 +6538,7 @@
       "commits": 3,
       "firstCommit": "2026-02-01T03:57:55Z",
       "lastCommit": "2026-02-06T18:19:14Z",
-      "phase": "AI Content & Platform Development"
+      "phase": "Phase 8"
     },
     {
       "name": "orator",
@@ -6800,7 +6547,7 @@
       "commits": 5,
       "firstCommit": "2026-02-02T01:27:12Z",
       "lastCommit": "2026-02-03T21:31:20Z",
-      "phase": "AI Content & Platform Development"
+      "phase": "Phase 8"
     },
     {
       "name": "esp32",
@@ -6809,7 +6556,7 @@
       "commits": 50,
       "firstCommit": "2026-02-10T01:11:37Z",
       "lastCommit": "2026-02-18T21:12:09Z",
-      "phase": "AI Content & Platform Development"
+      "phase": "Phase 8"
     }
   ]
 }
