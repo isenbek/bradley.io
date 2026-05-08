@@ -1,6 +1,6 @@
 {
-  "generated": "2026-04-24T20:00:33.645932+00:00",
-  "totalStudies": 59,
+  "generated": "2026-05-08T12:01:13.425557+00:00",
+  "totalStudies": 63,
   "totalReferences": 8,
   "categories": {
     "cross-domain": 7,
@@ -9,7 +9,7 @@
     "space-weather": 13,
     "radiation": 2,
     "hydrology": 3,
-    "research": 14
+    "research": 18
   },
   "studies": [
     {
@@ -1075,6 +1075,70 @@
       "previewImage": "/data/papers/wspr-tornado-v5-nontornadic-controls.png",
       "paperUrl": null,
       "dataFileCount": 62,
+      "refPaperCount": 0,
+      "references": []
+    },
+    {
+      "slug": "pre-tornadic-cape-evolution-from-igra-so",
+      "title": "Pre-tornadic CAPE evolution from IGRA soundings vs WSPR precursor timing",
+      "description": "Does atmospheric instability (CAPE / lifted index) ramp on the same 4-6h pre-tornado timeline as the WSPR 40m precursor signal? H1: timing match. H0: independent timing.",
+      "status": "complete_inconclusive",
+      "author": "PMA",
+      "category": "research",
+      "createdAt": "2026-05-05T17:40:10.029159+00:00",
+      "hasPaper": false,
+      "hasViz": true,
+      "previewImage": "/data/papers/pre-tornadic-cape-evolution-from-igra-so.png",
+      "paperUrl": null,
+      "dataFileCount": 5,
+      "refPaperCount": 0,
+      "references": []
+    },
+    {
+      "slug": "lifted-index-control-wspr-tornado-precu",
+      "title": "Lifted Index as a control variable for the WSPR-tornado precursor",
+      "description": "Is the WSPR 40m precursor independent of LI, or a proxy for atmospheric instability? H1: independent. H0: LI explains all of the WSPR-tornado correlation.",
+      "status": "complete",
+      "author": "PMA",
+      "category": "research",
+      "createdAt": "2026-05-05T17:45:40.393297+00:00",
+      "hasPaper": false,
+      "hasViz": true,
+      "previewImage": "/data/papers/lifted-index-control-wspr-tornado-precu.png",
+      "paperUrl": null,
+      "dataFileCount": 7,
+      "refPaperCount": 0,
+      "references": []
+    },
+    {
+      "slug": "v2-lifted-index-as-a-control-variable-fo",
+      "title": "V2: Lifted Index as a control variable for the WSPR-tornado precursor",
+      "description": "V2 of #181: re-run with full IGRA data (1.2M rows) and live WSPR. Test whether WSPR 40m precursor is independent of LI or proxy.",
+      "status": "draft",
+      "author": "PMA",
+      "category": "research",
+      "createdAt": "2026-05-05T20:11:07.657394+00:00",
+      "hasPaper": false,
+      "hasViz": true,
+      "previewImage": "/data/papers/v2-lifted-index-as-a-control-variable-fo.png",
+      "paperUrl": null,
+      "dataFileCount": 10,
+      "refPaperCount": 0,
+      "references": []
+    },
+    {
+      "slug": "v2-pre-tornadic-cape-evolution-from-igra",
+      "title": "V2: Pre-tornadic CAPE evolution from IGRA soundings vs WSPR precursor timing",
+      "description": "V2 re-run of #180 with IGRA sounding data now available (1.2M rows). Test if WSPR 40m precursor timing aligns with CAPE peak timing.",
+      "status": "draft",
+      "author": "PMA",
+      "category": "research",
+      "createdAt": "2026-05-05T20:11:09.568648+00:00",
+      "hasPaper": false,
+      "hasViz": false,
+      "previewImage": null,
+      "paperUrl": null,
+      "dataFileCount": 3,
       "refPaperCount": 0,
       "references": []
     }
