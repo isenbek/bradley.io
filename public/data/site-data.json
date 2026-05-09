@@ -1,13 +1,25 @@
 {
-  "generated": "2026-05-08T12:00:31.803602+00:00",
+  "generated": "2026-05-09T00:00:31.304869+00:00",
   "stats": {
     "totalProjects": 86,
-    "totalSessions": 56,
-    "totalMessages": 180904,
-    "activeDays": 29,
-    "streak": 1
+    "totalSessions": 59,
+    "totalMessages": 185259,
+    "activeDays": 30,
+    "streak": 2
   },
   "activityFeed": [
+    {
+      "type": "claude-code",
+      "title": "Claude Code session (1049 messages)",
+      "description": "3 sessions, 402 tool calls",
+      "projectSlug": null,
+      "category": null,
+      "date": "2026-05-08T23:59:00Z",
+      "metadata": {
+        "messages": 1049,
+        "sessions": 3
+      }
+    },
     {
       "type": "github",
       "title": "Activity on Sysforge-AI/sfproject",
@@ -21,13 +33,13 @@
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (587 messages)",
-      "description": "1 sessions, 225 tool calls",
+      "title": "Claude Code session (1041 messages)",
+      "description": "1 sessions, 379 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-05-07T23:59:00Z",
       "metadata": {
-        "messages": 587,
+        "messages": 1041,
         "sessions": 1
       }
     },
@@ -140,13 +152,13 @@
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (5752 messages)",
-      "description": "3 sessions, 1808 tool calls",
+      "title": "Claude Code session (5980 messages)",
+      "description": "3 sessions, 1884 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-04-21T23:59:00Z",
       "metadata": {
-        "messages": 5752,
+        "messages": 5980,
         "sessions": 3
       }
     },
@@ -188,25 +200,25 @@
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (46431 messages)",
-      "description": "6 sessions, 16801 tool calls",
+      "title": "Claude Code session (48377 messages)",
+      "description": "6 sessions, 17549 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-04-13T23:59:00Z",
       "metadata": {
-        "messages": 46431,
+        "messages": 48377,
         "sessions": 6
       }
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (1160 messages)",
-      "description": "2 sessions, 380 tool calls",
+      "title": "Claude Code session (1176 messages)",
+      "description": "2 sessions, 383 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-04-12T23:59:00Z",
       "metadata": {
-        "messages": 1160,
+        "messages": 1176,
         "sessions": 2
       }
     },
@@ -224,13 +236,13 @@
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (34978 messages)",
-      "description": "6 sessions, 12878 tool calls",
+      "title": "Claude Code session (35250 messages)",
+      "description": "6 sessions, 12960 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-04-08T23:59:00Z",
       "metadata": {
-        "messages": 34978,
+        "messages": 35250,
         "sessions": 6
       }
     },
@@ -248,13 +260,13 @@
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (2733 messages)",
-      "description": "2 sessions, 987 tool calls",
+      "title": "Claude Code session (2786 messages)",
+      "description": "2 sessions, 1002 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-03-28T23:59:00Z",
       "metadata": {
-        "messages": 2733,
+        "messages": 2786,
         "sessions": 2
       }
     },
@@ -296,13 +308,13 @@
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (26633 messages)",
-      "description": "8 sessions, 9687 tool calls",
+      "title": "Claude Code session (26879 messages)",
+      "description": "8 sessions, 9764 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-03-23T23:59:00Z",
       "metadata": {
-        "messages": 26633,
+        "messages": 26879,
         "sessions": 8
       }
     },
@@ -332,13 +344,13 @@
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (2437 messages)",
-      "description": "1 sessions, 908 tool calls",
+      "title": "Claude Code session (2528 messages)",
+      "description": "1 sessions, 938 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-03-08T23:59:00Z",
       "metadata": {
-        "messages": 2437,
+        "messages": 2528,
         "sessions": 1
       }
     },
@@ -575,17 +587,6 @@
       "metadata": {
         "messages": 2
       }
-    },
-    {
-      "type": "claude-web",
-      "title": "DSPy framework explanation and code",
-      "description": "The user requested a comprehensive introduction to DSPy, asking specifically for a simple explanation, diagram, and code sample. Claude provided a detailed technical overview of DSPy (Declarative Self-improving Python), a framework from Stanford NLP ",
-      "projectSlug": "dspy",
-      "category": "systems",
-      "date": "2026-02-04T02:42:25.915022Z",
-      "metadata": {
-        "messages": 2
-      }
     }
   ],
   "projects": [
@@ -621,11 +622,51 @@
       "status": "active",
       "technologies": [],
       "lastActivity": "2026-05-08",
-      "totalMessages": 36838,
+      "totalMessages": 37110,
       "sources": {
         "claudeCode": {
           "totalSessions": 2,
-          "totalMessages": 36838,
+          "totalMessages": 37110,
+          "lastSession": "2026-05-08"
+        }
+      }
+    },
+    {
+      "slug": "infra",
+      "name": "infra",
+      "tagline": "",
+      "description": "",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-05-08",
+      "totalMessages": 29399,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 5,
+          "totalMessages": 29399,
+          "lastSession": "2026-05-08"
+        }
+      }
+    },
+    {
+      "slug": "cbradio",
+      "name": "cbradio",
+      "tagline": "",
+      "description": "",
+      "category": "hardware",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-05-08",
+      "totalMessages": 18096,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 3,
+          "totalMessages": 18096,
           "lastSession": "2026-05-08"
         }
       }
@@ -641,11 +682,11 @@
       "status": "active",
       "technologies": [],
       "lastActivity": "2026-05-08",
-      "totalMessages": 17034,
+      "totalMessages": 17374,
       "sources": {
         "claudeCode": {
           "totalSessions": 2,
-          "totalMessages": 17034,
+          "totalMessages": 17374,
           "lastSession": "2026-05-08"
         }
       }
@@ -661,11 +702,40 @@
       "status": "active",
       "technologies": [],
       "lastActivity": "2026-05-08",
-      "totalMessages": 10284,
+      "totalMessages": 11146,
       "sources": {
         "claudeCode": {
           "totalSessions": 3,
-          "totalMessages": 10284,
+          "totalMessages": 11146,
+          "lastSession": "2026-05-08"
+        }
+      }
+    },
+    {
+      "slug": "bradleyio",
+      "name": "bradleyio",
+      "tagline": "",
+      "description": "",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [
+        "D3.js",
+        "Framer Motion",
+        "Next.js",
+        "Nginx",
+        "Ollama",
+        "Socket.IO",
+        "Tailwind CSS",
+        "TypeScript"
+      ],
+      "lastActivity": "2026-05-08",
+      "totalMessages": 2528,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 1,
+          "totalMessages": 2528,
           "lastSession": "2026-05-08"
         }
       }
@@ -681,11 +751,31 @@
       "status": "active",
       "technologies": [],
       "lastActivity": "2026-05-08",
-      "totalMessages": 1987,
+      "totalMessages": 2233,
       "sources": {
         "claudeCode": {
           "totalSessions": 1,
-          "totalMessages": 1987,
+          "totalMessages": 2233,
+          "lastSession": "2026-05-08"
+        }
+      }
+    },
+    {
+      "slug": "cbbanking",
+      "name": "cbbanking",
+      "tagline": "",
+      "description": "",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-05-08",
+      "totalMessages": 1567,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 1,
+          "totalMessages": 1567,
           "lastSession": "2026-05-08"
         }
       }
@@ -721,46 +811,6 @@
         "claudeCode": {
           "totalSessions": 2,
           "totalMessages": 19071,
-          "lastSession": "2026-05-07"
-        }
-      }
-    },
-    {
-      "slug": "infra",
-      "name": "infra",
-      "tagline": "",
-      "description": "",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-05-07",
-      "totalMessages": 29301,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 5,
-          "totalMessages": 29301,
-          "lastSession": "2026-05-07"
-        }
-      }
-    },
-    {
-      "slug": "cbradio",
-      "name": "cbradio",
-      "tagline": "",
-      "description": "",
-      "category": "hardware",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-05-07",
-      "totalMessages": 17450,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 3,
-          "totalMessages": 17450,
           "lastSession": "2026-05-07"
         }
       }
@@ -846,35 +896,6 @@
       }
     },
     {
-      "slug": "bradleyio",
-      "name": "bradleyio",
-      "tagline": "",
-      "description": "",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [
-        "D3.js",
-        "Framer Motion",
-        "Next.js",
-        "Nginx",
-        "Ollama",
-        "Socket.IO",
-        "Tailwind CSS",
-        "TypeScript"
-      ],
-      "lastActivity": "2026-05-03",
-      "totalMessages": 2437,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 1,
-          "totalMessages": 2437,
-          "lastSession": "2026-05-03"
-        }
-      }
-    },
-    {
       "slug": "cbtenant",
       "name": "cbtenant",
       "tagline": "",
@@ -951,26 +972,6 @@
           "totalSessions": 2,
           "totalMessages": 4136,
           "lastSession": "2026-04-26"
-        }
-      }
-    },
-    {
-      "slug": "cbquickbooks",
-      "name": "cbquickbooks",
-      "tagline": "",
-      "description": "",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "recent",
-      "technologies": [],
-      "lastActivity": "2026-04-25",
-      "totalMessages": 1419,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 1,
-          "totalMessages": 1419,
-          "lastSession": "2026-04-25"
         }
       }
     },
@@ -2026,19 +2027,19 @@
       "Bash",
       "JWT",
       "Pydantic",
+      "SSH",
       "Ollama",
       "Snowflake",
-      "SSH",
       "SQLite",
       "Redis",
       "OAuth",
       "YAML",
-      "Markdown",
       "AWS",
+      "Markdown",
       "TOML",
       "CSV",
-      "Pytest",
       "Rust",
+      "Pytest",
       "WebSocket",
       "WireGuard",
       "React"
