@@ -438,7 +438,7 @@ export default function HomePage() {
       <RecentAdditions />
 
       {/* ===== 24H ACTIVITY PULSE ===== */}
-      <section className="pb-10 sm:pb-16">
+      <section className="pb-8 sm:pb-12">
         <div className="container-page">
           <FadeSection>
             <div className="max-w-xl">
