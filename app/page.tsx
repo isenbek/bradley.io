@@ -438,7 +438,7 @@ export default function HomePage() {
       <RecentAdditions />
 
       {/* ===== 24H ACTIVITY PULSE ===== */}
-      <section className="pb-6 sm:pb-8">
+      <section className="pb-8 sm:pb-10">
         <div className="container-page">
           <FadeSection>
             <div className="max-w-xl">
@@ -453,7 +453,7 @@ export default function HomePage() {
 
       {/* ===== CLAUDE'S CORNER ===== */}
       {data?.claudeCorner && (
-        <section className="pb-6 sm:pb-8">
+        <section className="pb-8 sm:pb-10">
           <div className="container-page">
             <FadeSection>
               <ClaudeCorner data={data.claudeCorner} />

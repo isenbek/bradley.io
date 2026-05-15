@@ -4,7 +4,7 @@ import { TRNGCard } from "./TRNGCard"
 
 export function RecentAdditions() {
   return (
-    <section className="pb-6 sm:pb-8">
+    <section className="pb-8 sm:pb-10">
       <div className="container-page">
         <div className="mb-6 sm:mb-8 flex items-end justify-between gap-4">
           <div>
