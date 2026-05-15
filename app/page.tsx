@@ -10,7 +10,7 @@ import type { SiteData, ActivityItem as ActivityItemType, Project } from "@/lib/
 import { categoryMap } from "@/lib/project-categories"
 import { ClaudeCorner } from "@/components/home/ClaudeCorner"
 import { BigIdeas } from "@/components/home/BigIdeas"
-import { TRNGCard } from "@/components/home/TRNGCard"
+import { RecentAdditions } from "@/components/home/RecentAdditions"
 
 // --- Particle Grid Background (theme-aware) ---
 function ParticleGrid() {
@@ -548,6 +548,9 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ===== RECENT ADDITIONS ===== */}
+      <RecentAdditions />
+
       {/* ===== BIG IDEAS ===== */}
       <BigIdeas ideas={data?.bigIdeas} />
 
@@ -561,40 +564,6 @@ export default function HomePage() {
           </div>
         </section>
       )}
-
-      {/* ===== HOTBITS TRNG ===== */}
-      <section className="pb-10 sm:pb-16">
-        <div className="container-page">
-          <FadeSection>
-            <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
-              <TRNGCard />
-              <div
-                className="rounded-2xl p-5 sm:p-6 flex flex-col justify-between"
-                style={{ background: "var(--brand-bg-alt)", border: "1px solid var(--brand-border)" }}
-              >
-                <div>
-                  <div className="text-xs font-mono uppercase tracking-widest mb-2" style={{ color: "var(--brand-muted)" }}>
-                    What is this?
-                  </div>
-                  <p className="text-sm sm:text-base leading-relaxed" style={{ color: "var(--brand-text)" }}>
-                    A CAJOE Geiger counter wired to a Raspberry Pi 4 watches a tiny chunk of
-                    naturally radioactive material. Each decay event triggers an interrupt;
-                    the inter-arrival times feed an unbiased Δt₁/Δt₂ extractor, then SHA-256
-                    conditions the stream.
-                  </p>
-                  <p className="text-sm sm:text-base leading-relaxed mt-2" style={{ color: "var(--brand-text)" }}>
-                    Output passes <span className="font-mono">ent</span> · PractRand · TestU01
-                    Rabbit + Alphabit daily, at ~75 bytes/min sustained.
-                  </p>
-                </div>
-                <div className="mt-4 font-mono text-[10px] uppercase tracking-wide" style={{ color: "var(--brand-muted)" }}>
-                  Anti-Cloud · Anti-Pseudo-Random · Host Local
-                </div>
-              </div>
-            </div>
-          </FadeSection>
-        </div>
-      </section>
 
       {/* ===== HERO STATS ===== */}
       <section
