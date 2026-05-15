@@ -1,16 +1,16 @@
 {
-  "generated": "2026-05-08T09:04:53.108642+00:00",
+  "generated": "2026-05-15T09:01:23.882606+00:00",
   "org": "tinymachines",
-  "totalRepos": 57,
+  "totalRepos": 59,
   "firstCommit": "2016-02-27T16:07:26Z",
-  "latestCommit": "2026-05-08T04:03:30Z",
-  "totalCommits": 4149,
+  "latestCommit": "2026-05-14T06:46:04Z",
+  "totalCommits": 4240,
   "languages": {
     "Python": 24,
     "C": 7,
-    "HTML": 5,
+    "HTML": 6,
+    "Shell": 6,
     "TypeScript": 5,
-    "Shell": 5,
     "C++": 1,
     "Common Lisp": 1,
     "JavaScript": 1
@@ -5934,13 +5934,49 @@
     },
     {
       "date": "2026-05-07",
-      "commits": 22,
-      "repos": 1,
-      "intensity": 3
+      "commits": 26,
+      "repos": 2,
+      "intensity": 4
     },
     {
       "date": "2026-05-08",
-      "commits": 5,
+      "commits": 20,
+      "repos": 3,
+      "intensity": 3
+    },
+    {
+      "date": "2026-05-09",
+      "commits": 13,
+      "repos": 3,
+      "intensity": 2
+    },
+    {
+      "date": "2026-05-10",
+      "commits": 26,
+      "repos": 3,
+      "intensity": 4
+    },
+    {
+      "date": "2026-05-11",
+      "commits": 8,
+      "repos": 2,
+      "intensity": 2
+    },
+    {
+      "date": "2026-05-12",
+      "commits": 2,
+      "repos": 2,
+      "intensity": 1
+    },
+    {
+      "date": "2026-05-13",
+      "commits": 17,
+      "repos": 4,
+      "intensity": 3
+    },
+    {
+      "date": "2026-05-14",
+      "commits": 6,
       "repos": 1,
       "intensity": 1
     }
@@ -6085,10 +6121,12 @@
     {
       "name": "Phase 9",
       "startDate": "2026-05-04",
-      "endDate": "2026-05-04",
-      "description": "Development of geiger.",
+      "endDate": "2026-05-13",
+      "description": "Development of geiger, adsb, sdr.",
       "repos": [
-        "geiger"
+        "geiger",
+        "adsb",
+        "sdr"
       ],
       "milestones": [],
       "category": "systems"
@@ -6396,9 +6434,9 @@
       "name": "spondr",
       "description": "The spondr repository is a Python-based project that appears to be developing an augmented reality (AR) system for aircraft tracking and prediction, with a focus on accuracy and user experience.",
       "language": "Python",
-      "commits": 176,
+      "commits": 227,
       "firstCommit": "2025-08-17T21:48:35Z",
-      "lastCommit": "2025-09-12T02:10:02Z",
+      "lastCommit": "2026-05-13T17:58:08Z",
       "phase": "Phase 5"
     },
     {
@@ -6602,10 +6640,28 @@
     {
       "name": "geiger",
       "description": "Commits: Add bench tooling and Option B wiring notes",
-      "language": "Python",
-      "commits": 47,
+      "language": "HTML",
+      "commits": 59,
       "firstCommit": "2026-05-04T03:01:06Z",
-      "lastCommit": "2026-05-08T04:03:30Z",
+      "lastCommit": "2026-05-13T22:51:28Z",
+      "phase": "Phase 9"
+    },
+    {
+      "name": "adsb",
+      "description": "Bare-metal provisioning for two Raspberry Pi 4 ADS-B/UAT distribution nodes (1090 + 978)",
+      "language": "Python",
+      "commits": 19,
+      "firstCommit": "2026-05-07T17:16:20Z",
+      "lastCommit": "2026-05-13T18:07:21Z",
+      "phase": "Phase 9"
+    },
+    {
+      "name": "sdr",
+      "description": "Full SDR stack provisioner \u2014 target host bali.lan (RTL2838)",
+      "language": "Shell",
+      "commits": 9,
+      "firstCommit": "2026-05-13T20:32:50Z",
+      "lastCommit": "2026-05-14T06:46:04Z",
       "phase": "Phase 9"
     }
   ]
