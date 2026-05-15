@@ -453,7 +453,7 @@ export default function HomePage() {
 
       {/* ===== CLAUDE'S CORNER ===== */}
       {data?.claudeCorner && (
-        <section className="py-10 sm:py-16">
+        <section className="pb-8 sm:pb-12">
           <div className="container-page">
             <FadeSection>
               <ClaudeCorner data={data.claudeCorner} />
