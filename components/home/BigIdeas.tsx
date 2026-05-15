@@ -12,7 +12,7 @@ export function BigIdeas({ ideas }: BigIdeasProps) {
 
   return (
     <section
-      className="pb-8 sm:pb-12"
+      className="pb-6 sm:pb-8"
       style={{ borderBottom: "1px solid var(--brand-border)" }}
     >
       <div className="container-page">
