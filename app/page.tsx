@@ -430,17 +430,23 @@ export default function HomePage() {
 
             {/* Just Added — inline under hero buttons */}
             <JustAdded />
-
-            {/* 24h Activity Pulse */}
-            <div className="mt-6 sm:mt-8 max-w-xl">
-              <ActivityPulse />
-            </div>
           </FadeSection>
         </div>
       </section>
 
       {/* ===== RECENT ADDITIONS ===== */}
       <RecentAdditions />
+
+      {/* ===== 24H ACTIVITY PULSE ===== */}
+      <section className="pb-8 sm:pb-10">
+        <div className="container-page">
+          <FadeSection>
+            <div className="max-w-xl">
+              <ActivityPulse />
+            </div>
+          </FadeSection>
+        </div>
+      </section>
 
       {/* ===== BIG IDEAS ===== */}
       <BigIdeas ideas={data?.bigIdeas} />
