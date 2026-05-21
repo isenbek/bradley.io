@@ -20,18 +20,15 @@ export function SDRCard() {
     let mounted = true
     const ctrl = new AbortController()
     const load = async () => {
-      try {
-        const [h, s] = await Promise.all([
-          getHealth(ctrl.signal),
-          getSoak(ctrl.signal),
-        ])
-        if (!mounted) return
-        setHealth(h)
-        setSoak(s)
-        setError(false)
-      } catch {
-        if (mounted) setError(true)
-      }
+      const results = await Promise.allSettled([
+        getHealth(ctrl.signal),
+        getSoak(ctrl.signal),
+      ])
+      if (!mounted) return
+      const [h, s] = results
+      if (h.status === "fulfilled") setHealth(h.value)
+      if (s.status === "fulfilled") setSoak(s.value)
+      setError(h.status === "rejected")
     }
     load()
     const id = setInterval(load, 30_000)

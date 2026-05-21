@@ -32,22 +32,19 @@ export default function SDRPage() {
     const ctrl = new AbortController()
 
     const load = async () => {
-      try {
-        const [h, b, s, j] = await Promise.all([
-          getHealth(ctrl.signal),
-          getBands(ctrl.signal),
-          getSoak(ctrl.signal),
-          getJobs(ctrl.signal),
-        ])
-        if (!mounted) return
-        setHealth(h)
-        setBands(b)
-        setSoak(s)
-        setJobs(j)
-        setError(false)
-      } catch {
-        if (mounted) setError(true)
-      }
+      const results = await Promise.allSettled([
+        getHealth(ctrl.signal),
+        getBands(ctrl.signal),
+        getSoak(ctrl.signal),
+        getJobs(ctrl.signal),
+      ])
+      if (!mounted) return
+      const [h, b, s, j] = results
+      if (h.status === "fulfilled") setHealth(h.value)
+      if (b.status === "fulfilled") setBands(b.value)
+      if (s.status === "fulfilled") setSoak(s.value)
+      if (j.status === "fulfilled") setJobs(j.value)
+      setError(h.status === "rejected")
     }
 
     load()

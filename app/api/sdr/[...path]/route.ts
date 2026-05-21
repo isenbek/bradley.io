@@ -16,6 +16,7 @@ export async function GET(
     const upstream = await fetch(target, {
       cache: "no-store",
       headers: { Accept: "application/json" },
+      signal: AbortSignal.timeout(30_000),
     })
     const body = await upstream.text()
     return new Response(body, {
