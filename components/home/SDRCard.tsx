@@ -20,15 +20,23 @@ export function SDRCard() {
     let mounted = true
     const ctrl = new AbortController()
     const load = async () => {
-      const results = await Promise.allSettled([
-        getHealth(ctrl.signal),
-        getSoak(ctrl.signal),
-      ])
+      // Upstream serializes — fetch one at a time.
+      let h: HealthResponse | null = null
+      let s: SoakBand[] | null = null
+      try {
+        h = await getHealth(ctrl.signal)
+      } catch {
+        /* keep null */
+      }
+      try {
+        s = await getSoak(ctrl.signal)
+      } catch {
+        /* keep null */
+      }
       if (!mounted) return
-      const [h, s] = results
-      if (h.status === "fulfilled") setHealth(h.value)
-      if (s.status === "fulfilled") setSoak(s.value)
-      setError(h.status === "rejected")
+      if (h) setHealth(h)
+      if (s) setSoak(s)
+      setError(h === null)
     }
     load()
     const id = setInterval(load, 30_000)

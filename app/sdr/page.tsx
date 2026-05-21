@@ -32,19 +32,24 @@ export default function SDRPage() {
     const ctrl = new AbortController()
 
     const load = async () => {
-      const results = await Promise.allSettled([
-        getHealth(ctrl.signal),
-        getBands(ctrl.signal),
-        getSoak(ctrl.signal),
-        getJobs(ctrl.signal),
-      ])
+      // Upstream serializes — fetch one at a time to avoid 30s timeouts.
+      const safe = async <T,>(fn: () => Promise<T>): Promise<T | null> => {
+        try {
+          return await fn()
+        } catch {
+          return null
+        }
+      }
+      const h = await safe(() => getHealth(ctrl.signal))
+      const b = await safe(() => getBands(ctrl.signal))
+      const s = await safe(() => getSoak(ctrl.signal))
+      const j = await safe(() => getJobs(ctrl.signal))
       if (!mounted) return
-      const [h, b, s, j] = results
-      if (h.status === "fulfilled") setHealth(h.value)
-      if (b.status === "fulfilled") setBands(b.value)
-      if (s.status === "fulfilled") setSoak(s.value)
-      if (j.status === "fulfilled") setJobs(j.value)
-      setError(h.status === "rejected")
+      if (h) setHealth(h)
+      if (b) setBands(b)
+      if (s) setSoak(s)
+      if (j) setJobs(j)
+      setError(h === null)
     }
 
     load()
