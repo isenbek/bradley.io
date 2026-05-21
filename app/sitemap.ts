@@ -28,6 +28,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/cost-analysis`, changeFrequency: "weekly", priority: 0.8, lastModified: now },
     { url: `${base}/terminal`, changeFrequency: "monthly", priority: 0.5, lastModified: now },
     { url: `${base}/trng`, changeFrequency: "daily", priority: 0.6, lastModified: now },
+    { url: `${base}/dragonfli`, changeFrequency: "daily", priority: 0.6, lastModified: now },
     { url: `${base}/style-guide`, changeFrequency: "monthly", priority: 0.3, lastModified: now },
   ]
 

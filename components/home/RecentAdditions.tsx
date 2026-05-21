@@ -1,6 +1,7 @@
 "use client"
 
 import { TRNGCard } from "./TRNGCard"
+import { DragonfliCard } from "./DragonfliCard"
 
 export function RecentAdditions() {
   return (
@@ -30,7 +31,7 @@ export function RecentAdditions() {
 
         <div className="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
           <TRNGCard />
-          {/* Dragonfly / ADSB / GPS card lands here next */}
+          <DragonfliCard />
         </div>
       </div>
     </section>
