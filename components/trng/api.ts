@@ -1,4 +1,6 @@
-export const TRNG_API = "https://hotbits.tinymachines.ai"
+// Browser → same-origin proxy at /api/trng (server forwards to hotbits.tinymachines.ai).
+// Avoids CORS; upstream has no Access-Control-Allow-Origin header.
+export const TRNG_API = "/api/trng"
 
 export interface HealthResponse {
   healthy: boolean
