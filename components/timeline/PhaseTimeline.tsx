@@ -22,6 +22,27 @@ interface PhaseTimelineProps {
   repos: TimelineRepo[]
 }
 
+function formatPhaseRange(startISO: string, endISO: string, isCurrent: boolean): string {
+  const s = new Date(startISO)
+  const e = new Date(endISO)
+  const fmtMY = (d: Date) => d.toLocaleDateString("en-US", { month: "short", year: "numeric" })
+  const fmtM = (d: Date) => d.toLocaleDateString("en-US", { month: "short" })
+  const fmtMD = (d: Date) =>
+    d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })
+
+  if (isCurrent) {
+    return `${fmtMY(s)} – Present`
+  }
+  if (s.getUTCFullYear() === e.getUTCFullYear() && s.getUTCMonth() === e.getUTCMonth()) {
+    if (s.getUTCDate() === e.getUTCDate()) return fmtMD(s)
+    return fmtMY(s)
+  }
+  if (s.getUTCFullYear() === e.getUTCFullYear()) {
+    return `${fmtM(s)} – ${fmtMY(e)}`
+  }
+  return `${fmtMY(s)} – ${fmtMY(e)}`
+}
+
 export function PhaseTimeline({ phases, repos }: PhaseTimelineProps) {
   const reversed = [...phases].reverse()
   const [expandedIdx, setExpandedIdx] = useState<number | null>(0)
@@ -37,14 +58,7 @@ export function PhaseTimeline({ phases, repos }: PhaseTimelineProps) {
           .map((name) => repoMap.get(name))
           .filter(Boolean) as TimelineRepo[]
 
-        const startLabel = new Date(phase.startDate).toLocaleDateString(
-          "en-US",
-          { month: "short", year: "numeric" }
-        )
-        const endLabel = new Date(phase.endDate).toLocaleDateString("en-US", {
-          month: "short",
-          year: "numeric",
-        })
+        const rangeLabel = formatPhaseRange(phase.startDate, phase.endDate, i === 0)
 
         return (
           <div key={i} className="flex gap-4 sm:gap-6">
@@ -70,7 +84,7 @@ export function PhaseTimeline({ phases, repos }: PhaseTimelineProps) {
             {/* Phase card */}
             <div className="pb-8 sm:pb-10 flex-1 min-w-0">
               <div className="text-xs font-mono mb-1" style={{ color }}>
-                {startLabel} &ndash; {endLabel}
+                {rangeLabel}
               </div>
               <h3 className="text-lg sm:text-xl font-bold mb-2">
                 {phase.name}

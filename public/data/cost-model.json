@@ -1,19 +1,19 @@
 {
-  "generated": "2026-05-26T12:01:56.414989",
+  "generated": "2026-06-05T16:01:17.290217",
   "scope": "Campaign Brain Last 3 Months",
   "timespan": {
     "start": "2025-12-01",
     "end": "2026-03-26",
     "days": 117,
-    "activeDays": 5
+    "activeDays": 3
   },
   "actual": {
     "teamSize": 1,
-    "sessions": 44,
-    "messages": 144545,
-    "toolCalls": 80545,
-    "commits": 14131,
-    "repos": 80,
+    "sessions": 137,
+    "messages": 191355,
+    "toolCalls": 101967,
+    "commits": 15160,
+    "repos": 82,
     "projects": 14,
     "operatorCost": 60000,
     "aiCost": 800,
@@ -37,7 +37,7 @@
       },
       {
         "name": "Frontend",
-        "score": 56
+        "score": 55
       },
       {
         "name": "Data Engineering",
@@ -55,150 +55,155 @@
     "skills": [
       {
         "name": "Go",
-        "count": 4560
+        "count": 5484
       },
       {
         "name": "Git",
-        "count": 2139
+        "count": 2505
       },
       {
         "name": "JSON",
-        "count": 1435
-      },
-      {
-        "name": "HTML",
-        "count": 1155
-      },
-      {
-        "name": "Nginx",
-        "count": 1149
+        "count": 1658
       },
       {
         "name": "Python",
-        "count": 845
+        "count": 993
+      },
+      {
+        "name": "Nginx",
+        "count": 986
       },
       {
         "name": "DuckDB",
-        "count": 781
+        "count": 904
       },
       {
         "name": "systemd",
-        "count": 731
+        "count": 849
+      },
+      {
+        "name": "HTML",
+        "count": 800
       },
       {
         "name": "SPI",
-        "count": 493
-      },
-      {
-        "name": "CSS",
-        "count": 482
+        "count": 521
       },
       {
         "name": "Bash",
-        "count": 447
+        "count": 488
       },
       {
         "name": "FastAPI",
-        "count": 376
-      },
-      {
-        "name": "SQLite",
-        "count": 301
+        "count": 397
       },
       {
         "name": "Pytest",
-        "count": 283
-      },
-      {
-        "name": "Pydantic",
-        "count": 275
-      },
-      {
-        "name": "SSH",
-        "count": 256
-      },
-      {
-        "name": "YAML",
-        "count": 238
-      },
-      {
-        "name": "JWT",
-        "count": 235
-      },
-      {
-        "name": "Rust",
-        "count": 223
-      },
-      {
-        "name": "TOML",
-        "count": 222
+        "count": 389
       },
       {
         "name": "Snowflake",
-        "count": 221
+        "count": 386
       },
       {
-        "name": "Ollama",
-        "count": 209
+        "name": "SSH",
+        "count": 361
       },
       {
-        "name": "Anthropic",
-        "count": 203
+        "name": "CSS",
+        "count": 341
+      },
+      {
+        "name": "YAML",
+        "count": 332
+      },
+      {
+        "name": "SQLite",
+        "count": 296
       },
       {
         "name": "Markdown",
-        "count": 200
+        "count": 260
+      },
+      {
+        "name": "JWT",
+        "count": 259
+      },
+      {
+        "name": "CSV",
+        "count": 253
+      },
+      {
+        "name": "Pydantic",
+        "count": 246
+      },
+      {
+        "name": "Rust",
+        "count": 242
+      },
+      {
+        "name": "Ollama",
+        "count": 234
+      },
+      {
+        "name": "TOML",
+        "count": 230
+      },
+      {
+        "name": "Anthropic",
+        "count": 193
       },
       {
         "name": "Redis",
         "count": 164
       },
       {
-        "name": "WebSocket",
-        "count": 148
-      },
-      {
-        "name": "CSV",
-        "count": 145
-      },
-      {
-        "name": "OAuth",
-        "count": 143
-      },
-      {
         "name": "AWS",
-        "count": 136
+        "count": 163
       },
       {
         "name": "React",
-        "count": 120
+        "count": 127
+      },
+      {
+        "name": "OAuth",
+        "count": 111
+      },
+      {
+        "name": "WebSocket",
+        "count": 102
       }
     ],
     "topProjects": [
       {
         "name": "cbloom",
-        "sessions": 5,
-        "messages": 51131
+        "sessions": 10,
+        "messages": 64372
       },
       {
         "name": "cbmodels",
-        "sessions": 1,
-        "messages": 25648
+        "sessions": 2,
+        "messages": 32898
       },
       {
         "name": "cbradio",
-        "sessions": 16,
-        "messages": 16797
+        "sessions": 35,
+        "messages": 21545
       },
       {
         "name": "cbpulse",
-        "sessions": 1,
-        "messages": 11869
+        "sessions": 65,
+        "messages": 17941
       },
       {
         "name": "cbintel",
-        "sessions": 8,
-        "messages": 9542
+        "sessions": 10,
+        "messages": 17600
+      },
+      {
+        "name": "cbweave",
+        "sessions": 2,
+        "messages": 7783
       },
       {
         "name": "cbai",
@@ -207,28 +212,28 @@
       },
       {
         "name": "cbauth",
-        "sessions": 5,
-        "messages": 4525
+        "sessions": 6,
+        "messages": 4551
       },
       {
-        "name": "cbgreenroom",
+        "name": "cbcast",
         "sessions": 1,
-        "messages": 3551
+        "messages": 4243
+      },
+      {
+        "name": "cbmesh",
+        "sessions": 1,
+        "messages": 3452
       },
       {
         "name": "cbbanking",
         "sessions": 1,
-        "messages": 3046
+        "messages": 3137
       },
       {
         "name": "cbingest",
         "sessions": 1,
         "messages": 2927
-      },
-      {
-        "name": "cbmesh",
-        "sessions": 1,
-        "messages": 2651
       },
       {
         "name": "cbtenant",
@@ -239,11 +244,6 @@
         "name": "cbea",
         "sessions": 1,
         "messages": 2415
-      },
-      {
-        "name": "cbweave",
-        "sessions": 1,
-        "messages": 1952
       }
     ]
   },
@@ -317,8 +317,8 @@
   },
   "comparison": {
     "costSavingsPercent": 95.3,
-    "velocityMultiplier": 342.0,
-    "timeCompression": "9 months -> 5 days"
+    "velocityMultiplier": 570.0,
+    "timeCompression": "9 months -> 3 days"
   },
   "industryBenchmarks": {
     "locPerDevPerDay": {
@@ -556,9 +556,9 @@
       "weekStart": "2026-03-02",
       "commits": 373,
       "cumulativeCommits": 4248,
-      "messages": 7088,
-      "sessions": 3,
-      "toolCalls": 2598,
+      "messages": 6033,
+      "sessions": 2,
+      "toolCalls": 2207,
       "issuesOpened": 109,
       "issuesClosed": 62,
       "cumulativeIssuesOpened": 719,
@@ -601,9 +601,9 @@
       "weekStart": "2026-03-23",
       "commits": 232,
       "cumulativeCommits": 5362,
-      "messages": 19719,
-      "sessions": 7,
-      "toolCalls": 7205,
+      "messages": 18323,
+      "sessions": 6,
+      "toolCalls": 6679,
       "issuesOpened": 306,
       "issuesClosed": 202,
       "cumulativeIssuesOpened": 1494,
@@ -613,10 +613,10 @@
     }
   ],
   "issues": {
-    "opened": 2628,
-    "closed": 1950,
-    "bugs": 240,
-    "features": 431,
-    "other": 1957
+    "opened": 2807,
+    "closed": 2098,
+    "bugs": 262,
+    "features": 471,
+    "other": 2074
   }
 }
