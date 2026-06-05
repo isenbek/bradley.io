@@ -25,10 +25,17 @@ interface PhaseTimelineProps {
 function formatPhaseRange(startISO: string, endISO: string, isCurrent: boolean): string {
   const s = new Date(startISO)
   const e = new Date(endISO)
-  const fmtMY = (d: Date) => d.toLocaleDateString("en-US", { month: "short", year: "numeric" })
-  const fmtM = (d: Date) => d.toLocaleDateString("en-US", { month: "short" })
+  const fmtMY = (d: Date) =>
+    d.toLocaleDateString("en-US", { month: "short", year: "numeric", timeZone: "UTC" })
+  const fmtM = (d: Date) =>
+    d.toLocaleDateString("en-US", { month: "short", timeZone: "UTC" })
   const fmtMD = (d: Date) =>
-    d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })
+    d.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+      timeZone: "UTC",
+    })
 
   if (isCurrent) {
     return `${fmtMY(s)} – Present`
