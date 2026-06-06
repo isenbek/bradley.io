@@ -13,5 +13,6 @@ export default function OG() {
       "Boundary-pushing research projects — hardware, AI, and creative computing — that explore what's possible.",
     tags: ["Experiments", "Hardware", "AI", "Creative"],
     accent: "purple",
+    cta: "Enter the lab →",
   })
 }

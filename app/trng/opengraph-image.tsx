@@ -13,5 +13,6 @@ export default function OG() {
       "Live status for the Hotbits true random number generator — entropy harvested from radioactive decay on a Pi 4 Geiger counter.",
     tags: ["Hardware", "Live", "Pi 4", "Geiger"],
     accent: "green",
+    cta: "View live →",
   })
 }

@@ -13,5 +13,6 @@ export default function OG() {
       "Bradley Isenbek — building at the intersection of enterprise scale and maker culture, with Claude as co-pilot.",
     tags: ["ESP32", "Distributed Systems", "Claude", "Edge"],
     accent: "cyan",
+    cta: "Explore bradley.io →",
   })
 }

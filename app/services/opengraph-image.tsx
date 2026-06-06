@@ -13,5 +13,6 @@ export default function OG() {
       "Data architecture, distributed systems, AI integration, and edge computing — project, hourly, or retainer.",
     tags: ["Data Engineering", "AI / ML", "Edge & IoT", "Architecture"],
     accent: "orange",
+    cta: "Book a call →",
   })
 }

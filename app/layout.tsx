@@ -19,29 +19,29 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Bradley Isenbek — Frontier Technologist | bradley.io",
+    default: "Bradley Isenbek — Hardware Hacker, Data Architect, AI Pilot",
     template: "%s | Bradley Isenbek",
   },
   description:
-    "Bradley Isenbek — hardware hacker, data architect, and AI pilot based in Grand Rapids, MI. Building at the intersection of enterprise scale and maker culture — from ESP32 mesh networks to Fortune 500 data warehouses.",
+    "Bradley Isenbek — AI Systems Architect, hardware hacker, and frontier technologist building at the intersection of enterprise scale and maker culture. ESP32 mesh networks to Fortune 500 data warehouses, with Claude as co-pilot.",
   metadataBase: new URL("https://bradley.io"),
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "Bradley Isenbek — Frontier Technologist",
+    title: "Bradley Isenbek — Hardware Hacker, Data Architect, AI Pilot",
     description:
-      "Bradley Isenbek — hardware hacker, data architect, and AI pilot. Building at the intersection of enterprise scale and maker culture.",
+      "AI Systems Architect & frontier technologist. Building at the intersection of enterprise scale and maker culture — from ESP32 mesh networks to Fortune 500 data warehouses.",
     url: "https://bradley.io",
-    siteName: "Bradley Isenbek",
+    siteName: "Bradley Isenbek — bradley.io",
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Bradley Isenbek — Frontier Technologist",
+    title: "Bradley Isenbek — Hardware Hacker, Data Architect, AI Pilot",
     description:
-      "Bradley Isenbek — hardware hacker, data architect, and AI pilot. Building at the intersection of enterprise scale and maker culture.",
+      "AI Systems Architect & frontier technologist. Enterprise scale meets maker culture — ESP32 mesh networks to Fortune 500 warehouses, with Claude as co-pilot.",
   },
   robots: {
     index: true,

@@ -13,5 +13,6 @@ export default function OG() {
       "Hardware experiments, AI systems, data pipelines, and frontier research — every project shipped with Claude as co-pilot.",
     tags: ["Hardware", "AI", "Data", "Research"],
     accent: "cyan",
+    cta: "Browse projects →",
   })
 }

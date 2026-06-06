@@ -13,5 +13,6 @@ export default function OG() {
       "Active studies in seismology, space weather, climate, and cross-domain environmental statistics — open data, reproducible methods.",
     tags: ["Seismology", "Space weather", "Climate", "Open data"],
     accent: "green",
+    cta: "Read research →",
   })
 }

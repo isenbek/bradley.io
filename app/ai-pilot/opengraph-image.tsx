@@ -13,5 +13,6 @@ export default function OG() {
       "Live analytics of Claude AI usage — activity heatmaps, competency ratings, token economy, and piloting style.",
     tags: ["Claude", "Live data", "Heatmaps", "Token economy"],
     accent: "purple",
+    cta: "Open dashboard →",
   })
 }

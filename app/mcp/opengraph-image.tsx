@@ -13,5 +13,6 @@ export default function OG() {
       "Campaign Brain FastAPI microservices — fully indexed, OpenAPI-introspected, and callable from any MCP client.",
     tags: ["FastAPI", "OpenAPI", "MCP", "Microservices"],
     accent: "blue",
+    cta: "Browse catalog →",
   })
 }

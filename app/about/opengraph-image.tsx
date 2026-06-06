@@ -13,5 +13,6 @@ export default function OG() {
       "AI Systems Architect, hardware hacker, and frontier technologist building at the intersection of enterprise scale and maker culture.",
     tags: ["Grand Rapids, MI", "15+ years", "AI · Data · IoT"],
     accent: "cyan",
+    cta: "Read the story →",
   })
 }

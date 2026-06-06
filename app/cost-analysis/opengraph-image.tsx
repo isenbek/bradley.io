@@ -13,5 +13,6 @@ export default function OG() {
       "Real numbers behind human-AI engineering — token spend, velocity multiplier, and the economic case for the new stack.",
     tags: ["Economics", "Velocity", "AI", "Live"],
     accent: "amber",
+    cta: "See the numbers →",
   })
 }

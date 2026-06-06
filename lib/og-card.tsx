@@ -20,6 +20,8 @@ export interface OgCardConfig {
   subtitle?: string
   tags?: string[]
   accent?: Accent
+  /** CTA shown bottom-right. Defaults to "Read more →". */
+  cta?: string
 }
 
 export function ogImageResponse(cfg: OgCardConfig): ImageResponse {
@@ -145,11 +147,11 @@ export function ogImageResponse(cfg: OgCardConfig): ImageResponse {
           ) : null}
         </div>
 
-        {/* Footer: tags */}
+        {/* Footer: tags + CTA */}
         <div
           style={{
             display: "flex",
-            gap: 12,
+            gap: 16,
             position: "relative",
             alignItems: "center",
             justifyContent: "space-between",
@@ -175,13 +177,21 @@ export function ogImageResponse(cfg: OgCardConfig): ImageResponse {
           </div>
           <div
             style={{
-              fontSize: 16,
-              fontFamily: "monospace",
-              color: "#8DA3B0",
-              letterSpacing: 1,
+              display: "flex",
+              alignItems: "center",
+              gap: 10,
+              padding: "12px 24px",
+              borderRadius: 12,
+              fontSize: 20,
+              fontWeight: 700,
+              color: "#0B1215",
+              background: `linear-gradient(135deg, ${accent.primary} 0%, ${accent.secondary} 100%)`,
+              boxShadow: `0 10px 30px ${accent.tag}`,
+              letterSpacing: -0.3,
+              whiteSpace: "nowrap",
             }}
           >
-            bradley.io
+            {cfg.cta ?? "Read more →"}
           </div>
         </div>
       </div>

@@ -68,5 +68,6 @@ export default async function OG({ params }: { params: Promise<{ slug: string }>
     subtitle,
     tags,
     accent,
+    cta: "View project →",
   })
 }

@@ -13,5 +13,6 @@ export default function OG() {
       "Live status for the SDR scanner stack — band registry, soak archive, top frequencies, and job history from rtl-sdr.",
     tags: ["RTL-SDR", "Live", "Spectrum", "Archive"],
     accent: "orange",
+    cta: "Tune in →",
   })
 }
