@@ -514,25 +514,13 @@ export default function HomePage() {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3">
-              <Link
-                href="/projects"
-                className="px-6 py-3 sm:px-8 sm:py-3.5 rounded-lg text-sm sm:text-base font-semibold text-center transition-all"
-                style={{
-                  background: "var(--brand-primary)",
-                  color: "var(--brand-bg)",
-                }}
-              >
-                View Projects <ArrowRight className="inline w-4 h-4 ml-1" />
+              <Link href="/projects" className="btn-primary group">
+                View Projects
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
               </Link>
-              <Link
-                href="/ai-pilot"
-                className="px-6 py-3 sm:px-8 sm:py-3.5 rounded-lg text-sm sm:text-base font-medium text-center transition-all"
-                style={{
-                  border: "1px solid color-mix(in srgb, var(--brand-secondary) 30%, transparent)",
-                  color: "var(--brand-secondary)",
-                }}
-              >
-                AI Pilot Dashboard <ArrowRight className="inline w-4 h-4 ml-1" />
+              <Link href="/ai-pilot" className="btn-secondary group">
+                AI Pilot Dashboard
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
               </Link>
             </div>
 

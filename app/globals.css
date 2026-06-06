@@ -195,7 +195,11 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    /* Account for the 4rem fixed navigation when jumping to anchors */
+    scroll-padding-top: 5rem;
     overflow-x: hidden;
+    /* Modern overscroll feel */
+    overscroll-behavior-y: none;
   }
 
   body {
@@ -203,16 +207,58 @@
     transition: background-color 0.4s ease, color 0.4s ease;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
+    /* Cleaner typography defaults */
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "ss01", "cv01", "cv11";
   }
 
-  h1, h2, h3 {
+  h1, h2, h3, h4 {
     @apply font-display;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Brand-aware text selection */
+  ::selection {
+    background: color-mix(in srgb, var(--brand-primary) 35%, transparent);
+    color: var(--brand-text);
+  }
+
+  /* Visible keyboard focus across the whole site */
+  :focus-visible {
+    outline: 2px solid var(--brand-primary);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Respect reduced-motion users */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 }
 
 @layer components {
+  /*
+    Fluid responsive page container.
+    Steps through breakpoints so tablets aren't trapped at max-w-lg.
+  */
   .container-page {
-    @apply max-w-lg mx-auto px-4 sm:px-6 md:max-w-2xl lg:max-w-5xl;
+    @apply mx-auto w-full px-4 sm:px-6 lg:px-8
+           max-w-lg sm:max-w-xl md:max-w-3xl lg:max-w-5xl xl:max-w-6xl;
+  }
+
+  /* Narrow reading column for long-form pages (about, services, mdx) */
+  .container-prose {
+    @apply mx-auto w-full px-4 sm:px-6
+           max-w-lg sm:max-w-xl md:max-w-2xl lg:max-w-3xl;
   }
 
   .scrollbar-none {
@@ -228,5 +274,60 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+  }
+
+  /* Primary CTA: filled, glow on hover, slight lift */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-1.5
+           px-6 py-3 sm:px-7 sm:py-3.5
+           rounded-lg text-sm sm:text-base font-semibold
+           transition-all duration-200 ease-out;
+    background: var(--brand-primary);
+    color: var(--brand-bg);
+    box-shadow: 0 4px 14px color-mix(in srgb, var(--brand-primary) 22%, transparent);
+  }
+  .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px color-mix(in srgb, var(--brand-primary) 40%, transparent);
+    filter: brightness(1.05);
+  }
+  .btn-primary:active {
+    transform: translateY(0);
+  }
+
+  /* Secondary CTA: outlined, soft fill on hover */
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-1.5
+           px-6 py-3 sm:px-7 sm:py-3.5
+           rounded-lg text-sm sm:text-base font-medium
+           transition-all duration-200 ease-out;
+    color: var(--brand-secondary);
+    border: 1px solid color-mix(in srgb, var(--brand-secondary) 35%, transparent);
+    background: transparent;
+  }
+  .btn-secondary:hover {
+    background: color-mix(in srgb, var(--brand-secondary) 8%, transparent);
+    border-color: color-mix(in srgb, var(--brand-secondary) 60%, transparent);
+    transform: translateY(-1px);
+  }
+  .btn-secondary:active {
+    transform: translateY(0);
+  }
+
+  /* Reusable card surface with hover lift */
+  .card-surface {
+    background: var(--brand-bg-alt);
+    border: 1px solid var(--brand-border);
+    border-radius: 0.75rem;
+    transition:
+      transform 0.2s ease,
+      border-color 0.2s ease,
+      box-shadow 0.2s ease,
+      background 0.2s ease;
+  }
+  .card-surface:hover {
+    transform: translateY(-2px);
+    border-color: var(--brand-border-hover);
+    box-shadow: 0 10px 30px -10px var(--brand-card-hover-shadow);
   }
 }

@@ -36,21 +36,12 @@ export const metadata: Metadata = {
     siteName: "Bradley Isenbek",
     locale: "en_US",
     type: "website",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Bradley Isenbek — Hardware hacker, data architect, AI pilot",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Bradley Isenbek — Frontier Technologist",
     description:
       "Bradley Isenbek — hardware hacker, data architect, and AI pilot. Building at the intersection of enterprise scale and maker culture.",
-    images: ["/og-image.png"],
   },
   robots: {
     index: true,
@@ -83,13 +74,21 @@ export const metadata: Metadata = {
   authors: [{ name: "Bradley Isenbek", url: "https://bradley.io" }],
   creator: "Bradley Isenbek",
   publisher: "Bradley Isenbek",
+  applicationName: "bradley.io",
+  category: "technology",
+  formatDetection: { email: false, address: false, telephone: false },
+  // app/icon.svg, app/icon0.tsx (192), app/icon1.tsx (512), app/apple-icon.tsx
+  // are auto-injected by Next.js — no explicit `icons` block needed.
 }
 
 export const viewport = {
   width: "device-width",
   initialScale: 1,
-  maximumScale: 1,
   viewportFit: "cover" as const,
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#1C1412" },
+    { media: "(prefers-color-scheme: light)", color: "#FFFFFF" },
+  ],
 }
 
 export default function RootLayout({
