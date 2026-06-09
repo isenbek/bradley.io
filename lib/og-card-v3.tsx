@@ -74,18 +74,19 @@ export function ogV3ImageResponse(cfg: OgCardV3Config): ImageResponse {
           }}
         />
 
-        {/* Brand mark — top-left, real bio SVG wordmark */}
+        {/* Brand mark — top-left, stacked identity block */}
         <div
           style={{
             display: "flex",
-            alignItems: "center",
-            gap: 12,
+            flexDirection: "column",
+            alignItems: "flex-start",
+            gap: 4,
             zIndex: 1,
           }}
         >
           <svg
-            width="110"
-            height="58"
+            width="160"
+            height="84"
             viewBox={BIO_LOGO_VIEWBOX}
             preserveAspectRatio="xMidYMid meet"
           >
@@ -97,17 +98,27 @@ export function ogV3ImageResponse(cfg: OgCardV3Config): ImageResponse {
             style={{
               display: "flex",
               alignItems: "baseline",
-              gap: 2,
-              fontSize: 24,
+              fontSize: 26,
               fontWeight: 700,
-              letterSpacing: "0.06em",
+              letterSpacing: "0.04em",
               color: "#252521",
+              lineHeight: 1,
+              marginTop: 4,
             }}
           >
-            <span style={{ color: accent.primary, fontWeight: 800, fontSize: 28, marginRight: 2 }}>
-              ·
-            </span>
             bradley<span style={{ color: accent.primary }}>.io</span>
+          </div>
+          <div
+            style={{
+              fontSize: 15,
+              fontWeight: 600,
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+              color: accent.ink,
+              marginTop: 6,
+            }}
+          >
+            Bradley S. Isenbek · Frontier Technologist
           </div>
         </div>
 
