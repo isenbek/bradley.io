@@ -1,4 +1,9 @@
 import { ImageResponse } from "next/og"
+import {
+  BIO_LOGO_GROUP_TRANSFORM,
+  BIO_LOGO_PATH,
+  BIO_LOGO_VIEWBOX,
+} from "@/lib/bio-logo-path"
 
 export const OG_V3_SIZE = { width: 1200, height: 630 }
 export const OG_V3_CONTENT_TYPE = "image/png"
@@ -69,24 +74,41 @@ export function ogV3ImageResponse(cfg: OgCardV3Config): ImageResponse {
           }}
         />
 
-        {/* Brand mark — top-left */}
+        {/* Brand mark — top-left, real bio SVG wordmark */}
         <div
           style={{
             display: "flex",
-            alignItems: "baseline",
-            gap: 4,
-            fontWeight: 800,
-            fontSize: 30,
-            letterSpacing: "-0.02em",
-            color: accent.primary,
+            alignItems: "center",
+            gap: 12,
             zIndex: 1,
           }}
         >
-          <span>bio</span>
-          <span style={{ color: "#252521" }}>·</span>
-          <span style={{ color: "#252521", fontWeight: 700, fontSize: 22, letterSpacing: "0.06em" }}>
+          <svg
+            width="110"
+            height="58"
+            viewBox={BIO_LOGO_VIEWBOX}
+            preserveAspectRatio="xMidYMid meet"
+          >
+            <g transform={BIO_LOGO_GROUP_TRANSFORM} fill={accent.primary}>
+              <path d={BIO_LOGO_PATH} />
+            </g>
+          </svg>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "baseline",
+              gap: 2,
+              fontSize: 24,
+              fontWeight: 700,
+              letterSpacing: "0.06em",
+              color: "#252521",
+            }}
+          >
+            <span style={{ color: accent.primary, fontWeight: 800, fontSize: 28, marginRight: 2 }}>
+              ·
+            </span>
             bradley<span style={{ color: accent.primary }}>.io</span>
-          </span>
+          </div>
         </div>
 
         {/* Main content */}
