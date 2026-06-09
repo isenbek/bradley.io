@@ -3519,6 +3519,193 @@ body:has(.v3) {
   margin-top: 2px;
 }
 
+/* ============ RADAR (dragonfli) ============ */
+.v3-radar {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.v3-radar__svg {
+  width: 100%;
+  max-width: 380px;
+  height: auto;
+  display: block;
+}
+
+.v3-radar__rangebar {
+  display: inline-flex;
+  gap: 3px;
+  padding: 3px;
+  background: var(--v3-paper);
+  border-radius: var(--v3-r-pill);
+  border: 1px solid var(--v3-line);
+}
+
+.v3-radar__rangebar button {
+  font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border: none;
+  background: transparent;
+  color: var(--v3-slate);
+  border-radius: var(--v3-r-pill);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.v3-radar__rangebar button[data-active="true"] {
+  background: var(--v3-blue-500);
+  color: #fff;
+}
+
+.v3-radar__legend {
+  font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
+  font-size: 11.5px;
+  color: var(--v3-slate);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.v3-radar__legend-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.v3-radar__sw {
+  width: 11px;
+  height: 11px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.v3-radar__detail {
+  background: var(--v3-cloud);
+  border: 1px solid var(--v3-line);
+  border-radius: var(--v3-r-md);
+  padding: 14px 16px;
+  font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
+  font-size: 12px;
+  color: var(--v3-ink);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.v3-radar__detail-call {
+  font-family: var(--font-v3-display), "Bricolage Grotesque", sans-serif;
+  font-weight: 800;
+  font-size: 17px;
+  color: var(--v3-blue-700);
+  letter-spacing: -0.015em;
+}
+
+.v3-radar__detail-sub {
+  color: var(--v3-slate);
+  font-size: 11.5px;
+}
+
+.v3-radar__detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px 16px;
+  font-size: 11px;
+  color: var(--v3-slate);
+}
+
+.v3-radar__detail-grid strong {
+  color: var(--v3-charcoal);
+  font-weight: 700;
+}
+
+/* ============ AIRCRAFT TABLE ============ */
+.v3-actable {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
+}
+
+.v3-actable th {
+  text-align: left;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--v3-slate);
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--v3-line);
+  background: var(--v3-paper);
+}
+
+.v3-actable td {
+  font-size: 12px;
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--v3-line);
+  color: var(--v3-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.v3-actable tr:last-child td {
+  border-bottom: none;
+}
+
+.v3-actable__call {
+  font-family: var(--font-v3-display), "Bricolage Grotesque", sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--v3-charcoal);
+  letter-spacing: -0.005em;
+}
+
+.v3-actable__icao {
+  color: var(--v3-slate);
+}
+
+/* ============ BREAKDOWN BAR (registry) ============ */
+.v3-rb {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px 0;
+}
+
+.v3-rb__head {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
+  font-size: 12px;
+}
+
+.v3-rb__lbl {
+  color: var(--v3-charcoal);
+  font-weight: 600;
+}
+
+.v3-rb__count {
+  color: var(--v3-slate);
+}
+
+.v3-rb__track {
+  height: 6px;
+  background: var(--v3-paper);
+  border-radius: var(--v3-r-pill);
+  overflow: hidden;
+}
+
+.v3-rb__fill {
+  height: 100%;
+  border-radius: var(--v3-r-pill);
+  background: linear-gradient(90deg, var(--v3-blue-400), var(--v3-blue-700));
+}
+
+.v3-rb__fill--coral { background: linear-gradient(90deg, var(--v3-coral), var(--v3-coral-dk)); }
+.v3-rb__fill--gold  { background: linear-gradient(90deg, var(--v3-gold), var(--v3-gold-dk)); }
+.v3-rb__fill--green { background: linear-gradient(90deg, var(--v3-green), var(--v3-green-dk)); }
+
 /* ============ FOOTER ============ */
 .v3-footer {
   background: var(--v3-charcoal);
