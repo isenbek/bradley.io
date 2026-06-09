@@ -150,6 +150,23 @@ function MobileDrawer({
                 </button>
               </div>
 
+              {/* v3 preview banner */}
+              <Link
+                href="/v3"
+                onClick={onClose}
+                className="block px-5 py-3 text-center transition-all"
+                style={{
+                  background: "linear-gradient(135deg, #13B8F3, #08749B)",
+                  color: "#FFFFFF",
+                  fontSize: 13,
+                  fontWeight: 700,
+                  letterSpacing: "0.06em",
+                  borderBottom: "1px solid var(--brand-border)",
+                }}
+              >
+                ✦ Try v3 — preview the new design →
+              </Link>
+
               {/* Nav groups grid */}
               <div className="grid grid-cols-2 gap-px" style={{ background: "var(--brand-border)" }}>
                 {navGroups.map((group) => {
@@ -260,6 +277,19 @@ export function Navigation() {
                   {link.label}
                 </Link>
               ))}
+              <Link
+                href="/v3"
+                title="Preview the new design"
+                className="ml-2 px-3 py-1.5 text-xs font-mono font-bold uppercase tracking-[0.14em] rounded-full transition-all whitespace-nowrap inline-flex items-center gap-1.5"
+                style={{
+                  background: "linear-gradient(135deg, #13B8F3, #08749B)",
+                  color: "#FFFFFF",
+                  boxShadow: "0 6px 16px -8px rgba(19, 184, 243, 0.6)",
+                }}
+              >
+                <span style={{ fontSize: "0.95em" }}>✦</span>
+                Try v3
+              </Link>
             </div>
 
             <button

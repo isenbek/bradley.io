@@ -30,6 +30,14 @@ export function V3Nav() {
               </Link>
             )
           })}
+          <Link
+            href="/"
+            className="v3-nav__back"
+            title="Back to the current site"
+            aria-label="Back to v1 site"
+          >
+            ← v1
+          </Link>
         </div>
       </div>
     </nav>
