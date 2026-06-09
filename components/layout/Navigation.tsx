@@ -154,18 +154,102 @@ function MobileDrawer({
               <Link
                 href="/v3"
                 onClick={onClose}
-                className="block px-5 py-3 text-center transition-all"
+                className="v3-banner relative block px-5 py-4 text-center overflow-hidden"
                 style={{
-                  background: "linear-gradient(135deg, #13B8F3, #08749B)",
+                  background:
+                    "linear-gradient(135deg, #29BFF4 0%, #13B8F3 45%, #08749B 100%)",
                   color: "#FFFFFF",
-                  fontSize: 13,
-                  fontWeight: 700,
-                  letterSpacing: "0.06em",
                   borderBottom: "1px solid var(--brand-border)",
+                  boxShadow: "inset 0 -2px 0 rgba(0, 0, 0, 0.18)",
                 }}
               >
-                ✦ Try v3 — preview the new design →
+                <span
+                  aria-hidden
+                  className="v3-banner__sheen"
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    background:
+                      "linear-gradient(120deg, transparent 30%, rgba(255, 255, 255, 0.35) 50%, transparent 70%)",
+                    backgroundSize: "220% 100%",
+                    animation: "v3BannerSheen 3.6s linear infinite",
+                    pointerEvents: "none",
+                  }}
+                />
+                <span
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 8,
+                    fontSize: 14,
+                    fontWeight: 800,
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    textShadow: "0 1px 2px rgba(0, 0, 0, 0.25)",
+                    position: "relative",
+                  }}
+                >
+                  <span
+                    aria-hidden
+                    style={{
+                      fontSize: "1.1em",
+                      animation: "v3ToggleTwinkle 1.8s ease-in-out infinite",
+                    }}
+                  >
+                    ✦
+                  </span>
+                  Try v3
+                  <span
+                    style={{
+                      fontSize: 10,
+                      padding: "2px 8px",
+                      background: "rgba(255, 255, 255, 0.95)",
+                      color: "#08749B",
+                      borderRadius: 999,
+                      fontWeight: 800,
+                    }}
+                  >
+                    NEW
+                  </span>
+                </span>
+                <div
+                  style={{
+                    fontSize: 11,
+                    marginTop: 4,
+                    opacity: 0.9,
+                    letterSpacing: "0.04em",
+                    fontWeight: 600,
+                    position: "relative",
+                  }}
+                >
+                  preview the new design →
+                </div>
               </Link>
+              <style jsx>{`
+                @keyframes v3BannerSheen {
+                  0% {
+                    background-position: 220% 0;
+                  }
+                  100% {
+                    background-position: -120% 0;
+                  }
+                }
+                @keyframes v3ToggleTwinkle {
+                  0%,
+                  100% {
+                    transform: rotate(0deg) scale(1);
+                  }
+                  50% {
+                    transform: rotate(180deg) scale(1.18);
+                  }
+                }
+                @media (prefers-reduced-motion: reduce) {
+                  .v3-banner__sheen,
+                  .v3-banner span[aria-hidden] {
+                    animation: none !important;
+                  }
+                }
+              `}</style>
 
               {/* Nav groups grid */}
               <div className="grid grid-cols-2 gap-px" style={{ background: "var(--brand-border)" }}>
@@ -280,16 +364,92 @@ export function Navigation() {
               <Link
                 href="/v3"
                 title="Preview the new design"
-                className="ml-2 px-3 py-1.5 text-xs font-mono font-bold uppercase tracking-[0.14em] rounded-full transition-all whitespace-nowrap inline-flex items-center gap-1.5"
+                className="v3-toggle ml-3 relative px-4 py-2 text-sm font-mono font-extrabold uppercase tracking-[0.18em] rounded-full transition-all whitespace-nowrap inline-flex items-center gap-2 group"
                 style={{
-                  background: "linear-gradient(135deg, #13B8F3, #08749B)",
+                  background: "linear-gradient(135deg, #29BFF4 0%, #13B8F3 50%, #0A96C7 100%)",
                   color: "#FFFFFF",
-                  boxShadow: "0 6px 16px -8px rgba(19, 184, 243, 0.6)",
+                  boxShadow:
+                    "0 0 0 2px rgba(19, 184, 243, 0.18), 0 8px 28px -8px rgba(19, 184, 243, 0.75), 0 0 24px rgba(19, 184, 243, 0.35)",
+                  textShadow: "0 1px 2px rgba(0, 0, 0, 0.2)",
                 }}
               >
-                <span style={{ fontSize: "0.95em" }}>✦</span>
-                Try v3
+                <span
+                  className="v3-toggle__halo"
+                  aria-hidden
+                  style={{
+                    position: "absolute",
+                    inset: -3,
+                    borderRadius: "9999px",
+                    background:
+                      "linear-gradient(135deg, #29BFF4, #13B8F3, #0A96C7)",
+                    opacity: 0.45,
+                    filter: "blur(8px)",
+                    zIndex: -1,
+                    animation: "v3TogglePulse 2.4s ease-in-out infinite",
+                  }}
+                />
+                <span
+                  aria-hidden
+                  style={{
+                    fontSize: "1.05em",
+                    animation: "v3ToggleTwinkle 1.8s ease-in-out infinite",
+                  }}
+                >
+                  ✦
+                </span>
+                <span>Try v3</span>
+                <span
+                  aria-hidden
+                  style={{
+                    fontSize: "9px",
+                    padding: "1px 6px",
+                    background: "rgba(255, 255, 255, 0.95)",
+                    color: "#08749B",
+                    borderRadius: 999,
+                    letterSpacing: "0.12em",
+                    fontWeight: 800,
+                    boxShadow: "0 1px 0 rgba(0, 0, 0, 0.08)",
+                  }}
+                >
+                  NEW
+                </span>
               </Link>
+              <style jsx>{`
+                .v3-toggle:hover {
+                  transform: translateY(-1px) scale(1.04);
+                }
+                .v3-toggle:hover .v3-toggle__halo {
+                  opacity: 0.7;
+                }
+                @keyframes v3TogglePulse {
+                  0%,
+                  100% {
+                    opacity: 0.4;
+                    transform: scale(1);
+                  }
+                  50% {
+                    opacity: 0.75;
+                    transform: scale(1.06);
+                  }
+                }
+                @keyframes v3ToggleTwinkle {
+                  0%,
+                  100% {
+                    transform: rotate(0deg) scale(1);
+                    opacity: 1;
+                  }
+                  50% {
+                    transform: rotate(180deg) scale(1.18);
+                    opacity: 0.85;
+                  }
+                }
+                @media (prefers-reduced-motion: reduce) {
+                  .v3-toggle__halo,
+                  .v3-toggle span[aria-hidden] {
+                    animation: none !important;
+                  }
+                }
+              `}</style>
             </div>
 
             <button
