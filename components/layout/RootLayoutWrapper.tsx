@@ -1,6 +1,6 @@
 "use client"
 
-import { useSearchParams } from "next/navigation"
+import { usePathname, useSearchParams } from "next/navigation"
 import { Suspense } from "react"
 import dynamic from "next/dynamic"
 import { Navigation } from "./Navigation"
@@ -13,7 +13,13 @@ const AmbientLayer = dynamic(
 
 function LayoutContent({ children }: { children: React.ReactNode }) {
   const searchParams = useSearchParams()
+  const pathname = usePathname()
   const isPrintMode = searchParams.get("print") === "true"
+  const isV3 = pathname?.startsWith("/v3") ?? false
+
+  if (isV3) {
+    return <>{children}</>
+  }
 
   if (isPrintMode) {
     return (
