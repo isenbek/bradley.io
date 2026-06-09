@@ -1,13 +1,20 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { ArrowLeft, Bot, GitBranch, MessageSquare } from "lucide-react"
+import { ArrowLeft, ArrowUpRight, Bot, GitBranch, MessageSquare } from "lucide-react"
 import { loadSiteDataStatic } from "@/lib/site-data"
 import type { CategoryId } from "@/lib/project-categories"
 import { V3_CATEGORY } from "../_categories"
 import { V3Reveal } from "../../_components/V3Reveal"
 
 export const revalidate = 3600
+
+const MISSION_TIMELINES = new Set([
+  "nominate-ai",
+  "sysforge-ai",
+  "tinymachines",
+  "isenbek",
+])
 
 export async function generateStaticParams() {
   const data = await loadSiteDataStatic()
@@ -119,6 +126,45 @@ export default async function V3ProjectDetail({
           <V3Reveal delay={80}>
             <p className="v3-detail-tag">{project.tagline}</p>
           </V3Reveal>
+
+          {MISSION_TIMELINES.has(slug) ? (
+            <V3Reveal delay={140}>
+              <Link
+                href={`/projects/${slug}`}
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 10,
+                  marginTop: 22,
+                  padding: "12px 18px",
+                  background: "linear-gradient(135deg, var(--v3-gold), var(--v3-gold-dk))",
+                  color: "#fff",
+                  borderRadius: "var(--v3-r-pill)",
+                  textDecoration: "none",
+                  fontFamily: "var(--font-v3-mono), monospace",
+                  fontSize: 12.5,
+                  fontWeight: 700,
+                  letterSpacing: "0.06em",
+                  boxShadow: "0 6px 18px -6px rgba(176, 127, 8, 0.55)",
+                }}
+              >
+                <span aria-hidden style={{ fontSize: "1.05em" }}>✦</span>
+                Long-form mission timeline available
+                <ArrowUpRight size={14} strokeWidth={2.5} />
+              </Link>
+              <div
+                style={{
+                  fontFamily: "var(--font-v3-mono), monospace",
+                  fontSize: 11,
+                  color: "var(--v3-slate)",
+                  marginTop: 8,
+                }}
+              >
+                Phase milestones, commit heatmap, language breakdown — currently on the v1
+                page while a v3 port is in progress.
+              </div>
+            </V3Reveal>
+          ) : null}
         </div>
       </header>
 

@@ -1,5 +1,17 @@
 import Link from "next/link"
-import { ArrowRight, FlaskConical } from "lucide-react"
+import {
+  ArrowRight,
+  Atom,
+  BarChart3,
+  BookOpen,
+  FlaskConical,
+  GitBranch,
+  Plane,
+  Radio,
+  Server,
+  TerminalSquare,
+  Zap,
+} from "lucide-react"
 import { loadSiteDataStatic } from "@/lib/site-data"
 import type { CategoryId } from "@/lib/project-categories"
 import { V3_CATEGORY } from "../projects/_categories"
@@ -146,8 +158,280 @@ export default async function V3LabPage() {
         </div>
       </section>
 
+      {/* LAB HUB ======================================================= */}
+      <section className="v3-section v3-section--paper" style={{ paddingTop: 56 }}>
+        <div className="v3-wrap">
+          <V3Reveal>
+            <div className="v3-sec-head">
+              <div className="v3-sec-head__num">02 / EVERYTHING IN THE LAB</div>
+              <h2>The rest of the bench.</h2>
+              <p>
+                Live dashboards, hardware demos, catalogs, and the long-form mission
+                timelines for the multi-year platforms. Each one is its own page —
+                no aggregator, no marketing wrapper.
+              </p>
+            </div>
+          </V3Reveal>
+
+          {[
+            {
+              title: "Operational dashboards",
+              accent: "var(--v3-blue-500)",
+              items: [
+                {
+                  Icon: Plane,
+                  title: "AI Pilot License",
+                  blurb: "Live flight log — sessions, missions, models, tokens.",
+                  href: "/v3/ai-pilot",
+                  tag: "Flagship",
+                  tagColor: "blue" as const,
+                },
+                {
+                  Icon: Zap,
+                  title: "The Shift",
+                  blurb: "Thesis — how AI rewrites the economics of building.",
+                  href: "/v3/the-shift",
+                  tag: "Read",
+                  tagColor: "coral" as const,
+                },
+                {
+                  Icon: BarChart3,
+                  title: "Cost Analysis",
+                  blurb: "117 days, 1 operator vs the 9.5-person team it replaced.",
+                  href: "/v3/cost-analysis",
+                  tag: "Receipts",
+                  tagColor: "green" as const,
+                },
+              ],
+            },
+            {
+              title: "Hardware demos",
+              accent: "var(--v3-coral)",
+              items: [
+                {
+                  Icon: Plane,
+                  title: "Dragonfli",
+                  blurb: "1090 MHz ADS-B receiver — radar, registry, predictor.",
+                  href: "/v3/dragonfli",
+                  tag: "Live",
+                  tagColor: "green" as const,
+                },
+                {
+                  Icon: Radio,
+                  title: "sdr-api",
+                  blurb: "Software-defined radio scanner — bands, soaks, top freqs.",
+                  href: "/v3/sdr",
+                  tag: "Live",
+                  tagColor: "green" as const,
+                },
+                {
+                  Icon: Atom,
+                  title: "HOTBITS TRNG",
+                  blurb: "Random bits from radioactive decay — NIST-tested.",
+                  href: "/v3/trng",
+                  tag: "Live",
+                  tagColor: "green" as const,
+                },
+                {
+                  Icon: TerminalSquare,
+                  title: "Terminal",
+                  blurb: "Interactive CLI portfolio — type help and poke around.",
+                  href: "/v3/terminal",
+                  tag: "CLI",
+                  tagColor: "blue" as const,
+                },
+              ],
+            },
+            {
+              title: "Catalogs & writings",
+              accent: "var(--v3-gold-dk)",
+              items: [
+                {
+                  Icon: Server,
+                  title: "MCP Catalog",
+                  blurb: "Campaign Brain's 44 FastAPI services indexed for LLM agents.",
+                  href: "/v3/mcp",
+                  tag: "Beta",
+                  tagColor: "gold" as const,
+                },
+                {
+                  Icon: BookOpen,
+                  title: "Papers",
+                  blurb: "TerraPulse research — 72 studies across 7 domains, open data.",
+                  href: "/v3/papers",
+                  tag: "Research",
+                  tagColor: "coral" as const,
+                },
+              ],
+            },
+            {
+              title: "Mission timelines",
+              accent: "var(--v3-green-dk)",
+              items: [
+                {
+                  Icon: GitBranch,
+                  title: "Nominate-AI",
+                  blurb: "87 repos, 10k+ commits, AI-synthesized phase milestones.",
+                  href: "/projects/nominate-ai",
+                  tag: "v1 page",
+                  tagColor: "blue" as const,
+                  external: true,
+                },
+                {
+                  Icon: GitBranch,
+                  title: "Sysforge-AI",
+                  blurb: "AI consulting & development firm — phase-based timeline.",
+                  href: "/projects/sysforge-ai",
+                  tag: "v1 page",
+                  tagColor: "blue" as const,
+                  external: true,
+                },
+                {
+                  Icon: GitBranch,
+                  title: "tinymachines",
+                  blurb: "The lab umbrella — hardware, signals, agentic experiments.",
+                  href: "/projects/tinymachines",
+                  tag: "v1 page",
+                  tagColor: "blue" as const,
+                  external: true,
+                },
+                {
+                  Icon: GitBranch,
+                  title: "isenbek",
+                  blurb: "Personal timeline — career arc across the platforms.",
+                  href: "/projects/isenbek",
+                  tag: "v1 page",
+                  tagColor: "blue" as const,
+                  external: true,
+                },
+              ],
+            },
+          ].map((group) => (
+            <V3Reveal key={group.title}>
+              <div style={{ marginTop: 36 }}>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "baseline",
+                    gap: 10,
+                    marginBottom: 14,
+                  }}
+                >
+                  <div
+                    style={{
+                      width: 22,
+                      height: 2,
+                      background: group.accent,
+                      borderRadius: 2,
+                    }}
+                    aria-hidden
+                  />
+                  <h3
+                    className="v3-font-display"
+                    style={{
+                      fontWeight: 700,
+                      fontSize: 20,
+                      letterSpacing: "-0.015em",
+                      color: "var(--v3-charcoal)",
+                    }}
+                  >
+                    {group.title}
+                  </h3>
+                </div>
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+                    gap: 14,
+                  }}
+                >
+                  {group.items.map((item) => (
+                    <Link
+                      key={item.title}
+                      href={item.href}
+                      className="v3-panel"
+                      style={{
+                        display: "block",
+                        textDecoration: "none",
+                        color: "inherit",
+                        transition: "transform 0.2s, box-shadow 0.2s, border-color 0.2s",
+                      }}
+                    >
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          marginBottom: 12,
+                        }}
+                      >
+                        <div
+                          style={{
+                            width: 36,
+                            height: 36,
+                            borderRadius: "var(--v3-r-sm)",
+                            background:
+                              "color-mix(in srgb, " + group.accent + " 12%, transparent)",
+                            color: group.accent,
+                            border:
+                              "1px solid color-mix(in srgb, " +
+                              group.accent +
+                              " 22%, transparent)",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <item.Icon size={18} strokeWidth={2.25} />
+                        </div>
+                        <span className={"v3-pill v3-pill--" + item.tagColor}>
+                          {item.tag}
+                        </span>
+                      </div>
+                      <h4
+                        className="v3-font-display"
+                        style={{
+                          fontWeight: 700,
+                          fontSize: 16,
+                          letterSpacing: "-0.005em",
+                          marginBottom: 6,
+                          color: "var(--v3-charcoal)",
+                        }}
+                      >
+                        {item.title}
+                        {"external" in item && item.external ? (
+                          <span
+                            style={{
+                              fontFamily: "var(--font-v3-mono), monospace",
+                              fontSize: 11,
+                              color: "var(--v3-slate)",
+                              marginLeft: 6,
+                            }}
+                          >
+                            ↗
+                          </span>
+                        ) : null}
+                      </h4>
+                      <p
+                        style={{
+                          fontSize: 13,
+                          color: "var(--v3-ink)",
+                          lineHeight: 1.5,
+                        }}
+                      >
+                        {item.blurb}
+                      </p>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </V3Reveal>
+          ))}
+        </div>
+      </section>
+
       {/* FOOTNOTE ====================================================== */}
-      <section className="v3-section v3-section--paper">
+      <section className="v3-section" style={{ paddingTop: 56 }}>
         <div className="v3-wrap">
           <V3Reveal>
             <div

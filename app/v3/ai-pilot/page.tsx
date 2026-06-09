@@ -1,6 +1,7 @@
 import { readFileSync } from "fs"
 import { join } from "path"
-import { Plane } from "lucide-react"
+import Link from "next/link"
+import { ArrowRight, BarChart3, Plane, Zap } from "lucide-react"
 import type { AIPilotData } from "@/components/ai-pilot/types"
 import { V3Reveal } from "../_components/V3Reveal"
 import { V3PilotDashboard } from "./V3PilotDashboard"
@@ -110,6 +111,107 @@ export default function V3AIPilotPage() {
       <section className="v3-section" style={{ paddingTop: 16 }}>
         <div className="v3-wrap">
           <V3PilotDashboard data={data} />
+        </div>
+      </section>
+
+      {/* RELATED READING ================================================ */}
+      <section className="v3-section v3-section--paper" style={{ paddingTop: 56 }}>
+        <div className="v3-wrap">
+          <div className="v3-sec-head" style={{ marginBottom: 24 }}>
+            <div className="v3-sec-head__num">RELATED · KEEP READING</div>
+            <h2 style={{ marginBottom: 8 }}>This page is the receipts.</h2>
+            <p>
+              Two longer reads built on the same data — the argument, and the bottom-up
+              cost model.
+            </p>
+          </div>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+              gap: 16,
+            }}
+          >
+            {[
+              {
+                Icon: Zap,
+                tag: "Thesis",
+                tagColor: "coral" as const,
+                title: "The Shift",
+                blurb:
+                  "How AI rewrites the economics of building software. Five sections of evidence.",
+                href: "/v3/the-shift",
+              },
+              {
+                Icon: BarChart3,
+                tag: "Receipts",
+                tagColor: "green" as const,
+                title: "Cost Analysis",
+                blurb:
+                  "What 117 days of solo + Claude actually cost vs the 9.5-person team it replaced.",
+                href: "/v3/cost-analysis",
+              },
+            ].map((card) => (
+              <Link
+                key={card.title}
+                href={card.href}
+                className="v3-panel"
+                style={{
+                  display: "block",
+                  textDecoration: "none",
+                  color: "inherit",
+                  transition: "transform 0.2s, box-shadow 0.2s",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    marginBottom: 12,
+                  }}
+                >
+                  <div
+                    style={{
+                      width: 40,
+                      height: 40,
+                      borderRadius: "var(--v3-r-sm)",
+                      background: "var(--v3-blue-50)",
+                      color: "var(--v3-blue-600)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <card.Icon size={20} strokeWidth={2.25} />
+                  </div>
+                  <span className={`v3-pill v3-pill--${card.tagColor}`}>{card.tag}</span>
+                </div>
+                <h3
+                  className="v3-font-display"
+                  style={{ fontWeight: 700, fontSize: 22, marginBottom: 6 }}
+                >
+                  {card.title}
+                </h3>
+                <p style={{ fontSize: 14.5, color: "var(--v3-ink)", marginBottom: 12 }}>
+                  {card.blurb}
+                </p>
+                <span
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 6,
+                    fontFamily: "var(--font-v3-mono), monospace",
+                    fontSize: 12,
+                    fontWeight: 600,
+                    color: "var(--v3-blue-700)",
+                  }}
+                >
+                  Read <ArrowRight size={13} strokeWidth={2.25} />
+                </span>
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
     </>
