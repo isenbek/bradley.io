@@ -154,7 +154,27 @@ body:has(.v3) {
 }
 
 .v3-nav__logo:hover {
-  opacity: 0.85;
+  opacity: 0.92;
+}
+
+/* Playful bob: the i-dot lifts slightly on hover. Honors reduced-motion. */
+.v3-biologo--bob svg[data-bob="true"] [data-piece="dot"] {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.v3-biologo--bob:hover svg[data-bob="true"] [data-piece="dot"] {
+  transform: translateY(-12%) scale(1.08);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v3-biologo--bob svg[data-bob="true"] [data-piece="dot"] {
+    transition: none;
+  }
+  .v3-biologo--bob:hover svg[data-bob="true"] [data-piece="dot"] {
+    transform: none;
+  }
 }
 
 .v3-nav__logo-text {

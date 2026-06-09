@@ -20,11 +20,14 @@ export function V3Nav() {
   return (
     <nav className="v3-nav" aria-label="Primary">
       <div className="v3-nav__in">
-        <Link href="/" className="v3-nav__logo" aria-label="bio·bradley.io home">
+        <Link href="/" className="v3-nav__logo v3-biologo--bob" aria-label="bio·bradley.io home">
           <BioLogo
-            height={26}
+            height={28}
             title=""
-            style={{ color: "var(--v3-blue-500)", marginRight: 4 }}
+            bodyColor="var(--v3-blue-500)"
+            dotColor="var(--v3-blue-300)"
+            bobOnHover
+            style={{ marginRight: 4 }}
           />
           <span className="v3-nav__logo-text">bradley.io</span>
         </Link>

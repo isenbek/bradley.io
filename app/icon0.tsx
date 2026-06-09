@@ -1,7 +1,9 @@
 import { ImageResponse } from "next/og"
 import {
+  BIO_LOGO_BODY_PATH,
+  BIO_LOGO_BOWL_PATH,
+  BIO_LOGO_DOT,
   BIO_LOGO_GROUP_TRANSFORM,
-  BIO_LOGO_PATH,
   BIO_LOGO_VIEWBOX,
 } from "@/lib/bio-logo-path"
 
@@ -23,14 +25,11 @@ export default function Icon192() {
           borderRadius: 40,
         }}
       >
-        <svg
-          width="140"
-          height="74"
-          viewBox={BIO_LOGO_VIEWBOX}
-          preserveAspectRatio="xMidYMid meet"
-        >
-          <g transform={BIO_LOGO_GROUP_TRANSFORM} fill="#FBFAF5">
-            <path d={BIO_LOGO_PATH} />
+        <svg width="140" height="74" viewBox={BIO_LOGO_VIEWBOX} preserveAspectRatio="xMidYMid meet">
+          <g transform={BIO_LOGO_GROUP_TRANSFORM}>
+            <path d={BIO_LOGO_BODY_PATH} fill="#FBFAF5" />
+            <path d={BIO_LOGO_BOWL_PATH} fill="#FBFAF5" />
+            <circle cx={BIO_LOGO_DOT.cx} cy={BIO_LOGO_DOT.cy} r={BIO_LOGO_DOT.r} fill="#CEF0FD" />
           </g>
         </svg>
       </div>
