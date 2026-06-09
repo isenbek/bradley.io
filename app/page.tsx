@@ -1,5 +1,4 @@
 import Link from "next/link"
-import { BioLogo } from "@/components/v3/BioLogo"
 import { V3Reveal } from "@/components/v3/V3Reveal"
 
 export default function V3Home() {
@@ -13,22 +12,10 @@ export default function V3Home() {
 
         <div className="v3-wrap">
           <V3Reveal>
-            <div className="v3-hero-bio">
-              <BioLogo
-                height={140}
-                title="bio · bradley.io"
-                bodyColor="var(--v3-blue-500)"
-                bowlColor="var(--v3-blue-500)"
-                dotColor="var(--v3-blue-500)"
-              />
-            </div>
-          </V3Reveal>
-
-          <V3Reveal delay={60}>
             <span className="v3-eyebrow">Hardware · AI · the seam between</span>
           </V3Reveal>
 
-          <V3Reveal delay={120}>
+          <V3Reveal delay={80}>
             <h1>
               Hardware hacker.<br />
               Data architect.<br />
@@ -36,7 +23,7 @@ export default function V3Home() {
             </h1>
           </V3Reveal>
 
-          <V3Reveal delay={180}>
+          <V3Reveal delay={160}>
             <p className="v3-lede">
               I build at the seam where enterprise scale meets maker culture — ESP32 mesh
               networks, Fortune-500 data warehouses, and a lot of Claude as co-pilot.
@@ -44,7 +31,7 @@ export default function V3Home() {
             </p>
           </V3Reveal>
 
-          <V3Reveal delay={240}>
+          <V3Reveal delay={220}>
             <div className="v3-hero__meta">
               <Link href="/projects" className="v3-btn v3-btn--primary">
                 See the work →
@@ -55,7 +42,7 @@ export default function V3Home() {
             </div>
           </V3Reveal>
 
-          <V3Reveal delay={300}>
+          <V3Reveal delay={280}>
             <div className="v3-hero__meta" style={{ marginTop: 22 }}>
               <span className="v3-chip">
                 <span className="v3-chip__dot" style={{ background: "var(--v3-blue-500)" }} />

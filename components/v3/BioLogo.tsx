@@ -45,19 +45,26 @@ export function BioLogo({
   const finalBowl = bowlColor ?? bodyColor
   const finalDot = dotColor ?? bodyColor
 
+  // The v2 dot sits at viewBox y≈1.5 — that's basically touching the top edge,
+  // so sub-pixel rendering clips it. Add ~10 units of breathing room at top.
+  const PADDED_VIEWBOX = "0 -10 557.60217 302.12289"
+  void BIO_LOGO_VIEWBOX // exported for downstream consumers; intentionally not used here
+
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      viewBox={BIO_LOGO_VIEWBOX}
+      viewBox={PADDED_VIEWBOX}
       role={title ? "img" : "presentation"}
       aria-label={title || undefined}
       aria-hidden={title ? undefined : true}
       data-bob={bobOnHover ? "true" : undefined}
+      overflow="visible"
       style={{
         height: height ?? "1em",
         width: "auto",
         display: "inline-block",
         verticalAlign: "middle",
+        overflow: "visible",
         ...style,
       }}
       {...rest}
