@@ -7,6 +7,14 @@ const nextConfig = {
   turbopack: {
     root: process.cwd(),
   },
+  async redirects() {
+    return [
+      // v3 was the preview prefix; after the swap the canonical URL is the
+      // bare path. Permanent redirects preserve any bookmarks / shared links.
+      { source: '/v3', destination: '/', permanent: true },
+      { source: '/v3/:path*', destination: '/:path*', permanent: true },
+    ]
+  },
   async headers() {
     return [
       {

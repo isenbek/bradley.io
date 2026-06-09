@@ -1,36 +1,20 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Cost Analysis",
+  title: "Cost Analysis — bio·bradley.io",
   description:
-    "What does it cost to build software with AI? A data-driven comparison of legacy team development vs. AI-assisted solo engineering — using real project data from Campaign Brain.",
+    "What does it actually cost to ship enterprise software with AI? Real numbers from 117 days of Campaign Brain development — one person, $61K, 95% reduction vs legacy.",
   alternates: { canonical: "/cost-analysis" },
-  keywords: [
-    "AI development cost",
-    "software development ROI",
-    "AI productivity",
-    "Claude Code",
-    "development velocity",
-    "team vs solo developer",
-    "AI-assisted engineering",
-    "Campaign Brain",
-  ],
   openGraph: {
-    title: "Cost Analysis | bradley.io",
+    title: "Cost Analysis — bio·bradley.io",
     description:
-      "Legacy team vs. AI-assisted solo dev — real numbers from 3 months of Campaign Brain development.",
+      "$61K, 117 days, one person, with Claude. Vs a $1.3M, 9-month, 9.5-person team.",
     url: "https://bradley.io/cost-analysis",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Cost Analysis | bradley.io",
-    description:
-      "What a 9-person team costs $1.3M to build, one person + Claude ships in 46 days.",
+    type: "article",
   },
 }
 
-export default function CostAnalysisLayout({ children }: { children: React.ReactNode }) {
+export default function V3CostAnalysisLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <script
@@ -39,17 +23,15 @@ export default function CostAnalysisLayout({ children }: { children: React.React
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "Article",
-            headline: "The Real Cost of AI-Assisted Development",
-            description:
-              "Data-driven comparison of legacy team development vs. AI-assisted solo engineering using Campaign Brain project data.",
+            "@id": "https://bradley.io/cost-analysis",
             url: "https://bradley.io/cost-analysis",
+            headline: "Cost Analysis — building Campaign Brain with Claude",
             author: { "@id": "https://bradley.io/#person" },
             publisher: { "@id": "https://bradley.io/#person" },
-            about: [
-              { "@type": "Thing", name: "Software Development Economics" },
-              { "@type": "Thing", name: "AI-Assisted Programming" },
-              { "@type": "Thing", name: "Developer Productivity" },
-            ],
+            isPartOf: { "@id": "https://bradley.io/#website" },
+            mainEntityOfPage: "https://bradley.io/cost-analysis",
+            description:
+              "A bottom-up cost comparison: 9.5-person team vs one operator + Claude.",
           }),
         }}
       />

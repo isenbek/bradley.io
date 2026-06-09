@@ -1,11 +1,19 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "sdr-api · bradley.io",
+  title: "SDR — bio·bradley.io",
   description:
-    "Live status for the SDR scanner stack — band registry, soak archive, top frequencies, and job history from an rtl-sdr on bali.lan.",
+    "Live status for the SDR scanner stack — band registry, soak archive, top frequencies, and job history from rtl-sdr.",
+  alternates: { canonical: "/sdr" },
+  openGraph: {
+    title: "SDR — bio·bradley.io",
+    description:
+      "Live SDR scanner status — bands, soaks, top frequencies, jobs. Built on rtl-sdr.",
+    url: "https://bradley.io/sdr",
+    type: "website",
+  },
 }
 
-export default function SDRLayout({ children }: { children: React.ReactNode }) {
-  return children
+export default function V3SdrLayout({ children }: { children: React.ReactNode }) {
+  return <>{children}</>
 }

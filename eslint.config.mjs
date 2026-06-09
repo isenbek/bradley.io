@@ -46,6 +46,7 @@ export default tseslint.config(
       "wargames-server.js",
       "ecosystem.config.js",
       "telemetry/**",
+      "app/_legacy/**",
     ],
   }
 );

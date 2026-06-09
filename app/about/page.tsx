@@ -1,152 +1,166 @@
-import { Calendar, Code, Cpu, Database } from "lucide-react"
+import { Calendar, Code, Cpu, Database, Flame } from "lucide-react"
 import { loadSiteDataStatic } from "@/lib/site-data"
+import { V3Reveal } from "@/components/v3/V3Reveal"
 
 export const revalidate = 3600
 
-export default async function AboutPage() {
+export default async function V3AboutPage() {
   const data = await loadSiteDataStatic()
-  const about = data.about
-  const stats = data.stats
+  const { about, stats } = data
 
   return (
-    <div className="pt-20 sm:pt-24 pb-10 sm:pb-16">
-      <section className="container-page text-center mb-8 sm:mb-16">
-        <div
-          className="text-xs font-semibold uppercase tracking-[3px] mb-3"
-          style={{ color: "var(--brand-secondary)" }}
-        >
-          About
-        </div>
-        <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-4">
-          Bradley S. Isenbek
-        </h1>
-        <p className="text-base md:text-lg max-w-2xl mx-auto leading-relaxed" style={{ color: "var(--brand-muted)" }}>
-          AI Systems Architect | Machine Learning Engineer | Frontier Technologist
-        </p>
-        <p className="text-sm mt-2 font-mono" style={{ color: "var(--brand-muted)" }}>
-          Grand Rapids, MI
-        </p>
-        <p className="sr-only">
-          Bradley Isenbek (also known as Brad Isenbek and Bradley S. Isenbek) is a frontier technologist, AI systems architect, and data engineer based in Grand Rapids, Michigan.
-        </p>
-      </section>
+    <>
+      {/* HEADER ========================================================= */}
+      <header className="v3-page-head">
+        <div className="v3-blob v3-blob--1" aria-hidden style={{ right: "-80px", top: "-40px" }} />
+        <div className="v3-blob v3-blob--3" aria-hidden style={{ right: "120px", top: "180px" }} />
 
-      <div className="container-page grid lg:grid-cols-[1fr_300px] gap-6 sm:gap-10">
-        {/* Main */}
-        <div className="space-y-8">
-          {/* Bio */}
-          <div
-            className="rounded-xl p-5 sm:p-8"
-            style={{
-              background: "var(--brand-bg-alt)",
-              border: "1px solid var(--brand-border)",
-            }}
-          >
-            <h2 className="text-lg font-bold mb-4">Bio</h2>
-            <p className="leading-relaxed" style={{ color: "var(--brand-muted)" }}>
-              {about.bio}
+        <div className="v3-wrap">
+          <div className="v3-page-head__lockup">
+            <V3Reveal>
+              <span className="v3-eyebrow">About · the human behind it</span>
+            </V3Reveal>
+            <V3Reveal delay={80}>
+              <h1>
+                Bradley S. <span className="v3-accent">Isenbek</span>
+              </h1>
+            </V3Reveal>
+            <V3Reveal delay={140}>
+              <p className="v3-page-head__lede">
+                AI Systems Architect · Machine Learning Engineer · Frontier Technologist.
+              </p>
+            </V3Reveal>
+            <V3Reveal delay={200}>
+              <p className="v3-page-head__loc">📍 Grand Rapids, MI · est. 2009 in the field</p>
+            </V3Reveal>
+
+            <p className="sr-only">
+              Bradley Isenbek (also known as Brad Isenbek and Bradley S. Isenbek) is a frontier
+              technologist, AI systems architect, and data engineer based in Grand Rapids, Michigan.
             </p>
           </div>
-
-          {/* Timeline */}
-          <div
-            className="rounded-xl p-5 sm:p-8"
-            style={{
-              background: "var(--brand-bg-alt)",
-              border: "1px solid var(--brand-border)",
-            }}
-          >
-            <h2 className="text-lg font-bold mb-6">Timeline</h2>
-            <div className="space-y-6">
-              {about.timeline.map((entry, i) => (
-                <div key={i} className="flex gap-4">
-                  <div className="flex flex-col items-center">
-                    <div
-                      className="w-8 h-8 rounded-full flex items-center justify-center shrink-0"
-                      style={{
-                        background: "color-mix(in srgb, var(--brand-primary) 10%, transparent)",
-                        border: "1px solid color-mix(in srgb, var(--brand-primary) 25%, transparent)",
-                      }}
-                    >
-                      <Calendar className="w-4 h-4" style={{ color: "var(--brand-primary)" }} />
-                    </div>
-                    {i < about.timeline.length - 1 && (
-                      <div className="w-px flex-1 mt-2" style={{ background: "var(--brand-border)" }} />
-                    )}
-                  </div>
-                  <div className="pb-6">
-                    <div className="text-xs font-mono mb-1" style={{ color: "var(--brand-primary)" }}>
-                      {entry.year}
-                    </div>
-                    <div className="text-base font-bold mb-1">{entry.title}</div>
-                    <div className="text-sm" style={{ color: "var(--brand-muted)" }}>
-                      {entry.description}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
+      </header>
 
-        {/* Sidebar */}
-        <div className="space-y-6">
-          {/* Stats */}
-          <div
-            className="rounded-xl p-4 sm:p-6"
-            style={{
-              background: "var(--brand-bg-alt)",
-              border: "1px solid var(--brand-border)",
-            }}
-          >
-            <h3 className="text-sm font-bold uppercase tracking-widest mb-4" style={{ color: "var(--brand-muted)" }}>
-              By the Numbers
-            </h3>
-            <div className="space-y-4">
-              {[
-                { label: "Projects", value: stats.totalProjects, icon: Code },
-                { label: "AI Sessions", value: stats.totalSessions, icon: Cpu },
-                { label: "Messages", value: stats.totalMessages.toLocaleString(), icon: Database },
-                { label: "Active Days", value: stats.activeDays, icon: Calendar },
-              ].map((stat) => (
-                <div key={stat.label} className="flex items-center gap-3">
-                  <stat.icon className="w-4 h-4" style={{ color: "var(--brand-primary)" }} />
-                  <span className="text-sm flex-1" style={{ color: "var(--brand-muted)" }}>{stat.label}</span>
-                  <span className="font-mono font-bold text-sm">{stat.value}</span>
-                </div>
-              ))}
+      {/* BIO + TIMELINE + SIDEBAR ====================================== */}
+      <section className="v3-section" style={{ paddingTop: 16 }}>
+        <div className="v3-wrap">
+          <div className="v3-twocol">
+            {/* MAIN COLUMN */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
+              <V3Reveal>
+                <article className="v3-panel">
+                  <div className="v3-panel-head">Bio</div>
+                  <p className="v3-prose">{about.bio}</p>
+                </article>
+              </V3Reveal>
+
+              <V3Reveal delay={80}>
+                <article className="v3-panel">
+                  <div className="v3-panel-head">Timeline</div>
+                  <div className="v3-timeline">
+                    {about.timeline.map((entry, i) => (
+                      <div key={`${entry.year}-${i}`} className="v3-timeline__entry">
+                        <div className="v3-timeline__rail">
+                          <div className="v3-timeline__dot">
+                            <Calendar size={14} strokeWidth={2.25} />
+                          </div>
+                        </div>
+                        <div>
+                          <div className="v3-timeline__year">{entry.year}</div>
+                          <div className="v3-timeline__title">{entry.title}</div>
+                          <div className="v3-timeline__desc">{entry.description}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </article>
+              </V3Reveal>
             </div>
-          </div>
 
-          {/* Skills */}
-          <div
-            className="rounded-xl p-4 sm:p-6"
-            style={{
-              background: "var(--brand-bg-alt)",
-              border: "1px solid var(--brand-border)",
-            }}
-          >
-            <h3 className="text-sm font-bold uppercase tracking-widest mb-4" style={{ color: "var(--brand-muted)" }}>
-              Skills
-            </h3>
-            <div className="flex flex-wrap gap-1.5">
-              {about.skills.map((skill) => (
-                <span
-                  key={skill}
-                  className="text-[11px] font-mono px-2.5 py-1 rounded-lg"
+            {/* SIDEBAR */}
+            <aside className="v3-twocol__side">
+              <V3Reveal>
+                <div className="v3-panel">
+                  <div className="v3-panel-head">By the numbers</div>
+                  {[
+                    { label: "Projects", value: stats.totalProjects, Icon: Code },
+                    { label: "AI sessions", value: stats.totalSessions, Icon: Cpu },
+                    {
+                      label: "Messages",
+                      value: stats.totalMessages.toLocaleString(),
+                      Icon: Database,
+                    },
+                    { label: "Active days", value: stats.activeDays, Icon: Calendar },
+                    { label: "Streak", value: stats.streak, Icon: Flame },
+                  ].map(({ label, value, Icon }) => (
+                    <div key={label} className="v3-stat-row">
+                      <Icon className="v3-stat-row__icon" size={16} />
+                      <span className="v3-stat-row__label">{label}</span>
+                      <span className="v3-stat-row__value">{value}</span>
+                    </div>
+                  ))}
+                </div>
+              </V3Reveal>
+
+              <V3Reveal delay={100}>
+                <div className="v3-panel">
+                  <div className="v3-panel-head">Skills</div>
+                  <div className="v3-skills">
+                    {about.skills.map((skill) => (
+                      <span key={skill} className="v3-skill">
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </V3Reveal>
+
+              <V3Reveal delay={160}>
+                <div
+                  className="v3-panel"
                   style={{
-                    background: "color-mix(in srgb, var(--brand-primary) 8%, transparent)",
-                    border: "1px solid color-mix(in srgb, var(--brand-primary) 20%, transparent)",
-                    color: "var(--brand-primary)",
+                    background:
+                      "linear-gradient(135deg, var(--v3-blue-500), var(--v3-blue-700))",
+                    color: "#fff",
+                    borderColor: "transparent",
                   }}
                 >
-                  {skill}
-                </span>
-              ))}
-            </div>
+                  <div
+                    className="v3-panel-head"
+                    style={{ color: "rgba(255,255,255,0.7)" }}
+                  >
+                    Working together
+                  </div>
+                  <p
+                    className="v3-font-display"
+                    style={{
+                      fontWeight: 700,
+                      fontSize: 20,
+                      lineHeight: 1.2,
+                      letterSpacing: "-0.01em",
+                      marginBottom: 14,
+                    }}
+                  >
+                    Got a build that lives on the seam?
+                  </p>
+                  <a
+                    href="/contact"
+                    className="v3-btn"
+                    style={{
+                      background: "#fff",
+                      color: "var(--v3-blue-700)",
+                      fontWeight: 700,
+                    }}
+                  >
+                    Book a call →
+                  </a>
+                </div>
+              </V3Reveal>
+            </aside>
           </div>
         </div>
-      </div>
-    </div>
+      </section>
+    </>
   )
 }

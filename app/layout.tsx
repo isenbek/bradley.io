@@ -1,19 +1,40 @@
 import type { Metadata } from "next"
-import { Outfit, JetBrains_Mono } from "next/font/google"
+import {
+  Bricolage_Grotesque,
+  Hanken_Grotesk,
+  Baloo_2,
+  JetBrains_Mono,
+} from "next/font/google"
 import "./globals.css"
-import { RootLayoutWrapper } from "@/components/layout/RootLayoutWrapper"
+import "./v3.css"
+import { V3Nav } from "@/components/v3/V3Nav"
+import { V3Footer } from "@/components/v3/V3Footer"
 
-const outfit = Outfit({
+const display = Bricolage_Grotesque({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800"],
-  variable: "--font-display",
+  weight: ["400", "600", "700", "800"],
+  variable: "--font-v3-display",
   display: "swap",
 })
 
-const jetbrainsMono = JetBrains_Mono({
+const body = Hanken_Grotesk({
   subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-mono",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-v3-body",
+  display: "swap",
+})
+
+const logo = Baloo_2({
+  subsets: ["latin"],
+  weight: ["600", "700", "800"],
+  variable: "--font-v3-logo",
+  display: "swap",
+})
+
+const mono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  variable: "--font-v3-mono",
   display: "swap",
 })
 
@@ -25,15 +46,13 @@ export const metadata: Metadata = {
   description:
     "Bradley Isenbek — AI Systems Architect, hardware hacker, and frontier technologist building at the intersection of enterprise scale and maker culture. ESP32 mesh networks to Fortune 500 data warehouses, with Claude as co-pilot.",
   metadataBase: new URL("https://bradley.io"),
-  alternates: {
-    canonical: "/",
-  },
+  alternates: { canonical: "/" },
   openGraph: {
     title: "Bradley Isenbek — Hardware Hacker, Data Architect, AI Pilot",
     description:
       "AI Systems Architect & frontier technologist. Building at the intersection of enterprise scale and maker culture — from ESP32 mesh networks to Fortune 500 data warehouses.",
     url: "https://bradley.io",
-    siteName: "Bradley Isenbek — bradley.io",
+    siteName: "bio·bradley.io",
     locale: "en_US",
     type: "website",
   },
@@ -74,11 +93,9 @@ export const metadata: Metadata = {
   authors: [{ name: "Bradley Isenbek", url: "https://bradley.io" }],
   creator: "Bradley Isenbek",
   publisher: "Bradley Isenbek",
-  applicationName: "bradley.io",
+  applicationName: "bio·bradley.io",
   category: "technology",
   formatDetection: { email: false, address: false, telephone: false },
-  // app/icon.svg, app/icon0.tsx (192), app/icon1.tsx (512), app/apple-icon.tsx
-  // are auto-injected by Next.js — no explicit `icons` block needed.
 }
 
 export const viewport = {
@@ -86,8 +103,8 @@ export const viewport = {
   initialScale: 1,
   viewportFit: "cover" as const,
   themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#1C1412" },
-    { media: "(prefers-color-scheme: light)", color: "#FFFFFF" },
+    { media: "(prefers-color-scheme: dark)", color: "#252521" },
+    { media: "(prefers-color-scheme: light)", color: "#FBFAF5" },
   ],
 }
 
@@ -97,7 +114,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${outfit.variable} ${jetbrainsMono.variable}`}>
+    <html lang="en" className={`${display.variable} ${body.variable} ${logo.variable} ${mono.variable}`}>
       <head>
         <script
           type="application/ld+json"
@@ -191,7 +208,7 @@ export default function RootLayout({
                   "@type": "WebSite",
                   "@id": "https://bradley.io/#website",
                   url: "https://bradley.io",
-                  name: "bradley.io",
+                  name: "bio·bradley.io",
                   publisher: { "@id": "https://bradley.io/#person" },
                   inLanguage: "en-US",
                 },
@@ -201,9 +218,11 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <RootLayoutWrapper>
-          {children}
-        </RootLayoutWrapper>
+        <div className="v3">
+          <V3Nav />
+          <main>{children}</main>
+          <V3Footer />
+        </div>
       </body>
     </html>
   )

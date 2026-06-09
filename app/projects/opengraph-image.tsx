@@ -1,18 +1,18 @@
-import { ogImageResponse, OG_SIZE, OG_CONTENT_TYPE } from "@/lib/og-card"
+import { ogV3ImageResponse, OG_V3_SIZE, OG_V3_CONTENT_TYPE } from "@/lib/og-card-v3"
 
 export const runtime = "nodejs"
-export const alt = "Projects — Hardware, AI, Data Pipelines, Distributed Systems"
-export const size = OG_SIZE
-export const contentType = OG_CONTENT_TYPE
+export const alt = "Projects — bio·bradley.io"
+export const size = OG_V3_SIZE
+export const contentType = OG_V3_CONTENT_TYPE
 
 export default function OG() {
-  return ogImageResponse({
+  return ogV3ImageResponse({
     eyebrow: "Projects",
-    title: "Built in the open.",
+    title: "86+ things on the bench.",
     subtitle:
-      "Hardware experiments, AI systems, data pipelines, and frontier research — every project shipped with Claude as co-pilot.",
-    tags: ["Hardware", "AI", "Data", "Research"],
-    accent: "cyan",
-    cta: "Browse projects →",
+      "Hardware, AI, data pipelines, distributed systems, frontier research — most shipped with Claude as co-pilot.",
+    tags: ["Hardware", "AI/ML", "Data", "Systems", "Research"],
+    accent: "blue",
+    cta: "Browse the lot →",
   })
 }

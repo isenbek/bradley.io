@@ -1,8 +1,21 @@
-"use client"
-
-import { useEffect, useState } from "react"
-import { Server, Cpu, Database, MessageSquare, Shield, Briefcase, Lock, Globe, Hash } from "lucide-react"
+import { readFileSync } from "fs"
+import { join } from "path"
+import {
+  ArrowUpRight,
+  Briefcase,
+  Cpu,
+  Database,
+  Globe,
+  Hash,
+  Lock,
+  MessageSquare,
+  Server,
+  Shield,
+} from "lucide-react"
 import { timeAgo } from "@/lib/time-ago"
+import { V3Reveal } from "@/components/v3/V3Reveal"
+
+export const revalidate = 3600
 
 interface McpService {
   id: string
@@ -26,199 +39,241 @@ interface McpCatalog {
   categories: McpCategory[]
 }
 
-const categoryStyles: Record<string, { color: string; icon: React.ReactNode }> = {
-  ai: { color: "var(--brand-primary)", icon: <Cpu className="w-5 h-5" /> },
-  data: { color: "var(--brand-info)", icon: <Database className="w-5 h-5" /> },
-  communication: { color: "var(--brand-secondary)", icon: <MessageSquare className="w-5 h-5" /> },
-  infrastructure: { color: "var(--brand-steel)", icon: <Shield className="w-5 h-5" /> },
-  business: { color: "var(--brand-warning)", icon: <Briefcase className="w-5 h-5" /> },
+type CatId = "ai" | "data" | "communication" | "infrastructure" | "business"
+
+const CAT_STYLE: Record<
+  CatId,
+  { color: string; Icon: typeof Cpu }
+> = {
+  ai:             { color: "#EE766C", Icon: Cpu },           // coral
+  data:           { color: "#13B8F3", Icon: Database },      // bio blue
+  communication:  { color: "#169E73", Icon: MessageSquare }, // green
+  infrastructure: { color: "#EDB427", Icon: Shield },        // gold
+  business:       { color: "#A855F7", Icon: Briefcase },     // violet
 }
 
-function ServiceCard({ service, catColor }: { service: McpService; catColor: string }) {
-  return (
-    <div
-      className="rounded-xl overflow-hidden hover:-translate-y-1 transition-all h-full flex flex-col"
-      style={{
-        background: "var(--brand-bg-alt)",
-        border: "1px solid var(--brand-border)",
-      }}
-    >
-      <div className="h-[3px] w-full" style={{ background: catColor }} />
-      <div className="p-4 sm:p-5 flex-1 flex flex-col">
-        <div className="flex items-center justify-between mb-2">
-          <span
-            className="text-[10px] font-semibold uppercase tracking-[1.5px] font-mono"
-            style={{ color: catColor }}
-          >
-            {service.id}
-          </span>
-          <div className="flex items-center gap-1.5">
-            <Hash className="w-3 h-3" style={{ color: "var(--brand-muted)" }} />
-            <span className="text-[11px] font-mono" style={{ color: "var(--brand-muted)" }}>
-              {service.endpointCount} endpoints
-            </span>
-          </div>
-        </div>
-
-        <h3 className="text-base font-bold mb-2">{service.name}</h3>
-        <p className="text-[13px] leading-relaxed mb-4 flex-1" style={{ color: "var(--brand-muted)" }}>
-          {service.description}
-        </p>
-
-        {/* Capabilities */}
-        <div className="flex flex-wrap gap-1.5 mb-3">
-          {service.capabilities.map((cap) => (
-            <span
-              key={cap}
-              className="text-[10px] font-mono px-2 py-0.5 rounded-full"
-              style={{
-                color: catColor,
-                background: `color-mix(in srgb, ${catColor} 10%, transparent)`,
-                border: `1px solid color-mix(in srgb, ${catColor} 20%, transparent)`,
-              }}
-            >
-              {cap}
-            </span>
-          ))}
-        </div>
-
-        {/* Auth */}
-        <div className="flex items-center gap-1.5 mt-auto">
-          <Lock className="w-3 h-3" style={{ color: "var(--brand-muted)" }} />
-          <span className="text-[11px] font-mono" style={{ color: "var(--brand-muted)" }}>
-            {service.auth}
-          </span>
-        </div>
-      </div>
-    </div>
-  )
+function loadCatalog(): McpCatalog | null {
+  try {
+    return JSON.parse(
+      readFileSync(join(process.cwd(), "public/data/mcp-catalog.json"), "utf-8")
+    )
+  } catch {
+    return null
+  }
 }
 
-export default function McpPage() {
-  const [catalog, setCatalog] = useState<McpCatalog | null>(null)
+export default function V3McpPage() {
+  const catalog = loadCatalog()
 
-  useEffect(() => {
-    fetch("/data/mcp-catalog.json")
-      .then((r) => r.json())
-      .then(setCatalog)
-  }, [])
+  if (!catalog) {
+    return (
+      <section className="v3-section">
+        <div className="v3-wrap">
+          <div className="v3-empty">Catalog unavailable. Try again shortly.</div>
+        </div>
+      </section>
+    )
+  }
+
+  const { stats, categories } = catalog
 
   return (
-    <div className="pt-20 sm:pt-24 pb-10 sm:pb-16">
-      <div className="container-page">
-        {/* Hero */}
-        <div className="mb-10 sm:mb-16">
-          <div className="flex items-center gap-3 mb-4">
-            <div
-              className="w-10 h-10 rounded-lg flex items-center justify-center"
-              style={{
-                background: "color-mix(in srgb, var(--brand-primary) 12%, transparent)",
-                border: "1px solid color-mix(in srgb, var(--brand-primary) 25%, transparent)",
-              }}
-            >
-              <Server className="w-5 h-5" style={{ color: "var(--brand-primary)" }} />
-            </div>
-            <div>
-              <div className="text-xs font-semibold uppercase tracking-[3px]" style={{ color: "var(--brand-primary)" }}>
-                Campaign Brain
-              </div>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight">
-                MCP Service Catalog
+    <>
+      {/* HEADER ========================================================= */}
+      <header className="v3-page-head">
+        <div className="v3-blob v3-blob--1" aria-hidden style={{ right: "-80px", top: "-40px" }} />
+        <div className="v3-blob v3-blob--3" aria-hidden style={{ right: "160px", top: "220px" }} />
+
+        <div className="v3-wrap">
+          <div className="v3-page-head__lockup">
+            <V3Reveal>
+              <span
+                className="v3-pill v3-pill--blue"
+                style={{
+                  padding: "8px 16px",
+                  fontSize: 13,
+                  display: "inline-flex",
+                  gap: 8,
+                  alignItems: "center",
+                }}
+              >
+                <Server size={14} strokeWidth={2.25} />
+                Campaign Brain · MCP catalog
+              </span>
+            </V3Reveal>
+            <V3Reveal delay={80}>
+              <h1>
+                Services, <span className="v3-accent">indexed.</span>
               </h1>
-            </div>
+            </V3Reveal>
+            <V3Reveal delay={140}>
+              <p className="v3-page-head__lede">
+                {stats.totalServices} FastAPI microservices powering Campaign Brain — AI, data,
+                communication, infrastructure, and business operations. All open via MCP to LLM
+                agents.
+              </p>
+            </V3Reveal>
           </div>
-          <p className="text-base sm:text-lg max-w-[640px]" style={{ color: "var(--brand-muted)" }}>
-            22 FastAPI microservices powering Campaign Brain — AI, data, communication,
-            infrastructure, and business operations. All accessible via MCP for LLM agents.
-          </p>
         </div>
+      </header>
 
-        {/* Stats Bar */}
-        {catalog && (
-          <div
-            className="grid grid-cols-3 gap-4 rounded-xl p-4 sm:p-6 mb-10 sm:mb-16"
-            style={{
-              background: "var(--brand-bg-alt)",
-              border: "1px solid var(--brand-border)",
-            }}
-          >
-            {[
-              { val: catalog.stats.totalServices, label: "Services", color: "var(--brand-primary)" },
-              { val: catalog.stats.totalEndpoints, label: "Endpoints", color: "var(--brand-secondary)" },
-              { val: catalog.stats.totalCategories, label: "Categories", color: "var(--brand-warning)" },
-            ].map((s) => (
-              <div key={s.label} className="text-center">
-                <div className="text-2xl sm:text-4xl font-extrabold tabular-nums" style={{ color: s.color }}>
-                  {s.val}
-                </div>
-                <div className="text-[10px] sm:text-xs font-medium uppercase tracking-widest mt-0.5" style={{ color: "var(--brand-muted)" }}>
-                  {s.label}
-                </div>
+      {/* STAT BAR ======================================================= */}
+      <section style={{ padding: "0 0 24px" }}>
+        <div className="v3-wrap">
+          <V3Reveal>
+            <div className="v3-statbar">
+              <div
+                className="v3-statbar__cell"
+                style={{ ["--v3-statbar-color" as string]: "var(--v3-blue-600)" }}
+              >
+                <div className="v3-statbar__val">{stats.totalServices}</div>
+                <div className="v3-statbar__lbl">Services</div>
               </div>
-            ))}
-          </div>
-        )}
+              <div
+                className="v3-statbar__cell"
+                style={{ ["--v3-statbar-color" as string]: "var(--v3-coral-dk)" }}
+              >
+                <div className="v3-statbar__val">{stats.totalEndpoints}</div>
+                <div className="v3-statbar__lbl">Endpoints</div>
+              </div>
+              <div
+                className="v3-statbar__cell"
+                style={{ ["--v3-statbar-color" as string]: "var(--v3-gold-dk)" }}
+              >
+                <div className="v3-statbar__val">{stats.totalCategories}</div>
+                <div className="v3-statbar__lbl">Categories</div>
+              </div>
+            </div>
+          </V3Reveal>
+        </div>
+      </section>
 
-        {/* Categories */}
-        {!catalog ? (
-          <div className="py-16 text-center" style={{ color: "var(--brand-muted)" }}>
-            Loading catalog...
-          </div>
-        ) : (
-          <div className="space-y-12 sm:space-y-16">
-            {catalog.categories.map((cat) => {
-              const style = categoryStyles[cat.id] || categoryStyles.infrastructure
+      {/* CATEGORIES ===================================================== */}
+      <section className="v3-section" style={{ paddingTop: 24 }}>
+        <div className="v3-wrap">
+          <div style={{ display: "flex", flexDirection: "column", gap: 56 }}>
+            {categories.map((cat) => {
+              const style = CAT_STYLE[cat.id as CatId] ?? {
+                color: "var(--v3-blue-500)",
+                Icon: Server,
+              }
+              const endpointSum = cat.services.reduce((s, x) => s + x.endpointCount, 0)
               return (
                 <section key={cat.id}>
-                  <div className="flex items-center gap-3 mb-6">
+                  <V3Reveal>
                     <div
-                      className="w-9 h-9 rounded-lg flex items-center justify-center"
-                      style={{
-                        background: `color-mix(in srgb, ${style.color} 12%, transparent)`,
-                        border: `1px solid color-mix(in srgb, ${style.color} 25%, transparent)`,
-                        color: style.color,
-                      }}
+                      className="v3-cathead"
+                      style={{ ["--v3-cat-color" as string]: style.color }}
                     >
-                      {style.icon}
+                      <div className="v3-cathead__ico">
+                        <style.Icon size={22} strokeWidth={2.25} />
+                      </div>
+                      <div>
+                        <div className="v3-cathead__name">{cat.name}</div>
+                        <div className="v3-cathead__meta">
+                          {cat.services.length} services · {endpointSum} endpoints
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                      <h2 className="text-xl sm:text-2xl font-extrabold tracking-tight">{cat.name}</h2>
-                      <span className="text-[11px] font-mono" style={{ color: "var(--brand-muted)" }}>
-                        {cat.services.length} services · {cat.services.reduce((sum, s) => sum + s.endpointCount, 0)} endpoints
-                      </span>
-                    </div>
-                  </div>
+                  </V3Reveal>
 
-                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {cat.services.map((service) => (
-                      <ServiceCard key={service.id} service={service} catColor={style.color} />
+                  <div
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+                      gap: 16,
+                    }}
+                  >
+                    {cat.services.map((svc, i) => (
+                      <V3Reveal key={svc.id} delay={i * 35}>
+                        <article
+                          className="v3-svc"
+                          style={{ ["--v3-svc-color" as string]: style.color }}
+                        >
+                          <div className="v3-svc__bar" aria-hidden />
+                          <div className="v3-svc__body">
+                            <div className="v3-svc__head">
+                              <span className="v3-svc__id">{svc.id}</span>
+                              <span className="v3-svc__count">
+                                <Hash size={11} strokeWidth={2.5} />
+                                {svc.endpointCount}
+                              </span>
+                            </div>
+                            <h3 className="v3-svc__name">{svc.name}</h3>
+                            <p className="v3-svc__desc">{svc.description}</p>
+                            {svc.capabilities.length > 0 ? (
+                              <div className="v3-svc__caps">
+                                {svc.capabilities.map((c) => (
+                                  <span key={c} className="v3-svc__cap">
+                                    {c}
+                                  </span>
+                                ))}
+                              </div>
+                            ) : null}
+                            <div className="v3-svc__auth">
+                              <Lock size={11} strokeWidth={2.5} />
+                              <span>{svc.auth}</span>
+                              {svc.url ? (
+                                <a
+                                  href={svc.url}
+                                  target="_blank"
+                                  rel="noreferrer noopener"
+                                  className="v3-svc__url"
+                                >
+                                  open <ArrowUpRight size={11} strokeWidth={2.5} />
+                                </a>
+                              ) : null}
+                            </div>
+                          </div>
+                        </article>
+                      </V3Reveal>
                     ))}
                   </div>
                 </section>
               )
             })}
           </div>
-        )}
+        </div>
+      </section>
 
-        {/* Footer note */}
-        {catalog && (
-          <div
-            className="mt-12 sm:mt-16 rounded-xl p-5 sm:p-8 text-center"
-            style={{
-              background: "var(--brand-bg-alt)",
-              border: "1px solid var(--brand-border)",
-            }}
-          >
-            <div className="flex items-center justify-center gap-2 mb-2">
-              <Globe className="w-4 h-4" style={{ color: "var(--brand-primary)" }} />
-              <span className="text-sm font-bold">All services hosted at *.nominate.ai</span>
+      {/* FOOTER NOTE =================================================== */}
+      <section className="v3-section v3-section--paper" style={{ paddingTop: 56 }}>
+        <div className="v3-wrap">
+          <V3Reveal>
+            <div
+              className="v3-panel"
+              style={{
+                textAlign: "center",
+                padding: "32px 28px",
+              }}
+            >
+              <div
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 8,
+                  marginBottom: 6,
+                  color: "var(--v3-blue-700)",
+                }}
+              >
+                <Globe size={16} strokeWidth={2.25} />
+                <span
+                  className="v3-font-display"
+                  style={{ fontWeight: 700, fontSize: 16 }}
+                >
+                  All services hosted at <code style={{ fontFamily: "var(--font-v3-mono), monospace", fontSize: 14 }}>*.campaignbrain.dev</code>
+                </span>
+              </div>
+              <div
+                className="v3-font-mono"
+                style={{ fontSize: 11, color: "var(--v3-slate)", letterSpacing: "0.06em" }}
+              >
+                catalog updated {timeAgo(catalog.generated)}
+              </div>
             </div>
-            <span className="text-[10px] font-mono tracking-wide opacity-60" style={{ color: "var(--brand-muted)" }}>
-              updated {timeAgo(catalog.generated)}
-            </span>
-          </div>
-        )}
-      </div>
-    </div>
+          </V3Reveal>
+        </div>
+      </section>
+    </>
   )
 }

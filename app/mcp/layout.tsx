@@ -1,18 +1,45 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "MCP Service Catalog",
+  title: "MCP Catalog — bio·bradley.io",
   description:
-    "Campaign Brain service catalog — 22 FastAPI microservices with 85+ endpoints across AI, data, communication, infrastructure, and business operations.",
+    "Campaign Brain MCP catalog — FastAPI microservices for AI, data, communication, infrastructure, and business operations.",
   alternates: { canonical: "/mcp" },
   openGraph: {
-    title: "MCP Service Catalog | bradley.io",
+    title: "MCP Catalog — bio·bradley.io",
     description:
-      "22 FastAPI microservices powering Campaign Brain — all accessible via MCP for LLM agents.",
+      "Campaign Brain MCP services — AI, data, communication, infrastructure, business. All open via MCP to LLM agents.",
     url: "https://bradley.io/mcp",
+    type: "website",
   },
 }
 
-export default function McpLayout({ children }: { children: React.ReactNode }) {
-  return children
+export default function V3McpLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            "@id": "https://bradley.io/mcp",
+            url: "https://bradley.io/mcp",
+            name: "MCP Catalog — Campaign Brain",
+            description:
+              "Catalog of Campaign Brain MCP microservices: AI, data, communication, infrastructure, business.",
+            isPartOf: { "@id": "https://bradley.io/#website" },
+            breadcrumb: {
+              "@type": "BreadcrumbList",
+              itemListElement: [
+                { "@type": "ListItem", position: 1, name: "Home", item: "https://bradley.io/" },
+                { "@type": "ListItem", position: 2, name: "MCP Catalog", item: "https://bradley.io/mcp" },
+              ],
+            },
+          }),
+        }}
+      />
+      {children}
+    </>
+  )
 }

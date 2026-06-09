@@ -1,18 +1,18 @@
-import { ogImageResponse, OG_SIZE, OG_CONTENT_TYPE } from "@/lib/og-card"
+import { ogV3ImageResponse, OG_V3_SIZE, OG_V3_CONTENT_TYPE } from "@/lib/og-card-v3"
 
 export const runtime = "nodejs"
-export const alt = "Lab — Frontier experiments in hardware, AI, and creative computing"
-export const size = OG_SIZE
-export const contentType = OG_CONTENT_TYPE
+export const alt = "Lab — bio·bradley.io"
+export const size = OG_V3_SIZE
+export const contentType = OG_V3_CONTENT_TYPE
 
 export default function OG() {
-  return ogImageResponse({
-    eyebrow: "The Lab",
-    title: "Frontier experiments.",
+  return ogV3ImageResponse({
+    eyebrow: "Lab · frontier experiments",
+    title: "Things that might not ship.",
     subtitle:
-      "Boundary-pushing research projects — hardware, AI, and creative computing — that explore what's possible.",
-    tags: ["Experiments", "Hardware", "AI", "Creative"],
-    accent: "purple",
-    cta: "Enter the lab →",
+      "Hardware hacks, signal toys, AI agents off the leash. The room where the next product gets sketched.",
+    tags: ["Hardware", "AI", "Signals", "Creative"],
+    accent: "gold",
+    cta: "Step inside →",
   })
 }

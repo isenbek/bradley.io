@@ -1,18 +1,18 @@
-import { ogImageResponse, OG_SIZE, OG_CONTENT_TYPE } from "@/lib/og-card"
+import { ogV3ImageResponse, OG_V3_SIZE, OG_V3_CONTENT_TYPE } from "@/lib/og-card-v3"
 
 export const runtime = "nodejs"
-export const alt = "Bradley Isenbek — Hardware hacker, data architect, AI pilot"
-export const size = OG_SIZE
-export const contentType = OG_CONTENT_TYPE
+export const alt = "Bradley Isenbek — bio·bradley.io"
+export const size = OG_V3_SIZE
+export const contentType = OG_V3_CONTENT_TYPE
 
 export default function OG() {
-  return ogImageResponse({
-    eyebrow: "Frontier Technologist",
-    title: "Hardware. Data. AI.",
+  return ogV3ImageResponse({
+    eyebrow: "bio · bradley.io",
+    title: "Hardware hacker. Data architect. AI pilot.",
     subtitle:
-      "Bradley Isenbek — building at the intersection of enterprise scale and maker culture, with Claude as co-pilot.",
-    tags: ["ESP32", "Distributed Systems", "Claude", "Edge"],
-    accent: "cyan",
+      "Building at the seam where enterprise scale meets maker culture — ESP32 mesh to Fortune-500 warehouses, with Claude as co-pilot.",
+    tags: ["Anti-cloud", "Host local", "Think global"],
+    accent: "blue",
     cta: "Explore bradley.io →",
   })
 }

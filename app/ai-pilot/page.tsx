@@ -1,153 +1,219 @@
-"use client";
+import { readFileSync } from "fs"
+import { join } from "path"
+import Link from "next/link"
+import { ArrowRight, BarChart3, Plane, Zap } from "lucide-react"
+import type { AIPilotData } from "@/components/ai-pilot/types"
+import { V3Reveal } from "@/components/v3/V3Reveal"
+import { V3PilotDashboard } from "./V3PilotDashboard"
 
-import { useState, useEffect } from "react";
-import {
-  LicenseCard,
-  StreakBanner,
-  ActivityHeatmap,
-  HourlyDistribution,
-  CompetencyRadar,
-  InstrumentRatings,
-  MissionLog,
-  TypeRatings,
-  TokenEconomy,
-  PilotingStyle,
-  SkillsCloud,
-} from "@/components/ai-pilot";
-import type { AIPilotData } from "@/components/ai-pilot/types";
+export const revalidate = 3600
 
-
-const TABS = [
-  { id: "activity", label: "Activity" },
-  { id: "competency", label: "Competency" },
-  { id: "missions", label: "Missions" },
-  { id: "models", label: "Models" },
-  { id: "style", label: "Style" },
-] as const;
-
-type TabId = (typeof TABS)[number]["id"];
-
-export default function AIPilotPage() {
-  const [data, setData] = useState<AIPilotData | null>(null);
-  const [error, setError] = useState(false);
-  const [activeTab, setActiveTab] = useState<TabId>("activity");
-
-  useEffect(() => {
-    fetch("/data/ai-pilot-data.json")
-      .then((res) => {
-        if (!res.ok) throw new Error("Not found");
-        return res.json();
-      })
-      .then(setData)
-      .catch(() => setError(true));
-  }, []);
-
-  if (error) {
-    return (
-      <div className="pt-20 sm:pt-24 pb-10 sm:pb-16 flex items-center justify-center">
-        <div className="text-center max-w-md px-4">
-          <h1 className="text-2xl font-bold mb-2" style={{ color: "var(--brand-error)" }}>
-            Flight Data Unavailable
-          </h1>
-          <p className="mb-4" style={{ color: "var(--brand-muted)" }}>
-            Run the pipeline to generate flight data:
-          </p>
-          <code
-            className="block rounded-md px-4 py-2 font-mono text-sm"
-            style={{ background: "var(--brand-bg-alt)", border: "1px solid var(--brand-border)" }}
-          >
-            python scripts/ai-pilot-pipeline.py
-          </code>
-        </div>
-      </div>
-    );
+function loadPilot(): AIPilotData | null {
+  try {
+    return JSON.parse(
+      readFileSync(join(process.cwd(), "public/data/ai-pilot-data.json"), "utf-8")
+    )
+  } catch {
+    return null
   }
+}
+
+export default function V3AIPilotPage() {
+  const data = loadPilot()
 
   if (!data) {
     return (
-      <div className="pt-20 sm:pt-24 pb-10 sm:pb-16">
-        <div className="container-page">
-          <div className="space-y-4 sm:space-y-6">
-            <div className="h-64 rounded-2xl animate-pulse" style={{ background: "var(--brand-bg-alt)" }} />
-            <div className="h-12 rounded-lg animate-pulse max-w-md" style={{ background: "var(--brand-bg-alt)" }} />
-            <div className="h-10 rounded-md animate-pulse max-w-lg" style={{ background: "var(--brand-bg-alt)" }} />
-            <div className="h-96 rounded-lg animate-pulse" style={{ background: "var(--brand-bg-alt)" }} />
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="pt-16 sm:pt-20 pb-10 sm:pb-16">
-      <div className="container-page space-y-4 sm:space-y-6">
-        {/* Hero: License Card */}
-        <LicenseCard
-          license={data.license}
-          generated={data.generated}
-          hourlyDistribution={data.hourlyDistribution}
-        />
-
-        {/* Streak Banner */}
-        <StreakBanner streaks={data.streaks} />
-
-        {/* Tab Navigation */}
-        <div
-          className="flex gap-1 p-1 rounded-lg overflow-x-auto scrollbar-none"
-          style={{ background: "var(--brand-bg-alt)", border: "1px solid var(--brand-border)" }}
-        >
-          {TABS.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
-              className="flex-1 min-w-[64px] px-3 sm:px-4 py-1.5 sm:py-2 rounded-md text-xs sm:text-sm font-medium transition-all whitespace-nowrap"
+      <section className="v3-section">
+        <div className="v3-wrap">
+          <div className="v3-empty">
+            Flight data unavailable. Run{" "}
+            <code
               style={{
-                background: activeTab === tab.id
-                  ? "color-mix(in srgb, var(--brand-primary) 15%, transparent)"
-                  : "transparent",
-                color: activeTab === tab.id ? "var(--brand-primary)" : "var(--brand-muted)",
+                fontFamily: "var(--font-v3-mono), monospace",
+                background: "var(--v3-paper)",
+                padding: "2px 8px",
+                borderRadius: 6,
+                border: "1px solid var(--v3-line)",
               }}
             >
-              {tab.label}
-            </button>
-          ))}
+              python scripts/ai-pilot-pipeline.py
+            </code>{" "}
+            to generate it.
+          </div>
         </div>
+      </section>
+    )
+  }
 
-        {/* Tab Content */}
-        <div className="pt-2">
-          {activeTab === "activity" && (
-            <div className="space-y-5 sm:space-y-8">
-              <ActivityHeatmap data={data.activityHeatmap} />
-              <HourlyDistribution data={data.hourlyDistribution} />
-            </div>
-          )}
+  const generatedFmt = new Date(data.generated).toLocaleString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+    timeZone: "UTC",
+    timeZoneName: "short",
+  })
 
-          {activeTab === "competency" && (
-            <div className="grid gap-5 sm:gap-8 lg:grid-cols-2">
-              <CompetencyRadar data={data.competencyRadar} />
-              <InstrumentRatings ratings={data.instrumentRatings} />
-            </div>
-          )}
+  return (
+    <>
+      {/* HEADER ========================================================= */}
+      <header className="v3-page-head" style={{ paddingBottom: 32 }}>
+        <div className="v3-blob v3-blob--1" aria-hidden style={{ right: "-100px", top: "-40px" }} />
+        <div className="v3-blob v3-blob--2" aria-hidden style={{ right: "240px", top: "200px" }} />
 
-          {activeTab === "missions" && (
-            <MissionLog missions={data.missionLog} />
-          )}
-
-          {activeTab === "models" && (
-            <div className="space-y-5 sm:space-y-8">
-              <TypeRatings ratings={data.typeRatings} />
-              <TokenEconomy economy={data.tokenEconomy} />
-            </div>
-          )}
-
-          {activeTab === "style" && (
-            <div className="grid gap-5 sm:gap-8 lg:grid-cols-2">
-              <PilotingStyle style={data.pilotingStyle} />
-              <SkillsCloud skills={data.skillsCloud} />
-            </div>
-          )}
+        <div className="v3-wrap">
+          <div className="v3-page-head__lockup">
+            <V3Reveal>
+              <span
+                className="v3-pill v3-pill--blue"
+                style={{
+                  padding: "8px 16px",
+                  fontSize: 13,
+                  display: "inline-flex",
+                  gap: 8,
+                  alignItems: "center",
+                }}
+              >
+                <Plane size={14} strokeWidth={2.25} />
+                AI Pilot License · live flight log
+              </span>
+            </V3Reveal>
+            <V3Reveal delay={80}>
+              <h1>
+                Every flight, on the <span className="v3-accent">record.</span>
+              </h1>
+            </V3Reveal>
+            <V3Reveal delay={140}>
+              <p className="v3-page-head__lede">
+                Public dashboard for work shipped with Claude as co-pilot — sessions,
+                missions, models flown, and the token economy that pays for the runway.
+              </p>
+            </V3Reveal>
+            <V3Reveal delay={200}>
+              <p
+                style={{
+                  fontFamily: "var(--font-v3-mono), monospace",
+                  fontSize: 11,
+                  letterSpacing: "0.06em",
+                  color: "var(--v3-slate)",
+                  marginTop: 18,
+                }}
+              >
+                generated {generatedFmt} · pipeline v{data.pipelineVersion}
+              </p>
+            </V3Reveal>
+          </div>
         </div>
-      </div>
-    </div>
-  );
+      </header>
+
+      {/* DASHBOARD ====================================================== */}
+      <section className="v3-section" style={{ paddingTop: 16 }}>
+        <div className="v3-wrap">
+          <V3PilotDashboard data={data} />
+        </div>
+      </section>
+
+      {/* RELATED READING ================================================ */}
+      <section className="v3-section v3-section--paper" style={{ paddingTop: 56 }}>
+        <div className="v3-wrap">
+          <div className="v3-sec-head" style={{ marginBottom: 24 }}>
+            <div className="v3-sec-head__num">RELATED · KEEP READING</div>
+            <h2 style={{ marginBottom: 8 }}>This page is the receipts.</h2>
+            <p>
+              Two longer reads built on the same data — the argument, and the bottom-up
+              cost model.
+            </p>
+          </div>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+              gap: 16,
+            }}
+          >
+            {[
+              {
+                Icon: Zap,
+                tag: "Thesis",
+                tagColor: "coral" as const,
+                title: "The Shift",
+                blurb:
+                  "How AI rewrites the economics of building software. Five sections of evidence.",
+                href: "/the-shift",
+              },
+              {
+                Icon: BarChart3,
+                tag: "Receipts",
+                tagColor: "green" as const,
+                title: "Cost Analysis",
+                blurb:
+                  "What 117 days of solo + Claude actually cost vs the 9.5-person team it replaced.",
+                href: "/cost-analysis",
+              },
+            ].map((card) => (
+              <Link
+                key={card.title}
+                href={card.href}
+                className="v3-panel"
+                style={{
+                  display: "block",
+                  textDecoration: "none",
+                  color: "inherit",
+                  transition: "transform 0.2s, box-shadow 0.2s",
+                }}
+              >
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    marginBottom: 12,
+                  }}
+                >
+                  <div
+                    style={{
+                      width: 40,
+                      height: 40,
+                      borderRadius: "var(--v3-r-sm)",
+                      background: "var(--v3-blue-50)",
+                      color: "var(--v3-blue-600)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <card.Icon size={20} strokeWidth={2.25} />
+                  </div>
+                  <span className={`v3-pill v3-pill--${card.tagColor}`}>{card.tag}</span>
+                </div>
+                <h3
+                  className="v3-font-display"
+                  style={{ fontWeight: 700, fontSize: 22, marginBottom: 6 }}
+                >
+                  {card.title}
+                </h3>
+                <p style={{ fontSize: 14.5, color: "var(--v3-ink)", marginBottom: 12 }}>
+                  {card.blurb}
+                </p>
+                <span
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 6,
+                    fontFamily: "var(--font-v3-mono), monospace",
+                    fontSize: 12,
+                    fontWeight: 600,
+                    color: "var(--v3-blue-700)",
+                  }}
+                >
+                  Read <ArrowRight size={13} strokeWidth={2.25} />
+                </span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
+  )
 }

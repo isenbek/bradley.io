@@ -1,119 +1,50 @@
 import { readFileSync } from "fs"
 import { join } from "path"
 import type { Metadata } from "next"
+import { notFound } from "next/navigation"
 import type { NominateTimeline } from "@/lib/nominate-timeline-types"
-import { TimelineStats } from "@/components/timeline/TimelineStats"
-import { LanguageBar } from "@/components/timeline/LanguageBar"
-import { PhaseTimeline } from "@/components/timeline/PhaseTimeline"
-import { CommitHeatmap } from "@/components/timeline/CommitHeatmap"
-import { timeAgo } from "@/lib/time-ago"
+import { MissionTimeline } from "../_timeline/MissionTimeline"
+
+export const revalidate = 3600
 
 export const metadata: Metadata = {
-  title: "Sysforge-AI Platform Timeline",
+  title: "Sysforge-AI — Timeline | bio·bradley.io",
   description:
-    "Full development timeline of Sysforge-AI — AI-powered systems engineering and infrastructure tooling.",
+    "Development timeline of Sysforge-AI — AI consulting and development firm delivering frontier AI solutions.",
   alternates: { canonical: "/projects/sysforge-ai" },
   openGraph: {
-    title: "Sysforge-AI Platform Timeline | bradley.io",
+    title: "Sysforge-AI — Timeline",
     description:
-      "Full development timeline of Sysforge-AI — AI-powered systems engineering and infrastructure tooling.",
+      "AI consulting practice — frontier integrations, agentic pipelines, AI-augmented toolchains.",
     url: "https://bradley.io/projects/sysforge-ai",
+    type: "article",
   },
 }
 
 function loadTimeline(): NominateTimeline | null {
   try {
-    const raw = readFileSync(
-      join(process.cwd(), "public/data/sysforge-ai-timeline.json"),
-      "utf-8"
+    return JSON.parse(
+      readFileSync(
+        join(process.cwd(), "public/data/sysforge-ai-timeline.json"),
+        "utf-8"
+      )
     )
-    return JSON.parse(raw)
   } catch {
     return null
   }
 }
 
-export default function SysforgeAIPage() {
+export default function V3SysforgeAITimeline() {
   const data = loadTimeline()
-
-  if (!data) {
-    return (
-      <main className="container-page py-16 sm:py-24">
-        <h1 className="text-3xl font-extrabold mb-4">Sysforge-AI Timeline</h1>
-        <p style={{ color: "var(--brand-muted)" }}>
-          Timeline data not yet generated. Run{" "}
-          <code className="font-mono text-sm px-1.5 py-0.5 rounded" style={{ background: "var(--brand-bg-alt)" }}>
-            python3 scripts/nominate-timeline-pipeline.py --target Sysforge-AI
-          </code>{" "}
-          to populate.
-        </p>
-      </main>
-    )
-  }
+  if (!data) notFound()
 
   return (
-    <main className="container-page py-12 sm:py-20">
-      {/* Hero */}
-      <div className="mb-10 sm:mb-14">
-        <div className="flex items-center gap-3 mb-1">
-          <div
-            className="text-xs font-semibold uppercase tracking-[3px]"
-            style={{ color: "var(--brand-primary)" }}
-          >
-            Platform Timeline
-          </div>
-          <span
-            className="text-[10px] font-mono tracking-wide opacity-60"
-            style={{ color: "var(--brand-muted)" }}
-          >
-            updated {timeAgo(data.generated)}
-          </span>
-        </div>
-        <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
-          Sysforge-AI
-        </h1>
-        <p
-          className="text-base sm:text-lg max-w-2xl mb-6"
-          style={{ color: "var(--brand-muted)" }}
-        >
-          {data.totalRepos} repositories built from{" "}
-          {new Date(data.firstCommit).toLocaleDateString("en-US", {
-            month: "long",
-            year: "numeric",
-          })}{" "}
-          to present. AI-powered systems engineering and infrastructure tooling.
-        </p>
-        <TimelineStats
-          totalRepos={data.totalRepos}
-          totalCommits={data.totalCommits}
-          firstCommit={data.firstCommit}
-          latestCommit={data.latestCommit}
-          languageCount={Object.keys(data.languages).length}
-        />
-      </div>
-
-      {/* Commit activity heatmap */}
-      {data.activityHeatmap && data.activityHeatmap.length > 0 && (
-        <section className="mb-10 sm:mb-14">
-          <CommitHeatmap data={data.activityHeatmap} />
-        </section>
-      )}
-
-      {/* Language distribution */}
-      <section className="mb-10 sm:mb-14">
-        <h2 className="text-sm font-semibold uppercase tracking-[2px] mb-4" style={{ color: "var(--brand-muted)" }}>
-          Language Distribution
-        </h2>
-        <LanguageBar languages={data.languages} />
-      </section>
-
-      {/* Phase timeline */}
-      <section className="mb-10 sm:mb-14">
-        <h2 className="text-sm font-semibold uppercase tracking-[2px] mb-6" style={{ color: "var(--brand-muted)" }}>
-          Development Phases
-        </h2>
-        <PhaseTimeline phases={data.phases} repos={data.repos} />
-      </section>
-    </main>
+    <MissionTimeline
+      displayName="Sysforge-AI"
+      eyebrow="Consulting timeline"
+      accent="coral"
+      lede="The AI consulting & development firm. Frontier LLM integrations, agentic pipelines, and AI-augmented developer toolchains shipped to enterprise clients."
+      data={data}
+    />
   )
 }

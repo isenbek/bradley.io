@@ -1,18 +1,51 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Consulting Services",
+  title: "Services — bio·bradley.io",
   description:
-    "Data engineering, distributed systems, AI/ML integration, and edge computing consulting. Project-based ($25K–$100K), hourly ($150–$275/hr), or retainer engagements.",
+    "AI & data engineering consulting. Distributed systems, data pipelines, APIs, edge/IoT, and AI/ML integration. Project, hourly, and retainer engagements.",
   alternates: { canonical: "/services" },
   openGraph: {
-    title: "Consulting Services | bradley.io",
+    title: "Services — bio·bradley.io",
     description:
-      "Data engineering, distributed systems, AI/ML integration, and edge computing consulting.",
+      "Distributed systems, data pipelines, edge/IoT, AI/ML integration. 15+ years building production systems at scale.",
     url: "https://bradley.io/services",
+    type: "website",
   },
 }
 
-export default function ServicesLayout({ children }: { children: React.ReactNode }) {
-  return children
+export default function V3ServicesLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ProfessionalService",
+            "@id": "https://bradley.io/#service",
+            name: "Bradley Isenbek — AI & Data Engineering Consulting",
+            url: "https://bradley.io/services",
+            provider: { "@id": "https://bradley.io/#person" },
+            areaServed: "US",
+            serviceType: [
+              "Distributed Systems Architecture",
+              "Data Engineering",
+              "API Design & Development",
+              "Edge Computing & IoT",
+              "AI/ML Integration",
+            ],
+            breadcrumb: {
+              "@type": "BreadcrumbList",
+              itemListElement: [
+                { "@type": "ListItem", position: 1, name: "Home", item: "https://bradley.io/" },
+                { "@type": "ListItem", position: 2, name: "Services", item: "https://bradley.io/services" },
+              ],
+            },
+          }),
+        }}
+      />
+      {children}
+    </>
+  )
 }

@@ -1,18 +1,18 @@
-import { ogImageResponse, OG_SIZE, OG_CONTENT_TYPE } from "@/lib/og-card"
+import { ogV3ImageResponse, OG_V3_SIZE, OG_V3_CONTENT_TYPE } from "@/lib/og-card-v3"
 
 export const runtime = "nodejs"
-export const alt = "SDR API — Software-defined radio scanner stack"
-export const size = OG_SIZE
-export const contentType = OG_CONTENT_TYPE
+export const alt = "SDR — bio·bradley.io"
+export const size = OG_V3_SIZE
+export const contentType = OG_V3_CONTENT_TYPE
 
 export default function OG() {
-  return ogImageResponse({
-    eyebrow: "sdr-api",
+  return ogV3ImageResponse({
+    eyebrow: "sdr-api · live",
     title: "The spectrum, indexed.",
     subtitle:
-      "Live status for the SDR scanner stack — band registry, soak archive, top frequencies, and job history from rtl-sdr.",
+      "Band registry, soak archive, top frequencies, and job history — straight from the rtl-sdr scanner stack.",
     tags: ["RTL-SDR", "Live", "Spectrum", "Archive"],
-    accent: "orange",
+    accent: "coral",
     cta: "Tune in →",
   })
 }

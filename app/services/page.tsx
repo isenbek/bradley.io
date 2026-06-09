@@ -1,238 +1,332 @@
-"use client"
-
 import Link from "next/link"
+import { V3Reveal } from "@/components/v3/V3Reveal"
 
-export default function ServicesPage() {
-  const services = [
-    {
-      title: "Distributed Systems Architecture",
-      description: "Design and implementation of systems that process billions of records with high availability and fault tolerance.",
-      skills: ["Distributed Databases", "Message Queues", "Load Balancing", "Fault Tolerance"],
-      examples: ["Search infrastructure at Fortune 500 scale", "High-volume messaging platforms", "Multi-region data replication"],
-    },
-    {
-      title: "Data Engineering",
-      description: "Building pipelines that ingest, transform, and serve data at scale with real-time and batch processing.",
-      skills: ["ETL Pipelines", "Data Warehousing", "Stream Processing", "Analytics"],
-      examples: ["4.9B data point integration", "Snowflake data architectures", "Real-time reporting backends"],
-    },
-    {
-      title: "API Design & Development",
-      description: "RESTful and WebSocket APIs with comprehensive authentication, rate limiting, and monitoring.",
-      skills: ["FastAPI", "REST", "WebSocket", "GraphQL"],
-      examples: ["85-endpoint API orchestration", "Multi-carrier messaging integrations", "Real-time event streaming"],
-    },
-    {
-      title: "Edge Computing & IoT",
-      description: "Deploying AI and data processing on resource-constrained devices with custom protocols.",
-      skills: ["Raspberry Pi", "Custom Protocols", "Mesh Networks", "Low-Power Systems"],
-      examples: ["60-node Pi cluster", "Custom 802.11 protocols", "LoRa mesh deployments"],
-    },
-    {
-      title: "AI/ML Integration",
-      description: "Production-grade machine learning pipelines with real-time inference and model management.",
-      skills: ["LLM Integration", "Model Deployment", "Vector Search", "ML Pipelines"],
-      examples: ["Multi-provider AI orchestration", "Sub-100ms inference pipelines", "Self-improving systems"],
-    },
-  ]
+const SERVICES = [
+  {
+    title: "Distributed Systems Architecture",
+    description:
+      "Systems that move billions of records with high availability, fault tolerance, and a deploy script that fits on one screen.",
+    skills: ["Distributed Databases", "Message Queues", "Load Balancing", "Fault Tolerance"],
+    examples: [
+      "Search infrastructure at Fortune 500 scale",
+      "High-volume messaging platforms",
+      "Multi-region data replication",
+    ],
+  },
+  {
+    title: "Data Engineering",
+    description:
+      "Pipelines that ingest, transform, and serve — real-time and batch, without a cloud provider on the bill.",
+    skills: ["ETL Pipelines", "Data Warehousing", "Stream Processing", "Analytics"],
+    examples: [
+      "4.9B data point integration",
+      "Snowflake data architectures",
+      "Real-time reporting backends",
+    ],
+  },
+  {
+    title: "API Design & Development",
+    description:
+      "REST and WebSocket APIs with auth, rate limiting, and monitoring baked in from the first commit.",
+    skills: ["FastAPI", "REST", "WebSocket", "GraphQL"],
+    examples: [
+      "85-endpoint API orchestration",
+      "Multi-carrier messaging integrations",
+      "Real-time event streaming",
+    ],
+  },
+  {
+    title: "Edge Computing & IoT",
+    description:
+      "AI and data on resource-constrained devices. Custom protocols, mesh radios, salvaged hardware where it makes sense.",
+    skills: ["Raspberry Pi", "Custom Protocols", "Mesh Networks", "Low-Power Systems"],
+    examples: [
+      "60-node Pi cluster",
+      "Custom 802.11 protocols",
+      "LoRa mesh deployments",
+    ],
+  },
+  {
+    title: "AI/ML Integration",
+    description:
+      "Production-grade ML — sub-100ms inference, multi-provider orchestration, the unglamorous plumbing that keeps it safe in prod.",
+    skills: ["LLM Integration", "Model Deployment", "Vector Search", "ML Pipelines"],
+    examples: [
+      "Multi-provider AI orchestration",
+      "Sub-100ms inference pipelines",
+      "Self-improving systems",
+    ],
+  },
+]
 
-  const engagementModels = [
-    {
-      type: "Project-Based",
-      description: "Fixed scope with defined deliverables",
-      range: "$25K - $100K",
-      ideal: "Specific initiatives with clear requirements",
-    },
-    {
-      type: "Hourly Consulting",
-      description: "Flexible, as-needed expertise",
-      range: "$150 - $275/hr",
-      ideal: "Technical guidance and architecture review",
-    },
-    {
-      type: "Retainer",
-      description: "Dedicated monthly support",
-      range: "$15K - $50K/mo",
-      ideal: "Ongoing partnership and continuous improvement",
-    },
-  ]
+const ENGAGEMENTS = [
+  {
+    type: "Project-based",
+    description: "Fixed scope, defined deliverables",
+    range: "$25K – $100K",
+    ideal: "Specific initiatives with clear requirements",
+  },
+  {
+    type: "Hourly consulting",
+    description: "Flexible, as-needed expertise",
+    range: "$150 – $275/hr",
+    ideal: "Technical guidance and architecture review",
+  },
+  {
+    type: "Retainer",
+    description: "Dedicated monthly support",
+    range: "$15K – $50K/mo",
+    ideal: "Ongoing partnership, continuous improvement",
+  },
+]
 
+const STEPS = [
+  { step: "1", title: "Discovery", desc: "Understand the problem deeply before proposing solutions." },
+  { step: "2", title: "Design", desc: "Architecture that balances elegance with practicality." },
+  { step: "3", title: "Build", desc: "Iterative development with continuous feedback." },
+  { step: "4", title: "Deliver", desc: "Documentation, handoff, knowledge transfer." },
+]
+
+const DIFFS = [
+  {
+    color: "blue" as const,
+    title: "Production experience",
+    desc: "Systems processing billions of records at Fortune-500 scale, not prototypes.",
+  },
+  {
+    color: "coral" as const,
+    title: "Maker mentality",
+    desc: "Creative problem-solving sharpened on 60-node Pi clusters and salvaged hardware.",
+  },
+  {
+    color: "gold" as const,
+    title: "Full stack",
+    desc: "From low-level protocols to cloud architecture to ML pipelines — one head, one accountability.",
+  },
+  {
+    color: "green" as const,
+    title: "Security cleared",
+    desc: "Led classified government projects under the highest security standards.",
+  },
+]
+
+export default function V3ServicesPage() {
   return (
-    <main className="min-h-screen">
-      {/* Header */}
-      <header className="border-b border-sf-steel/15">
-        <div className="container-page py-12">
-          <h1 className="text-3xl md:text-4xl font-bold text-sf-white mb-4">
-            Services
-          </h1>
-          <p className="text-lg text-sf-muted leading-relaxed">
-            15+ years of experience architecting production systems at scale.
-            From Fortune 500 data infrastructure to garage lab innovations—I bring
-            the same rigor and creativity to every project.
-          </p>
+    <>
+      {/* HEADER ========================================================= */}
+      <header className="v3-page-head">
+        <div className="v3-blob v3-blob--1" aria-hidden style={{ right: "-80px", top: "-40px" }} />
+        <div className="v3-blob v3-blob--2" aria-hidden style={{ right: "200px", top: "200px" }} />
+
+        <div className="v3-wrap">
+          <div className="v3-page-head__lockup">
+            <V3Reveal>
+              <span className="v3-eyebrow">Services · how we work together</span>
+            </V3Reveal>
+            <V3Reveal delay={80}>
+              <h1>
+                Build what cloud-shaped<br />
+                consultants <span className="v3-accent">can't.</span>
+              </h1>
+            </V3Reveal>
+            <V3Reveal delay={140}>
+              <p className="v3-page-head__lede">
+                15+ years architecting production systems at scale — Fortune-500 data
+                infrastructure to garage-lab innovations. Same rigor, both rooms.
+              </p>
+            </V3Reveal>
+          </div>
         </div>
       </header>
 
-      <div className="container-page py-12 space-y-16">
-        {/* Services */}
-        <section>
-          <h2 className="text-xl font-semibold text-sf-white mb-8">What I Do</h2>
-          <div className="space-y-8">
-            {services.map((service, idx) => (
+      {/* SERVICES ======================================================= */}
+      <section className="v3-section" style={{ paddingTop: 16 }}>
+        <div className="v3-wrap">
+          <V3Reveal>
+            <div className="v3-sec-head">
+              <div className="v3-sec-head__num">01 / WHAT I DO</div>
+              <h2>Five practices, one practitioner.</h2>
+              <p>
+                Each engagement draws from one or more of these. Nothing is bolted on after the
+                fact — security, observability, and a graceful retire path come standard.
+              </p>
+            </div>
+          </V3Reveal>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
+            {SERVICES.map((s, i) => (
+              <V3Reveal key={s.title} delay={i * 50}>
+                <article className="v3-service">
+                  <div className="v3-service__head">
+                    <div className="v3-service__num">
+                      {String(i + 1).padStart(2, "0")}
+                    </div>
+                    <div style={{ flex: 1 }}>
+                      <h3>{s.title}</h3>
+                    </div>
+                  </div>
+                  <p className="v3-service__desc">{s.description}</p>
+                  <div className="v3-chips">
+                    {s.skills.map((skill) => (
+                      <span key={skill} className="v3-chip-sm">
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="v3-service__examples">
+                    <strong>Examples: </strong>
+                    {s.examples.join(" · ")}
+                  </div>
+                </article>
+              </V3Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ENGAGEMENTS ==================================================== */}
+      <section className="v3-section v3-section--paper">
+        <div className="v3-wrap">
+          <V3Reveal>
+            <div className="v3-sec-head">
+              <div className="v3-sec-head__num">02 / ENGAGEMENT MODELS</div>
+              <h2>Three shapes. Pick the one that fits.</h2>
+              <p>
+                Most engagements start as a short scoping call, then drop into one of the shapes
+                below. Hybrid arrangements are fine — say so up front.
+              </p>
+            </div>
+          </V3Reveal>
+
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+              gap: 18,
+            }}
+          >
+            {ENGAGEMENTS.map((m, i) => (
+              <V3Reveal key={m.type} delay={i * 60}>
+                <div className="v3-price">
+                  <h3>{m.type}</h3>
+                  <p className="v3-price__desc">{m.description}</p>
+                  <div className="v3-price__range">{m.range}</div>
+                  <p className="v3-price__ideal">Best for: {m.ideal}</p>
+                </div>
+              </V3Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* PROCESS ======================================================= */}
+      <section className="v3-section">
+        <div className="v3-wrap">
+          <V3Reveal>
+            <div className="v3-sec-head">
+              <div className="v3-sec-head__num">03 / PROCESS</div>
+              <h2>Four steps, no theater.</h2>
+              <p>
+                The same rhythm every time. Discovery is unbillable — if the work doesn't fit, I'll
+                say so before we sign anything.
+              </p>
+            </div>
+          </V3Reveal>
+
+          <div className="v3-steps">
+            {STEPS.map((p, i) => (
+              <V3Reveal key={p.step} delay={i * 80}>
+                <div className="v3-step">
+                  <div className="v3-step__num">{p.step}</div>
+                  <h3>{p.title}</h3>
+                  <p className="v3-step__desc">{p.desc}</p>
+                </div>
+              </V3Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* DIFFERENTIATORS =============================================== */}
+      <section className="v3-section v3-section--paper">
+        <div className="v3-wrap">
+          <V3Reveal>
+            <div className="v3-sec-head">
+              <div className="v3-sec-head__num">04 / WHY ME</div>
+              <h2>What you get that doesn't come standard.</h2>
+              <p>
+                A short list — but each one is the reason somebody hired me, not a hypothetical
+                advantage.
+              </p>
+            </div>
+          </V3Reveal>
+
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+              gap: 16,
+            }}
+          >
+            {DIFFS.map((d, i) => (
+              <V3Reveal key={d.title} delay={i * 60}>
+                <article className={`v3-diff v3-diff--${d.color}`}>
+                  <div className="v3-diff__bar" />
+                  <div>
+                    <h3>{d.title}</h3>
+                    <p>{d.desc}</p>
+                  </div>
+                </article>
+              </V3Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA ============================================================ */}
+      <section className="v3-section">
+        <div className="v3-wrap">
+          <V3Reveal>
+            <div
+              className="v3-panel"
+              style={{
+                textAlign: "center",
+                padding: "56px 32px",
+                background: "linear-gradient(135deg, var(--v3-blue-50), var(--v3-white) 60%, var(--v3-paper))",
+              }}
+            >
+              <div className="v3-sec-head__num" style={{ marginBottom: 8 }}>
+                05 / NEXT
+              </div>
+              <h2
+                className="v3-font-display"
+                style={{ fontSize: "clamp(28px, 4vw, 40px)", fontWeight: 700, margin: "0 0 14px" }}
+              >
+                Let's sketch it.
+              </h2>
+              <p style={{ maxWidth: 540, margin: "0 auto 28px", color: "var(--v3-ink)" }}>
+                Bring the problem. I'll bring the questions. Worst case you walk away with a
+                clearer picture of what to do next — and that's free.
+              </p>
               <div
-                key={idx}
-                className="p-6 rounded-lg border transition-colors"
                 style={{
-                  borderColor: "var(--brand-border)",
+                  display: "flex",
+                  gap: 14,
+                  justifyContent: "center",
+                  flexWrap: "wrap",
                 }}
-                onMouseEnter={(e) => e.currentTarget.style.borderColor = "var(--brand-border-hover)"}
-                onMouseLeave={(e) => e.currentTarget.style.borderColor = "var(--brand-border)"}
               >
-                <h3 className="text-lg font-semibold text-sf-white mb-2">
-                  {service.title}
-                </h3>
-                <p className="text-sf-muted mb-4">{service.description}</p>
-
-                <div className="flex flex-wrap gap-1.5 mb-4">
-                  {service.skills.map((skill) => (
-                    <span
-                      key={skill}
-                      className="px-2 py-1 text-xs font-mono rounded"
-                      style={{
-                        backgroundColor: "color-mix(in srgb, var(--brand-primary) 12%, transparent)",
-                        color: "var(--brand-primary)",
-                      }}
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="text-sm text-sf-steel">
-                  <span className="font-medium">Examples: </span>
-                  {service.examples.join(" \u2022 ")}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Engagement Models */}
-        <section>
-          <h2 className="text-xl font-semibold text-sf-white mb-6">Engagement Models</h2>
-          <div className="grid md:grid-cols-3 gap-4">
-            {engagementModels.map((model) => (
-              <div
-                key={model.type}
-                className="p-5 rounded-lg border transition-colors"
-                style={{ borderColor: "var(--brand-border)" }}
-                onMouseEnter={(e) => e.currentTarget.style.borderColor = "var(--brand-border-hover)"}
-                onMouseLeave={(e) => e.currentTarget.style.borderColor = "var(--brand-border)"}
-              >
-                <h3 className="font-semibold text-sf-white mb-1">{model.type}</h3>
-                <p className="text-sm text-sf-steel mb-3">{model.description}</p>
-                <div className="text-lg font-mono font-bold text-sf-orange mb-2">
-                  {model.range}
-                </div>
-                <p className="text-xs text-sf-steel">{model.ideal}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Process */}
-        <section>
-          <h2 className="text-xl font-semibold text-sf-white mb-6">How I Work</h2>
-          <div className="grid md:grid-cols-4 gap-4">
-            {[
-              { step: "1", title: "Discovery", desc: "Understand the problem deeply before proposing solutions" },
-              { step: "2", title: "Design", desc: "Architecture that balances elegance with practicality" },
-              { step: "3", title: "Build", desc: "Iterative development with continuous feedback" },
-              { step: "4", title: "Deliver", desc: "Documentation, handoff, and knowledge transfer" },
-            ].map((phase) => (
-              <div key={phase.step} className="text-center">
-                <div
-                  className="w-10 h-10 rounded-full font-bold flex items-center justify-center mx-auto mb-3"
-                  style={{
-                    backgroundColor: "color-mix(in srgb, var(--brand-primary) 15%, transparent)",
-                    color: "var(--brand-primary)",
-                  }}
-                >
-                  {phase.step}
-                </div>
-                <h3 className="font-medium text-sf-white mb-1">{phase.title}</h3>
-                <p className="text-sm text-sf-steel">{phase.desc}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Differentiators */}
-        <section className="bg-sf-dark-alt -mx-4 px-4 py-8 md:rounded-lg md:mx-0 md:px-8">
-          <h2 className="text-xl font-semibold text-sf-white mb-4">Why Work With Me</h2>
-          <div className="grid md:grid-cols-2 gap-4">
-            <div className="flex gap-3">
-              <div className="w-1 bg-sf-orange rounded-full flex-shrink-0" />
-              <div>
-                <h3 className="font-medium text-sf-white">Production Experience</h3>
-                <p className="text-sm text-sf-muted">
-                  Built systems processing billions of records at Fortune 500 scale, not just prototypes.
-                </p>
+                <a href="mailto:brad@bradley.io" className="v3-btn v3-btn--primary">
+                  Get in touch →
+                </a>
+                <Link href="/projects" className="v3-btn v3-btn--ghost">
+                  View projects
+                </Link>
               </div>
             </div>
-            <div className="flex gap-3">
-              <div className="w-1 bg-sf-cyan rounded-full flex-shrink-0" />
-              <div>
-                <h3 className="font-medium text-sf-white">Maker Mentality</h3>
-                <p className="text-sm text-sf-muted">
-                  Creative problem-solving from building 60-node Pi clusters on salvaged hardware.
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-3">
-              <div className="w-1 bg-sf-orange rounded-full flex-shrink-0" />
-              <div>
-                <h3 className="font-medium text-sf-white">Full Stack</h3>
-                <p className="text-sm text-sf-muted">
-                  From low-level protocols to cloud architecture to ML pipelines.
-                </p>
-              </div>
-            </div>
-            <div className="flex gap-3">
-              <div className="w-1 bg-sf-cyan rounded-full flex-shrink-0" />
-              <div>
-                <h3 className="font-medium text-sf-white">Security Cleared</h3>
-                <p className="text-sm text-sf-muted">
-                  Led classified government projects requiring highest security standards.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* CTA */}
-        <section className="border-t pt-8 text-center" style={{ borderColor: "var(--brand-border)" }}>
-          <h2 className="text-xl font-semibold text-sf-white mb-2">Let&apos;s Talk</h2>
-          <p className="text-sf-muted mb-6">
-            Have a project in mind? Let&apos;s discuss how I can help.
-          </p>
-          <div className="flex flex-wrap gap-4 justify-center">
-            <a
-              href="mailto:brad@isenbek.io"
-              className="px-6 py-2 bg-sf-orange text-sf-dark rounded-lg hover:opacity-90 transition-opacity font-medium"
-            >
-              Get in Touch
-            </a>
-            <Link
-              href="/projects"
-              className="px-6 py-2 border rounded-lg text-sf-white transition-colors"
-              style={{ borderColor: "var(--brand-border)" }}
-            >
-              View Projects
-            </Link>
-          </div>
-        </section>
-      </div>
-    </main>
+          </V3Reveal>
+        </div>
+      </section>
+    </>
   )
 }

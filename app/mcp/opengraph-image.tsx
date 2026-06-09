@@ -1,17 +1,31 @@
-import { ogImageResponse, OG_SIZE, OG_CONTENT_TYPE } from "@/lib/og-card"
+import { readFileSync } from "fs"
+import { join } from "path"
+import { ogV3ImageResponse, OG_V3_SIZE, OG_V3_CONTENT_TYPE } from "@/lib/og-card-v3"
 
 export const runtime = "nodejs"
-export const alt = "MCP Service Catalog — 22 FastAPI services, 85+ endpoints"
-export const size = OG_SIZE
-export const contentType = OG_CONTENT_TYPE
+export const alt = "MCP Catalog — bio·bradley.io"
+export const size = OG_V3_SIZE
+export const contentType = OG_V3_CONTENT_TYPE
+
+function loadStats() {
+  try {
+    const d = JSON.parse(
+      readFileSync(join(process.cwd(), "public/data/mcp-catalog.json"), "utf-8")
+    )
+    return d.stats ?? { totalServices: 0, totalEndpoints: 0, totalCategories: 0 }
+  } catch {
+    return { totalServices: 0, totalEndpoints: 0, totalCategories: 0 }
+  }
+}
 
 export default function OG() {
-  return ogImageResponse({
-    eyebrow: "MCP Catalog",
-    title: "22 services. 85+ endpoints.",
+  const s = loadStats()
+  return ogV3ImageResponse({
+    eyebrow: "Campaign Brain · MCP",
+    title: `${s.totalServices} services. ${s.totalEndpoints} endpoints.`,
     subtitle:
-      "Campaign Brain FastAPI microservices — fully indexed, OpenAPI-introspected, and callable from any MCP client.",
-    tags: ["FastAPI", "OpenAPI", "MCP", "Microservices"],
+      "FastAPI microservices for AI, data, communication, infrastructure, and business — all open via MCP to LLM agents.",
+    tags: ["AI", "Data", "Comms", "Infra", "Business"],
     accent: "blue",
     cta: "Browse catalog →",
   })

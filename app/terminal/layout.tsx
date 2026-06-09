@@ -1,18 +1,19 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Terminal",
+  title: "Terminal — bio·bradley.io",
   description:
-    "Interactive CLI portfolio — explore projects, skills, and experience through a command-line interface.",
+    "Interactive CLI portfolio — type `help` to start. About, skills, projects, repos, experience, contact, all via commands.",
   alternates: { canonical: "/terminal" },
   openGraph: {
-    title: "Terminal | bradley.io",
+    title: "Terminal — bio·bradley.io",
     description:
-      "Interactive CLI portfolio — explore projects, skills, and experience via command line.",
+      "Interactive CLI portfolio. Type `help` to start poking around.",
     url: "https://bradley.io/terminal",
+    type: "website",
   },
 }
 
-export default function TerminalLayout({ children }: { children: React.ReactNode }) {
-  return children
+export default function V3TerminalLayout({ children }: { children: React.ReactNode }) {
+  return <>{children}</>
 }

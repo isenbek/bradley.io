@@ -1,18 +1,18 @@
-import { ogImageResponse, OG_SIZE, OG_CONTENT_TYPE } from "@/lib/og-card"
+import { ogV3ImageResponse, OG_V3_SIZE, OG_V3_CONTENT_TYPE } from "@/lib/og-card-v3"
 
 export const runtime = "nodejs"
-export const alt = "Consulting Services — Data Engineering, AI/ML, Edge Computing"
-export const size = OG_SIZE
-export const contentType = OG_CONTENT_TYPE
+export const alt = "Services — bio·bradley.io"
+export const size = OG_V3_SIZE
+export const contentType = OG_V3_CONTENT_TYPE
 
 export default function OG() {
-  return ogImageResponse({
-    eyebrow: "Consulting",
-    title: "Engineering for the frontier.",
+  return ogV3ImageResponse({
+    eyebrow: "Services",
+    title: "Build what cloud-shaped consultants can't.",
     subtitle:
-      "Data architecture, distributed systems, AI integration, and edge computing — project, hourly, or retainer.",
-    tags: ["Data Engineering", "AI / ML", "Edge & IoT", "Architecture"],
-    accent: "orange",
+      "Distributed systems, data pipelines, edge & IoT, AI/ML integration. Project, hourly, or retainer.",
+    tags: ["Architecture", "Data", "Edge/IoT", "AI/ML"],
+    accent: "green",
     cta: "Book a call →",
   })
 }
