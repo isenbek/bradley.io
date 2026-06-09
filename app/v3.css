@@ -145,20 +145,40 @@ body:has(.v3) {
 }
 
 .v3-nav__logo {
-  font-family: var(--font-v3-logo), "Baloo 2", cursive;
-  font-weight: 800;
-  font-size: 24px;
-  color: var(--v3-blue-600);
-  letter-spacing: -0.02em;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
+  gap: 4px;
+  line-height: 1;
+  transition: opacity 0.2s;
 }
 
-.v3-nav__logo b {
+.v3-nav__logo:hover {
+  opacity: 0.85;
+}
+
+.v3-nav__logo-text {
+  font-family: var(--font-v3-body), "Hanken Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.08em;
   color: var(--v3-charcoal);
+  text-transform: lowercase;
+  position: relative;
+  top: 1px;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+}
+
+.v3-nav__logo-text::before {
+  content: "·";
+  color: var(--v3-blue-500);
   font-weight: 800;
-  padding: 0 2px;
+  font-size: 1.4em;
+  line-height: 0.5;
+  position: relative;
+  top: -0.05em;
 }
 
 .v3-nav__links {
@@ -4077,14 +4097,24 @@ body:has(.v3) {
 }
 
 .v3-footer__mark {
-  font-family: var(--font-v3-logo), "Baloo 2", cursive;
-  font-weight: 800;
-  font-size: 40px;
-  color: var(--v3-blue-400);
+  display: inline-flex;
+  align-items: baseline;
+  gap: 8px;
+  line-height: 1;
 }
 
-.v3-footer__mark .v3-footer__dot {
+.v3-footer__sub {
+  font-family: var(--font-v3-body), "Hanken Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  letter-spacing: 0.06em;
+  color: var(--v3-paper);
+  text-transform: lowercase;
+}
+
+.v3-footer__dot {
   color: var(--v3-blue-200);
+  margin-right: 2px;
 }
 
 .v3-footer p {

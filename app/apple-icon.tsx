@@ -1,4 +1,9 @@
 import { ImageResponse } from "next/og"
+import {
+  BIO_LOGO_GROUP_TRANSFORM,
+  BIO_LOGO_PATH,
+  BIO_LOGO_VIEWBOX,
+} from "@/lib/bio-logo-path"
 
 export const runtime = "nodejs"
 export const size = { width: 180, height: 180 }
@@ -14,27 +19,20 @@ export default function AppleIcon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "linear-gradient(135deg, #1C1412 0%, #0D0B0A 100%)",
+          background: "linear-gradient(135deg, #29BFF4 0%, #13B8F3 50%, #0A96C7 100%)",
           borderRadius: 40,
         }}
       >
-        <div
-          style={{
-            width: 120,
-            height: 120,
-            borderRadius: 28,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            background: "linear-gradient(135deg, #00F5FF 0%, #FF6B35 100%)",
-            color: "#0B1215",
-            fontSize: 76,
-            fontWeight: 800,
-            fontFamily: "system-ui, sans-serif",
-          }}
+        <svg
+          width="132"
+          height="69"
+          viewBox={BIO_LOGO_VIEWBOX}
+          preserveAspectRatio="xMidYMid meet"
         >
-          B
-        </div>
+          <g transform={BIO_LOGO_GROUP_TRANSFORM} fill="#FBFAF5">
+            <path d={BIO_LOGO_PATH} />
+          </g>
+        </svg>
       </div>
     ),
     size

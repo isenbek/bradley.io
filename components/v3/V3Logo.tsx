@@ -1,9 +1,9 @@
+import { BioLogo } from "./BioLogo"
+
 /**
- * V3Logo — the "bio·bradley.io" wordmark used in nav/footer/share cards.
- * Pure presentational. Color and size scale via CSS classes the caller controls.
- *
- * NOTE: Final SVG logo from the style guide is pending — when it lands, swap
- * the inline markup here for the SVG and keep the same prop surface.
+ * V3Logo — the stacked "bio / bradley.io" wordmark used on share cards and
+ * hero contexts. Wraps the SVG `<BioLogo />` with the "bradley.io" subtag
+ * underneath so all three sizes share the same proportions.
  */
 export function V3Logo({
   size = "nav",
@@ -20,16 +20,15 @@ export function V3Logo({
   } as const
 
   const sizeMap = {
-    nav: { mark: "1.5rem", tag: "0.8125rem", gap: "2px" },
-    footer: { mark: "2.5rem", tag: "1rem", gap: "4px" },
-    hero: { mark: "5.25rem", tag: "1.3125rem", gap: "6px" },
+    nav: { mark: 28, tag: "0.8125rem", gap: 4 },
+    footer: { mark: 56, tag: "1rem", gap: 6 },
+    hero: { mark: 110, tag: "1.3125rem", gap: 10 },
   } as const
 
   const { mark, tag, gap } = sizeMap[size]
 
   return (
     <span
-      className="v3-font-logo"
       style={{
         display: "inline-flex",
         flexDirection: "column",
@@ -39,16 +38,15 @@ export function V3Logo({
       }}
       aria-label="bio·bradley.io"
     >
-      <span style={{ fontWeight: 800, fontSize: mark, color: colorMap[variant], letterSpacing: "-0.04em" }}>
-        bi<span style={{ color: "var(--v3-blue-300)" }}>o</span>
-      </span>
+      <BioLogo height={mark} title="" style={{ color: colorMap[variant] }} />
       <span
         className="v3-font-body"
         style={{
-          fontWeight: 600,
+          fontWeight: 700,
           fontSize: tag,
           letterSpacing: "0.16em",
           color: "var(--v3-charcoal)",
+          textTransform: "lowercase",
         }}
       >
         bradley<span style={{ color: colorMap[variant] }}>.io</span>

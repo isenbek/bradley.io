@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { BioLogo } from "./BioLogo"
 
 const LINKS = [
   { href: "/", label: "Home" },
@@ -20,7 +21,12 @@ export function V3Nav() {
     <nav className="v3-nav" aria-label="Primary">
       <div className="v3-nav__in">
         <Link href="/" className="v3-nav__logo" aria-label="bio·bradley.io home">
-          bio<b>·</b>bradley.io
+          <BioLogo
+            height={26}
+            title=""
+            style={{ color: "var(--v3-blue-500)", marginRight: 4 }}
+          />
+          <span className="v3-nav__logo-text">bradley.io</span>
         </Link>
         <div className="v3-nav__links">
           {LINKS.map((l) => {
