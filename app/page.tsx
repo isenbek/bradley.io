@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { ActivityPulse } from "@/components/v3/ActivityPulse"
 import { V3Reveal } from "@/components/v3/V3Reveal"
 
 export default function V3Home() {
@@ -60,6 +61,12 @@ export default function V3Home() {
                 <span className="v3-chip__dot" style={{ background: "var(--v3-green)" }} />
                 Green · organic
               </span>
+            </div>
+          </V3Reveal>
+
+          <V3Reveal delay={340}>
+            <div style={{ marginTop: 32 }}>
+              <ActivityPulse />
             </div>
           </V3Reveal>
         </div>
