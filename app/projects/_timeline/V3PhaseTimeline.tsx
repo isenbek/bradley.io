@@ -43,7 +43,51 @@ function formatPhaseRange(startISO: string, endISO: string, isCurrent: boolean):
   return `${fmtMY(s)} – ${fmtMY(e)}`
 }
 
-function RepoCard({ repo, color }: { repo: TimelineRepo; color: string }) {
+interface SparkData {
+  buckets: number[]
+  max: number
+}
+
+function RepoSparkline({ spark, color }: { spark: SparkData; color: string }) {
+  const { buckets, max } = spark
+  const w = 100
+  const h = 20
+  const bw = w / buckets.length
+  return (
+    <svg
+      viewBox={`0 0 ${w} ${h}`}
+      preserveAspectRatio="none"
+      style={{ width: "100%", height: h, display: "block" }}
+      aria-hidden
+    >
+      {buckets.map((n, i) => {
+        const bh = (n / max) * (h - 2)
+        return (
+          <rect
+            key={i}
+            x={i * bw + 0.5}
+            y={h - bh}
+            width={Math.max(bw - 1, 1)}
+            height={Math.max(bh, n > 0 ? 1.5 : 0)}
+            rx={0.8}
+            fill={color}
+            opacity={n > 0 ? 1 : 0.18}
+          />
+        )
+      })}
+    </svg>
+  )
+}
+
+function RepoCard({
+  repo,
+  color,
+  spark,
+}: {
+  repo: TimelineRepo
+  color: string
+  spark?: SparkData
+}) {
   return (
     <Link
       href={`/projects/${repo.name}`}
@@ -69,6 +113,14 @@ function RepoCard({ repo, color }: { repo: TimelineRepo; color: string }) {
           no description
         </p>
       )}
+      {spark ? (
+        <div
+          style={{ marginTop: 6, marginBottom: 2, opacity: 0.9 }}
+          title={`${spark.buckets.reduce((s, n) => s + n, 0).toLocaleString()} org commits during this repo's window`}
+        >
+          <RepoSparkline spark={spark} color={color} />
+        </div>
+      ) : null}
       <div className="v3-repocard__foot">
         <span>{repo.commits.toLocaleString()} commits</span>
         <span>
@@ -86,9 +138,11 @@ function RepoCard({ repo, color }: { repo: TimelineRepo; color: string }) {
 export function V3PhaseTimeline({
   phases,
   repos,
+  sparklines = {},
 }: {
   phases: TimelinePhase[]
   repos: TimelineRepo[]
+  sparklines?: Record<string, SparkData>
 }) {
   const reversed = [...phases].reverse()
   const [openIdx, setOpenIdx] = useState<number | null>(0)
@@ -155,7 +209,12 @@ export function V3PhaseTimeline({
                   {isOpen ? (
                     <div className="v3-phase__repos">
                       {phaseRepos.map((repo) => (
-                        <RepoCard key={repo.name} repo={repo} color={color} />
+                        <RepoCard
+                          key={repo.name}
+                          repo={repo}
+                          color={color}
+                          spark={sparklines[repo.name]}
+                        />
                       ))}
                     </div>
                   ) : null}

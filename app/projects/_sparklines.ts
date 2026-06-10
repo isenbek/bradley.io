@@ -36,6 +36,33 @@ export interface SparkData {
 }
 
 /**
+ * Compute a sparkline for every repo in a single in-memory timeline. Useful
+ * for the mission-timeline pages where the data is already loaded — avoids
+ * re-reading the JSON files.
+ */
+export function sparklinesForTimeline(
+  repos: TimelineRepo[],
+  heatmap: CommitDay[]
+): Record<string, SparkData> {
+  const out: Record<string, SparkData> = {}
+  for (const repo of repos) {
+    const firstT = new Date(repo.firstCommit).getTime()
+    const lastT = new Date(repo.lastCommit).getTime()
+    const spanMs = Math.max(86_400_000, lastT - firstT)
+    const bucketMs = spanMs / NUM_BUCKETS
+    const buckets = new Array(NUM_BUCKETS).fill(0)
+    for (const d of heatmap) {
+      const t = new Date(d.date + "T00:00:00Z").getTime()
+      if (t < firstT || t > lastT) continue
+      const idx = Math.min(NUM_BUCKETS - 1, Math.floor((t - firstT) / bucketMs))
+      buckets[idx] += d.commits
+    }
+    out[repo.name] = { buckets, max: Math.max(...buckets, 1) }
+  }
+  return out
+}
+
+/**
  * Build a `Map<slug, SparkData>` of compact per-project weekly activity
  * arrays. For projects whose slug matches a repo in one of the four mission
  * timelines, the array is sampled from that timeline's `activityHeatmap`

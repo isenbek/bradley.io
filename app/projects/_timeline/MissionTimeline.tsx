@@ -7,6 +7,7 @@ import { V3TimelineStats } from "./V3TimelineStats"
 import { V3LanguageBar } from "./V3LanguageBar"
 import { V3CommitHeatmap } from "./V3CommitHeatmap"
 import { V3PhaseTimeline } from "./V3PhaseTimeline"
+import { sparklinesForTimeline } from "../_sparklines"
 
 interface Props {
   /** Display name for hero h1 (e.g. "Nominate-AI", "tinymachines") */
@@ -171,7 +172,14 @@ export function MissionTimeline({
             </div>
           </V3Reveal>
           <V3Reveal delay={60}>
-            <V3PhaseTimeline phases={data.phases} repos={data.repos} />
+            <V3PhaseTimeline
+              phases={data.phases}
+              repos={data.repos}
+              sparklines={sparklinesForTimeline(
+                data.repos,
+                data.activityHeatmap ?? []
+              )}
+            />
           </V3Reveal>
         </div>
       </section>
