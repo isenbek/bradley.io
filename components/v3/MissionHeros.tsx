@@ -176,35 +176,22 @@ export function MissionHeros() {
     >
       {data.map(({ meta, tl }) => {
         const accentColor = ACCENT_TO_VAR[meta.accent]
-        // For tiles: total repos / commits / phases / span
         return (
-          <Link
+          <article
             key={meta.slug}
-            href={`/projects/${meta.slug}`}
             className="v3-mission-hero"
             style={
-              {
-                ["--v3-mission-color" as string]: accentColor,
-              } as React.CSSProperties
+              { ["--v3-mission-color" as string]: accentColor } as React.CSSProperties
             }
           >
             <div className="v3-mission-hero__bar" aria-hidden />
-            <div className="v3-mission-hero__body">
+            <Link
+              href={`/projects/${meta.slug}`}
+              className="v3-mission-hero__body"
+              aria-label={`Explore the ${meta.displayName} timeline`}
+            >
               <div className="v3-mission-hero__row">
                 <span className="v3-mission-hero__eyebrow">{meta.eyebrow}</span>
-                {meta.gh ? (
-                  <a
-                    href={meta.gh}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={(e) => e.stopPropagation()}
-                    className="v3-mission-hero__gh"
-                    title={`GitHub · ${meta.displayName}`}
-                  >
-                    <GitBranch size={11} strokeWidth={2.25} />
-                    org
-                  </a>
-                ) : null}
               </div>
               <h3 className="v3-mission-hero__name">{meta.displayName}</h3>
               <p className="v3-mission-hero__lede">{meta.lede}</p>
@@ -228,8 +215,20 @@ export function MissionHeros() {
               <div className="v3-mission-hero__cta">
                 Explore timeline <ArrowRight size={13} strokeWidth={2.5} />
               </div>
-            </div>
-          </Link>
+            </Link>
+            {meta.gh ? (
+              <a
+                href={meta.gh}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="v3-mission-hero__gh"
+                title={`GitHub · ${meta.displayName}`}
+              >
+                <GitBranch size={11} strokeWidth={2.25} />
+                org
+              </a>
+            ) : null}
+          </article>
         )
       })}
     </div>

@@ -4268,6 +4268,7 @@ body:has(.v3) {
 /* ============ FOOTER ============ */
 /* ============ MISSION HERO CARD (home) ============ */
 .v3-mission-hero {
+  position: relative;
   display: flex;
   flex-direction: column;
   border-radius: var(--v3-r-lg);
@@ -4275,15 +4276,18 @@ body:has(.v3) {
   background: var(--v3-white);
   box-shadow: var(--v3-sh-1);
   overflow: hidden;
-  text-decoration: none;
-  color: inherit;
   transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
 }
 
-.v3-mission-hero:hover {
+.v3-mission-hero:has(.v3-mission-hero__body:hover) {
   transform: translateY(-3px);
   box-shadow: var(--v3-sh-2);
   border-color: color-mix(in srgb, var(--v3-mission-color, var(--v3-blue-500)) 38%, var(--v3-line));
+}
+
+.v3-mission-hero__body {
+  text-decoration: none;
+  color: inherit;
 }
 
 .v3-mission-hero__bar {
@@ -4318,6 +4322,10 @@ body:has(.v3) {
 }
 
 .v3-mission-hero__gh {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
   display: inline-flex;
   align-items: center;
   gap: 4px;
