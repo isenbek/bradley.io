@@ -42,6 +42,9 @@ export default defineConfig({
     },
     {
       name: "tablet",
+      // Lighthouse drives its own browser + viewport sim, so don't
+      // duplicate perf runs across viewport projects.
+      testIgnore: /perf-budget\.spec\.ts/,
       use: {
         ...devices["iPad (gen 7)"],
         defaultBrowserType: "chromium",
@@ -52,6 +55,7 @@ export default defineConfig({
     },
     {
       name: "mobile",
+      testIgnore: /perf-budget\.spec\.ts/,
       use: {
         ...devices["iPhone 14 Pro"],
         defaultBrowserType: "chromium",
