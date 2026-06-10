@@ -9,7 +9,49 @@ import { V3_CATEGORY } from "./_categories"
 
 const ORDER: CategoryId[] = ["hardware", "ai-ml", "data", "systems", "creative"]
 
-export function V3ProjectGrid({ projects }: { projects: Project[] }) {
+interface SparkData {
+  buckets: number[]
+  max: number
+}
+
+function Sparkline({ spark, color }: { spark: SparkData; color: string }) {
+  const { buckets, max } = spark
+  const w = 100
+  const h = 22
+  const bw = w / buckets.length
+  return (
+    <svg
+      viewBox={`0 0 ${w} ${h}`}
+      preserveAspectRatio="none"
+      style={{ width: "100%", height: h, display: "block" }}
+      aria-hidden
+    >
+      {buckets.map((n, i) => {
+        const bh = (n / max) * (h - 2)
+        return (
+          <rect
+            key={i}
+            x={i * bw + 0.5}
+            y={h - bh}
+            width={Math.max(bw - 1, 1)}
+            height={Math.max(bh, n > 0 ? 1.5 : 0)}
+            rx={0.8}
+            fill={color}
+            opacity={n > 0 ? 1 : 0.18}
+          />
+        )
+      })}
+    </svg>
+  )
+}
+
+export function V3ProjectGrid({
+  projects,
+  sparklines = {},
+}: {
+  projects: Project[]
+  sparklines?: Record<string, SparkData>
+}) {
   const [active, setActive] = useState<CategoryId | null>(null)
 
   const counts = useMemo(() => {
@@ -90,6 +132,14 @@ export function V3ProjectGrid({ projects }: { projects: Project[] }) {
                           +{p.technologies.length - 4}
                         </span>
                       ) : null}
+                    </div>
+                  ) : null}
+                  {sparklines[p.slug] ? (
+                    <div
+                      className="v3-pcard__spark"
+                      title={`${sparklines[p.slug].buckets.reduce((s, n) => s + n, 0).toLocaleString()} org commits during this project's window`}
+                    >
+                      <Sparkline spark={sparklines[p.slug]} color={cat.color} />
                     </div>
                   ) : null}
                   <div className="v3-pcard__foot">

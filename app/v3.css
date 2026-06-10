@@ -1203,6 +1203,18 @@ body:has(.v3) {
   padding: 3px 4px;
 }
 
+.v3-pcard__spark {
+  margin-top: 8px;
+  margin-bottom: 2px;
+  padding: 4px 0;
+  opacity: 0.85;
+  transition: opacity 0.2s;
+}
+
+.v3-pcard:hover .v3-pcard__spark {
+  opacity: 1;
+}
+
 .v3-pcard__foot {
   display: flex;
   align-items: center;

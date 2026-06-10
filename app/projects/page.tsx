@@ -1,6 +1,7 @@
 import { loadSiteDataStatic } from "@/lib/site-data"
 import { V3Reveal } from "@/components/v3/V3Reveal"
 import { V3ProjectGrid } from "./V3ProjectGrid"
+import { buildSparklines } from "./_sparklines"
 
 export const revalidate = 3600
 
@@ -13,6 +14,14 @@ export default async function V3ProjectsPage() {
   })
 
   const stats = data.stats
+
+  // Precompute sparklines server-side and pass to the client grid as a plain
+  // object (Map can't cross the RSC boundary).
+  const sparkMap = buildSparklines(projects.map((p) => p.slug))
+  const sparklines: Record<string, { buckets: number[]; max: number }> = {}
+  sparkMap.forEach((v, k) => {
+    sparklines[k] = v
+  })
 
   return (
     <>
@@ -65,7 +74,7 @@ export default async function V3ProjectsPage() {
       {/* GRID =========================================================== */}
       <section className="v3-section" style={{ paddingTop: 16 }}>
         <div className="v3-wrap">
-          <V3ProjectGrid projects={projects} />
+          <V3ProjectGrid projects={projects} sparklines={sparklines} />
         </div>
       </section>
     </>
