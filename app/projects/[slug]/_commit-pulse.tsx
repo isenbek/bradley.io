@@ -1,63 +1,6 @@
-import { readFileSync } from "fs"
-import { join } from "path"
 import { Activity, GitBranch } from "lucide-react"
 import type { Project } from "@/lib/site-data"
-
-interface TimelineRepo {
-  name: string
-  description: string
-  language: string
-  commits: number
-  firstCommit: string
-  lastCommit: string
-  phase: string
-}
-
-interface CommitDay {
-  date: string
-  commits: number
-  repos: number
-  intensity: 0 | 1 | 2 | 3 | 4
-}
-
-interface TimelineFile {
-  org: string
-  totalRepos: number
-  totalCommits: number
-  activityHeatmap: CommitDay[]
-  repos: TimelineRepo[]
-}
-
-const TIMELINE_FILES = [
-  "nominate-ai-timeline.json",
-  "tinymachines-timeline.json",
-  "isenbek-timeline.json",
-  "sysforge-ai-timeline.json",
-] as const
-
-type TimelineMatch = {
-  org: string
-  repo: TimelineRepo
-  heatmap: CommitDay[]
-} | null
-
-/** Walk the four mission timelines looking for a repo whose name matches the slug. */
-function findTimelineMatch(slug: string): TimelineMatch {
-  for (const fname of TIMELINE_FILES) {
-    try {
-      const data: TimelineFile = JSON.parse(
-        readFileSync(join(process.cwd(), "public/data", fname), "utf-8")
-      )
-      const repo = data.repos?.find((r) => r.name === slug)
-      if (repo) {
-        return { org: data.org, repo, heatmap: data.activityHeatmap ?? [] }
-      }
-    } catch {
-      /* file missing, keep looking */
-    }
-  }
-  return null
-}
+import { findTimelineRepo } from "../_timeline-lookup"
 
 function fmtSpan(firstISO: string, lastISO: string): string {
   const days = (new Date(lastISO).getTime() - new Date(firstISO).getTime()) / 86_400_000
@@ -86,11 +29,11 @@ function fmtMonth(iso: string): string {
  *      lone dot.
  */
 export function CommitPulse({ project }: { project: Project }) {
-  const match = findTimelineMatch(project.slug)
+  const match = findTimelineRepo(project.slug)
 
   // ---------- Mode A: rich data via timeline match ----------
   if (match) {
-    const { repo, heatmap, org } = match
+    const { repo, activityHeatmap: heatmap, org } = match
     const firstT = new Date(repo.firstCommit).getTime()
     const lastT = new Date(repo.lastCommit).getTime()
     const spanDays = Math.max(1, (lastT - firstT) / 86_400_000)

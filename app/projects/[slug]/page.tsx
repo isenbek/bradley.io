@@ -4,16 +4,22 @@ import { notFound } from "next/navigation"
 import { ArrowLeft, Bot, GitBranch, MessageSquare } from "lucide-react"
 import { CommitPulse } from "./_commit-pulse"
 import { GitHubCard, SourceContribution, VitalsStrip } from "./_vitals"
+import { TimelineRepoDossier } from "./_timeline-dossier"
 import { loadSiteDataStatic } from "@/lib/site-data"
 import type { CategoryId } from "@/lib/project-categories"
 import { V3_CATEGORY } from "../_categories"
+import { allTimelineRepoSlugs, findTimelineRepo } from "../_timeline-lookup"
 import { V3Reveal } from "@/components/v3/V3Reveal"
 
 export const revalidate = 3600
 
 export async function generateStaticParams() {
   const data = await loadSiteDataStatic()
-  return data.projects.map((p) => ({ slug: p.slug }))
+  // Union of site-data slugs + every repo in the four mission timelines —
+  // so timeline-only repos get static dossier pages too.
+  const slugs = new Set<string>(data.projects.map((p) => p.slug))
+  for (const s of allTimelineRepoSlugs()) slugs.add(s)
+  return Array.from(slugs).map((slug) => ({ slug }))
 }
 
 export async function generateMetadata({
@@ -25,23 +31,41 @@ export async function generateMetadata({
   const data = await loadSiteDataStatic()
   const project = data.projects.find((p) => p.slug === slug)
 
-  if (!project) {
-    return { title: "Project not found", robots: { index: false, follow: false } }
-  }
-
-  const description = project.tagline || project.description?.slice(0, 160) || ""
-
-  return {
-    title: `${project.name} — Projects`,
-    description,
-    alternates: { canonical: `/projects/${slug}` },
-    openGraph: {
-      title: `${project.name} | bio·bradley.io`,
+  if (project) {
+    const description = project.tagline || project.description?.slice(0, 160) || ""
+    return {
+      title: `${project.name} — Projects`,
       description,
-      url: `https://bradley.io/projects/${slug}`,
-      type: "article",
-    },
+      alternates: { canonical: `/projects/${slug}` },
+      openGraph: {
+        title: `${project.name} | bio·bradley.io`,
+        description,
+        url: `https://bradley.io/projects/${slug}`,
+        type: "article",
+      },
+    }
   }
+
+  // Fallback: timeline-only repo
+  const match = findTimelineRepo(slug)
+  if (match) {
+    const description =
+      match.repo.description?.slice(0, 160) ||
+      `Repository in the ${match.org} timeline (${match.repo.commits.toLocaleString()} commits).`
+    return {
+      title: `${match.repo.name} — ${match.org} | bio·bradley.io`,
+      description,
+      alternates: { canonical: `/projects/${slug}` },
+      openGraph: {
+        title: `${match.repo.name} | ${match.org} timeline`,
+        description,
+        url: `https://bradley.io/projects/${slug}`,
+        type: "article",
+      },
+    }
+  }
+
+  return { title: "Project not found", robots: { index: false, follow: false } }
 }
 
 function formatDate(iso: string, withYear = false) {
@@ -62,7 +86,14 @@ export default async function V3ProjectDetail({
   const data = await loadSiteDataStatic()
   const project = data.projects.find((p) => p.slug === slug)
 
-  if (!project) notFound()
+  if (!project) {
+    // Fall back: render a timeline-only repo dossier if the slug matches a
+    // mission timeline. Keeps the URL flat (/projects/{slug}) regardless of
+    // which data source the dossier reads from.
+    const match = findTimelineRepo(slug)
+    if (match) return <TimelineRepoDossier match={match} />
+    notFound()
+  }
 
   const cat = V3_CATEGORY[project.category as CategoryId] ?? V3_CATEGORY.systems
   const related = data.activityFeed

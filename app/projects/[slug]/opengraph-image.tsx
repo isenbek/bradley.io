@@ -1,6 +1,7 @@
 import { readFileSync } from "fs"
 import { join } from "path"
 import { ogV3ImageResponse, OG_V3_SIZE, OG_V3_CONTENT_TYPE } from "@/lib/og-card-v3"
+import { findTimelineRepo } from "../_timeline-lookup"
 
 export const runtime = "nodejs"
 export const alt = "Project — bio·bradley.io"
@@ -42,6 +43,28 @@ export default async function OG({ params }: { params: Promise<{ slug: string }>
   const project = loadProjects().find((p) => p.slug === slug)
 
   if (!project) {
+    // Try timeline-only repo
+    const match = findTimelineRepo(slug)
+    if (match) {
+      const compactCommits =
+        match.repo.commits >= 1000
+          ? `${(match.repo.commits / 1000).toFixed(1)}k commits`
+          : `${match.repo.commits} commits`
+      return ogV3ImageResponse({
+        eyebrow: `${match.org} · repo`,
+        title: match.repo.name,
+        subtitle:
+          match.repo.description ||
+          `Repository in the ${match.org} mission timeline.`,
+        tags: [
+          match.repo.language || "—",
+          compactCommits,
+          match.repo.phase || "—",
+        ].filter(Boolean) as string[],
+        accent: "blue",
+        cta: "View repo →",
+      })
+    }
     return ogV3ImageResponse({
       eyebrow: "Project",
       title: "bio·bradley.io",

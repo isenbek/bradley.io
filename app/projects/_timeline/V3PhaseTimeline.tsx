@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Link from "next/link"
 import { ChevronRight } from "lucide-react"
 import type { TimelinePhase, TimelineRepo } from "@/lib/nominate-timeline-types"
 import { langColor } from "./lang-colors"
@@ -44,11 +45,14 @@ function formatPhaseRange(startISO: string, endISO: string, isCurrent: boolean):
 
 function RepoCard({ repo, color }: { repo: TimelineRepo; color: string }) {
   return (
-    <div
+    <Link
+      href={`/projects/${repo.name}`}
       className="v3-repocard"
       style={{
         ["--v3-phase-color" as string]: color,
         ["--v3-lang-color" as string]: langColor(repo.language),
+        textDecoration: "none",
+        color: "inherit",
       }}
     >
       <div className="v3-repocard__head">
@@ -75,7 +79,7 @@ function RepoCard({ repo, color }: { repo: TimelineRepo; color: string }) {
           })}
         </span>
       </div>
-    </div>
+    </Link>
   )
 }
 

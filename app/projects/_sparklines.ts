@@ -40,8 +40,7 @@ export interface SparkData {
  * arrays. For projects whose slug matches a repo in one of the four mission
  * timelines, the array is sampled from that timeline's `activityHeatmap`
  * filtered to the repo's first/last-commit window and aggregated into
- * `NUM_BUCKETS` buckets. Projects without a match get no entry — the index
- * renders those cards without a sparkline.
+ * `NUM_BUCKETS` buckets. Projects without a match get no entry.
  */
 export function buildSparklines(slugs: string[]): Map<string, SparkData> {
   const out = new Map<string, SparkData>()
