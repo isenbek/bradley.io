@@ -11,16 +11,29 @@ const FOOT = 18
  * Limits to the last ~52 weeks for legibility. Each column is a week,
  * each row is a day-of-week (Sun..Sat). Colors come from the
  * .v3-cheat__cell[data-i] CSS — keeps the palette tied to v3 tokens.
+ *
+ * The cutoff is computed from the data's most recent commit, NOT from
+ * `new Date()`. Using wall-clock time inside a server component causes
+ * hydration mismatches when the ISR-cached HTML diverges from the
+ * RSC payload generated on a later request — the heatmap re-rolled its
+ * window between the two renders. Data-driven cutoff is stable across
+ * every render of the same `data` value.
  */
 export function V3CommitHeatmap({ data }: { data: CommitDay[] }) {
-  const cutoff = new Date()
+  // Find the most recent commit date in the data; fall back to the
+  // last item if the data isn't sorted. Empty data is handled below.
+  const allDays = data
+    .map((d) => ({ ...d, date_obj: new Date(d.date + "T00:00:00Z") }))
+    .sort((a, b) => a.date_obj.getTime() - b.date_obj.getTime())
+
+  const latest = allDays.length > 0
+    ? allDays[allDays.length - 1].date_obj
+    : new Date("1970-01-01T00:00:00Z")
+  const cutoff = new Date(latest)
   cutoff.setUTCFullYear(cutoff.getUTCFullYear() - 1)
   cutoff.setUTCHours(0, 0, 0, 0)
 
-  const days = data
-    .map((d) => ({ ...d, date_obj: new Date(d.date + "T00:00:00Z") }))
-    .filter((d) => d.date_obj >= cutoff)
-    .sort((a, b) => a.date_obj.getTime() - b.date_obj.getTime())
+  const days = allDays.filter((d) => d.date_obj >= cutoff)
 
   if (days.length === 0) {
     return (
@@ -145,6 +158,19 @@ export function V3CommitHeatmap({ data }: { data: CommitDay[] }) {
                 : intensity === 3
                 ? "var(--v3-blue-500)"
                 : "var(--v3-blue-700)"
+            // Pre-build the SVG <title> as a single string. Multiple text
+            // children + conditional interpolations inside an SVG <title>
+            // hydrate inconsistently between the SSR HTML and the client
+            // render in Next 16 / React 19 — server serialization drops
+            // the text, client renders it, → React error #418. A single
+            // string child is stable.
+            const tipText = day
+              ? `${iso} · ${day.commits} commit${day.commits === 1 ? "" : "s"}${
+                  day.repos
+                    ? ` across ${day.repos} repo${day.repos === 1 ? "" : "s"}`
+                    : ""
+                }`
+              : `${iso} · 0 commits`
             return (
               <rect
                 key={`${w}-${d}`}
@@ -155,14 +181,7 @@ export function V3CommitHeatmap({ data }: { data: CommitDay[] }) {
                 rx={2}
                 fill={fill}
               >
-                {day ? (
-                  <title>
-                    {iso} · {day.commits} commit{day.commits === 1 ? "" : "s"}
-                    {day.repos ? ` across ${day.repos} repo${day.repos === 1 ? "" : "s"}` : ""}
-                  </title>
-                ) : (
-                  <title>{iso} · 0 commits</title>
-                )}
+                <title>{tipText}</title>
               </rect>
             )
           })
