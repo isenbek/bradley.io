@@ -1,4 +1,5 @@
 import { test, expect, type ConsoleMessage, type Page } from "@playwright/test"
+import AxeBuilder from "@axe-core/playwright"
 import { PATHS, slugFor } from "./urls"
 
 /**
@@ -16,6 +17,8 @@ import { PATHS, slugFor } from "./urls"
  *  8. The sticky nav is present at top, the fixed footer is present at bottom
  *  9. No 4xx/5xx network responses
  * 10. Full-page screenshot saved under playwright-report/screenshots/{viewport}/
+ * 11. axe-core a11y scan: WCAG 2 A + 2 AA + 2.1 A + 2.1 AA. Critical/serious
+ *     violations fail the test; moderate/minor violations are warnings.
  *
  * Tests are tagged `@audit`. Run with: npm run audit (or audit:all for sitemap).
  */
@@ -120,7 +123,9 @@ for (const path of PATHS) {
             message: `multiple <h1>s (${h1Texts.length}): ${h1Texts.slice(0, 3).join(" | ")}`,
           })
         } else {
-          expect(h1Texts[0].length, `h1 too short on ${path}`).toBeGreaterThan(2)
+          // Some legitimate project names are 2 chars (e.g. "CC", "OS").
+          // Only flag actually-empty h1s; non-empty short names are valid.
+          expect(h1Texts[0].length, `h1 empty on ${path}`).toBeGreaterThan(0)
         }
 
         // 3. meta description
@@ -229,6 +234,80 @@ for (const path of PATHS) {
           body: screenshot,
           contentType: "image/png",
         })
+
+        // 11. axe-core a11y scan
+        //   - Tags: WCAG 2 A + AA + 2.1 A + AA. (AAA is aspirational; not enforced.)
+        //   - Exclude: known false positives on framework chrome. Color-contrast
+        //     is included — bio-blue brand checks come from this.
+        const axe = new AxeBuilder({ page })
+          .withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"])
+          // Skip rules that flag dev/framework noise we can't fix.
+          .disableRules([
+            // Lucide icons render aria-hidden svgs without a role — fine for decorative use
+            "svg-img-alt",
+          ])
+        const axeResults = await axe.analyze()
+
+        const blocking = axeResults.violations.filter(
+          (v) => v.impact === "critical" || v.impact === "serious"
+        )
+        const advisory = axeResults.violations.filter(
+          (v) => v.impact === "moderate" || v.impact === "minor"
+        )
+
+        if (axeResults.violations.length > 0) {
+          const dump = axeResults.violations
+            .map((v) => {
+              const targets = v.nodes
+                .slice(0, 8)
+                .map((n) => {
+                  // For color-contrast, pull the fg/bg/ratio data straight
+                  // from the check result so reports name the exact ratio.
+                  let detail = ""
+                  const check = (n.any ?? [])[0]
+                  if (check?.data && v.id === "color-contrast") {
+                    const d = check.data as {
+                      fgColor?: string
+                      bgColor?: string
+                      contrastRatio?: number
+                      expectedContrastRatio?: number
+                      fontSize?: string
+                      fontWeight?: string
+                    }
+                    detail = `\n        fg=${d.fgColor} bg=${d.bgColor} ratio=${d.contrastRatio}:1 need=${d.expectedContrastRatio}:1 (${d.fontSize}, ${d.fontWeight})`
+                  } else if (check?.message) {
+                    detail = "\n        " + check.message
+                  }
+                  return `      ${n.target.join(" ")}${detail}`
+                })
+                .join("\n")
+              return `[${(v.impact || "n/a").toUpperCase()}] ${v.id} — ${v.help}\n  ${v.helpUrl}\n${targets}${
+                v.nodes.length > 8 ? `\n      …+${v.nodes.length - 8} more` : ""
+              }`
+            })
+            .join("\n\n")
+          await testInfo.attach(`axe-${project}-${slug}.txt`, {
+            body: dump,
+            contentType: "text/plain",
+          })
+        }
+
+        if (blocking.length > 0) {
+          notes.push({
+            level: "error",
+            message: `a11y violations (critical/serious): ${blocking
+              .map((v) => `${v.id} (${v.nodes.length})`)
+              .join(", ")}`,
+          })
+        }
+        for (const v of advisory) {
+          notes.push({
+            level: "warn",
+            message: `a11y ${v.impact}: ${v.id} (${v.nodes.length} node${
+              v.nodes.length === 1 ? "" : "s"
+            })`,
+          })
+        }
 
         // 9 / final report
         if (consoleErrors.length > 0) {

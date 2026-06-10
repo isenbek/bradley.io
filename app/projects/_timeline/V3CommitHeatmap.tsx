@@ -87,7 +87,12 @@ export function V3CommitHeatmap({ data }: { data: CommitDay[] }) {
   const activeDays = days.filter((d) => d.commits > 0).length
 
   return (
-    <div className="v3-cheat">
+    <div
+      className="v3-cheat"
+      role="region"
+      aria-label="Commit activity heatmap, last 52 weeks"
+      tabIndex={0}
+    >
       <div
         style={{
           display: "flex",

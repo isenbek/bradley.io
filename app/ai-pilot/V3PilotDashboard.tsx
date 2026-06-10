@@ -36,6 +36,7 @@ function ActivityPanel({ data }: { data: AIPilotData }) {
           {heatmap.map((d) => (
             <div
               key={d.date}
+              role="img"
               className="v3-heatmap__cell"
               data-i={d.intensity}
               title={`${d.date} — ${d.count} messages, ${d.sessions} sessions`}
@@ -71,6 +72,7 @@ function ActivityPanel({ data }: { data: AIPilotData }) {
             return (
               <div
                 key={h.hour}
+                role="img"
                 className="v3-bars__bar"
                 data-peak={isPeak ? "true" : "false"}
                 style={{ height: `${Math.max(pct, 4)}%` }}

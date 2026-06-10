@@ -561,7 +561,7 @@ export function V3TrngDashboard() {
             rel="noopener noreferrer"
             className="v3-btn v3-btn--primary"
             style={{
-              background: "var(--v3-green)",
+              background: "var(--v3-green-dk)",
               gap: 6,
             }}
           >

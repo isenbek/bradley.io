@@ -140,7 +140,10 @@ export default async function V3ProjectDetail({
           <div className="v3-detail-meta">
             <span
               className="v3-pcard__cat"
-              style={{ ["--v3-pcard-color" as string]: cat.color }}
+              style={{
+                ["--v3-pcard-color" as string]: cat.color,
+                ["--v3-pcard-ink" as string]: cat.ink,
+              }}
             >
               {cat.label}
             </span>

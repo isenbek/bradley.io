@@ -43,13 +43,15 @@ type CatId = "ai" | "data" | "communication" | "infrastructure" | "business"
 
 const CAT_STYLE: Record<
   CatId,
-  { color: string; Icon: typeof Cpu }
+  { color: string; ink: string; Icon: typeof Cpu }
 > = {
-  ai:             { color: "#EE766C", Icon: Cpu },           // coral
-  data:           { color: "#13B8F3", Icon: Database },      // bio blue
-  communication:  { color: "#169E73", Icon: MessageSquare }, // green
-  infrastructure: { color: "#EDB427", Icon: Shield },        // gold
-  business:       { color: "#A855F7", Icon: Briefcase },     // violet
+  // `color` = bright brand hue used for borders, dots, gradient accents.
+  // `ink`   = darker accessible variant used for TEXT (passes 4.5:1 on cream).
+  ai:             { color: "#EE766C", ink: "#B43A30", Icon: Cpu },           // coral
+  data:           { color: "#13B8F3", ink: "#08749B", Icon: Database },      // bio blue
+  communication:  { color: "#169E73", ink: "#0F7355", Icon: MessageSquare }, // green
+  infrastructure: { color: "#EDB427", ink: "#8C6306", Icon: Shield },        // gold
+  business:       { color: "#A855F7", ink: "#7E22CE", Icon: Briefcase },     // violet
 }
 
 function loadCatalog(): McpCatalog | null {
@@ -188,7 +190,10 @@ export default function V3McpPage() {
                       <V3Reveal key={svc.id} delay={i * 35}>
                         <article
                           className="v3-svc"
-                          style={{ ["--v3-svc-color" as string]: style.color }}
+                          style={{
+                            ["--v3-svc-color" as string]: style.color,
+                            ["--v3-svc-ink" as string]: style.ink,
+                          }}
                         >
                           <div className="v3-svc__bar" aria-hidden />
                           <div className="v3-svc__body">

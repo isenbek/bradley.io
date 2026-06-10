@@ -56,7 +56,10 @@ function StudyCard({ study }: { study: Study }) {
   return (
     <article
       className="v3-study"
-      style={{ ["--v3-study-color" as string]: cat.color }}
+      style={{
+        ["--v3-study-color" as string]: cat.color,
+        ["--v3-study-ink" as string]: cat.ink,
+      }}
     >
       <div className="v3-study__bar" aria-hidden />
       <div className="v3-study__body">

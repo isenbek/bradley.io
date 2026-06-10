@@ -12,6 +12,7 @@ export function V3LanguageBar({ languages }: { languages: Record<string, number>
           return (
             <div
               key={name}
+              role="img"
               className="v3-langbar__seg"
               title={`${name} · ${repos} repos · ${pct.toFixed(1)}%`}
               style={{

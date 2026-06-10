@@ -15,12 +15,21 @@
   --v3-blue-700: #08749B;
   --v3-blue-800: #065673;
   --v3-blue-900: #043C50;
+  /* Semantic text color — guaranteed ≥4.5:1 on cream/paper/white for
+     small body text. Use this for any text rendered on a light bg.
+     Brand colors (--v3-blue-500) stay on logos, dots, large display
+     text, and decorative accents. */
+  --v3-blue-ink: #08749B;
 
   /* Accents */
   --v3-coral: #EE766C;
-  --v3-coral-dk: #C5443A;
+  /* coral-dk darkened from #C5443A → #B43A30 so coral text on its
+     tinted pill bg (#FBE6E3) clears 4.5:1 (was 4.11:1). */
+  --v3-coral-dk: #B43A30;
   --v3-gold: #EDB427;
-  --v3-gold-dk: #B07F08;
+  /* gold-dk darkened from #B07F08 → #8C6306 so gold text on tinted
+     pill bg (#FCF2D8) clears 4.5:1 (was ~3.4:1). */
+  --v3-gold-dk: #8C6306;
   --v3-green: #169E73;
   --v3-green-dk: #0F7355;
 
@@ -232,7 +241,7 @@ body:has(.v3) {
 
 .v3-nav__links a:hover,
 .v3-nav__links a[aria-current="page"] {
-  color: var(--v3-blue-600);
+  color: var(--v3-blue-ink);
 }
 
 
@@ -396,7 +405,7 @@ body:has(.v3) {
   font-size: 12px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--v3-blue-600);
+  color: var(--v3-blue-ink);
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -421,7 +430,9 @@ body:has(.v3) {
 }
 
 .v3-hero h1 .v3-accent {
-  color: var(--v3-blue-500);
+  /* Large bold hero text — blue-600 still reads "bio blue" but lands
+     at ≥3:1 against cream (axe requires 3:1 for ≥18.66px bold). */
+  color: var(--v3-blue-600);
 }
 
 .v3-hero .v3-lede {
@@ -496,7 +507,7 @@ body:has(.v3) {
 .v3-sec-head__num {
   font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
   font-size: 13px;
-  color: var(--v3-blue-500);
+  color: var(--v3-blue-ink);
   letter-spacing: 0.1em;
 }
 
@@ -573,7 +584,7 @@ body:has(.v3) {
 }
 
 .v3-btn--primary {
-  background: var(--v3-blue-500);
+  background: var(--v3-blue-ink);
   color: #fff;
 }
 
@@ -604,12 +615,12 @@ body:has(.v3) {
 }
 
 .v3-btn--coral {
-  background: var(--v3-coral);
+  background: var(--v3-coral-dk);
   color: #fff;
 }
 
 .v3-btn--coral:hover {
-  background: var(--v3-coral-dk);
+  filter: brightness(1.1);
 }
 
 /* ============ CARDS ============ */
@@ -746,7 +757,7 @@ body:has(.v3) {
   font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
   font-size: 12px;
   letter-spacing: 0.06em;
-  color: var(--v3-blue-600);
+  color: var(--v3-blue-ink);
   text-transform: uppercase;
   margin-bottom: 4px;
 }
@@ -840,7 +851,7 @@ body:has(.v3) {
   text-wrap: balance;
 }
 
-.v3-page-head h1 .v3-accent { color: var(--v3-blue-500); }
+.v3-page-head h1 .v3-accent { color: var(--v3-blue-600); }
 
 .v3-page-head__lede {
   font-size: clamp(16px, 2vw, 19px);
@@ -927,7 +938,7 @@ body:has(.v3) {
 .v3-service__num {
   font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
   font-size: 11px;
-  color: var(--v3-blue-500);
+  color: var(--v3-blue-ink);
   letter-spacing: 0.1em;
   padding-top: 8px;
 }
@@ -1160,7 +1171,8 @@ body:has(.v3) {
   padding: 4px 10px;
   border-radius: var(--v3-r-sm);
   background: color-mix(in srgb, var(--v3-pcard-color, var(--v3-blue-500)) 10%, transparent);
-  color: var(--v3-pcard-color, var(--v3-blue-500));
+  /* Text — dark ink variant of the per-card color (≥4.5:1 on tinted bg). */
+  color: var(--v3-pcard-ink, var(--v3-blue-ink));
 }
 
 .v3-pcard__research {
@@ -1313,9 +1325,18 @@ body:has(.v3) {
 }
 
 .v3-filter button .v3-filter__count {
-  opacity: 0.6;
+  /* Was opacity: 0.6 which dropped contrast below 4.5:1; use the slate
+     token at full opacity so the count stays visible without falling
+     under WCAG AA. */
+  color: var(--v3-slate);
   margin-left: 4px;
   font-weight: 500;
+}
+
+.v3-filter button[data-active="true"] .v3-filter__count {
+  /* Active filter bg is charcoal — slate on charcoal is 2.85:1, fails.
+     Use the paper tint that the active button label already uses. */
+  color: color-mix(in srgb, var(--v3-paper) 75%, transparent);
 }
 
 /* ============ EMPTY STATE ============ */
@@ -1767,7 +1788,9 @@ body:has(.v3) {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.12em;
-  color: var(--v3-svc-color, var(--v3-blue-500));
+  /* Text — use the dark ink variant of the per-service color so it
+     hits 4.5:1 on cream. Falls through to the global blue-ink token. */
+  color: var(--v3-svc-ink, var(--v3-blue-ink));
 }
 
 .v3-svc__count {
@@ -1807,7 +1830,8 @@ body:has(.v3) {
   padding: 3px 8px;
   border-radius: var(--v3-r-sm);
   background: color-mix(in srgb, var(--v3-svc-color, var(--v3-blue-500)) 10%, transparent);
-  color: var(--v3-svc-color, var(--v3-blue-500));
+  /* Text — use the dark ink variant of the per-service color. */
+  color: var(--v3-svc-ink, var(--v3-blue-ink));
   border: 1px solid color-mix(in srgb, var(--v3-svc-color, var(--v3-blue-500)) 22%, transparent);
 }
 
@@ -1829,7 +1853,7 @@ body:has(.v3) {
   gap: 4px;
   font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
   font-size: 11px;
-  color: var(--v3-svc-color, var(--v3-blue-500));
+  color: var(--v3-svc-ink, var(--v3-blue-ink));
   text-decoration: none;
   margin-left: auto;
   font-weight: 600;
@@ -1884,7 +1908,8 @@ body:has(.v3) {
   padding: 4px 10px;
   border-radius: var(--v3-r-sm);
   background: color-mix(in srgb, var(--v3-study-color, var(--v3-blue-500)) 10%, transparent);
-  color: var(--v3-study-color, var(--v3-blue-500));
+  /* Text — dark ink variant of the per-study color. */
+  color: var(--v3-study-ink, var(--v3-blue-ink));
 }
 
 .v3-study__status {
@@ -2281,7 +2306,7 @@ body:has(.v3) {
 
 .v3-tabs button:hover { color: var(--v3-blue-700); }
 .v3-tabs button[data-active="true"] {
-  background: var(--v3-blue-500);
+  background: var(--v3-blue-ink);
   color: #fff;
 }
 
@@ -2664,7 +2689,7 @@ body:has(.v3) {
 .v3-bandsel button:hover { color: var(--v3-coral-dk); }
 
 .v3-bandsel button[data-active="true"] {
-  background: var(--v3-coral);
+  background: var(--v3-coral-dk);
   color: #fff;
 }
 
@@ -3772,7 +3797,7 @@ body:has(.v3) {
 }
 
 .v3-radar__rangebar button[data-active="true"] {
-  background: var(--v3-blue-500);
+  background: var(--v3-blue-ink);
   color: #fff;
 }
 
@@ -4318,7 +4343,8 @@ body:has(.v3) {
   padding: 3px 10px;
   border-radius: var(--v3-r-pill);
   background: color-mix(in srgb, var(--v3-mission-color, var(--v3-blue-500)) 12%, transparent);
-  color: var(--v3-mission-color, var(--v3-blue-500));
+  /* Text — dark ink variant of the mission accent (≥4.5:1 on cream). */
+  color: var(--v3-mission-ink, var(--v3-blue-ink));
 }
 
 .v3-mission-hero__gh {
@@ -4413,7 +4439,7 @@ body:has(.v3) {
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--v3-mission-color, var(--v3-blue-500));
+  color: var(--v3-mission-ink, var(--v3-blue-ink));
   margin-top: auto;
 }
 

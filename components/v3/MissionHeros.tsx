@@ -156,6 +156,15 @@ const ACCENT_TO_VAR: Record<MissionMeta["accent"], string> = {
   green: "var(--v3-green)",
 }
 
+// Dark text variant of each accent — for the eyebrow pill text + CTA text
+// that lives on the cream card. Each clears 4.5:1 against cream.
+const ACCENT_INK_TO_VAR: Record<MissionMeta["accent"], string> = {
+  blue: "var(--v3-blue-ink)",
+  coral: "var(--v3-coral-dk)",
+  gold: "var(--v3-gold-dk)",
+  green: "var(--v3-green-dk)",
+}
+
 /**
  * Mission timeline hero cards — 4-up grid above ActivityPulse on home.
  * Reads every mission timeline JSON server-side so totals are always live.
@@ -176,12 +185,16 @@ export function MissionHeros() {
     >
       {data.map(({ meta, tl }) => {
         const accentColor = ACCENT_TO_VAR[meta.accent]
+        const accentInk = ACCENT_INK_TO_VAR[meta.accent]
         return (
           <article
             key={meta.slug}
             className="v3-mission-hero"
             style={
-              { ["--v3-mission-color" as string]: accentColor } as React.CSSProperties
+              {
+                ["--v3-mission-color" as string]: accentColor,
+                ["--v3-mission-ink" as string]: accentInk,
+              } as React.CSSProperties
             }
           >
             <div className="v3-mission-hero__bar" aria-hidden />

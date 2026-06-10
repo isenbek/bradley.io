@@ -84,14 +84,20 @@ export default async function V3LabPage() {
                     <Link
                       href={`/projects/${p.slug}`}
                       className="v3-pcard"
-                      style={{ ["--v3-pcard-color" as string]: "var(--v3-gold)" }}
+                      style={{
+                        ["--v3-pcard-color" as string]: "var(--v3-gold)",
+                        ["--v3-pcard-ink" as string]: "var(--v3-gold-dk)",
+                      }}
                     >
                       <div className="v3-pcard__bar" aria-hidden />
                       <div className="v3-pcard__body" style={{ gap: 14, padding: "24px 26px" }}>
                         <div className="v3-pcard__row">
                           <span
                             className="v3-pcard__cat"
-                            style={{ ["--v3-pcard-color" as string]: cat.color }}
+                            style={{
+                              ["--v3-pcard-color" as string]: cat.color,
+                              ["--v3-pcard-ink" as string]: cat.ink,
+                            }}
                           >
                             {cat.label}
                           </span>

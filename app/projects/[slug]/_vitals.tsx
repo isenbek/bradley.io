@@ -140,7 +140,7 @@ export function SourceContribution({ project }: { project: Project }) {
               <strong style={{ color: "var(--v3-charcoal)" }}>
                 {s.n >= 1000 ? `${(s.n / 1000).toFixed(1)}k` : s.n}
               </strong>
-              <span style={{ opacity: 0.65 }}>{pct.toFixed(0)}%</span>
+              <span style={{ color: "var(--v3-slate)" }}>{pct.toFixed(0)}%</span>
             </span>
           )
         })}

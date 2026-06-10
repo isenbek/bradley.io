@@ -69,7 +69,12 @@ export function TimelineRepoDossier({ match }: { match: TimelineMatch }) {
           <div className="v3-detail-meta">
             <span
               className="v3-pcard__cat"
-              style={{ ["--v3-pcard-color" as string]: accent }}
+              style={{
+                ["--v3-pcard-color" as string]: accent,
+                // Language hues vary too much to map per-color — use
+                // charcoal for guaranteed ≥4.5:1 on the 10%-tint background.
+                ["--v3-pcard-ink" as string]: "var(--v3-charcoal)",
+              }}
             >
               {org}
             </span>
@@ -93,7 +98,9 @@ export function TimelineRepoDossier({ match }: { match: TimelineMatch }) {
           </div>
 
           <V3Reveal>
-            <h1 className="v3-detail-name">{repo.name}</h1>
+            <h1 className="v3-detail-name">
+              {repo.name.length <= 4 ? `${orgSlug}/${repo.name}` : repo.name}
+            </h1>
           </V3Reveal>
           <V3Reveal delay={80}>
             <p className="v3-detail-tag">
