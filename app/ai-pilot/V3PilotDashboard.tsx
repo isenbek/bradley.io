@@ -105,13 +105,13 @@ function ModelsPanel({ data }: { data: AIPilotData }) {
                 <span className="v3-model__lbl">{r.displayName}</span>
                 <span className="v3-model__sub">
                   {compact(r.inputTokens + r.outputTokens)} tokens ·{" "}
-                  {(r.costShare * 100).toFixed(1)}% of usage
+                  {r.costShare.toFixed(1)}% of usage
                 </span>
               </div>
               <div className="v3-model__share">
                 <div
                   className="v3-model__share-fill"
-                  style={{ width: `${Math.max(r.costShare * 100, 2)}%` }}
+                  style={{ width: `${Math.min(Math.max(r.costShare, 2), 100)}%` }}
                 />
               </div>
               <div className="v3-model__prof">{r.proficiency}</div>
@@ -136,7 +136,7 @@ function ModelsPanel({ data }: { data: AIPilotData }) {
             { lbl: "Cache create", val: compact(economy.totalCacheCreateTokens) },
             {
               lbl: "Cache efficiency",
-              val: `${(economy.cacheEfficiency * 100).toFixed(1)}%`,
+              val: `${economy.cacheEfficiency.toFixed(1)}%`,
             },
             { lbl: "Web searches", val: economy.webSearches.toLocaleString() },
           ].map((s) => (
@@ -280,7 +280,7 @@ function CompetencyPanel({ data }: { data: AIPilotData }) {
             <div key={s.lbl} className="v3-stylemix__cell">
               <div className="v3-stylemix__lbl">{s.lbl}</div>
               <div className="v3-stylemix__val">
-                {Math.round(s.val * 100)}
+                {Math.round(s.val)}
                 <span
                   style={{
                     fontSize: 14,
