@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { ArrowLeft, Bot, GitBranch, MessageSquare } from "lucide-react"
+import { CommitPulse } from "./_commit-pulse"
 import { GitHubCard, SourceContribution, VitalsStrip } from "./_vitals"
 import { loadSiteDataStatic } from "@/lib/site-data"
 import type { CategoryId } from "@/lib/project-categories"
@@ -149,6 +150,10 @@ export default async function V3ProjectDetail({
             {/* MAIN */}
             <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
               <V3Reveal>
+                <CommitPulse project={project} />
+              </V3Reveal>
+
+              <V3Reveal delay={30}>
                 <article className="v3-panel">
                   <div className="v3-panel-head">Where the work came from</div>
                   <SourceContribution project={project} />
