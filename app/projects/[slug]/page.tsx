@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 import { ArrowLeft, Bot, GitBranch, MessageSquare } from "lucide-react"
+import { GitHubCard, SourceContribution, VitalsStrip } from "./_vitals"
 import { loadSiteDataStatic } from "@/lib/site-data"
 import type { CategoryId } from "@/lib/project-categories"
 import { V3_CATEGORY } from "../_categories"
@@ -63,7 +64,17 @@ export default async function V3ProjectDetail({
   if (!project) notFound()
 
   const cat = V3_CATEGORY[project.category as CategoryId] ?? V3_CATEGORY.systems
-  const related = data.activityFeed.filter((a) => a.projectSlug === project.slug).slice(0, 8)
+  const related = data.activityFeed
+    .filter((a) => a.projectSlug === project.slug)
+    .slice(0, 15)
+  // If a project has no per-slug activity items (most don't), fall back to
+  // showing recent activity from same-category peers so the panel isn't empty.
+  const relatedFallback =
+    related.length === 0
+      ? data.activityFeed
+          .filter((a) => a.category === project.category && a.projectSlug !== project.slug)
+          .slice(0, 10)
+      : []
 
   const breadcrumb = {
     "@context": "https://schema.org",
@@ -122,14 +133,30 @@ export default async function V3ProjectDetail({
         </div>
       </header>
 
+      {/* VITALS STRIP =================================================== */}
+      <section style={{ padding: "0 0 32px" }}>
+        <div className="v3-wrap">
+          <V3Reveal>
+            <VitalsStrip project={project} />
+          </V3Reveal>
+        </div>
+      </section>
+
       {/* MAIN + SIDEBAR ================================================== */}
       <section className="v3-section" style={{ paddingTop: 8 }}>
         <div className="v3-wrap">
           <div className="v3-twocol">
             {/* MAIN */}
             <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+              <V3Reveal>
+                <article className="v3-panel">
+                  <div className="v3-panel-head">Where the work came from</div>
+                  <SourceContribution project={project} />
+                </article>
+              </V3Reveal>
+
               {project.description && project.description !== project.tagline ? (
-                <V3Reveal>
+                <V3Reveal delay={40}>
                   <article className="v3-panel">
                     <div className="v3-panel-head">About</div>
                     <p className="v3-prose">{project.description}</p>
@@ -155,12 +182,36 @@ export default async function V3ProjectDetail({
                 </V3Reveal>
               ) : null}
 
-              {related.length > 0 ? (
+              {related.length > 0 || relatedFallback.length > 0 ? (
                 <V3Reveal delay={120}>
                   <article className="v3-panel">
-                    <div className="v3-panel-head">Recent activity</div>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "baseline",
+                        marginBottom: 6,
+                      }}
+                    >
+                      <div className="v3-panel-head" style={{ marginBottom: 0 }}>
+                        {related.length > 0
+                          ? `Recent activity · ${related.length}`
+                          : `${cat.label} · same category`}
+                      </div>
+                      {relatedFallback.length > 0 ? (
+                        <span
+                          style={{
+                            fontFamily: "var(--font-v3-mono), monospace",
+                            fontSize: 10.5,
+                            color: "var(--v3-slate)",
+                          }}
+                        >
+                          peer activity
+                        </span>
+                      ) : null}
+                    </div>
                     <div className="v3-activity">
-                      {related.map((item, i) => {
+                      {(related.length > 0 ? related : relatedFallback).map((item, i) => {
                         const iconMod =
                           item.type === "claude-web"
                             ? "v3-activity__icon--web"
@@ -196,7 +247,13 @@ export default async function V3ProjectDetail({
 
             {/* SIDEBAR */}
             <aside className="v3-twocol__side">
-              <V3Reveal>
+              {project.sources.github ? (
+                <V3Reveal>
+                  <GitHubCard project={project} />
+                </V3Reveal>
+              ) : null}
+
+              <V3Reveal delay={project.sources.github ? 60 : 0}>
                 <div className="v3-panel">
                   <div className="v3-panel-head">Stats</div>
                   <div className="v3-stat-row">
