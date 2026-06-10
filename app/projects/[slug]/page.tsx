@@ -223,7 +223,14 @@ export default async function V3ProjectDetail({
 
               {related.length > 0 || relatedFallback.length > 0 ? (
                 <V3Reveal delay={120}>
-                  <article className="v3-panel">
+                  <article
+                    className="v3-panel"
+                    // When we're falling back to peer activity (the project
+                    // has no direct feed), the list shifts every time the
+                    // activity feed updates — mark it so visual regression
+                    // skips it via the [data-live] mask.
+                    data-live={relatedFallback.length > 0 ? "peer-activity" : undefined}
+                  >
                     <div
                       style={{
                         display: "flex",
