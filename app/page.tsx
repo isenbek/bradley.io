@@ -57,27 +57,6 @@ export default async function V3Home() {
           </V3Reveal>
 
           <V3Reveal delay={280}>
-            <div className="v3-hero__meta" style={{ marginTop: 22 }}>
-              <span className="v3-chip">
-                <span className="v3-chip__dot" style={{ background: "var(--v3-blue-500)" }} />
-                Bio Blue
-              </span>
-              <span className="v3-chip">
-                <span className="v3-chip__dot" style={{ background: "var(--v3-coral)" }} />
-                Coral · energetic
-              </span>
-              <span className="v3-chip">
-                <span className="v3-chip__dot" style={{ background: "var(--v3-gold)" }} />
-                Gold · warm
-              </span>
-              <span className="v3-chip">
-                <span className="v3-chip__dot" style={{ background: "var(--v3-green)" }} />
-                Green · organic
-              </span>
-            </div>
-          </V3Reveal>
-
-          <V3Reveal delay={340}>
             <div style={{ marginTop: 32 }}>
               <ActivityPulse />
             </div>

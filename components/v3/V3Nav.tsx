@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Menu, X } from "lucide-react"
+import { Github, Menu, X } from "lucide-react"
 import { BioLogo } from "./BioLogo"
 
 const LINKS = [
@@ -80,6 +80,25 @@ export function V3Nav() {
                 </Link>
               )
             })}
+            <span className="v3-nav__divider" aria-hidden />
+            <a
+              href="https://github.com/isenbek"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="v3-nav__gh"
+              title="GitHub · @isenbek"
+            >
+              <Github size={13} strokeWidth={2.25} /> isenbek
+            </a>
+            <a
+              href="https://github.com/tinymachines"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="v3-nav__gh"
+              title="GitHub · @tinymachines"
+            >
+              <Github size={13} strokeWidth={2.25} /> tinymachines
+            </a>
           </div>
 
           <button
@@ -146,6 +165,31 @@ export function V3Nav() {
                 </li>
               )
             })}
+            <li className="v3-drawer__divider" aria-hidden />
+            <li>
+              <a
+                href="https://github.com/isenbek"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setOpen(false)}
+              >
+                <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+                  <Github size={18} strokeWidth={2.25} /> github.com/isenbek
+                </span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://github.com/tinymachines"
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setOpen(false)}
+              >
+                <span style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+                  <Github size={18} strokeWidth={2.25} /> github.com/tinymachines
+                </span>
+              </a>
+            </li>
           </ul>
         </div>
       </div>

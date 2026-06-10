@@ -58,31 +58,27 @@
   line-height: 1.6;
   min-height: 100dvh;
   position: relative;
-  overflow-x: hidden;
+  /* Do NOT set overflow here — it would make .v3 the scroll container and
+     break `position: sticky` on the nav. Horizontal overflow is clipped on
+     body below. */
 }
 
-/* Force the html/body backgrounds to match — root globals have a dark default */
+/* Force the html/body backgrounds to match — root globals have a dark default.
+   `overflow-x` lives on body (not on the .v3 wrapper) so the html element
+   stays the scroll container and nav `position: sticky` keeps working. */
 html:has(.v3),
 body:has(.v3) {
   background: var(--v3-cloud) !important;
   color: var(--v3-charcoal) !important;
+  overflow-x: hidden;
 }
 
-/* Sticky-footer layout: nav stays sticky at top during scroll (see .v3-nav);
-   the page is a flex column so the footer pins to the viewport bottom when
-   content is short, and scrolls naturally past content on long pages. */
-.v3 {
-  display: flex;
-  flex-direction: column;
-  min-height: 100dvh;
-}
-
+/* Fixed-footer layout. Both nav (top) and footer (bottom) are pinned during
+   scroll; main pads itself away from both. The wrapper isn't a scroll
+   container — html scrolls, nav sticks, footer is fixed. */
 .v3 > main {
-  flex: 1 0 auto;
-}
-
-.v3 > .v3-footer {
-  flex-shrink: 0;
+  /* Padding-bottom must match the footer height (~64px including padding). */
+  padding-bottom: 72px;
 }
 
 /* Blueprint dotted grid backdrop */
@@ -237,6 +233,41 @@ body:has(.v3) {
 .v3-nav__links a:hover,
 .v3-nav__links a[aria-current="page"] {
   color: var(--v3-blue-600);
+}
+
+.v3-nav__divider {
+  width: 1px;
+  height: 18px;
+  background: var(--v3-line);
+  margin: 0 4px;
+}
+
+.v3-nav__gh {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 12px !important;
+  border-radius: var(--v3-r-pill);
+  background: var(--v3-blue-50);
+  color: var(--v3-blue-700) !important;
+  border: 1px solid color-mix(in srgb, var(--v3-blue-500) 22%, transparent);
+  letter-spacing: 0.06em !important;
+  font-size: 11.5px !important;
+  text-transform: none !important;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.v3-nav__gh:hover {
+  background: var(--v3-blue-100);
+  border-color: var(--v3-blue-300);
+  color: var(--v3-blue-700) !important;
+}
+
+.v3-drawer__divider {
+  height: 1px;
+  background: var(--v3-line);
+  margin: 8px 0;
+  list-style: none;
 }
 
 .v3-nav__back {
@@ -4269,60 +4300,84 @@ body:has(.v3) {
 }
 
 /* ============ FOOTER ============ */
+/* Compact fixed-bottom footer bar — always visible during scroll. */
 .v3-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 49;
   background: var(--v3-charcoal);
   color: var(--v3-paper);
-  padding: 60px 0 40px;
-  margin-top: 40px;
-  position: relative;
-  z-index: 1;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.v3-footer__mark {
+.v3-footer__bar {
+  max-width: var(--v3-maxw);
+  margin: 0 auto;
+  padding: 10px 28px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
+  font-size: 11.5px;
+  color: var(--v3-mist);
+}
+
+.v3-footer__brand {
   display: inline-flex;
-  align-items: baseline;
+  align-items: center;
   gap: 8px;
-  line-height: 1;
+  text-decoration: none;
+  color: inherit;
+  flex-shrink: 0;
+  transition: opacity 0.2s;
 }
 
-.v3-footer__sub {
+.v3-footer__brand:hover { opacity: 0.85; }
+
+.v3-footer__brand-text {
   font-family: var(--font-v3-body), "Hanken Grotesk", sans-serif;
   font-weight: 700;
-  font-size: 24px;
+  font-size: 14px;
   letter-spacing: 0.06em;
   color: var(--v3-paper);
   text-transform: lowercase;
 }
 
-.v3-footer__dot {
-  color: var(--v3-blue-200);
-  margin-right: 2px;
-}
-
-.v3-footer p {
-  font-size: 14px;
+.v3-footer__loc {
   color: var(--v3-mist);
-  margin-top: 8px;
-}
-
-.v3-footer__meta {
-  font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
-  font-size: 12px;
-  color: var(--v3-mist);
-  margin-top: 20px;
+  font-size: 11px;
 }
 
 .v3-footer__build {
-  margin-top: 24px;
-  padding-top: 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 16px;
+  gap: 14px;
   flex-wrap: wrap;
-  font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
-  font-size: 11.5px;
-  color: var(--v3-mist);
+  justify-content: flex-end;
+}
+
+.v3-footer__gh {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  text-decoration: none;
+  color: var(--v3-paper);
+  padding: 4px 10px;
+  border-radius: var(--v3-r-pill);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-weight: 600;
+  transition: background 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+
+.v3-footer__gh:hover {
+  background: rgba(19, 184, 243, 0.18);
+  border-color: rgba(19, 184, 243, 0.4);
 }
 
 .v3-footer__version {
@@ -4331,32 +4386,41 @@ body:has(.v3) {
   gap: 8px;
   text-decoration: none;
   transition: opacity 0.2s;
+  color: inherit;
 }
 
-.v3-footer__version:hover {
-  opacity: 0.85;
-}
+.v3-footer__version:hover { opacity: 0.85; }
 
 .v3-footer__pill {
   display: inline-flex;
   align-items: center;
-  padding: 4px 10px;
+  padding: 3px 9px;
   border-radius: var(--v3-r-pill);
   background: var(--v3-blue-700);
   color: #fff;
   font-weight: 700;
   letter-spacing: 0.04em;
+  font-size: 11px;
 }
 
 .v3-footer__hash {
   color: var(--v3-blue-300);
 }
 
-.v3-footer__deployed {
-  color: var(--v3-mist);
-}
-
 .v3-footer__deployed strong {
   color: var(--v3-paper);
   font-weight: 700;
+}
+
+/* Hide the location + hash + GH labels on tight screens */
+@media (max-width: 760px) {
+  .v3-footer__loc,
+  .v3-footer__hash,
+  .v3-footer__deployed {
+    display: none;
+  }
+  .v3-footer__bar { padding: 8px 14px; gap: 10px; }
+  .v3-footer__build { gap: 8px; }
+  .v3-footer__gh span,
+  .v3-footer__gh { font-size: 10.5px; padding: 3px 7px; }
 }
