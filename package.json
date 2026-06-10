@@ -11,10 +11,12 @@
     "start": "next start",
     "lint": "eslint .",
     "audit": "playwright test",
-    "audit:all": "AUDIT_SCOPE=all playwright test",
+    "audit:all": "AUDIT_SCOPE=all playwright test tests/site-audit.spec.ts",
     "audit:desktop": "playwright test --project=desktop",
     "audit:tablet": "playwright test --project=tablet",
     "audit:mobile": "playwright test --project=mobile",
+    "audit:visual": "playwright test tests/visual.spec.ts",
+    "audit:visual:update": "playwright test tests/visual.spec.ts --update-snapshots",
     "audit:report": "playwright show-report"
   },
   "dependencies": {
