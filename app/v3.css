@@ -235,40 +235,6 @@ body:has(.v3) {
   color: var(--v3-blue-600);
 }
 
-.v3-nav__divider {
-  width: 1px;
-  height: 18px;
-  background: var(--v3-line);
-  margin: 0 4px;
-}
-
-.v3-nav__gh {
-  display: inline-flex !important;
-  align-items: center;
-  gap: 5px;
-  padding: 4px 12px !important;
-  border-radius: var(--v3-r-pill);
-  background: var(--v3-blue-50);
-  color: var(--v3-blue-700) !important;
-  border: 1px solid color-mix(in srgb, var(--v3-blue-500) 22%, transparent);
-  letter-spacing: 0.06em !important;
-  font-size: 11.5px !important;
-  text-transform: none !important;
-  transition: background 0.15s, border-color 0.15s;
-}
-
-.v3-nav__gh:hover {
-  background: var(--v3-blue-100);
-  border-color: var(--v3-blue-300);
-  color: var(--v3-blue-700) !important;
-}
-
-.v3-drawer__divider {
-  height: 1px;
-  background: var(--v3-line);
-  margin: 8px 0;
-  list-style: none;
-}
 
 .v3-nav__back {
   margin-left: 10px;
@@ -4300,6 +4266,149 @@ body:has(.v3) {
 }
 
 /* ============ FOOTER ============ */
+/* ============ MISSION HERO CARD (home) ============ */
+.v3-mission-hero {
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--v3-r-lg);
+  border: 1px solid var(--v3-line);
+  background: var(--v3-white);
+  box-shadow: var(--v3-sh-1);
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+}
+
+.v3-mission-hero:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--v3-sh-2);
+  border-color: color-mix(in srgb, var(--v3-mission-color, var(--v3-blue-500)) 38%, var(--v3-line));
+}
+
+.v3-mission-hero__bar {
+  height: 4px;
+  background: var(--v3-mission-color, var(--v3-blue-500));
+}
+
+.v3-mission-hero__body {
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.v3-mission-hero__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.v3-mission-hero__eyebrow {
+  font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: var(--v3-r-pill);
+  background: color-mix(in srgb, var(--v3-mission-color, var(--v3-blue-500)) 12%, transparent);
+  color: var(--v3-mission-color, var(--v3-blue-500));
+}
+
+.v3-mission-hero__gh {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: var(--v3-r-pill);
+  background: var(--v3-paper);
+  color: var(--v3-slate);
+  border: 1px solid var(--v3-line);
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.v3-mission-hero__gh:hover {
+  background: var(--v3-charcoal);
+  color: var(--v3-paper);
+  border-color: var(--v3-charcoal);
+}
+
+.v3-mission-hero__name {
+  font-family: var(--font-v3-display), "Bricolage Grotesque", sans-serif;
+  font-weight: 800;
+  font-size: 26px;
+  letter-spacing: -0.025em;
+  color: var(--v3-charcoal);
+  line-height: 1.1;
+  margin: 0;
+}
+
+.v3-mission-hero__lede {
+  font-size: 13.5px;
+  color: var(--v3-ink);
+  line-height: 1.5;
+  margin: 0;
+  min-height: 2.6em;
+}
+
+.v3-mission-hero__stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  background: var(--v3-cloud);
+  border: 1px solid var(--v3-line);
+  border-radius: var(--v3-r-md);
+  padding: 10px 0;
+}
+
+.v3-mission-hero__stat {
+  text-align: center;
+  border-right: 1px solid var(--v3-line);
+  padding: 0 4px;
+}
+
+.v3-mission-hero__stat:last-child { border-right: none; }
+
+.v3-mission-hero__stat-val {
+  font-family: var(--font-v3-display), "Bricolage Grotesque", sans-serif;
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: -0.02em;
+  color: var(--v3-charcoal);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.v3-mission-hero__stat-lbl {
+  font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--v3-slate);
+  margin-top: 4px;
+}
+
+.v3-mission-hero__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--v3-mission-color, var(--v3-blue-500));
+  margin-top: auto;
+}
+
 /* Compact fixed-bottom footer bar — always visible during scroll. */
 .v3-footer {
   position: fixed;

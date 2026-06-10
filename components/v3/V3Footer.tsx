@@ -52,6 +52,15 @@ export function V3Footer() {
             <Github size={13} strokeWidth={2.25} /> tinymachines
           </a>
           <a
+            href="https://github.com/Nominate-AI"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="v3-footer__gh"
+            title="GitHub · Nominate-AI"
+          >
+            <Github size={13} strokeWidth={2.25} /> Nominate-AI
+          </a>
+          <a
             href={`https://github.com/isenbek/bradley.io/commit/${buildInfo.commitHashFull}`}
             target="_blank"
             rel="noopener noreferrer"

@@ -3,6 +3,7 @@ import Link from "next/link"
 import { ActivityPulse } from "@/components/v3/ActivityPulse"
 import { ActivityFeedList } from "@/components/v3/ActivityFeedList"
 import { HeroStats } from "@/components/v3/HeroStats"
+import { MissionHeros } from "@/components/v3/MissionHeros"
 import { V3Reveal } from "@/components/v3/V3Reveal"
 import { loadSiteDataStatic } from "@/lib/site-data"
 import { V3_CATEGORY } from "./projects/_categories"
@@ -56,8 +57,23 @@ export default async function V3Home() {
             </div>
           </V3Reveal>
 
-          <V3Reveal delay={280}>
-            <div style={{ marginTop: 32 }}>
+          <V3Reveal delay={260}>
+            <div style={{ marginTop: 36 }}>
+              <div
+                className="v3-sec-head__num"
+                style={{
+                  color: "var(--v3-slate)",
+                  marginBottom: 12,
+                }}
+              >
+                MISSION TIMELINES
+              </div>
+              <MissionHeros />
+            </div>
+          </V3Reveal>
+
+          <V3Reveal delay={320}>
+            <div style={{ marginTop: 28 }}>
               <ActivityPulse />
             </div>
           </V3Reveal>

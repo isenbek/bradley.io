@@ -19,6 +19,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const staticPages: MetadataRoute.Sitemap = [
     { url: base, changeFrequency: "weekly", priority: 1.0, lastModified: now },
     { url: `${base}/about`, changeFrequency: "monthly", priority: 0.8, lastModified: now },
+    { url: `${base}/contact`, changeFrequency: "monthly", priority: 0.7, lastModified: now },
     { url: `${base}/projects`, changeFrequency: "weekly", priority: 0.9, lastModified: now },
     { url: `${base}/services`, changeFrequency: "monthly", priority: 0.8, lastModified: now },
     { url: `${base}/ai-pilot`, changeFrequency: "daily", priority: 0.7, lastModified: now },
@@ -26,11 +27,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/mcp`, changeFrequency: "weekly", priority: 0.7, lastModified: now },
     { url: `${base}/papers`, changeFrequency: "weekly", priority: 0.8, lastModified: now },
     { url: `${base}/cost-analysis`, changeFrequency: "weekly", priority: 0.8, lastModified: now },
+    { url: `${base}/the-shift`, changeFrequency: "monthly", priority: 0.8, lastModified: now },
     { url: `${base}/terminal`, changeFrequency: "monthly", priority: 0.5, lastModified: now },
     { url: `${base}/trng`, changeFrequency: "daily", priority: 0.6, lastModified: now },
     { url: `${base}/dragonfli`, changeFrequency: "daily", priority: 0.6, lastModified: now },
     { url: `${base}/sdr`, changeFrequency: "daily", priority: 0.6, lastModified: now },
-    { url: `${base}/style-guide`, changeFrequency: "monthly", priority: 0.3, lastModified: now },
+    // /style-guide was retired with the v3 swap — archived under app/_legacy.
   ]
 
   // Timeline pages
