@@ -201,12 +201,19 @@ export function MissionHeros() {
             <Link
               href={`/projects/${meta.slug}`}
               className="v3-mission-hero__body"
-              aria-label={`Explore the ${meta.displayName} timeline`}
+              // Don't prefetch from the home page — each mission timeline
+              // RSC payload is 15–22KB and prefetching all 4 burns the
+              // bandwidth the LCP element needs. The click navigation is
+              // still fast over the local server; the cost is just no
+              // background pre-warm.
+              prefetch={false}
             >
               <div className="v3-mission-hero__row">
                 <span className="v3-mission-hero__eyebrow">{meta.eyebrow}</span>
               </div>
-              <h3 className="v3-mission-hero__name">{meta.displayName}</h3>
+              {/* h2 — sits directly under the page h1, no intermediate level.
+                  Was h3 which Lighthouse flagged as a heading-order skip. */}
+              <h2 className="v3-mission-hero__name">{meta.displayName}</h2>
               <p className="v3-mission-hero__lede">{meta.lede}</p>
 
               <div className="v3-mission-hero__stats">

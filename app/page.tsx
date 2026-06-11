@@ -204,6 +204,10 @@ export default async function V3Home() {
                     key={p.slug}
                     href={`/projects/${p.slug}`}
                     className="v3-pcard"
+                    // 6 featured cards × default-prefetched RSC payloads
+                    // burns LCP-critical bandwidth; click navigation is
+                    // still fast over the local origin.
+                    prefetch={false}
                     style={{
                       ["--v3-pcard-color" as string]: cat.color,
                       ["--v3-pcard-ink" as string]: cat.ink,
@@ -267,7 +271,7 @@ export default async function V3Home() {
               <article className="v3-feature-card">
                 <div className="v3-feature-card__top">
                   <div className="v3-feature-card__ico">io</div>
-                  <h5>Edge & hardware</h5>
+                  <h3>Edge & hardware</h3>
                 </div>
                 <div className="v3-feature-card__body">
                   ESP32 mesh, SDR scanner stacks, TRNG generators, Pi clusters. Production hardware
@@ -280,7 +284,7 @@ export default async function V3Home() {
               <article className="v3-feature-card">
                 <div className="v3-feature-card__top">
                   <div className="v3-feature-card__ico">{"{ }"}</div>
-                  <h5>Data architecture</h5>
+                  <h3>Data architecture</h3>
                 </div>
                 <div className="v3-feature-card__body">
                   Pipelines, warehouses, telemetry. Fortune-500 scale without a cloud provider on
@@ -293,7 +297,7 @@ export default async function V3Home() {
               <article className="v3-feature-card">
                 <div className="v3-feature-card__top">
                   <div className="v3-feature-card__ico">∿</div>
-                  <h5>AI piloting</h5>
+                  <h3>AI piloting</h3>
                 </div>
                 <div className="v3-feature-card__body">
                   Claude as co-pilot for actual ship-it work — not demos. Workflow design,

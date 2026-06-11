@@ -10,6 +10,9 @@ import "./v3.css"
 import { V3Nav } from "@/components/v3/V3Nav"
 import { V3Footer } from "@/components/v3/V3Footer"
 
+// Bricolage (display) — used for h1, hero text, big numbers. Brand-critical.
+// `swap` so the webfont always wins; next/font auto-generates a metric-
+// matched fallback so the swap is visually quiet.
 const display = Bricolage_Grotesque({
   subsets: ["latin"],
   weight: ["400", "600", "700", "800"],
@@ -17,25 +20,38 @@ const display = Bricolage_Grotesque({
   display: "swap",
 })
 
+// Hanken (body) — used for paragraphs, lede, prose. The LCP element on
+// most pages is a body-font <p>. Using `optional` so Lighthouse measures
+// LCP at fallback render (instant after FCP) rather than waiting for the
+// webfont swap. With `adjustFontFallback: true` (default), next/font writes
+// a size-adjust'd fallback @font-face so the layout doesn't shift if the
+// webfont does arrive. Slow-network users keep the fallback for the page
+// session — a 5% identity cost in exchange for ~Good LCP for everyone.
 const body = Hanken_Grotesk({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   variable: "--font-v3-body",
-  display: "swap",
+  display: "optional",
+  adjustFontFallback: true,
 })
 
+// Baloo (logo) — only used on the bio·bradley.io wordmark; small surface
+// area, fine to keep on `optional`.
 const logo = Baloo_2({
   subsets: ["latin"],
   weight: ["600", "700", "800"],
   variable: "--font-v3-logo",
-  display: "swap",
+  display: "optional",
 })
 
+// JetBrains Mono — used on monospace labels / numerals throughout the UI.
+// Visual character matters less than body / display, `optional` keeps it
+// off the LCP critical path.
 const mono = JetBrains_Mono({
   subsets: ["latin"],
   weight: ["400", "500", "700"],
   variable: "--font-v3-mono",
-  display: "swap",
+  display: "optional",
 })
 
 export const metadata: Metadata = {

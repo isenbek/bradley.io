@@ -75,7 +75,14 @@ export function V3Nav() {
             {LINKS.map((l) => {
               const active = l.href === "/" ? pathname === "/" : pathname.startsWith(l.href)
               return (
-                <Link key={l.href} href={l.href} aria-current={active ? "page" : undefined}>
+                <Link
+                  key={l.href}
+                  href={l.href}
+                  // Nav prefetches 7 routes from every page → 7 RSC fetches
+                  // before LCP. Disable to free up the LCP-critical bandwidth.
+                  prefetch={false}
+                  aria-current={active ? "page" : undefined}
+                >
                   {l.label}
                 </Link>
               )

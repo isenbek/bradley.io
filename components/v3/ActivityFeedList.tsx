@@ -100,6 +100,8 @@ export function ActivityFeedList({
           <Link
             key={`${item.type}-${i}`}
             href={`/projects/${item.projectSlug}`}
+            // 15 feed items × default-prefetch would burn bandwidth.
+            prefetch={false}
             style={{
               textDecoration: "none",
               color: "inherit",
