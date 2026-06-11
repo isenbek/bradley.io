@@ -83,15 +83,15 @@ export default function V3ContactPage() {
 
         <div className="v3-wrap">
           <div className="v3-page-head__lockup">
-            <V3Reveal>
+            <V3Reveal eager>
               <span className="v3-eyebrow">Contact · open inbox</span>
             </V3Reveal>
-            <V3Reveal delay={80}>
+            <V3Reveal eager>
               <h1>
                 Drop me a <span className="v3-accent">line.</span>
               </h1>
             </V3Reveal>
-            <V3Reveal delay={140}>
+            <V3Reveal eager>
               <p className="v3-page-head__lede">
                 Project, second opinion, weird hardware question, or just a hello — all welcome.
                 Email is the front door; GitHub is the side door; both lead to the same room.

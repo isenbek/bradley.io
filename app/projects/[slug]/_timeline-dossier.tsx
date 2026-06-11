@@ -97,12 +97,12 @@ export function TimelineRepoDossier({ match }: { match: TimelineMatch }) {
             ) : null}
           </div>
 
-          <V3Reveal>
+          <V3Reveal eager>
             <h1 className="v3-detail-name">
               {repo.name.length <= 4 ? `${orgSlug}/${repo.name}` : repo.name}
             </h1>
           </V3Reveal>
-          <V3Reveal delay={80}>
+          <V3Reveal eager>
             <p className="v3-detail-tag">
               {repo.description ||
                 `Repository in the ${org} timeline.`}

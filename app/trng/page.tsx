@@ -27,12 +27,12 @@ export default function V3TrngPage() {
                 hotbits · radioactive entropy
               </span>
             </V3Reveal>
-            <V3Reveal delay={80}>
+            <V3Reveal eager>
               <h1>
                 Random, from radioactive <span className="v3-accent">decay.</span>
               </h1>
             </V3Reveal>
-            <V3Reveal delay={140}>
+            <V3Reveal eager>
               <p className="v3-page-head__lede">
                 A CAJOE Geiger counter, a Raspberry Pi, and a Δt₁/Δt₂ comparison turn cosmic
                 noise into NIST-tested bits. Polls fast for the pool, slower for the labs.

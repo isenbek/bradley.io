@@ -103,12 +103,12 @@ export default function V3McpPage() {
                 Campaign Brain · MCP catalog
               </span>
             </V3Reveal>
-            <V3Reveal delay={80}>
+            <V3Reveal eager>
               <h1>
                 Services, <span className="v3-accent">indexed.</span>
               </h1>
             </V3Reveal>
-            <V3Reveal delay={140}>
+            <V3Reveal eager>
               <p className="v3-page-head__lede">
                 {stats.totalServices} FastAPI microservices powering Campaign Brain — AI, data,
                 communication, infrastructure, and business operations. All open via MCP to LLM

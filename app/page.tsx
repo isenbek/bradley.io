@@ -26,11 +26,14 @@ export default async function V3Home() {
         <div className="v3-blob v3-blob--3" aria-hidden />
 
         <div className="v3-wrap">
-          <V3Reveal>
+          {/* Above-the-fold uses `eager` so first paint already shows them at
+              full opacity — needed for a fast LCP since the h1 is the LCP
+              element. The on-scroll fade still runs for everything below. */}
+          <V3Reveal eager>
             <span className="v3-eyebrow">Hardware · AI · the seam between</span>
           </V3Reveal>
 
-          <V3Reveal delay={80}>
+          <V3Reveal eager>
             <h1>
               Hardware hacker.<br />
               Data architect.<br />
@@ -38,7 +41,7 @@ export default async function V3Home() {
             </h1>
           </V3Reveal>
 
-          <V3Reveal delay={160}>
+          <V3Reveal eager>
             <p className="v3-lede">
               I build at the seam where enterprise scale meets maker culture — ESP32 mesh
               networks, Fortune-500 data warehouses, and a lot of Claude as co-pilot.
@@ -46,7 +49,7 @@ export default async function V3Home() {
             </p>
           </V3Reveal>
 
-          <V3Reveal delay={220}>
+          <V3Reveal eager>
             <div className="v3-hero__meta">
               <Link href="/projects" className="v3-btn v3-btn--primary">
                 See the work →

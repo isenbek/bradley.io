@@ -60,22 +60,26 @@ interface Budget {
 // buffer so today's perf passes and regressions get caught immediately.
 // Tighten over time — every improvement should ratchet the floor down.
 //
-// Reference baseline (worst across the 6 audited pages):
-//   Perf 83 · A11y 98 · BP 100 · SEO 100
-//   FCP 1068ms · LCP 4519ms · CLS 0 · TBT 95ms · Speed Index 1068ms
+// Reference baseline AFTER the eager-LCP fix:
+//   Perf 94–96 · A11y 98+ · BP 100 · SEO 100
+//   FCP ~1050ms · LCP ~2700–3110ms · CLS 0 · TBT ~50–105ms
+//
+// Previous baseline (pre-fix) was Perf 83/LCP 4519ms on home — eager
+// reveal on above-the-fold elements + first content panel dropped LCP
+// by ~1.8s and lifted Performance by ~13 points.
 //
 // Note: Lighthouse mobile sim uses Slow 4G + 4× CPU throttle, so LCP
-// in the ~4s range corresponds to a much faster real-world LCP — but
+// in the ~3s range corresponds to a much faster real-world LCP — but
 // it's still the metric Search Console looks at.
 const BUDGETS: Budget = {
-  performance: 0.8,
+  performance: 0.9,
   accessibility: 0.95,
   bestPractices: 0.95,
   seo: 0.95,
   fcp: 1500,
-  lcp: 4800,
+  lcp: 3400,
   cls: 0.05,
-  tbt: 250,
+  tbt: 200,
   speedIndex: 1500,
 }
 
@@ -119,7 +123,8 @@ async function runLighthouse(
 test.describe.configure({ mode: "serial", retries: 1 })
 
 for (const path of PERF_PATHS) {
-  test(`@perf ${path} stays within budget`, async (_fixtures, testInfo) => {
+  // eslint-disable-next-line no-empty-pattern
+  test(`@perf ${path} stays within budget`, async ({}, testInfo) => {
     test.setTimeout(90_000)
     const url = `${BASE_URL}${path}`
     const budget = budgetFor(path)

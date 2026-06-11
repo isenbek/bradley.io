@@ -56,12 +56,12 @@ export default function V3TheShiftPage() {
                 Thesis · the shift
               </span>
             </V3Reveal>
-            <V3Reveal delay={80}>
+            <V3Reveal eager>
               <h1>
                 How AI rewrites the economics of <span className="v3-accent">building software.</span>
               </h1>
             </V3Reveal>
-            <V3Reveal delay={140}>
+            <V3Reveal eager>
               <p className="v3-page-head__lede">
                 Five sections of evidence, not vibes. Teams collapsing into soloists.
                 Sprints stretching into streams. Meetings replaced by messages. The cache

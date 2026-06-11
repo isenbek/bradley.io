@@ -27,12 +27,12 @@ export default function V3DragonfliPage() {
                 dragonfli · 1090 MHz live
               </span>
             </V3Reveal>
-            <V3Reveal delay={80}>
+            <V3Reveal eager>
               <h1>
                 Watch the sky, <span className="v3-accent">locally.</span>
               </h1>
             </V3Reveal>
-            <V3Reveal delay={140}>
+            <V3Reveal eager>
               <p className="v3-page-head__lede">
                 A Raspberry Pi, a 1090 MHz ADS-B receiver, and an FAA registry lookup
                 running in the garage. Polar radar, live tracks, and a trajectory predictor

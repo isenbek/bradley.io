@@ -27,12 +27,12 @@ export default function V3TerminalPage() {
                 Terminal · interactive CLI
               </span>
             </V3Reveal>
-            <V3Reveal delay={80}>
+            <V3Reveal eager>
               <h1>
                 Poke around the <span className="v3-accent">old-fashioned way.</span>
               </h1>
             </V3Reveal>
-            <V3Reveal delay={140}>
+            <V3Reveal eager>
               <p className="v3-page-head__lede">
                 Same portfolio, command line. Type <code style={cliCode}>help</code> to start, or
                 tap any of the suggestion chips. Arrow keys recall history, Tab completes, Ctrl+L

@@ -49,12 +49,12 @@ export default async function V3LabPage() {
                 Lab · frontier experiments
               </span>
             </V3Reveal>
-            <V3Reveal delay={80}>
+            <V3Reveal eager>
               <h1>
                 Things that <span className="v3-accent">might not ship.</span>
               </h1>
             </V3Reveal>
-            <V3Reveal delay={140}>
+            <V3Reveal eager>
               <p className="v3-page-head__lede">
                 Hardware hacks, signal toys, AI agents off the leash. The room where the next
                 product gets sketched — and most of the sketches stay sketches.

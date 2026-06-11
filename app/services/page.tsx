@@ -120,16 +120,16 @@ export default function V3ServicesPage() {
 
         <div className="v3-wrap">
           <div className="v3-page-head__lockup">
-            <V3Reveal>
+            <V3Reveal eager>
               <span className="v3-eyebrow">Services · how we work together</span>
             </V3Reveal>
-            <V3Reveal delay={80}>
+            <V3Reveal eager>
               <h1>
                 Build what cloud-shaped<br />
                 consultants <span className="v3-accent">can't.</span>
               </h1>
             </V3Reveal>
-            <V3Reveal delay={140}>
+            <V3Reveal eager>
               <p className="v3-page-head__lede">
                 15+ years architecting production systems at scale — Fortune-500 data
                 infrastructure to garage-lab innovations. Same rigor, both rooms.

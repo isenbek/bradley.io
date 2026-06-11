@@ -43,7 +43,7 @@ export function MissionTimeline({
 
         <div className="v3-wrap">
           <div className="v3-page-head__lockup">
-            <V3Reveal>
+            <V3Reveal eager>
               <Link
                 href="/projects"
                 style={{
@@ -61,7 +61,7 @@ export function MissionTimeline({
                 <ArrowLeft size={13} strokeWidth={2.25} /> All projects
               </Link>
             </V3Reveal>
-            <V3Reveal delay={40}>
+            <V3Reveal eager>
               <span
                 className={`v3-pill v3-pill--${accent}`}
                 style={{
@@ -76,13 +76,13 @@ export function MissionTimeline({
                 {eyebrow}
               </span>
             </V3Reveal>
-            <V3Reveal delay={100}>
+            <V3Reveal eager>
               <h1>{displayName}</h1>
             </V3Reveal>
-            <V3Reveal delay={160}>
+            <V3Reveal eager>
               <p className="v3-page-head__lede">{lede}</p>
             </V3Reveal>
-            <V3Reveal delay={220}>
+            <V3Reveal eager>
               <p
                 style={{
                   fontFamily: "var(--font-v3-mono), monospace",

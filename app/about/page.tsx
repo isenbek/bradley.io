@@ -17,20 +17,20 @@ export default async function V3AboutPage() {
 
         <div className="v3-wrap">
           <div className="v3-page-head__lockup">
-            <V3Reveal>
+            <V3Reveal eager>
               <span className="v3-eyebrow">About · the human behind it</span>
             </V3Reveal>
-            <V3Reveal delay={80}>
+            <V3Reveal eager>
               <h1>
                 Bradley S. <span className="v3-accent">Isenbek</span>
               </h1>
             </V3Reveal>
-            <V3Reveal delay={140}>
+            <V3Reveal eager>
               <p className="v3-page-head__lede">
                 AI Systems Architect · Machine Learning Engineer · Frontier Technologist.
               </p>
             </V3Reveal>
-            <V3Reveal delay={200}>
+            <V3Reveal eager>
               <p className="v3-page-head__loc">📍 Grand Rapids, MI · est. 2009 in the field</p>
             </V3Reveal>
 
@@ -48,7 +48,7 @@ export default async function V3AboutPage() {
           <div className="v3-twocol">
             {/* MAIN COLUMN */}
             <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
-              <V3Reveal>
+              <V3Reveal eager>
                 <article className="v3-panel">
                   <div className="v3-panel-head">Bio</div>
                   <p className="v3-prose">{about.bio}</p>

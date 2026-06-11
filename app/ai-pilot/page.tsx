@@ -79,12 +79,12 @@ export default function V3AIPilotPage() {
                 AI Pilot License · live flight log
               </span>
             </V3Reveal>
-            <V3Reveal delay={80}>
+            <V3Reveal eager>
               <h1>
                 Every flight, on the <span className="v3-accent">record.</span>
               </h1>
             </V3Reveal>
-            <V3Reveal delay={140}>
+            <V3Reveal eager>
               <p className="v3-page-head__lede">
                 Public dashboard for work shipped with Claude as co-pilot — sessions,
                 missions, models flown, and the token economy that pays for the runway.

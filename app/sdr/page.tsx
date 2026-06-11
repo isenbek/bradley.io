@@ -27,12 +27,12 @@ export default function V3SdrPage() {
                 sdr-api · spectrum, live
               </span>
             </V3Reveal>
-            <V3Reveal delay={80}>
+            <V3Reveal eager>
               <h1>
                 The spectrum, <span className="v3-accent">indexed.</span>
               </h1>
             </V3Reveal>
-            <V3Reveal delay={140}>
+            <V3Reveal eager>
               <p className="v3-page-head__lede">
                 Live status for the rtl-sdr scanner stack — band registry, soak archive,
                 top frequencies, and the job history that fed them. Polls every 30 seconds.

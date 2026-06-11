@@ -54,12 +54,12 @@ export default function V3CostAnalysisPage() {
                 {data.scope}
               </span>
             </V3Reveal>
-            <V3Reveal delay={80}>
+            <V3Reveal eager>
               <h1>
                 What does it actually cost to build with <span className="v3-accent">AI?</span>
               </h1>
             </V3Reveal>
-            <V3Reveal delay={140}>
+            <V3Reveal eager>
               <p className="v3-page-head__lede">
                 Real numbers from {data.timespan.days} days of Campaign Brain development.
                 One operator. Claude as co-pilot. Bottom-up bill of materials, not a vendor

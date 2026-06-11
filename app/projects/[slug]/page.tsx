@@ -159,10 +159,10 @@ export default async function V3ProjectDetail({
             ) : null}
           </div>
 
-          <V3Reveal>
+          <V3Reveal eager>
             <h1 className="v3-detail-name">{project.name}</h1>
           </V3Reveal>
-          <V3Reveal delay={80}>
+          <V3Reveal eager>
             <p className="v3-detail-tag">{project.tagline}</p>
           </V3Reveal>
         </div>

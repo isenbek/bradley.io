@@ -63,12 +63,12 @@ export default function V3PapersPage() {
                 TerraPulse · research papers
               </span>
             </V3Reveal>
-            <V3Reveal delay={80}>
+            <V3Reveal eager>
               <h1>
                 Open data, <span className="v3-accent">open notes.</span>
               </h1>
             </V3Reveal>
-            <V3Reveal delay={140}>
+            <V3Reveal eager>
               <p className="v3-page-head__lede">
                 Active research in environmental data science — seismology, space weather,
                 climate, hydrology, and the cross-domain bits where everything starts to look

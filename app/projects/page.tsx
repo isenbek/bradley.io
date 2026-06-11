@@ -33,15 +33,15 @@ export default async function V3ProjectsPage() {
 
         <div className="v3-wrap">
           <div className="v3-page-head__lockup">
-            <V3Reveal>
+            <V3Reveal eager>
               <span className="v3-eyebrow">Projects · what's on the bench</span>
             </V3Reveal>
-            <V3Reveal delay={80}>
+            <V3Reveal eager>
               <h1>
                 {stats.totalProjects}+ things <span className="v3-accent">on the bench.</span>
               </h1>
             </V3Reveal>
-            <V3Reveal delay={140}>
+            <V3Reveal eager>
               <p className="v3-page-head__lede">
                 Hardware, AI, data pipelines, distributed systems, frontier research — most shipped
                 with Claude as co-pilot, all self-hosted.
