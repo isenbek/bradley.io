@@ -428,6 +428,27 @@ def build_output(cache: dict) -> dict:
     summaries = cache.get("repo_summaries", {})
     phases = cache.get("phases", [])
 
+    # Guard: never overwrite a good timeline with an empty stub.
+    # A 0-repo result almost always means the GitHub fetch failed
+    # (rate limit / transient network / expired token), not that the
+    # org genuinely has no repos. Writing the stub silently guts the
+    # site (home heros, project index, every dossier page), so bail
+    # loudly and leave the last-good file in place.
+    if not repos_raw:
+        existing_repos = 0
+        if OUTPUT_FILE.exists():
+            try:
+                existing_repos = json.loads(OUTPUT_FILE.read_text()).get("totalRepos", 0)
+            except (json.JSONDecodeError, OSError):
+                existing_repos = 0
+        print(
+            f"\nERROR: fetched 0 repos for {ORG} — refusing to overwrite "
+            f"{OUTPUT_FILE.name} (existing has {existing_repos} repos). "
+            f"This usually means the GitHub fetch failed; not a real empty org.",
+            file=sys.stderr,
+        )
+        sys.exit(1)
+
     def get_summary(name: str) -> dict:
         for key, val in summaries.items():
             if key.startswith(f"{name}_"):

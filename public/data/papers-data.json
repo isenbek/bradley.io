@@ -1,15 +1,15 @@
 {
-  "generated": "2026-06-11T00:00:54.162020+00:00",
-  "totalStudies": 72,
+  "generated": "2026-06-16T04:01:28.556362+00:00",
+  "totalStudies": 74,
   "totalReferences": 8,
   "categories": {
     "cross-domain": 8,
     "climate": 5,
-    "seismology": 16,
+    "seismology": 17,
     "space-weather": 17,
     "radiation": 2,
     "hydrology": 3,
-    "research": 21
+    "research": 22
   },
   "studies": [
     {
@@ -919,6 +919,22 @@
       "references": []
     },
     {
+      "slug": "wspr-21year-census",
+      "title": "WSPR 21-Year Census \u2014 11.53 Billion Spots, Nov 2004 to Apr 2026",
+      "description": "Complete statistical census of the WSPRnet raw spot archive: 11.53 billion spots across 221 months, aggregated in 64 minutes of wall time on a single workstation. Foundational reference for all WSPR papers.",
+      "status": "complete",
+      "author": "Claude (TerraPulse Lab)",
+      "category": "research",
+      "createdAt": "2026-04-07T01:48:00+00:00",
+      "hasPaper": false,
+      "hasViz": true,
+      "previewImage": "/data/papers/wspr-21year-census.png",
+      "paperUrl": null,
+      "dataFileCount": 1,
+      "refPaperCount": 0,
+      "references": []
+    },
+    {
       "slug": "wspr-aircraft-detection",
       "title": "Can WSPR Detect Aircraft? A Pre-Registered Test Against ADS-B Ground Truth",
       "description": "Before evaluating any WSPR-aircraft tracking hypothesis (e.g., MH370), we must answer the prior question: can WSPR detect commercial aircraft at all? This pre-registered analysis tests whether WSPR SNR variations correlate with known flight crossings of station-pair great circle paths.",
@@ -1258,7 +1274,7 @@
       "slug": "bz-dst-predictive-lead-time",
       "title": "Bz \u2192 Dst predictive lead-time \u2014 Granger causality on solar-wind driver vs ring-current response",
       "description": "How many hours does southward IMF Bz lead Dst-index minima, and is the predictive relationship Granger-causal? Pure space-weather predictability test on TerraPulse's 71-day Bz/Dst overlap window.",
-      "status": "complete_r1",
+      "status": "published",
       "author": "PMA",
       "category": "cross-domain",
       "createdAt": "2026-05-26T00:00:00+00:00",
@@ -1283,6 +1299,22 @@
       "previewImage": "/data/papers/skinwalker-ranch-baseline.png",
       "paperUrl": null,
       "dataFileCount": 11,
+      "refPaperCount": 0,
+      "references": []
+    },
+    {
+      "slug": "earthquake-lights-nuforc-usgs",
+      "title": "UFO Reports Don't Cluster Around US Earthquakes \u2014 104-Year NUFORC \u00d7 USGS Cross-Match",
+      "description": "Population-level test of the earthquake-lights folklore: 9,379 US M>=4.5 earthquakes (1910-2014) cross-matched against 71,008 NUFORC reports. Observed coincidences (3) sit below the 10,000-permutation null mean (9.4); null survives every sensitivity check.",
+      "status": "published",
+      "author": "Claude (TerraPulse Lab)",
+      "category": "seismology",
+      "createdAt": "2026-05-30T17:20:00+00:00",
+      "hasPaper": false,
+      "hasViz": false,
+      "previewImage": null,
+      "paperUrl": null,
+      "dataFileCount": 9,
       "refPaperCount": 0,
       "references": []
     }
