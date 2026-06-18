@@ -1,10 +1,10 @@
 {
-  "generated": "2026-06-10T09:06:25.337593+00:00",
+  "generated": "2026-06-18T19:47:19.611962+00:00",
   "org": "tinymachines",
   "totalRepos": 60,
   "firstCommit": "2016-02-27T16:07:26Z",
-  "latestCommit": "2026-06-01T23:02:44Z",
-  "totalCommits": 4555,
+  "latestCommit": "2026-06-18T17:25:12Z",
+  "totalCommits": 4581,
   "languages": {
     "Python": 26,
     "C": 7,
@@ -6087,6 +6087,30 @@
       "commits": 53,
       "repos": 3,
       "intensity": 4
+    },
+    {
+      "date": "2026-06-14",
+      "commits": 6,
+      "repos": 1,
+      "intensity": 1
+    },
+    {
+      "date": "2026-06-15",
+      "commits": 5,
+      "repos": 1,
+      "intensity": 1
+    },
+    {
+      "date": "2026-06-17",
+      "commits": 9,
+      "repos": 1,
+      "intensity": 2
+    },
+    {
+      "date": "2026-06-18",
+      "commits": 6,
+      "repos": 1,
+      "intensity": 1
     }
   ],
   "phases": [
@@ -6125,10 +6149,10 @@
       "category": "systems"
     },
     {
-      "name": "Phase 3",
+      "name": "Research & Development \u2013 Core Infrastructure & Experimentation",
       "startDate": "2025-06-04",
       "endDate": "2025-07-07",
-      "description": "Development of addai, rpi5-arm-assembly, spydr and 4 more repos.",
+      "description": "\"These 7 repos represent the early stages of developing and refining core infrastructure and experimental projects within the tinymachines ecosystem. They encompass a broad range, from initial experimentation with monitoring and assembly guides to building foundational tools for AI/ML research and web scraping. The focus is on creating stable platforms that support ongoing development and evolution of key components of the project\u2019s system architecture.\",\n  \"Category\": \"systems, ai-ml, data, hardware, creative\"\n",
       "repos": [
         "addai",
         "rpi5-arm-assembly",
@@ -6142,10 +6166,21 @@
       "category": "systems"
     },
     {
-      "name": "Phase 4",
+      "name": "Tinymachine Ecosystem Core Infrastructure",
       "startDate": "2025-07-11",
       "endDate": "2025-08-13",
-      "description": "Development of gcombinatr, llisp, watr and 4 more repos.",
+      "description": "This collection of repositories represents the foundational development phase for the core Tinymlchine ecosystem. It encompasses initial project setup, essential tools like `gcombinatr`, a Deep Learning implementation (`llisp`), and automation scripts for geometry modeling (`watr`), all crucial for enabling seamless workflow within the broader project.",
+      "category": "systems",
+      "milestone": [
+        {
+          "date": "2025-07-11",
+          "title": "Project Foundation & Initial Setup"
+        },
+        {
+          "date": "2025-08-13",
+          "title": "Core Infrastructure Stabilization"
+        }
+      ],
       "repos": [
         "gcombinatr",
         "llisp",
@@ -6155,14 +6190,41 @@
         "llarp",
         "blossom"
       ],
-      "milestones": [],
-      "category": "systems"
+      "milestones": []
     },
     {
-      "name": "Phase 5",
+      "name": "Data Pipeline & Core Components",
       "startDate": "2025-08-14",
       "endDate": "2025-09-11",
-      "description": "Development of hotbits, yeet, guzl and 4 more repos.",
+      "description": "'The repository represents the foundational development of the tinymachines project. Hotbits and Yeet focus on building essential web components for the core functions, while Guzl is dedicated to data processing capabilities and Spondr tackles specific ADS B data handling solutions. Stats provides a basic entry point, and Llamirc represents the initial stage.",
+      "category": "Data",
+      "milestones": [
+        {
+          "date": "2025-08-14",
+          "title": "Hotbits - Comprehensive Web App & Improvements to Core Functionality",
+          "repo": "hotbits"
+        },
+        {
+          "date": "2025-08-16",
+          "title": "Yeet - Implement complete SMS gateway wrapper with CLI and MCP server; Add CLAUDE.md for SMS gateway wrapper project",
+          "repo": "yeet"
+        },
+        {
+          "date": "2025-08-16",
+          "title": "\u00bfSpondr es a un proyecto de c\u00f3digo abierto basado en Python para el procesamiento y la entrega de datos de ADS B. Los recientes commits se enfocan en...",
+          "repo": "spondr"
+        },
+        {
+          "date": "2025-09-02",
+          "title": "Stats - First commit",
+          "repo": "stats"
+        },
+        {
+          "date": "2025-09-11",
+          "title": "Llamirc - Commits: 0 commits",
+          "repo": "lllamirc"
+        }
+      ],
       "repos": [
         "hotbits",
         "yeet",
@@ -6171,15 +6233,21 @@
         "crawwwl",
         "stats",
         "llamirc"
-      ],
-      "milestones": [],
-      "category": "systems"
+      ]
     },
     {
-      "name": "Phase 6",
+      "name": "Development of Core UI Components & Tools",
       "startDate": "2025-09-12",
-      "endDate": "2025-11-01",
-      "description": "Development of dragonfli, umbra, aihelp and 4 more repos.",
+      "endDate": "2025-10-30",
+      "description": "'The initial repos represent the core development phase, focused on building fundamental components for the tinymachine ecosystem. From Dragonfli's initial setup to `tiny`\u2019s simplification of TinyGrad, these projects lay the groundwork for the project\u2019s features and functionalities. The focus shifts towards creating essential tools and systems for rapid iteration in the evolving tinymachines project.",
+      "category": "systems",
+      "milestone": [
+        {
+          "date": "2025-10-27",
+          "title": "AIHelp Enhancements",
+          "repo": "aihelp"
+        }
+      ],
       "repos": [
         "dragonfli",
         "umbra",
@@ -6189,14 +6257,51 @@
         "ferret",
         "tiny"
       ],
-      "milestones": [],
-      "category": "systems"
+      "milestones": []
     },
     {
-      "name": "Phase 7",
+      "name": "Tinymachine Ecosystem Development Phases",
       "startDate": "2025-11-04",
       "endDate": "2025-11-27",
-      "description": "Development of resume, 6502, cascade and 4 more repos.",
+      "description": "This collection of repositories represents the core development phases within the tinymachines project ecosystem.  They cover various levels of functionality and experimentation, progressively integrating new features and improvements across different areas.",
+      "category": "Systems / AI-ML / Data",
+      "milestones": [
+        {
+          "date": "2025-11-04",
+          "title": "Resume - Initial Repository Setup",
+          "repo": "resume"
+        },
+        {
+          "date": "2025-11-06",
+          "title": "6502 Processor Expert Agent with RAG system",
+          "repo": "6502"
+        },
+        {
+          "date": "2025-11-14",
+          "title": "Cascade - Functional Puzzle Mechanics & UI Improvements",
+          "repo": "cascade"
+        },
+        {
+          "date": "2025-11-14",
+          "title": "tgmi - HTML - Focus on functional puzzle mechanics and basic user interface improvements.",
+          "repo": "tgmi"
+        },
+        {
+          "date": "2025-11-21",
+          "title": "Scout - Shell - 15 commits",
+          "repo": "scout"
+        },
+        {
+          "date": "2025-11-24",
+          "title": "rustforhaters - Python - Automatic Documentation & Code Review Implementation",
+          "repo": "rustforahaters"
+        },
+        {
+          "date": "2025-11-27",
+          "title": "ripgrep - Recursive File Finding Tool Implementation",
+          "repo": "ripgrep"
+        }
+      ],
       "repos": [
         "resume",
         "6502",
@@ -6205,15 +6310,46 @@
         "scout",
         "rustforhaters",
         "ripgrep"
-      ],
-      "milestones": [],
-      "category": "systems"
+      ]
     },
     {
-      "name": "Phase 8",
+      "name": "Development Pipeline - Tinymachine Ecosystem",
       "startDate": "2025-11-30",
       "endDate": "2026-02-21",
-      "description": "Development of deox, gnomes, collidr and 4 more repos.",
+      "description": "This repository represents the sequential evolution of various tools and projects developed as part of the tinymachines project ecosystem. It showcases a progression from initial core functionalities to advanced experimental code across diverse domains, including data analysis, creative content creation, IoT control, and AI development.  The codebase is designed to support building upon each other\u2019s work.",
+      "category": "systems",
+      "milestones": [
+        {
+          "date": "2025-11-30",
+          "title": "Add automatic PDF generation for lectures & companions",
+          "repo": "deox"
+        },
+        {
+          "date": "2025-12-11",
+          "title": "Gnomes - Develop tools and experiments",
+          "repo": "gophers"
+        },
+        {
+          "date": "2026-01-11",
+          "title": "Collidr - Unknown",
+          "repo": "collidr"
+        },
+        {
+          "date": "2026-02-01",
+          "title": "Spicy - Async human-in-the-loop AI with DSPy and Scout",
+          "repo": "spicy"
+        },
+        {
+          "date": "2026-02-09",
+          "title": "Esp32 - Python Script for Image Control & Capture",
+          "repo": "esp32"
+        },
+        {
+          "date": "2026-02-21",
+          "title": "Gene-Pool - Curated AI coding agent system prompts",
+          "repo": "gene-pool"
+        }
+      ],
       "repos": [
         "deox",
         "gnomes",
@@ -6222,9 +6358,7 @@
         "orator",
         "esp32",
         "gene-pool"
-      ],
-      "milestones": [],
-      "category": "systems"
+      ]
     },
     {
       "name": "Phase 9",
@@ -6244,12 +6378,12 @@
   "repos": [
     {
       "name": "ripgrep",
-      "description": "ripgrep recursively searches directories for a regex pattern while respecting your gitignore",
+      "description": "ripgrep is a tool for recursively finding files matching regex patterns in directories. It significantly improves performance compared to the default `grep` command by utilizing more efficient searching techniques and support for extended regex syntax. Recent updates focus on improving speed, adding new features such as the `ssa` type and improved error handling.",
       "language": "Unknown",
       "commits": 2204,
       "firstCommit": "2016-02-27T16:07:26Z",
       "lastCommit": "2025-10-30T17:30:14Z",
-      "phase": "Phase 7"
+      "phase": "Tinymachine Ecosystem Development Phases"
     },
     {
       "name": "knowsynet",
@@ -6267,11 +6401,11 @@
       "commits": 479,
       "firstCommit": "2025-03-26T06:58:25Z",
       "lastCommit": "2026-02-21T23:00:06Z",
-      "phase": "Phase 8"
+      "phase": "Development Pipeline - Tinymachine Ecosystem"
     },
     {
       "name": "vectl",
-      "description": "The vectl repository is a C++ project that provides a vector comparison tool, with recent updates focusing on fixing test assertions, adding a fastcomp CLI tool for text similarity comparison, and improving packaging. The project has seen significant development since its initial check-in in March 2025.",
+      "description": "Vectl is a C++ library focused on vectorized similarity search, providing a persistent vector store and supporting various client libraries. Recently updated releases include bug fixes to improve performance, address stability issues, add new features like the fastcomp CLI tool for text comparison and improved packaging and testing.",
       "language": "C++",
       "commits": 18,
       "firstCommit": "2025-03-29T02:45:34Z",
@@ -6334,7 +6468,7 @@
     },
     {
       "name": "evolve",
-      "description": "",
+      "description": "\u00bfevolv is a Python project focusing on evolutionary algorithms and related concepts. It provides documentation, example code, Pydantic compatibility fixes, test suite improvements, and core components for a potential Phase 1 implementation.",
       "language": "Python",
       "commits": 10,
       "firstCommit": "2025-04-23T02:18:54Z",
@@ -6393,7 +6527,7 @@
       "commits": 5,
       "firstCommit": "2025-06-04T02:06:24Z",
       "lastCommit": "2025-06-10T05:01:32Z",
-      "phase": "Phase 3"
+      "phase": "Research & Development \u2013 Core Infrastructure & Experimentation"
     },
     {
       "name": "rpi5-arm-assembly",
@@ -6402,16 +6536,16 @@
       "commits": 5,
       "firstCommit": "2025-06-10T17:32:01Z",
       "lastCommit": "2025-06-10T22:20:06Z",
-      "phase": "Phase 3"
+      "phase": "Research & Development \u2013 Core Infrastructure & Experimentation"
     },
     {
       "name": "spydr",
-      "description": "Tardus",
+      "description": "Tardus is a TypeScript-based blockchain project focused on stealth and user privacy, aiming for an alternative to Bitcoin. It incorporates features such as persistent cookies, improved web crawling, and enhanced security with advanced support for Docker.",
       "language": "TypeScript",
       "commits": 6,
       "firstCommit": "2025-06-12T14:19:41Z",
       "lastCommit": "2025-06-13T21:52:05Z",
-      "phase": "Phase 3"
+      "phase": "Research & Development \u2013 Core Infrastructure & Experimentation"
     },
     {
       "name": "investigations",
@@ -6420,7 +6554,7 @@
       "commits": 0,
       "firstCommit": "2025-06-14T17:35:31Z",
       "lastCommit": "2025-06-14T17:35:31Z",
-      "phase": "Phase 3"
+      "phase": "Research & Development \u2013 Core Infrastructure & Experimentation"
     },
     {
       "name": "sovereign",
@@ -6429,16 +6563,16 @@
       "commits": 13,
       "firstCommit": "2025-06-18T00:55:54Z",
       "lastCommit": "2025-06-20T19:53:29Z",
-      "phase": "Phase 3"
+      "phase": "Research & Development \u2013 Core Infrastructure & Experimentation"
     },
     {
       "name": "spidr",
-      "description": "Distributed, brute force web scraping.",
+      "description": "This GitHub repository is a Python package designed for distributed, brute force web scraping. It undergoes ongoing development and updates focusing on improved data aggregation and coordination capabilities. Recent commits involve comprehensive documentation updates, system improvements (including runner script enhancements), and infrastructure planning.",
       "language": "Python",
       "commits": 40,
       "firstCommit": "2025-06-24T22:38:01Z",
       "lastCommit": "2025-06-28T18:01:09Z",
-      "phase": "Phase 3"
+      "phase": "Research & Development \u2013 Core Infrastructure & Experimentation"
     },
     {
       "name": "plumbr",
@@ -6447,7 +6581,7 @@
       "commits": 140,
       "firstCommit": "2025-07-06T18:04:01Z",
       "lastCommit": "2025-07-16T19:50:30Z",
-      "phase": "Phase 3"
+      "phase": "Research & Development \u2013 Core Infrastructure & Experimentation"
     },
     {
       "name": "gcombinatr",
@@ -6456,25 +6590,25 @@
       "commits": 4,
       "firstCommit": "2025-07-11T01:27:18Z",
       "lastCommit": "2025-07-11T04:11:12Z",
-      "phase": "Phase 4"
+      "phase": "Tinymachine Ecosystem Core Infrastructure"
     },
     {
       "name": "llisp",
-      "description": "",
+      "description": "This GitHub repository focuses on developing a Common Lisp implementation of deep learning, specifically including transformer models and MNIST OCR.  It's a progression from basic lessons to more advanced techniques like an original neural network, and utilizes frequent updates to improve code structure and documentation.",
       "language": "Common Lisp",
       "commits": 7,
       "firstCommit": "2025-07-11T03:48:05Z",
       "lastCommit": "2025-07-16T06:37:47Z",
-      "phase": "Phase 4"
+      "phase": "Tinymachine Ecosystem Core Infrastructure"
     },
     {
       "name": "watr",
-      "description": "",
+      "description": "This GitHub repository develops a Python script focused on managing and automating the creation of geometry models, with a strong emphasis on streamlining the workflow through automation and indexing. It\u2019s actively maintained and includes features like auto commits, logging, and improved protocol management.",
       "language": "Python",
       "commits": 87,
       "firstCommit": "2025-07-15T06:41:59Z",
       "lastCommit": "2025-07-29T19:48:11Z",
-      "phase": "Phase 4"
+      "phase": "Tinymachine Ecosystem Core Infrastructure"
     },
     {
       "name": "zephyr",
@@ -6483,7 +6617,7 @@
       "commits": 120,
       "firstCommit": "2025-07-29T21:48:29Z",
       "lastCommit": "2025-08-13T02:33:30Z",
-      "phase": "Phase 4"
+      "phase": "Tinymachine Ecosystem Core Infrastructure"
     },
     {
       "name": "classic-rock",
@@ -6492,16 +6626,16 @@
       "commits": 3,
       "firstCommit": "2025-07-31T03:02:38Z",
       "lastCommit": "2025-07-31T03:23:01Z",
-      "phase": "Phase 4"
+      "phase": "Tinymachine Ecosystem Core Infrastructure"
     },
     {
       "name": "llarp",
-      "description": "",
+      "description": "Llarp is a shell scripting project focused on improving DNS privacy infrastructure through a robust suite of features, including comprehensive security audits, a Tor integration, and enhanced network monitoring tools. It\u2019s rapidly evolving with recent commits focusing on hardening, deployment, and diagnostics.",
       "language": "Shell",
       "commits": 168,
       "firstCommit": "2025-08-02T02:10:38Z",
       "lastCommit": "2025-10-29T22:36:27Z",
-      "phase": "Phase 4"
+      "phase": "Tinymachine Ecosystem Core Infrastructure"
     },
     {
       "name": "blossom",
@@ -6510,16 +6644,16 @@
       "commits": 3,
       "firstCommit": "2025-08-13T04:51:01Z",
       "lastCommit": "2025-08-15T12:36:35Z",
-      "phase": "Phase 4"
+      "phase": "Tinymachine Ecosystem Core Infrastructure"
     },
     {
       "name": "hotbits",
-      "description": "",
+      "description": "Comprehensive Web App & Improvements to Core Functionality",
       "language": "TypeScript",
       "commits": 53,
       "firstCommit": "2025-08-14T04:28:56Z",
       "lastCommit": "2025-10-07T04:47:00Z",
-      "phase": "Phase 5"
+      "phase": "Data Pipeline & Core Components"
     },
     {
       "name": "yeet",
@@ -6528,7 +6662,7 @@
       "commits": 2,
       "firstCommit": "2025-08-14T05:19:41Z",
       "lastCommit": "2025-08-14T19:45:08Z",
-      "phase": "Phase 5"
+      "phase": "Data Pipeline & Core Components"
     },
     {
       "name": "guzl",
@@ -6537,25 +6671,25 @@
       "commits": 3,
       "firstCommit": "2025-08-16T00:42:08Z",
       "lastCommit": "2025-08-24T05:49:24Z",
-      "phase": "Phase 5"
+      "phase": "Data Pipeline & Core Components"
     },
     {
       "name": "spondr",
-      "description": "The spondr repository is a Python-based project that appears to be developing an augmented reality (AR) system for aircraft tracking and prediction, with a focus on accuracy and user experience.",
+      "description": "\u00bfSpondr es a un proyecto de c\u00f3digo abierto basado en Python para el procesamiento y la entrega de datos de ADS B. Los recientes commits se enfocan en la mejora de la funcionalidad, optimizaci\u00f3n del rendimiento y nuevas caracter\u00edsticas de soporte. El repositorio incluye una arquitectura modular para facilitar la adici\u00f3n de nuevos recursos.",
       "language": "Python",
       "commits": 227,
       "firstCommit": "2025-08-17T21:48:35Z",
       "lastCommit": "2026-05-13T17:58:08Z",
-      "phase": "Phase 5"
+      "phase": "Data Pipeline & Core Components"
     },
     {
       "name": "crawwwl",
-      "description": "",
+      "description": "This GitHub repository contains recent commits to a web application aimed at improving its search functionality and data ingestion pipelines. Key features include updated core logic, improved indexing mechanisms, and enhanced responsiveness to user feedback.",
       "language": "HTML",
       "commits": 42,
       "firstCommit": "2025-08-24T03:29:38Z",
       "lastCommit": "2025-09-20T06:24:13Z",
-      "phase": "Phase 5"
+      "phase": "Data Pipeline & Core Components"
     },
     {
       "name": "stats",
@@ -6564,7 +6698,7 @@
       "commits": 1,
       "firstCommit": "2025-09-02T21:34:03Z",
       "lastCommit": "2025-09-02T21:34:03Z",
-      "phase": "Phase 5"
+      "phase": "Data Pipeline & Core Components"
     },
     {
       "name": "llamirc",
@@ -6573,7 +6707,7 @@
       "commits": 0,
       "firstCommit": "2025-09-11T19:05:20Z",
       "lastCommit": "2025-09-11T19:05:21Z",
-      "phase": "Phase 5"
+      "phase": "Data Pipeline & Core Components"
     },
     {
       "name": "dragonfli",
@@ -6582,16 +6716,16 @@
       "commits": 0,
       "firstCommit": "2025-09-12T02:39:41Z",
       "lastCommit": "2025-09-12T02:39:41Z",
-      "phase": "Phase 6"
+      "phase": "Development of Core UI Components & Tools"
     },
     {
       "name": "umbra",
-      "description": "",
+      "description": "**UMabra is an ongoing effort to enhance the platform\u2019s functionality and appearance through significant updates focusing on performance optimization, enhanced security, and improved user experience.** The repository contains a backlog of features addressing RDP connectivity issues, authentication improvements, VM management tasks, and branding changes. **Key milestones include redesigning the name from UMBRA to Clarion \u2018Own Your Morning\u2019, adding comprehensive performance optimizations for RDP, implementing employee/VM management, and integrating complete VM automation capabilities.**",
       "language": "TypeScript",
       "commits": 17,
       "firstCommit": "2025-09-29T02:38:48Z",
       "lastCommit": "2025-10-13T22:07:35Z",
-      "phase": "Phase 6"
+      "phase": "Development of Core UI Components & Tools"
     },
     {
       "name": "aihelp",
@@ -6600,7 +6734,7 @@
       "commits": 2,
       "firstCommit": "2025-09-29T20:06:11Z",
       "lastCommit": "2026-01-15T21:23:25Z",
-      "phase": "Phase 6"
+      "phase": "Development of Core UI Components & Tools"
     },
     {
       "name": "swrm",
@@ -6609,7 +6743,7 @@
       "commits": 27,
       "firstCommit": "2025-10-17T22:46:28Z",
       "lastCommit": "2025-10-21T16:34:19Z",
-      "phase": "Phase 6"
+      "phase": "Development of Core UI Components & Tools"
     },
     {
       "name": "leaks",
@@ -6618,7 +6752,7 @@
       "commits": 6,
       "firstCommit": "2025-10-27T19:44:47Z",
       "lastCommit": "2025-10-28T03:00:55Z",
-      "phase": "Phase 6"
+      "phase": "Development of Core UI Components & Tools"
     },
     {
       "name": "ferret",
@@ -6627,16 +6761,16 @@
       "commits": 18,
       "firstCommit": "2025-10-30T18:54:40Z",
       "lastCommit": "2026-01-26T03:36:31Z",
-      "phase": "Phase 6"
+      "phase": "Development of Core UI Components & Tools"
     },
     {
       "name": "tiny",
-      "description": "The tiny repository is a Python project that appears to be a development environment for computer vision and machine learning tasks. Recent commits have focused on adding new features, improving user experience, and enhancing architecture designs for TinyGrad Inspector.",
+      "description": "The `tiny` repository is a Python project focused on simplifying the development of TinyGrad, a library for building and experimenting with visual inspection models. It includes recent commits concerning architectural improvements, UI enhancements, integration with various tools (like Lab 7, Lab 5, Lab 4), and improved data management & debugging.",
       "language": "Python",
       "commits": 73,
       "firstCommit": "2025-11-01T15:50:31Z",
       "lastCommit": "2025-11-15T00:41:51Z",
-      "phase": "Phase 6"
+      "phase": "Development of Core UI Components & Tools"
     },
     {
       "name": "resume",
@@ -6645,7 +6779,7 @@
       "commits": 6,
       "firstCommit": "2025-11-04T02:20:51Z",
       "lastCommit": "2025-11-04T03:22:58Z",
-      "phase": "Phase 7"
+      "phase": "Tinymachine Ecosystem Development Phases"
     },
     {
       "name": "6502",
@@ -6654,16 +6788,16 @@
       "commits": 1,
       "firstCommit": "2025-11-07T01:17:49Z",
       "lastCommit": "2025-11-07T01:17:49Z",
-      "phase": "Phase 7"
+      "phase": "Tinymachine Ecosystem Development Phases"
     },
     {
       "name": "cascade",
-      "description": "",
+      "description": "Phase 1 & 2: Focuses on functional puzzle mechanics and basic user interface improvements.",
       "language": "HTML",
       "commits": 41,
       "firstCommit": "2025-11-14T04:24:16Z",
       "lastCommit": "2025-11-28T17:23:27Z",
-      "phase": "Phase 7"
+      "phase": "Tinymachine Ecosystem Development Phases"
     },
     {
       "name": "tgmi",
@@ -6672,25 +6806,25 @@
       "commits": 140,
       "firstCommit": "2025-11-14T23:36:30Z",
       "lastCommit": "2025-12-20T03:11:04Z",
-      "phase": "Phase 7"
+      "phase": "Tinymachine Ecosystem Development Phases"
     },
     {
       "name": "scout",
-      "description": "The Scout network scanner is a shell-based tool that performs various tasks such as automated key installation, drive-time guide, run verification report, and more. The repository has undergone significant updates since its initial release on November 22, 2025, with recent commits adding features like SSH access enumeration, distributed deployment system, and service reconnaissance system. The current version is v1.0.0.",
+      "description": "",
       "language": "Shell",
       "commits": 15,
       "firstCommit": "2025-11-22T23:06:30Z",
       "lastCommit": "2025-11-26T17:25:19Z",
-      "phase": "Phase 7"
+      "phase": "Tinymachine Ecosystem Development Phases"
     },
     {
       "name": "rustforhaters",
-      "description": "",
+      "description": "Rust for Hatters is a Python repository developed by the Rust team focused on automating documentation and code review. It recently incorporates features like PDF export, hourly doc update scripts, lecture series support, enhanced source naming (avoiding conflicts), markdown wrappers, file upload functionality, transcript processing tools, and improvements to existing documentation topics.  The project leverages recent commits to enhance maintainability and automate various aspects of the documentation workflow.",
       "language": "Python",
       "commits": 18,
       "firstCommit": "2025-11-24T22:10:45Z",
       "lastCommit": "2025-12-03T02:56:09Z",
-      "phase": "Phase 7"
+      "phase": "Tinymachine Ecosystem Development Phases"
     },
     {
       "name": "deox",
@@ -6699,16 +6833,16 @@
       "commits": 3,
       "firstCommit": "2025-12-01T21:07:42Z",
       "lastCommit": "2025-12-03T16:20:42Z",
-      "phase": "Phase 8"
+      "phase": "Development Pipeline - Tinymachine Ecosystem"
     },
     {
       "name": "gnomes",
-      "description": "",
+      "description": "This Git repository focuses on developing tools and experiments related to gnomes. It includes experimental code for data analysis (like analyzing gnome outputs from autonomy), documentation, visualization and research prototypes around the development of gnome-related concepts and AI applications.",
       "language": "Python",
       "commits": 18,
       "firstCommit": "2025-12-13T05:43:45Z",
       "lastCommit": "2025-12-19T22:49:55Z",
-      "phase": "Phase 8"
+      "phase": "Development Pipeline - Tinymachine Ecosystem"
     },
     {
       "name": "collidr",
@@ -6717,7 +6851,7 @@
       "commits": 0,
       "firstCommit": "2026-01-11T21:59:35Z",
       "lastCommit": "2026-01-11T21:59:35Z",
-      "phase": "Phase 8"
+      "phase": "Development Pipeline - Tinymachine Ecosystem"
     },
     {
       "name": "spicy",
@@ -6726,7 +6860,7 @@
       "commits": 3,
       "firstCommit": "2026-02-01T03:57:55Z",
       "lastCommit": "2026-02-06T18:19:14Z",
-      "phase": "Phase 8"
+      "phase": "Development Pipeline - Tinymachine Ecosystem"
     },
     {
       "name": "orator",
@@ -6735,24 +6869,24 @@
       "commits": 5,
       "firstCommit": "2026-02-02T01:27:12Z",
       "lastCommit": "2026-02-03T21:31:20Z",
-      "phase": "Phase 8"
+      "phase": "Development Pipeline - Tinymachine Ecosystem"
     },
     {
       "name": "esp32",
-      "description": "",
+      "description": "This GitHub repository develops a Python script designed for controlling and capturing images utilizing an ESP32 device. Key features include automatic zoom functionality, customizable FFT settings (including sigma threshold), batch run support with AF management, camera UI improvements, autofocus enhancements, image capture from OLED displays, and improved game of life implementation.",
       "language": "Python",
       "commits": 50,
       "firstCommit": "2026-02-10T01:11:37Z",
       "lastCommit": "2026-02-18T21:12:09Z",
-      "phase": "Phase 8"
+      "phase": "Development Pipeline - Tinymachine Ecosystem"
     },
     {
       "name": "geiger",
-      "description": "Commits: Add bench tooling and Option B wiring notes",
+      "description": "Daily Reporting Engine",
       "language": "HTML",
-      "commits": 128,
+      "commits": 154,
       "firstCommit": "2026-05-04T03:01:06Z",
-      "lastCommit": "2026-06-01T03:04:43Z",
+      "lastCommit": "2026-06-18T17:25:12Z",
       "phase": "Phase 9"
     },
     {
@@ -6766,7 +6900,7 @@
     },
     {
       "name": "sdr",
-      "description": "Full SDR stack provisioner \u2014 target host bali.lan (RTL2838)",
+      "description": "\u00bfFull SDR stack provisioner for bali.lan (RTL2838) complete with recent code commits addressing core functionalities and improvements. The repository focuses heavily on the deployment of this system to a target host.",
       "language": "Python",
       "commits": 137,
       "firstCommit": "2026-05-13T20:32:50Z",

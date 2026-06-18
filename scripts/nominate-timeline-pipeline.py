@@ -92,13 +92,13 @@ def fetch_all_repos() -> list[dict]:
         # Try org API first, fall back to user API
         result = subprocess.run(
             ["gh", "api", f"/orgs/{ORG}/repos?per_page=100&page={page}",
-             "-q", '.[] | "\(.name)\t\(.language // "Unknown")\t\(.created_at)\t\(.pushed_at)\t\(.description // "")"'],
+             "-q", r'.[] | "\(.name)\t\(.language // "Unknown")\t\(.created_at)\t\(.pushed_at)\t\(.description // "")"'],
             capture_output=True, text=True, timeout=30,
         )
         if result.returncode != 0 or not result.stdout.strip():
             result = subprocess.run(
                 ["gh", "api", f"/users/{ORG}/repos?per_page=100&page={page}",
-                 "-q", '.[] | "\(.name)\t\(.language // "Unknown")\t\(.created_at)\t\(.pushed_at)\t\(.description // "")"'],
+                 "-q", r'.[] | "\(.name)\t\(.language // "Unknown")\t\(.created_at)\t\(.pushed_at)\t\(.description // "")"'],
                 capture_output=True, text=True, timeout=30,
             )
         if result.returncode != 0 or not result.stdout.strip():
@@ -134,7 +134,7 @@ def fetch_repo_commits(repo_name: str) -> list[dict]:
             result = subprocess.run(
                 ["gh", "api",
                  f"/repos/{ORG}/{repo_name}/commits?per_page=100&page={page}",
-                 "-q", '.[] | "\(.commit.message | split("\\n") | .[0])\t\(.commit.author.date)\t\(.sha[:7])\t\(.commit.author.name)"'],
+                 "-q", r'.[] | "\(.commit.message | split("\n") | .[0])\t\(.commit.author.date)\t\(.sha[:7])\t\(.commit.author.name)"'],
                 capture_output=True, text=True, timeout=30,
             )
             if result.returncode != 0 or not result.stdout.strip():
