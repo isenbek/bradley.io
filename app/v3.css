@@ -1192,6 +1192,7 @@ body:has(.v3) {
   color: var(--v3-charcoal);
   line-height: 1.2;
   transition: color 0.2s;
+  overflow-wrap: anywhere;
 }
 
 .v3-pcard:hover .v3-pcard__title {
@@ -1203,6 +1204,7 @@ body:has(.v3) {
   color: var(--v3-ink);
   line-height: 1.5;
   flex: 1;
+  overflow-wrap: anywhere;
 }
 
 .v3-pcard__tech {
@@ -4146,6 +4148,7 @@ body:has(.v3) {
   color: var(--v3-charcoal);
   margin-bottom: 8px;
   line-height: 1.1;
+  overflow-wrap: anywhere;
 }
 
 .v3-phase__desc {
@@ -4178,12 +4181,19 @@ body:has(.v3) {
 
 .v3-phase__milestone-title {
   color: var(--v3-ink);
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .v3-phase__milestone-repo {
   font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
   color: var(--v3-slate);
   font-size: 11.5px;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: right;
 }
 
 .v3-phase__toggle {
@@ -4253,6 +4263,8 @@ body:has(.v3) {
   font-size: 14.5px;
   letter-spacing: -0.005em;
   color: var(--v3-charcoal);
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .v3-repocard__lang {
