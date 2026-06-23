@@ -4567,15 +4567,18 @@ body:has(.v3) {
   font-weight: 700;
 }
 
-/* Hide the location + hash + GH labels on tight screens */
+/* Mobile: strip the footer to its essential "did it ship?" signal.
+   The three GH org pills + location + commit hash are desktop-only — on a
+   phone they wrapped behind the fixed 48px bar (122px of content at 320px)
+   and scrunched. Keep just bio·bradley.io on the left and the version pill
+   + deploy-ago on the right, on a single non-wrapping row. */
 @media (max-width: 760px) {
+  .v3-footer__gh,
   .v3-footer__loc,
-  .v3-footer__hash,
-  .v3-footer__deployed {
+  .v3-footer__hash {
     display: none;
   }
-  .v3-footer__bar { padding: 8px 14px; gap: 10px; }
-  .v3-footer__build { gap: 8px; }
-  .v3-footer__gh span,
-  .v3-footer__gh { font-size: 10.5px; padding: 3px 7px; }
+  .v3-footer__bar { padding: 8px 16px; gap: 12px; }
+  .v3-footer__build { gap: 12px; flex-wrap: nowrap; }
+  .v3-footer__deployed { white-space: nowrap; }
 }
