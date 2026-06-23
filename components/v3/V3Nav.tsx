@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { Menu, X } from "lucide-react"
+import { Github, Menu, X } from "lucide-react"
 import { BioLogo } from "./BioLogo"
 
 const LINKS = [
@@ -14,6 +14,14 @@ const LINKS = [
   { href: "/about", label: "About" },
   { href: "/services", label: "Services" },
   { href: "/contact", label: "Contact" },
+]
+
+// GitHub orgs — surfaced in the mobile drawer since the fixed footer drops
+// them on phones (≤760px). Mirrors the desktop footer's org pills.
+const ORGS = [
+  { href: "https://github.com/isenbek", label: "isenbek" },
+  { href: "https://github.com/tinymachines", label: "tinymachines" },
+  { href: "https://github.com/Nominate-AI", label: "Nominate-AI" },
 ]
 
 export function V3Nav() {
@@ -154,6 +162,23 @@ export function V3Nav() {
               )
             })}
           </ul>
+
+          <div className="v3-drawer__orgs">
+            <span className="v3-drawer__orgs-label">GitHub</span>
+            {ORGS.map((o) => (
+              <a
+                key={o.href}
+                href={o.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="v3-drawer__org"
+                onClick={() => setOpen(false)}
+              >
+                <Github size={16} strokeWidth={2.25} />
+                <span>{o.label}</span>
+              </a>
+            ))}
+          </div>
         </div>
       </div>
     </>

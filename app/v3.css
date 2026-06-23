@@ -386,6 +386,45 @@ body:has(.v3) {
   color: var(--v3-blue-700);
 }
 
+/* GitHub orgs — anchored to the bottom of the drawer, under a divider.
+   Secondary weight vs. the primary nav links above. */
+.v3-drawer__orgs {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-top: 14px;
+  border-top: 1px solid var(--v3-line);
+}
+
+.v3-drawer__orgs-label {
+  font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--v3-slate);
+  padding: 2px 16px 6px;
+}
+
+.v3-drawer__org {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 16px;
+  border-radius: var(--v3-r-md);
+  font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--v3-charcoal);
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+}
+
+.v3-drawer__org:hover {
+  background: var(--v3-blue-50);
+  color: var(--v3-blue-700);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .v3-drawer,
   .v3-drawer__panel {

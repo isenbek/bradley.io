@@ -1,30 +1,30 @@
 {
-  "generated": "2026-06-22T20:01:33.288667",
+  "generated": "2026-06-23T00:02:17.750530",
   "pipelineVersion": "1.0.0",
   "license": {
-    "number": "AIP-2026-0278",
+    "number": "AIP-2026-0279",
     "class": "ATP",
     "issued": "2026-03-08",
     "expires": "NEVER",
-    "totalSessions": 278,
-    "totalMessages": 378997,
+    "totalSessions": 279,
+    "totalMessages": 380110,
     "totalCostUSD": 0,
-    "totalInputTokens": 24256423,
-    "totalOutputTokens": 286685080,
-    "totalCacheTokens": 82566014695,
+    "totalInputTokens": 24329420,
+    "totalOutputTokens": 287795293,
+    "totalCacheTokens": 82872190574,
     "modelCount": 6,
-    "projectCount": 34
+    "projectCount": 35
   },
   "typeRatings": [
     {
       "modelId": "claude-opus-4-8",
       "displayName": "Opus",
-      "inputTokens": 20049079,
-      "outputTokens": 141676676,
-      "cacheReadTokens": 37237179279,
-      "cacheCreationTokens": 783379967,
+      "inputTokens": 20121999,
+      "outputTokens": 142753296,
+      "cacheReadTokens": 37531153068,
+      "cacheCreationTokens": 791521730,
       "costUSD": 0,
-      "costShare": 49.4,
+      "costShare": 49.6,
       "proficiency": "Proficient",
       "contextWindow": 0,
       "maxOutputTokens": 0
@@ -32,12 +32,12 @@
     {
       "modelId": "claude-opus-4-7",
       "displayName": "Opus",
-      "inputTokens": 2769178,
-      "outputTokens": 133175088,
-      "cacheReadTokens": 39872058823,
-      "cacheCreationTokens": 766126976,
+      "inputTokens": 2769255,
+      "outputTokens": 133208681,
+      "cacheReadTokens": 39884260913,
+      "cacheCreationTokens": 767801193,
       "costUSD": 0,
-      "costShare": 46.5,
+      "costShare": 46.3,
       "proficiency": "Proficient",
       "contextWindow": 0,
       "maxOutputTokens": 0
@@ -85,16 +85,16 @@
   "activityHeatmap": [
     {
       "date": "2026-03-08",
-      "count": 8079,
+      "count": 8177,
       "sessions": 1,
-      "toolCalls": 2951,
+      "toolCalls": 2975,
       "intensity": 1
     },
     {
       "date": "2026-03-28",
-      "count": 2056,
+      "count": 2104,
       "sessions": 1,
-      "toolCalls": 574,
+      "toolCalls": 585,
       "intensity": 1
     },
     {
@@ -134,9 +134,9 @@
     },
     {
       "date": "2026-05-09",
-      "count": 25828,
+      "count": 25977,
       "sessions": 1,
-      "toolCalls": 7807,
+      "toolCalls": 7844,
       "intensity": 1
     },
     {
@@ -204,9 +204,9 @@
     },
     {
       "date": "2026-05-28",
-      "count": 50888,
+      "count": 51421,
       "sessions": 36,
-      "toolCalls": 14753,
+      "toolCalls": 14911,
       "intensity": 2
     },
     {
@@ -246,23 +246,23 @@
     },
     {
       "date": "2026-06-05",
-      "count": 17909,
+      "count": 18044,
       "sessions": 16,
-      "toolCalls": 5266,
+      "toolCalls": 5307,
       "intensity": 1
     },
     {
       "date": "2026-06-06",
-      "count": 14048,
+      "count": 14175,
       "sessions": 1,
-      "toolCalls": 3806,
+      "toolCalls": 3840,
       "intensity": 1
     },
     {
       "date": "2026-06-08",
-      "count": 15756,
+      "count": 15763,
       "sessions": 2,
-      "toolCalls": 4364,
+      "toolCalls": 4365,
       "intensity": 1
     },
     {
@@ -313,6 +313,13 @@
       "sessions": 1,
       "toolCalls": 0,
       "intensity": 1
+    },
+    {
+      "date": "2026-06-23",
+      "count": 16,
+      "sessions": 1,
+      "toolCalls": 4,
+      "intensity": 1
     }
   ],
   "hourlyDistribution": {
@@ -325,7 +332,7 @@
       {
         "hour": 1,
         "label": "01:00",
-        "count": 22
+        "count": 23
       },
       {
         "hour": 2,
@@ -572,26 +579,26 @@
     {
       "axis": "Tool Mastery",
       "score": 95,
-      "detail": "106 tools, 79851 calls"
+      "detail": "106 tools, 80163 calls"
     },
     {
       "axis": "Debugging",
       "score": 95,
-      "detail": "54833 debug tool calls"
+      "detail": "55065 debug tool calls"
     },
     {
       "axis": "Architecture",
       "score": 71,
-      "detail": "34 projects designed"
+      "detail": "35 projects designed"
     },
     {
       "axis": "Iteration",
       "score": 71,
-      "detail": "1363 msgs/session avg"
+      "detail": "1362 msgs/session avg"
     },
     {
       "axis": "Multi-Project",
-      "score": 88,
+      "score": 90,
       "detail": "0 context switches"
     }
   ],
@@ -607,7 +614,7 @@
     {
       "name": "cbloom",
       "sessions": 17,
-      "messages": 86926,
+      "messages": 87459,
       "complexity": 10,
       "domain": "General",
       "technologies": [],
@@ -618,7 +625,7 @@
     {
       "name": "infra",
       "sessions": 111,
-      "messages": 74099,
+      "messages": 74226,
       "complexity": 10,
       "domain": "General",
       "technologies": [],
@@ -660,7 +667,7 @@
     {
       "name": "cbintel",
       "sessions": 3,
-      "messages": 25970,
+      "messages": 26119,
       "complexity": 10,
       "domain": "General",
       "technologies": [],
@@ -693,7 +700,7 @@
     {
       "name": "cbstitch",
       "sessions": 1,
-      "messages": 16199,
+      "messages": 16334,
       "complexity": 10,
       "domain": "General",
       "technologies": [],
@@ -704,7 +711,7 @@
     {
       "name": "cbhive",
       "sessions": 4,
-      "messages": 13958,
+      "messages": 13965,
       "complexity": 10,
       "domain": "General",
       "technologies": [],
@@ -726,7 +733,7 @@
     {
       "name": "bradleyio",
       "sessions": 1,
-      "messages": 8079,
+      "messages": 8177,
       "complexity": 10,
       "domain": "Frontend",
       "technologies": [
@@ -832,7 +839,7 @@
     {
       "name": "cbdc",
       "sessions": 1,
-      "messages": 2056,
+      "messages": 2104,
       "complexity": 10,
       "domain": "General",
       "technologies": [],
@@ -853,19 +860,15 @@
     }
   ],
   "tokenEconomy": {
-    "totalInputTokens": 24256423,
-    "totalOutputTokens": 286685080,
-    "totalCacheReadTokens": 82566014695,
-    "totalCacheCreateTokens": 1660582783,
+    "totalInputTokens": 24329420,
+    "totalOutputTokens": 287795293,
+    "totalCacheReadTokens": 82872190574,
+    "totalCacheCreateTokens": 1670398763,
     "totalCostUSD": 0,
     "cacheEfficiency": 98.0,
     "costPerSession": 0.0,
     "webSearches": 0,
     "dailyTokens": [
-      {
-        "date": "2026-03-29",
-        "tokens": 1618960
-      },
       {
         "date": "2026-04-08",
         "tokens": 28613086
@@ -884,7 +887,7 @@
       },
       {
         "date": "2026-05-09",
-        "tokens": 22640004
+        "tokens": 22804601
       },
       {
         "date": "2026-05-11",
@@ -924,7 +927,7 @@
       },
       {
         "date": "2026-05-28",
-        "tokens": 50415867
+        "tokens": 50965137
       },
       {
         "date": "2026-05-29",
@@ -948,15 +951,15 @@
       },
       {
         "date": "2026-06-05",
-        "tokens": 19087434
+        "tokens": 19245467
       },
       {
         "date": "2026-06-06",
-        "tokens": 15482246
+        "tokens": 15624119
       },
       {
         "date": "2026-06-08",
-        "tokens": 16071925
+        "tokens": 16076775
       },
       {
         "date": "2026-06-14",
@@ -981,42 +984,46 @@
       {
         "date": "2026-06-20",
         "tokens": 319346
+      },
+      {
+        "date": "2026-06-23",
+        "tokens": 32358
       }
     ]
   },
   "streaks": {
-    "current": 1,
+    "current": 2,
     "longest": 10,
     "peakDay": "2026-04-13",
     "peakDayCount": 113245,
     "peakWeek": "2026-04-13",
     "peakWeekCount": 113245,
-    "totalActiveDays": 33
+    "totalActiveDays": 34
   },
   "skillsCloud": [
     {
       "name": "Go",
-      "count": 8058,
+      "count": 8084,
       "category": "General"
     },
     {
       "name": "Git",
-      "count": 2671,
+      "count": 2679,
       "category": "General"
     },
     {
       "name": "JSON",
-      "count": 2141,
+      "count": 2143,
       "category": "General"
     },
     {
       "name": "HTML",
-      "count": 1077,
+      "count": 1087,
       "category": "Frontend"
     },
     {
       "name": "DuckDB",
-      "count": 1052,
+      "count": 1053,
       "category": "Data Engineering"
     },
     {
@@ -1026,12 +1033,12 @@
     },
     {
       "name": "SPI",
-      "count": 988,
+      "count": 990,
       "category": "IoT / Edge"
     },
     {
       "name": "CSS",
-      "count": 921,
+      "count": 929,
       "category": "Frontend"
     },
     {
@@ -1041,7 +1048,7 @@
     },
     {
       "name": "systemd",
-      "count": 559,
+      "count": 563,
       "category": "DevOps"
     },
     {
@@ -1061,12 +1068,12 @@
     },
     {
       "name": "SSH",
-      "count": 439,
+      "count": 441,
       "category": "DevOps"
     },
     {
       "name": "Rust",
-      "count": 413,
+      "count": 414,
       "category": "Systems"
     },
     {
@@ -1075,14 +1082,14 @@
       "category": "General"
     },
     {
-      "name": "Markdown",
-      "count": 352,
-      "category": "General"
+      "name": "Ollama",
+      "count": 367,
+      "category": "AI / ML"
     },
     {
-      "name": "Ollama",
-      "count": 334,
-      "category": "AI / ML"
+      "name": "Markdown",
+      "count": 361,
+      "category": "General"
     },
     {
       "name": "SQLite",
@@ -1125,14 +1132,14 @@
       "category": "Frontend"
     },
     {
+      "name": "WireGuard",
+      "count": 180,
+      "category": "Security"
+    },
+    {
       "name": "Pydantic",
       "count": 177,
       "category": "General"
-    },
-    {
-      "name": "WireGuard",
-      "count": 176,
-      "category": "Security"
     },
     {
       "name": "TOML",
