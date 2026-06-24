@@ -4,11 +4,13 @@ import { useCallback, useEffect, useRef, useState } from "react"
 import { RefreshCw } from "lucide-react"
 import { getEntropyBytes } from "@/components/trng"
 
-const N = 256 // one cell per byte value
-const SAMPLE_BYTES = 24_000
+const N = 128 // grid = top 7 bits of each byte (keeps cells well-populated)
+const SAMPLE_BYTES = 32_768 // ~2 pairs/cell → a smooth, clearly uniform haze
 
 // Plot each consecutive pair (byteₙ, byteₙ₊₁) as a cell. True randomness
-// scatters uniformly; a weak PRNG leaves a visible lattice or diagonal.
+// fills the square as an even haze; a weak PRNG leaves a visible lattice or
+// diagonal. Color is normalized to the *mean* count, so a uniform field
+// renders as a flat blue mist with only Poisson grain — the way it should.
 export default function ReturnMap() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [loading, setLoading] = useState(true)
@@ -21,22 +23,22 @@ export default function ReturnMap() {
     if (!ctx) return
 
     const counts = new Uint32Array(N * N)
-    let max = 0
+    let pairs = 0
     for (let i = 0; i < bytes.length - 1; i++) {
-      const idx = bytes[i] * N + bytes[i + 1]
-      const c = ++counts[idx]
-      if (c > max) max = c
+      const idx = (bytes[i] >> 1) * N + (bytes[i + 1] >> 1)
+      counts[idx]++
+      pairs++
     }
 
+    const mean = pairs / (N * N)
+    const denom = Math.max(1e-6, mean * 2.4)
     const img = ctx.createImageData(N, N)
-    const logMax = Math.log(1 + max)
     for (let i = 0; i < counts.length; i++) {
-      const t = logMax > 0 ? Math.log(1 + counts[i]) / logMax : 0
+      const t = Math.pow(Math.min(1, counts[i] / denom), 0.85)
       const o = i * 4
-      // dark ink → Bio Blue → bright cyan
-      img.data[o] = Math.round(12 + t * 60)
-      img.data[o + 1] = Math.round(20 + t * 200)
-      img.data[o + 2] = Math.round(30 + t * 225)
+      img.data[o] = Math.round(10 + t * 72)
+      img.data[o + 1] = Math.round(24 + t * 176)
+      img.data[o + 2] = Math.round(36 + t * 210)
       img.data[o + 3] = 255
     }
     ctx.putImageData(img, 0, 0)
@@ -78,7 +80,7 @@ export default function ReturnMap() {
         <canvas ref={canvasRef} width={N} height={N} className="v3-espace-square__canvas" />
       </div>
       <p className="v3-espace-caption">
-        <strong>The return map.</strong> Each pixel is a consecutive byte pair
+        <strong>The return map.</strong> Each cell is a consecutive byte pair
         (value <em>n</em> across, value <em>n+1</em> up). Real entropy paints an
         even haze — every pairing equally likely. A flawed generator would etch
         diagonal lines or a grid here; this stays featureless.
