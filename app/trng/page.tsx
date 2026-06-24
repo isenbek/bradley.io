@@ -1,4 +1,5 @@
-import { Atom } from "lucide-react"
+import Link from "next/link"
+import { Atom, Boxes } from "lucide-react"
 import { V3Reveal } from "@/components/v3/V3Reveal"
 import { V3TrngDashboard } from "./V3TrngDashboard"
 
@@ -37,6 +38,13 @@ export default function V3TrngPage() {
                 A CAJOE Geiger counter, a Raspberry Pi, and a Δt₁/Δt₂ comparison turn cosmic
                 noise into NIST-tested bits. Polls fast for the pool, slower for the labs.
               </p>
+            </V3Reveal>
+            <V3Reveal>
+              <Link href="/trng/space" className="v3-espace-cta">
+                <Boxes size={15} strokeWidth={2.4} />
+                See the entropy in 3D — rotatable point clouds
+                <span aria-hidden>→</span>
+              </Link>
             </V3Reveal>
           </div>
         </div>
