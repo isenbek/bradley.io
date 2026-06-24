@@ -1,6 +1,5 @@
 "use client"
 
-import { TRNGCard } from "./TRNGCard"
 import { DragonfliCard } from "./DragonfliCard"
 import { SDRCard } from "./SDRCard"
 
@@ -31,7 +30,6 @@ export function RecentAdditions() {
         </div>
 
         <div className="grid gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          <TRNGCard />
           <DragonfliCard />
           <SDRCard />
         </div>
