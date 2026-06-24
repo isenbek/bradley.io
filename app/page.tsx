@@ -2,6 +2,7 @@ import { ArrowRight } from "lucide-react"
 import Link from "next/link"
 import { ActivityPulse } from "@/components/v3/ActivityPulse"
 import { ActivityFeedList } from "@/components/v3/ActivityFeedList"
+import { HotbitsHero } from "@/components/home/HotbitsHero"
 import { HeroStats } from "@/components/v3/HeroStats"
 import { MissionHeros } from "@/components/v3/MissionHeros"
 import { V3Reveal } from "@/components/v3/V3Reveal"
@@ -82,6 +83,15 @@ export default async function V3Home() {
           </V3Reveal>
         </div>
       </header>
+
+      {/* HOTBITS HERO PANEL ============================================= */}
+      <section className="v3-section" style={{ paddingTop: 8, paddingBottom: 8 }}>
+        <div className="v3-wrap">
+          <V3Reveal>
+            <HotbitsHero />
+          </V3Reveal>
+        </div>
+      </section>
 
       {/* STAT STRIP ====================================================== */}
       <section className="v3-section v3-section--paper" style={{ paddingTop: 56, paddingBottom: 56 }}>

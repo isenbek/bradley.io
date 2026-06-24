@@ -24,6 +24,10 @@ export interface StatsResponse {
   events_csv_size_bytes: number
   max_bytes_per_request: number
   reject_us: number
+  // L1 health-gate fields (present on the live /stats payload)
+  l1_total_bits_emitted?: number
+  l1_health_ok?: boolean
+  l1_rct_max_seen?: number
 }
 
 export interface MetricRow {
