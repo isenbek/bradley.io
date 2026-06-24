@@ -1,6 +1,12 @@
 "use client"
 
 import dynamic from "next/dynamic"
+import { useSharedEntropy } from "@/components/trng/space/use-entropy"
+
+// One modest pull of true decay entropy feeds the cube, return map, and raster.
+// The radioactive pool refills slowly, so the whole page shares this buffer
+// rather than each widget draining the source independently.
+const SHARED_BYTES = 6144
 
 function Loading({ label }: { label: string }) {
   return (
@@ -43,6 +49,8 @@ function SectionHead({ n, kicker, title }: { n: string; kicker: string; title: s
 }
 
 export function V3EntropySpace() {
+  const { bytes, status, regenerate } = useSharedEntropy(SHARED_BYTES)
+
   return (
     <div className="v3-espace">
       {/* HERO — the cube */}
@@ -50,7 +58,7 @@ export function V3EntropySpace() {
         <div className="v3-wrap">
           <SectionHead n="01" kicker="the geometry of randomness" title="Entropy, in three dimensions" />
           <article className="v3-panel v3-espace-panel">
-            <EntropyCube />
+            <EntropyCube bytes={bytes} status={status} onRegenerate={regenerate} />
           </article>
         </div>
       </section>
@@ -62,20 +70,20 @@ export function V3EntropySpace() {
             <div>
               <SectionHead n="02" kicker="short-range correlation" title="The return map" />
               <article className="v3-panel v3-espace-panel">
-                <ReturnMap />
+                <ReturnMap bytes={bytes} status={status} onRegenerate={regenerate} />
               </article>
             </div>
             <div>
-              <SectionHead n="03" kicker="raw, live, never repeating" title="The bit raster" />
+              <SectionHead n="03" kicker="raw, scrolling, structureless" title="The bit raster" />
               <article className="v3-panel v3-espace-panel">
-                <BitRaster />
+                <BitRaster bytes={bytes} status={status} />
               </article>
             </div>
           </div>
         </div>
       </section>
 
-      {/* phase space */}
+      {/* phase space — fed by cheap /metrics JSON, not the entropy pool */}
       <section className="v3-section v3-espace-section">
         <div className="v3-wrap">
           <SectionHead n="04" kicker="health, over the last 24 hours" title="Quality phase-space" />

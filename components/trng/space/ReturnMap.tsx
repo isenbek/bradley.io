@@ -1,22 +1,28 @@
 "use client"
 
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useEffect, useRef } from "react"
 import { RefreshCw } from "lucide-react"
-import { getEntropyBytes } from "@/components/trng"
+import type { EntropyStatus } from "./use-entropy"
 
-const N = 128 // grid = top 7 bits of each byte (keeps cells well-populated)
-const SAMPLE_BYTES = 32_768 // ~2 pairs/cell → a smooth, clearly uniform haze
+const N = 64 // grid = top 6 bits of each byte (well-populated from a small buffer)
 
-// Plot each consecutive pair (byteₙ, byteₙ₊₁) as a cell. True randomness
-// fills the square as an even haze; a weak PRNG leaves a visible lattice or
-// diagonal. Color is normalized to the *mean* count, so a uniform field
-// renders as a flat blue mist with only Poisson grain — the way it should.
-export default function ReturnMap() {
+// Plot each consecutive pair (byteₙ, byteₙ₊₁) as a cell. True randomness fills
+// the square as an even haze; a weak PRNG leaves a visible lattice or diagonal.
+// Color is normalized to the mean count, so a uniform field renders as a flat
+// blue mist with only Poisson grain.
+export default function ReturnMap({
+  bytes,
+  status,
+  onRegenerate,
+}: {
+  bytes: Uint8Array | null
+  status: EntropyStatus
+  onRegenerate: () => void
+}) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(false)
 
-  const render = useCallback((bytes: Uint8Array) => {
+  useEffect(() => {
+    if (!bytes) return
     const canvas = canvasRef.current
     if (!canvas) return
     const ctx = canvas.getContext("2d")
@@ -25,13 +31,10 @@ export default function ReturnMap() {
     const counts = new Uint32Array(N * N)
     let pairs = 0
     for (let i = 0; i < bytes.length - 1; i++) {
-      const idx = (bytes[i] >> 1) * N + (bytes[i + 1] >> 1)
-      counts[idx]++
+      counts[(bytes[i] >> 2) * N + (bytes[i + 1] >> 2)]++
       pairs++
     }
-
-    const mean = pairs / (N * N)
-    const denom = Math.max(1e-6, mean * 2.4)
+    const denom = Math.max(1e-6, (pairs / (N * N)) * 2.4)
     const img = ctx.createImageData(N, N)
     for (let i = 0; i < counts.length; i++) {
       const t = Math.pow(Math.min(1, counts[i] / denom), 0.85)
@@ -42,41 +45,20 @@ export default function ReturnMap() {
       img.data[o + 3] = 255
     }
     ctx.putImageData(img, 0, 0)
-  }, [])
+  }, [bytes])
 
-  const load = useCallback(
-    async (signal?: AbortSignal) => {
-      setLoading(true)
-      setError(false)
-      try {
-        const bytes = await getEntropyBytes(SAMPLE_BYTES, signal)
-        if (signal?.aborted) return
-        render(bytes)
-      } catch (e) {
-        if ((e as Error).name !== "AbortError") setError(true)
-      } finally {
-        if (!signal?.aborted) setLoading(false)
-      }
-    },
-    [render]
-  )
-
-  useEffect(() => {
-    const ctrl = new AbortController()
-    load(ctrl.signal)
-    return () => ctrl.abort()
-  }, [load])
+  const overlay = !bytes ? (status === "pool-low" ? "entropy pool replenishing" : "sampling…") : null
 
   return (
     <div className="v3-espace-viz">
       <div className="v3-espace-viz__controls v3-espace-viz__controls--end">
-        <button type="button" className="v3-espace-btn" onClick={() => load()} disabled={loading}>
-          <RefreshCw size={13} strokeWidth={2.4} className={loading ? "v3-spin" : ""} />
+        <button type="button" className="v3-espace-btn" onClick={onRegenerate} disabled={status === "loading"}>
+          <RefreshCw size={13} strokeWidth={2.4} className={status === "loading" ? "v3-spin" : ""} />
           Resample
         </button>
       </div>
       <div className="v3-espace-square">
-        {error ? <div className="v3-espace-fallback">decay source unreachable</div> : null}
+        {overlay ? <div className="v3-espace-fallback">{overlay}</div> : null}
         <canvas ref={canvasRef} width={N} height={N} className="v3-espace-square__canvas" />
       </div>
       <p className="v3-espace-caption">

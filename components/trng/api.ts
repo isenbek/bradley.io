@@ -103,26 +103,48 @@ export const getRandomHex = (n = 64, s?: AbortSignal) =>
 // Upstream caps a single random pull at max_bytes_per_request (4096).
 const MAX_BYTES_PER_REQUEST = 4096
 
+// The entropy pool is a SCARCE physical resource — a radioactive source emits
+// only ~3 bytes/sec, so the conditioned pool refills over hours. When it runs
+// below its low-water mark the upstream returns 503; treat that as a normal,
+// recoverable "replenishing" signal rather than an error, and consume frugally.
+export class PoolLowError extends Error {
+  constructor() {
+    super("entropy pool replenishing")
+    this.name = "PoolLowError"
+  }
+}
+
 // Raw binary entropy. /random/bytes returns an octet-stream — read it as an
 // ArrayBuffer rather than JSON. Clamped to the per-request cap.
 export async function getRandomBytes(n = MAX_BYTES_PER_REQUEST, signal?: AbortSignal): Promise<Uint8Array> {
   const want = Math.max(1, Math.min(n, MAX_BYTES_PER_REQUEST))
   const res = await fetch(`${TRNG_API}/random/bytes?n=${want}`, { signal, cache: "no-store" })
+  if (res.status === 503) throw new PoolLowError()
   if (!res.ok) throw new Error(`/random/bytes: ${res.status}`)
   return new Uint8Array(await res.arrayBuffer())
 }
 
-// Pull `total` bytes of decay entropy, batching across the 4096-byte cap.
+// Pull up to `total` bytes of decay entropy, batching across the 4096-byte
+// cap. Tolerant of a mid-stream failure: returns whatever was collected so a
+// single hiccup doesn't blank an entire visualization. Throws PoolLowError
+// only when nothing at all could be pulled.
 export async function getEntropyBytes(total: number, signal?: AbortSignal): Promise<Uint8Array> {
   const out = new Uint8Array(total)
   let off = 0
   while (off < total) {
-    const chunk = await getRandomBytes(total - off, signal)
+    let chunk: Uint8Array
+    try {
+      chunk = await getRandomBytes(total - off, signal)
+    } catch (e) {
+      if ((e as Error).name === "AbortError") throw e
+      break // pool low or transient — use what we already have
+    }
     if (chunk.length === 0) break
     out.set(chunk.subarray(0, total - off), off)
     off += chunk.length
   }
-  return off === total ? out : out.subarray(0, off)
+  if (off === 0) throw new PoolLowError()
+  return off === total ? out : out.slice(0, off)
 }
 
 export interface MetricsWindow {

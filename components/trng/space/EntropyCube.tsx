@@ -1,15 +1,15 @@
 "use client"
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { Canvas } from "@react-three/fiber"
 import { OrbitControls } from "@react-three/drei"
 import * as THREE from "three"
 import { RefreshCw } from "lucide-react"
-import { getEntropyBytes } from "@/components/trng"
 import { bytesToPoints, randuPoints, pointColors } from "./entropy-lib"
+import type { EntropyStatus } from "./use-entropy"
 
 type Source = "live" | "randu"
-const COUNTS = [2000, 4000, 8000]
+const MAX_POINTS = 2000
 
 function usePrefersReducedMotion() {
   const [reduced, setReduced] = useState(false)
@@ -47,10 +47,7 @@ function PointCloud({ positions, colors }: { positions: Float32Array; colors: Fl
 }
 
 function CubeFrame() {
-  const edges = useMemo(
-    () => new THREE.EdgesGeometry(new THREE.BoxGeometry(2, 2, 2)),
-    []
-  )
+  const edges = useMemo(() => new THREE.EdgesGeometry(new THREE.BoxGeometry(2, 2, 2)), [])
   useEffect(() => () => edges.dispose(), [edges])
   return (
     <lineSegments geometry={edges}>
@@ -59,94 +56,63 @@ function CubeFrame() {
   )
 }
 
-export default function EntropyCube() {
+export default function EntropyCube({
+  bytes,
+  status,
+  onRegenerate,
+}: {
+  bytes: Uint8Array | null
+  status: EntropyStatus
+  onRegenerate: () => void
+}) {
   const [source, setSource] = useState<Source>("live")
-  const [count, setCount] = useState(4000)
-  const [data, setData] = useState<{ positions: Float32Array; colors: Float32Array } | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState(false)
+  const [reseed, setReseed] = useState(1)
   const reduced = usePrefersReducedMotion()
-  const seedRef = useRef(1)
 
-  const load = useCallback(
-    async (signal?: AbortSignal) => {
-      setLoading(true)
-      setError(false)
-      try {
-        let positions: Float32Array
-        if (source === "live") {
-          const bytes = await getEntropyBytes(count * 3, signal)
-          positions = bytesToPoints(bytes, count)
-        } else {
-          // advance the seed so each "regenerate" reshuffles the planes
-          seedRef.current = (seedRef.current * 1103515245 + 12345) % 2147483648 || 1
-          positions = randuPoints(count, seedRef.current)
-        }
-        if (signal?.aborted) return
-        setData({ positions, colors: pointColors(positions) })
-      } catch (e) {
-        if ((e as Error).name !== "AbortError") setError(true)
-      } finally {
-        if (!signal?.aborted) setLoading(false)
-      }
-    },
-    [source, count]
-  )
+  const data = useMemo(() => {
+    let positions: Float32Array | null = null
+    if (source === "live") {
+      if (!bytes) return null
+      positions = bytesToPoints(bytes, Math.min(MAX_POINTS, Math.floor(bytes.length / 3)))
+    } else {
+      positions = randuPoints(MAX_POINTS, reseed * 2654435761)
+    }
+    return { positions, colors: pointColors(positions) }
+  }, [source, bytes, reseed])
 
-  useEffect(() => {
-    const ctrl = new AbortController()
-    load(ctrl.signal)
-    return () => ctrl.abort()
-  }, [load])
+  const overlay =
+    source === "live" && !bytes
+      ? status === "pool-low"
+        ? "entropy pool replenishing — hang tight"
+        : "drawing entropy…"
+      : null
 
   return (
     <div className="v3-espace-viz">
       <div className="v3-espace-viz__controls">
         <div className="v3-seg" role="group" aria-label="Entropy source">
-          <button
-            type="button"
-            className="v3-seg__btn"
-            data-active={source === "live"}
-            onClick={() => setSource("live")}
-          >
+          <button type="button" className="v3-seg__btn" data-active={source === "live"} onClick={() => setSource("live")}>
             Live decay
           </button>
-          <button
-            type="button"
-            className="v3-seg__btn"
-            data-active={source === "randu"}
-            onClick={() => setSource("randu")}
-          >
+          <button type="button" className="v3-seg__btn" data-active={source === "randu"} onClick={() => setSource("randu")}>
             RANDU (broken)
           </button>
         </div>
-        <select
-          className="v3-espace-select"
-          value={count}
-          onChange={(e) => setCount(Number(e.target.value))}
-          aria-label="Point count"
-        >
-          {COUNTS.map((c) => (
-            <option key={c} value={c}>
-              {c.toLocaleString()} pts
-            </option>
-          ))}
-        </select>
-        <button
-          type="button"
-          className="v3-espace-btn"
-          onClick={() => load()}
-          disabled={loading}
-        >
-          <RefreshCw size={13} strokeWidth={2.4} className={loading ? "v3-spin" : ""} />
-          {source === "live" ? "Pour entropy" : "Reseed"}
-        </button>
+        {source === "live" ? (
+          <button type="button" className="v3-espace-btn" onClick={onRegenerate} disabled={status === "loading"}>
+            <RefreshCw size={13} strokeWidth={2.4} className={status === "loading" ? "v3-spin" : ""} />
+            Pour fresh entropy
+          </button>
+        ) : (
+          <button type="button" className="v3-espace-btn" onClick={() => setReseed((n) => n + 1)}>
+            <RefreshCw size={13} strokeWidth={2.4} />
+            Reseed
+          </button>
+        )}
       </div>
 
       <div className="v3-espace-canvas" data-source={source}>
-        {error ? (
-          <div className="v3-espace-fallback">decay source unreachable — try again shortly</div>
-        ) : null}
+        {overlay ? <div className="v3-espace-fallback">{overlay}</div> : null}
         <Canvas camera={{ position: [2.6, 1.9, 2.6], fov: 48 }} dpr={[1, 2]}>
           <CubeFrame />
           {data ? <PointCloud positions={data.positions} colors={data.colors} /> : null}

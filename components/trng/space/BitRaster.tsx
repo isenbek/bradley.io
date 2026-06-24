@@ -1,20 +1,25 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
-import { getEntropyBytes } from "@/components/trng"
+import { useEffect, useRef } from "react"
+import type { EntropyStatus } from "./use-entropy"
 
 const W = 160 // bits per row
 const H = 120 // rows
-const BAND = 5 // new rows per tick
-const BYTES_PER_TICK = (W * BAND) / 8 // 100
-const TICK_MS = 1400
+const BAND = 4 // rows added per tick
+const TICK_MS = 1500
 
-// A live, scrolling texture of raw decay bits — on = Bio Blue, off = ink.
-// New entropy pours in at the bottom and scrolls up: a hypnotic, ever-
-// changing field that never repeats.
-export default function BitRaster() {
+// A scrolling field of raw decay bits — on = Bio Blue, off = ink. It streams
+// through the page's shared entropy buffer (no extra pulls on the scarce pool),
+// scrolling up so the texture feels alive. Each "pour fresh entropy" swaps in a
+// new block of true randomness.
+export default function BitRaster({
+  bytes,
+  status,
+}: {
+  bytes: Uint8Array | null
+  status: EntropyStatus
+}) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const [error, setError] = useState(false)
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -22,21 +27,20 @@ export default function BitRaster() {
     const ctx = canvas.getContext("2d")
     if (!ctx) return
 
-    // start dark
     ctx.fillStyle = "#0a0f15"
     ctx.fillRect(0, 0, W, H)
+    if (!bytes || bytes.length === 0) return
 
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    const ctrl = new AbortController()
-    let stopped = false
-
-    const drawBand = (bytes: Uint8Array, rows: number) => {
+    const totalBits = bytes.length * 8
+    const bitAt = (pos: number) => {
+      const p = ((pos % totalBits) + totalBits) % totalBits
+      return (bytes[p >> 3] >> (7 - (p & 7))) & 1
+    }
+    const drawRows = (startBit: number, rows: number, atY: number) => {
       const band = ctx.createImageData(W, rows)
       for (let r = 0; r < rows; r++) {
         for (let c = 0; c < W; c++) {
-          const bit = r * W + c
-          const byte = bytes[bit >> 3] ?? 0
-          const on = (byte >> (7 - (bit & 7))) & 1
+          const on = bitAt(startBit + r * W + c)
           const o = (r * W + c) * 4
           band.data[o] = on ? 38 : 10
           band.data[o + 1] = on ? 178 : 16
@@ -44,56 +48,43 @@ export default function BitRaster() {
           band.data[o + 3] = 255
         }
       }
-      // scroll existing image up by `rows`, then drop the new band at the bottom
-      ctx.globalCompositeOperation = "copy"
-      ctx.drawImage(ctx.canvas, 0, -rows)
-      ctx.globalCompositeOperation = "source-over"
-      ctx.putImageData(band, 0, H - rows)
+      ctx.putImageData(band, 0, atY)
     }
 
-    const tick = async () => {
-      if (stopped || document.visibilityState === "hidden") return
-      try {
-        const bytes = await getEntropyBytes(BYTES_PER_TICK, ctrl.signal)
-        if (stopped) return
-        drawBand(bytes, BAND)
-        setError(false)
-      } catch (e) {
-        if ((e as Error).name !== "AbortError") setError(true)
-      }
-    }
+    // initial full field
+    drawRows(0, H, 0)
+    let head = H * W // next bit offset to reveal at the bottom
 
-    // initial full-screen fill so it doesn't start mostly black
-    const seed = async () => {
-      try {
-        const bytes = await getEntropyBytes((W * H) / 8, ctrl.signal)
-        if (stopped) return
-        drawBand(bytes, H)
-      } catch {
-        /* ignore — ticks will fill in */
-      }
-    }
-    seed()
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    const id = reduced
+      ? null
+      : window.setInterval(() => {
+          if (document.visibilityState === "hidden") return
+          ctx.globalCompositeOperation = "copy"
+          ctx.drawImage(ctx.canvas, 0, -BAND)
+          ctx.globalCompositeOperation = "source-over"
+          drawRows(head, BAND, H - BAND)
+          head += BAND * W
+        }, TICK_MS)
 
-    const id = reduced ? null : window.setInterval(tick, TICK_MS)
     return () => {
-      stopped = true
-      ctrl.abort()
       if (id) clearInterval(id)
     }
-  }, [])
+  }, [bytes])
+
+  const overlay = !bytes ? (status === "pool-low" ? "entropy pool replenishing" : "sampling…") : null
 
   return (
     <div className="v3-espace-viz">
       <div className="v3-espace-raster">
-        {error ? <div className="v3-espace-fallback">decay source unreachable</div> : null}
+        {overlay ? <div className="v3-espace-fallback">{overlay}</div> : null}
         <canvas ref={canvasRef} width={W} height={H} className="v3-espace-raster__canvas" />
       </div>
       <p className="v3-espace-caption">
-        <strong>Raw bits, live.</strong> Each pixel is one bit straight off the
-        conditioned pool — blue for 1, ink for 0 — scrolling up as fresh decay
-        arrives. No pattern forms because there is none to form: this texture
-        will never repeat for as long as the isotope decays.
+        <strong>Raw bits.</strong> Each pixel is one bit straight off the
+        conditioned pool — blue for 1, ink for 0 — scrolling up through a block
+        of live decay. No pattern forms because there is none to form. Pour
+        fresh entropy to stream a new block.
       </p>
     </div>
   )
