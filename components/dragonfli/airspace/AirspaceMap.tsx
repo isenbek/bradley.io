@@ -111,9 +111,10 @@ export default function AirspaceMap() {
 
   // ---- map init (once) ----
   useEffect(() => {
-    if (!containerRef.current) return
+    const container = containerRef.current
+    if (!container) return
     const map = new maplibregl.Map({
-      container: containerRef.current,
+      container,
       style: airspaceStyle,
       center: GR_CENTER,
       zoom: 8,
@@ -122,6 +123,12 @@ export default function AirspaceMap() {
       attributionControl: false,
     })
     mapRef.current = map
+
+    // The map can mount into a container that hasn't settled its height yet
+    // (dynamic import + clamp() height) — MapLibre would lock to a default
+    // 300px buffer. A ResizeObserver keeps the GL viewport matched to the box.
+    const ro = new ResizeObserver(() => map.resize())
+    ro.observe(container)
     map.addControl(new maplibregl.NavigationControl({ showCompass: false }), "top-right")
     map.addControl(
       new maplibregl.AttributionControl({ compact: true, customAttribution: "© OpenMapTiles · OpenStreetMap" }),
@@ -171,6 +178,7 @@ export default function AirspaceMap() {
 
     map.on("load", () => {
       readyRef.current = true
+      map.resize() // match the now-settled container box
       map.addImage("dart", makeDart(), { sdf: true })
 
       map.addSource("density", { type: "geojson", data: EMPTY })
@@ -276,6 +284,7 @@ export default function AirspaceMap() {
 
     return () => {
       aborted = true
+      ro.disconnect()
       if (aircraftTimer) clearInterval(aircraftTimer)
       if (densityTimer) clearInterval(densityTimer)
       if (moveTimer) clearTimeout(moveTimer)
