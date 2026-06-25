@@ -58,6 +58,18 @@ step "Building production..."
 bun run build
 ok "Build complete"
 
+# 5b. Sync build-info — the build just regenerated lib/build-info.json with
+# the bumped version. Commit it so the repo's version pill matches what we're
+# deploying (otherwise the committed pill lags one deploy behind).
+step "Syncing build-info..."
+if [[ -n "$(git status --porcelain lib/build-info.json)" ]]; then
+    git add lib/build-info.json
+    git commit -m "build-info: ${NEW_VER}"
+    ok "build-info committed (${NEW_VER})"
+else
+    ok "build-info already in sync"
+fi
+
 # 6. Push
 step "Pushing to origin..."
 git push
