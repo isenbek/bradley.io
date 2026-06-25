@@ -392,13 +392,6 @@ export default async function V3Home() {
               },
               {
                 tag: "Live",
-                tagColor: "blue",
-                title: "Airspace Map",
-                blurb: "Live aircraft on a self-hosted vector map — 15-min density forecast, trajectory ribbons, RSSI bloom.",
-                href: "/dragonfli/airspace",
-              },
-              {
-                tag: "Live",
                 tagColor: "green",
                 title: "HOTBITS TRNG",
                 blurb: "Random bits from radioactive decay — NIST-tested, Geiger-fed, served live.",
