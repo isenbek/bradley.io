@@ -1,4 +1,5 @@
-import { Plane } from "lucide-react"
+import Link from "next/link"
+import { Plane, Map as MapIcon } from "lucide-react"
 import { V3Reveal } from "@/components/v3/V3Reveal"
 import { V3DragonfliDashboard } from "./V3DragonfliDashboard"
 
@@ -38,6 +39,13 @@ export default function V3DragonfliPage() {
                 running in the garage. Polar radar, live tracks, and a trajectory predictor
                 — refreshed every 5 seconds.
               </p>
+            </V3Reveal>
+            <V3Reveal>
+              <Link href="/dragonfli/airspace" className="v3-espace-cta">
+                <MapIcon size={15} strokeWidth={2.4} />
+                Open the live airspace map — aircraft, density &amp; trajectories
+                <span aria-hidden>→</span>
+              </Link>
             </V3Reveal>
           </div>
         </div>

@@ -106,3 +106,50 @@ export const getRegistryStats = (s?: AbortSignal) =>
   getJSON<RegistryStats>("/registry/stats", s)
 export const getPredictStatus = (s?: AbortSignal) =>
   getJSON<PredictStatus>("/predict_status", s)
+
+// ---- Density forecast (GeoJSON, drops straight into a MapLibre source) ----
+
+export interface DensityProps {
+  geohash: string
+  center_lat: number
+  center_lon: number
+  predicted_count: number
+  predicted_raw: number
+  current_count: number
+  historical_avg_hour: number
+  confidence: number
+}
+export type DensityCollection = GeoJSON.FeatureCollection<GeoJSON.Polygon, DensityProps> & {
+  truncated?: boolean
+  n_features?: number
+  horizon_minutes?: number
+}
+
+/** bbox = "west,south,east,north" in decimal degrees. */
+export const getPredictBbox = (bbox: string, maxCells = 1500, s?: AbortSignal) =>
+  getJSON<DensityCollection>(
+    `/predict_bbox?bbox=${encodeURIComponent(bbox)}&max_cells=${maxCells}`,
+    s
+  )
+
+// ---- Per-aircraft trajectory forecast (kinematic + lgbm residual) ----
+
+export interface TrackPoint {
+  t_offset_s: number
+  lat: number
+  lon: number
+  alt_baro: number | null
+  ground_distance_nm: number
+  confidence: number
+}
+export interface PredictTrack {
+  icao: string
+  as_of: string
+  horizon_s: number
+  step_s: number
+  method: string
+  current: { lat: number; lon: number; alt_baro: number | null; speed: number | null; track: number | null }
+  predictions: TrackPoint[]
+}
+export const getPredictTrack = (icao: string, s?: AbortSignal) =>
+  getJSON<PredictTrack>(`/predict_track/${icao}`, s)
