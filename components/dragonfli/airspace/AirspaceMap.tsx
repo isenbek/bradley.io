@@ -191,14 +191,14 @@ export default function AirspaceMap() {
         source: "density",
         paint: {
           "fill-color": densityColor(MODE_PROP.predicted),
-          "fill-opacity": ["max", 0.12, ["*", 0.6, ["coalesce", ["get", "confidence"], 0.3]]],
+          "fill-opacity": ["max", 0.34, ["*", 0.9, ["coalesce", ["get", "confidence"], 0.45]]],
         },
       })
       map.addLayer({
         id: "density-line",
         type: "line",
         source: "density",
-        paint: { "line-color": "#3fd0ff", "line-opacity": 0.22, "line-width": 0.5 },
+        paint: { "line-color": "#3fd0ff", "line-opacity": 0.4, "line-width": 0.6 },
       })
       map.addLayer({
         id: "rssi",
