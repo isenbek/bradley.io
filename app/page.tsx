@@ -68,7 +68,7 @@ export default async function V3Home() {
           </V3Reveal>
 
           <V3Reveal delay={260}>
-            <div style={{ marginTop: 36 }}>
+            <div style={{ marginTop: 18 }}>
               <div
                 className="v3-sec-head__num"
                 style={{
