@@ -61,6 +61,12 @@ export default async function V3Home() {
             </div>
           </V3Reveal>
 
+          <V3Reveal delay={220}>
+            <div style={{ marginTop: 36 }}>
+              <HotbitsHero />
+            </div>
+          </V3Reveal>
+
           <V3Reveal delay={260}>
             <div style={{ marginTop: 36 }}>
               <div
@@ -83,15 +89,6 @@ export default async function V3Home() {
           </V3Reveal>
         </div>
       </header>
-
-      {/* HOTBITS HERO PANEL ============================================= */}
-      <section className="v3-section" style={{ paddingTop: 8, paddingBottom: 8 }}>
-        <div className="v3-wrap">
-          <V3Reveal>
-            <HotbitsHero />
-          </V3Reveal>
-        </div>
-      </section>
 
       {/* STAT STRIP ====================================================== */}
       <section className="v3-section v3-section--paper" style={{ paddingTop: 56, paddingBottom: 56 }}>
