@@ -47,8 +47,11 @@ fi
 # 4. Bump patch version
 step "Bumping version..."
 OLD_VER=$(node -p "require('./package.json').version")
-NEW_VER=v$(bun pm version patch --no-git-tag-version 2>/dev/null || \
+# `bun pm version` already prints a leading "v"; the node fallback doesn't.
+# Strip any leading "v" then add exactly one, so we never get "vv1.0.x".
+RAW_VER=$(bun pm version patch --no-git-tag-version 2>/dev/null || \
             node -e "const p=require('./package.json');const v=p.version.split('.');v[2]=String(+v[2]+1);p.version=v.join('.');require('fs').writeFileSync('./package.json',JSON.stringify(p,null,2)+'\n');console.log(p.version)")
+NEW_VER="v${RAW_VER#v}"
 git add package.json bun.lock 2>/dev/null || git add package.json
 git commit -m "bump: ${NEW_VER}" --allow-empty
 ok "${OLD_VER} → ${NEW_VER}"
