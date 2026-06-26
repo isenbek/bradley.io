@@ -66,9 +66,13 @@ CAP=$(echo "$SIZES" | awk -Fx -v max="$MAXW" 'NF==2 && $1<=max' | sort -t x -k1,
 # ── Capture ─────────────────────────────────────────────────────────────────
 # select=gte(n,4) discards the first few frames so auto-exposure settles before
 # we keep one — older UVC cams (the QuickCam) hand back a dark first frame.
+# scale+pad normalizes every camera onto a 1280×720 16:9 canvas: the BRIO fills
+# it exactly, narrower/4:3 cams (the QuickCam) get letterbox bars baked in rather
+# than being cropped by the page/share-card's object-fit:cover.
 ffmpeg -hide_banner -loglevel error -y \
   -f v4l2 -input_format mjpeg -video_size "$CAP" -i "$DEV" \
-  -vf "select=gte(n\,4)" -frames:v 1 -q:v 3 "$TMP"
+  -vf "select=gte(n\,4),scale=1280:720:force_original_aspect_ratio=decrease,pad=1280:720:(ow-iw)/2:(oh-ih)/2:color=black" \
+  -frames:v 1 -q:v 3 "$TMP"
 
 # Serialize the same frame as a PNG (file→file, no second camera open) with a
 # faint "bradley.io · <timestamp>" caption baked into the bottom-right corner.

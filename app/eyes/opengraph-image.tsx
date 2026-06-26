@@ -117,19 +117,23 @@ export default async function Image() {
           </div>
         </div>
 
-        {/* framed photo */}
-        <div
-          style={{
-            display: "flex",
-            marginTop: 14,
-            flex: 1,
-            borderRadius: 16,
-            overflow: "hidden",
-            border: "1px solid rgba(255,255,255,0.14)",
-            boxShadow: "0 22px 55px -22px rgba(0,0,0,0.85)",
-          }}
-        >
-          <img src={dataUrl} width={1144} height={500} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+        {/* framed photo — fixed 16:9 box, centered. The frame is normalized to
+            16:9 at capture, so cover fills it exactly (no crop); the QuickCam's
+            letterbox bars are baked into the frame itself. */}
+        <div style={{ display: "flex", flex: 1, marginTop: 14, alignItems: "center", justifyContent: "center" }}>
+          <div
+            style={{
+              display: "flex",
+              width: 900,
+              height: 506,
+              borderRadius: 16,
+              overflow: "hidden",
+              border: "1px solid rgba(255,255,255,0.14)",
+              boxShadow: "0 22px 55px -22px rgba(0,0,0,0.85)",
+            }}
+          >
+            <img src={dataUrl} width={900} height={506} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          </div>
         </div>
       </div>
     ),
