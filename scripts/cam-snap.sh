@@ -77,7 +77,7 @@ ffmpeg -hide_banner -loglevel error -y \
 # Serialize the same frame as a PNG (file→file, no second camera open) with a
 # faint "bradley.io · <timestamp>" caption baked into the bottom-right corner.
 # The JPEG stays clean — the live /eyes page draws its own HTML timestamp HUD.
-STAMP="bradley.io · $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+STAMP="bradley.io · ${NAME} · $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
 printf '%s' "$STAMP" > "$TS_FILE"
 ffmpeg -hide_banner -loglevel error -y -i "$TMP" \
   -vf "drawtext=fontfile=${FONT}:textfile=${TS_FILE}:fontsize=18:fontcolor=white@0.42:shadowcolor=black@0.45:shadowx=1:shadowy=1:x=w-tw-16:y=h-th-14" \
