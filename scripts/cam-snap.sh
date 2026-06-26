@@ -25,10 +25,10 @@ ffmpeg -hide_banner -loglevel error -y \
   -frames:v 1 -q:v 3 "$TMP"
 
 # Serialize the same frame as a PNG (file→file, no second camera open) with a
-# faint timestamp baked into the bottom-right corner. The JPEG stays clean — the
-# live /eyes page draws its own HTML timestamp HUD over it. textfile= avoids the
-# drawtext colon-escaping dance for the "HH:MM:SS" string.
-STAMP="$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+# faint "bradley.io · <timestamp>" caption baked into the bottom-right corner.
+# The JPEG stays clean — the live /eyes page draws its own HTML timestamp HUD
+# over it. textfile= avoids the drawtext colon-escaping dance for "HH:MM:SS".
+STAMP="bradley.io · $(date -u '+%Y-%m-%d %H:%M:%S UTC')"
 printf '%s' "$STAMP" > "$TS_FILE"
 FONT="/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf"
 ffmpeg -hide_banner -loglevel error -y -i "$TMP" \
