@@ -9,8 +9,7 @@ Group=bisenbek
 SupplementaryGroups=video
 WorkingDirectory=/home/bisenbek/projects/bradleyio
 Environment="CAM_CACHE_DIR=/var/lib/bradley-cam"
-Environment="CAM_DEVICE=/dev/video0"
-Environment="CAM_SIZE=1280x720"
+Environment="CAM_MAXW=1280"
 # systemd creates/chowns /var/lib/bradley-cam for us (User:Group, 0755).
 StateDirectory=bradley-cam
 ExecStart=/home/bisenbek/projects/bradleyio/scripts/cam-snap.sh
