@@ -16,15 +16,24 @@ TMP="${CACHE_DIR}/.latest.tmp.jpg"
 trap 'rm -f "$TMP"' EXIT
 
 TMP_PNG="${CACHE_DIR}/.latest.tmp.png"
-trap 'rm -f "$TMP" "$TMP_PNG"' EXIT
+TS_FILE="${CACHE_DIR}/.stamp.txt"
+trap 'rm -f "$TMP" "$TMP_PNG" "$TS_FILE"' EXIT
 
 # One MJPEG frame, lightly re-encoded for consistent JPEG output.
 ffmpeg -hide_banner -loglevel error -y \
   -f v4l2 -input_format mjpeg -video_size "$SIZE" -i "$DEV" \
   -frames:v 1 -q:v 3 "$TMP"
 
-# Serialize the same frame as a PNG (file→file, no second camera open).
-ffmpeg -hide_banner -loglevel error -y -i "$TMP" "$TMP_PNG"
+# Serialize the same frame as a PNG (file→file, no second camera open) with a
+# faint timestamp baked into the bottom-right corner. The JPEG stays clean — the
+# live /eyes page draws its own HTML timestamp HUD over it. textfile= avoids the
+# drawtext colon-escaping dance for the "HH:MM:SS" string.
+STAMP="$(date -u '+%Y-%m-%d %H:%M:%S UTC')"
+printf '%s' "$STAMP" > "$TS_FILE"
+FONT="/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf"
+ffmpeg -hide_banner -loglevel error -y -i "$TMP" \
+  -vf "drawtext=fontfile=${FONT}:textfile=${TS_FILE}:fontsize=18:fontcolor=white@0.42:shadowcolor=black@0.45:shadowx=1:shadowy=1:x=w-tw-16:y=h-th-14" \
+  "$TMP_PNG"
 
 # Atomic publish — readers never see a half-written file.
 mv -f "$TMP" "${CACHE_DIR}/latest.jpg"
