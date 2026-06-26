@@ -1,8 +1,9 @@
-import { ArrowRight, Map as MapIcon } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 import Link from "next/link"
 import { ActivityPulse } from "@/components/v3/ActivityPulse"
 import { ActivityFeedList } from "@/components/v3/ActivityFeedList"
 import { HotbitsHero } from "@/components/home/HotbitsHero"
+import { AirspacePromo } from "@/components/home/AirspacePromo"
 import { HeroStats } from "@/components/v3/HeroStats"
 import { MissionHeros } from "@/components/v3/MissionHeros"
 import { V3Reveal } from "@/components/v3/V3Reveal"
@@ -68,20 +69,7 @@ export default async function V3Home() {
           </V3Reveal>
 
           <V3Reveal delay={240}>
-            <Link href="/dragonfli/airspace" className="v3-air-promo" style={{ marginTop: 14 }}>
-              <span className="v3-air-promo__ico">
-                <MapIcon size={20} strokeWidth={2.2} />
-              </span>
-              <span className="v3-air-promo__body">
-                <span className="v3-air-promo__eyebrow">live · airspace map</span>
-                <span className="v3-air-promo__title">The sky over Grand Rapids, mapped</span>
-                <span className="v3-air-promo__blurb">
-                  Live ADS-B aircraft on a self-hosted vector map — 15-min density forecast,
-                  trajectory ribbons, and an RSSI reception bloom.
-                </span>
-              </span>
-              <ArrowRight className="v3-air-promo__arrow" size={18} strokeWidth={2.4} />
-            </Link>
+            <AirspacePromo />
           </V3Reveal>
 
           <V3Reveal delay={260}>

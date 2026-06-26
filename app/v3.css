@@ -5264,6 +5264,34 @@ body:has(.v3) {
   color: var(--v3-ink);
   line-height: 1.45;
 }
+.v3-air-promo__right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-shrink: 0;
+}
+.v3-air-promo__count {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--v3-blue-700);
+  padding: 5px 11px;
+  border-radius: var(--v3-r-pill);
+  background: color-mix(in srgb, var(--v3-blue-500) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--v3-blue-500) 24%, transparent);
+  white-space: nowrap;
+}
+.v3-air-promo__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 7px #22c55e;
+  animation: v3-pulse-dot 1.4s ease-in-out infinite;
+}
 .v3-air-promo__arrow {
   color: var(--v3-blue-600);
   flex-shrink: 0;
@@ -5273,4 +5301,7 @@ body:has(.v3) {
 
 @media (max-width: 560px) {
   .v3-air-promo__blurb { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .v3-air-promo__dot { animation: none; }
 }
