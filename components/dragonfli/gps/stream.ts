@@ -120,6 +120,9 @@ export function useGpsStream(): GpsState {
       }
       ws.onopen = () => {
         attempt = 0
+        // Connected — we're now awaiting a fix (or already have one). The stale
+        // timer manages searching↔live from here.
+        setState((s) => ({ ...s, status: s.tpv ? "live" : "searching" }))
       }
       ws.onmessage = (ev) => {
         let f: RawFrame
