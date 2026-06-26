@@ -1,48 +1,105 @@
 "use client"
 
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useRef, useState, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { RefreshCw } from "lucide-react"
-import { getRandomHex } from "./api"
+import { getEntropyBytes, PoolLowError } from "./api"
+
+// The /random pool is a SCARCE physical resource (~3 B/s from a radioactive
+// source, ~14 KB fresh at any time). A decorative grid must not hammer it, so
+// the public site "rewinds into the old pool": pull ONE buffer, then resample a
+// random window of it for the animation ("start somewhere"), and only re-pull
+// from the pool on a slow cadence. Everything is gated on tab visibility — a
+// backgrounded tab draws nothing. Mirrors the shared-buffer model on /trng/space.
+const BUFFER_BYTES = 1024 // pulled from the pool at most once per REFILL_MS
+const WINDOW_BYTES = 256 //  2048 bits shown in the grid
+const RESAMPLE_MS = 10_000 // re-window the local buffer (no network)
+const REFILL_MS = 120_000 //  actually re-pull fresh entropy from the pool
 
 export function LiveBits() {
-  const [hex, setHex] = useState<string>("")
-  const [ts, setTs] = useState<number>(0)
+  const [win, setWin] = useState<Uint8Array>(new Uint8Array(0))
+  const [gen, setGen] = useState(0) // bumps each (re)sample → AnimatePresence key
+  const [pulledAt, setPulledAt] = useState(0)
   const [loading, setLoading] = useState(false)
+  const [poolLow, setPoolLow] = useState(false)
+
+  const bufRef = useRef<Uint8Array>(new Uint8Array(0))
+  const lastPullRef = useRef(0)
   const mounted = useRef(true)
 
-  const refresh = async (signal?: AbortSignal) => {
+  // Show a random window of the buffer — "start somewhere in the old pool".
+  const resample = useCallback(() => {
+    const buf = bufRef.current
+    if (buf.length < WINDOW_BYTES) return
+    const off = Math.floor(Math.random() * (buf.length - WINDOW_BYTES + 1))
+    setWin(buf.slice(off, off + WINDOW_BYTES))
+    setGen((g) => g + 1)
+  }, [])
+
+  // Pull a fresh buffer from the scarce pool (mount / slow refill / manual).
+  const refill = useCallback(async (signal?: AbortSignal) => {
     setLoading(true)
     try {
-      const r = await getRandomHex(256, signal)
+      const buf = await getEntropyBytes(BUFFER_BYTES, signal)
       if (!mounted.current) return
-      setHex(r.hex)
-      setTs(Date.now())
-    } catch {
-      /* ignore — usually rate limit */
+      bufRef.current = buf
+      lastPullRef.current = Date.now()
+      setPulledAt(Date.now())
+      setPoolLow(false)
+      const off = Math.floor(Math.random() * Math.max(1, buf.length - WINDOW_BYTES + 1))
+      setWin(buf.slice(off, off + WINDOW_BYTES))
+      setGen((g) => g + 1)
+    } catch (e) {
+      if (!mounted.current) return
+      if (e instanceof PoolLowError) setPoolLow(true) // keep showing the last buffer
     } finally {
       if (mounted.current) setLoading(false)
     }
-  }
+  }, [])
 
   useEffect(() => {
     mounted.current = true
     const ctrl = new AbortController()
-    refresh(ctrl.signal)
-    const id = setInterval(() => refresh(), 10_000)
+    const hidden = () => document.visibilityState === "hidden"
+
+    // Initial pull only if the tab is actually visible.
+    if (!hidden()) refill(ctrl.signal)
+
+    const resampleId = setInterval(() => {
+      if (!hidden()) resample()
+    }, RESAMPLE_MS)
+    const refillId = setInterval(() => {
+      if (!hidden()) refill()
+    }, REFILL_MS)
+
+    // Coming back to a foregrounded tab: refresh promptly (re-pull if stale).
+    const onVis = () => {
+      if (hidden()) return
+      if (Date.now() - lastPullRef.current > REFILL_MS) refill()
+      else resample()
+    }
+    document.addEventListener("visibilitychange", onVis)
+
     return () => {
       mounted.current = false
       ctrl.abort()
-      clearInterval(id)
+      clearInterval(resampleId)
+      clearInterval(refillId)
+      document.removeEventListener("visibilitychange", onVis)
     }
-  }, [])
+  }, [refill, resample])
 
-  // Convert hex to bit grid (each byte → 8 cells)
-  const bytes = hex.match(/.{2}/g) || []
-  const bits = bytes.flatMap((h) => {
-    const n = parseInt(h, 16)
-    return Array.from({ length: 8 }, (_, i) => (n >> (7 - i)) & 1)
-  })
+  // bytes → bit grid
+  const bits: number[] = []
+  for (let i = 0; i < win.length; i++) {
+    for (let b = 0; b < 8; b++) bits.push((win[i] >> (7 - b)) & 1)
+  }
+  const hex = Array.from(win, (b) => b.toString(16).padStart(2, "0")).join("")
+  const agoLabel = poolLow
+    ? "pool replenishing…"
+    : pulledAt
+      ? `pool pull ${Math.round((Date.now() - pulledAt) / 1000)}s ago`
+      : "loading…"
 
   return (
     <motion.div
@@ -55,14 +112,14 @@ export function LiveBits() {
       <div className="flex items-center justify-between mb-4">
         <div>
           <h3 className="text-sm font-medium font-mono uppercase tracking-wide" style={{ color: "var(--brand-muted)" }}>
-            Live Bits · 2048 fresh bits every 10s
+            Live Bits · 2048-bit window, resampled every 10s
           </h3>
           <div className="font-mono text-[10px] mt-1" style={{ color: "var(--brand-muted)" }}>
-            {ts ? `updated ${Math.round((Date.now() - ts) / 1000)}s ago` : "loading…"}
+            {agoLabel}
           </div>
         </div>
         <button
-          onClick={() => refresh()}
+          onClick={() => refill()}
           disabled={loading}
           className="rounded-md px-3 py-1.5 text-[11px] font-mono uppercase tracking-wide transition-all"
           style={{
@@ -79,7 +136,7 @@ export function LiveBits() {
 
       <AnimatePresence mode="wait">
         <motion.div
-          key={ts}
+          key={gen}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -92,7 +149,7 @@ export function LiveBits() {
               a structure artifact, not entropy. Fade the whole grid in once. */}
           {bits.map((b, i) => (
             <div
-              key={`${ts}-${i}`}
+              key={`${gen}-${i}`}
               className="aspect-square rounded-[1px]"
               style={{
                 background: b
