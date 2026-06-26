@@ -4,7 +4,12 @@ import { useEffect, useRef } from "react"
 import { RefreshCw } from "lucide-react"
 import type { EntropyStatus } from "./use-entropy"
 
-const N = 64 // grid = top 6 bits of each byte (well-populated from a small buffer)
+// Top 5 bits per byte → 32×32 = 1024 cells. With the shared 6 KB buffer that's
+// ~6 pairs/cell on average — enough that Poisson grain (σ = √λ ≈ 2.4) reads as
+// a textured haze rather than the salt-and-pepper speckle you get from a 64×64
+// grid (mean ≈ 1.5/cell, ~22% of cells empty by pure chance). The caption's
+// "even haze" claim has to hold under the buffer we actually have.
+const N = 32
 
 // Plot each consecutive pair (byteₙ, byteₙ₊₁) as a cell. True randomness fills
 // the square as an even haze; a weak PRNG leaves a visible lattice or diagonal.
@@ -31,7 +36,7 @@ export default function ReturnMap({
     const counts = new Uint32Array(N * N)
     let pairs = 0
     for (let i = 0; i < bytes.length - 1; i++) {
-      counts[(bytes[i] >> 2) * N + (bytes[i + 1] >> 2)]++
+      counts[(bytes[i] >> 3) * N + (bytes[i + 1] >> 3)]++
       pairs++
     }
     const denom = Math.max(1e-6, (pairs / (N * N)) * 2.4)

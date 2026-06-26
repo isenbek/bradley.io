@@ -12,14 +12,24 @@ const TICK_MS = 1500
 // through the page's shared entropy buffer (no extra pulls on the scarce pool),
 // scrolling up so the texture feels alive. Each "pour fresh entropy" swaps in a
 // new block of true randomness.
+//
+// Auto-regenerate: bitAt() wraps the read position modulo the buffer, so once
+// `head` exceeds bytes.length*8 the SAME bits scroll past again. That's
+// silently periodic — on a 6 KB buffer at BAND*W=640 bits per 1500 ms tick,
+// the field repeats every ~115 s. Calling onRegenerate() when we've consumed
+// most of the buffer hands us a fresh block before any visible loop, while
+// the shared `useSharedEntropy` hook handles abort/backoff if the pool is low.
 export default function BitRaster({
   bytes,
   status,
+  onRegenerate,
 }: {
   bytes: Uint8Array | null
   status: EntropyStatus
+  onRegenerate?: () => void
 }) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const regenRequestedRef = useRef(false)
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -27,11 +37,15 @@ export default function BitRaster({
     const ctx = canvas.getContext("2d")
     if (!ctx) return
 
+    // Fresh buffer arrived — re-arm the one-shot regenerate trigger.
+    regenRequestedRef.current = false
+
     ctx.fillStyle = "#0a0f15"
     ctx.fillRect(0, 0, W, H)
     if (!bytes || bytes.length === 0) return
 
     const totalBits = bytes.length * 8
+    const regenAt = Math.floor(totalBits * 0.8)
     const bitAt = (pos: number) => {
       const p = ((pos % totalBits) + totalBits) % totalBits
       return (bytes[p >> 3] >> (7 - (p & 7))) & 1
@@ -65,12 +79,16 @@ export default function BitRaster({
           ctx.globalCompositeOperation = "source-over"
           drawRows(head, BAND, H - BAND)
           head += BAND * W
+          if (head >= regenAt && !regenRequestedRef.current && onRegenerate) {
+            regenRequestedRef.current = true
+            onRegenerate()
+          }
         }, TICK_MS)
 
     return () => {
       if (id) clearInterval(id)
     }
-  }, [bytes])
+  }, [bytes, onRegenerate])
 
   const overlay = !bytes ? (status === "pool-low" ? "entropy pool replenishing" : "sampling…") : null
 

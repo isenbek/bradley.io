@@ -14,7 +14,7 @@ export function LiveBits() {
   const refresh = async (signal?: AbortSignal) => {
     setLoading(true)
     try {
-      const r = await getRandomHex(64, signal)
+      const r = await getRandomHex(256, signal)
       if (!mounted.current) return
       setHex(r.hex)
       setTs(Date.now())
@@ -55,7 +55,7 @@ export function LiveBits() {
       <div className="flex items-center justify-between mb-4">
         <div>
           <h3 className="text-sm font-medium font-mono uppercase tracking-wide" style={{ color: "var(--brand-muted)" }}>
-            Live Bits · 512 fresh bits every 10s
+            Live Bits · 2048 fresh bits every 10s
           </h3>
           <div className="font-mono text-[10px] mt-1" style={{ color: "var(--brand-muted)" }}>
             {ts ? `updated ${Math.round((Date.now() - ts) / 1000)}s ago` : "loading…"}
@@ -85,14 +85,14 @@ export function LiveBits() {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
           className="grid gap-px"
-          style={{ gridTemplateColumns: "repeat(32, minmax(0, 1fr))" }}
+          style={{ gridTemplateColumns: "repeat(64, minmax(0, 1fr))" }}
         >
+          {/* No per-cell stagger: `delay: i * 0.001` at 2048 cells sweeps a
+              2-second wipe across the grid, which the eye reads as direction —
+              a structure artifact, not entropy. Fade the whole grid in once. */}
           {bits.map((b, i) => (
-            <motion.div
+            <div
               key={`${ts}-${i}`}
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 0.2, delay: i * 0.001 }}
               className="aspect-square rounded-[1px]"
               style={{
                 background: b

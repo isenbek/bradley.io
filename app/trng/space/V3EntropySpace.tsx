@@ -76,7 +76,7 @@ export function V3EntropySpace() {
             <div>
               <SectionHead n="03" kicker="raw, scrolling, structureless" title="The bit raster" />
               <article className="v3-panel v3-espace-panel">
-                <BitRaster bytes={bytes} status={status} />
+                <BitRaster bytes={bytes} status={status} onRegenerate={regenerate} />
               </article>
             </div>
           </div>

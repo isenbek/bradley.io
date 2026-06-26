@@ -20,22 +20,46 @@ function usePrefersReducedMotion() {
 
 const clamp = (v: number, lo = -1, hi = 1) => Math.max(lo, Math.min(hi, v))
 
-// Each 5-min quality window becomes a point: bias × entropy × chi.
+// 5-min quality windows are 1024 bytes wide — at that sample size individual
+// chi_pct readings swing across the full 0..100 range run-to-run by design
+// (see geiger CLAUDE.md: "drift signal lives in the trend over many readings,
+// not any one value"). Plotting raw rows on the chi axis paints noise as drift.
+// A trailing mean over ROLL rows (≈1 hour at the 5-min cadence) collapses that
+// per-window jitter into a cloud whose actual structure tracks the source's
+// trend, not its sampling variance.
+const ROLL = 12
+
+function rollingMean(values: number[], window: number): number[] {
+  const out = new Array<number>(values.length)
+  let sum = 0
+  for (let i = 0; i < values.length; i++) {
+    sum += values[i]
+    if (i >= window) sum -= values[i - window]
+    const n = Math.min(i + 1, window)
+    out[i] = sum / n
+  }
+  return out
+}
+
+// Each (smoothed) 5-min quality window becomes a point: bias × entropy × chi.
 function rowsToCloud(rows: MetricRow[]): { positions: Float32Array; colors: Float32Array } {
   const n = rows.length
   const positions = new Float32Array(n * 3)
   const colors = new Float32Array(n * 3)
-  rows.forEach((r, i) => {
+  const biasMean = rollingMean(rows.map((r) => r.bias), ROLL)
+  const entMean = rollingMean(rows.map((r) => r.ent_bpb), ROLL)
+  const chiMean = rollingMean(rows.map((r) => r.chi_pct), ROLL)
+  for (let i = 0; i < n; i++) {
     const o = i * 3
-    positions[o] = clamp(r.bias / 0.03)
-    positions[o + 1] = clamp((r.ent_bpb - 7.8) / 0.1)
-    positions[o + 2] = clamp((r.chi_pct / 100) * 2 - 1)
+    positions[o] = clamp(biasMean[i] / 0.03)
+    positions[o + 1] = clamp((entMean[i] - 7.8) / 0.1)
+    positions[o + 2] = clamp((chiMean[i] / 100) * 2 - 1)
     // recency ramp: oldest = deep blue, newest = warm accent
     const t = n > 1 ? i / (n - 1) : 1
     colors[o] = 0.1 + 0.9 * t
     colors[o + 1] = 0.55 + 0.1 * t
     colors[o + 2] = 1 - 0.7 * t
-  })
+  }
   return { positions, colors }
 }
 
@@ -130,11 +154,13 @@ export default function MetricsPhaseSpace() {
         <span className="v3-espace-axes__ramp">old → now</span>
       </div>
       <p className="v3-espace-caption">
-        <strong>Quality, drifting in real time.</strong> Each dot is one 5-minute
-        window of the source&apos;s health — bias, Shannon entropy, and the χ²
-        uniformity p-value — colored from oldest (blue) to newest (amber). A
-        healthy TRNG hovers in a tight knot near the origin; sustained drift in
-        any direction is the first sign of trouble.
+        <strong>Quality, drifting in real time.</strong> Each dot is a 1-hour
+        trailing mean of the source&apos;s health — bias, Shannon entropy, and the
+        χ² uniformity p-value — colored from oldest (blue) to newest (amber).
+        The smoothing matters: at the 1024-byte window the per-5-minute χ² swings
+        across the full 0–100 range by design, so raw points would paint noise as
+        drift. Smoothed, a healthy TRNG hovers in a tight knot near the origin;
+        sustained drift in any direction is the first sign of trouble.
       </p>
     </div>
   )
