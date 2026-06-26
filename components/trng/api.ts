@@ -128,6 +128,19 @@ export async function getRandomBytes(n = MAX_BYTES_PER_REQUEST, signal?: AbortSi
   return new Uint8Array(await res.arrayBuffer())
 }
 
+// NON-CRYPTOGRAPHIC archive replay (geiger /random/archive). The server seeks a
+// random offset into the append-only conditioned bit stream — ZERO pool cost,
+// never touches the scarce fresh tip, never 503s on a low pool. For decorative
+// visualizations only (bytes are deterministic given the offset and may have
+// been served before). Omit `offset` for a server-side random window.
+export async function getArchiveBytes(n = 256, offset?: number, signal?: AbortSignal): Promise<Uint8Array> {
+  const want = Math.max(1, Math.min(n, MAX_BYTES_PER_REQUEST))
+  const q = offset == null ? `n=${want}` : `n=${want}&offset=${offset}`
+  const res = await fetch(`${TRNG_API}/random/archive?${q}`, { signal, cache: "no-store" })
+  if (!res.ok) throw new Error(`/random/archive: ${res.status}`)
+  return new Uint8Array(await res.arrayBuffer())
+}
+
 // Pull up to `total` bytes of decay entropy, batching across the 4096-byte
 // cap. Tolerant of a mid-stream failure: returns whatever was collected so a
 // single hiccup doesn't blank an entire visualization. Throws PoolLowError
