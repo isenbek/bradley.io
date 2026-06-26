@@ -14,6 +14,13 @@ export const metadata: Metadata = {
     url: "https://bradley.io/eyes",
     type: "website",
   },
+  // Large-image card so the live frame fills the preview on iOS / X / Slack.
+  twitter: {
+    card: "summary_large_image",
+    title: "Eyes — a frame, once a minute",
+    description:
+      "The latest still from the camera on the bradley.io box, framed and refreshed every minute.",
+  },
 }
 
 export default function EyesLayout({ children }: { children: React.ReactNode }) {
