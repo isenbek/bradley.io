@@ -1,0 +1,11 @@
+[Unit]
+Description=Snap a BRIO frame every minute
+
+[Timer]
+OnBootSec=30s
+OnUnitActiveSec=60s
+AccuracySec=5s
+Persistent=false
+
+[Install]
+WantedBy=timers.target

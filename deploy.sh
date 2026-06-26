@@ -36,7 +36,7 @@ if [[ -n "$(git status --porcelain)" ]]; then
            package.json bun.lock next.config.mjs playwright.config.ts \
            tsconfig.json postcss.config.mjs mdx-components.tsx \
            eslint.config.mjs .gitignore CLAUDE.md deploy.sh \
-           bradley-io.service ecosystem.config.js \
+           bradley-io.service bradley-cam.service bradley-cam.timer ecosystem.config.js \
            wargames-server.js .env 2>/dev/null || true
     git commit -m "deploy: $(date '+%Y-%m-%d %H:%M:%S')"
     ok "Committed"
