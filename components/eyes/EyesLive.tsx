@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 
-// Live frame viewer. Polls /api/cam/meta for the newest snapshot epoch and only
+// Live frame viewer. Polls /api/eyes/meta for the newest snapshot epoch and only
 // swaps the <img> when a fresh frame has actually landed (cache-busted by epoch),
 // so we never re-fetch the same JPEG. Visibility-gated; degrades gracefully when
 // the snapshot timer hasn't produced a frame yet.
@@ -14,7 +14,7 @@ interface Meta {
   device: string
 }
 
-export function CamLive() {
+export function EyesLive() {
   const [meta, setMeta] = useState<Meta | null>(null)
   const [src, setSrc] = useState<string | null>(null)
   const [err, setErr] = useState(false)
@@ -27,7 +27,7 @@ export function CamLive() {
     const tick = async () => {
       if (document.visibilityState === "hidden") return
       try {
-        const r = await fetch("/api/cam/meta", { cache: "no-store", signal: ctrl.signal })
+        const r = await fetch("/api/eyes/meta", { cache: "no-store", signal: ctrl.signal })
         if (!r.ok) throw new Error("no frame")
         const m: Meta = await r.json()
         if (!mounted) return
@@ -35,7 +35,7 @@ export function CamLive() {
         setMeta(m)
         if (m.epoch !== epochRef.current) {
           epochRef.current = m.epoch
-          setSrc(`/api/cam?t=${m.epoch}`)
+          setSrc(`/api/eyes?t=${m.epoch}`)
         }
       } catch {
         if (mounted) setErr(true)

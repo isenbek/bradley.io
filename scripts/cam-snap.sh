@@ -15,13 +15,20 @@ mkdir -p "$CACHE_DIR"
 TMP="${CACHE_DIR}/.latest.tmp.jpg"
 trap 'rm -f "$TMP"' EXIT
 
+TMP_PNG="${CACHE_DIR}/.latest.tmp.png"
+trap 'rm -f "$TMP" "$TMP_PNG"' EXIT
+
 # One MJPEG frame, lightly re-encoded for consistent JPEG output.
 ffmpeg -hide_banner -loglevel error -y \
   -f v4l2 -input_format mjpeg -video_size "$SIZE" -i "$DEV" \
   -frames:v 1 -q:v 3 "$TMP"
 
+# Serialize the same frame as a PNG (file→file, no second camera open).
+ffmpeg -hide_banner -loglevel error -y -i "$TMP" "$TMP_PNG"
+
 # Atomic publish — readers never see a half-written file.
 mv -f "$TMP" "${CACHE_DIR}/latest.jpg"
+mv -f "$TMP_PNG" "${CACHE_DIR}/latest.png"
 trap - EXIT
 
 BYTES=$(stat -c%s "${CACHE_DIR}/latest.jpg")

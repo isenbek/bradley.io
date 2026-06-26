@@ -4,7 +4,6 @@ import { ActivityPulse } from "@/components/v3/ActivityPulse"
 import { ActivityFeedList } from "@/components/v3/ActivityFeedList"
 import { HotbitsHero } from "@/components/home/HotbitsHero"
 import { AirspacePromo } from "@/components/home/AirspacePromo"
-import { CamPromo } from "@/components/home/CamPromo"
 import { HeroStats } from "@/components/v3/HeroStats"
 import { MissionHeros } from "@/components/v3/MissionHeros"
 import { V3Reveal } from "@/components/v3/V3Reveal"
@@ -71,10 +70,6 @@ export default async function V3Home() {
 
           <V3Reveal delay={240}>
             <AirspacePromo />
-          </V3Reveal>
-
-          <V3Reveal delay={250}>
-            <CamPromo />
           </V3Reveal>
 
           <V3Reveal delay={260}>

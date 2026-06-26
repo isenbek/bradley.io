@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/api/"],
+      disallow: ["/api/", "/eyes", "/eyes.png"],
     },
     sitemap: "https://bradley.io/sitemap.xml",
     host: "https://bradley.io",

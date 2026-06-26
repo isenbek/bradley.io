@@ -1,9 +1,9 @@
 import Link from "next/link"
-import { Camera, ArrowLeft } from "lucide-react"
+import { Eye, ArrowLeft } from "lucide-react"
 import { V3Reveal } from "@/components/v3/V3Reveal"
-import { CamLive } from "@/components/cam/CamLive"
+import { EyesLive } from "@/components/eyes/EyesLive"
 
-export default function CamPage() {
+export default function EyesPage() {
   return (
     <>
       {/* HEADER ========================================================= */}
@@ -22,8 +22,8 @@ export default function CamPage() {
                 className="v3-pill v3-pill--blue"
                 style={{ padding: "8px 16px", fontSize: 13, display: "inline-flex", gap: 8, alignItems: "center" }}
               >
-                <Camera size={14} strokeWidth={2.25} />
-                live · camera
+                <Eye size={14} strokeWidth={2.25} />
+                live · eyes
               </span>
             </V3Reveal>
             <V3Reveal eager>
@@ -36,7 +36,8 @@ export default function CamPage() {
                 A live still from the camera attached to the bradley.io box — grabbed with{" "}
                 <code>ffmpeg</code> straight off <code>/dev/video0</code> once a minute, cached on
                 the metal, and served same-origin. No stream, no cloud, no third party in the
-                middle. Just the most recent frame.
+                middle. Just the most recent frame — also at{" "}
+                <Link href="/eyes.png" className="v3-accent">/eyes.png</Link>.
               </p>
             </V3Reveal>
           </div>
@@ -47,7 +48,7 @@ export default function CamPage() {
       <section className="v3-section" style={{ paddingTop: 8, paddingBottom: 16 }}>
         <div className="v3-wrap">
           <article className="v3-panel v3-cam-panel">
-            <CamLive />
+            <EyesLive />
           </article>
         </div>
       </section>
