@@ -83,7 +83,7 @@ export default function EntropyCube({
   const overlay =
     source === "live" && !bytes
       ? status === "pool-low"
-        ? "entropy pool replenishing — hang tight"
+        ? "archive unavailable — retrying"
         : "drawing entropy…"
       : null
 

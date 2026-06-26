@@ -52,7 +52,7 @@ export default function ReturnMap({
     ctx.putImageData(img, 0, 0)
   }, [bytes])
 
-  const overlay = !bytes ? (status === "pool-low" ? "entropy pool replenishing" : "sampling…") : null
+  const overlay = !bytes ? (status === "pool-low" ? "archive unavailable" : "sampling…") : null
 
   return (
     <div className="v3-espace-viz">

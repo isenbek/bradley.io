@@ -141,6 +141,30 @@ export async function getArchiveBytes(n = 256, offset?: number, signal?: AbortSi
   return new Uint8Array(await res.arrayBuffer())
 }
 
+// Chunked archive read for buffers above the 4096-byte per-request cap.
+// Each chunk picks its own random offset server-side (no `offset` passed), so
+// the result is a stitch of independent windows from the conditioned stream
+// — still zero pool cost, still NON-CRYPTOGRAPHIC, still safe for viz. Throws
+// only if nothing at all came back (archive file missing / server error).
+export async function getArchiveEntropyBytes(total: number, signal?: AbortSignal): Promise<Uint8Array> {
+  const out = new Uint8Array(total)
+  let off = 0
+  while (off < total) {
+    let chunk: Uint8Array
+    try {
+      chunk = await getArchiveBytes(total - off, undefined, signal)
+    } catch (e) {
+      if ((e as Error).name === "AbortError") throw e
+      break // transient — return whatever we got
+    }
+    if (chunk.length === 0) break
+    out.set(chunk.subarray(0, total - off), off)
+    off += chunk.length
+  }
+  if (off === 0) throw new Error("/random/archive: no bytes returned")
+  return off === total ? out : out.slice(0, off)
+}
+
 // Pull up to `total` bytes of decay entropy, batching across the 4096-byte
 // cap. Tolerant of a mid-stream failure: returns whatever was collected so a
 // single hiccup doesn't blank an entire visualization. Throws PoolLowError

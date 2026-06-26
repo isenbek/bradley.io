@@ -90,7 +90,7 @@ export default function BitRaster({
     }
   }, [bytes, onRegenerate])
 
-  const overlay = !bytes ? (status === "pool-low" ? "entropy pool replenishing" : "sampling…") : null
+  const overlay = !bytes ? (status === "pool-low" ? "archive unavailable" : "sampling…") : null
 
   return (
     <div className="v3-espace-viz">

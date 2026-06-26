@@ -1,16 +1,22 @@
 "use client"
 
 import { useCallback, useEffect, useRef, useState } from "react"
-import { getEntropyBytes } from "@/components/trng"
+import { getArchiveEntropyBytes } from "@/components/trng"
 
+// `unavailable` covers the archive being missing / server unreachable. We keep
+// the original "pool-low" label as an alias so downstream viz code that already
+// branches on status stays valid; the lexical literal is misleading now (the
+// pool is never touched) and should be renamed in a follow-up.
 export type EntropyStatus = "loading" | "ready" | "pool-low"
 
 /**
- * One shared pull of true decay entropy, fed to every visualization on the
- * page. The radioactive pool is scarce (~3 B/s, hours to refill), so the whole
- * page consumes a single modest buffer instead of each widget hammering the
- * source. `regenerate()` pulls a fresh buffer on demand (the "pour entropy"
- * buttons); while the pool is low we back off and retry rather than erroring.
+ * One shared archive read of decay bytes, fed to every visualization on the
+ * page. Reads from /random/archive — a NON-CRYPTOGRAPHIC seek-and-read of the
+ * append-only conditioned bit stream — so the viz never touches the scarce
+ * fresh tip that real consumers depend on, and never 503s on a low pool. Bytes
+ * are still real radioactive-decay output; they may just have been served
+ * before. `regenerate()` swaps in a fresh slice (the "pour entropy" buttons +
+ * BitRaster auto-regen).
  */
 export function useSharedEntropy(targetBytes: number) {
   const [bytes, setBytes] = useState<Uint8Array | null>(null)
@@ -24,7 +30,7 @@ export function useSharedEntropy(targetBytes: number) {
     ctrlRef.current = ctrl
     if (!hasData.current) setStatus("loading")
     try {
-      const b = await getEntropyBytes(targetBytes, ctrl.signal)
+      const b = await getArchiveEntropyBytes(targetBytes, ctrl.signal)
       if (ctrl.signal.aborted) return
       hasData.current = true
       setBytes(b)
@@ -40,7 +46,8 @@ export function useSharedEntropy(targetBytes: number) {
     return () => ctrlRef.current?.abort()
   }, [regenerate])
 
-  // while the pool is low, retry quietly with a long backoff
+  // archive failures should be vanishingly rare (file present, append-only) —
+  // but if one slips through, retry quietly on a long backoff.
   useEffect(() => {
     if (status !== "pool-low") return
     const id = window.setTimeout(regenerate, 25_000)
