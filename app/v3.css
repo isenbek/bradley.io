@@ -5135,7 +5135,7 @@ body:has(.v3) {
 .v3-air__live--offline { color: #e0a05f; }
 
 .v3-air__panel {
-  position: absolute; z-index: 2; left: 12px; bottom: 14px;
+  position: absolute; z-index: 2; right: 12px; top: 12px;  /* top corner: clear of the fixed footer */
   display: flex; flex-direction: column; gap: 4px;
   padding: 9px; border-radius: var(--v3-r-md);
   background: rgba(7, 13, 20, 0.82);
