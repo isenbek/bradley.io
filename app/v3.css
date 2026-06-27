@@ -5580,6 +5580,22 @@ body:has(.v3) {
 /* ── Meatball — the sensory-machine project hub ─────────────────────── */
 .v3-meatball .v3-wrap { max-width: 780px; }   /* a touch wider than prose for the grid + eye */
 
+/* Hero: text + waving mascot. Line art is multiplied onto the paper so its
+   white background drops out (no card, no white box). */
+.v3-mb-hero { display: flex; align-items: center; gap: 28px; }
+.v3-mb-hero__text { flex: 1 1 auto; min-width: 0; }
+.v3-mb-hero__mascot {
+  flex: 0 0 auto;
+  width: clamp(150px, 33%, 290px);
+  height: auto;
+  mix-blend-mode: multiply;
+  filter: drop-shadow(0 6px 14px rgba(20, 30, 40, 0.08));
+}
+@media (max-width: 640px) {
+  .v3-mb-hero { flex-direction: column-reverse; align-items: center; gap: 6px; }
+  .v3-mb-hero__mascot { width: min(240px, 72%); }
+}
+
 /* Live eye */
 .v3-meatball-eye { margin: 0; }
 .v3-meatball-eye__frame {

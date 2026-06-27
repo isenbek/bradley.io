@@ -45,27 +45,40 @@ export default function MeatballPage() {
     <div className="v3-longform v3-meatball">
       {/* HERO ========================================================== */}
       <header className="v3-page-head" style={{ paddingBottom: 12 }}>
-        <div className="v3-blob v3-blob--2" aria-hidden style={{ right: "-40px", top: "-20px", width: 360, height: 360 }} />
+        <div className="v3-blob v3-blob--2" aria-hidden style={{ left: "-90px", top: "-30px", width: 340, height: 340 }} />
         <div className="v3-wrap">
           <div className="v3-page-head__lockup">
-            <V3Reveal>
-              <span className="v3-pill v3-pill--gold" style={{ padding: "8px 16px", fontSize: 13, display: "inline-flex", gap: 8, alignItems: "center" }}>
-                🍖 project · the sensory machine
-              </span>
-            </V3Reveal>
-            <V3Reveal eager>
-              <h1>
-                Meatball <span className="v3-accent">can see, hear, and talk back.</span>
-              </h1>
-            </V3Reveal>
-            <V3Reveal eager>
-              <p className="v3-page-head__lede">
-                A caseless home server built from other people&apos;s cast-offs — salvaged GPUs, an
-                abandoned-office pile of audio dongles, a &apos;60s microphone, early-&apos;90s speakers — taught to
-                see, hear, think, and speak. Every model runs on the metal. Nothing touches the cloud.
-                This is its home.
-              </p>
-            </V3Reveal>
+            <div className="v3-mb-hero">
+              <div className="v3-mb-hero__text">
+                <V3Reveal>
+                  <span className="v3-pill v3-pill--gold" style={{ padding: "8px 16px", fontSize: 13, display: "inline-flex", gap: 8, alignItems: "center" }}>
+                    🍖 project · the sensory machine
+                  </span>
+                </V3Reveal>
+                <V3Reveal eager>
+                  <h1>
+                    Meatball <span className="v3-accent">can see, hear, and talk back.</span>
+                  </h1>
+                </V3Reveal>
+                <V3Reveal eager>
+                  <p className="v3-page-head__lede">
+                    A caseless home server built from other people&apos;s cast-offs — salvaged GPUs, an
+                    abandoned-office pile of audio dongles, a &apos;60s microphone, early-&apos;90s speakers — taught to
+                    see, hear, think, and speak. Every model runs on the metal. Nothing touches the cloud.
+                    This is its home.
+                  </p>
+                </V3Reveal>
+              </div>
+              <V3Reveal>
+                <img
+                  className="v3-mb-hero__mascot"
+                  src="/meatball-mascot.png"
+                  width={512}
+                  height={279}
+                  alt="Meatball — a grinning ball of salvaged electronics with cable arms, waving hello"
+                />
+              </V3Reveal>
+            </div>
           </div>
         </div>
       </header>
