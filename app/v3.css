@@ -5540,3 +5540,88 @@ body:has(.v3) {
   font-weight: 800; font-size: 3.1em; line-height: 0.78;
   padding: 6px 12px 0 0; color: var(--v3-charcoal);
 }
+
+/* ── Meatball — the sensory-machine project hub ─────────────────────── */
+.v3-meatball .v3-wrap { max-width: 780px; }   /* a touch wider than prose for the grid + eye */
+
+/* Live eye */
+.v3-meatball-eye { margin: 0; }
+.v3-meatball-eye__frame {
+  position: relative; border-radius: var(--v3-r-lg); overflow: hidden;
+  border: 1px solid var(--v3-line); background: #0c0d10; box-shadow: var(--v3-sh-2);
+  aspect-ratio: 16 / 9;
+}
+.v3-meatball-eye__frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.v3-meatball-eye__dead {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  color: rgba(255, 255, 255, 0.5); font-family: var(--font-v3-mono), monospace; font-size: 13px;
+}
+.v3-meatball-eye__live {
+  position: absolute; top: 12px; left: 12px; display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 10px; border-radius: 999px; background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  color: #fff; font-family: var(--font-v3-mono), monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+}
+.v3-meatball-eye__dot {
+  width: 7px; height: 7px; border-radius: 50%; background: #ff4d4d; animation: v3-eye-pulse 2s infinite;
+}
+@keyframes v3-eye-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(255, 77, 77, 0.7); }
+  70% { box-shadow: 0 0 0 7px rgba(255, 77, 77, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 77, 77, 0); }
+}
+.v3-meatball-eye figcaption {
+  margin-top: 10px; font-family: var(--font-v3-mono), monospace; font-size: 12px;
+  color: var(--v3-slate); text-align: center; letter-spacing: 0.02em;
+}
+
+/* The four-senses grid */
+.v3-meatball-senses { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+.v3-meatball-sense {
+  display: flex; flex-direction: column; gap: 8px; padding: 20px 22px; border-radius: var(--v3-r-lg);
+  border: 1px solid var(--v3-line); background: var(--v3-white); box-shadow: var(--v3-sh-1);
+  text-decoration: none; transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+}
+.v3-meatball-sense--link:hover {
+  transform: translateY(-3px); box-shadow: var(--v3-sh-2);
+  border-color: color-mix(in srgb, var(--v3-gold) 45%, var(--v3-line));
+}
+.v3-meatball-sense__ico {
+  width: 38px; height: 38px; border-radius: 11px; display: grid; place-items: center;
+  background: color-mix(in srgb, var(--v3-gold) 14%, transparent); color: var(--v3-gold-dk, #7C5605);
+}
+.v3-meatball-sense__label { font-family: var(--font-v3-display), sans-serif; font-weight: 800; font-size: 18px; color: var(--v3-charcoal); }
+.v3-meatball-sense__body { font-size: 14px; line-height: 1.55; color: var(--v3-slate); }
+.v3-meatball-sense__cta {
+  margin-top: 2px; display: inline-flex; align-items: center; gap: 5px;
+  font-family: var(--font-v3-mono), monospace; font-size: 12px; font-weight: 700; color: var(--v3-gold-dk, #7C5605);
+}
+
+/* Field-note (blog) entries */
+.v3-meatball-notes { display: flex; flex-direction: column; gap: 12px; }
+.v3-meatball-note {
+  display: flex; align-items: flex-start; gap: 16px; padding: 20px 22px; border-radius: var(--v3-r-lg);
+  border: 1px solid var(--v3-line); background: var(--v3-white); box-shadow: var(--v3-sh-1);
+  text-decoration: none; transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+}
+.v3-meatball-note:not(.v3-meatball-note--soon):hover {
+  transform: translateY(-3px); box-shadow: var(--v3-sh-2);
+  border-color: color-mix(in srgb, var(--v3-gold) 45%, var(--v3-line));
+}
+.v3-meatball-note--soon { opacity: 0.62; }
+.v3-meatball-note__ico {
+  flex: none; width: 40px; height: 40px; border-radius: 11px; display: grid; place-items: center;
+  background: color-mix(in srgb, var(--v3-gold) 14%, transparent); color: var(--v3-gold-dk, #7C5605);
+}
+.v3-meatball-note__body { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.v3-meatball-note__kicker {
+  font-family: var(--font-v3-mono), monospace; font-size: 11px; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--v3-gold-dk, #7C5605);
+}
+.v3-meatball-note__title { font-family: var(--font-v3-display), sans-serif; font-weight: 800; font-size: 18px; color: var(--v3-charcoal); line-height: 1.25; }
+.v3-meatball-note__blurb { font-size: 14px; line-height: 1.55; color: var(--v3-slate); }
+.v3-meatball-note__arrow { flex: none; align-self: center; color: var(--v3-gold); }
+
+@media (max-width: 560px) {
+  .v3-meatball-senses { grid-template-columns: 1fr; }
+}

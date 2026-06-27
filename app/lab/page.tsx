@@ -64,27 +64,6 @@ export default async function V3LabPage() {
         </div>
       </header>
 
-      {/* FEATURED FIELD NOTE ============================================ */}
-      <section className="v3-section" style={{ paddingTop: 16, paddingBottom: 0 }}>
-        <div className="v3-wrap">
-          <V3Reveal>
-            <Link href="/lab/senses" className="v3-air-promo" style={{ marginTop: 0 }}>
-              <span className="v3-air-promo__ico"><FlaskConical size={20} strokeWidth={2.2} /></span>
-              <span className="v3-air-promo__body">
-                <span className="v3-air-promo__eyebrow">field notes</span>
-                <span className="v3-air-promo__title">I gave a junk-pile eyes, ears, and a voice</span>
-                <span className="v3-air-promo__blurb">
-                  A caseless home server of salvaged parts — &apos;60s mics, thrift-store everything,
-                  early-&apos;90s Altec Lansings — taught to see, hear, think, and speak. Every model
-                  on the metal.
-                </span>
-              </span>
-              <span className="v3-air-promo__right"><ArrowRight className="v3-air-promo__arrow" size={18} strokeWidth={2.4} /></span>
-            </Link>
-          </V3Reveal>
-        </div>
-      </section>
-
       {/* GRID =========================================================== */}
       <section className="v3-section" style={{ paddingTop: 16 }}>
         <div className="v3-wrap">
