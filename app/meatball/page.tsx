@@ -69,15 +69,13 @@ export default function MeatballPage() {
                   </p>
                 </V3Reveal>
               </div>
-              <V3Reveal>
-                <img
-                  className="v3-mb-hero__mascot"
-                  src="/meatball-mascot.png"
-                  width={512}
-                  height={279}
-                  alt="Meatball — a grinning ball of salvaged electronics with cable arms, waving hello"
-                />
-              </V3Reveal>
+              <img
+                className="v3-mb-hero__mascot"
+                src="/meatball-mascot.png"
+                width={512}
+                height={279}
+                alt="Meatball — a grinning ball of salvaged electronics with cable arms, waving hello"
+              />
             </div>
           </div>
         </div>

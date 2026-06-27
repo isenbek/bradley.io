@@ -5586,9 +5586,13 @@ body:has(.v3) {
 .v3-mb-hero__text { flex: 1 1 auto; min-width: 0; }
 .v3-mb-hero__mascot {
   flex: 0 0 auto;
-  width: clamp(180px, 38%, 310px);
+  width: clamp(200px, 40%, 340px);
+  max-width: 40%;
   height: auto;
   filter: drop-shadow(0 8px 16px rgba(20, 30, 40, 0.12));
+}
+@media (max-width: 640px) {
+  .v3-mb-hero__mascot { max-width: 72%; }
 }
 @media (max-width: 640px) {
   .v3-mb-hero { flex-direction: column-reverse; align-items: center; gap: 6px; }
