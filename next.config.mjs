@@ -21,7 +21,10 @@ const nextConfig = {
         source: '/(.*)',
         headers: [
           { key: 'X-Content-Type-Options', value: 'nosniff' },
-          { key: 'X-Frame-Options', value: 'DENY' },
+          // SAMEORIGIN (not DENY) so the site can frame its own self-contained
+          // tools (e.g. /lab/bio-mark embeds /bio-mark.html); still blocks
+          // cross-origin framing (clickjacking protection intact).
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
           { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
           { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
         ],
