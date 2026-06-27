@@ -1,4 +1,4 @@
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, Bot, Atom } from "lucide-react"
 import Link from "next/link"
 import { ActivityPulse } from "@/components/v3/ActivityPulse"
 import { ActivityFeedList } from "@/components/v3/ActivityFeedList"
@@ -75,6 +75,36 @@ export default async function V3Home() {
 
           <V3Reveal delay={250}>
             <GpsPromo />
+          </V3Reveal>
+
+          <V3Reveal delay={254}>
+            <Link href="/meatball" className="v3-air-promo v3-air-promo--gold" style={{ marginTop: 14 }}>
+              <span className="v3-air-promo__ico"><Bot size={20} strokeWidth={2.2} /></span>
+              <span className="v3-air-promo__body">
+                <span className="v3-air-promo__eyebrow">project · the sensory machine</span>
+                <span className="v3-air-promo__title">Meatball — eyes, ears &amp; a voice</span>
+                <span className="v3-air-promo__blurb">
+                  A caseless junk-pile home server taught to see, hear, think, and speak —
+                  every model on the metal. Live eye, field notes, and a WOPR you can talk to.
+                </span>
+              </span>
+              <span className="v3-air-promo__right"><ArrowRight className="v3-air-promo__arrow" size={18} strokeWidth={2.4} /></span>
+            </Link>
+          </V3Reveal>
+
+          <V3Reveal delay={258}>
+            <Link href="/lab/bio-mark" className="v3-air-promo" style={{ marginTop: 14 }}>
+              <span className="v3-air-promo__ico"><Atom size={20} strokeWidth={2.2} /></span>
+              <span className="v3-air-promo__body">
+                <span className="v3-air-promo__eyebrow">design · vector x-ray</span>
+                <span className="v3-air-promo__title">The bio mark, decomposed</span>
+                <span className="v3-air-promo__blurb">
+                  The wordmark as pure geometry — chords, Bézier offset handles, anchors, and the
+                  i-tittle plumb. Drag the dot, morph chords↔curves, measure live.
+                </span>
+              </span>
+              <span className="v3-air-promo__right"><ArrowRight className="v3-air-promo__arrow" size={18} strokeWidth={2.4} /></span>
+            </Link>
           </V3Reveal>
 
           <V3Reveal delay={260}>

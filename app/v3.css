@@ -5281,6 +5281,14 @@ body:has(.v3) {
   background: var(--v3-blue-500);
   color: #fff;
 }
+
+/* Gold variant — for the Meatball promo (matches its brand). */
+.v3-air-promo--gold {
+  background: linear-gradient(100deg, color-mix(in srgb, var(--v3-gold) 16%, var(--v3-white)), var(--v3-white) 70%);
+  border-color: color-mix(in srgb, var(--v3-gold) 38%, var(--v3-line));
+}
+.v3-air-promo--gold .v3-air-promo__ico { background: var(--v3-gold); }
+.v3-air-promo--gold .v3-air-promo__eyebrow { color: var(--v3-gold-dk, #7C5605); }
 .v3-air-promo__body {
   display: flex;
   flex-direction: column;
