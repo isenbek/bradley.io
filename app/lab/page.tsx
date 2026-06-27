@@ -64,6 +64,26 @@ export default async function V3LabPage() {
         </div>
       </header>
 
+      {/* FEATURED TOOL ================================================= */}
+      <section className="v3-section" style={{ paddingTop: 16, paddingBottom: 0 }}>
+        <div className="v3-wrap">
+          <V3Reveal>
+            <Link href="/lab/bio-mark" className="v3-air-promo" style={{ marginTop: 0 }}>
+              <span className="v3-air-promo__ico"><Atom size={20} strokeWidth={2.2} /></span>
+              <span className="v3-air-promo__body">
+                <span className="v3-air-promo__eyebrow">vector x-ray</span>
+                <span className="v3-air-promo__title">The bio mark — chords, offsets &amp; the implied ∞</span>
+                <span className="v3-air-promo__blurb">
+                  The bio·bradley.io wordmark decomposed: the b/i/o ligature as chords, Bézier offset
+                  handles, anchors, and the i-tittle plumb. Drag the dot, morph chords↔curves, measure live.
+                </span>
+              </span>
+              <span className="v3-air-promo__right"><ArrowRight className="v3-air-promo__arrow" size={18} strokeWidth={2.4} /></span>
+            </Link>
+          </V3Reveal>
+        </div>
+      </section>
+
       {/* GRID =========================================================== */}
       <section className="v3-section" style={{ paddingTop: 16 }}>
         <div className="v3-wrap">

@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>bio·mark — chords, offsets &amp; the tittle plumb</title>
+<style>
+:root{
+  --ink:#e8edf7; --dim:#8493ad; --faint:#566179;
+  --bg:#0a0f1c; --panel:#0e1525; --line:#1b2740; --line2:#243352;
+  --blue5:#2563eb; --blue3:#93c5fd;
+  --chord:#f0a23b; --hout:#ff5a8a; --hin:#37d6c4; --anchor:#cdd8ef;
+  --plumb:#ffd166;
+  --mono:'JetBrains Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+  --sans:'Hanken Grotesk',ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+body{padding:clamp(14px,2.5vw,30px)}
+.wrap{max-width:1240px;margin:0 auto}
+header{border-bottom:1px solid var(--line);padding-bottom:14px;margin-bottom:18px}
+.toprow{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.kicker{font-family:var(--mono);font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--blue3)}
+h1{font-size:clamp(20px,3.4vw,30px);font-weight:650;letter-spacing:-.02em;margin:0}
+h1 .b{color:var(--blue5)} h1 .o{color:var(--blue3)}
+.sub{color:var(--dim);font-size:13px;max-width:60ch;line-height:1.5;margin:8px 0 0}
+.stats{display:flex;flex-wrap:wrap;gap:10px;margin-left:auto}
+.stat{font-family:var(--mono);font-size:11px;color:var(--dim);border:1px solid var(--line);border-radius:8px;padding:7px 11px;line-height:1.3}
+.stat b{display:block;color:var(--ink);font-size:16px;font-weight:600}
+.stat.key b{color:var(--plumb)}
+.stat .u{color:var(--faint)}
+
+.grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:18px}
+@media(max-width:880px){.grid{grid-template-columns:1fr}}
+
+.stage{background:
+   linear-gradient(var(--line) 1px,transparent 1px) 0 0/40px 40px,
+   linear-gradient(90deg,var(--line) 1px,transparent 1px) 0 0/40px 40px,
+   radial-gradient(120% 120% at 30% 10%,#101a30 0%,#0a0f1c 70%);
+  border:1px solid var(--line2);border-radius:14px;overflow:hidden;position:relative}
+svg{display:block;width:100%;height:auto;touch-action:none}
+.fillpiece{stroke:none}
+.chordline{stroke:var(--chord);stroke-width:1.4;fill:none;vector-effect:non-scaling-stroke;opacity:.85}
+.hvec{stroke-width:1.3;fill:none;vector-effect:non-scaling-stroke}
+.hvec.out{stroke:var(--hout)} .hvec.in{stroke:var(--hin)}
+.node{fill:var(--anchor);stroke:#0a0f1c;stroke-width:1;vector-effect:non-scaling-stroke}
+.ctl.out{fill:var(--hout)} .ctl.in{fill:var(--hin)}
+.seglabel{fill:var(--faint);font-family:var(--mono);font-size:9px}
+#dotHit{cursor:grab} #dotHit.drag{cursor:grabbing}
+.plumb{stroke:var(--plumb);stroke-width:1;vector-effect:non-scaling-stroke;stroke-dasharray:5 4;opacity:.9}
+.gapbar{stroke:var(--plumb);stroke-width:1.4;vector-effect:non-scaling-stroke}
+.crestpt{fill:var(--hout)}
+.conlabel{fill:var(--plumb);font-family:var(--mono);font-size:11px}
+
+.controls{display:flex;flex-wrap:wrap;gap:7px;padding:12px 14px;border-top:1px solid var(--line2);background:#0b1120}
+.tg{display:inline-flex;align-items:center;gap:7px;font-family:var(--mono);font-size:11px;color:var(--dim);
+   border:1px solid var(--line);border-radius:999px;padding:6px 11px;cursor:pointer;user-select:none;transition:.12s}
+.tg:hover{border-color:var(--line2);color:var(--ink)}
+.tg .dot{width:9px;height:9px;border-radius:50%;background:var(--faint);transition:.12s}
+.tg[aria-pressed="true"]{color:var(--ink);border-color:currentColor}
+.tg[data-k="fill"][aria-pressed="true"] .dot{background:var(--blue5)}
+.tg[data-k="curve"][aria-pressed="true"] .dot{background:var(--blue3)}
+.tg[data-k="chords"][aria-pressed="true"] .dot{background:var(--chord)}
+.tg[data-k="handles"][aria-pressed="true"] .dot{background:var(--hout)}
+.tg[data-k="anchors"][aria-pressed="true"] .dot{background:var(--anchor)}
+.tg[data-k="labels"][aria-pressed="true"] .dot{background:var(--dim)}
+.tg[data-k="dotcubic"][aria-pressed="true"] .dot{background:var(--hin)}
+.tg[data-k="plumb"][aria-pressed="true"] .dot{background:var(--plumb)}
+.tg[data-k="inf"][aria-pressed="true"] .dot{background:var(--hout)}
+
+.morph{display:flex;align-items:center;gap:12px;padding:12px 14px;border-top:1px solid var(--line2)}
+.morph label{font-family:var(--mono);font-size:11px;color:var(--dim);white-space:nowrap}
+.morph .ends{font-family:var(--mono);font-size:10px;color:var(--faint)}
+.morph input[type=range]{flex:1;accent-color:var(--chord);min-width:120px}
+
+aside{background:var(--panel);border:1px solid var(--line);border-radius:14px;display:flex;flex-direction:column;min-height:0}
+.con{padding:13px 15px;border-bottom:1px solid var(--line);background:#0c1424}
+.con h3{margin:0 0 7px;font-size:12px;font-family:var(--mono);letter-spacing:.06em;color:var(--plumb);text-transform:uppercase;font-weight:600}
+.con .read{display:flex;gap:18px;flex-wrap:wrap;font-family:var(--mono);font-size:12px;color:var(--dim)}
+.con .read b{color:var(--ink);font-size:15px}
+.con .read .ok{color:#5fd98a} .con .read .warn{color:#ffb454}
+.con .hint{font-family:var(--mono);font-size:10.5px;color:var(--faint);margin-top:7px}
+.con .reset{font-family:var(--mono);font-size:10px;color:var(--blue3);background:none;border:1px solid var(--line2);border-radius:6px;padding:3px 8px;cursor:pointer;margin-left:8px}
+.legend{display:flex;flex-wrap:wrap;gap:10px 16px;padding:13px 15px;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:11px;color:var(--dim)}
+.legend i{display:inline-block;width:16px;height:0;border-top:2px solid;margin-right:6px;vertical-align:middle}
+.tabs{display:flex;gap:4px;padding:10px 12px 0}
+.tab{font-family:var(--mono);font-size:11px;color:var(--dim);background:none;border:1px solid var(--line);border-bottom:none;
+   border-radius:8px 8px 0 0;padding:7px 12px;cursor:pointer}
+.tab[aria-selected="true"]{color:var(--ink);background:#0b1120;border-color:var(--line2)}
+.tablewrap{overflow:auto;flex:1;border-top:1px solid var(--line2);max-height:42vh}
+table{border-collapse:collapse;width:100%;font-family:var(--mono);font-size:11px}
+th,td{text-align:right;padding:5px 9px;white-space:nowrap;border-bottom:1px solid #131c30}
+th{position:sticky;top:0;background:#0b1120;color:var(--faint);font-weight:500;z-index:1}
+td.i{text-align:left;color:var(--faint)} td.t{text-align:left}
+td.t.cubic{color:var(--blue3)} td.t.line{color:var(--chord)}
+tr.hi td{background:#152138;color:var(--ink)}
+.foot{display:flex;gap:8px;flex-wrap:wrap;padding:11px 14px;border-top:1px solid var(--line)}
+.btn{font-family:var(--mono);font-size:11px;color:var(--ink);background:#13203a;border:1px solid var(--line2);border-radius:8px;padding:8px 13px;cursor:pointer}
+.btn:hover{background:#1a2c4d}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="toprow">
+      <span class="kicker">bradley.io · vector x-ray</span>
+      <h1>The <span class="b">b</span>i<span class="o">o</span> mark — chords, offsets &amp; the implied <span class="o">∞</span></h1>
+      <div class="stats" id="stats"></div>
+    </div>
+    <p class="sub">A single flowing ligature: <b>b</b> (stem + bowl), <b>i</b> (centre stem), <b>o</b> (right loop). The floating dot is the <b>i</b>'s tittle — its alignment over the centre crest is the implied b→o connection. Drag the dot to test the tolerance; the plumb overlay re-measures live.</p>
+  </header>
+
+  <div class="grid">
+    <section class="stage">
+      <svg id="svg" viewBox="-160 -40 600 365" preserveAspectRatio="xMidYMid meet" aria-label="logo decomposition"></svg>
+      <div class="controls" id="toggles">
+        <span class="tg" data-k="fill"     aria-pressed="true"><span class="dot"></span>fill</span>
+        <span class="tg" data-k="curve"    aria-pressed="true"><span class="dot"></span>curve outline</span>
+        <span class="tg" data-k="chords"   aria-pressed="true"><span class="dot"></span>chords</span>
+        <span class="tg" data-k="handles"  aria-pressed="true"><span class="dot"></span>offset handles</span>
+        <span class="tg" data-k="anchors"  aria-pressed="true"><span class="dot"></span>anchors</span>
+        <span class="tg" data-k="dotcubic" aria-pressed="false"><span class="dot"></span>dot → 4 cubics</span>
+        <span class="tg" data-k="plumb"    aria-pressed="true"><span class="dot"></span>i-tittle plumb</span>
+        <span class="tg" data-k="inf"      aria-pressed="false"><span class="dot"></span>implied ∞</span>
+        <span class="tg" data-k="labels"   aria-pressed="false"><span class="dot"></span>seg #</span>
+      </div>
+      <div class="morph">
+        <label>morph</label><span class="ends">chords</span>
+        <input id="morph" type="range" min="0" max="1" step="0.01" value="1">
+        <span class="ends">curves</span>
+      </div>
+    </section>
+
+    <aside>
+      <div class="con">
+        <h3>i-tittle plumb · b→o alignment <button class="reset" id="reset">reset dot</button></h3>
+        <div class="read" id="conread"></div>
+        <div class="hint">crest = top of the centre stroke (tangent horizontal). dx = dot centre − crest x · gap = crest → dot underside. drag the dot in the canvas.</div>
+        <div class="hint" style="margin-top:9px;color:var(--hin)">implied ∞ · core lobes are 180°-symmetric about (142.5, 186.6) to ~3px median. spine x: bbox 141.3 · dot 141.9 · crest 142.6 · ∞-centre 142.5 (spread 1.3px).</div>
+        <div class="hint" style="margin-top:7px;color:#5fd98a">axis · seg3 ctr (−110.8, 3.2) → heart → seg16 ctr (242.1, 232.0): a ~33° diagonal, but the heart sits <b>16.1px off</b> it. to make them collinear, nudge <b>seg16 by (−12.7, +17.5)</b> → centre (229.4, 249.5). green ring = on-axis target. toggle <b style="color:var(--hout)">implied ∞</b>.</div>
+      </div>
+      <div class="legend">
+        <span><i style="border-color:var(--chord)"></i>chord Δ=P₃−P₀</span>
+        <span><i style="border-color:var(--hout)"></i>h_out=P₁−P₀</span>
+        <span><i style="border-color:var(--hin)"></i>h_in=P₂−P₃</span>
+        <span><i style="border-color:var(--plumb)"></i>plumb axis</span>
+      </div>
+      <div class="tabs" id="tabs">
+        <button class="tab" data-p="body" aria-selected="true">body · 27</button>
+        <button class="tab" data-p="bowl" aria-selected="false">bowl · 4</button>
+        <button class="tab" data-p="dot_cubic" aria-selected="false">dot · 4</button>
+      </div>
+      <div class="tablewrap"><table id="tbl">
+        <thead><tr><th>#</th><th>type</th><th>P0ₓ</th><th>P0ᵧ</th><th>Δₓ</th><th>Δᵧ</th><th>|Δ|</th><th>∠°</th><th>h_outₓ</th><th>h_outᵧ</th><th>h_inₓ</th><th>h_inᵧ</th></tr></thead>
+        <tbody></tbody>
+      </table></div>
+      <div class="foot">
+        <button class="btn" id="copy">copy JSON</button>
+        <button class="btn" id="copysvg">copy chord-polygon path</button>
+        <button class="btn" id="copydot">copy dot-as-cubics d</button>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<script>
+const DATA = {
+  "meta": {
+    "viewBox": [
+      0,
+      -10,
+      557.60217,
+      302.12289
+    ],
+    "groupTranslate": [
+      137.58337,
+      -3.17499
+    ],
+    "convention": "chord=P3-P0, h_out=P1-P0, h_in=P2-P3 (offsets); reconstruct P1=P0+h_out, P3=P0+chord, P2=P3+h_in"
+  },
+  "body": [
+    {
+      "type": "cubic",
+      "P0": [
+        -18.49986,
+        295.07131
+      ],
+      "chord": [
+        -116.32212,
+        -88.69337000000002
+      ],
+      "h_out": [
+        -53.01060100000001,
+        1.9219299999999748
+      ],
+      "h_in": [
+        11.313429999999997,
+        52.27129000000002
+      ]
+    },
+    {
+      "type": "cubic",
+      "P0": [
+        -134.82198,
+        206.37793999999997
+      ],
+      "chord": [
+        -2.647490000000005,
+        -73.51835
+      ],
+      "h_out": [
+        -5.019479999999987,
+        -24.152659999999997
+      ],
+      "h_in": [
+        1.0270399999999995,
+        24.48212000000001
+      ]
+    },
+    {
+      "type": "cubic",
+      "P0": [
+        -137.46947,
+        132.85958999999997
+      ],
+      "chord": [
+        0.19004000000001042,
+        -129.49675
+      ],
+      "h_out": [
+        0.16464999999999463,
+        -43.109162
+      ],
+      "h_in": [
+        -0.6719600000000128,
+        42.82660399999999
+      ]
+    },
+    {
+      "type": "cubic",
+      "P0": [
+        -137.27943,
+        3.362839999999977
+      ],
+      "chord": [
+        50.64128600000001,
+        8.67787
+      ],
+      "h_out": [
+        16.923410000000004,
+        0.6910175000000001
+      ],
+      "h_in": [
+        -13.937796000000006,
+        -12.59920767
+      ]
+    },
+    {
+      "type": "cubic",
+      "P0": [
+        -86.63814399999998,
+        12.040709999999978
+      ],
+      "chord": [
+        12.703536,
+        41.375607
+      ],
+      "h_out": [
+        12.48872,
+        9.980358999999998
+      ],
+      "h_in": [
+        1.0389720000000011,
+        -14.734191000000003
+      ]
+    },
+    {
+      "type": "cubic",
+      "P0": [
+        -73.93460799999998,
+        53.41631699999998
+      ],
+      "chord": [
+        0.557705999999996,
+        137.589633
+      ],
+      "h_out": [
+        0.27955699999999695,
+        45.85262300000001
+      ],
+      "h_in": [
+        -0.7391930000000002,
+        -45.80065999999999
+      ]
+    },
+    {
+      "type": "cubic",
+      "P0": [
+        -73.37690199999999,
+        191.00594999999998
+      ],
+      "chord": [
+        68.2397997,
+        41.7312
+      ],
+      "h_out": [
+        4.629833000000005,
+        30.518309999999985
+      ],
+      "h_in": [
+        -29.283838700000004,
+        10.12061
+      ]
+    },
+    {
+      "type": "cubic",
+      "P0": [
+        -5.137102299999981,
+        232.73714999999999
+      ],
+      "chord": [
+        49.37520429999998,
+        -46.79227999999998
+      ],
+      "h_out": [
+        23.41570229999998,
+        -6.397629999999992
+      ],
+      "h_in": [
+        -15.075302999999998,
+        16.762519999999995
+      ]
+    },
+    {
+      "type": "cubic",
+      "P0": [
+        44.238102,
+        185.94487
+      ],
+      "chord": [
+        76.869628,
+        -95.491279
+      ],
+      "h_out": [
+        25.763613000000007,
+        -31.70344
+      ],
+      "h_in": [
+        -26.447885999999997,
+        31.075839000000002
+      ]
+    },
+    {
+      "type": "cubic",
+      "P0": [
+        121.10773,
+        90.453591
+      ],
+      "chord": [
+        53.23749999999998,
+        16.275808999999995
+      ],
+      "h_out": [
+        16.685270000000003,
+        -15.732624999999999
+      ],
+      "h_in": [
+        -3.728829999999988,
+        -23.782124999999994
+      ]
+    },
+    {
+      "type": "cubic",
+      "P0": [
+        174.34523,
+        106.7294
+      ],
+      "chord": [
+        0.7283299999999997,
+        75.77273
+      ],
+      "h_out": [
+        0.6309599999999875,
+        25.086160000000007
+      ],
+      "h_in": [
+        -1.1172799999999938,
+        -24.41731999999999
+      ]
+    },
+    {
+      "type": "cubic",
+      "P0": [
+        175.07356,
+        182.50213
+      ],
+      "chord": [
+        49.348510000000005,
+        -71.12693
+      ],
+      "h_out": [
+        16.554360000000003,
+        -23.614499999999992
+      ],
+      "h_in": [
+        -18.954300000000018,
+        21.813479999999984
+      ]
+    },
+    {
+      "type": "cubic",
+      "P0": [
+        224.42207,
+        111.37519999999999
+      ],
+      "chord": [
+        136.04295,
+        -22.726253
+      ],
+      "h_out": [
+        33.552460000000025,
+        -36.985485
+      ],
+      "h_in": [
+        -43.77762999999999,
+        -23.661455000000004
+      ]
+    },
+    {
+      "type": "cubic",
+      "P0": [
+        360.46502,
+        88.64894699999999
+      ],
+      "chord": [
+        56.335320000000024,
+        122.85759299999998
+      ],
+      "h_out": [
+        43.96708000000001,
+        21.672813000000005
+      ],
+      "h_in": [
+        12.997149999999976,
+        -47.557679999999976
+      ]
+    },
+    {
+      "type": "cubic",
+      "P0": [
+        416.80034,
+        211.50653999999997
+      ],
+      "chord": [
+        -106.03052000000002,
+        83.55997000000002
+      ],
+      "h_out": [
+        -11.611370000000022,
+        47.438030000000026
+      ],
+      "h_in": [
+        48.51107000000002,
+        -0.9765500000000316
+      ]
+    },
+    {
+      "type": "cubic",
+      "P0": [
+        310.76982,
+        295.06651
+      ],
+      "chord": [
+        -86.65475,
+        -35.98592000000002
+      ],
+      "h_out": [
+        -32.08634000000001,
+        1.1331900000000132
+      ],
+      "h_in": [
+        21.232850000000013,
+        23.930679999999995
+      ]
+    },
+    {
+      "type": "cubic",
+      "P0": [
+        224.11506999999997,
+        259.08059
+      ],
+      "chord": [
+        35.91574,
+        -54.127110000000016
+      ],
+      "h_out": [
+        12.008209999999991,
+        -18.01692
+      ],
+      "h_in": [
+        -12.056240000000003,
+        17.97804000000002
+      ]
+    },
+    {
+      "type": "cubic",
+      "P0": [
+        260.03081,
+        204.95347999999996
+      ],
+      "chord": [
+        67.55563999999998,
+        25.982910000000004
+      ],
+      "h_out": [
+        10.904719999999998,
+        24.992739999999998
+      ],
+      "h_in": [
+        -24.849549999999965,
+        11.313649999999996
+      ]
+    },
+    {
+      "type": "cubic",
+      "P0": [
+        327.58644999999996,
+        230.93638999999996
+      ],
+      "chord": [
+        26.22699,
+        -66.69767000000002
+      ],
+      "h_out": [
+        25.416870000000017,
+        -9.852370000000008
+      ],
+      "h_in": [
+        12.580469999999991,
+        24.56423000000001
+      ]
+    },
+    {
+      "type": "cubic",
+      "P0": [
+        353.81343999999996,
+        164.23871999999994
+      ],
+      "chord": [
+        -74.41937000000001,
+        -20.783629999999988
+      ],
+      "h_out": [
+        -12.420050000000003,
+        -27.118439999999993
+      ],
+      "h_in": [
+        24.670349999999985,
+        -16.55638000000002
+      ]
+    },
+    {
+      "type": "cubic",
+      "P0": [
+        279.39406999999994,
+        143.45508999999996
+      ],
+      "chord": [
+        -36.84312,
+        47.498790000000014
+      ],
+      "h_out": [
+        -17.39672999999999,
+        11.100570000000005
+      ],
+      "h_in": [
+        12.025090000000006,
+        -15.94547
+      ]
+    },
+    {
+      "type": "cubic",
+      "P0": [
+        242.55094999999994,
+        190.95387999999997
+      ],
+      "chord": [
+        -58.08167,
+        87.55252999999999
+      ],
+      "h_out": [
+        -19.47353000000001,
+        29.095879999999994
+      ],
+      "h_in": [
+        20.26437999999999,
+        -28.50539999999998
+      ]
+    },
+    {
+      "type": "cubic",
+      "P0": [
+        184.46927999999994,
+        278.50640999999996
+      ],
+      "chord": [
+        -64.36668,
+        -2.7392699999999763
+      ],
+      "h_out": [
+        -16.283510000000007,
+        19.458669999999984
+      ],
+      "h_in": [
+        14.605549999999994,
+        20.67403999999999
+      ]
+    },
+    {
+      "type": "cubic",
+      "P0": [
+        120.10259999999994,
+        275.76714
+      ],
+      "chord": [
+        -8.112449999999995,
+        -51.86288999999999
+      ],
+      "h_out": [
+        -12.280950000000004,
+        -14.649029999999982
+      ],
+      "h_in": [
+        1.242440000000002,
+        17.39992000000001
+      ]
+    },
+    {
+      "type": "cubic",
+      "P0": [
+        111.99014999999994,
+        223.90425
+      ],
+      "chord": [
+        -0.49541999999999575,
+        -24.218860000000006
+      ],
+      "h_out": [
+        -0.31700999999999624,
+        -8.009770000000003
+      ],
+      "h_in": [
+        1.0172699999999963,
+        7.718389999999999
+      ]
+    },
+    {
+      "type": "cubic",
+      "P0": [
+        111.49472999999995,
+        199.68538999999998
+      ],
+      "chord": [
+        -54.19908,
+        65.79788000000002
+      ],
+      "h_out": [
+        -18.198124000000007,
+        21.81103999999999
+      ],
+      "h_in": [
+        19.91800700000001,
+        -20.28287000000003
+      ]
+    },
+    {
+      "type": "cubic",
+      "P0": [
+        57.295649999999945,
+        265.48327
+      ],
+      "chord": [
+        -75.79551,
+        29.588039999999978
+      ],
+      "h_out": [
+        -20.729789000000004,
+        18.43365
+      ],
+      "h_in": [
+        27.807784799999993,
+        -0.16681999999997288
+      ]
+    }
+  ],
+  "bowl": [
+    {
+      "type": "cubic",
+      "P0": [
+        29.153885,
+        168.47921
+      ],
+      "chord": [
+        -81.265963,
+        -26.468429999999984
+      ],
+      "h_out": [
+        -30.6256943,
+        -35.817980000000006
+      ],
+      "h_in": [
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "type": "line",
+      "P0": [
+        -52.112078,
+        142.01078
+      ],
+      "chord": [
+        0.13438000000000017,
+        -64.910486
+      ]
+    },
+    {
+      "type": "cubic",
+      "P0": [
+        -51.977698,
+        77.100294
+      ],
+      "chord": [
+        121.89174300000002,
+        40.86984600000001
+      ],
+      "h_out": [
+        0.0,
+        0.0
+      ],
+      "h_in": [
+        -43.981428000000015,
+        -53.755430000000004
+      ]
+    },
+    {
+      "type": "line",
+      "P0": [
+        69.91404500000002,
+        117.97014000000001
+      ],
+      "chord": [
+        -40.76016000000001,
+        50.50906999999998
+      ]
+    }
+  ],
+  "dot": {
+    "type": "circle",
+    "center": [
+      141.94557,
+      37.143867
+    ],
+    "r": 32.5
+  },
+  "dot_cubic": [
+    {
+      "type": "cubic",
+      "P0": [
+        174.44557,
+        37.143867
+      ],
+      "chord": [
+        -32.5,
+        32.5
+      ],
+      "h_out": [
+        0.0,
+        17.949254369500792
+      ],
+      "h_in": [
+        17.94925436950078,
+        0.0
+      ]
+    },
+    {
+      "type": "cubic",
+      "P0": [
+        141.94557,
+        69.643867
+      ],
+      "chord": [
+        -32.5,
+        -32.5
+      ],
+      "h_out": [
+        -17.949254369500792,
+        0.0
+      ],
+      "h_in": [
+        0.0,
+        17.949254369500792
+      ]
+    },
+    {
+      "type": "cubic",
+      "P0": [
+        109.44557,
+        37.143867
+      ],
+      "chord": [
+        32.5,
+        -32.5
+      ],
+      "h_out": [
+        0.0,
+        -17.949254369500792
+      ],
+      "h_in": [
+        -17.949254369500792,
+        0.0
+      ]
+    },
+    {
+      "type": "cubic",
+      "P0": [
+        141.94557,
+        4.643867
+      ],
+      "chord": [
+        32.5,
+        32.5
+      ],
+      "h_out": [
+        17.94925436950078,
+        0.0
+      ],
+      "h_in": [
+        0.0,
+        -17.949254369500792
+      ]
+    }
+  ],
+  "connection": {
+    "crest": [
+      142.619,
+      82.379
+    ],
+    "dotCenter": [
+      141.94557,
+      37.143867
+    ],
+    "dx": -0.673,
+    "gap": 12.735,
+    "plumbX": 141.946
+  }
+};
+const SVGNS="http://www.w3.org/2000/svg";
+const svg=document.getElementById('svg');
+const R=DATA.dot.r;
+const CREST=DATA.connection.crest;          // fixed: belongs to the body
+let DOTC=[...DATA.connection.dotCenter];     // mutable: draggable
+DATA.infinity=DATA.infinity||{center:[142.5,186.6],symMedianPx:3.0,bTop:[-137.3,8.2],oEnd:[258.7,207.0],
+  spineX:{bboxMid:141.3,dot:141.9,iCrest:142.6,rotCenter:142.5}};
+DATA.infinity.s1=DATA.infinity.s1||[-10.8,167.8];
+DATA.infinity.s3=DATA.infinity.s3||[276.3,187.0];
+DATA.infinity.s3target=DATA.infinity.s3target||[295.8,205.4];
+DATA.infinity.axisPerpPx=DATA.infinity.axisPerpPx||8.5;
+DATA.infinity.seg16collinearTarget=DATA.infinity.seg16collinearTarget||[229.4,249.5];
+const INF=DATA.infinity, IC=INF.center;
+const rot180=(p,c)=>[2*c[0]-p[0],2*c[1]-p[1]];
+
+const add=(a,b)=>[a[0]+b[0],a[1]+b[1]];
+const lerp=(a,b,t)=>[a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t];
+function pts(s){const P0=s.P0,P3=add(P0,s.chord);
+  if(s.type==='line')return{P0,P3};
+  return{P0,P1:add(P0,s.h_out),P2:add(P3,s.h_in),P3};}
+function el(tag,attrs,parent){const e=document.createElementNS(SVGNS,tag);
+  for(const k in attrs)e.setAttribute(k,attrs[k]);(parent||svg).appendChild(e);return e;}
+
+function outlinePath(segs,t){let d='';segs.forEach((s,i)=>{const p=pts(s);
+  if(i===0)d+=`M ${p.P0[0]} ${p.P0[1]} `;
+  if(s.type==='line'){d+=`L ${p.P3[0]} ${p.P3[1]} `;return;}
+  const s1=lerp(p.P0,p.P3,1/3),s2=lerp(p.P0,p.P3,2/3);
+  const c1=lerp(s1,p.P1,t),c2=lerp(s2,p.P2,t);
+  d+=`C ${c1[0]} ${c1[1]} ${c2[0]} ${c2[1]} ${p.P3[0]} ${p.P3[1]} `;});return d+'Z';}
+function chordPath(segs){let d='';segs.forEach((s,i)=>{d+=(i?'L ':'M ')+s.P0[0]+' '+s.P0[1]+' ';});return d+'Z';}
+
+const layers={};
+['fillG','infG','curveG','chordG','handleG','anchorG','labelG','dotG','conG'].forEach(n=>layers[n]=el('g',{},svg));
+layers.conG.style.pointerEvents='none'; layers.infG.style.pointerEvents='none';
+const PIECES=['body','bowl'];
+let curMorph=1;
+
+function drawSkeleton(name,t){
+  DATA[name].forEach((s,i)=>{const p=pts(s);const gid=name+'-'+i;
+    el('line',{x1:p.P0[0],y1:p.P0[1],x2:p.P3[0],y2:p.P3[1],class:'chordline','data-seg':gid},layers.chordG);
+    if(s.type==='cubic'){
+      el('line',{x1:p.P0[0],y1:p.P0[1],x2:p.P1[0],y2:p.P1[1],class:'hvec out','data-seg':gid},layers.handleG);
+      el('line',{x1:p.P3[0],y1:p.P3[1],x2:p.P2[0],y2:p.P2[1],class:'hvec in','data-seg':gid},layers.handleG);
+      el('circle',{cx:p.P1[0],cy:p.P1[1],r:2.4,class:'ctl out','data-seg':gid},layers.handleG);
+      el('circle',{cx:p.P2[0],cy:p.P2[1],r:2.4,class:'ctl in','data-seg':gid},layers.handleG);
+    }
+    el('circle',{cx:p.P0[0],cy:p.P0[1],r:3.1,class:'node','data-seg':gid},layers.anchorG);
+    const mid=lerp(p.P0,p.P3,.5);
+    el('text',{x:mid[0],y:mid[1]-3,class:'seglabel','text-anchor':'middle'},layers.labelG).textContent=i;
+  });
+}
+
+function draw(t){
+  curMorph=t;
+  Object.values(layers).forEach(g=>g.innerHTML='');
+  // fills
+  PIECES.forEach(n=>el('path',{d:outlinePath(DATA[n],1),class:'fillpiece',fill:'var(--blue5)','fill-opacity':.16},layers.fillG));
+  // body+bowl morphing stroke
+  PIECES.forEach(n=>el('path',{d:outlinePath(DATA[n],t),fill:'none',stroke:'var(--blue3)','stroke-width':1.6,'vector-effect':'non-scaling-stroke','stroke-opacity':.9},layers.curveG));
+  PIECES.forEach(n=>drawSkeleton(n,t));
+
+  // DOT — circle, or 4 cubics if toggled
+  const dcx=DOTC[0],dcy=DOTC[1];
+  el('circle',{cx:dcx,cy:dcy,r:R,class:'fillpiece',fill:'var(--blue3)','fill-opacity':.22},layers.dotG);
+  if(state.dotcubic){
+    // translate dot_cubic to current center
+    const ox=dcx-DATA.dot.center[0], oy=dcy-DATA.dot.center[1];
+    const tseg=DATA.dot_cubic.map(s=>({type:'cubic',P0:[s.P0[0]+ox,s.P0[1]+oy],chord:s.chord,h_out:s.h_out,h_in:s.h_in}));
+    el('path',{d:outlinePath(tseg,t),fill:'none',stroke:'var(--hin)','stroke-width':1.6,'vector-effect':'non-scaling-stroke'},layers.dotG);
+    tseg.forEach((s,i)=>{const p=pts(s);const gid='dot_cubic-'+i;
+      el('line',{x1:p.P0[0],y1:p.P0[1],x2:p.P3[0],y2:p.P3[1],class:'chordline','data-seg':gid},layers.dotG);
+      el('line',{x1:p.P0[0],y1:p.P0[1],x2:p.P1[0],y2:p.P1[1],class:'hvec out','data-seg':gid},layers.dotG);
+      el('line',{x1:p.P3[0],y1:p.P3[1],x2:p.P2[0],y2:p.P2[1],class:'hvec in','data-seg':gid},layers.dotG);
+      el('circle',{cx:p.P0[0],cy:p.P0[1],r:3.1,class:'node','data-seg':gid},layers.dotG);
+    });
+  } else {
+    el('circle',{cx:dcx,cy:dcy,r:R,fill:'none',stroke:'var(--blue3)','stroke-width':1.6,'vector-effect':'non-scaling-stroke'},layers.dotG);
+  }
+  // draggable hit target on the dot
+  el('circle',{cx:dcx,cy:dcy,r:R,id:'dotHit',fill:'transparent'},layers.dotG);
+
+  drawConnection();
+  drawInfinity();
+  applyToggles();
+  bindDrag();
+}
+
+function drawInfinity(){
+  layers.infG.innerHTML='';
+  // 180-deg rotated ghost of body+bowl -> reveals the lemniscate symmetry
+  const g=el('g',{transform:`rotate(180 ${IC[0]} ${IC[1]})`,opacity:.30},layers.infG);
+  PIECES.forEach(n=>el('path',{d:outlinePath(DATA[n],1),fill:'var(--hout)'},g));
+  // spine axis (infinity center x)
+  el('line',{x1:IC[0],y1:-40,x2:IC[0],y2:325,stroke:'var(--hout)','stroke-width':1,'stroke-dasharray':'2 5','vector-effect':'non-scaling-stroke',opacity:.7},layers.infG);
+  // infinity heart
+  el('circle',{cx:IC[0],cy:IC[1],r:9,fill:'none',stroke:'#fff','stroke-width':1,'vector-effect':'non-scaling-stroke'},layers.infG);
+  el('circle',{cx:IC[0],cy:IC[1],r:2.5,fill:'#fff'},layers.infG);
+  el('text',{x:IC[0]+13,y:IC[1]+4,fill:'#fff','font-family':'var(--mono)','font-size':10},layers.infG).textContent='∞ heart';
+  // b-top and o-end markers
+  const mark=(p,col,lab)=>{el('circle',{cx:p[0],cy:p[1],r:4,fill:col},layers.infG);
+    el('text',{x:p[0]+6,y:p[1]-6,fill:col,'font-family':'var(--mono)','font-size':10},layers.infG).textContent=lab;};
+  mark(INF.bTop,'var(--hin)','top of b');
+  mark(INF.oEnd,'var(--plumb)','end of o');
+  // ---- seg3 center -> heart -> seg16 center axis ----
+  const cubMid=s=>{const p=pts(s);return [(p.P0[0]+3*p.P1[0]+3*p.P2[0]+p.P3[0])/8,(p.P0[1]+3*p.P1[1]+3*p.P2[1]+p.P3[1])/8];};
+  const c3=cubMid(DATA.body[3]), c16=cubMid(DATA.body[16]), TG=INF.seg16collinearTarget;
+  // current seg3-seg16 line (grey dashed): heart misses it
+  el('line',{x1:c3[0],y1:c3[1],x2:c16[0],y2:c16[1],stroke:'#7f8aa3','stroke-width':1,'stroke-dasharray':'4 4','vector-effect':'non-scaling-stroke'},layers.infG);
+  // ideal axis: through seg3 + heart, extended to the collinear target (solid green)
+  el('line',{x1:c3[0],y1:c3[1],x2:TG[0],y2:TG[1],stroke:'#5fd98a','stroke-width':1.4,'vector-effect':'non-scaling-stroke'},layers.infG);
+  const cm=(p,col,lab,dy=14)=>{el('circle',{cx:p[0],cy:p[1],r:4,fill:col},layers.infG);
+    el('text',{x:p[0]+6,y:p[1]+dy,fill:col,'font-family':'var(--mono)','font-size':9},layers.infG).textContent=lab;};
+  cm(c3,'#5fd98a','seg3 ctr');
+  cm(c16,'#ffb454','seg16 now');
+  // collinear target (hollow) + shift arrow
+  el('circle',{cx:TG[0],cy:TG[1],r:5,fill:'none',stroke:'#5fd98a','stroke-width':1.4,'vector-effect':'non-scaling-stroke'},layers.infG);
+  el('text',{x:TG[0]+7,y:TG[1]+4,fill:'#5fd98a','font-family':'var(--mono)','font-size':9},layers.infG).textContent='seg16 on-axis';
+  el('line',{x1:c16[0],y1:c16[1],x2:TG[0],y2:TG[1],stroke:'#5fd98a','stroke-width':1,'marker-end':'url(#ah)','vector-effect':'non-scaling-stroke'},layers.infG);
+  if(!document.getElementById('ah')){const defs=el('defs',{},layers.infG);
+    const m=el('marker',{id:'ah',markerWidth:7,markerHeight:7,refX:5,refY:3,orient:'auto'},defs);
+    el('path',{d:'M0,0 L6,3 L0,6 Z',fill:'#5fd98a'},m);}
+  // 180-image of the (live) dot -> where the floating chunk maps under the infinity
+  const di=rot180(DOTC,IC);
+  el('circle',{cx:di[0],cy:di[1],r:R,fill:'none',stroke:'var(--blue3)','stroke-width':1,'stroke-dasharray':'3 3','vector-effect':'non-scaling-stroke',opacity:.8},layers.infG);
+  el('text',{x:di[0]+R+3,y:di[1]+3,fill:'var(--blue3)','font-family':'var(--mono)','font-size':9,opacity:.8},layers.infG).textContent='dot ↻180°';
+}
+
+function drawConnection(){
+  layers.conG.innerHTML='';
+  const dcx=DOTC[0],dcy=DOTC[1];
+  // plumb axis through the (fixed) crest
+  el('line',{x1:CREST[0],y1:-40,x2:CREST[0],y2:320,class:'plumb'},layers.conG);
+  // crest marker
+  el('circle',{cx:CREST[0],cy:CREST[1],r:3,class:'crestpt'},layers.conG);
+  // gap bar crest -> dot underside (along dot's own x)
+  const underY=dcy+R;
+  el('line',{x1:dcx,y1:CREST[1],x2:dcx,y2:underY,class:'gapbar'},layers.conG);
+  el('line',{x1:dcx-5,y1:CREST[1],x2:dcx+5,y2:CREST[1],class:'gapbar'},layers.conG);
+  el('line',{x1:dcx-5,y1:underY,x2:dcx+5,y2:underY,class:'gapbar'},layers.conG);
+  // dot center cross
+  el('line',{x1:dcx-5,y1:dcy,x2:dcx+5,y2:dcy,class:'gapbar'},layers.conG);
+  const dx=dcx-CREST[0], gap=CREST[1]-underY;
+  el('text',{x:dcx+9,y:(CREST[1]+underY)/2+3,class:'conlabel'},layers.conG).textContent='gap '+gap.toFixed(1);
+  el('text',{x:CREST[0]+7,y:CREST[1]+15,class:'conlabel'},layers.conG).textContent='Δx '+(dx>=0?'+':'')+dx.toFixed(2);
+  // readout panel
+  const okx=Math.abs(dx)<1.5, okg=gap>0;
+  document.getElementById('conread').innerHTML=
+    `<span>Δx <b class="${okx?'ok':'warn'}">${(dx>=0?'+':'')+dx.toFixed(2)}</b> px</span>
+     <span>gap <b class="${okg?'ok':'warn'}">${gap.toFixed(1)}</b> px</span>
+     <span>gap/⌀ <b>${(gap/(2*R)).toFixed(2)}</b></span>
+     <span>dot <b>(${dcx.toFixed(1)}, ${dcy.toFixed(1)})</b></span>`;
+}
+
+// ---- drag ----
+function svgPt(evt){const p=svg.createSVGPoint();p.x=evt.clientX;p.y=evt.clientY;
+  return p.matrixTransform(svg.getScreenCTM().inverse());}
+function bindDrag(){
+  const hit=document.getElementById('dotHit');if(!hit)return;
+  hit.addEventListener('pointerdown',e=>{e.preventDefault();hit.classList.add('drag');
+    try{hit.setPointerCapture(e.pointerId);}catch(_){}
+    const move=ev=>{const m=svgPt(ev);DOTC=[m.x,m.y];draw(curMorph);};
+    const up=()=>{hit.classList.remove('drag');window.removeEventListener('pointermove',move);window.removeEventListener('pointerup',up);};
+    window.addEventListener('pointermove',move);window.addEventListener('pointerup',up);});
+}
+document.getElementById('reset').onclick=()=>{DOTC=[...DATA.connection.dotCenter];draw(curMorph);};
+
+// ---- toggles ----
+const tdefs={fill:'fillG',curve:'curveG',chords:'chordG',handles:'handleG',anchors:'anchorG',labels:'labelG',plumb:'conG',inf:'infG'};
+const state={fill:1,curve:1,chords:1,handles:1,anchors:1,labels:0,plumb:1,dotcubic:0,inf:0};
+function applyToggles(){for(const k in tdefs)layers[tdefs[k]].style.display=state[k]?'':'none';}
+document.getElementById('toggles').addEventListener('click',e=>{const t=e.target.closest('.tg');if(!t)return;
+  const k=t.dataset.k;state[k]=!state[k];t.setAttribute('aria-pressed',state[k]);
+  if(k==='dotcubic')draw(curMorph);else applyToggles();});
+
+// ---- morph ----
+document.getElementById('morph').addEventListener('input',e=>draw(parseFloat(e.target.value)));
+
+// ---- table + hover ----
+const fmt=n=>n.toFixed(1);
+function buildTable(piece){
+  const tb=document.querySelector('#tbl tbody');tb.innerHTML='';
+  DATA[piece].forEach((s,i)=>{const dx=s.chord[0],dy=s.chord[1];
+    const len=Math.hypot(dx,dy),ang=Math.atan2(dy,dx)*180/Math.PI;
+    const ho=s.h_out||[0,0],hi=s.h_in||[0,0];
+    const tr=document.createElement('tr');tr.dataset.seg=piece+'-'+i;
+    tr.innerHTML=`<td class="i">${i}</td><td class="t ${s.type}">${s.type}</td>
+      <td>${fmt(s.P0[0])}</td><td>${fmt(s.P0[1])}</td><td>${fmt(dx)}</td><td>${fmt(dy)}</td>
+      <td>${fmt(len)}</td><td>${ang.toFixed(0)}</td>
+      <td>${fmt(ho[0])}</td><td>${fmt(ho[1])}</td><td>${fmt(hi[0])}</td><td>${fmt(hi[1])}</td>`;
+    tr.addEventListener('mouseenter',()=>hi_seg(piece+'-'+i,true));
+    tr.addEventListener('mouseleave',()=>hi_seg(piece+'-'+i,false));
+    tb.appendChild(tr);});
+}
+function hi_seg(gid,on){
+  document.querySelectorAll('.chordline').forEach(l=>{const m=l.getAttribute('data-seg')===gid;
+    l.style.strokeWidth=on&&m?'3.4':'';l.style.opacity=on?(m?'1':'.15'):'';});
+  document.querySelectorAll('.hvec,[data-seg].node,.node[data-seg]').forEach(()=>{});
+  layers.handleG.querySelectorAll('[data-seg]').forEach(l=>{l.style.opacity=on?(l.getAttribute('data-seg')===gid?'1':'.12'):'';});
+  layers.anchorG.querySelectorAll('[data-seg]').forEach(l=>{l.style.opacity=on?(l.getAttribute('data-seg')===gid?'1':'.2'):'';});
+  document.querySelectorAll('tr[data-seg="'+gid+'"]').forEach(r=>r.classList.toggle('hi',on));
+}
+svg.addEventListener('mouseover',e=>{const g=e.target.getAttribute&&e.target.getAttribute('data-seg');if(g)hi_seg(g,true);});
+svg.addEventListener('mouseout',e=>{const g=e.target.getAttribute&&e.target.getAttribute('data-seg');if(g)hi_seg(g,false);});
+
+document.getElementById('tabs').addEventListener('click',e=>{const t=e.target.closest('.tab');if(!t)return;
+  document.querySelectorAll('.tab').forEach(x=>x.setAttribute('aria-selected',x===t));buildTable(t.dataset.p);});
+
+// ---- stats ----
+function polylen(segs){let s=0;segs.forEach(x=>s+=Math.hypot(x.chord[0],x.chord[1]));return s;}
+function arclen(segs){let L=0;segs.forEach(x=>{const p=pts(x);if(x.type==='line'){L+=Math.hypot(x.chord[0],x.chord[1]);return;}
+  let pr=p.P0;for(let k=1;k<=24;k++){const t=k/24,u=1-t;
+    const X=u*u*u*p.P0[0]+3*u*u*t*p.P1[0]+3*u*t*t*p.P2[0]+t*t*t*p.P3[0];
+    const Y=u*u*u*p.P0[1]+3*u*u*t*p.P1[1]+3*u*t*t*p.P2[1]+t*t*t*p.P3[1];
+    L+=Math.hypot(X-pr[0],Y-pr[1]);pr=[X,Y];}});return L;}
+const nseg=DATA.body.filter(s=>s.type==='cubic').length+DATA.bowl.filter(s=>s.type==='cubic').length;
+const bodyR=arclen(DATA.body)/polylen(DATA.body);
+const c=DATA.connection;
+document.getElementById('stats').innerHTML=
+  `<span class="stat"><b>${nseg}</b><span class="u">cubic segments</span></span>
+   <span class="stat"><b>${(100/bodyR).toFixed(0)}%</b><span class="u">straight (body)</span></span>
+   <span class="stat key"><b>${(c.dx>=0?'+':'')+c.dx}</b><span class="u">tittle Δx px</span></span>
+   <span class="stat key"><b>${c.gap}</b><span class="u">tittle gap px</span></span>
+   <span class="stat"><b>~${INF.symMedianPx}</b><span class="u">∞ sym median px</span></span>
+   <span class="stat"><b>${IC[0]}</b><span class="u">spine x · all ±1.3</span></span>`;
+
+// ---- export ----
+function flash(id,m){const b=document.getElementById(id),o=b.textContent;b.textContent=m;setTimeout(()=>b.textContent=o,1100);}
+document.getElementById('copy').onclick=()=>{navigator.clipboard.writeText(JSON.stringify(DATA,null,2));flash('copy','copied ✓');};
+document.getElementById('copysvg').onclick=()=>{navigator.clipboard.writeText(chordPath(DATA.body)+' '+chordPath(DATA.bowl));flash('copysvg','copied ✓');};
+document.getElementById('copydot').onclick=()=>{navigator.clipboard.writeText(outlinePath(DATA.dot_cubic,1));flash('copydot','copied ✓');};
+
+draw(1);buildTable('body');
+</script>
+</body>
+</html>
