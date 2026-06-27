@@ -5474,3 +5474,41 @@ body:has(.v3) {
   backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.1);
   font-family: var(--font-v3-mono), monospace; font-size: 11.5px; color: rgba(200, 220, 232, 0.85);
 }
+
+/* ── Lab: senses article — salvaged bill-of-materials ───────────────── */
+.v3-senses-rig {
+  border: 1px solid var(--v3-line);
+  border-radius: var(--v3-r-lg);
+  background: color-mix(in srgb, var(--v3-gold) 5%, var(--v3-paper, #FBFAF5));
+  padding: 8px 0 10px;
+  overflow: hidden;
+}
+.v3-senses-rig__head {
+  font-family: var(--font-v3-mono), monospace;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--v3-gold-dk, #7C5605);
+  padding: 10px 20px 8px;
+  border-bottom: 1px solid var(--v3-line);
+  margin-bottom: 4px;
+}
+.v3-senses-rig__list { list-style: none; margin: 0; padding: 0; }
+.v3-senses-rig__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1.1fr);
+  align-items: baseline; gap: 10px;
+  padding: 9px 20px;
+  border-top: 1px solid color-mix(in srgb, var(--v3-line) 55%, transparent);
+}
+.v3-senses-rig__row:first-child { border-top: none; }
+.v3-senses-rig__junk {
+  font-family: var(--font-v3-mono), monospace; font-size: 13px; font-weight: 600;
+  color: var(--v3-ink, #252521);
+}
+.v3-senses-rig__arrow { color: var(--v3-gold); font-weight: 700; }
+.v3-senses-rig__role { font-size: 13.5px; color: var(--v3-slate, #5b5b54); line-height: 1.4; }
+
+@media (max-width: 560px) {
+  .v3-senses-rig__row { grid-template-columns: 1fr; gap: 2px; padding: 10px 18px; }
+  .v3-senses-rig__arrow { display: none; }
+  .v3-senses-rig__role { font-size: 13px; }
+}
