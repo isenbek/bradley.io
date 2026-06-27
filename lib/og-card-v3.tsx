@@ -37,6 +37,8 @@ export interface OgCardV3Config {
   tags?: string[]
   accent?: V3Accent
   cta?: string
+  /** Optional data-URI (e.g. a mascot) rendered on the right side of the card. */
+  image?: string
 }
 
 /**
@@ -142,6 +144,17 @@ export function ogV3ImageResponse(cfg: OgCardV3Config): ImageResponse {
           </div>
         </div>
 
+        {/* Optional image (e.g. mascot) on the right */}
+        {cfg.image ? (
+          <img
+            src={cfg.image}
+            width={420}
+            height={229}
+            alt=""
+            style={{ position: "absolute", right: 44, top: 198, zIndex: 1 }}
+          />
+        ) : null}
+
         {/* Main content */}
         <div
           style={{
@@ -149,7 +162,7 @@ export function ogV3ImageResponse(cfg: OgCardV3Config): ImageResponse {
             flexDirection: "column",
             gap: 22,
             zIndex: 1,
-            maxWidth: 900,
+            maxWidth: cfg.image ? 620 : 900,
           }}
         >
           <div

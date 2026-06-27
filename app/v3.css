@@ -5107,14 +5107,14 @@ body:has(.v3) {
   border-radius: 0;
 }
 
-/* Full-bleed embed (self-contained interactive HTML tool in an iframe). */
+/* Embedded self-contained interactive HTML tool (iframe), below an article
+   header — full-width + tall stage, internal scroll for any overflow. */
 .v3-embed-stage { width: 100%; background: #0a0f1c; }
 .v3-embed-stage__frame {
   display: block;
   width: 100%;
   border: 0;
-  height: calc(100vh - 58px - 72px);
-  height: calc(100dvh - 58px - 72px);
+  height: clamp(640px, 86vh, 1100px);
 }
 /* out-specify maplibre-gl.css's `.maplibregl-map { position: relative }`,
    which otherwise collapses this container to height:0 (→ canvas 300px). */
