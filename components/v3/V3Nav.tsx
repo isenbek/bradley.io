@@ -27,6 +27,15 @@ const ORGS = [
 export function V3Nav() {
   const pathname = usePathname() ?? ""
   const [open, setOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+
+  // Translucent at the very top, frosted once you scroll.
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8)
+    onScroll()
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => window.removeEventListener("scroll", onScroll)
+  }, [])
 
   // Close on route change
   useEffect(() => {
@@ -65,7 +74,7 @@ export function V3Nav() {
 
   return (
     <>
-      <nav className="v3-nav" aria-label="Primary">
+      <nav className="v3-nav" data-scrolled={scrolled} aria-label="Primary">
         <div className="v3-nav__in">
           <Link href="/" className="v3-nav__logo v3-biologo--bob" aria-label="bio·bradley.io home">
             <BioLogo

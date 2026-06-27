@@ -60,7 +60,7 @@ export function V3Gps() {
       </div>
 
       <article className="v3-panel v3-gps-map-panel">
-        <GroundTrack history={history} tpv={tpv} />
+        <GroundTrack history={history} tpv={tpv} sats={sats} />
       </article>
     </div>
   )
