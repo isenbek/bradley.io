@@ -19,7 +19,7 @@ const RIG: { junk: string; role: string }[] = [
 function Sec({ n, title, children }: { n: string; title: string; children: React.ReactNode }) {
   return (
     <section className="v3-section" style={{ paddingTop: 8, paddingBottom: 8 }}>
-      <div className="v3-wrap" style={{ maxWidth: 760 }}>
+      <div className="v3-wrap">
         <V3Reveal>
           <div className="v3-sec-head" style={{ marginBottom: 18 }}>
             <div className="v3-sec-head__num">{n}</div>
@@ -34,12 +34,12 @@ function Sec({ n, title, children }: { n: string; title: string; children: React
 
 export default function SensesPage() {
   return (
-    <>
+    <div className="v3-longform">
       {/* HEADER ========================================================= */}
       <header className="v3-page-head" style={{ paddingBottom: 16 }}>
         <div className="v3-blob v3-blob--2" aria-hidden style={{ right: "-40px", top: "-20px", width: 360, height: 360 }} />
         <div className="v3-wrap">
-          <div className="v3-page-head__lockup" style={{ maxWidth: 760 }}>
+          <div className="v3-page-head__lockup">
             <V3Reveal>
               <Link href="/lab" className="v3-air-back">
                 <ArrowLeft size={14} strokeWidth={2.4} /> back to the Lab
@@ -70,7 +70,7 @@ export default function SensesPage() {
 
       {/* THE RIG (kicker) =============================================== */}
       <section className="v3-section" style={{ paddingTop: 8, paddingBottom: 16 }}>
-        <div className="v3-wrap" style={{ maxWidth: 760 }}>
+        <div className="v3-wrap">
           <V3Reveal>
             <div className="v3-senses-rig">
               <div className="v3-senses-rig__head">The bill of materials</div>
@@ -89,7 +89,7 @@ export default function SensesPage() {
       </section>
 
       <Sec n="01" title="The premise">
-        <p className="v3-prose">
+        <p className="v3-prose v3-longform__lead">
           The house rule here is <strong>Anti-Cloud. Host Local, Think Global.</strong> No Vercel,
           no API keys, no someone-else&apos;s-computer. If the box is going to have senses, the
           speech recognition, the voice, and the brain all have to live on the same open-air
@@ -192,11 +192,11 @@ export default function SensesPage() {
 
       {/* FOOT ========================================================== */}
       <section className="v3-section" style={{ paddingTop: 18, paddingBottom: 28 }}>
-        <div className="v3-wrap" style={{ maxWidth: 760, display: "flex", gap: 14, flexWrap: "wrap" }}>
+        <div className="v3-wrap" style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
           <Link href="/eyes" className="v3-espace-cta"><Eye size={15} strokeWidth={2.4} /> See through its eyes <span aria-hidden>→</span></Link>
           <Link href="/lab" className="v3-espace-cta"><FlaskConical size={15} strokeWidth={2.4} /> More from the Lab <span aria-hidden>→</span></Link>
         </div>
       </section>
-    </>
+    </div>
   )
 }

@@ -5512,3 +5512,31 @@ body:has(.v3) {
   .v3-senses-rig__arrow { display: none; }
   .v3-senses-rig__role { font-size: 13px; }
 }
+
+/* ── Longform article layout — one left-aligned reading column ───────── */
+/* Opt-in via a .v3-longform wrapper. Fixes the "centered hero, weird text"
+   look on article pages: unifies hero + body into a single ~66ch column,
+   left-aligned, with modern type niceties. */
+.v3-longform .v3-wrap { max-width: 720px; }                 /* ~66ch measure */
+.v3-longform .v3-page-head__lockup { text-align: left; }    /* hero flush-left, not centered */
+.v3-longform .v3-page-head__lede { max-width: none; margin-inline: 0; }
+.v3-longform .v3-sec-head { max-width: none; }
+.v3-longform h2 { text-wrap: balance; }                     /* no orphan words in headings */
+.v3-longform { hanging-punctuation: first allow-end; }      /* progressive: quotes hang the margin */
+
+.v3-longform .v3-prose { font-size: 17px; line-height: 1.72; text-wrap: pretty; }
+.v3-longform .v3-prose + .v3-prose { margin-top: 1.05em; }
+.v3-longform .v3-prose code,
+.v3-longform code {
+  font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
+  font-size: 0.86em; padding: 1px 6px; border-radius: 6px;
+  background: color-mix(in srgb, var(--v3-gold) 12%, transparent);
+  color: var(--v3-gold-dk, #7C5605);
+}
+
+/* Drop cap on the lead paragraph — classic field-note flourish. */
+.v3-longform__lead::first-letter {
+  float: left; font-family: var(--font-v3-display), "Bricolage Grotesque", serif;
+  font-weight: 800; font-size: 3.1em; line-height: 0.78;
+  padding: 6px 12px 0 0; color: var(--v3-charcoal);
+}
