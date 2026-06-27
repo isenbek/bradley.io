@@ -63,6 +63,10 @@ CAP=$(echo "$SIZES" | awk -Fx -v max="$MAXW" 'NF==2 && $1<=max' | sort -t x -k1,
 [[ -n "$CAP" ]] || CAP=$(echo "$SIZES" | awk -Fx 'NF==2' | sort -t x -k1,1n | tail -1)
 [[ -n "$CAP" ]] || CAP="640x480"
 
+# Per-camera rotation: the BRIO is mounted upside-down → 180° (hflip+vflip).
+ROT=""
+case "$NAME" in *BRIO*) ROT="hflip,vflip," ;; esac
+
 # ── Capture ─────────────────────────────────────────────────────────────────
 # select=gte(n,4) discards the first few frames so auto-exposure settles before
 # we keep one — older UVC cams (the QuickCam) hand back a dark first frame.
@@ -71,7 +75,7 @@ CAP=$(echo "$SIZES" | awk -Fx -v max="$MAXW" 'NF==2 && $1<=max' | sort -t x -k1,
 # than being cropped by the page/share-card's object-fit:cover.
 ffmpeg -hide_banner -loglevel error -y \
   -f v4l2 -input_format mjpeg -video_size "$CAP" -i "$DEV" \
-  -vf "select=gte(n\,4),scale=1280:720:force_original_aspect_ratio=decrease,pad=1280:720:(ow-iw)/2:(oh-ih)/2:color=black" \
+  -vf "select=gte(n\,4),${ROT}scale=1280:720:force_original_aspect_ratio=decrease,pad=1280:720:(ow-iw)/2:(oh-ih)/2:color=black" \
   -frames:v 1 -q:v 3 "$TMP"
 
 # Serialize the same frame as a PNG (file→file, no second camera open) with a
