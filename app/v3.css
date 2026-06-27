@@ -5625,3 +5625,22 @@ body:has(.v3) {
 @media (max-width: 560px) {
   .v3-meatball-senses { grid-template-columns: 1fr; }
 }
+
+/* ── Code/receipt block for the longform field notes ─────────────────── */
+.v3-codeblock {
+  margin: 18px 0; padding: 16px 18px; border-radius: var(--v3-r-md, 12px);
+  background: #14161c; border: 1px solid rgba(255, 255, 255, 0.08);
+  overflow-x: auto; box-shadow: var(--v3-sh-1);
+}
+.v3-codeblock code, .v3-codeblock pre {
+  font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
+  font-size: 12.5px; line-height: 1.6; color: #d6deea;
+  white-space: pre; background: none; padding: 0; border: 0;
+  display: block; tab-size: 2;
+}
+.v3-codeblock--receipt { background: #11160f; border-color: rgba(120, 200, 120, 0.16); }
+.v3-codeblock--receipt code { color: #cfe6c4; }
+.v3-codeblock__cap {
+  display: block; margin-bottom: 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: rgba(214, 222, 234, 0.45);
+}

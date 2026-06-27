@@ -32,6 +32,12 @@ const ENTRIES = [
     title: "I gave a junk-pile eyes, ears, and a voice",
     blurb: "The whole saga: the salvaged bill of materials, the debugging traps that cost an hour each, the calibration insight, and — finally — talking to the WOPR out loud.",
   },
+  {
+    href: "/lab/listening",
+    kicker: "field note · 02",
+    title: "The math of listening",
+    blurb: "Low-level DSP from raw samples to a working voice gate: the real FFT, windowing (200× less leakage), spectral-subtraction denoise and its U-curve. Every number from a live run.",
+  },
 ]
 
 export default function MeatballPage() {
@@ -154,16 +160,6 @@ export default function MeatballPage() {
                 </Link>
               </V3Reveal>
             ))}
-            <V3Reveal delay={ENTRIES.length * 70}>
-              <div className="v3-meatball-note v3-meatball-note--soon">
-                <span className="v3-meatball-note__ico"><BookOpen size={18} strokeWidth={2.2} /></span>
-                <span className="v3-meatball-note__body">
-                  <span className="v3-meatball-note__kicker">drafting</span>
-                  <span className="v3-meatball-note__title">The math of listening · samples → FFT → special sauce</span>
-                  <span className="v3-meatball-note__blurb">A low-level DSP walkthrough: the real FFT, windowing, spectral-subtraction denoise, and the voice gate — every number from a live run.</span>
-                </span>
-              </div>
-            </V3Reveal>
           </div>
         </div>
       </section>
