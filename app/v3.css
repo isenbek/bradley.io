@@ -5099,12 +5099,11 @@ body:has(.v3) {
   background: #070d14;
 }
 
-/* Full-bleed airspace page — the map fills the viewport between the fixed
-   nav (~58px) and footer (~72px); no card, no rounded corners, edge to edge. */
-.v3-air-full { width: 100%; }
-.v3-air-full .v3-air {
-  height: calc(100vh - 58px - 72px);
-  height: calc(100dvh - 58px - 72px);
+/* Airspace map stage — full-width + tall + unboxed (no card), sitting below
+   the article hero. Big and map-forward without eating the whole page. */
+.v3-air-stage { width: 100%; }
+.v3-air-stage .v3-air {
+  height: clamp(520px, 80vh, 920px);
   border-radius: 0;
 }
 /* out-specify maplibre-gl.css's `.maplibregl-map { position: relative }`,
