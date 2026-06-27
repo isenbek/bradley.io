@@ -86,7 +86,8 @@ body:has(.v3) {
    scroll; main pads itself away from both. The wrapper isn't a scroll
    container — html scrolls, nav sticks, footer is fixed. */
 .v3 > main {
-  /* Padding-bottom must match the footer height (~64px including padding). */
+  /* Offsets for the fixed chrome: nav (~57px) on top, footer (~64px) on bottom. */
+  padding-top: 58px;
   padding-bottom: 72px;
 }
 
@@ -147,8 +148,12 @@ body:has(.v3) {
 
 /* ============ NAV ============ */
 .v3-nav {
-  position: sticky;
+  /* Fixed (anchored) like the footer — immune to the sticky-breaks-on-overflow
+     footgun. main gets a matching padding-top to offset it. */
+  position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 50;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -5142,19 +5147,33 @@ body:has(.v3) {
   display: flex; align-items: center; gap: 8px;
   font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
   font-size: 12px; font-weight: 600;
-  color: #7e9fae; background: transparent; border: none; cursor: pointer;
-  padding: 5px 7px; border-radius: var(--v3-r-sm); text-align: left;
-  transition: color 0.15s, background 0.15s;
+  color: #7e9fae; background: transparent; border: 1px solid transparent; cursor: pointer;
+  padding: 5px 8px; border-radius: var(--v3-r-sm); text-align: left;
+  transition: color 0.15s, background 0.15s, border-color 0.15s, opacity 0.15s;
 }
+/* Hollow ring = off, filled = on — and both wear the layer's own colour. */
 .v3-air__lyr i {
-  width: 11px; height: 11px; border-radius: 3px; flex-shrink: 0; opacity: 0.35;
-  transition: opacity 0.15s; box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06);
+  width: 11px; height: 11px; border-radius: 3px; flex-shrink: 0;
+  background: transparent; border: 1.5px solid var(--lc, #7e9fae);
+  transition: background 0.15s, border-color 0.15s;
 }
-.v3-air__lyr[data-on="true"] { color: #eaf6fb; background: rgba(120, 200, 230, 0.08); }
-.v3-air__lyr[data-on="true"] i { opacity: 1; }
+.v3-air__lyr[data-on="true"] {
+  color: #eaf6fb;
+  background: color-mix(in srgb, var(--lc) 14%, transparent);
+  border-color: color-mix(in srgb, var(--lc) 32%, transparent);
+}
+.v3-air__lyr[data-on="true"] i { background: var(--lc); border-color: var(--lc); }
+.v3-air__lyr[data-on="false"] { opacity: 0.6; }
+.v3-air__lyr[data-on="false"] i { border-color: #7e9fae; }
 .v3-air__lyr:hover { color: #cfe9f3; }
 
-.v3-air__modes { display: flex; gap: 4px; padding: 2px 2px 4px 26px; }
+.v3-air__panel-head {
+  font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
+  font-size: 9px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+  color: #5b7886; padding: 1px 7px 4px;
+}
+
+.v3-air__modes { display: flex; gap: 4px; padding: 1px 2px 4px 26px; }
 .v3-air__mode {
   font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
   font-size: 10.5px; font-weight: 600;

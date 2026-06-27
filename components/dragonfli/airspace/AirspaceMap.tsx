@@ -102,8 +102,8 @@ export default function AirspaceMap() {
   const [layers, setLayers] = useState<Record<LayerKey, boolean>>({
     aircraft: true,
     density: true,
-    tracks: false,
-    rssi: false,
+    tracks: true,
+    rssi: true,
   })
   const [mode, setMode] = useState<DensityMode>("predicted")
   const [count, setCount] = useState(0)
@@ -329,26 +329,27 @@ export default function AirspaceMap() {
       </div>
 
       <div className="v3-air__panel">
-        <button type="button" className="v3-air__lyr" data-on={layers.aircraft} onClick={() => toggle("aircraft")}>
-          <i style={{ background: "#3fd0ff" }} /> Aircraft
+        <span className="v3-air__panel-head">Layers</span>
+        <button type="button" className="v3-air__lyr" style={{ ["--lc" as string]: "#3fd0ff" }} data-on={layers.aircraft} aria-pressed={layers.aircraft} onClick={() => toggle("aircraft")}>
+          <i /> Aircraft
         </button>
-        <button type="button" className="v3-air__lyr" data-on={layers.density} onClick={() => toggle("density")}>
-          <i style={{ background: "#7c3aed" }} /> Density forecast
+        <button type="button" className="v3-air__lyr" style={{ ["--lc" as string]: "#7c3aed" }} data-on={layers.density} aria-pressed={layers.density} onClick={() => toggle("density")}>
+          <i /> Density
         </button>
         {layers.density ? (
           <div className="v3-air__modes">
             {(["predicted", "current", "historical"] as DensityMode[]).map((m) => (
               <button key={m} type="button" className="v3-air__mode" data-on={mode === m} onClick={() => setMode(m)}>
-                {m === "historical" ? "hist. avg" : m}
+                {m === "historical" ? "hist" : m}
               </button>
             ))}
           </div>
         ) : null}
-        <button type="button" className="v3-air__lyr" data-on={layers.tracks} onClick={() => toggle("tracks")}>
-          <i style={{ background: "#ff8a3d" }} /> Trajectories
+        <button type="button" className="v3-air__lyr" style={{ ["--lc" as string]: "#ff8a3d" }} data-on={layers.tracks} aria-pressed={layers.tracks} onClick={() => toggle("tracks")}>
+          <i /> Trajectories
         </button>
-        <button type="button" className="v3-air__lyr" data-on={layers.rssi} onClick={() => toggle("rssi")}>
-          <i style={{ background: "#eafaff" }} /> RSSI bloom
+        <button type="button" className="v3-air__lyr" style={{ ["--lc" as string]: "#eafaff" }} data-on={layers.rssi} aria-pressed={layers.rssi} onClick={() => toggle("rssi")}>
+          <i /> RSSI bloom
         </button>
       </div>
 
