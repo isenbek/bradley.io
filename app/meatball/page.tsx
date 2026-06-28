@@ -118,6 +118,11 @@ export default function MeatballPage() {
             </div>
           </V3Reveal>
           <V3Reveal><EarsTrack /></V3Reveal>
+          <V3Reveal>
+            <Link href="/meatball/memory" className="v3-espace-cta" style={{ marginTop: 16 }}>
+              <Brain size={15} strokeWidth={2.4} /> the memory — moments lined up <span aria-hidden>→</span>
+            </Link>
+          </V3Reveal>
         </div>
       </section>
 

@@ -5752,6 +5752,29 @@ body:has(.v3) {
 .v3-ears-feed__text { flex: 1 1 auto; color: var(--v3-charcoal); min-width: 0; }
 .v3-ears-feed__ago { font-family: var(--font-v3-mono), monospace; font-size: 11px; color: var(--v3-slate); flex: none; }
 @media (max-width: 620px) { .v3-ears-grid { grid-template-columns: 1fr; } }
+
+/* Multimodal memory — moments with before/during/after + correlation */
+.v3-mem { display: flex; flex-direction: column; gap: 16px; }
+.v3-mem-card { padding: 14px 16px; border: 1px solid var(--v3-line); border-radius: var(--v3-r-lg); background: var(--v3-white); box-shadow: var(--v3-sh-1); }
+.v3-mem-card__head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+.v3-mem-card__icon { font-size: 16px; line-height: 1; }
+.v3-mem-card__title { font-family: var(--font-v3-display), sans-serif; font-weight: 800; font-size: 16px; color: var(--v3-charcoal); }
+.v3-mem-card__meta { font-family: var(--font-v3-mono), monospace; font-size: 11px; color: var(--v3-slate); margin-left: auto; }
+.v3-mem-card__strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.v3-mem__frame { margin: 0; }
+.v3-mem__frame img, .v3-mem__frame-missing {
+  width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 8px;
+  background: #0c0d10; border: 1px solid var(--v3-line); display: block;
+}
+.v3-mem__frame-missing { display: grid; place-items: center; color: rgba(255, 255, 255, 0.3); font-family: var(--font-v3-mono), monospace; }
+.v3-mem__frame figcaption {
+  font-family: var(--font-v3-mono), monospace; font-size: 9.5px; color: var(--v3-slate);
+  text-align: center; margin-top: 4px; letter-spacing: 0.1em; text-transform: uppercase;
+}
+.v3-mem-card__corr { margin-top: 10px; font-family: var(--font-v3-mono), monospace; font-size: 12px; display: flex; gap: 10px; flex-wrap: wrap; align-items: baseline; }
+.v3-mem-card__corr-lead { color: var(--v3-slate); }
+.v3-mem-card__corr-item { color: var(--v3-charcoal); }
+
 .v3-motion__dead-box {
   padding: 40px; text-align: center; color: var(--v3-slate);
   font-family: var(--font-v3-mono), monospace; font-size: 13px;
