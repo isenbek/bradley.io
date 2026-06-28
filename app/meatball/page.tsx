@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Eye, Ear, Speaker, Brain, ArrowRight, BookOpen } from "lucide-react"
+import { Eye, Ear, Speaker, Brain, ArrowRight, BookOpen, ScrollText } from "lucide-react"
 import { V3Reveal } from "@/components/v3/V3Reveal"
 import { LiveEye } from "@/components/meatball/LiveEye"
 import { MotionTrack } from "@/components/meatball/MotionTrack"
@@ -99,6 +99,11 @@ export default function MeatballPage() {
             </div>
           </V3Reveal>
           <V3Reveal><MotionTrack /></V3Reveal>
+          <V3Reveal>
+            <Link href="/meatball/log" className="v3-espace-cta" style={{ marginTop: 16 }}>
+              <ScrollText size={15} strokeWidth={2.4} /> the logbook — what it noticed <span aria-hidden>→</span>
+            </Link>
+          </V3Reveal>
         </div>
       </section>
 
