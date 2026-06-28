@@ -2,6 +2,7 @@ import Link from "next/link"
 import { Eye, Ear, Speaker, Brain, ArrowRight, BookOpen } from "lucide-react"
 import { V3Reveal } from "@/components/v3/V3Reveal"
 import { LiveEye } from "@/components/meatball/LiveEye"
+import { MotionTrack } from "@/components/meatball/MotionTrack"
 
 // The salvaged rig — junk on the left, the sense it became on the right.
 const RIG: { junk: string; role: string }[] = [
@@ -85,6 +86,19 @@ export default function MeatballPage() {
       <section className="v3-section" style={{ paddingTop: 8, paddingBottom: 16 }}>
         <div className="v3-wrap">
           <V3Reveal><LiveEye /></V3Reveal>
+        </div>
+      </section>
+
+      {/* MOTION TRACKER =============================================== */}
+      <section className="v3-section" style={{ paddingTop: 8, paddingBottom: 16 }}>
+        <div className="v3-wrap">
+          <V3Reveal>
+            <div className="v3-sec-head" style={{ marginBottom: 16 }}>
+              <div className="v3-sec-head__num">what&apos;s moving</div>
+              <h2 style={{ marginBottom: 0 }}>It tracks its own motion.</h2>
+            </div>
+          </V3Reveal>
+          <V3Reveal><MotionTrack /></V3Reveal>
         </div>
       </section>
 
