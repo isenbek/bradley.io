@@ -24,6 +24,7 @@ interface Moment {
   before_img?: string | null
   during_img?: string | null
   after_img?: string | null
+  diff_img?: string | null
   correlated: Corr[]
 }
 
@@ -34,9 +35,9 @@ function ago(ts: string): string {
   return `${Math.round(s / 3600)}h ago`
 }
 
-function Frame({ img, tag }: { img?: string | null; tag: string }) {
+function Frame({ img, tag, variant }: { img?: string | null; tag: string; variant?: string }) {
   return (
-    <figure className="v3-mem__frame">
+    <figure className={`v3-mem__frame${variant ? ` v3-mem__frame--${variant}` : ""}`}>
       {img ? (
         <img src={`/moment-img.jpg?f=${encodeURIComponent(img)}`} alt={tag} loading="lazy" />
       ) : (
@@ -59,9 +60,10 @@ function MomentCard({ m }: { m: Moment }) {
           {isMotion ? `${m.cam} · Δ${Number(m.delta ?? 0).toFixed(0)}` : `${m.mic} mic`} · {ago(m.ts)}
         </span>
       </div>
-      <div className="v3-mem-card__strip">
+      <div className={`v3-mem-card__strip${isMotion && m.diff_img ? " v3-mem-card__strip--4" : ""}`}>
         <Frame img={m.before_img} tag="before" />
         <Frame img={m.during_img} tag={isMotion ? "motion" : "scene"} />
+        {isMotion && m.diff_img ? <Frame img={m.diff_img} tag="subtracted" variant="diff" /> : null}
         <Frame img={m.after_img} tag="after" />
       </div>
       {m.correlated?.length ? (

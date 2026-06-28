@@ -5780,7 +5780,14 @@ body:has(.v3) {
 .v3-mem-card__title { font-family: var(--font-v3-display), sans-serif; font-weight: 800; font-size: 16px; color: var(--v3-charcoal); }
 .v3-mem-card__meta { font-family: var(--font-v3-mono), monospace; font-size: 11px; color: var(--v3-slate); margin-left: auto; }
 .v3-mem-card__strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.v3-mem-card__strip--4 { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 600px) {
+  .v3-mem-card__strip, .v3-mem-card__strip--4 { grid-template-columns: repeat(2, 1fr); }
+}
 .v3-mem__frame { margin: 0; }
+/* the subtracted "what moved" view — tinted to read as the diff, like the tracker */
+.v3-mem__frame--diff img { border-color: rgba(238, 118, 108, 0.5); }
+.v3-mem__frame--diff figcaption { color: var(--v3-coral, #EE766C); }
 .v3-mem__frame img, .v3-mem__frame-missing {
   width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 8px;
   background: #0c0d10; border: 1px solid var(--v3-line); display: block;
