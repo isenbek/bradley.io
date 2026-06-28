@@ -17,6 +17,7 @@ interface Result {
   mic: string | null
   ts: string
   nonce?: number
+  trigger?: "manual" | "motion"
 }
 
 const PHASE: Record<string, string> = {
@@ -38,13 +39,8 @@ export function Greeter() {
       const d = await r.json()
       setStatus(d.status)
       setResult(d.result)
-      // stop fast-polling once the run settles
       if (d.status && (d.status.state === "idle" || d.status.state === "done")) {
         setBusy(false)
-        if (poll.current) {
-          clearInterval(poll.current)
-          poll.current = null
-        }
       }
       return d.status?.state
     } catch {
@@ -52,8 +48,10 @@ export function Greeter() {
     }
   }, [])
 
+  // steady heartbeat — surfaces auto-greets (motion-triggered) too, not just clicks
   useEffect(() => {
     fetchState()
+    poll.current = setInterval(fetchState, 3000)
     return () => {
       if (poll.current) clearInterval(poll.current)
     }
@@ -64,9 +62,7 @@ export function Greeter() {
     setResult(null)
     try {
       const r = await fetch("/api/greet", { method: "POST" })
-      if (r.status === 409) {
-        setBusy(true) // already running — just watch it
-      } else if (!r.ok) {
+      if (r.status !== 409 && !r.ok) {
         setBusy(false)
         return
       }
@@ -74,9 +70,7 @@ export function Greeter() {
       setBusy(false)
       return
     }
-    // poll the watcher until it settles
-    if (poll.current) clearInterval(poll.current)
-    poll.current = setInterval(fetchState, 800)
+    fetchState()
   }, [fetchState])
 
   const live = status?.state === "speaking" || status?.state === "listening"
@@ -105,7 +99,12 @@ export function Greeter() {
             {result.present ? "🙂" : "🦗"}
           </span>
           <div className="v3-greet__verdict-body">
-            <strong>{result.present ? "Probably a person" : "Probably nobody"}</strong>
+            <strong>
+              {result.present ? "Probably a person" : "Probably nobody"}
+              {result.trigger === "motion" ? (
+                <span className="v3-greet__trig">👁 saw movement, asked on its own</span>
+              ) : null}
+            </strong>
             {result.present && result.name ? (
               <span className="v3-greet__name">
                 nice to meet you, {result.name}
@@ -124,7 +123,8 @@ export function Greeter() {
 
       <p className="v3-greet__note">
         Meatball says hi through the Altec Lansings, then listens on the always-on mics. A reply →
-        probably a person. Silence → probably not. The simplest sensor there is.
+        probably a person. Silence → probably not. It also does this on its own when the cameras
+        catch someone — the simplest sensor there is.
       </p>
     </div>
   )

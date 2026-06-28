@@ -1,13 +1,24 @@
 {
-  "generated": "2026-06-28T16:00:43.127287+00:00",
+  "generated": "2026-06-28T20:00:46.399075+00:00",
   "stats": {
     "totalProjects": 86,
-    "totalSessions": 151,
-    "totalMessages": 331237,
+    "totalSessions": 146,
+    "totalMessages": 331615,
     "activeDays": 28,
     "streak": 0
   },
   "activityFeed": [
+    {
+      "type": "github",
+      "title": "Activity on isenbek/terrapulse",
+      "description": "Climate intelligence platform \u2014 ingest, normalize, and serve environmental data",
+      "projectSlug": "terrapulse",
+      "category": "systems",
+      "date": "2026-06-28T17:07:05Z",
+      "metadata": {
+        "repo": "isenbek/terrapulse"
+      }
+    },
     {
       "type": "github",
       "title": "Activity on Sysforge-AI/sfproject",
@@ -17,17 +28,6 @@
       "date": "2026-06-28T07:30:14Z",
       "metadata": {
         "repo": "Sysforge-AI/sfproject"
-      }
-    },
-    {
-      "type": "github",
-      "title": "Activity on isenbek/terrapulse",
-      "description": "Climate intelligence platform \u2014 ingest, normalize, and serve environmental data",
-      "projectSlug": "terrapulse",
-      "category": "systems",
-      "date": "2026-06-27T21:08:04Z",
-      "metadata": {
-        "repo": "isenbek/terrapulse"
       }
     },
     {
@@ -164,13 +164,13 @@
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (19578 messages)",
-      "description": "1 sessions, 5329 tool calls",
+      "title": "Claude Code session (19798 messages)",
+      "description": "1 sessions, 5396 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-06-06T23:59:00Z",
       "metadata": {
-        "messages": 19578,
+        "messages": 19798,
         "sessions": 1
       }
     },
@@ -236,25 +236,25 @@
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (17182 messages)",
-      "description": "34 sessions, 5016 tool calls",
+      "title": "Claude Code session (16931 messages)",
+      "description": "29 sessions, 4937 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-05-29T23:59:00Z",
       "metadata": {
-        "messages": 17182,
-        "sessions": 34
+        "messages": 16931,
+        "sessions": 29
       }
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (56903 messages)",
-      "description": "4 sessions, 16386 tool calls",
+      "title": "Claude Code session (57117 messages)",
+      "description": "4 sessions, 16454 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-05-28T23:59:00Z",
       "metadata": {
-        "messages": 56903,
+        "messages": 57117,
         "sessions": 4
       }
     },
@@ -356,13 +356,13 @@
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (11830 messages)",
-      "description": "1 sessions, 4027 tool calls",
+      "title": "Claude Code session (12025 messages)",
+      "description": "1 sessions, 4081 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-03-08T23:59:00Z",
       "metadata": {
-        "messages": 11830,
+        "messages": 12025,
         "sessions": 1
       }
     },
@@ -589,6 +589,41 @@
   ],
   "projects": [
     {
+      "slug": "terrapulse",
+      "name": "terrapulse",
+      "tagline": "Climate intelligence platform \u2014 ingest, normalize, and serve environmental data",
+      "description": "Climate intelligence platform \u2014 ingest, normalize, and serve environmental data",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": true,
+      "status": "active",
+      "technologies": [
+        "Docker",
+        "DuckDB",
+        "FastAPI",
+        "Git",
+        "Go",
+        "JSON",
+        "PostgreSQL",
+        "Python"
+      ],
+      "lastActivity": "2026-06-28T17:07:05Z",
+      "totalMessages": 32476,
+      "sources": {
+        "github": {
+          "repo": "isenbek/terrapulse",
+          "stars": 1,
+          "language": "HTML",
+          "lastPush": "2026-06-28"
+        },
+        "claudeCode": {
+          "totalSessions": 2,
+          "totalMessages": 32476,
+          "lastSession": "2026-06-28"
+        }
+      }
+    },
+    {
       "slug": "sysforge",
       "name": "sfproject",
       "tagline": "Building resilient systems, reliably.",
@@ -610,6 +645,26 @@
       }
     },
     {
+      "slug": "infra",
+      "name": "infra",
+      "tagline": "",
+      "description": "",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-06-28",
+      "totalMessages": 75583,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 19,
+          "totalMessages": 75583,
+          "lastSession": "2026-06-28"
+        }
+      }
+    },
+    {
       "slug": "cbloom",
       "name": "cbloom",
       "tagline": "",
@@ -620,11 +675,11 @@
       "status": "active",
       "technologies": [],
       "lastActivity": "2026-06-28",
-      "totalMessages": 38082,
+      "totalMessages": 38296,
       "sources": {
         "claudeCode": {
           "totalSessions": 27,
-          "totalMessages": 38082,
+          "totalMessages": 38296,
           "lastSession": "2026-06-28"
         }
       }
@@ -649,67 +704,12 @@
         "TypeScript"
       ],
       "lastActivity": "2026-06-28",
-      "totalMessages": 11830,
+      "totalMessages": 12025,
       "sources": {
         "claudeCode": {
           "totalSessions": 1,
-          "totalMessages": 11830,
+          "totalMessages": 12025,
           "lastSession": "2026-06-28"
-        }
-      }
-    },
-    {
-      "slug": "terrapulse",
-      "name": "terrapulse",
-      "tagline": "Climate intelligence platform \u2014 ingest, normalize, and serve environmental data",
-      "description": "Climate intelligence platform \u2014 ingest, normalize, and serve environmental data",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": true,
-      "status": "active",
-      "technologies": [
-        "Docker",
-        "DuckDB",
-        "FastAPI",
-        "Git",
-        "Go",
-        "JSON",
-        "PostgreSQL",
-        "Python"
-      ],
-      "lastActivity": "2026-06-27T21:08:04Z",
-      "totalMessages": 32456,
-      "sources": {
-        "github": {
-          "repo": "isenbek/terrapulse",
-          "stars": 1,
-          "language": "HTML",
-          "lastPush": "2026-06-27"
-        },
-        "claudeCode": {
-          "totalSessions": 2,
-          "totalMessages": 32456,
-          "lastSession": "2026-06-27"
-        }
-      }
-    },
-    {
-      "slug": "infra",
-      "name": "infra",
-      "tagline": "",
-      "description": "",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-06-27",
-      "totalMessages": 75556,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 23,
-          "totalMessages": 75556,
-          "lastSession": "2026-06-27"
         }
       }
     },
