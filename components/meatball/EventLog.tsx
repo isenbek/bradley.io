@@ -10,6 +10,20 @@ interface Ev {
   img: string
 }
 
+function Thumb({ img, label }: { img: string; label: string }) {
+  const [ok, setOk] = useState(true)
+  if (!img || !ok) return <div className="v3-log__thumb v3-log__thumb--missing">no preview</div>
+  return (
+    <img
+      className="v3-log__thumb"
+      src={`/event-thumb.jpg?f=${encodeURIComponent(img)}`}
+      alt={label}
+      loading="lazy"
+      onError={() => setOk(false)}
+    />
+  )
+}
+
 function ago(ts: string): string {
   const s = Math.max(0, Math.round((Date.now() - new Date(ts).getTime()) / 1000))
   if (s < 60) return `${s}s ago`
@@ -58,12 +72,7 @@ export function EventLog() {
     <ol className="v3-log">
       {events.map((e, i) => (
         <li key={`${e.ts}-${i}`} className="v3-log__row">
-          <img
-            className="v3-log__thumb"
-            src={`/event-thumb.jpg?f=${encodeURIComponent(e.img)}`}
-            alt={e.label}
-            loading="lazy"
-          />
+          <Thumb img={e.img} label={e.label} />
           <div className="v3-log__body">
             <div className="v3-log__label">👁 {e.label}</div>
             <div className="v3-log__meta">
