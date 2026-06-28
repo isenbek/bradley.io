@@ -41,6 +41,12 @@ const ENTRIES = [
     title: "The math of listening",
     blurb: "Low-level DSP from raw samples to a working voice gate: the real FFT, windowing (200× less leakage), spectral-subtraction denoise and its U-curve. Every number from a live run.",
   },
+  {
+    href: "/lab/motion",
+    kicker: "field note · 03",
+    title: "Teaching the eyes to ignore a box fan",
+    blurb: "One cheap fan fooled both senses. Locking the camera's auto-exposure galaxy, then an adaptive per-cell gate that self-mutes the fan, the monitors, and lighting blips — so it only fires on what shouldn't move.",
+  },
 ]
 
 export default function MeatballPage() {
