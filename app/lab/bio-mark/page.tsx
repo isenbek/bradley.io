@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { ArrowLeft, Atom } from "lucide-react"
 import { V3Reveal } from "@/components/v3/V3Reveal"
+import { BioMarkFrame } from "@/components/v3/BioMarkFrame"
 
 // The bio·mark vector x-ray is a fully self-contained interactive HTML doc
 // (embedded geometry, vanilla JS + inline SVG) served from public/bio-mark.html.
@@ -44,13 +45,9 @@ export default function BioMarkPage() {
         </div>
       </header>
 
-      {/* THE TOOL ===================================================== */}
+      {/* THE TOOL — self-sizing iframe (grows to its content; no nested scroll) */}
       <section className="v3-embed-stage">
-        <iframe
-          src="/bio-mark.html"
-          title="The bio mark — chords, offsets & the implied infinity (interactive vector x-ray)"
-          className="v3-embed-stage__frame"
-        />
+        <BioMarkFrame />
       </section>
     </>
   )

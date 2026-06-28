@@ -67,6 +67,9 @@ svg{display:block;width:100%;height:auto;touch-action:none}
 .tg[data-k="dotcubic"][aria-pressed="true"] .dot{background:var(--hin)}
 .tg[data-k="plumb"][aria-pressed="true"] .dot{background:var(--plumb)}
 .tg[data-k="inf"][aria-pressed="true"] .dot{background:var(--hout)}
+.tg[data-k="align16"][aria-pressed="true"] .dot{background:#5fd98a}
+.tg[data-k="road"][aria-pressed="true"] .dot{background:#caa86b}
+.tg[data-k="oncenter"][aria-pressed="true"] .dot{background:#ffd166}
 
 .morph{display:flex;align-items:center;gap:12px;padding:12px 14px;border-top:1px solid var(--line2)}
 .morph label{font-family:var(--mono);font-size:11px;color:var(--dim);white-space:nowrap}
@@ -97,6 +100,47 @@ tr.hi td{background:#152138;color:var(--ink)}
 .foot{display:flex;gap:8px;flex-wrap:wrap;padding:11px 14px;border-top:1px solid var(--line)}
 .btn{font-family:var(--mono);font-size:11px;color:var(--ink);background:#13203a;border:1px solid var(--line2);border-radius:8px;padding:8px 13px;cursor:pointer}
 .btn:hover{background:#1a2c4d}
+.tablewrap{-webkit-overflow-scrolling:touch}
+
+/* ── breaking the dense sections into panels that stack cleanly (matches the
+      site's GPS / meatball auto-reflow panel technique) ──────────────────── */
+@media(max-width:880px){
+  .grid{gap:14px}
+  /* on the phone the canvas is the star — give it room to drag the dot */
+  svg{min-height:46vw}
+  /* the readout panel keeps the scene legible without a wall of mono text */
+  .con .read{gap:12px}
+}
+@media(max-width:620px){
+  body{padding:14px}
+  header{padding-bottom:12px;margin-bottom:14px}
+  .toprow{gap:10px 12px}
+  h1{font-size:19px}
+  .sub{font-size:12.5px}
+  /* stats become a single horizontal rail you can swipe — no cramped wrap */
+  .stats{margin-left:0;width:100%;flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:4px;scrollbar-width:none}
+  .stats::-webkit-scrollbar{display:none}
+  .stat{flex:0 0 auto}
+  svg{min-height:58vw}
+  /* toggle pills + tabs + buttons get real tap targets */
+  .controls{gap:8px;padding:12px}
+  .morph{padding:12px}
+  .con,.legend{padding:13px}
+  .tabs{padding:10px 10px 0}
+  .foot{padding:12px}
+  .foot .btn{flex:1 1 auto;text-align:center}
+  /* the data table is a panel you scroll inside, not one that bloats the page */
+  .tablewrap{max-height:48vh}
+  th,td{padding:6px 8px}
+}
+/* coarse pointers (touch) — uniform 40px-ish hit height everywhere */
+@media(pointer:coarse){
+  .tg{padding:9px 13px}
+  .tab{padding:9px 14px}
+  .btn{padding:10px 15px}
+  .con .reset{padding:5px 10px}
+  .morph input[type=range]{height:28px}
+}
 </style>
 </head>
 <body>
@@ -122,6 +166,9 @@ tr.hi td{background:#152138;color:var(--ink)}
         <span class="tg" data-k="dotcubic" aria-pressed="false"><span class="dot"></span>dot → 4 cubics</span>
         <span class="tg" data-k="plumb"    aria-pressed="true"><span class="dot"></span>i-tittle plumb</span>
         <span class="tg" data-k="inf"      aria-pressed="false"><span class="dot"></span>implied ∞</span>
+        <span class="tg" data-k="align16"  aria-pressed="false"><span class="dot"></span>align seg 16</span>
+        <span class="tg" data-k="road"     aria-pressed="false"><span class="dot"></span>service road</span>
+        <span class="tg" data-k="oncenter" aria-pressed="false"><span class="dot"></span>on-centre check</span>
         <span class="tg" data-k="labels"   aria-pressed="false"><span class="dot"></span>seg #</span>
       </div>
       <div class="morph">
@@ -867,6 +914,8 @@ DATA.infinity.s3=DATA.infinity.s3||[276.3,187.0];
 DATA.infinity.s3target=DATA.infinity.s3target||[295.8,205.4];
 DATA.infinity.axisPerpPx=DATA.infinity.axisPerpPx||8.5;
 DATA.infinity.seg16collinearTarget=DATA.infinity.seg16collinearTarget||[229.4,249.5];
+const ORIG16={h_out:[...DATA.body[16].h_out],h_in:[...DATA.body[16].h_in]};
+const ALIGN16={h_out:[-4.8716,5.3046],h_in:[-28.9361,41.2995]};
 const INF=DATA.infinity, IC=INF.center;
 const rot180=(p,c)=>[2*c[0]-p[0],2*c[1]-p[1]];
 
@@ -875,6 +924,8 @@ const lerp=(a,b,t)=>[a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t];
 function pts(s){const P0=s.P0,P3=add(P0,s.chord);
   if(s.type==='line')return{P0,P3};
   return{P0,P1:add(P0,s.h_out),P2:add(P3,s.h_in),P3};}
+const cubMid=s=>{const p=pts(s);return [(p.P0[0]+3*p.P1[0]+3*p.P2[0]+p.P3[0])/8,(p.P0[1]+3*p.P1[1]+3*p.P2[1]+p.P3[1])/8];};
+const segEnd=s=>add(s.P0,s.chord);
 function el(tag,attrs,parent){const e=document.createElementNS(SVGNS,tag);
   for(const k in attrs)e.setAttribute(k,attrs[k]);(parent||svg).appendChild(e);return e;}
 
@@ -887,8 +938,8 @@ function outlinePath(segs,t){let d='';segs.forEach((s,i)=>{const p=pts(s);
 function chordPath(segs){let d='';segs.forEach((s,i)=>{d+=(i?'L ':'M ')+s.P0[0]+' '+s.P0[1]+' ';});return d+'Z';}
 
 const layers={};
-['fillG','infG','curveG','chordG','handleG','anchorG','labelG','dotG','conG'].forEach(n=>layers[n]=el('g',{},svg));
-layers.conG.style.pointerEvents='none'; layers.infG.style.pointerEvents='none';
+['fillG','infG','roadG','centerG','curveG','chordG','handleG','anchorG','labelG','dotG','conG'].forEach(n=>layers[n]=el('g',{},svg));
+layers.conG.style.pointerEvents='none'; layers.infG.style.pointerEvents='none'; layers.roadG.style.pointerEvents='none'; layers.centerG.style.pointerEvents='none';
 const PIECES=['body','bowl'];
 let curMorph=1;
 
@@ -938,8 +989,56 @@ function draw(t){
 
   drawConnection();
   drawInfinity();
+  drawRoad();
+  drawOnCenter();
   applyToggles();
   bindDrag();
+}
+
+// on-centre check: the yellow-highlighted pair that should be 180°-symmetric about the heart
+const ONPAIR=[8,16];
+function drawOnCenter(){
+  layers.centerG.innerHTML='';
+  const A=cubMid(DATA.body[ONPAIR[0]]), B=cubMid(DATA.body[ONPAIR[1]]);
+  // glow each highlighted segment
+  ONPAIR.forEach(i=>{el('path',{d:outlinePath([DATA.body[i]],1).replace(/Z$/,''),fill:'none',stroke:'#ffd166','stroke-width':7,'stroke-linecap':'round','vector-effect':'non-scaling-stroke',opacity:.28},layers.centerG);});
+  const Aimg=rot180(A,IC), Bimg=rot180(B,IC);
+  // markers: actual mids (yellow) and their 180° images (hollow)
+  const dot=(p,fill,r=3.5)=>el('circle',{cx:p[0],cy:p[1],r,fill,stroke:'#0a0f1c','stroke-width':1,'vector-effect':'non-scaling-stroke'},layers.centerG);
+  dot(A,'#ffd166'); dot(B,'#ffd166');
+  el('circle',{cx:Aimg[0],cy:Aimg[1],r:4,fill:'none',stroke:'#ffd166','stroke-width':1.2,'stroke-dasharray':'3 3','vector-effect':'non-scaling-stroke'},layers.centerG);
+  // gap between seg16 mid and the 180°-image of seg8 mid = the off-centre amount
+  el('line',{x1:B[0],y1:B[1],x2:Aimg[0],y2:Aimg[1],stroke:'#ffd166','stroke-width':1.4,'vector-effect':'non-scaling-stroke'},layers.centerG);
+  const off=Math.hypot(B[0]-Aimg[0],B[1]-Aimg[1]);
+  el('text',{x:B[0]+7,y:B[1]+15,fill:'#ffd166','font-family':'var(--mono)','font-size':9},layers.centerG).textContent=`seg${ONPAIR[1]}`;
+  el('text',{x:A[0]+7,y:A[1]-7,fill:'#ffd166','font-family':'var(--mono)','font-size':9},layers.centerG).textContent=`seg${ONPAIR[0]}`;
+  el('text',{x:(B[0]+Aimg[0])/2+6,y:(B[1]+Aimg[1])/2,fill:'#ffd166','font-family':'var(--mono)','font-size':9},layers.centerG).textContent=`off-centre ${off.toFixed(0)}px`;
+}
+
+// "service road": implied construction line centre-of-16 -> heart -> end-of-3.
+// On the map (blueprint), not in the rendered mark.
+function drawRoad(){
+  layers.roadG.innerHTML='';
+  const A=cubMid(DATA.body[16]);   // centre of seg 16
+  const B=IC;                       // heart = centre / interchange
+  const C=segEnd(DATA.body[3]);     // end of seg 3
+  const poly=`${A[0]},${A[1]} ${B[0]},${B[1]} ${C[0]},${C[1]}`;
+  // as-the-crow-flies chord (faint) to show the dogleg through centre
+  el('line',{x1:A[0],y1:A[1],x2:C[0],y2:C[1],stroke:'#c9a96a','stroke-width':1,'stroke-dasharray':'2 7','vector-effect':'non-scaling-stroke',opacity:.35},layers.roadG);
+  // road casing + surface + centreline (map style)
+  el('polyline',{points:poly,fill:'none',stroke:'#0a0f1c','stroke-width':6,'stroke-linejoin':'round','stroke-linecap':'round','vector-effect':'non-scaling-stroke'},layers.roadG);
+  el('polyline',{points:poly,fill:'none',stroke:'#caa86b','stroke-width':3.2,'stroke-linejoin':'round','stroke-linecap':'round','vector-effect':'non-scaling-stroke'},layers.roadG);
+  el('polyline',{points:poly,fill:'none',stroke:'#fff4dd','stroke-width':1,'stroke-dasharray':'6 6','vector-effect':'non-scaling-stroke'},layers.roadG);
+  // endpoints + interchange node
+  const node=(p,fill,lab,dy)=>{el('circle',{cx:p[0],cy:p[1],r:3.6,fill,stroke:'#0a0f1c','stroke-width':1,'vector-effect':'non-scaling-stroke'},layers.roadG);
+    el('text',{x:p[0]+6,y:p[1]+dy,fill:'#e7d4ab','font-family':'var(--mono)','font-size':9},layers.roadG).textContent=lab;};
+  node(A,'#caa86b','centre of 16',14);
+  node(C,'#caa86b','end of 3',-6);
+  el('circle',{cx:B[0],cy:B[1],r:7,fill:'none',stroke:'#fff4dd','stroke-width':1,'stroke-dasharray':'3 3','vector-effect':'non-scaling-stroke'},layers.roadG);
+  el('text',{x:B[0]+12,y:B[1]+15,fill:'#e7d4ab','font-family':'var(--mono)','font-size':9},layers.roadG).textContent='centre · interchange';
+  // construction-only banner near mid of first leg
+  const mid=lerp(A,B,.5);
+  el('text',{x:mid[0]+8,y:mid[1],fill:'#9a8a63','font-family':'var(--mono)','font-size':8.5,'font-style':'italic'},layers.roadG).textContent='service road — construction only, not rendered';
 }
 
 function drawInfinity(){
@@ -959,7 +1058,6 @@ function drawInfinity(){
   mark(INF.bTop,'var(--hin)','top of b');
   mark(INF.oEnd,'var(--plumb)','end of o');
   // ---- seg3 center -> heart -> seg16 center axis ----
-  const cubMid=s=>{const p=pts(s);return [(p.P0[0]+3*p.P1[0]+3*p.P2[0]+p.P3[0])/8,(p.P0[1]+3*p.P1[1]+3*p.P2[1]+p.P3[1])/8];};
   const c3=cubMid(DATA.body[3]), c16=cubMid(DATA.body[16]), TG=INF.seg16collinearTarget;
   // current seg3-seg16 line (grey dashed): heart misses it
   el('line',{x1:c3[0],y1:c3[1],x2:c16[0],y2:c16[1],stroke:'#7f8aa3','stroke-width':1,'stroke-dasharray':'4 4','vector-effect':'non-scaling-stroke'},layers.infG);
@@ -1022,11 +1120,13 @@ function bindDrag(){
 document.getElementById('reset').onclick=()=>{DOTC=[...DATA.connection.dotCenter];draw(curMorph);};
 
 // ---- toggles ----
-const tdefs={fill:'fillG',curve:'curveG',chords:'chordG',handles:'handleG',anchors:'anchorG',labels:'labelG',plumb:'conG',inf:'infG'};
-const state={fill:1,curve:1,chords:1,handles:1,anchors:1,labels:0,plumb:1,dotcubic:0,inf:0};
+const tdefs={fill:'fillG',curve:'curveG',chords:'chordG',handles:'handleG',anchors:'anchorG',labels:'labelG',plumb:'conG',inf:'infG',road:'roadG',oncenter:'centerG'};
+const state={fill:1,curve:1,chords:1,handles:1,anchors:1,labels:0,plumb:1,dotcubic:0,inf:0,align16:0,road:0,oncenter:0};
 function applyToggles(){for(const k in tdefs)layers[tdefs[k]].style.display=state[k]?'':'none';}
 document.getElementById('toggles').addEventListener('click',e=>{const t=e.target.closest('.tg');if(!t)return;
   const k=t.dataset.k;state[k]=!state[k];t.setAttribute('aria-pressed',state[k]);
+  if(k==='align16'){const h=state.align16?ALIGN16:ORIG16;DATA.body[16].h_out=[...h.h_out];DATA.body[16].h_in=[...h.h_in];
+    draw(curMorph);if(curTbl==='body')buildTable('body');return;}
   if(k==='dotcubic')draw(curMorph);else applyToggles();});
 
 // ---- morph ----
@@ -1034,7 +1134,9 @@ document.getElementById('morph').addEventListener('input',e=>draw(parseFloat(e.t
 
 // ---- table + hover ----
 const fmt=n=>n.toFixed(1);
+let curTbl='body';
 function buildTable(piece){
+  curTbl=piece;
   const tb=document.querySelector('#tbl tbody');tb.innerHTML='';
   DATA[piece].forEach((s,i)=>{const dx=s.chord[0],dy=s.chord[1];
     const len=Math.hypot(dx,dy),ang=Math.atan2(dy,dx)*180/Math.PI;
@@ -1087,6 +1189,23 @@ document.getElementById('copysvg').onclick=()=>{navigator.clipboard.writeText(ch
 document.getElementById('copydot').onclick=()=>{navigator.clipboard.writeText(outlinePath(DATA.dot_cubic,1));flash('copydot','copied ✓');};
 
 draw(1);buildTable('body');
+</script>
+
+<!-- report content height to the embedding page so the iframe sizes to its
+     content (no nested scroll on mobile). Same-origin embed → safe '*' target. -->
+<script>
+(function(){
+  function postH(){
+    var h=Math.ceil(document.documentElement.getBoundingClientRect().height);
+    try{parent.postMessage({type:'bio-mark:height',height:h},'*');}catch(e){}
+  }
+  window.addEventListener('load',postH);
+  window.addEventListener('resize',postH);
+  if(window.ResizeObserver){new ResizeObserver(postH).observe(document.body);}
+  // tables/tabs/toggles all change height — nudge after interaction settles
+  document.addEventListener('click',function(){setTimeout(postH,60);});
+  setTimeout(postH,200);
+})();
 </script>
 </body>
 </html>
