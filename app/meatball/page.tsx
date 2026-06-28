@@ -2,6 +2,7 @@ import Link from "next/link"
 import { Eye, Ear, Speaker, Brain, ArrowRight, BookOpen, ScrollText } from "lucide-react"
 import { V3Reveal } from "@/components/v3/V3Reveal"
 import { LiveEye } from "@/components/meatball/LiveEye"
+import { Greeter } from "@/components/meatball/Greeter"
 import { MotionTrack } from "@/components/meatball/MotionTrack"
 import { EarsTrack } from "@/components/meatball/EarsTrack"
 
@@ -87,6 +88,19 @@ export default function MeatballPage() {
       <section className="v3-section" style={{ paddingTop: 8, paddingBottom: 16 }}>
         <div className="v3-wrap">
           <V3Reveal><LiveEye /></V3Reveal>
+        </div>
+      </section>
+
+      {/* GREETER — the presence probe ================================= */}
+      <section className="v3-section" style={{ paddingTop: 8, paddingBottom: 16 }}>
+        <div className="v3-wrap">
+          <V3Reveal>
+            <div className="v3-sec-head" style={{ marginBottom: 16 }}>
+              <div className="v3-sec-head__num">is anyone there?</div>
+              <h2 style={{ marginBottom: 0 }}>It can just ask.</h2>
+            </div>
+          </V3Reveal>
+          <V3Reveal><Greeter /></V3Reveal>
         </div>
       </section>
 
