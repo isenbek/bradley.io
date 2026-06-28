@@ -5679,6 +5679,30 @@ body:has(.v3) {
   color: var(--v3-slate); text-align: center;
 }
 
+/* Multi-camera motion grid */
+.v3-motion-grid { display: flex; flex-direction: column; gap: 24px; }
+.v3-motion-cam__head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 8px; }
+.v3-motion-cam__name {
+  font-family: var(--font-v3-mono), monospace; font-size: 12px; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--v3-gold-dk, #7C5605);
+}
+.v3-motion-cam__peak { font-family: var(--font-v3-mono), monospace; font-size: 11px; color: var(--v3-slate); }
+.v3-motion-cam__imgs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.v3-motion__sublabel {
+  position: absolute; top: 12px; left: 12px; padding: 4px 10px; border-radius: 999px;
+  background: rgba(0, 0, 0, 0.55); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  color: #cfe6c4; font-family: var(--font-v3-mono), monospace; font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+}
+.v3-motion-note { margin: 4px 0 0; font-family: var(--font-v3-mono), monospace; font-size: 11.5px; color: var(--v3-slate); text-align: center; }
+.v3-motion__dead-box {
+  padding: 40px; text-align: center; color: var(--v3-slate);
+  font-family: var(--font-v3-mono), monospace; font-size: 13px;
+  border: 1px dashed var(--v3-line); border-radius: var(--v3-r-lg);
+}
+@media (max-width: 620px) {
+  .v3-motion-cam__imgs { grid-template-columns: 1fr; }
+}
+
 /* The four-senses grid */
 .v3-meatball-senses { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
 .v3-meatball-sense {
