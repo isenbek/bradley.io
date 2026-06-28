@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { Pager, usePager } from "./Pager"
 
 interface Mic {
   name: string
@@ -100,6 +101,8 @@ export function EarsTrack() {
     }
   }, [])
 
+  const feed = usePager(events, 10)
+
   if (dead) return <div className="v3-motion__dead-box">mic listener offline</div>
 
   return (
@@ -112,13 +115,14 @@ export function EarsTrack() {
       {events.length ? (
         <div className="v3-ears-feed">
           <div className="v3-ears-feed__head">recent transcriptions</div>
-          {events.slice(0, 8).map((e, i) => (
+          {feed.slice.map((e, i) => (
             <div key={`${e.ts}-${i}`} className="v3-ears-feed__row">
               <span className="v3-ears-feed__mic">{e.mic}</span>
               <span className="v3-ears-feed__text">&ldquo;{e.text}&rdquo;</span>
               <span className="v3-ears-feed__ago">{ago(e.ts)}</span>
             </div>
           ))}
+          <Pager {...feed} onPage={feed.setPage} unit="lines" />
         </div>
       ) : (
         <p className="v3-motion-note">

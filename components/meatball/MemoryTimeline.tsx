@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { Pager, usePager } from "./Pager"
 
 interface Corr {
   type: string
@@ -104,6 +105,8 @@ export function MemoryTimeline() {
     }
   }, [])
 
+  const pager = usePager(moments, 10)
+
   if (loaded && moments.length === 0) {
     return (
       <div className="v3-log__empty">
@@ -114,10 +117,13 @@ export function MemoryTimeline() {
   }
 
   return (
-    <div className="v3-mem">
-      {moments.map((m) => (
-        <MomentCard key={m.id} m={m} />
-      ))}
-    </div>
+    <>
+      <div className="v3-mem">
+        {pager.slice.map((m) => (
+          <MomentCard key={m.id} m={m} />
+        ))}
+      </div>
+      <Pager {...pager} onPage={pager.setPage} unit="moments" />
+    </>
   )
 }

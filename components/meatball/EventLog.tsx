@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { Pager, usePager } from "./Pager"
 
 interface Ev {
   ts: string
@@ -59,6 +60,8 @@ export function EventLog() {
     }
   }, [])
 
+  const pager = usePager(events, 10)
+
   if (loaded && events.length === 0) {
     return (
       <div className="v3-log__empty">
@@ -69,21 +72,24 @@ export function EventLog() {
   }
 
   return (
-    <ol className="v3-log">
-      {events.map((e, i) => (
-        <li key={`${e.ts}-${i}`} className="v3-log__row">
-          <Thumb img={e.img} label={e.label} />
-          <div className="v3-log__body">
-            <div className="v3-log__label">👁 {e.label}</div>
-            <div className="v3-log__meta">
-              {e.cam} · Δ {Number(e.delta).toFixed(1)} · {ago(e.ts)}
+    <>
+      <ol className="v3-log">
+        {pager.slice.map((e, i) => (
+          <li key={`${e.ts}-${i}`} className="v3-log__row">
+            <Thumb img={e.img} label={e.label} />
+            <div className="v3-log__body">
+              <div className="v3-log__label">👁 {e.label}</div>
+              <div className="v3-log__meta">
+                {e.cam} · Δ {Number(e.delta).toFixed(1)} · {ago(e.ts)}
+              </div>
             </div>
-          </div>
-          <time className="v3-log__time" dateTime={e.ts}>
-            {new Date(e.ts).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
-          </time>
-        </li>
-      ))}
-    </ol>
+            <time className="v3-log__time" dateTime={e.ts}>
+              {new Date(e.ts).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+            </time>
+          </li>
+        ))}
+      </ol>
+      <Pager {...pager} onPage={pager.setPage} unit="events" />
+    </>
   )
 }
