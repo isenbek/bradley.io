@@ -206,14 +206,24 @@ export function V3TrngDashboard() {
     return ago < 5 ? "just now" : `updated ${ago}s ago`
   }, [lastUpdated])
 
-  const rctState =
-    cont?.rct.failed_ever
+  // RCT badge reflects CURRENT health (current_run_length vs cutoff), NOT the
+  // sticky `failed_ever` flag. The geiger source's RCT.failed_ever has been
+  // true since a one-shot transient at startup (max_run_seen pegged at cutoff
+  // once, never since); the geiger CLAUDE.md is explicit that "RCT is sticky-
+  // failed-ever and deliberately ignored" — APT is the runtime gate. Gating
+  // the badge on `failed_ever` makes the panel scream "fail" forever on a
+  // healthy source. We still surface `max_run_seen` in the meta line so the
+  // historical event isn't hidden.
+  const rctState = !cont
+    ? "pass"
+    : cont.rct.current_run_length >= cont.rct.cutoff
       ? "fail"
-      : (cont && cont.rct.current_run_length / cont.rct.cutoff > 0.7) ? "warn" : "pass"
-  const aptState =
-    cont?.apt.failed_ever
-      ? "fail"
-      : "pass"
+      : cont.rct.current_run_length / cont.rct.cutoff > 0.7
+        ? "warn"
+        : "pass"
+  // APT.failed_ever is the meaningful runtime signal — APT is the gate the
+  // L1 extractor consults before serving bytes.
+  const aptState = cont?.apt.failed_ever ? "fail" : "pass"
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
@@ -411,11 +421,14 @@ export function V3TrngDashboard() {
                 </div>
               </div>
               <span
-                className={`v3-test__verdict v3-test__verdict--${
-                  cont.rct.failed_ever ? "fail" : rctState === "warn" ? "warn" : "pass"
-                }`}
+                className={`v3-test__verdict v3-test__verdict--${rctState}`}
+                title={
+                  cont.rct.failed_ever
+                    ? "RCT.failed_ever is true (historical transient at startup) — deliberately not gated on at runtime"
+                    : undefined
+                }
               >
-                {cont.rct.failed_ever ? "fail" : "pass"}
+                {rctState}
               </span>
             </div>
 
