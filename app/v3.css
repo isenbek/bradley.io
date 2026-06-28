@@ -5727,6 +5727,31 @@ body:has(.v3) {
   font-family: var(--font-v3-mono), monospace; font-size: 13px; line-height: 1.6;
   border: 1px dashed var(--v3-line); border-radius: var(--v3-r-lg);
 }
+
+/* Ears — per-mic always-on listener: floor, level meter, live FFT, transcripts */
+.v3-ears-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+.v3-ears-mic { padding: 16px 18px; border: 1px solid var(--v3-line); border-radius: var(--v3-r-lg); background: var(--v3-white); box-shadow: var(--v3-sh-1); }
+.v3-ears-mic__head { display: flex; justify-content: space-between; align-items: center; }
+.v3-ears-mic__name { font-family: var(--font-v3-mono), monospace; font-size: 12px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--v3-gold-dk, #7C5605); }
+.v3-ears-mic__state { display: inline-flex; align-items: center; gap: 5px; font-family: var(--font-v3-mono), monospace; font-size: 11px; color: var(--v3-slate); }
+.v3-ears-mic__dot { width: 7px; height: 7px; border-radius: 50%; background: #9fc0ce; }
+.v3-ears-mic__state.is-on { color: var(--v3-coral, #EE766C); }
+.v3-ears-mic__state.is-on .v3-ears-mic__dot { background: var(--v3-coral, #EE766C); animation: v3-eye-pulse 1.2s infinite; }
+.v3-ears-mic__meta { font-family: var(--font-v3-mono), monospace; font-size: 11px; color: var(--v3-slate); margin: 4px 0 8px; }
+.v3-ears-meter { position: relative; height: 8px; border-radius: 4px; background: color-mix(in srgb, var(--v3-blue-500) 7%, var(--v3-white)); overflow: visible; border: 1px solid var(--v3-line); }
+.v3-ears-meter__fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 4px 0 0 4px; transition: width 0.2s; }
+.v3-ears-meter__thr { position: absolute; top: -3px; bottom: -3px; width: 2px; background: var(--v3-charcoal); opacity: 0.5; }
+.v3-ears-fft { display: flex; align-items: flex-end; gap: 2px; height: 54px; margin-top: 12px; }
+.v3-ears-fft__bar { flex: 1; background: linear-gradient(var(--v3-gold), color-mix(in srgb, var(--v3-gold) 35%, transparent)); border-radius: 2px 2px 0 0; min-height: 2px; transition: height 0.2s; }
+.v3-ears-mic__heard { margin-top: 10px; font-size: 13px; color: var(--v3-charcoal); font-family: var(--font-v3-mono), monospace; line-height: 1.5; }
+.v3-ears-mic__heard-ago { color: var(--v3-slate); }
+.v3-ears-feed { margin-top: 18px; border-top: 1px solid var(--v3-line); padding-top: 14px; }
+.v3-ears-feed__head { font-family: var(--font-v3-mono), monospace; font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--v3-slate); margin-bottom: 8px; }
+.v3-ears-feed__row { display: flex; gap: 10px; align-items: baseline; padding: 4px 0; font-size: 13.5px; }
+.v3-ears-feed__mic { font-family: var(--font-v3-mono), monospace; font-size: 11px; color: var(--v3-gold-dk, #7C5605); flex: none; width: 72px; }
+.v3-ears-feed__text { flex: 1 1 auto; color: var(--v3-charcoal); min-width: 0; }
+.v3-ears-feed__ago { font-family: var(--font-v3-mono), monospace; font-size: 11px; color: var(--v3-slate); flex: none; }
+@media (max-width: 620px) { .v3-ears-grid { grid-template-columns: 1fr; } }
 .v3-motion__dead-box {
   padding: 40px; text-align: center; color: var(--v3-slate);
   font-family: var(--font-v3-mono), monospace; font-size: 13px;

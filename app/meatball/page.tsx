@@ -3,6 +3,7 @@ import { Eye, Ear, Speaker, Brain, ArrowRight, BookOpen, ScrollText } from "luci
 import { V3Reveal } from "@/components/v3/V3Reveal"
 import { LiveEye } from "@/components/meatball/LiveEye"
 import { MotionTrack } from "@/components/meatball/MotionTrack"
+import { EarsTrack } from "@/components/meatball/EarsTrack"
 
 // The salvaged rig — junk on the left, the sense it became on the right.
 const RIG: { junk: string; role: string }[] = [
@@ -104,6 +105,19 @@ export default function MeatballPage() {
               <ScrollText size={15} strokeWidth={2.4} /> the logbook — what it noticed <span aria-hidden>→</span>
             </Link>
           </V3Reveal>
+        </div>
+      </section>
+
+      {/* EARS ========================================================= */}
+      <section className="v3-section" style={{ paddingTop: 8, paddingBottom: 16 }}>
+        <div className="v3-wrap">
+          <V3Reveal>
+            <div className="v3-sec-head" style={{ marginBottom: 16 }}>
+              <div className="v3-sec-head__num">what&apos;s listening</div>
+              <h2 style={{ marginBottom: 0 }}>Always-on ears.</h2>
+            </div>
+          </V3Reveal>
+          <V3Reveal><EarsTrack /></V3Reveal>
         </div>
       </section>
 
