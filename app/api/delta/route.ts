@@ -37,7 +37,13 @@ export async function GET() {
         } catch {
           /* no history yet */
         }
-        cams.push({ name, latest, history })
+        let label: unknown = null
+        try {
+          label = JSON.parse(await fs.readFile(`${CACHE}/delta-${name}-label.json`, "utf8"))
+        } catch {
+          /* nothing seen yet */
+        }
+        cams.push({ name, latest, history, label })
       } catch {
         /* skip a half-written camera */
       }

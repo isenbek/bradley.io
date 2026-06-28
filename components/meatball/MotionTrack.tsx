@@ -16,6 +16,15 @@ interface Cam {
   name: string
   latest: Latest
   history: { ts: string; delta: number }[]
+  label: { label: string; delta: number; ts: string } | null
+}
+
+// "12s ago" / "3m ago" from an ISO timestamp.
+function ago(ts: string): string {
+  const s = Math.max(0, Math.round((Date.now() - new Date(ts).getTime()) / 1000))
+  if (s < 60) return `${s}s ago`
+  if (s < 3600) return `${Math.round(s / 60)}m ago`
+  return `${Math.round(s / 3600)}h ago`
 }
 
 const FLOOR = 6 // motion threshold above the sensor-noise floor (~4–6)
@@ -74,6 +83,11 @@ function CamPanel({ cam, nonce }: { cam: Cam; nonce: number }) {
           <span className={`v3-motion__badge${moving ? " is-moving" : ""}`}>
             <span className="v3-motion__dot" aria-hidden />Δ {cur.toFixed(1)} · {moving ? "motion" : "still"}
           </span>
+          {cam.label?.label ? (
+            <span className="v3-motion__seen">
+              👁 {cam.label.label} <span className="v3-motion__seen-ago">· {ago(cam.label.ts)}</span>
+            </span>
+          ) : null}
         </div>
         <div className="v3-motion__frame">
           <img src={`/delta-diff.jpg?cam=${name}&t=${nonce}`} alt={`${name} subtracted difference image`} />
