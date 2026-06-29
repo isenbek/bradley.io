@@ -5109,7 +5109,7 @@ body:has(.v3) {
 
 /* Embedded self-contained interactive HTML tool (iframe), below an article
    header — full-width + tall stage, internal scroll for any overflow. */
-.v3-embed-stage { width: 100%; background: #0a0f1c; }
+.v3-embed-stage { width: 100%; background: var(--v3-paper); }
 .v3-embed-stage__frame {
   display: block;
   width: 100%;
