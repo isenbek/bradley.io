@@ -144,6 +144,12 @@ html[data-theme="dark"]:has(.v3) {
   --v3-mist: #8C97AD;
   border-top-color: rgba(255, 255, 255, 0.07);
 }
+/* Tinted pills have hardcoded light backgrounds — give them dark hue-tints
+   (their -dk text tokens already flip light, so contrast holds). */
+[data-theme="dark"] .v3-pill--blue  { background: var(--v3-blue-50); color: var(--v3-blue-ink); }
+[data-theme="dark"] .v3-pill--green { background: rgba(43, 185, 133, 0.15); }
+[data-theme="dark"] .v3-pill--gold  { background: rgba(237, 180, 39, 0.15); }
+[data-theme="dark"] .v3-pill--coral { background: rgba(238, 118, 108, 0.16); }
 
 /* Fixed-footer layout. Both nav (top) and footer (bottom) are pinned during
    scroll; main pads itself away from both. The wrapper isn't a scroll
