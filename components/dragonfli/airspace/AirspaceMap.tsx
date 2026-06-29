@@ -108,6 +108,11 @@ export default function AirspaceMap() {
   const [mode, setMode] = useState<DensityMode>("predicted")
   const [count, setCount] = useState(0)
   const [status, setStatus] = useState<"loading" | "live" | "offline">("loading")
+  // map.on("load") has fired AND the layers exist — gates the sync effects below
+  // so they (re)apply current toggle/mode state the instant the map is live,
+  // instead of silently bailing during the initial pre-load render (the race
+  // that left tracks/rssi hidden until you cycled a toggle).
+  const [ready, setReady] = useState(false)
 
   // ---- map init (once) ----
   useEffect(() => {
@@ -178,6 +183,7 @@ export default function AirspaceMap() {
 
     map.on("load", () => {
       readyRef.current = true
+      setReady(true)
       map.resize() // match the now-settled container box
       map.addImage("dart", makeDart(), { sdf: true })
 
@@ -289,15 +295,17 @@ export default function AirspaceMap() {
       if (densityTimer) clearInterval(densityTimer)
       if (moveTimer) clearTimeout(moveTimer)
       readyRef.current = false
+      setReady(false)
       map.remove()
       mapRef.current = null
     }
   }, [])
 
-  // ---- apply layer visibility toggles ----
+  // ---- apply layer visibility toggles (also runs once `ready` flips, syncing
+  // the layers MapLibre created hidden — tracks/rssi — to the live toggle state) ----
   useEffect(() => {
     const map = mapRef.current
-    if (!map || !readyRef.current) return
+    if (!map || !ready) return
     const vis = (id: string, on: boolean) => {
       if (map.getLayer(id)) map.setLayoutProperty(id, "visibility", on ? "visible" : "none")
     }
@@ -306,20 +314,30 @@ export default function AirspaceMap() {
     vis("density-line", layers.density)
     vis("tracks", layers.tracks)
     vis("rssi", layers.rssi)
-  }, [layers])
+  }, [layers, ready])
 
   // ---- density mode → recolor ----
   useEffect(() => {
     const map = mapRef.current
-    if (!map || !readyRef.current || !map.getLayer("density-fill")) return
+    if (!map || !ready || !map.getLayer("density-fill")) return
     map.setPaintProperty("density-fill", "fill-color", densityColor(MODE_PROP[mode]))
-  }, [mode])
+  }, [mode, ready])
 
   const toggle = (k: LayerKey) => setLayers((s) => ({ ...s, [k]: !s[k] }))
+
+  // opaque cover until the map is live AND first aircraft poll has resolved
+  const initializing = !ready || status === "loading"
 
   return (
     <div className="v3-air">
       <div ref={containerRef} className="v3-air__map" />
+
+      {initializing ? (
+        <div className="v3-air__init" role="status" aria-live="polite">
+          <span className="v3-air__loading-dot" aria-hidden />
+          <span>bringing up the airspace…</span>
+        </div>
+      ) : null}
 
       <div className="v3-air__hud v3-air__hud--top">
         <span className={`v3-air__live v3-air__live--${status}`}>
@@ -340,7 +358,7 @@ export default function AirspaceMap() {
           <div className="v3-air__modes">
             {(["predicted", "current", "historical"] as DensityMode[]).map((m) => (
               <button key={m} type="button" className="v3-air__mode" data-on={mode === m} onClick={() => setMode(m)}>
-                {m === "historical" ? "hist" : m}
+                {m === "historical" ? "hist" : m === "predicted" ? "pred" : "now"}
               </button>
             ))}
           </div>

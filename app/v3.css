@@ -5239,6 +5239,20 @@ html[data-theme="dark"]:has(.v3) {
   animation: v3-pulse-dot 1.1s ease-in-out infinite;
 }
 
+/* Opaque init cover — fully hides the map (and its half-drawn layers) while the
+   GL context comes up and the first aircraft poll resolves, so nothing flashes
+   in piecemeal. Sits above the HUD/panel; fades itself out when ready. */
+.v3-air__init {
+  position: absolute; inset: 0; z-index: 6;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  background: #070d14;
+  color: rgba(180, 220, 240, 0.72);
+  font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
+  font-size: 13px;
+  animation: v3-air-init-in 0.2s ease;
+}
+@keyframes v3-air-init-in { from { opacity: 0.6; } to { opacity: 1; } }
+
 .v3-air__hud { position: absolute; z-index: 2; pointer-events: none; }
 .v3-air__hud--top { top: 12px; left: 12px; }
 .v3-air__live {
@@ -5299,12 +5313,15 @@ html[data-theme="dark"]:has(.v3) {
   color: #5b7886; padding: 1px 7px 4px;
 }
 
-.v3-air__modes { display: flex; gap: 4px; padding: 1px 2px 4px 26px; }
+/* density sub-modes — sit under their parent toggle, wrap rather than overflow
+   the 200px panel, and shrink to share the row evenly with the abbreviated labels */
+.v3-air__modes { display: flex; flex-wrap: wrap; gap: 4px; padding: 1px 2px 4px 27px; }
 .v3-air__mode {
+  flex: 1 1 auto; min-width: 0; text-align: center;
   font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
-  font-size: 10.5px; font-weight: 600;
+  font-size: 10px; font-weight: 600;
   color: #7e9fae; background: rgba(255, 255, 255, 0.04); border: 1px solid transparent;
-  padding: 3px 7px; border-radius: var(--v3-r-pill); cursor: pointer; text-transform: capitalize;
+  padding: 3px 6px; border-radius: var(--v3-r-pill); cursor: pointer; text-transform: capitalize;
 }
 .v3-air__mode[data-on="true"] { color: #fff; background: var(--v3-blue-600); }
 

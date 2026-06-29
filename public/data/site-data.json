@@ -1,13 +1,36 @@
 {
-  "generated": "2026-06-29T00:00:44.236419+00:00",
+  "generated": "2026-06-29T08:00:47.256419+00:00",
   "stats": {
     "totalProjects": 86,
-    "totalSessions": 139,
-    "totalMessages": 332887,
-    "activeDays": 28,
-    "streak": 0
+    "totalSessions": 119,
+    "totalMessages": 335033,
+    "activeDays": 29,
+    "streak": 1
   },
   "activityFeed": [
+    {
+      "type": "claude-code",
+      "title": "Claude Code session (391 messages)",
+      "description": "1 sessions, 117 tool calls",
+      "projectSlug": null,
+      "category": null,
+      "date": "2026-06-29T23:59:00Z",
+      "metadata": {
+        "messages": 391,
+        "sessions": 1
+      }
+    },
+    {
+      "type": "github",
+      "title": "Activity on Sysforge-AI/sfproject",
+      "description": "Repository sfproject",
+      "projectSlug": "sysforge",
+      "category": "systems",
+      "date": "2026-06-29T07:30:14Z",
+      "metadata": {
+        "repo": "Sysforge-AI/sfproject"
+      }
+    },
     {
       "type": "github",
       "title": "Activity on isenbek/terrapulse",
@@ -17,17 +40,6 @@
       "date": "2026-06-28T17:07:05Z",
       "metadata": {
         "repo": "isenbek/terrapulse"
-      }
-    },
-    {
-      "type": "github",
-      "title": "Activity on Sysforge-AI/sfproject",
-      "description": "Repository sfproject",
-      "projectSlug": "sysforge",
-      "category": "systems",
-      "date": "2026-06-28T07:30:14Z",
-      "metadata": {
-        "repo": "Sysforge-AI/sfproject"
       }
     },
     {
@@ -164,25 +176,25 @@
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (20237 messages)",
-      "description": "1 sessions, 5522 tool calls",
+      "title": "Claude Code session (20675 messages)",
+      "description": "1 sessions, 5658 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-06-06T23:59:00Z",
       "metadata": {
-        "messages": 20237,
+        "messages": 20675,
         "sessions": 1
       }
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (23963 messages)",
-      "description": "16 sessions, 7103 tool calls",
+      "title": "Claude Code session (24940 messages)",
+      "description": "16 sessions, 7370 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-06-05T23:59:00Z",
       "metadata": {
-        "messages": 23963,
+        "messages": 24940,
         "sessions": 16
       }
     },
@@ -236,25 +248,25 @@
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (16960 messages)",
-      "description": "22 sessions, 4929 tool calls",
+      "title": "Claude Code session (15508 messages)",
+      "description": "1 sessions, 4453 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-05-29T23:59:00Z",
       "metadata": {
-        "messages": 16960,
-        "sessions": 22
+        "messages": 15508,
+        "sessions": 1
       }
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (57392 messages)",
-      "description": "4 sessions, 16540 tool calls",
+      "title": "Claude Code session (58113 messages)",
+      "description": "4 sessions, 16772 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-05-28T23:59:00Z",
       "metadata": {
-        "messages": 57392,
+        "messages": 58113,
         "sessions": 4
       }
     },
@@ -284,13 +296,13 @@
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (31101 messages)",
-      "description": "1 sessions, 9274 tool calls",
+      "title": "Claude Code session (31455 messages)",
+      "description": "1 sessions, 9369 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-05-09T23:59:00Z",
       "metadata": {
-        "messages": 31101,
+        "messages": 31455,
         "sessions": 1
       }
     },
@@ -356,13 +368,13 @@
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (12522 messages)",
-      "description": "1 sessions, 4234 tool calls",
+      "title": "Claude Code session (13239 messages)",
+      "description": "1 sessions, 4446 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-03-08T23:59:00Z",
       "metadata": {
-        "messages": 12522,
+        "messages": 13239,
         "sessions": 1
       }
     },
@@ -574,20 +586,30 @@
       "metadata": {
         "messages": 2
       }
-    },
-    {
-      "type": "claude-web",
-      "title": "Fast STT/TTS models in Python",
-      "description": "The user inquired about fast, decent Speech-to-Text (STT) and Text-to-Speech (TTS) models available for Python development. Claude provided a comprehensive overview of several options for both categories, focusing on performance and ease of implement",
-      "projectSlug": null,
-      "category": null,
-      "date": "2026-02-04T02:29:20.854177Z",
-      "metadata": {
-        "messages": 2
-      }
     }
   ],
   "projects": [
+    {
+      "slug": "sysforge",
+      "name": "sfproject",
+      "tagline": "Building resilient systems, reliably.",
+      "description": "SFProject is a system designed to enhance stability and scalability through advanced monitoring and automated diagnostics. It focuses on proactive identification and resolution of potential issues within complex infrastructure.\n\nWe leverage [mention key technologies - e.g., Kafka, Kubernetes, Prometheus] to collect and analyze data, enabling early detection of anomalies. Ultimately, SFProject aims to minimize downtime and maximize system uptime.",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": true,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-06-29T07:30:14Z",
+      "totalMessages": 0,
+      "sources": {
+        "github": {
+          "repo": "Sysforge-AI/sfproject",
+          "stars": 0,
+          "language": "TypeScript",
+          "lastPush": "2026-06-29"
+        }
+      }
+    },
     {
       "slug": "terrapulse",
       "name": "terrapulse",
@@ -624,27 +646,6 @@
       }
     },
     {
-      "slug": "sysforge",
-      "name": "sfproject",
-      "tagline": "Building resilient systems, reliably.",
-      "description": "SFProject is a system designed to enhance stability and scalability through advanced monitoring and automated diagnostics. It focuses on proactive identification and resolution of potential issues within complex infrastructure.\n\nWe leverage [mention key technologies - e.g., Kafka, Kubernetes, Prometheus] to collect and analyze data, enabling early detection of anomalies. Ultimately, SFProject aims to minimize downtime and maximize system uptime.",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": true,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-06-28T07:30:14Z",
-      "totalMessages": 0,
-      "sources": {
-        "github": {
-          "repo": "Sysforge-AI/sfproject",
-          "stars": 0,
-          "language": "TypeScript",
-          "lastPush": "2026-06-28"
-        }
-      }
-    },
-    {
       "slug": "infra",
       "name": "infra",
       "tagline": "",
@@ -655,11 +656,11 @@
       "status": "active",
       "technologies": [],
       "lastActivity": "2026-06-28",
-      "totalMessages": 75729,
+      "totalMessages": 76156,
       "sources": {
         "claudeCode": {
-          "totalSessions": 12,
-          "totalMessages": 75729,
+          "totalSessions": 11,
+          "totalMessages": 76156,
           "lastSession": "2026-06-28"
         }
       }
@@ -675,11 +676,51 @@
       "status": "active",
       "technologies": [],
       "lastActivity": "2026-06-28",
-      "totalMessages": 38571,
+      "totalMessages": 39221,
       "sources": {
         "claudeCode": {
-          "totalSessions": 27,
-          "totalMessages": 38571,
+          "totalSessions": 25,
+          "totalMessages": 39221,
+          "lastSession": "2026-06-28"
+        }
+      }
+    },
+    {
+      "slug": "cbintel",
+      "name": "cbintel",
+      "tagline": "",
+      "description": "",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-06-28",
+      "totalMessages": 31455,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 1,
+          "totalMessages": 31455,
+          "lastSession": "2026-06-28"
+        }
+      }
+    },
+    {
+      "slug": "cbstitch",
+      "name": "cbstitch",
+      "tagline": "",
+      "description": "",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-06-28",
+      "totalMessages": 23230,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 1,
+          "totalMessages": 23230,
           "lastSession": "2026-06-28"
         }
       }
@@ -704,11 +745,11 @@
         "TypeScript"
       ],
       "lastActivity": "2026-06-28",
-      "totalMessages": 12522,
+      "totalMessages": 13239,
       "sources": {
         "claudeCode": {
           "totalSessions": 1,
-          "totalMessages": 12522,
+          "totalMessages": 13239,
           "lastSession": "2026-06-28"
         }
       }
@@ -730,46 +771,6 @@
           "totalSessions": 1,
           "totalMessages": 2415,
           "lastSession": "2026-06-28"
-        }
-      }
-    },
-    {
-      "slug": "cbintel",
-      "name": "cbintel",
-      "tagline": "",
-      "description": "",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-06-26",
-      "totalMessages": 31101,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 1,
-          "totalMessages": 31101,
-          "lastSession": "2026-06-26"
-        }
-      }
-    },
-    {
-      "slug": "cbstitch",
-      "name": "cbstitch",
-      "tagline": "",
-      "description": "",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-06-26",
-      "totalMessages": 22253,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 1,
-          "totalMessages": 22253,
-          "lastSession": "2026-06-26"
         }
       }
     },
@@ -1013,11 +1014,11 @@
       "status": "recent",
       "technologies": [],
       "lastActivity": "2026-06-05",
-      "totalMessages": 17193,
+      "totalMessages": 16375,
       "sources": {
         "claudeCode": {
-          "totalSessions": 55,
-          "totalMessages": 17193,
+          "totalSessions": 44,
+          "totalMessages": 16375,
           "lastSession": "2026-06-05"
         }
       }
@@ -2025,19 +2026,19 @@
       "JSON",
       "CSS",
       "HTML",
-      "DuckDB",
       "SPI",
+      "DuckDB",
       "Python",
       "Nginx",
       "systemd",
       "Bash",
       "SSH",
+      "Ollama",
       "Rust",
       "CSV",
-      "Ollama",
       "SQLite",
-      "Snowflake",
       "YAML",
+      "Snowflake",
       "Anthropic",
       "Markdown",
       "FastAPI",
@@ -2048,8 +2049,8 @@
       "React",
       "WireGuard",
       "Docker",
-      "WebSocket",
-      "Pydantic"
+      "Pydantic",
+      "WebSocket"
     ],
     "timeline": [
       {
