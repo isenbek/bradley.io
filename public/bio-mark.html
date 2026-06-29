@@ -1147,7 +1147,26 @@ document.getElementById('reset').onclick=()=>{DOTC=[...DATA.connection.dotCenter
 const tdefs={fill:'fillG',curve:'curveG',chords:'chordG',handles:'handleG',anchors:'anchorG',labels:'labelG',plumb:'conG',inf:'infG',road:'roadG',oncenter:'centerG'};
 const state={fill:1,curve:1,chords:1,handles:1,anchors:1,labels:0,plumb:1,dotcubic:0,inf:0,align16:0,road:0,oncenter:0};
 function applyToggles(){for(const k in tdefs)layers[tdefs[k]].style.display=state[k]?'':'none';}
+
+// ---- intro reveal: load blank, then light each default layer in sequence.
+// Any tap on a toggle cancels it (and won't resume until the page reloads). ----
+const REVEAL=['chords','anchors','handles','curve','fill','plumb'];
+let revealOn=false, revealTimers=[];
+function setTog(k,on){state[k]=on?1:0;
+  const el=document.querySelector('.tg[data-k="'+k+'"]');if(el)el.setAttribute('aria-pressed',on?'true':'false');}
+function stopReveal(){revealOn=false;revealTimers.forEach(clearTimeout);revealTimers=[];}
+function startReveal(){
+  REVEAL.forEach(k=>setTog(k,false));applyToggles();   // everything off to begin
+  revealOn=true;
+  REVEAL.forEach((k,i)=>revealTimers.push(setTimeout(()=>{
+    if(!revealOn)return;
+    setTog(k,true);applyToggles();
+    if(i===REVEAL.length-1)revealOn=false;
+  },520*(i+1))));
+}
+
 document.getElementById('toggles').addEventListener('click',e=>{const t=e.target.closest('.tg');if(!t)return;
+  if(revealOn)stopReveal();                              // a tap ends the intro for good
   const k=t.dataset.k;state[k]=!state[k];t.setAttribute('aria-pressed',state[k]);
   if(k==='align16'){const h=state.align16?ALIGN16:ORIG16;DATA.body[16].h_out=[...h.h_out];DATA.body[16].h_in=[...h.h_in];
     draw(curMorph);if(curTbl==='body')buildTable('body');return;}
@@ -1212,7 +1231,7 @@ document.getElementById('copy').onclick=()=>{navigator.clipboard.writeText(JSON.
 document.getElementById('copysvg').onclick=()=>{navigator.clipboard.writeText(chordPath(DATA.body)+' '+chordPath(DATA.bowl));flash('copysvg','copied ✓');};
 document.getElementById('copydot').onclick=()=>{navigator.clipboard.writeText(outlinePath(DATA.dot_cubic,1));flash('copydot','copied ✓');};
 
-draw(1);buildTable('body');
+draw(1);buildTable('body');startReveal();
 </script>
 
 <!-- report content height to the embedding page so the iframe sizes to its

@@ -127,6 +127,23 @@ html[data-theme="dark"]:has(.v3) {
 [data-theme="dark"] .v3::before {
   background-image: radial-gradient(rgba(95, 200, 245, 0.10) 1px, transparent 1px);
 }
+/* Fixed chrome (nav + footer) uses hardcoded/charcoal backgrounds that don't come
+   along with the token flip — re-skin them for dark explicitly. */
+[data-theme="dark"] .v3-nav {
+  background: rgba(12, 17, 28, 0.60);
+}
+[data-theme="dark"] .v3-nav[data-scrolled="true"] {
+  background: rgba(12, 17, 28, 0.85);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.32);
+}
+[data-theme="dark"] .v3-footer {
+  /* a dark chrome bar, distinct from the page; re-light the footer-scoped text
+     tokens (children use --v3-paper/--v3-mist, which flipped dark) */
+  background: #0E1626;
+  --v3-paper: #E6EBF4;
+  --v3-mist: #8C97AD;
+  border-top-color: rgba(255, 255, 255, 0.07);
+}
 
 /* Fixed-footer layout. Both nav (top) and footer (bottom) are pinned during
    scroll; main pads itself away from both. The wrapper isn't a scroll
