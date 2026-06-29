@@ -5307,6 +5307,25 @@ html[data-theme="dark"]:has(.v3) {
 .v3-air__lyr[data-on="false"] i { border-color: #7e9fae; }
 .v3-air__lyr:hover { color: #cfe9f3; }
 
+/* still fetching this layer's first data — lock the toggle and blink its LED in
+   the layer's own colour, so you can see exactly which layers are still landing */
+.v3-air__lyr[data-loading="true"] {
+  cursor: progress; color: #8fb0bf;
+  background: transparent; border-color: transparent;
+}
+.v3-air__lyr[data-loading="true"] i {
+  background: var(--lc); border-color: var(--lc);
+  animation: v3-air-led-blink 0.9s ease-in-out infinite;
+}
+@keyframes v3-air-led-blink {
+  0%, 100% { opacity: 1; box-shadow: 0 0 6px var(--lc); }
+  50% { opacity: 0.18; box-shadow: 0 0 0 var(--lc); }
+}
+.v3-air__mode:disabled { opacity: 0.4; cursor: progress; }
+@media (prefers-reduced-motion: reduce) {
+  .v3-air__lyr[data-loading="true"] i { animation: none; opacity: 0.6; }
+}
+
 .v3-air__panel-head {
   font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
   font-size: 9px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;

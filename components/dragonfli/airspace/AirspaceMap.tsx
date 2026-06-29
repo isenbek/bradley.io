@@ -113,6 +113,15 @@ export default function AirspaceMap() {
   // instead of silently bailing during the initial pre-load render (the race
   // that left tracks/rssi hidden until you cycled a toggle).
   const [ready, setReady] = useState(false)
+  // per-layer "first data has landed" — until then the toggle is disabled and its
+  // LED blinks. aircraft + rssi share the same source so they light together;
+  // trajectories land after the predict round-trip; density after its bbox query.
+  const [loaded, setLoaded] = useState<Record<LayerKey, boolean>>({
+    aircraft: false,
+    density: false,
+    tracks: false,
+    rssi: false,
+  })
 
   // ---- map init (once) ----
   useEffect(() => {
@@ -152,6 +161,7 @@ export default function AirspaceMap() {
         ;(map.getSource("aircraft") as maplibregl.GeoJSONSource)?.setData(aircraftFC(res.aircraft))
         setCount(res.count)
         setStatus("live")
+        setLoaded((s) => (s.aircraft && s.rssi ? s : { ...s, aircraft: true, rssi: true }))
         // trajectory forecasts for the visible aircraft (cap to keep it light)
         const withPos = res.aircraft.filter((a) => a.lat != null && a.lon != null).slice(0, 12)
         const tracks = (
@@ -159,8 +169,13 @@ export default function AirspaceMap() {
         ).filter(Boolean) as PredictTrack[]
         if (aborted || !mapRef.current) return
         ;(map.getSource("tracks") as maplibregl.GeoJSONSource)?.setData(tracksFC(tracks))
+        setLoaded((s) => (s.tracks ? s : { ...s, tracks: true }))
       } catch {
-        if (!aborted) setStatus("offline")
+        if (!aborted) {
+          setStatus("offline")
+          // nothing more is coming — release the toggles so they don't blink forever
+          setLoaded({ aircraft: true, density: true, tracks: true, rssi: true })
+        }
       }
     }
 
@@ -168,6 +183,7 @@ export default function AirspaceMap() {
       if (!mapRef.current) return
       if (map.getZoom() < 6) {
         ;(map.getSource("density") as maplibregl.GeoJSONSource)?.setData(EMPTY)
+        setLoaded((s) => (s.density ? s : { ...s, density: true }))
         return
       }
       const b = map.getBounds()
@@ -178,6 +194,9 @@ export default function AirspaceMap() {
         ;(map.getSource("density") as maplibregl.GeoJSONSource)?.setData(fc)
       } catch {
         /* leave last good */
+      } finally {
+        // resolved or failed, the first attempt is done — release the toggle
+        if (!aborted) setLoaded((s) => (s.density ? s : { ...s, density: true }))
       }
     }
 
@@ -348,25 +367,25 @@ export default function AirspaceMap() {
 
       <div className="v3-air__panel">
         <span className="v3-air__panel-head">Layers</span>
-        <button type="button" className="v3-air__lyr" style={{ ["--lc" as string]: "#3fd0ff" }} data-on={layers.aircraft} aria-pressed={layers.aircraft} onClick={() => toggle("aircraft")}>
+        <button type="button" className="v3-air__lyr" style={{ ["--lc" as string]: "#3fd0ff" }} data-on={layers.aircraft} data-loading={!loaded.aircraft} disabled={!loaded.aircraft} aria-busy={!loaded.aircraft} aria-pressed={layers.aircraft} onClick={() => toggle("aircraft")}>
           <i /> Aircraft
         </button>
-        <button type="button" className="v3-air__lyr" style={{ ["--lc" as string]: "#7c3aed" }} data-on={layers.density} aria-pressed={layers.density} onClick={() => toggle("density")}>
+        <button type="button" className="v3-air__lyr" style={{ ["--lc" as string]: "#7c3aed" }} data-on={layers.density} data-loading={!loaded.density} disabled={!loaded.density} aria-busy={!loaded.density} aria-pressed={layers.density} onClick={() => toggle("density")}>
           <i /> Density
         </button>
         {layers.density ? (
           <div className="v3-air__modes">
             {(["predicted", "current", "historical"] as DensityMode[]).map((m) => (
-              <button key={m} type="button" className="v3-air__mode" data-on={mode === m} onClick={() => setMode(m)}>
+              <button key={m} type="button" className="v3-air__mode" data-on={mode === m} disabled={!loaded.density} onClick={() => setMode(m)}>
                 {m === "historical" ? "hist" : m === "predicted" ? "pred" : "now"}
               </button>
             ))}
           </div>
         ) : null}
-        <button type="button" className="v3-air__lyr" style={{ ["--lc" as string]: "#ff8a3d" }} data-on={layers.tracks} aria-pressed={layers.tracks} onClick={() => toggle("tracks")}>
+        <button type="button" className="v3-air__lyr" style={{ ["--lc" as string]: "#ff8a3d" }} data-on={layers.tracks} data-loading={!loaded.tracks} disabled={!loaded.tracks} aria-busy={!loaded.tracks} aria-pressed={layers.tracks} onClick={() => toggle("tracks")}>
           <i /> Trajectories
         </button>
-        <button type="button" className="v3-air__lyr" style={{ ["--lc" as string]: "#eafaff" }} data-on={layers.rssi} aria-pressed={layers.rssi} onClick={() => toggle("rssi")}>
+        <button type="button" className="v3-air__lyr" style={{ ["--lc" as string]: "#eafaff" }} data-on={layers.rssi} data-loading={!loaded.rssi} disabled={!loaded.rssi} aria-busy={!loaded.rssi} aria-pressed={layers.rssi} onClick={() => toggle("rssi")}>
           <i /> RSSI bloom
         </button>
       </div>
