@@ -5,6 +5,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { Github, Menu, X } from "lucide-react"
 import { BioLogo } from "./BioLogo"
+import { ThemeToggle } from "./ThemeToggle"
 
 const LINKS = [
   { href: "/", label: "Home" },
@@ -106,15 +107,18 @@ export function V3Nav() {
             })}
           </div>
 
-          <button
-            type="button"
-            className="v3-nav__burger"
-            aria-label="Open menu"
-            aria-expanded={open}
-            onClick={() => setOpen(true)}
-          >
-            <Menu size={22} strokeWidth={2.25} />
-          </button>
+          <div className="v3-nav__right">
+            <ThemeToggle />
+            <button
+              type="button"
+              className="v3-nav__burger"
+              aria-label="Open menu"
+              aria-expanded={open}
+              onClick={() => setOpen(true)}
+            >
+              <Menu size={22} strokeWidth={2.25} />
+            </button>
+          </div>
         </div>
       </nav>
 

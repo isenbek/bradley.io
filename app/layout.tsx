@@ -132,6 +132,14 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${display.variable} ${body.variable} ${logo.variable} ${mono.variable}`}>
       <head>
+        {/* Set the theme before first paint — no flash. Reads the saved choice,
+            else falls back to the OS preference. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(){try{var t=localStorage.getItem('bio-theme');if(t!=='dark'&&t!=='light'){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.dataset.theme=t;}catch(e){}})();",
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

@@ -146,6 +146,25 @@ tr.hi td{background:#ECF9FE;color:var(--ink)}
   .con .reset{padding:5px 10px}
   .morph input[type=range]{height:28px}
 }
+
+/* ── DARK — follows the site's data-theme="dark" (set by the parent). Flips the
+      token block; the var()-driven geometry + panels come along automatically. ── */
+html[data-theme="dark"]{
+  --ink:#E4E9F1; --dim:#9AA7BD; --faint:#66718A;
+  --bg:#0B0F19; --panel:#18202F; --tint:#121A28; --line:#283347; --line2:#39455E;
+  --blue5:#13B8F3; --blue3:#64D0F7; --blueink:#5FC8F5;
+  --chord:#F0A23B; --hout:#FF5A8A; --hin:#37D6C4; --anchor:#AEB9D4;
+  --plumb:#FFD166; --ok:#5FD98A; --warn:#FFB454;
+  --sh:0 1px 2px rgba(0,0,0,.42), 0 1px 1px rgba(0,0,0,.30);
+}
+html[data-theme="dark"] .stage{background:
+   linear-gradient(var(--line) 1px,transparent 1px) 0 0/40px 40px,
+   linear-gradient(90deg,var(--line) 1px,transparent 1px) 0 0/40px 40px,
+   radial-gradient(120% 120% at 30% 10%,#101A30 0%,#0A0F1C 72%)}
+html[data-theme="dark"] .node{stroke:#0A0F1C}
+html[data-theme="dark"] th,html[data-theme="dark"] td{border-bottom-color:#1A2236}
+html[data-theme="dark"] tr.hi td{background:#1B2740}
+html[data-theme="dark"] .btn:hover{background:#1E2A40}
 </style>
 </head>
 <body>
@@ -189,7 +208,7 @@ tr.hi td{background:#ECF9FE;color:var(--ink)}
         <div class="read" id="conread"></div>
         <div class="hint">crest = top of the centre stroke (tangent horizontal). dx = dot centre − crest x · gap = crest → dot underside. drag the dot in the canvas.</div>
         <div class="hint" style="margin-top:9px;color:var(--hin)">implied ∞ · core lobes are 180°-symmetric about (142.5, 186.6) to ~3px median. spine x: bbox 141.3 · dot 141.9 · crest 142.6 · ∞-centre 142.5 (spread 1.3px).</div>
-        <div class="hint" style="margin-top:7px;color:#16A34A">axis · seg3 ctr (−110.8, 3.2) → heart → seg16 ctr (242.1, 232.0): a ~33° diagonal, but the heart sits <b>16.1px off</b> it. to make them collinear, nudge <b>seg16 by (−12.7, +17.5)</b> → centre (229.4, 249.5). green ring = on-axis target. toggle <b style="color:var(--hout)">implied ∞</b>.</div>
+        <div class="hint" style="margin-top:7px;color:var(--ok)">axis · seg3 ctr (−110.8, 3.2) → heart → seg16 ctr (242.1, 232.0): a ~33° diagonal, but the heart sits <b>16.1px off</b> it. to make them collinear, nudge <b>seg16 by (−12.7, +17.5)</b> → centre (229.4, 249.5). green ring = on-axis target. toggle <b style="color:var(--hout)">implied ∞</b>.</div>
       </div>
       <div class="legend">
         <span><i style="border-color:var(--chord)"></i>chord Δ=P₃−P₀</span>
@@ -1006,18 +1025,18 @@ function drawOnCenter(){
   layers.centerG.innerHTML='';
   const A=cubMid(DATA.body[ONPAIR[0]]), B=cubMid(DATA.body[ONPAIR[1]]);
   // glow each highlighted segment
-  ONPAIR.forEach(i=>{el('path',{d:outlinePath([DATA.body[i]],1).replace(/Z$/,''),fill:'none',stroke:'#CA8A04','stroke-width':7,'stroke-linecap':'round','vector-effect':'non-scaling-stroke',opacity:.28},layers.centerG);});
+  ONPAIR.forEach(i=>{el('path',{d:outlinePath([DATA.body[i]],1).replace(/Z$/,''),fill:'none',stroke:'var(--plumb)','stroke-width':7,'stroke-linecap':'round','vector-effect':'non-scaling-stroke',opacity:.28},layers.centerG);});
   const Aimg=rot180(A,IC), Bimg=rot180(B,IC);
   // markers: actual mids (yellow) and their 180° images (hollow)
   const dot=(p,fill,r=3.5)=>el('circle',{cx:p[0],cy:p[1],r,fill,stroke:'#0a0f1c','stroke-width':1,'vector-effect':'non-scaling-stroke'},layers.centerG);
-  dot(A,'#CA8A04'); dot(B,'#CA8A04');
-  el('circle',{cx:Aimg[0],cy:Aimg[1],r:4,fill:'none',stroke:'#CA8A04','stroke-width':1.2,'stroke-dasharray':'3 3','vector-effect':'non-scaling-stroke'},layers.centerG);
+  dot(A,'var(--plumb)'); dot(B,'var(--plumb)');
+  el('circle',{cx:Aimg[0],cy:Aimg[1],r:4,fill:'none',stroke:'var(--plumb)','stroke-width':1.2,'stroke-dasharray':'3 3','vector-effect':'non-scaling-stroke'},layers.centerG);
   // gap between seg16 mid and the 180°-image of seg8 mid = the off-centre amount
-  el('line',{x1:B[0],y1:B[1],x2:Aimg[0],y2:Aimg[1],stroke:'#CA8A04','stroke-width':1.4,'vector-effect':'non-scaling-stroke'},layers.centerG);
+  el('line',{x1:B[0],y1:B[1],x2:Aimg[0],y2:Aimg[1],stroke:'var(--plumb)','stroke-width':1.4,'vector-effect':'non-scaling-stroke'},layers.centerG);
   const off=Math.hypot(B[0]-Aimg[0],B[1]-Aimg[1]);
-  el('text',{x:B[0]+7,y:B[1]+15,fill:'#CA8A04','font-family':'var(--mono)','font-size':9},layers.centerG).textContent=`seg${ONPAIR[1]}`;
-  el('text',{x:A[0]+7,y:A[1]-7,fill:'#CA8A04','font-family':'var(--mono)','font-size':9},layers.centerG).textContent=`seg${ONPAIR[0]}`;
-  el('text',{x:(B[0]+Aimg[0])/2+6,y:(B[1]+Aimg[1])/2,fill:'#CA8A04','font-family':'var(--mono)','font-size':9},layers.centerG).textContent=`off-centre ${off.toFixed(0)}px`;
+  el('text',{x:B[0]+7,y:B[1]+15,fill:'var(--plumb)','font-family':'var(--mono)','font-size':9},layers.centerG).textContent=`seg${ONPAIR[1]}`;
+  el('text',{x:A[0]+7,y:A[1]-7,fill:'var(--plumb)','font-family':'var(--mono)','font-size':9},layers.centerG).textContent=`seg${ONPAIR[0]}`;
+  el('text',{x:(B[0]+Aimg[0])/2+6,y:(B[1]+Aimg[1])/2,fill:'var(--plumb)','font-family':'var(--mono)','font-size':9},layers.centerG).textContent=`off-centre ${off.toFixed(0)}px`;
 }
 
 // "service road": implied construction line centre-of-16 -> heart -> end-of-3.
@@ -1054,9 +1073,9 @@ function drawInfinity(){
   // spine axis (infinity center x)
   el('line',{x1:IC[0],y1:-40,x2:IC[0],y2:325,stroke:'var(--hout)','stroke-width':1,'stroke-dasharray':'2 5','vector-effect':'non-scaling-stroke',opacity:.7},layers.infG);
   // infinity heart
-  el('circle',{cx:IC[0],cy:IC[1],r:9,fill:'none',stroke:'#33332E','stroke-width':1,'vector-effect':'non-scaling-stroke'},layers.infG);
-  el('circle',{cx:IC[0],cy:IC[1],r:2.5,fill:'#33332E'},layers.infG);
-  el('text',{x:IC[0]+13,y:IC[1]+4,fill:'#33332E','font-family':'var(--mono)','font-size':10},layers.infG).textContent='∞ heart';
+  el('circle',{cx:IC[0],cy:IC[1],r:9,fill:'none',stroke:'var(--ink)','stroke-width':1,'vector-effect':'non-scaling-stroke'},layers.infG);
+  el('circle',{cx:IC[0],cy:IC[1],r:2.5,fill:'var(--ink)'},layers.infG);
+  el('text',{x:IC[0]+13,y:IC[1]+4,fill:'var(--ink)','font-family':'var(--mono)','font-size':10},layers.infG).textContent='∞ heart';
   // b-top and o-end markers
   const mark=(p,col,lab)=>{el('circle',{cx:p[0],cy:p[1],r:4,fill:col},layers.infG);
     el('text',{x:p[0]+6,y:p[1]-6,fill:col,'font-family':'var(--mono)','font-size':10},layers.infG).textContent=lab;};
@@ -1067,18 +1086,18 @@ function drawInfinity(){
   // current seg3-seg16 line (grey dashed): heart misses it
   el('line',{x1:c3[0],y1:c3[1],x2:c16[0],y2:c16[1],stroke:'#7f8aa3','stroke-width':1,'stroke-dasharray':'4 4','vector-effect':'non-scaling-stroke'},layers.infG);
   // ideal axis: through seg3 + heart, extended to the collinear target (solid green)
-  el('line',{x1:c3[0],y1:c3[1],x2:TG[0],y2:TG[1],stroke:'#16A34A','stroke-width':1.4,'vector-effect':'non-scaling-stroke'},layers.infG);
+  el('line',{x1:c3[0],y1:c3[1],x2:TG[0],y2:TG[1],stroke:'var(--ok)','stroke-width':1.4,'vector-effect':'non-scaling-stroke'},layers.infG);
   const cm=(p,col,lab,dy=14)=>{el('circle',{cx:p[0],cy:p[1],r:4,fill:col},layers.infG);
     el('text',{x:p[0]+6,y:p[1]+dy,fill:col,'font-family':'var(--mono)','font-size':9},layers.infG).textContent=lab;};
-  cm(c3,'#16A34A','seg3 ctr');
+  cm(c3,'var(--ok)','seg3 ctr');
   cm(c16,'#D97706','seg16 now');
   // collinear target (hollow) + shift arrow
-  el('circle',{cx:TG[0],cy:TG[1],r:5,fill:'none',stroke:'#16A34A','stroke-width':1.4,'vector-effect':'non-scaling-stroke'},layers.infG);
-  el('text',{x:TG[0]+7,y:TG[1]+4,fill:'#16A34A','font-family':'var(--mono)','font-size':9},layers.infG).textContent='seg16 on-axis';
-  el('line',{x1:c16[0],y1:c16[1],x2:TG[0],y2:TG[1],stroke:'#16A34A','stroke-width':1,'marker-end':'url(#ah)','vector-effect':'non-scaling-stroke'},layers.infG);
+  el('circle',{cx:TG[0],cy:TG[1],r:5,fill:'none',stroke:'var(--ok)','stroke-width':1.4,'vector-effect':'non-scaling-stroke'},layers.infG);
+  el('text',{x:TG[0]+7,y:TG[1]+4,fill:'var(--ok)','font-family':'var(--mono)','font-size':9},layers.infG).textContent='seg16 on-axis';
+  el('line',{x1:c16[0],y1:c16[1],x2:TG[0],y2:TG[1],stroke:'var(--ok)','stroke-width':1,'marker-end':'url(#ah)','vector-effect':'non-scaling-stroke'},layers.infG);
   if(!document.getElementById('ah')){const defs=el('defs',{},layers.infG);
     const m=el('marker',{id:'ah',markerWidth:7,markerHeight:7,refX:5,refY:3,orient:'auto'},defs);
-    el('path',{d:'M0,0 L6,3 L0,6 Z',fill:'#16A34A'},m);}
+    el('path',{d:'M0,0 L6,3 L0,6 Z',fill:'var(--ok)'},m);}
   // 180-image of the (live) dot -> where the floating chunk maps under the infinity
   const di=rot180(DOTC,IC);
   el('circle',{cx:di[0],cy:di[1],r:R,fill:'none',stroke:'var(--blue3)','stroke-width':1,'stroke-dasharray':'3 3','vector-effect':'non-scaling-stroke',opacity:.8},layers.infG);

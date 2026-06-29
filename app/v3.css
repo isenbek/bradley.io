@@ -82,6 +82,52 @@ body:has(.v3) {
   overflow-x: hidden;
 }
 
+/* ============================================================
+   DARK THEME — a `data-theme="dark"` token flip on <html>.
+   Tokens live on `.v3`, so we re-assign them at `[data-theme]
+   .v3` (more specific than `.v3`). Neutrals invert; the Bio-Blue
+   brand ramp + accents stay, with the light "tint" steps (50–200)
+   and the readable -ink/-dk text variants swapped for dark.
+   Snapshot/seed: docs/dark-theme-palette.md.
+   ============================================================ */
+[data-theme="dark"] { color-scheme: dark; }
+[data-theme="dark"] body:has(.v3),
+html[data-theme="dark"]:has(.v3) {
+  background: #0B0F19 !important;
+  color: #E4E9F1 !important;
+}
+[data-theme="dark"] .v3 {
+  /* light tint steps become dark-blue tints (used as pill/hover/row backgrounds) */
+  --v3-blue-50:  #0E2233;
+  --v3-blue-100: #123247;
+  --v3-blue-200: #16415C;
+  /* 300–900 keep — mid/deep blues read on dark; 300/400 are the light accents */
+  --v3-blue-ink: #5FC8F5;   /* readable blue TEXT on dark (was a deep blue for light) */
+
+  --v3-coral: #F07B71;  --v3-coral-dk: #F4A89F;
+  --v3-gold:  #EDB427;  --v3-gold-dk:  #ECCB7C;
+  --v3-green: #2BB985;  --v3-green-dk: #5FD3A8;
+
+  /* neutrals invert: surfaces go deep, text goes light */
+  --v3-charcoal: #F3F6FB;   /* was darkest → now lightest (headings) */
+  --v3-ink:      #E4E9F1;   /* primary body text */
+  --v3-slate:    #9AA7BD;   /* dim text */
+  --v3-mist:     #66718A;   /* faint */
+  --v3-line:     #283347;   /* hairlines */
+  --v3-paper:    #0B0F19;   /* deepest page bg */
+  --v3-cloud:    #111726;   /* base surface (body) */
+  --v3-white:    #18202F;   /* "white" → the elevated card/panel surface */
+
+  --v3-sh-1: 0 1px 2px rgba(0, 0, 0, 0.42), 0 1px 1px rgba(0, 0, 0, 0.30);
+  --v3-sh-2: 0 6px 16px -6px rgba(0, 0, 0, 0.55), 0 2px 6px -2px rgba(0, 0, 0, 0.40);
+  --v3-sh-3: 0 22px 48px -16px rgba(0, 0, 0, 0.62), 0 8px 18px -8px rgba(0, 0, 0, 0.45);
+  --v3-sh-glow: 0 0 0 4px rgba(19, 184, 243, 0.18), 0 14px 30px -10px rgba(19, 184, 243, 0.38);
+}
+/* the blueprint dot-grid: a touch brighter so it reads on the dark page */
+[data-theme="dark"] .v3::before {
+  background-image: radial-gradient(rgba(95, 200, 245, 0.10) 1px, transparent 1px);
+}
+
 /* Fixed-footer layout. Both nav (top) and footer (bottom) are pinned during
    scroll; main pads itself away from both. The wrapper isn't a scroll
    container — html scrolls, nav sticks, footer is fixed. */
@@ -278,6 +324,37 @@ body:has(.v3) {
   .v3-nav__links {
     display: none;
   }
+}
+
+/* ============ NAV RIGHT GROUP + THEME TOGGLE ============ */
+.v3-nav__right {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.v3-theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  background: transparent;
+  border: 1px solid var(--v3-line);
+  border-radius: var(--v3-r-sm);
+  color: var(--v3-slate);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.v3-theme-toggle:hover {
+  background: var(--v3-blue-50);
+  border-color: var(--v3-blue-300);
+  color: var(--v3-blue-ink);
+}
+.v3-theme-toggle__ph {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid var(--v3-line);
 }
 
 /* ============ HAMBURGER + MOBILE DRAWER ============ */
