@@ -45,6 +45,14 @@ function SkyPlot({ sats }: { sats: Sat[] }) {
   const plot = sats.filter((s) => typeof s.az === "number" && typeof s.el === "number")
   // draw unused first so used sats sit on top
   const ordered = [...plot].sort((a, b) => Number(a.used) - Number(b.used))
+  // only label the strongest few used sats — keeps the plot legible
+  const labelled = new Set(
+    plot
+      .filter((s) => s.used)
+      .sort((a, b) => (b.ss ?? 0) - (a.ss ?? 0))
+      .slice(0, 4)
+      .map((s) => s.PRN),
+  )
 
   return (
     <svg className="v3-we-sky" viewBox={`0 0 ${S} ${S}`} role="img" aria-label="GPS skyplot">
@@ -66,7 +74,9 @@ function SkyPlot({ sats }: { sats: Sat[] }) {
         return (
           <g key={s.PRN ?? i}>
             <circle cx={p.x} cy={p.y} r={3 + str * 2.6} fill={ssColor(str)} stroke="#0a0f15" strokeWidth={1} />
-            <text x={p.x} y={p.y - 6} textAnchor="middle" className="v3-we-sky__prn">{s.PRN}</text>
+            {labelled.has(s.PRN) ? (
+              <text x={p.x} y={p.y - 6} textAnchor="middle" className="v3-we-sky__prn">{s.PRN}</text>
+            ) : null}
           </g>
         )
       })}

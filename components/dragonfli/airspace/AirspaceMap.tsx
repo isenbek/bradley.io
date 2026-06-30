@@ -12,6 +12,8 @@ import {
   type PredictTrack,
 } from "@/components/dragonfli/api"
 import { airspaceStyle, GR_CENTER } from "./style"
+import { useGeolocation } from "@/lib/useGeolocation"
+import { circlePolygon } from "@/lib/geo"
 
 type LayerKey = "aircraft" | "density" | "tracks" | "rssi"
 type DensityMode = "predicted" | "current" | "historical"
@@ -98,6 +100,7 @@ export default function AirspaceMap() {
   const containerRef = useRef<HTMLDivElement>(null)
   const mapRef = useRef<maplibregl.Map | null>(null)
   const readyRef = useRef(false)
+  const me = useGeolocation()
 
   const [layers, setLayers] = useState<Record<LayerKey, boolean>>({
     aircraft: true,
@@ -290,6 +293,44 @@ export default function AirspaceMap() {
       map.on("mouseenter", "aircraft", () => (map.getCanvas().style.cursor = "pointer"))
       map.on("mouseleave", "aircraft", () => (map.getCanvas().style.cursor = ""))
 
+      // ---- receiver (GPS) + viewer ("you are here") on top -------------
+      map.addSource("rcv", {
+        type: "geojson",
+        data: { type: "Feature", properties: {}, geometry: { type: "Point", coordinates: GR_CENTER } },
+      })
+      map.addSource("me", { type: "geojson", data: EMPTY })
+      map.addSource("me-acc", { type: "geojson", data: EMPTY })
+      map.addLayer({
+        id: "me-acc",
+        type: "fill",
+        source: "me-acc",
+        paint: { "fill-color": "#ffb020", "fill-opacity": 0.08 },
+      })
+      map.addLayer({
+        id: "rcv-glow",
+        type: "circle",
+        source: "rcv",
+        paint: { "circle-radius": 11, "circle-color": "#13B8F3", "circle-opacity": 0.22, "circle-blur": 0.6 },
+      })
+      map.addLayer({
+        id: "rcv",
+        type: "circle",
+        source: "rcv",
+        paint: { "circle-radius": 5, "circle-color": "#bdecff", "circle-stroke-color": "#13B8F3", "circle-stroke-width": 2 },
+      })
+      map.addLayer({
+        id: "me-glow",
+        type: "circle",
+        source: "me",
+        paint: { "circle-radius": 11, "circle-color": "#ffb020", "circle-opacity": 0.22, "circle-blur": 0.6 },
+      })
+      map.addLayer({
+        id: "me",
+        type: "circle",
+        source: "me",
+        paint: { "circle-radius": 5, "circle-color": "#ffd98a", "circle-stroke-color": "#ffb020", "circle-stroke-width": 2 },
+      })
+
       // center on the receiver if it has a fix
       getReceiver()
         .then((r) => {
@@ -341,6 +382,22 @@ export default function AirspaceMap() {
     if (!map || !ready || !map.getLayer("density-fill")) return
     map.setPaintProperty("density-fill", "fill-color", densityColor(MODE_PROP[mode]))
   }, [mode, ready])
+
+  // ---- viewer location → "you are here" marker ----
+  useEffect(() => {
+    const map = mapRef.current
+    if (!map || !ready || !map.getSource("me")) return
+    const pt: GeoJSON.FeatureCollection =
+      me.lon != null && me.lat != null
+        ? { type: "FeatureCollection", features: [{ type: "Feature", properties: {}, geometry: { type: "Point", coordinates: [me.lon, me.lat] } }] }
+        : EMPTY
+    const acc: GeoJSON.FeatureCollection =
+      me.lon != null && me.lat != null && me.accuracy
+        ? { type: "FeatureCollection", features: [circlePolygon(me.lon, me.lat, Math.min(me.accuracy, 20000))] }
+        : EMPTY
+    ;(map.getSource("me") as maplibregl.GeoJSONSource).setData(pt)
+    ;(map.getSource("me-acc") as maplibregl.GeoJSONSource).setData(acc)
+  }, [me, ready])
 
   const toggle = (k: LayerKey) => setLayers((s) => ({ ...s, [k]: !s[k] }))
 
