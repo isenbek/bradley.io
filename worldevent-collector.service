@@ -1,0 +1,18 @@
+[Unit]
+Description=WorldEvent collector — generic perception-bus snapshot for bradley.io
+Documentation=https://bradley.io/dragonfli/worldevent
+After=network-online.target dragonfli-feed.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=bisenbek
+Group=bisenbek
+ExecStart=/usr/bin/python3 -u /home/bisenbek/projects/bradleyio/scripts/worldevent_collector.py
+Environment=CAM_CACHE_DIR=/var/lib/bradley-cam
+Restart=always
+RestartSec=2
+Nice=5
+
+[Install]
+WantedBy=multi-user.target

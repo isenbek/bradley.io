@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Plane, Map as MapIcon, Satellite } from "lucide-react"
+import { Plane, Map as MapIcon, Satellite, Radio } from "lucide-react"
 import { V3Reveal } from "@/components/v3/V3Reveal"
 import { V3DragonfliDashboard } from "./V3DragonfliDashboard"
 
@@ -51,6 +51,13 @@ export default function V3DragonfliPage() {
               <Link href="/dragonfli/gps" className="v3-espace-cta">
                 <Satellite size={15} strokeWidth={2.4} />
                 Open the live GPS board — skyplot, SNR, fix precision &amp; track
+                <span aria-hidden>→</span>
+              </Link>
+            </V3Reveal>
+            <V3Reveal>
+              <Link href="/dragonfli/worldevent" className="v3-espace-cta">
+                <Radio size={15} strokeWidth={2.4} />
+                Open the WorldEvent bus — the live perception firehose, every sense at once
                 <span aria-hidden>→</span>
               </Link>
             </V3Reveal>
