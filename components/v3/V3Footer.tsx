@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Github } from "lucide-react"
+import { Github, SlidersHorizontal } from "lucide-react"
 import buildInfo from "@/lib/build-info.json"
 import { timeAgo } from "@/lib/time-ago"
 import { BioLogo } from "./BioLogo"
@@ -33,6 +33,9 @@ export function V3Footer() {
 
         {/* Right: GitHub repos + version + deploy */}
         <div className="v3-footer__build">
+          <Link href="/preferences" className="v3-footer__gh" title="Device capabilities · /preferences" aria-label="Preferences">
+            <SlidersHorizontal size={13} strokeWidth={2.25} />
+          </Link>
           <a
             href="https://github.com/isenbek"
             target="_blank"

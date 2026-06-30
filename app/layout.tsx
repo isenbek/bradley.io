@@ -9,6 +9,7 @@ import "./globals.css"
 import "./v3.css"
 import { V3Nav } from "@/components/v3/V3Nav"
 import { V3Footer } from "@/components/v3/V3Footer"
+import { RegisterSW } from "@/components/pwa/RegisterSW"
 
 // Bricolage (display) — used for h1, hero text, big numbers. Brand-critical.
 // `swap` so the webfont always wins; next/font auto-generates a metric-
@@ -112,6 +113,8 @@ export const metadata: Metadata = {
   applicationName: "bio·bradley.io",
   category: "technology",
   formatDetection: { email: false, address: false, telephone: false },
+  // iOS add-to-home-screen: standalone chrome, branded title + status bar.
+  appleWebApp: { capable: true, statusBarStyle: "black-translucent", title: "bradley.io" },
 }
 
 export const viewport = {
@@ -242,6 +245,7 @@ export default function RootLayout({
         />
       </head>
       <body>
+        <RegisterSW />
         <div className="v3">
           <V3Nav />
           <main>{children}</main>

@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>offline · bradley.io</title>
+    <style>
+      :root { color-scheme: dark; }
+      html, body { margin: 0; height: 100%; }
+      body {
+        display: grid; place-content: center; gap: 14px; text-align: center;
+        background: #0a0f15; color: #c8dae4;
+        font-family: ui-monospace, "JetBrains Mono", monospace; padding: 24px;
+      }
+      .dot { width: 12px; height: 12px; border-radius: 50%; background: #f59e0b;
+        box-shadow: 0 0 14px #f59e0b; margin: 0 auto; animation: p 1.4s infinite; }
+      @keyframes p { 0%,100% { opacity: 1 } 50% { opacity: .35 } }
+      h1 { font-size: 18px; font-weight: 800; margin: 6px 0 0; color: #eaf6fb; }
+      p { font-size: 13px; margin: 0; color: #6b8a99; max-width: 32ch; }
+      a { color: #38bdf8; text-decoration: none; font-size: 13px; margin-top: 8px; }
+    </style>
+  </head>
+  <body>
+    <span class="dot"></span>
+    <h1>you're offline</h1>
+    <p>Host local, think global — but this page hasn't been cached yet. Reconnect to load it.</p>
+    <a href="/">↻ retry home</a>
+  </body>
+</html>

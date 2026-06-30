@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>device capabilities · bradley.io</title>
+    <style>
+      :root { color-scheme: dark; --font-v3-mono: ui-monospace, "JetBrains Mono", monospace; }
+      html, body { margin: 0; background: #070b11; }
+      body { min-height: 100%; padding: 26px 18px 60px; }
+      .wrap { max-width: 720px; margin: 0 auto; }
+      .hdr { font-family: var(--font-v3-mono); color: #6b8a99; font-size: 11px; margin-bottom: 16px; }
+      .hdr b { color: #eaf6fb; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="hdr"><b>bradley.io</b> — standalone capability scanner · host local, think global</div>
+      <div id="scan"></div>
+    </div>
+    <script src="/preferences/scanner.js"></script>
+    <script>
+      BradleyScanner.mount(document.getElementById("scan"))
+    </script>
+  </body>
+</html>

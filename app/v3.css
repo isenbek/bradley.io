@@ -5675,6 +5675,17 @@ html[data-theme="dark"]:has(.v3) {
 .v3-gps-lg--me { background: #ffd98a; box-shadow: 0 0 0 2px #ffb020; margin-left: 6px; }
 .v3-gps-lg__gap { margin-left: 4px; padding-left: 8px; border-left: 1px solid rgba(255, 255, 255, 0.15); color: #ffce7a; }
 
+/* /preferences — device capability scanner (dark-well, like the data-viz pages) */
+.v3-prefs { padding-top: 28px; padding-bottom: 56px; }
+.v3-prefs__head { margin-bottom: 18px; }
+.v3-prefs__eyebrow { font-family: var(--font-v3-mono), monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #5d7a88; margin: 0 0 6px; }
+.v3-prefs__title { font-size: clamp(28px, 5vw, 40px); font-weight: 800; margin: 0 0 8px; }
+.v3-prefs__lede { max-width: 62ch; color: var(--v3-ink-2, #5d7a88); font-size: 14.5px; line-height: 1.55; margin: 0; }
+.v3-prefs__link { color: #38bdf8; text-decoration: none; white-space: nowrap; }
+.v3-prefs__link:hover { text-decoration: underline; }
+.v3-prefs__mount { margin-top: 8px; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: var(--v3-r-lg); background: #0a0f15; padding: 16px 18px; }
+[data-theme="light"] .v3-prefs__mount { background: #0a0f15; } /* scanner UI is dark by design */
+
 /* ── Lab: senses article — salvaged bill-of-materials ───────────────── */
 .v3-senses-rig {
   border: 1px solid var(--v3-line);
