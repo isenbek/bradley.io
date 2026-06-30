@@ -278,9 +278,18 @@
   async function mount(host) {
     if (typeof host === "string") host = document.querySelector(host)
     if (!host) return
-    let count = 0
-    try { count = (await dbAll("scans")).length } catch { /* private mode / no idb */ }
-    render(host, count)
+    // Render immediately — never block the capability list on IndexedDB (which
+    // can be slow or disabled in private/embedded contexts). The saved-snapshot
+    // count is filled in asynchronously once the store responds.
+    render(host, 0)
+    try {
+      const scans = await dbAll("scans")
+      const meta = host.querySelector(".bsc__meta")
+      const sup = P.filter((p) => safe(p.supported)).length
+      if (meta) meta.textContent = `${P.length} capabilities · ${sup} supported · ${scans.length} saved snapshot${scans.length === 1 ? "" : "s"}`
+    } catch {
+      /* idb unavailable — the scan UI still works, just no persisted history */
+    }
   }
 
   window.BradleyScanner = { mount, scan }

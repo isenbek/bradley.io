@@ -29,7 +29,7 @@ const nextConfig = {
           // Allow first-party (self) access to device capabilities — the maps
           // show "you are here" (geolocation) and the /preferences sensor scanner
           // probes camera/mic/motion sensors. Cross-origin embeds stay blocked.
-          { key: 'Permissions-Policy', value: 'camera=(self), microphone=(self), geolocation=(self), accelerometer=(self), gyroscope=(self), magnetometer=(self), ambient-light-sensor=(self)' },
+          { key: 'Permissions-Policy', value: 'camera=(self), microphone=(self), geolocation=(self), accelerometer=(self), gyroscope=(self), magnetometer=(self)' },
         ],
       },
     ]
