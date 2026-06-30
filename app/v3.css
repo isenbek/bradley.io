@@ -6178,3 +6178,9 @@ html[data-theme="dark"]:has(.v3) {
 .v3-we-chrony__spark { width: 100%; height: 34px; display: block; }
 .v3-we-chrony__zero { stroke: rgba(255, 255, 255, 0.14); stroke-width: 1; stroke-dasharray: 3 3; }
 .v3-we-chrony__trendk { font-family: var(--font-v3-mono), monospace; font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.08em; color: #6b8a99; }
+
+/* mesh mean-RSSI trend sparkline (offset-trend style) */
+.v3-we-mesh__trend { display: flex; flex-direction: column; gap: 2px; margin-top: 8px; }
+.v3-we-mesh__spark { width: 100%; height: 34px; display: block; }
+.v3-we-mesh__zero { stroke: rgba(255, 255, 255, 0.14); stroke-width: 1; stroke-dasharray: 3 3; }
+.v3-we-mesh__trendk { font-family: var(--font-v3-mono), monospace; font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.08em; color: #6b8a99; }

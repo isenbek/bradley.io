@@ -1,12 +1,12 @@
 {
-  "generated": "2026-06-29T09:01:04.865651+00:00",
+  "generated": "2026-06-30T09:06:00.982827+00:00",
   "org": "Nominate-AI",
-  "totalRepos": 121,
+  "totalRepos": 122,
   "firstCommit": "2022-12-09T19:55:42Z",
-  "latestCommit": "2026-06-28T09:00:37Z",
-  "totalCommits": 19905,
+  "latestCommit": "2026-06-30T09:00:07Z",
+  "totalCommits": 20100,
   "languages": {
-    "Python": 86,
+    "Python": 87,
     "TypeScript": 12,
     "Shell": 5,
     "HTML": 4,
@@ -7470,8 +7470,20 @@
     },
     {
       "date": "2026-06-28",
-      "commits": 6,
-      "repos": 6,
+      "commits": 25,
+      "repos": 10,
+      "intensity": 1
+    },
+    {
+      "date": "2026-06-29",
+      "commits": 141,
+      "repos": 28,
+      "intensity": 2
+    },
+    {
+      "date": "2026-06-30",
+      "commits": 35,
+      "repos": 8,
       "intensity": 1
     }
   ],
@@ -7768,11 +7780,12 @@
     {
       "name": "Phase 18",
       "startDate": "2026-06-25",
-      "endDate": "2026-06-25",
-      "description": "Development of cbbackup, cbbilling.",
+      "endDate": "2026-06-29",
+      "description": "Development of cbbackup, cbbilling, cbmarketing.",
       "repos": [
         "cbbackup",
-        "cbbilling"
+        "cbbilling",
+        "cbmarketing"
       ],
       "milestones": [],
       "category": "systems"
@@ -7999,9 +8012,9 @@
       "name": "cbapp",
       "description": "",
       "language": "Python",
-      "commits": 474,
+      "commits": 475,
       "firstCommit": "2025-12-02T23:55:28Z",
-      "lastCommit": "2026-06-25T01:32:56Z",
+      "lastCommit": "2026-06-29T06:00:55Z",
       "phase": "Phase 4"
     },
     {
@@ -8017,9 +8030,9 @@
       "name": "cbdistricts",
       "description": "Initial commit and foundational work including the core `cbdistricts` library, essential data processing logic, and a significant improvement to the basic radio coverage functionality.  This represents the initial deployment of the project.",
       "language": "Python",
-      "commits": 140,
+      "commits": 141,
       "firstCommit": "2025-12-13T21:24:17Z",
-      "lastCommit": "2026-06-27T21:21:19Z",
+      "lastCommit": "2026-06-29T06:01:00Z",
       "phase": "Phase 4"
     },
     {
@@ -8044,18 +8057,18 @@
       "name": "cbai",
       "description": "Ongoing improvements and enhancements to the agent system, focusing on stability, performance optimization, and feature additions.  The recent commit history reflects an iterative approach of fixing bugs, adding new functionality, and streamlining core operations.",
       "language": "Python",
-      "commits": 202,
+      "commits": 203,
       "firstCommit": "2025-12-15T23:30:50Z",
-      "lastCommit": "2026-06-26T21:00:26Z",
+      "lastCommit": "2026-06-29T06:00:53Z",
       "phase": "Phase 4"
     },
     {
       "name": "cbmodels",
       "description": "The CB Models repository is a Python project focused on data handling, specifically with a focus on metadata management and automated processes. It contains recent commits exploring various features related to the `cbmodels` framework, including improved automation for data lifecycle operations (including AWS infrastructure cleanup), changes in workflow, and enhancing data accessibility through auditing.",
       "language": "Python",
-      "commits": 851,
+      "commits": 864,
       "firstCommit": "2025-12-17T05:45:49Z",
-      "lastCommit": "2026-06-27T21:53:04Z",
+      "lastCommit": "2026-06-30T02:08:49Z",
       "phase": "Phase 5"
     },
     {
@@ -8089,36 +8102,36 @@
       "name": "cbinfra",
       "description": "",
       "language": "Python",
-      "commits": 288,
+      "commits": 289,
       "firstCommit": "2025-12-21T21:41:51Z",
-      "lastCommit": "2026-06-25T01:32:56Z",
+      "lastCommit": "2026-06-29T01:34:16Z",
       "phase": "Phase 5"
     },
     {
       "name": "cbfiles",
       "description": "",
       "language": "Python",
-      "commits": 103,
+      "commits": 104,
       "firstCommit": "2025-12-22T17:44:17Z",
-      "lastCommit": "2026-06-25T20:04:21Z",
+      "lastCommit": "2026-06-29T02:33:38Z",
       "phase": "Phase 5"
     },
     {
       "name": "cbdocs",
       "description": "Documentation updates for a server component",
       "language": "Shell",
-      "commits": 233,
+      "commits": 236,
       "firstCommit": "2025-12-24T20:06:09Z",
-      "lastCommit": "2026-06-28T08:00:35Z",
+      "lastCommit": "2026-06-30T08:00:05Z",
       "phase": "Phase 5"
     },
     {
       "name": "cbintel",
       "description": "\u00bfQu\u00e9 es este repositorio de GitHub? El repositorio se centra en la optimizaci\u00f3n y mejora del c\u00f3digo espec\u00edfico relacionado con el proyecto Elections (2026).  Los commits revelan un trabajo intensivo en tareas como la correcci\u00f3n de errores, la refactorizaci\u00f3n del c\u00f3digo, el manejo de datos y las pruebas.",
       "language": "Python",
-      "commits": 948,
+      "commits": 982,
       "firstCommit": "2025-12-31T00:33:04Z",
-      "lastCommit": "2026-06-28T04:00:11Z",
+      "lastCommit": "2026-06-30T04:32:23Z",
       "phase": "Phase 6"
     },
     {
@@ -8134,18 +8147,18 @@
       "name": "cbauth",
       "description": "GitHub repository for a kiosk management system, focusing on security and streamlined user access.",
       "language": "Python",
-      "commits": 203,
+      "commits": 204,
       "firstCommit": "2026-01-02T03:19:11Z",
-      "lastCommit": "2026-06-25T01:32:56Z",
+      "lastCommit": "2026-06-29T06:00:56Z",
       "phase": "Phase 6"
     },
     {
       "name": "cbmesh",
       "description": "The repository, `cbmesh`, is a Python project focused on improving the reliability and safety of message exchange through a decentralized messaging system. Recent commits emphasize improvements to the codebase\u2019s functionality, focusing heavily on security, caching, and message handling. The code prioritizes stability, robustness, and automation via webhook updates.",
       "language": "Python",
-      "commits": 108,
+      "commits": 109,
       "firstCommit": "2026-01-09T17:03:41Z",
-      "lastCommit": "2026-06-25T01:32:57Z",
+      "lastCommit": "2026-06-29T20:04:29Z",
       "phase": "Phase 5"
     },
     {
@@ -8260,9 +8273,9 @@
       "name": "cbcdn",
       "description": "Campaign Brain self-hosted CDN assets",
       "language": "JavaScript",
-      "commits": 25,
+      "commits": 26,
       "firstCommit": "2026-01-28T19:25:59Z",
-      "lastCommit": "2026-06-23T18:46:46Z",
+      "lastCommit": "2026-06-29T23:16:32Z",
       "phase": "Phase 8"
     },
     {
@@ -8296,9 +8309,9 @@
       "name": "cboverseer",
       "description": "Development & Feature Enhancement of CB_SERVICES_DC1 Health Probe and Network Agent Updates",
       "language": "Python",
-      "commits": 153,
+      "commits": 156,
       "firstCommit": "2026-02-02T00:35:45Z",
-      "lastCommit": "2026-06-25T01:32:56Z",
+      "lastCommit": "2026-06-29T01:33:20Z",
       "phase": "Phase 9"
     },
     {
@@ -8386,9 +8399,9 @@
       "name": "cbexecutive",
       "description": "CB Executive Summaries",
       "language": "Unknown",
-      "commits": 132,
+      "commits": 134,
       "firstCommit": "2026-02-20T15:15:58Z",
-      "lastCommit": "2026-06-28T09:00:37Z",
+      "lastCommit": "2026-06-30T09:00:07Z",
       "phase": "Phase 10"
     },
     {
@@ -8404,9 +8417,9 @@
       "name": "cbradio-ui",
       "description": "Development and enhancement of the CBRRadio UI, including rate control, media buying functionality, and improvements to radio verification. Recent commits focus on performance optimization, stability fixes, and frontend improvements.",
       "language": "TypeScript",
-      "commits": 736,
+      "commits": 737,
       "firstCommit": "2026-02-22T03:58:16Z",
-      "lastCommit": "2026-06-26T21:28:16Z",
+      "lastCommit": "2026-06-29T13:15:07Z",
       "phase": "Phase 11"
     },
     {
@@ -8449,9 +8462,9 @@
       "name": "cbcron",
       "description": "Configurable scheduled task engine for cbcron registry updates and snapshots, focusing on refreshing data from the source and managing radio stations to ensure consistent functionality.",
       "language": "Python",
-      "commits": 167,
+      "commits": 175,
       "firstCommit": "2026-02-26T16:28:21Z",
-      "lastCommit": "2026-06-27T16:53:55Z",
+      "lastCommit": "2026-06-30T01:33:47Z",
       "phase": "Phase 11"
     },
     {
@@ -8476,9 +8489,9 @@
       "name": "cbdc",
       "description": "Campaign Brain data center infrastructure \u2014 systemd units, SOPS scripts, health daemon, certbot hooks",
       "language": "Shell",
-      "commits": 360,
+      "commits": 362,
       "firstCommit": "2026-03-01T15:16:40Z",
-      "lastCommit": "2026-06-27T19:22:18Z",
+      "lastCommit": "2026-06-29T01:33:34Z",
       "phase": "Phase 12"
     },
     {
@@ -8494,9 +8507,9 @@
       "name": "cbairtable",
       "description": "Multi-tenant Airtable API wrapper with DuckDB sync",
       "language": "Python",
-      "commits": 80,
+      "commits": 82,
       "firstCommit": "2026-03-03T23:16:57Z",
-      "lastCommit": "2026-06-25T01:32:56Z",
+      "lastCommit": "2026-06-29T20:51:26Z",
       "phase": "Phase 12"
     },
     {
@@ -8521,9 +8534,9 @@
       "name": "infrastructure",
       "description": "Focuses on enhancing core functionality, fixing errors, improving stability, and incorporating new features for the CJ client.",
       "language": "Python",
-      "commits": 795,
+      "commits": 798,
       "firstCommit": "2026-03-12T22:38:20Z",
-      "lastCommit": "2026-06-28T04:30:28Z",
+      "lastCommit": "2026-06-29T04:30:29Z",
       "phase": "Phase 12"
     },
     {
@@ -8575,9 +8588,9 @@
       "name": "cbloom",
       "description": "GitHub repository documentation for an HTML/JavaScript framework focused on creating interactive and visually rich user interfaces. It covers development best practices, code organization, and design principles to create responsive web applications.",
       "language": "HTML",
-      "commits": 2058,
+      "commits": 2104,
       "firstCommit": "2026-03-27T14:52:52Z",
-      "lastCommit": "2026-06-28T04:06:49Z",
+      "lastCommit": "2026-06-30T04:42:47Z",
       "phase": "Phase 13"
     },
     {
@@ -8656,9 +8669,9 @@
       "name": "cbbanking",
       "description": ":cbbanking_campaignbrain integrates with Huntington\u2019s SFTP client for banking, specifically focusing on the integration between cbbanking and its friends. Recent commits prioritize streamlining the codebase through refactorings and improvements to the `db` module, including a focus on data persistence and auditing.",
       "language": "Python",
-      "commits": 84,
+      "commits": 85,
       "firstCommit": "2026-04-21T17:54:44Z",
-      "lastCommit": "2026-06-25T01:32:57Z",
+      "lastCommit": "2026-06-29T06:00:57Z",
       "phase": "Phase 14"
     },
     {
@@ -8710,9 +8723,9 @@
       "name": "cbcalendar",
       "description": "cbcalendar is a Python-based multi-provider, multi-tenant calendar service targeting Google/Apple/Outlook. Recent developments include improvements to the core functionality including: bug fixes, documentation updates, security enhancements (like vault key declaration), and API refinements. The repository also focuses on webhook integrations, including a push-to-deploy system.",
       "language": "Python",
-      "commits": 22,
+      "commits": 23,
       "firstCommit": "2026-04-29T14:33:50Z",
-      "lastCommit": "2026-06-25T01:32:56Z",
+      "lastCommit": "2026-06-29T06:00:58Z",
       "phase": "Phase 15"
     },
     {
@@ -8728,9 +8741,9 @@
       "name": "cbstt",
       "description": "Speech-to-text service (sibling of cbtts). Port 32226 @ stt.campaignbrain.dev.",
       "language": "Python",
-      "commits": 35,
+      "commits": 37,
       "firstCommit": "2026-05-03T18:48:33Z",
-      "lastCommit": "2026-06-25T01:32:56Z",
+      "lastCommit": "2026-06-29T01:10:25Z",
       "phase": "Phase 16"
     },
     {
@@ -8791,27 +8804,27 @@
       "name": "cbcast",
       "description": "This repository, 'cbcast,' is a Python project focused on enhancing the functionality and stability of a channel management system. It includes features such as improved URL flavor design, robust streaming capabilities (including HLS), enhanced channel handling, device-based playlisting, and code optimization for production environments.",
       "language": "Python",
-      "commits": 127,
+      "commits": 133,
       "firstCommit": "2026-06-01T20:40:32Z",
-      "lastCommit": "2026-06-27T17:02:47Z",
+      "lastCommit": "2026-06-29T23:21:56Z",
       "phase": "Phase 17"
     },
     {
       "name": "cbstitch",
       "description": "This GitHub repository contains a FastAPI project focused on maintaining and improving the `cbstitch` application, likely related to data processing or machine learning pipelines. The code involves refactoring, documentation updates, and testing of various aspects of the backend infrastructure.",
       "language": "Python",
-      "commits": 262,
+      "commits": 299,
       "firstCommit": "2026-06-04T17:28:30Z",
-      "lastCommit": "2026-06-27T17:04:14Z",
+      "lastCommit": "2026-06-30T05:30:59Z",
       "phase": "Phase 17"
     },
     {
       "name": "cbhive",
       "description": "The CBhive repository contains a collection of tasks and code changes aimed at improving the core functionality, particularly around data processing pipelines, user experience in Loom DSL, and automated workflows. It focuses on fixes, improvements to documentation, and new features such as automated triage and data validation.",
       "language": "Python",
-      "commits": 164,
+      "commits": 165,
       "firstCommit": "2026-06-07T02:49:36Z",
-      "lastCommit": "2026-06-27T17:07:55Z",
+      "lastCommit": "2026-06-29T22:35:43Z",
       "phase": "Phase 17"
     },
     {
@@ -8827,9 +8840,9 @@
       "name": "website",
       "description": "Nominate-AI website \u2014 v3 design-system sampler template (one of each page type + living style guide)",
       "language": "TypeScript",
-      "commits": 60,
+      "commits": 80,
       "firstCommit": "2026-06-12T05:49:25Z",
-      "lastCommit": "2026-06-25T01:32:57Z",
+      "lastCommit": "2026-06-30T04:45:02Z",
       "phase": "Phase 17"
     },
     {
@@ -8845,9 +8858,9 @@
       "name": "cbdatabase",
       "description": "Commits: feat: cbdatabase \u2014 DuckDB control plane, CBApp-ified for the fleet",
       "language": "Python",
-      "commits": 19,
+      "commits": 20,
       "firstCommit": "2026-06-24T01:45:36Z",
-      "lastCommit": "2026-06-27T21:38:36Z",
+      "lastCommit": "2026-06-29T22:13:38Z",
       "phase": "Phase 17"
     },
     {
@@ -8866,6 +8879,15 @@
       "commits": 8,
       "firstCommit": "2026-06-25T20:55:50Z",
       "lastCommit": "2026-06-27T05:06:45Z",
+      "phase": "Phase 18"
+    },
+    {
+      "name": "cbmarketing",
+      "description": "Centralized brand, color & design-decision service",
+      "language": "Python",
+      "commits": 1,
+      "firstCommit": "2026-06-29T01:30:10Z",
+      "lastCommit": "2026-06-29T01:30:10Z",
       "phase": "Phase 18"
     }
   ]

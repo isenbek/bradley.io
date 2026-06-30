@@ -1,5 +1,5 @@
 {
-  "generated": "2026-06-30T00:01:36.837683",
+  "generated": "2026-06-30T04:01:43.355511",
   "pipelineVersion": "1.0.0",
   "license": {
     "number": "AIP-2026-0112",
@@ -7,11 +7,11 @@
     "issued": "2026-03-08",
     "expires": "NEVER",
     "totalSessions": 112,
-    "totalMessages": 326548,
+    "totalMessages": 327115,
     "totalCostUSD": 0,
-    "totalInputTokens": 30162894,
-    "totalOutputTokens": 266597680,
-    "totalCacheTokens": 75832374598,
+    "totalInputTokens": 30173690,
+    "totalOutputTokens": 267068089,
+    "totalCacheTokens": 75947937184,
     "modelCount": 6,
     "projectCount": 28
   },
@@ -19,10 +19,10 @@
     {
       "modelId": "claude-opus-4-8",
       "displayName": "Opus",
-      "inputTokens": 27905898,
-      "outputTokens": 192890476,
-      "cacheReadTokens": 52619379068,
-      "cacheCreationTokens": 1065027552,
+      "inputTokens": 27916694,
+      "outputTokens": 193360885,
+      "cacheReadTokens": 52734941654,
+      "cacheCreationTokens": 1067122796,
       "costUSD": 0,
       "costShare": 72.4,
       "proficiency": "Expert",
@@ -37,7 +37,7 @@
       "cacheReadTokens": 20423328585,
       "cacheCreationTokens": 409024088,
       "costUSD": 0,
-      "costShare": 24.8,
+      "costShare": 24.7,
       "proficiency": "Proficient",
       "contextWindow": 0,
       "maxOutputTokens": 0
@@ -63,7 +63,7 @@
       "cacheReadTokens": 1608310384,
       "cacheCreationTokens": 47378727,
       "costUSD": 0,
-      "costShare": 1.4,
+      "costShare": 1.3,
       "proficiency": "Exposure",
       "contextWindow": 0,
       "maxOutputTokens": 0
@@ -85,9 +85,9 @@
   "activityHeatmap": [
     {
       "date": "2026-03-08",
-      "count": 13715,
+      "count": 13894,
       "sessions": 1,
-      "toolCalls": 4589,
+      "toolCalls": 4647,
       "intensity": 1
     },
     {
@@ -127,9 +127,9 @@
     },
     {
       "date": "2026-05-09",
-      "count": 32577,
+      "count": 32624,
       "sessions": 1,
-      "toolCalls": 9678,
+      "toolCalls": 9690,
       "intensity": 2
     },
     {
@@ -148,9 +148,9 @@
     },
     {
       "date": "2026-05-28",
-      "count": 60897,
+      "count": 61158,
       "sessions": 3,
-      "toolCalls": 17565,
+      "toolCalls": 17642,
       "intensity": 3
     },
     {
@@ -162,7 +162,7 @@
     },
     {
       "date": "2026-06-01",
-      "count": 15070,
+      "count": 15074,
       "sessions": 20,
       "toolCalls": 4166,
       "intensity": 1
@@ -274,9 +274,9 @@
     },
     {
       "date": "2026-06-29",
-      "count": 1891,
+      "count": 1967,
       "sessions": 1,
-      "toolCalls": 585,
+      "toolCalls": 604,
       "intensity": 1
     },
     {
@@ -544,12 +544,12 @@
     {
       "axis": "Tool Mastery",
       "score": 95,
-      "detail": "115 tools, 79385 calls"
+      "detail": "115 tools, 79551 calls"
     },
     {
       "axis": "Debugging",
       "score": 95,
-      "detail": "55120 debug tool calls"
+      "detail": "55238 debug tool calls"
     },
     {
       "axis": "Architecture",
@@ -559,7 +559,7 @@
     {
       "axis": "Iteration",
       "score": 76,
-      "detail": "2915 msgs/session avg"
+      "detail": "2920 msgs/session avg"
     },
     {
       "axis": "Multi-Project",
@@ -590,24 +590,24 @@
     {
       "name": "cbloom",
       "sessions": 29,
-      "messages": 42142,
+      "messages": 42399,
       "complexity": 10,
       "domain": "General",
       "technologies": [],
       "status": "active",
       "firstActive": "2026-05-28",
-      "lastActive": "2026-06-29"
+      "lastActive": "2026-06-30"
     },
     {
       "name": "cbintel",
       "sessions": 1,
-      "messages": 32577,
+      "messages": 32624,
       "complexity": 10,
       "domain": "General",
       "technologies": [],
       "status": "active",
       "firstActive": "2026-05-09",
-      "lastActive": "2026-06-29"
+      "lastActive": "2026-06-30"
     },
     {
       "name": "cbstitch",
@@ -645,13 +645,13 @@
     {
       "name": "cbmodels",
       "sessions": 1,
-      "messages": 16383,
+      "messages": 16387,
       "complexity": 10,
       "domain": "General",
       "technologies": [],
       "status": "active",
       "firstActive": "2026-05-28",
-      "lastActive": "2026-06-29"
+      "lastActive": "2026-06-30"
     },
     {
       "name": "cbpulse",
@@ -687,7 +687,7 @@
     {
       "name": "bradleyio",
       "sessions": 1,
-      "messages": 13716,
+      "messages": 13894,
       "complexity": 10,
       "domain": "Frontend",
       "technologies": [
@@ -707,13 +707,13 @@
     {
       "name": "cbcast",
       "sessions": 1,
-      "messages": 13208,
+      "messages": 13212,
       "complexity": 10,
       "domain": "General",
       "technologies": [],
       "status": "active",
       "firstActive": "2026-06-01",
-      "lastActive": "2026-06-29"
+      "lastActive": "2026-06-30"
     },
     {
       "name": "cbradio-ui",
@@ -804,13 +804,13 @@
     {
       "name": "cbmarketing",
       "sessions": 1,
-      "messages": 1891,
+      "messages": 1967,
       "complexity": 10,
       "domain": "General",
       "technologies": [],
       "status": "active",
       "firstActive": "2026-06-28",
-      "lastActive": "2026-06-29"
+      "lastActive": "2026-06-30"
     },
     {
       "name": "cbcli",
@@ -825,10 +825,10 @@
     }
   ],
   "tokenEconomy": {
-    "totalInputTokens": 30162894,
-    "totalOutputTokens": 266597680,
-    "totalCacheReadTokens": 75832374598,
-    "totalCacheCreateTokens": 1550974626,
+    "totalInputTokens": 30173690,
+    "totalOutputTokens": 267068089,
+    "totalCacheReadTokens": 75947937184,
+    "totalCacheCreateTokens": 1553069870,
     "totalCostUSD": 0,
     "cacheEfficiency": 98.0,
     "costPerSession": 0.0,
@@ -836,7 +836,7 @@
     "dailyTokens": [
       {
         "date": "2026-03-08",
-        "tokens": 10150582
+        "tokens": 10250778
       },
       {
         "date": "2026-03-28",
@@ -860,7 +860,7 @@
       },
       {
         "date": "2026-05-09",
-        "tokens": 29893318
+        "tokens": 29930382
       },
       {
         "date": "2026-05-11",
@@ -872,7 +872,7 @@
       },
       {
         "date": "2026-05-28",
-        "tokens": 61831681
+        "tokens": 62079902
       },
       {
         "date": "2026-05-29",
@@ -940,7 +940,7 @@
       },
       {
         "date": "2026-06-29",
-        "tokens": 2000868
+        "tokens": 2096592
       },
       {
         "date": "2026-06-30",
@@ -960,42 +960,42 @@
   "skillsCloud": [
     {
       "name": "Go",
-      "count": 8469,
+      "count": 8486,
       "category": "General"
     },
     {
       "name": "Git",
-      "count": 2854,
+      "count": 2859,
       "category": "General"
     },
     {
       "name": "JSON",
-      "count": 2386,
+      "count": 2394,
       "category": "General"
     },
     {
       "name": "CSS",
-      "count": 1284,
+      "count": 1290,
       "category": "Frontend"
     },
     {
       "name": "DuckDB",
-      "count": 1202,
+      "count": 1204,
       "category": "Data Engineering"
     },
     {
       "name": "HTML",
-      "count": 1177,
+      "count": 1182,
       "category": "Frontend"
     },
     {
       "name": "SPI",
-      "count": 1107,
+      "count": 1109,
       "category": "IoT / Edge"
     },
     {
       "name": "Python",
-      "count": 996,
+      "count": 1000,
       "category": "Backend"
     },
     {
@@ -1005,12 +1005,12 @@
     },
     {
       "name": "systemd",
-      "count": 615,
+      "count": 616,
       "category": "DevOps"
     },
     {
       "name": "Bash",
-      "count": 598,
+      "count": 599,
       "category": "General"
     },
     {
@@ -1025,22 +1025,22 @@
     },
     {
       "name": "Rust",
-      "count": 453,
+      "count": 454,
       "category": "Systems"
     },
     {
       "name": "CSV",
-      "count": 410,
+      "count": 411,
       "category": "General"
     },
     {
       "name": "Snowflake",
-      "count": 382,
+      "count": 383,
       "category": "Data Engineering"
     },
     {
       "name": "SQLite",
-      "count": 377,
+      "count": 379,
       "category": "Data Engineering"
     },
     {
@@ -1050,7 +1050,7 @@
     },
     {
       "name": "Anthropic",
-      "count": 355,
+      "count": 357,
       "category": "AI / ML"
     },
     {
@@ -1070,7 +1070,7 @@
     },
     {
       "name": "AWS",
-      "count": 262,
+      "count": 263,
       "category": "DevOps"
     },
     {
@@ -1090,12 +1090,12 @@
     },
     {
       "name": "React",
-      "count": 196,
+      "count": 197,
       "category": "Frontend"
     },
     {
       "name": "Docker",
-      "count": 187,
+      "count": 189,
       "category": "DevOps"
     },
     {

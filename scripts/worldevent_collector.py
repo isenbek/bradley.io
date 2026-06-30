@@ -29,6 +29,7 @@ SERIES_LEN = 60      # rolling per-type scalar-metric history (for value sparkli
 # want a trend sparkline). Type-agnostic by default — only listed types track one.
 SERIES_METRIC = {
     "chrony.tracking": lambda d: d.get("system_time_offset"),
+    "mesh.rssi_map": lambda d: _mesh_mean_rssi(d),
 }
 
 
@@ -108,10 +109,15 @@ def _scalar(v):
     return v
 
 
-def _mesh_summary(d):
+def _mesh_mean_rssi(d):
     links = d.get("links", [])
     rssis = [l.get("rssi") for l in links if isinstance(l.get("rssi"), (int, float))]
-    mean = sum(rssis) / len(rssis) if rssis else 0
+    return sum(rssis) / len(rssis) if rssis else None
+
+
+def _mesh_summary(d):
+    links = d.get("links", [])
+    mean = _mesh_mean_rssi(d) or 0
     n = d.get("units", len(d.get("nodes", [])))
     return f"{n} nodes · {len(links)} links · mean {mean:.0f} dBm"
 
