@@ -30,6 +30,8 @@ SERIES_LEN = 60      # rolling per-type scalar-metric history (for value sparkli
 SERIES_METRIC = {
     "chrony.tracking": lambda d: d.get("system_time_offset"),
     "mesh.rssi_map": lambda d: _mesh_mean_rssi(d),
+    "gps.position": lambda d: d.get("altMSL"),
+    "gps.satellites": lambda d: d.get("uSat"),
 }
 
 

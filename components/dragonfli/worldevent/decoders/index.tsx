@@ -5,6 +5,8 @@
 import type { ComponentType } from "react"
 import { ChronyTracking } from "./ChronyTracking"
 import { MeshRssiMap } from "./MeshRssiMap"
+import { GpsPosition } from "./GpsPosition"
+import { GpsSatellites } from "./GpsSatellites"
 
 type Sample = Record<string, unknown>
 
@@ -17,6 +19,8 @@ export type Decoder = {
 const REGISTRY: Record<string, Decoder> = {
   "chrony.tracking": { Comp: ChronyTracking },
   "mesh.rssi_map": { Comp: MeshRssiMap, wide: true },
+  "gps.position": { Comp: GpsPosition },
+  "gps.satellites": { Comp: GpsSatellites },
 }
 
 export function decoderFor(type: string): Decoder | null {

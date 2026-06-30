@@ -2,6 +2,8 @@
 // Nodes carry pre-computed {x,y} layout + cluster; links carry pairwise RSSI (dBm).
 // Edges are colored + weighted by signal strength; nodes colored by cluster.
 
+import { TrendSpark } from "./TrendSpark"
+
 type Node = { id: string; x: number; y: number; cluster?: string }
 type Link = { a: string; b: string; rssi: number }
 type Mesh = { units?: number; nodes?: Node[]; links?: Link[] }
@@ -27,30 +29,6 @@ function clusterHue(c?: string): number {
   let h = 0
   for (let i = 0; i < (c ?? "").length; i++) h = (h * 31 + (c ?? "").charCodeAt(i)) % 360
   return h
-}
-
-// signed sparkline centered on the series mean — the mean-RSSI trend.
-// RSSI sits around -60 dBm, so we center on the running mean (not zero) and
-// plot deviation from it, mirroring the chrony offset-trend style.
-function RssiSpark({ series }: { series: number[] }) {
-  const w = 200
-  const h = 34
-  const center = series.reduce((a, b) => a + b, 0) / series.length
-  const dev = series.map((v) => v - center)
-  const amp = Math.max(2, ...dev.map((v) => Math.abs(v))) // floor so a steady mesh stays calm
-  const n = dev.length
-  const step = n > 1 ? w / (n - 1) : w
-  const y = (v: number) => h / 2 - (v / amp) * (h / 2 - 2)
-  const pts = dev.map((v, i) => `${(i * step).toFixed(1)},${y(v).toFixed(1)}`).join(" ")
-  // green when the latest sample is above the mean (signal improving), red below
-  const latest = dev[dev.length - 1]
-  const stroke = `hsl(${latest >= 0 ? 130 : 0} 72% 55%)`
-  return (
-    <svg className="v3-we-mesh__spark" viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="none" aria-hidden>
-      <line x1={0} y1={h / 2} x2={w} y2={h / 2} className="v3-we-mesh__zero" />
-      <polyline points={pts} fill="none" stroke={stroke} strokeWidth={1.5} strokeLinejoin="round" strokeLinecap="round" />
-    </svg>
-  )
 }
 
 export function MeshRssiMap({ data, series }: { data: Mesh; series?: number[] }) {
@@ -120,10 +98,9 @@ export function MeshRssiMap({ data, series }: { data: Mesh; series?: number[] })
         ))}
       </div>
       {series && series.length > 1 ? (
-        <div className="v3-we-mesh__trend">
-          <RssiSpark series={series} />
-          <span className="v3-we-mesh__trendk">mean rssi, last {series.length}</span>
-        </div>
+        // RSSI sits around -60 dBm, so center on the running mean; green when the
+        // latest sample is above the mean (signal improving), red below.
+        <TrendSpark series={series} label={`mean rssi, last ${series.length}`} floor={2} />
       ) : null}
     </div>
   )
