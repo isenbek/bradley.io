@@ -10,7 +10,7 @@ type Sample = Record<string, unknown>
 
 export type Decoder = {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  Comp: ComponentType<{ data: any }>
+  Comp: ComponentType<{ data: any; series?: number[] }>
   wide?: boolean // span the full card row (for graphs / maps)
 }
 

@@ -23,6 +23,13 @@ WINDOW = 60          # sparkline / rate window, seconds
 TAIL = 48            # rolling recent-event tail length
 FLUSH_SEC = 1.0      # snapshot cadence
 SAMPLE_CAP = 12000   # bytes — keep full last payload up to this; trim if bigger
+SERIES_LEN = 60      # rolling per-type scalar-metric history (for value sparklines)
+
+# Per-type scalar metric to retain as a value-history series (for decoders that
+# want a trend sparkline). Type-agnostic by default — only listed types track one.
+SERIES_METRIC = {
+    "chrony.tracking": lambda d: d.get("system_time_offset"),
+}
 
 
 def now():
@@ -30,7 +37,7 @@ def now():
 
 
 class TypeAgg:
-    __slots__ = ("count", "first", "last", "buckets", "sample", "last_bytes")
+    __slots__ = ("count", "first", "last", "buckets", "sample", "last_bytes", "series")
 
     def __init__(self, t0):
         self.count = 0
@@ -39,13 +46,22 @@ class TypeAgg:
         self.buckets = defaultdict(int)   # int(second) -> count
         self.sample = None                # last data payload (trimmed)
         self.last_bytes = 0
+        self.series = deque(maxlen=SERIES_LEN)  # rolling scalar-metric history
 
-    def hit(self, sec, data, nbytes):
+    def hit(self, sec, etype, data, nbytes):
         self.count += 1
         self.last = now()
         self.buckets[sec] += 1
         self.sample = cap_sample(data)
         self.last_bytes = nbytes
+        fn = SERIES_METRIC.get(etype)
+        if fn:
+            try:
+                v = fn(data)
+                if isinstance(v, (int, float)):
+                    self.series.append(round(v, 9))
+            except Exception:
+                pass
 
     def spark(self, sec):
         return [self.buckets.get(sec - i, 0) for i in range(WINDOW - 1, -1, -1)]
@@ -187,7 +203,7 @@ def main():
             agg = types.get(etype)
             if agg is None:
                 agg = types[etype] = TypeAgg(t)
-            agg.hit(sec, data, len(pkt))
+            agg.hit(sec, etype, data, len(pkt))
 
             h = hosts[ehost]
             h["count"] += 1
@@ -232,6 +248,7 @@ def main():
                     "firstSeen": round(agg.first, 3),
                     "bytes": agg.last_bytes,
                     "spark": agg.spark(sec),
+                    "series": list(agg.series),
                     "sample": agg.sample,
                 })
 

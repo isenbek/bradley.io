@@ -15,6 +15,7 @@ type WeType = {
   firstSeen: number
   bytes: number
   spark: number[]
+  series?: number[]
   sample: Record<string, unknown> | null
 }
 type WeHost = { host: string; count: number; ageSec: number }
@@ -211,7 +212,7 @@ export function WorldEventBus() {
                 </div>
                 <span className="v3-we-card__share">{(ty.share * 100).toFixed(0)}% of bus</span>
                 {ty.sample ? (
-                  dec ? <dec.Comp data={ty.sample} /> : <GenericSample sample={ty.sample} />
+                  dec ? <dec.Comp data={ty.sample} series={ty.series} /> : <GenericSample sample={ty.sample} />
                 ) : null}
               </div>
             )
