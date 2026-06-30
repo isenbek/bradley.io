@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import { decoderFor, GenericSample } from "./decoders"
 
 // ---- snapshot shape (written by worldevent-collector.service) -------------
 type WeType = {
@@ -14,7 +15,7 @@ type WeType = {
   firstSeen: number
   bytes: number
   spark: number[]
-  sample: Record<string, string | number | boolean> | null
+  sample: Record<string, unknown> | null
 }
 type WeHost = { host: string; count: number; ageSec: number }
 type WeTail = { ts: number; type: string; host: string; id: string; summary: string }
@@ -187,11 +188,17 @@ export function WorldEventBus() {
         ) : (
           types.map((ty) => {
             const hue = hueFor(ty.type)
+            const dec = decoderFor(ty.type)
             return (
-              <div className="v3-we-card" key={ty.type} style={{ ["--we-hue" as string]: `${hue}` }}>
+              <div
+                className={`v3-we-card${dec?.wide ? " v3-we-card--wide" : ""}${dec ? " v3-we-card--decoded" : ""}`}
+                key={ty.type}
+                style={{ ["--we-hue" as string]: `${hue}` }}
+              >
                 <div className="v3-we-card__head">
                   <span className="v3-we-card__dot" aria-hidden />
                   <span className="v3-we-card__type">{ty.type}</span>
+                  {dec ? <span className="v3-we-card__badge">decoded</span> : null}
                   <span className="v3-we-card__age">{fmtAge(ty.ageSec)}</span>
                 </div>
                 <div className="v3-we-card__nums">
@@ -204,14 +211,7 @@ export function WorldEventBus() {
                 </div>
                 <span className="v3-we-card__share">{(ty.share * 100).toFixed(0)}% of bus</span>
                 {ty.sample ? (
-                  <dl className="v3-we-card__sample">
-                    {Object.entries(ty.sample).slice(0, 6).map(([k, v]) => (
-                      <div key={k}>
-                        <dt>{k}</dt>
-                        <dd>{String(v)}</dd>
-                      </div>
-                    ))}
-                  </dl>
+                  dec ? <dec.Comp data={ty.sample} /> : <GenericSample sample={ty.sample} />
                 ) : null}
               </div>
             )

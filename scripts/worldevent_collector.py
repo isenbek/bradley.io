@@ -22,6 +22,7 @@ OUT = os.path.join(OUT_DIR, "worldevent.json")
 WINDOW = 60          # sparkline / rate window, seconds
 TAIL = 48            # rolling recent-event tail length
 FLUSH_SEC = 1.0      # snapshot cadence
+SAMPLE_CAP = 12000   # bytes — keep full last payload up to this; trim if bigger
 
 
 def now():
@@ -43,7 +44,7 @@ class TypeAgg:
         self.count += 1
         self.last = now()
         self.buckets[sec] += 1
-        self.sample = trim(data)
+        self.sample = cap_sample(data)
         self.last_bytes = nbytes
 
     def spark(self, sec):
@@ -55,6 +56,17 @@ class TypeAgg:
     def prune(self, sec):
         for k in [k for k in self.buckets if k <= sec - WINDOW]:
             del self.buckets[k]
+
+
+def cap_sample(data):
+    """Pass the full payload through if it serializes small enough; else trim.
+    Keeps the snapshot bounded while giving rich decoders the real arrays."""
+    try:
+        if len(json.dumps(data, separators=(",", ":"))) <= SAMPLE_CAP:
+            return data
+    except (TypeError, ValueError):
+        pass
+    return trim(data)
 
 
 def trim(data):
@@ -80,8 +92,42 @@ def _scalar(v):
     return v
 
 
-def summarize(data):
-    """One-line, generic summary: up to 3 scalar key=value pairs."""
+def _mesh_summary(d):
+    links = d.get("links", [])
+    rssis = [l.get("rssi") for l in links if isinstance(l.get("rssi"), (int, float))]
+    mean = sum(rssis) / len(rssis) if rssis else 0
+    n = d.get("units", len(d.get("nodes", [])))
+    return f"{n} nodes · {len(links)} links · mean {mean:.0f} dBm"
+
+
+def _chrony_summary(d):
+    off = d.get("system_time_offset", 0) * 1e6
+    return f"stratum {d.get('stratum')} · offset {off:+.0f}µs · {d.get('leap_status')}"
+
+
+def _gps_pos_summary(d):
+    fix = {0: "no", 1: "no", 2: "2D", 3: "3D"}.get(d.get("mode"), "?")
+    return f"{fix} fix · {d.get('lat'):.4f},{d.get('lon'):.4f} · {d.get('altMSL', 0):.0f}m"
+
+
+# type-specific one-liners for the live tail; fall back to generic on any error
+TYPE_SUMMARY = {
+    "mesh.rssi_map": _mesh_summary,
+    "chrony.tracking": _chrony_summary,
+    "gps.position": _gps_pos_summary,
+    "gps.satellites": lambda d: f"{d.get('uSat')}/{d.get('nSat')} sats · pdop {d.get('pdop')}",
+    "adsb.mode_s": lambda d: f"{d.get('beast_type', '?')} · {d.get('raw_hex', '')}",
+}
+
+
+def summarize(etype, data):
+    """One-line summary — type-specific if known, else generic key=value."""
+    fn = TYPE_SUMMARY.get(etype)
+    if fn:
+        try:
+            return fn(data)
+        except Exception:
+            pass
     if not isinstance(data, dict):
         return str(data)[:80]
     parts = []
@@ -152,7 +198,7 @@ def main():
                 "type": etype,
                 "host": ehost,
                 "id": str(ev.get("id", ""))[:8],
-                "summary": summarize(data),
+                "summary": summarize(etype, data),
             })
         except socket.timeout:
             pass
