@@ -1,17 +1,17 @@
 {
-  "generated": "2026-06-30T04:01:43.355511",
+  "generated": "2026-06-30T08:01:50.272336",
   "pipelineVersion": "1.0.0",
   "license": {
-    "number": "AIP-2026-0112",
+    "number": "AIP-2026-0113",
     "class": "ATP",
     "issued": "2026-03-08",
     "expires": "NEVER",
-    "totalSessions": 112,
-    "totalMessages": 327115,
+    "totalSessions": 113,
+    "totalMessages": 327288,
     "totalCostUSD": 0,
-    "totalInputTokens": 30173690,
-    "totalOutputTokens": 267068089,
-    "totalCacheTokens": 75947937184,
+    "totalInputTokens": 30184672,
+    "totalOutputTokens": 267168536,
+    "totalCacheTokens": 75955825630,
     "modelCount": 6,
     "projectCount": 28
   },
@@ -19,10 +19,10 @@
     {
       "modelId": "claude-opus-4-8",
       "displayName": "Opus",
-      "inputTokens": 27916694,
-      "outputTokens": 193360885,
-      "cacheReadTokens": 52734941654,
-      "cacheCreationTokens": 1067122796,
+      "inputTokens": 27927676,
+      "outputTokens": 193461332,
+      "cacheReadTokens": 52742830100,
+      "cacheCreationTokens": 1067300566,
       "costUSD": 0,
       "costShare": 72.4,
       "proficiency": "Expert",
@@ -253,7 +253,7 @@
     },
     {
       "date": "2026-06-23",
-      "count": 864,
+      "count": 867,
       "sessions": 1,
       "toolCalls": 256,
       "intensity": 1
@@ -281,9 +281,9 @@
     },
     {
       "date": "2026-06-30",
-      "count": 270,
-      "sessions": 4,
-      "toolCalls": 96,
+      "count": 440,
+      "sessions": 5,
+      "toolCalls": 146,
       "intensity": 1
     }
   ],
@@ -342,7 +342,7 @@
       {
         "hour": 10,
         "label": "10:00",
-        "count": 0
+        "count": 1
       },
       {
         "hour": 11,
@@ -544,12 +544,12 @@
     {
       "axis": "Tool Mastery",
       "score": 95,
-      "detail": "115 tools, 79551 calls"
+      "detail": "115 tools, 79603 calls"
     },
     {
       "axis": "Debugging",
       "score": 95,
-      "detail": "55238 debug tool calls"
+      "detail": "55271 debug tool calls"
     },
     {
       "axis": "Architecture",
@@ -559,7 +559,7 @@
     {
       "axis": "Iteration",
       "score": 76,
-      "detail": "2920 msgs/session avg"
+      "detail": "2896 msgs/session avg"
     },
     {
       "axis": "Multi-Project",
@@ -686,8 +686,8 @@
     },
     {
       "name": "bradleyio",
-      "sessions": 1,
-      "messages": 13894,
+      "sessions": 2,
+      "messages": 14072,
       "complexity": 10,
       "domain": "Frontend",
       "technologies": [
@@ -825,10 +825,10 @@
     }
   ],
   "tokenEconomy": {
-    "totalInputTokens": 30173690,
-    "totalOutputTokens": 267068089,
-    "totalCacheReadTokens": 75947937184,
-    "totalCacheCreateTokens": 1553069870,
+    "totalInputTokens": 30184672,
+    "totalOutputTokens": 267168536,
+    "totalCacheReadTokens": 75955825630,
+    "totalCacheCreateTokens": 1553247640,
     "totalCostUSD": 0,
     "cacheEfficiency": 98.0,
     "costPerSession": 0.0,
@@ -944,7 +944,7 @@
       },
       {
         "date": "2026-06-30",
-        "tokens": 279632
+        "tokens": 391061
       }
     ]
   },
@@ -960,7 +960,7 @@
   "skillsCloud": [
     {
       "name": "Go",
-      "count": 8486,
+      "count": 8490,
       "category": "General"
     },
     {
@@ -970,12 +970,12 @@
     },
     {
       "name": "JSON",
-      "count": 2394,
+      "count": 2396,
       "category": "General"
     },
     {
       "name": "CSS",
-      "count": 1290,
+      "count": 1297,
       "category": "Frontend"
     },
     {
