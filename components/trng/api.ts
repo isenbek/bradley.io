@@ -91,7 +91,21 @@ async function getJSON<T>(path: string, signal?: AbortSignal): Promise<T> {
   return res.json() as Promise<T>
 }
 
-export const getHealth = (s?: AbortSignal) => getJSON<HealthResponse>("/health", s)
+// The geiger daemon returns HTTP 503 (with the health payload nested under
+// `detail`) when it self-reports unhealthy — e.g. a stale events-logger CSV —
+// even while it's reachable and the entropy pool is full. Parse that body
+// instead of throwing so the dashboard degrades gracefully rather than going
+// fully "offline · upstream unreachable". Only a real network failure throws.
+export async function getHealth(s?: AbortSignal): Promise<HealthResponse> {
+  const res = await fetch(`${TRNG_API}/health`, { signal: s, cache: "no-store" })
+  if (res.ok || res.status === 503) {
+    const body = (await res.json().catch(() => null)) as
+      | (HealthResponse & { detail?: HealthResponse })
+      | null
+    if (body) return body.detail ?? body
+  }
+  throw new Error(`/health: ${res.status}`)
+}
 export const getStats = (s?: AbortSignal) => getJSON<StatsResponse>("/stats", s)
 export const getLatestMetric = (s?: AbortSignal) =>
   getJSON<{ row: MetricRow | null }>("/metrics/latest", s)

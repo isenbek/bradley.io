@@ -155,21 +155,23 @@ export function V3TrngDashboard() {
     const ctrl = new AbortController()
 
     const loadFast = async () => {
-      try {
-        const [h, s, c] = await Promise.all([
-          getHealth(ctrl.signal),
-          getStats(ctrl.signal),
-          getContinuous(ctrl.signal),
-        ])
-        if (!mounted) return
-        setHealth(h)
-        setStats(s)
-        setCont(c)
-        setError(false)
-        setLastUpdated(Date.now())
-      } catch {
-        if (mounted) setError(true)
+      // Decoupled so one degraded/failed endpoint doesn't blank the others —
+      // e.g. a stale /health shouldn't discard a perfectly good /stats.
+      const [h, s, c] = await Promise.allSettled([
+        getHealth(ctrl.signal),
+        getStats(ctrl.signal),
+        getContinuous(ctrl.signal),
+      ])
+      if (!mounted) return
+      if (h.status === "fulfilled") {
+        setHealth(h.value)
+        setError(false) // reachable (even if self-reporting degraded)
+      } else if (h.reason?.name !== "AbortError") {
+        setError(true) // health genuinely unreachable → offline
       }
+      if (s.status === "fulfilled") setStats(s.value)
+      if (c.status === "fulfilled") setCont(c.value)
+      setLastUpdated(Date.now())
     }
 
     const loadSlow = async () => {
@@ -249,6 +251,12 @@ export function V3TrngDashboard() {
             {isOk
               ? `entropy pool · ${health!.pool_has_bytes ? "filled" : "low"} · csv ${
                   health!.events_csv_fresh ? "fresh" : "stale"
+                }`
+              : health
+              ? // reachable but self-reporting degraded (e.g. stale events-logger
+                // CSV) — the pool + entropy still work, so keep the dashboard live
+                `degraded · pool ${health.pool_has_bytes ? "filled" : "low"} · csv ${
+                  health.events_csv_fresh ? "fresh" : "stale"
                 }`
               : error
               ? "offline · upstream unreachable"
