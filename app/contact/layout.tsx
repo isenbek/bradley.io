@@ -12,6 +12,12 @@ export const metadata: Metadata = {
     url: "https://bradley.io/contact",
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Contact — bio·bradley.io",
+    description:
+      "Drop me a line. Email, GitHub, or just a sketch. Based in Grand Rapids, MI.",
+  },
 }
 
 export default function V3ContactLayout({ children }: { children: React.ReactNode }) {

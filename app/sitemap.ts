@@ -30,9 +30,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/the-shift`, changeFrequency: "monthly", priority: 0.8, lastModified: now },
     { url: `${base}/terminal`, changeFrequency: "monthly", priority: 0.5, lastModified: now },
     { url: `${base}/trng`, changeFrequency: "daily", priority: 0.6, lastModified: now },
+    { url: `${base}/trng/space`, changeFrequency: "weekly", priority: 0.5, lastModified: now },
     { url: `${base}/dragonfli`, changeFrequency: "daily", priority: 0.6, lastModified: now },
+    { url: `${base}/dragonfli/airspace`, changeFrequency: "daily", priority: 0.5, lastModified: now },
+    { url: `${base}/dragonfli/gps`, changeFrequency: "daily", priority: 0.5, lastModified: now },
+    { url: `${base}/dragonfli/worldevent`, changeFrequency: "daily", priority: 0.5, lastModified: now },
     { url: `${base}/sdr`, changeFrequency: "daily", priority: 0.6, lastModified: now },
+    { url: `${base}/meatball`, changeFrequency: "daily", priority: 0.6, lastModified: now },
+    { url: `${base}/lab/senses`, changeFrequency: "monthly", priority: 0.5, lastModified: now },
+    { url: `${base}/lab/listening`, changeFrequency: "monthly", priority: 0.5, lastModified: now },
+    { url: `${base}/lab/motion`, changeFrequency: "monthly", priority: 0.5, lastModified: now },
+    { url: `${base}/lab/bio-mark`, changeFrequency: "monthly", priority: 0.5, lastModified: now },
     // /style-guide was retired with the v3 swap — archived under app/_legacy.
+    // /eyes and /meatball/{log,memory} stay out — noindex by design.
   ]
 
   // Timeline pages

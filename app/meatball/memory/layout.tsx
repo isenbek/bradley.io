@@ -12,6 +12,11 @@ export const metadata: Metadata = {
     url: "https://bradley.io/meatball/memory",
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Meatball's memory — moments lined up",
+    description: "Motion + speech events on one timeline, each with the scene before & after.",
+  },
 }
 
 export default function MemoryLayout({ children }: { children: React.ReactNode }) {

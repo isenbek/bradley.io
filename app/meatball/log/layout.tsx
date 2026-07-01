@@ -12,6 +12,11 @@ export const metadata: Metadata = {
     url: "https://bradley.io/meatball/log",
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Meatball's logbook — what it noticed",
+    description: "A live event log of motion the cameras caught and qwen3-vl named.",
+  },
 }
 
 export default function LogLayout({ children }: { children: React.ReactNode }) {

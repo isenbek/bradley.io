@@ -19,6 +19,12 @@ export const metadata: Metadata = {
     url: "https://bradley.io/projects/tinymachines",
     type: "article",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "tinymachines — Lab Timeline",
+    description:
+      "Hardware, signals, agentic experiments — the lab umbrella behind SDR, TRNG, Dragonfli, and more.",
+  },
 }
 
 function loadTimeline(): NominateTimeline | null {
@@ -39,12 +45,38 @@ export default function V3TinyMachinesTimeline() {
   if (!data) notFound()
 
   return (
-    <MissionTimeline
-      displayName="tinymachines"
-      eyebrow="Lab umbrella"
-      accent="gold"
-      lede="The garage-lab umbrella. ESP32 mesh, software-defined radio, true randomness from radioactive decay, ADS-B receivers — all the hardware-meets-AI experiments live here."
-      data={data}
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "CreativeWork",
+            "@id": "https://bradley.io/projects/tinymachines",
+            url: "https://bradley.io/projects/tinymachines",
+            name: "tinymachines — Lab Timeline",
+            description:
+              "Development timeline of the tinymachines lab — hardware, signals, agentic experiments. 60+ repos across 9 phases.",
+            author: { "@id": "https://bradley.io/#person" },
+            isPartOf: { "@id": "https://bradley.io/#website" },
+            breadcrumb: {
+              "@type": "BreadcrumbList",
+              itemListElement: [
+                { "@type": "ListItem", position: 1, name: "Home", item: "https://bradley.io/" },
+                { "@type": "ListItem", position: 2, name: "Projects", item: "https://bradley.io/projects" },
+                { "@type": "ListItem", position: 3, name: "tinymachines", item: "https://bradley.io/projects/tinymachines" },
+              ],
+            },
+          }),
+        }}
+      />
+      <MissionTimeline
+        displayName="tinymachines"
+        eyebrow="Lab umbrella"
+        accent="gold"
+        lede="The garage-lab umbrella. ESP32 mesh, software-defined radio, true randomness from radioactive decay, ADS-B receivers — all the hardware-meets-AI experiments live here."
+        data={data}
+      />
+    </>
   )
 }

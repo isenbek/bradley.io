@@ -12,6 +12,12 @@ export const metadata: Metadata = {
     url: "https://bradley.io/lab",
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Lab — bio·bradley.io",
+    description:
+      "Frontier experiments — hardware, AI, signals, creative computing. Things that might not ship.",
+  },
 }
 
 export default function V3LabLayout({ children }: { children: React.ReactNode }) {

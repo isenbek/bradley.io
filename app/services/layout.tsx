@@ -12,6 +12,12 @@ export const metadata: Metadata = {
     url: "https://bradley.io/services",
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Services — bio·bradley.io",
+    description:
+      "Distributed systems, data pipelines, edge/IoT, AI/ML integration. 15+ years building production systems at scale.",
+  },
 }
 
 export default function V3ServicesLayout({ children }: { children: React.ReactNode }) {

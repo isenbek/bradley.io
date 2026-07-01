@@ -136,14 +136,7 @@ function Radar({
         </div>
       </div>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "minmax(280px, 380px) 1fr",
-          gap: 22,
-          alignItems: "start",
-        }}
-      >
+      <div className="v3-radar-layout">
         <div className="v3-radar">
           <svg viewBox={`0 0 ${SIZE} ${SIZE}`} className="v3-radar__svg">
             <defs>

@@ -11,6 +11,11 @@ export const metadata: Metadata = {
     url: "https://bradley.io/projects",
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Projects — bio·bradley.io",
+    description: "Hardware, AI, data, systems, research — 86+ projects, mostly open, all self-hosted.",
+  },
 }
 
 export default function V3ProjectsLayout({ children }: { children: React.ReactNode }) {

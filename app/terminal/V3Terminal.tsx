@@ -155,7 +155,7 @@ function Experience({ data }: { data: SiteData | null }) {
       <div className="v3-term__accent">Professional experience timeline:</div>
       <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 10 }}>
         {tl.map((e) => (
-          <div key={e.year} style={{ display: "grid", gridTemplateColumns: "120px 1fr", gap: 12 }}>
+          <div key={e.year} className="v3-term__tl-row">
             <div className="v3-term__accent" style={{ fontSize: "0.9em" }}>
               {e.year}
             </div>

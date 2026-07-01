@@ -12,6 +12,12 @@ export const metadata: Metadata = {
     url: "https://bradley.io/mcp",
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "MCP Catalog — bio·bradley.io",
+    description:
+      "Campaign Brain MCP services — AI, data, communication, infrastructure, business. All open via MCP to LLM agents.",
+  },
 }
 
 export default function V3McpLayout({ children }: { children: React.ReactNode }) {

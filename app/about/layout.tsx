@@ -12,6 +12,12 @@ export const metadata: Metadata = {
     url: "https://bradley.io/about",
     type: "profile",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "About — bio·bradley.io",
+    description:
+      "Bradley Isenbek — hardware hacker, data architect, AI pilot. 15+ years, ESP32 to Fortune-500 warehouses.",
+  },
 }
 
 export default function V3AboutLayout({ children }: { children: React.ReactNode }) {

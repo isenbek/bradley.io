@@ -12,6 +12,12 @@ export const metadata: Metadata = {
     url: "https://bradley.io/the-shift",
     type: "article",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "The Shift — bio·bradley.io",
+    description:
+      "How AI rewrites the economics of building software — one person covering ground that used to need a team.",
+  },
 }
 
 export default function V3TheShiftLayout({ children }: { children: React.ReactNode }) {

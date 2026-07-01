@@ -12,6 +12,12 @@ export const metadata: Metadata = {
     url: "https://bradley.io/papers",
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Papers — bio·bradley.io",
+    description:
+      "Active research notes and papers — seismology, space weather, climate, cross-domain analysis.",
+  },
 }
 
 export default function V3PapersLayout({ children }: { children: React.ReactNode }) {

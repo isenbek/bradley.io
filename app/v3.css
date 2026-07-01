@@ -359,8 +359,9 @@ html[data-theme="dark"]:has(.v3) {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 34px;
-  height: 34px;
+  /* ≥40px tap target */
+  width: 40px;
+  height: 40px;
   background: transparent;
   border: 1px solid var(--v3-line);
   border-radius: var(--v3-r-sm);
@@ -387,6 +388,8 @@ html[data-theme="dark"]:has(.v3) {
   border: 1px solid var(--v3-line);
   color: var(--v3-charcoal);
   padding: 6px 8px;
+  min-width: 40px;
+  min-height: 40px;
   border-radius: var(--v3-r-sm);
   cursor: pointer;
   transition: background 0.15s, border-color 0.15s;
@@ -3640,6 +3643,19 @@ html[data-theme="dark"]:has(.v3) {
 .v3-term__accent { color: var(--v3-blue-300); }
 .v3-term__bullet { color: var(--v3-gold); }
 
+/* experience timeline row — year column collapses above the entry on phones */
+.v3-term__tl-row {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 12px;
+}
+@media (max-width: 560px) {
+  .v3-term__tl-row {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+}
+
 .v3-term__cursor {
   display: inline-block;
   width: 0.6em;
@@ -3908,6 +3924,18 @@ html[data-theme="dark"]:has(.v3) {
 }
 
 /* ============ RADAR (dragonfli) ============ */
+/* radar scope + detail column; the 280px scope floor overflows a phone, so
+   stack the two columns once the pair can't share the row */
+.v3-radar-layout {
+  display: grid;
+  grid-template-columns: minmax(280px, 380px) 1fr;
+  gap: 22px;
+  align-items: start;
+}
+@media (max-width: 720px) {
+  .v3-radar-layout { grid-template-columns: 1fr; }
+}
+
 .v3-radar {
   position: relative;
   display: flex;
@@ -4568,6 +4596,14 @@ html[data-theme="dark"]:has(.v3) {
 }
 
 .v3-mission-hero__stat:last-child { border-right: none; }
+
+@media (max-width: 480px) {
+  .v3-mission-hero__stats {
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 10px;
+  }
+  .v3-mission-hero__stat:nth-child(2) { border-right: none; }
+}
 
 .v3-mission-hero__stat-val {
   font-family: var(--font-v3-display), "Bricolage Grotesque", sans-serif;
@@ -5282,6 +5318,11 @@ html[data-theme="dark"]:has(.v3) {
   border: 1px solid rgba(120, 200, 230, 0.18);
   backdrop-filter: blur(8px);
   max-width: 200px;
+}
+/* small phones: drop the layer panel below the live pill's row so the two
+   absolute overlays can't collide across a ≤360px map */
+@media (max-width: 480px) {
+  .v3-air__panel { top: 52px; max-width: 172px; }
 }
 .v3-air__lyr {
   display: flex; align-items: center; gap: 8px;

@@ -12,6 +12,12 @@ export const metadata: Metadata = {
     url: "https://bradley.io/cost-analysis",
     type: "article",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Cost Analysis — bio·bradley.io",
+    description:
+      "$61K, 117 days, one person, with Claude. Vs a $1.3M, 9-month, 9.5-person team.",
+  },
 }
 
 export default function V3CostAnalysisLayout({ children }: { children: React.ReactNode }) {

@@ -43,6 +43,11 @@ export async function generateMetadata({
         url: `https://bradley.io/projects/${slug}`,
         type: "article",
       },
+      twitter: {
+        card: "summary_large_image",
+        title: `${project.name} | bio·bradley.io`,
+        description,
+      },
     }
   }
 
@@ -61,6 +66,11 @@ export async function generateMetadata({
         description,
         url: `https://bradley.io/projects/${slug}`,
         type: "article",
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: `${match.repo.name} | ${match.org} timeline`,
+        description,
       },
     }
   }

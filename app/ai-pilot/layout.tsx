@@ -12,6 +12,12 @@ export const metadata: Metadata = {
     url: "https://bradley.io/ai-pilot",
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "AI Pilot License — bio·bradley.io",
+    description:
+      "Live flight log — sessions, missions, models, tokens. Built with Claude as co-pilot.",
+  },
 }
 
 export default function V3AIPilotLayout({ children }: { children: React.ReactNode }) {
