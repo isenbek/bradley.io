@@ -367,16 +367,46 @@ export default async function V3Home() {
       </section>
 
       {/* RECENT ========================================================= */}
+      {/* Curated teaser only — the full experiment catalog lives at /lab
+          (single source of truth; this grid used to mirror all 9 cards). */}
       <section className="v3-section v3-section--paper">
         <div className="v3-wrap">
           <V3Reveal>
-            <div className="v3-sec-head">
-              <div className="v3-sec-head__num">02 / RECENT</div>
-              <h2>Currently building.</h2>
-              <p>
-                A few of the systems running right now. Most are open, all are self-hosted, none
-                live behind a corporate proxy.
-              </p>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "flex-end",
+                gap: 16,
+                flexWrap: "wrap",
+                marginBottom: 24,
+              }}
+            >
+              <div className="v3-sec-head" style={{ marginBottom: 0 }}>
+                <div className="v3-sec-head__num">02 / RECENT</div>
+                <h2 style={{ marginBottom: 6 }}>Currently building.</h2>
+                <p>
+                  The flagship stories — the rest of the bench (radios, robots, random
+                  bits) lives in the lab.
+                </p>
+              </div>
+              <Link
+                href="/lab"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 6,
+                  fontFamily: "var(--font-v3-mono), monospace",
+                  fontSize: 12,
+                  fontWeight: 700,
+                  letterSpacing: "0.08em",
+                  textTransform: "uppercase",
+                  color: "var(--v3-gold-dk)",
+                  textDecoration: "none",
+                }}
+              >
+                Everything in the lab <ArrowRight size={13} strokeWidth={2.5} />
+              </Link>
             </div>
           </V3Reveal>
 
@@ -410,46 +440,11 @@ export default async function V3Home() {
                 href: "/cost-analysis",
               },
               {
-                tag: "Live",
-                tagColor: "green",
-                title: "sdr-api",
-                blurb: "Software-defined radio scanner archive — band registry, soak logs, top frequencies.",
-                href: "/sdr",
-              },
-              {
-                tag: "Live",
-                tagColor: "green",
-                title: "Dragonfli",
-                blurb: "1090 MHz ADS-B receiver — local radar, active aircraft, FAA registry, trajectory predictor.",
-                href: "/dragonfli",
-              },
-              {
-                tag: "Live",
-                tagColor: "green",
-                title: "HOTBITS TRNG",
-                blurb: "Random bits from radioactive decay — NIST-tested, Geiger-fed, served live.",
-                href: "/trng",
-              },
-              {
-                tag: "Beta",
+                tag: "Hub",
                 tagColor: "gold",
-                title: "MCP Catalog",
-                blurb: "Campaign Brain's 44 FastAPI services, indexed for LLM agents. Reading room for the MCP era.",
-                href: "/mcp",
-              },
-              {
-                tag: "Research",
-                tagColor: "coral",
-                title: "Papers",
-                blurb: "TerraPulse research — seismology, space weather, climate, cross-domain. 72 studies, open data.",
-                href: "/papers",
-              },
-              {
-                tag: "CLI",
-                tagColor: "blue",
-                title: "Terminal",
-                blurb: "Interactive shell into the portfolio. Same data, command-line. Type help and poke around.",
-                href: "/terminal",
+                title: "The Lab",
+                blurb: "Live dashboards, hardware demos, the sensory robot, field notes — the full bench on one page.",
+                href: "/lab",
               },
             ].map((item, i) => (
               <V3Reveal key={item.title} delay={i * 60}>
