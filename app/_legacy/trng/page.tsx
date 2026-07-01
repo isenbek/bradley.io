@@ -10,7 +10,6 @@ import {
   MetricsChart,
   NISTPanel,
   BatteryStrip,
-  LiveBits,
   getHealth,
   getStats,
   getLatestMetric,
@@ -92,7 +91,6 @@ export default function TRNGPage() {
         {series.length > 1 && <MetricsChart data={series} />}
         <NISTPanel cont={cont} />
         {battery.length > 0 && <BatteryStrip rows={battery} />}
-        <LiveBits />
 
         <div
           className="rounded-2xl p-5 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3"
