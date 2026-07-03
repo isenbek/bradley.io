@@ -8,6 +8,7 @@ import { MeshRssiMap } from "./MeshRssiMap"
 import { GpsPosition } from "./GpsPosition"
 import { GpsSatellites } from "./GpsSatellites"
 import { BleDeviceCensus } from "./BleDeviceCensus"
+import { AdsbUat } from "./AdsbUat"
 
 type Sample = Record<string, unknown>
 
@@ -23,6 +24,7 @@ const REGISTRY: Record<string, Decoder> = {
   "gps.position": { Comp: GpsPosition },
   "gps.satellites": { Comp: GpsSatellites },
   "ble.device_census": { Comp: BleDeviceCensus },
+  "adsb.uat": { Comp: AdsbUat },
 }
 
 export function decoderFor(type: string): Decoder | null {
