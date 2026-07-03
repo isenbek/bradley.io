@@ -56,6 +56,14 @@ export interface Job {
   notes: string | null
 }
 
+export interface FleetChannels {
+  generated_at: string
+  data_dir?: string
+  channels_global: Record<string, number>
+  channels_per_node: Record<string, Record<string, number>>
+  active_channels_global: number[]
+}
+
 async function getJSON<T>(path: string, signal?: AbortSignal): Promise<T> {
   const res = await fetch(`${SDR_PROXY}${path}`, { signal, cache: "no-store" })
   if (!res.ok) throw new Error(`${path}: ${res.status}`)
@@ -68,3 +76,5 @@ export const getSoak = (s?: AbortSignal) => getJSON<SoakBand[]>("/soak", s)
 export const getSoakSummary = (band: string, s?: AbortSignal) =>
   getJSON<SoakSummary>(`/soak/${encodeURIComponent(band)}/summary`, s)
 export const getJobs = (s?: AbortSignal) => getJSON<Job[]>("/jobs", s)
+export const getFleetChannels = (s?: AbortSignal) =>
+  getJSON<FleetChannels>("/fleet/channels", s)

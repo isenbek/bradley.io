@@ -7,6 +7,7 @@ import { ChronyTracking } from "./ChronyTracking"
 import { MeshRssiMap } from "./MeshRssiMap"
 import { GpsPosition } from "./GpsPosition"
 import { GpsSatellites } from "./GpsSatellites"
+import { BleDeviceCensus } from "./BleDeviceCensus"
 
 type Sample = Record<string, unknown>
 
@@ -21,6 +22,7 @@ const REGISTRY: Record<string, Decoder> = {
   "mesh.rssi_map": { Comp: MeshRssiMap, wide: true },
   "gps.position": { Comp: GpsPosition },
   "gps.satellites": { Comp: GpsSatellites },
+  "ble.device_census": { Comp: BleDeviceCensus },
 }
 
 export function decoderFor(type: string): Decoder | null {

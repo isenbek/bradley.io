@@ -4,11 +4,13 @@ import { useEffect, useMemo, useState } from "react"
 import { ExternalLink } from "lucide-react"
 import {
   getBands,
+  getFleetChannels,
   getHealth,
   getJobs,
   getSoak,
   getSoakSummary,
   type Band,
+  type FleetChannels,
   type HealthResponse,
   type Job,
   type SoakBand,
@@ -55,6 +57,7 @@ export function V3SdrDashboard() {
   const [bands, setBands] = useState<Band[]>([])
   const [soak, setSoak] = useState<SoakBand[]>([])
   const [jobs, setJobs] = useState<Job[]>([])
+  const [channels, setChannels] = useState<FleetChannels | null>(null)
   const [error, setError] = useState(false)
   const [lastUpdated, setLastUpdated] = useState<number | null>(null)
 
@@ -81,11 +84,16 @@ export function V3SdrDashboard() {
       const b = await safe(() => getBands(ctrl.signal))
       const s = await safe(() => getSoak(ctrl.signal))
       const j = await safe(() => getJobs(ctrl.signal))
+      // fleet/channels is a light aggregate; the other /fleet/* endpoints are
+      // heavy and can 504, so we only pull channels here and hide the panel if
+      // it ever fails to land.
+      const c = await safe(() => getFleetChannels(ctrl.signal))
       if (!mounted) return
       if (h) setHealth(h)
       if (b) setBands(b)
       if (s) setSoak(s)
       if (j) setJobs(j)
+      if (c) setChannels(c)
       setError(h === null)
       setLastUpdated(Date.now())
     }
@@ -134,6 +142,24 @@ export function V3SdrDashboard() {
 
   const topByHits = useMemo(() => [...soak].sort((a, b) => b.n_hits - a.n_hits), [soak])
   const maxFreqHit = summary?.top?.[0]?.n ?? 1
+
+  // Zigbee 802.15.4 channel occupancy across the collector fleet
+  const channelRows = useMemo(() => {
+    const g = channels?.channels_global ?? {}
+    const rows = Object.entries(g)
+      .map(([ch, count]) => ({ ch: Number(ch), count }))
+      .filter((r) => Number.isFinite(r.ch) && r.count > 0)
+      .sort((a, b) => a.ch - b.ch)
+    const max = Math.max(1, ...rows.map((r) => r.count))
+    const total = rows.reduce((s, r) => s + r.count, 0)
+    return { rows, max, total }
+  }, [channels])
+  const activeChannels = useMemo(
+    () => [...(channels?.active_channels_global ?? [])].sort((a, b) => a - b),
+    [channels]
+  )
+  const activeSet = useMemo(() => new Set(activeChannels), [activeChannels])
+  const channelNodes = channels ? Object.keys(channels.channels_per_node ?? {}).length : 0
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
@@ -301,6 +327,69 @@ export function V3SdrDashboard() {
           <div className="v3-empty">no data</div>
         )}
       </article>
+
+      {/* ZIGBEE CHANNEL OCCUPANCY (802.15.4) ============================ */}
+      {channels && channelRows.rows.length > 0 ? (
+        <article className="v3-panel">
+          <div style={{ marginBottom: 12 }}>
+            <div className="v3-panel-head" style={{ marginBottom: 4 }}>
+              Zigbee channel occupancy
+            </div>
+            <div
+              style={{
+                fontFamily: "var(--font-v3-mono), monospace",
+                fontSize: 11,
+                color: "var(--v3-slate)",
+              }}
+            >
+              802.15.4 · {channelNodes} node{channelNodes === 1 ? "" : "s"} ·{" "}
+              {channelRows.total.toLocaleString()} frames
+              {activeChannels.length
+                ? ` · active ${activeChannels.join(" · ")}`
+                : ""}
+            </div>
+          </div>
+
+          {channelRows.rows.map((r) => {
+            const pct = (r.count / channelRows.max) * 100
+            const active = activeSet.has(r.ch)
+            return (
+              <div key={r.ch} className="v3-freq-row">
+                <div className="v3-freq-row__head">
+                  <span className="v3-freq-row__hz">
+                    ch {r.ch}
+                    {active ? (
+                      <span
+                        style={{
+                          marginLeft: 8,
+                          fontSize: 9.5,
+                          letterSpacing: "0.1em",
+                          textTransform: "uppercase",
+                          color: "var(--v3-green-dk)",
+                        }}
+                      >
+                        active
+                      </span>
+                    ) : null}
+                  </span>
+                  <span className="v3-freq-row__n">
+                    {r.count.toLocaleString()} frames
+                  </span>
+                </div>
+                <div className="v3-freq-row__track">
+                  <div
+                    className="v3-freq-row__fill"
+                    style={{
+                      width: `${Math.max(pct, 2)}%`,
+                      opacity: active ? 1 : 0.4,
+                    }}
+                  />
+                </div>
+              </div>
+            )
+          })}
+        </article>
+      ) : null}
 
       {/* SOAK ARCHIVE + JOB HISTORY (two cols) ========================== */}
       <div
