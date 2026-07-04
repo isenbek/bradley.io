@@ -10,6 +10,9 @@ WorkingDirectory=/home/bisenbek/projects/bradleyio
 Environment="NODE_ENV=production"
 Environment="PORT=32221"
 Environment="PATH=/home/bisenbek/.nvm/versions/node/v24.0.1/bin:/usr/local/bin:/usr/bin:/bin"
+# Secrets (not in the repo): WORLDSINK_TOKEN, etc. The `-` makes it optional so
+# the unit still starts if the file is absent (e.g. a fresh checkout).
+EnvironmentFile=-/etc/bradley-io.env
 ExecStart=/home/bisenbek/.nvm/versions/node/v24.0.1/bin/npm run start
 Restart=always
 RestartSec=5
