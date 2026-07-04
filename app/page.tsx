@@ -6,6 +6,7 @@ import { HotbitsHero } from "@/components/home/HotbitsHero"
 import { AirspacePromo } from "@/components/home/AirspacePromo"
 import { GpsPromo } from "@/components/home/GpsPromo"
 import { WorldEventPromo } from "@/components/home/WorldEventPromo"
+import { FleetPromo } from "@/components/home/FleetPromo"
 import { HeroStats } from "@/components/v3/HeroStats"
 import { MissionHeros } from "@/components/v3/MissionHeros"
 import { V3Reveal } from "@/components/v3/V3Reveal"
@@ -80,6 +81,10 @@ export default async function V3Home() {
 
           <V3Reveal delay={252}>
             <WorldEventPromo />
+          </V3Reveal>
+
+          <V3Reveal delay={253}>
+            <FleetPromo />
           </V3Reveal>
 
           <V3Reveal delay={254}>
