@@ -125,6 +125,8 @@ missing `.env` degrades gracefully rather than crashing.
 | `activity-pulse.json` stale (> a few min) | minutely cron not firing, or `~/.claude/projects` gone | `crontab -l`; check cron is running; verify the dir exists |
 | 4-hourly outputs stale (> 4h) | `refresh-4h.sh` erroring early | read `/tmp/bradleyio-pipeline.log`; run the chain by hand |
 | **`ERROR: fetched 0 repos for <org>`** in log | **`gh` token expired** | **`gh auth login -h github.com`** (interactive) — timelines are preserved by the guard until then |
+| Same `fetched 0 repos` error **persists after `gh` is fixed** | **poisoned 24h cache** — a fetch that ran while `gh` was down wrote `raw_repos: []` into `.<org-slug>-timeline-cache.json`; later runs reuse it (`Using cached raw data (< 24h old)`) | `rm .<org-slug>-timeline-cache.json` (forces a live re-fetch) or run once with `--skip-cache`. Verify recovery: the cache's `raw_repos` list should repopulate (healthy ≈ MBs, poisoned ≈ 100 KB). |
+| Timeline `phases` are generic / log shows `Phase N: AI failed … using auto` | **CBAI down** (`:3220` refused) | start CBAI/ollama; phases still generate via heuristic fallback, just without AI-written descriptions |
 | `DC-1 sync complete: 0 session files` / rsync errors | DC-1 unreachable or key rotated | test the SSH one-liner above; check `id_ed25519_knowsynet` |
 | CBAI timeouts in log | ollama at `:3220` down | start CBAI, or run `nightly-pipeline.py --skip-ai` |
 | pipeline uses wrong Python | pyenv env missing | confirm `~/.pyenv/versions/3.13.3/envs/tinymachines` exists |
@@ -144,9 +146,13 @@ missing `.env` degrades gracefully rather than crashing.
 - ✅ **Running & healthy.** `activity-pulse.json` fresh (~1 min); the 16:00 four-hourly
   run completed cleanly through `cost-model` (`Done!`). Claude aggregation (local + DC-1)
   and local-git commits both working; DC-1 SSH reachable live.
-- ⚠️ **GitHub arm degraded.** The `gh` CLI token is **expired (401)**, so the daily
-  05:00 org-timeline refresh fetched 0 repos and the safety guard held the previous
-  data — the four `*-timeline.json` files are frozen at **2026-07-03 05:00**. Re-auth
-  with `gh auth login -h github.com` to resume org-timeline / GitHub-issue updates.
-  (The core 4-hourly aggregator does **not** depend on `gh` — it reads local git — so
-  it is unaffected.)
+- ✅ **GitHub arm recovered (evening).** The `gh` token had expired (401), freezing the
+  org timelines at 07-03 05:00; re-authed via `gh auth login --with-token`. All four
+  timelines re-fetched live: **nominate-ai 125 · tinymachines 61 · isenbek 11 ·
+  sysforge-ai 1**. Gotcha hit along the way: the Nominate-AI cache had been **poisoned**
+  with `raw_repos: []` by the failed 05:00 run, so re-runs kept reusing the empty cache —
+  fixed by deleting `.nominate-ai-timeline-cache.json` to force a live fetch (now a
+  healthy 125-repo, 8.4 MB cache). See the failure-modes table.
+- ⚠️ **CBAI (`:3220`) down.** Timeline phase-synthesis fell back to `auto` heuristics
+  (`Phase N: AI failed … using auto`). Non-blocking; start ollama/CBAI to restore
+  AI-written phase + repo descriptions.
