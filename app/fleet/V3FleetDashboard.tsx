@@ -170,26 +170,14 @@ export function V3FleetDashboard() {
             "linear-gradient(135deg, var(--v3-white) 0%, var(--v3-paper) 100%)",
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            flexWrap: "wrap",
-            gap: 16,
-            marginBottom: 18,
-          }}
-        >
+        <div className="v3-cardhead" style={{ marginBottom: 18 }}>
           <div className={`v3-live ${busOnline ? "v3-live--ok" : "v3-live--err"}`}>
             <span className="v3-live__dot" aria-hidden />
             {busOnline
               ? `worldsink · live · recv ${fmtAge(state?.last_recv_age_s)}`
               : "worldsink · offline"}
           </div>
-          <div
-            className="v3-font-mono"
-            style={{ fontSize: 11, color: "var(--v3-slate)" }}
-          >
+          <div className="v3-cardhead__meta">
             {state
               ? `uptime ${fmtUptime(state.uptime_s)} · ${fmtBytes(state.bytes_in)} in`
               : "loading…"}

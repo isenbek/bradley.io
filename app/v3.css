@@ -3030,16 +3030,30 @@ html[data-theme="dark"]:has(.v3) {
 
 /* attention banner */
 .v3-fleet-att { border-left: 3px solid var(--v3-gold); }
+/* mobile-first: node + severity on top, reasons wrap full-width below (no
+   truncation); collapse to a single inline row once there's width. */
 .v3-fleet-att__row {
   display: grid;
-  grid-template-columns: auto auto 1fr;
+  grid-template-columns: auto 1fr;
+  grid-template-areas:
+    "node sev"
+    "reasons reasons";
   align-items: center;
-  gap: 10px;
+  gap: 3px 8px;
   font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
   font-size: 12.5px;
 }
-.v3-fleet-att__node { color: var(--v3-ink); font-weight: 700; }
+@media (min-width: 560px) {
+  .v3-fleet-att__row {
+    grid-template-columns: auto auto 1fr;
+    grid-template-areas: "node sev reasons";
+    gap: 10px;
+  }
+}
+.v3-fleet-att__node { grid-area: node; color: var(--v3-ink); font-weight: 700; }
 .v3-fleet-att__sev {
+  grid-area: sev;
+  justify-self: start;
   font-size: 9.5px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -3048,7 +3062,7 @@ html[data-theme="dark"]:has(.v3) {
 }
 .v3-fleet-att__sev[data-sev="warn"] { background: #FBEED0; color: var(--v3-gold-dk); }
 .v3-fleet-att__sev[data-sev="crit"] { background: #FBDDD9; color: var(--v3-coral-dk); }
-.v3-fleet-att__reasons { color: var(--v3-slate); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.v3-fleet-att__reasons { grid-area: reasons; color: var(--v3-slate); overflow-wrap: anywhere; }
 
 /* node grid */
 .v3-fleet-grid {

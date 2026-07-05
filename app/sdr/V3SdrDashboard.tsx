@@ -171,16 +171,7 @@ export function V3SdrDashboard() {
             "linear-gradient(135deg, var(--v3-white) 0%, var(--v3-paper) 100%)",
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            flexWrap: "wrap",
-            gap: 16,
-            marginBottom: 18,
-          }}
-        >
+        <div className="v3-cardhead" style={{ marginBottom: 18 }}>
           <div
             className={`v3-live ${
               error || !health ? "v3-live--err" : "v3-live--ok"
@@ -191,13 +182,7 @@ export function V3SdrDashboard() {
               ? "offline"
               : `sdr-api · ${health.status} · db ${health.db}`}
           </div>
-          <div
-            style={{
-              fontFamily: "var(--font-v3-mono), monospace",
-              fontSize: 11,
-              color: "var(--v3-slate)",
-            }}
-          >
+          <div className="v3-cardhead__meta">
             {lastUpdated
               ? `updated ${fmtTimeAgo(new Date(lastUpdated).toISOString())}`
               : "loading…"}
@@ -205,44 +190,18 @@ export function V3SdrDashboard() {
           </div>
         </div>
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
-            gap: 0,
-          }}
-        >
+        <div className="v3-statgrid">
           {[
             { lbl: "Total hits", val: totalHits.toLocaleString(), color: "var(--v3-coral-dk)" },
             { lbl: "Soak bands", val: soak.length, color: "var(--v3-blue-700)" },
             { lbl: "Bands enabled", val: `${enabledBands}/${bands.length}`, color: "var(--v3-green-dk)" },
             { lbl: "Jobs running", val: `${runningJobs}/${jobs.length}`, color: "var(--v3-gold-dk)" },
           ].map((s) => (
-            <div key={s.lbl} style={{ textAlign: "center", padding: "12px 8px" }}>
-              <div
-                className="v3-font-display"
-                style={{
-                  fontWeight: 800,
-                  fontSize: 32,
-                  color: s.color,
-                  letterSpacing: "-0.025em",
-                  fontVariantNumeric: "tabular-nums",
-                }}
-              >
+            <div key={s.lbl} className="v3-statgrid__cell">
+              <div className="v3-statgrid__val" style={{ color: s.color }}>
                 {s.val}
               </div>
-              <div
-                className="v3-font-mono"
-                style={{
-                  fontSize: 10.5,
-                  color: "var(--v3-slate)",
-                  letterSpacing: "0.14em",
-                  textTransform: "uppercase",
-                  marginTop: 4,
-                }}
-              >
-                {s.lbl}
-              </div>
+              <div className="v3-statgrid__lbl">{s.lbl}</div>
             </div>
           ))}
         </div>
@@ -250,28 +209,15 @@ export function V3SdrDashboard() {
 
       {/* TOP FREQUENCIES ================================================ */}
       <article className="v3-panel">
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            gap: 12,
-            flexWrap: "wrap",
-            marginBottom: 12,
-          }}
-        >
+        <div className="v3-cardhead" style={{ marginBottom: 12 }}>
           <div>
             <div className="v3-panel-head" style={{ marginBottom: 0 }}>
               Top frequencies
             </div>
             {summary ? (
               <div
-                style={{
-                  fontFamily: "var(--font-v3-mono), monospace",
-                  fontSize: 11,
-                  color: "var(--v3-slate)",
-                  marginTop: 4,
-                }}
+                className="v3-cardhead__meta"
+                style={{ marginTop: 4 }}
               >
                 {summary.n_hits.toLocaleString()} hits · first{" "}
                 {new Date(summary.time_range.first).toLocaleDateString("en-US", {
