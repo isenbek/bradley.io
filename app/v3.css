@@ -5821,6 +5821,12 @@ html[data-theme="dark"]:has(.v3) {
 
 @media (max-width: 560px) {
   .v3-air-promo__blurb { display: none; }
+  /* the live chip is nowrap and non-shrinking; on phones it would squeeze the
+     title to a sliver and overflow the edge. Wrap the chip+arrow group onto its
+     own full-width row below the body, arrow pinned right. */
+  .v3-air-promo { flex-wrap: wrap; row-gap: 10px; }
+  .v3-air-promo__right { flex-basis: 100%; }
+  .v3-air-promo__right .v3-air-promo__arrow { margin-left: auto; }
 }
 @media (prefers-reduced-motion: reduce) {
   .v3-air-promo__dot { animation: none; }
