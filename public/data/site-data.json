@@ -1,13 +1,35 @@
 {
-  "generated": "2026-07-04T20:00:31.903240+00:00",
+  "generated": "2026-07-05T01:39:31.136748+00:00",
   "stats": {
-    "totalProjects": 84,
+    "totalProjects": 86,
     "totalSessions": 77,
-    "totalMessages": 354719,
+    "totalMessages": 356656,
     "activeDays": 28,
     "streak": 0
   },
   "activityFeed": [
+    {
+      "type": "github",
+      "title": "Activity on Sysforge-AI/sfproject",
+      "description": "Repository sfproject",
+      "projectSlug": "sysforge",
+      "category": "systems",
+      "date": "2026-07-04T07:30:15Z",
+      "metadata": {
+        "repo": "Sysforge-AI/sfproject"
+      }
+    },
+    {
+      "type": "github",
+      "title": "Activity on isenbek/terrapulse",
+      "description": "Climate intelligence platform \u2014 ingest, normalize, and serve environmental data",
+      "projectSlug": "terrapulse",
+      "category": "systems",
+      "date": "2026-07-03T18:17:33Z",
+      "metadata": {
+        "repo": "isenbek/terrapulse"
+      }
+    },
     {
       "type": "claude-code",
       "title": "Claude Code session (1160 messages)",
@@ -34,13 +56,13 @@
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (2164 messages)",
-      "description": "7 sessions, 614 tool calls",
+      "title": "Claude Code session (2427 messages)",
+      "description": "7 sessions, 686 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-06-30T23:59:00Z",
       "metadata": {
-        "messages": 2164,
+        "messages": 2427,
         "sessions": 7
       }
     },
@@ -202,13 +224,13 @@
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (23278 messages)",
-      "description": "1 sessions, 6487 tool calls",
+      "title": "Claude Code session (23894 messages)",
+      "description": "1 sessions, 6681 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-06-06T23:59:00Z",
       "metadata": {
-        "messages": 23278,
+        "messages": 23894,
         "sessions": 1
       }
     },
@@ -250,25 +272,25 @@
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (71654 messages)",
-      "description": "3 sessions, 20846 tool calls",
+      "title": "Claude Code session (72196 messages)",
+      "description": "3 sessions, 20996 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-05-28T23:59:00Z",
       "metadata": {
-        "messages": 71654,
+        "messages": 72196,
         "sessions": 3
       }
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (34880 messages)",
-      "description": "1 sessions, 10325 tool calls",
+      "title": "Claude Code session (35396 messages)",
+      "description": "1 sessions, 10491 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-05-09T23:59:00Z",
       "metadata": {
-        "messages": 34880,
+        "messages": 35396,
         "sessions": 1
       }
     },
@@ -342,6 +364,17 @@
       "metadata": {
         "messages": 13894,
         "sessions": 1
+      }
+    },
+    {
+      "type": "github",
+      "title": "Activity on tinymachines/esp32",
+      "description": "Repository esp32",
+      "projectSlug": "esp32",
+      "category": "hardware",
+      "date": "2026-02-18T21:12:13Z",
+      "metadata": {
+        "repo": "tinymachines/esp32"
       }
     },
     {
@@ -552,42 +585,30 @@
       "metadata": {
         "messages": 2
       }
-    },
-    {
-      "type": "claude-web",
-      "title": "Organizing MVP and backend implementation roadmap",
-      "description": "The user asked Claude to resume converting ASCII diagrams to Mermaid format in a VIP backend implementation plan document. Claude successfully converted two complex ASCII diagrams into modern Mermaid flowchart syntax. The first diagram illustrated an",
-      "projectSlug": null,
-      "category": null,
-      "date": "2026-02-03T20:11:15.929845Z",
-      "metadata": {
-        "messages": 14
-      }
-    },
-    {
-      "type": "claude-web",
-      "title": "Rust network interface enumeration on Linux",
-      "description": "The user asked a technical question about how Rust programming language exposes Ethernet adapters on Linux systems. Claude provided a comprehensive technical explanation covering the multi-layered approach required since Rust's standard library doesn",
-      "projectSlug": "rust",
-      "category": "ai-ml",
-      "date": "2026-02-02T01:01:54.565085Z",
-      "metadata": {
-        "messages": 2
-      }
-    },
-    {
-      "type": "claude-web",
-      "title": "Extracting AM contours from FCC data",
-      "description": "The user referenced previous work on FM contours and requested help finding AM contours for what appears to be a radio broadcasting project called \"cbradio\" or \"Rural AM.FM.\" Claude investigated the availability of AM broadcast service contour data f",
-      "projectSlug": "cc",
-      "category": "data",
-      "date": "2026-01-30T19:30:49.069553Z",
-      "metadata": {
-        "messages": 4
-      }
     }
   ],
   "projects": [
+    {
+      "slug": "sysforge",
+      "name": "sfproject",
+      "tagline": "Building resilient systems, reliably.",
+      "description": "SFProject is a system designed to enhance stability and scalability through advanced monitoring and automated diagnostics. It focuses on proactive identification and resolution of potential issues within complex infrastructure.\n\nWe leverage [mention key technologies - e.g., Kafka, Kubernetes, Prometheus] to collect and analyze data, enabling early detection of anomalies. Ultimately, SFProject aims to minimize downtime and maximize system uptime.",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": true,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-07-04T07:30:15Z",
+      "totalMessages": 0,
+      "sources": {
+        "github": {
+          "repo": "Sysforge-AI/sfproject",
+          "stars": 0,
+          "language": "TypeScript",
+          "lastPush": "2026-07-04"
+        }
+      }
+    },
     {
       "slug": "infra",
       "name": "infra",
@@ -599,11 +620,31 @@
       "status": "active",
       "technologies": [],
       "lastActivity": "2026-07-04",
-      "totalMessages": 78224,
+      "totalMessages": 78840,
       "sources": {
         "claudeCode": {
           "totalSessions": 2,
-          "totalMessages": 78224,
+          "totalMessages": 78840,
+          "lastSession": "2026-07-04"
+        }
+      }
+    },
+    {
+      "slug": "cbintel",
+      "name": "cbintel",
+      "tagline": "",
+      "description": "",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-07-04",
+      "totalMessages": 35396,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 1,
+          "totalMessages": 35396,
           "lastSession": "2026-07-04"
         }
       }
@@ -619,11 +660,11 @@
       "status": "active",
       "technologies": [],
       "lastActivity": "2026-07-04",
-      "totalMessages": 21589,
+      "totalMessages": 22103,
       "sources": {
         "claudeCode": {
           "totalSessions": 3,
-          "totalMessages": 21589,
+          "totalMessages": 22103,
           "lastSession": "2026-07-04"
         }
       }
@@ -648,12 +689,67 @@
         "TypeScript"
       ],
       "lastActivity": "2026-07-04",
-      "totalMessages": 15755,
+      "totalMessages": 16018,
       "sources": {
         "claudeCode": {
           "totalSessions": 3,
-          "totalMessages": 15755,
+          "totalMessages": 16018,
           "lastSession": "2026-07-04"
+        }
+      }
+    },
+    {
+      "slug": "cbweave",
+      "name": "cbweave",
+      "tagline": "",
+      "description": "",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-07-04",
+      "totalMessages": 4607,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 1,
+          "totalMessages": 4607,
+          "lastSession": "2026-07-04"
+        }
+      }
+    },
+    {
+      "slug": "terrapulse",
+      "name": "terrapulse",
+      "tagline": "Climate intelligence platform \u2014 ingest, normalize, and serve environmental data",
+      "description": "Climate intelligence platform \u2014 ingest, normalize, and serve environmental data",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": true,
+      "status": "active",
+      "technologies": [
+        "Docker",
+        "DuckDB",
+        "FastAPI",
+        "Git",
+        "Go",
+        "JSON",
+        "PostgreSQL",
+        "Python"
+      ],
+      "lastActivity": "2026-07-03T18:17:33Z",
+      "totalMessages": 20157,
+      "sources": {
+        "github": {
+          "repo": "isenbek/terrapulse",
+          "stars": 1,
+          "language": "HTML",
+          "lastPush": "2026-07-03"
+        },
+        "claudeCode": {
+          "totalSessions": 2,
+          "totalMessages": 20157,
+          "lastSession": "2026-07-03"
         }
       }
     },
@@ -673,26 +769,6 @@
         "claudeCode": {
           "totalSessions": 28,
           "totalMessages": 48752,
-          "lastSession": "2026-07-03"
-        }
-      }
-    },
-    {
-      "slug": "cbintel",
-      "name": "cbintel",
-      "tagline": "",
-      "description": "",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-07-03",
-      "totalMessages": 34880,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 1,
-          "totalMessages": 34880,
           "lastSession": "2026-07-03"
         }
       }
@@ -733,35 +809,6 @@
         "claudeCode": {
           "totalSessions": 4,
           "totalMessages": 21629,
-          "lastSession": "2026-07-03"
-        }
-      }
-    },
-    {
-      "slug": "terrapulse",
-      "name": "terrapulse",
-      "tagline": "",
-      "description": "",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [
-        "Docker",
-        "DuckDB",
-        "FastAPI",
-        "Git",
-        "Go",
-        "JSON",
-        "PostgreSQL",
-        "Python"
-      ],
-      "lastActivity": "2026-07-03",
-      "totalMessages": 20157,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 2,
-          "totalMessages": 20157,
           "lastSession": "2026-07-03"
         }
       }
@@ -976,26 +1023,6 @@
       }
     },
     {
-      "slug": "cbweave",
-      "name": "cbweave",
-      "tagline": "",
-      "description": "",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "recent",
-      "technologies": [],
-      "lastActivity": "2026-06-06",
-      "totalMessages": 4579,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 1,
-          "totalMessages": 4579,
-          "lastSession": "2026-06-06"
-        }
-      }
-    },
-    {
       "slug": "cbpulse",
       "name": "cbpulse",
       "tagline": "",
@@ -1016,6 +1043,27 @@
       }
     },
     {
+      "slug": "esp32",
+      "name": "ESP32",
+      "tagline": "Control Your World, One Chip at a Time.",
+      "description": "I have an ESP32 experiment kit. Want to learn about it.",
+      "category": "hardware",
+      "isResearch": false,
+      "isFeatured": true,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-02-18T21:12:13Z",
+      "totalMessages": 0,
+      "sources": {
+        "github": {
+          "repo": "tinymachines/esp32",
+          "stars": 0,
+          "language": "Python",
+          "lastPush": "2026-02-18"
+        }
+      }
+    },
+    {
       "slug": "190personel",
       "name": "190PERSONEL",
       "tagline": "190PERSONEL: Seamless banking automation.",
@@ -1026,20 +1074,6 @@
       "status": "active",
       "technologies": [],
       "lastActivity": "2026-02-13T22:00:40.326626+00:00",
-      "totalMessages": 0,
-      "sources": {}
-    },
-    {
-      "slug": "esp32",
-      "name": "ESP32",
-      "tagline": "Control Your World, One Chip at a Time.",
-      "description": "I have an ESP32 experiment kit. Want to learn about it.",
-      "category": "hardware",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-02-06T22:25:23.961211+00:00",
       "totalMessages": 0,
       "sources": {}
     },
@@ -1378,6 +1412,27 @@
       "lastActivity": "2025-10-13T19:34:09.227364+00:00",
       "totalMessages": 0,
       "sources": {}
+    },
+    {
+      "slug": "hotbits",
+      "name": "HOTBITS",
+      "tagline": "Unlock unpredictable outcomes.",
+      "description": "HOTBITS utilizes true random number generation to create truly unique and dynamic results. It\u2019s designed for creative applications requiring adaptability and surprise. Explore the potential of unpredictable data through HOTBITS.",
+      "category": "creative",
+      "isResearch": true,
+      "isFeatured": true,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2025-10-07T04:47:11Z",
+      "totalMessages": 0,
+      "sources": {
+        "github": {
+          "repo": "tinymachines/hotbits",
+          "stars": 0,
+          "language": "TypeScript",
+          "lastPush": "2025-10-07"
+        }
+      }
     },
     {
       "slug": "umbra",
@@ -1764,20 +1819,6 @@
       "sources": {}
     },
     {
-      "slug": "hotbits",
-      "name": "HOTBITS",
-      "tagline": "Unlock unpredictable outcomes.",
-      "description": "HOTBITS utilizes true random number generation to create truly unique and dynamic results. It\u2019s designed for creative applications requiring adaptability and surprise. Explore the potential of unpredictable data through HOTBITS.",
-      "category": "creative",
-      "isResearch": true,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2025-09-15T21:58:40.517403+00:00",
-      "totalMessages": 0,
-      "sources": {}
-    },
-    {
       "slug": "wasm",
       "name": "WASM",
       "tagline": "Unlock Mobile Apps with WASM.",
@@ -1890,6 +1931,27 @@
       "sources": {}
     },
     {
+      "slug": "sovereign",
+      "name": "sovereign",
+      "tagline": "An assembly-like agentic programming language designed for self-improving systems.",
+      "description": "An assembly-like agentic programming language designed for self-improving systems.",
+      "category": "ai-ml",
+      "isResearch": true,
+      "isFeatured": true,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2025-06-20T19:53:34Z",
+      "totalMessages": 0,
+      "sources": {
+        "github": {
+          "repo": "tinymachines/sovereign",
+          "stars": 1,
+          "language": "Python",
+          "lastPush": "2025-06-20"
+        }
+      }
+    },
+    {
       "slug": "addai",
       "name": "ADDAI",
       "tagline": "Unlocking Brain Insights, Simply.",
@@ -1931,7 +1993,7 @@
       "label": "AI & Language",
       "color": "var(--brand-secondary)",
       "icon": "Brain",
-      "count": 5
+      "count": 6
     },
     {
       "id": "data",
@@ -1945,7 +2007,7 @@
       "label": "Systems & Infra",
       "color": "var(--brand-steel)",
       "icon": "Server",
-      "count": 61
+      "count": 62
     },
     {
       "id": "creative",
@@ -1962,8 +2024,8 @@
       "Git",
       "JSON",
       "DuckDB",
-      "CSS",
       "SPI",
+      "CSS",
       "HTML",
       "Nginx",
       "Python",
@@ -2014,6 +2076,27 @@
   },
   "labProjects": [
     {
+      "slug": "hotbits",
+      "name": "HOTBITS",
+      "tagline": "Unlock unpredictable outcomes.",
+      "description": "HOTBITS utilizes true random number generation to create truly unique and dynamic results. It\u2019s designed for creative applications requiring adaptability and surprise. Explore the potential of unpredictable data through HOTBITS.",
+      "category": "creative",
+      "isResearch": true,
+      "isFeatured": true,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2025-10-07T04:47:11Z",
+      "totalMessages": 0,
+      "sources": {
+        "github": {
+          "repo": "tinymachines/hotbits",
+          "stars": 0,
+          "language": "TypeScript",
+          "lastPush": "2025-10-07"
+        }
+      }
+    },
+    {
       "slug": "zephyr",
       "name": "ZEPHYR",
       "tagline": "ZEPHYR: Edge-Driven Intelligence, Reimagined.",
@@ -2028,18 +2111,25 @@
       "sources": {}
     },
     {
-      "slug": "hotbits",
-      "name": "HOTBITS",
-      "tagline": "Unlock unpredictable outcomes.",
-      "description": "HOTBITS utilizes true random number generation to create truly unique and dynamic results. It\u2019s designed for creative applications requiring adaptability and surprise. Explore the potential of unpredictable data through HOTBITS.",
-      "category": "creative",
+      "slug": "sovereign",
+      "name": "sovereign",
+      "tagline": "An assembly-like agentic programming language designed for self-improving systems.",
+      "description": "An assembly-like agentic programming language designed for self-improving systems.",
+      "category": "ai-ml",
       "isResearch": true,
-      "isFeatured": false,
+      "isFeatured": true,
       "status": "active",
       "technologies": [],
-      "lastActivity": "2025-09-15T21:58:40.517403+00:00",
+      "lastActivity": "2025-06-20T19:53:34Z",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {
+        "github": {
+          "repo": "tinymachines/sovereign",
+          "stars": 1,
+          "language": "Python",
+          "lastPush": "2025-06-20"
+        }
+      }
     },
     {
       "slug": "addai",
