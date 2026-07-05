@@ -3287,16 +3287,22 @@ html[data-theme="dark"]:has(.v3) {
 /* ============ TEST PANEL (nist continuous) ============ */
 .v3-test {
   display: grid;
-  grid-template-columns: auto 1fr auto;
-  gap: 14px;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-areas:
+    "icon name verdict"
+    "icon meta meta";
+  column-gap: 12px;
+  row-gap: 3px;
   align-items: center;
-  padding: 14px 16px;
+  padding: 13px 14px;
   border-radius: var(--v3-r-md);
   border: 1px solid var(--v3-line);
   background: var(--v3-white);
 }
 
 .v3-test__icon {
+  grid-area: icon;
+  align-self: center;
   width: 36px;
   height: 36px;
   border-radius: var(--v3-r-sm);
@@ -3323,21 +3329,32 @@ html[data-theme="dark"]:has(.v3) {
 }
 
 .v3-test__name {
+  grid-area: name;
+  align-self: center;
   font-family: var(--font-v3-display), "Bricolage Grotesque", sans-serif;
   font-weight: 700;
   font-size: 14.5px;
   color: var(--v3-charcoal);
   letter-spacing: -0.005em;
+  line-height: 1.2;
+  min-width: 0;
 }
 
 .v3-test__meta {
+  grid-area: meta;
   font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
   font-size: 11px;
   color: var(--v3-slate);
-  margin-top: 2px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+  word-break: normal;
+  min-width: 0;
 }
 
 .v3-test__verdict {
+  grid-area: verdict;
+  align-self: center;
+  justify-self: end;
   font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
   font-weight: 700;
   font-size: 11px;
@@ -3411,14 +3428,22 @@ html[data-theme="dark"]:has(.v3) {
 
 .v3-bits__head {
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
   justify-content: space-between;
+  gap: 6px 12px;
   font-size: 10.5px;
   text-transform: uppercase;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.16em;
   color: rgba(255, 255, 255, 0.5);
   margin-bottom: 10px;
   position: relative;
+  /* the parent .v3-bits sets word-break: break-all for the hex stream; keep the
+     header label breaking at spaces so "refresh" doesn't split mid-word */
+  word-break: normal;
+  overflow-wrap: normal;
 }
+.v3-bits__head > span:first-child { min-width: 0; }
 
 .v3-bits__head .v3-live {
   color: var(--v3-green);
@@ -3429,6 +3454,68 @@ html[data-theme="dark"]:has(.v3) {
 
 .v3-bits__stream {
   position: relative;
+}
+
+/* ============ GOLD-STANDARD MOBILE-FIRST PRIMITIVES ============ */
+/* Shared, reusable card building blocks. Established on /trng (Hotbits) as the
+   reference; other live-data pages (/sdr, /fleet, worldevent) should adopt these
+   instead of re-inlining flex/grid (inline styles can't carry media queries). */
+
+/* Card header: title / live-pill on the left, meta on the right. Wraps cleanly
+   on narrow screens instead of squeezing either side. */
+.v3-cardhead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  margin-bottom: 16px;
+}
+.v3-cardhead__meta {
+  font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
+  font-size: 11px;
+  color: var(--v3-slate);
+  min-width: 0;
+}
+
+/* Stat-counter grid: 2-up on phones (dense, no dead vertical space), 4-up on
+   wider screens. Replaces the repeated inline auto-fit grids. */
+.v3-statgrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px 0;
+}
+@media (min-width: 620px) {
+  .v3-statgrid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; }
+}
+.v3-statgrid__cell { text-align: center; padding: 12px 8px; min-width: 0; }
+.v3-statgrid__val {
+  font-family: var(--font-v3-display), "Bricolage Grotesque", sans-serif;
+  font-weight: 800;
+  font-size: 25px;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+@media (min-width: 620px) { .v3-statgrid__val { font-size: 28px; } }
+.v3-statgrid__lbl {
+  font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
+  font-size: 10px;
+  color: var(--v3-slate);
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  margin-top: 5px;
+}
+
+/* Quality-gauge grid: 1-up on phones, 2-up once there's room. */
+.v3-trng-gauges {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+}
+@media (min-width: 560px) {
+  .v3-trng-gauges { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 /* ============ COST HERO TILE ============ */

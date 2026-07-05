@@ -236,16 +236,7 @@ export function V3TrngDashboard() {
           background: "linear-gradient(135deg, var(--v3-white) 0%, var(--v3-paper) 100%)",
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            flexWrap: "wrap",
-            gap: 16,
-            marginBottom: 18,
-          }}
-        >
+        <div className="v3-cardhead" style={{ marginBottom: 18 }}>
           <div className={`v3-live ${isOk ? "v3-live--ok" : "v3-live--err"}`}>
             <span className="v3-live__dot" aria-hidden />
             {isOk
@@ -262,25 +253,13 @@ export function V3TrngDashboard() {
               ? "offline · upstream unreachable"
               : "loading…"}
           </div>
-          <div
-            style={{
-              fontFamily: "var(--font-v3-mono), monospace",
-              fontSize: 11,
-              color: "var(--v3-slate)",
-            }}
-          >
+          <div className="v3-cardhead__meta">
             {updatedLabel}
             {stats?.reject_us != null ? ` · reject ${stats.reject_us}µs` : ""}
           </div>
         </div>
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
-            gap: 0,
-          }}
-        >
+        <div className="v3-statgrid">
           {[
             {
               lbl: "Fresh pool",
@@ -306,31 +285,11 @@ export function V3TrngDashboard() {
                   : "var(--v3-gold-dk)",
             },
           ].map((s) => (
-            <div key={s.lbl} style={{ textAlign: "center", padding: "12px 8px" }}>
-              <div
-                className="v3-font-display"
-                style={{
-                  fontWeight: 800,
-                  fontSize: 28,
-                  color: s.color,
-                  letterSpacing: "-0.025em",
-                  fontVariantNumeric: "tabular-nums",
-                }}
-              >
+            <div key={s.lbl} className="v3-statgrid__cell">
+              <div className="v3-statgrid__val" style={{ color: s.color }}>
                 {s.val}
               </div>
-              <div
-                className="v3-font-mono"
-                style={{
-                  fontSize: 10.5,
-                  color: "var(--v3-slate)",
-                  letterSpacing: "0.14em",
-                  textTransform: "uppercase",
-                  marginTop: 4,
-                }}
-              >
-                {s.lbl}
-              </div>
+              <div className="v3-statgrid__lbl">{s.lbl}</div>
             </div>
           ))}
         </div>
@@ -338,39 +297,18 @@ export function V3TrngDashboard() {
 
       {/* QUALITY GAUGES ================================================= */}
       <article className="v3-panel">
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            flexWrap: "wrap",
-            gap: 10,
-            marginBottom: 14,
-          }}
-        >
+        <div className="v3-cardhead" style={{ marginBottom: 14 }}>
           <div className="v3-panel-head" style={{ marginBottom: 0 }}>
             Statistical quality
           </div>
           {metric ? (
-            <div
-              style={{
-                fontFamily: "var(--font-v3-mono), monospace",
-                fontSize: 11,
-                color: "var(--v3-slate)",
-              }}
-            >
+            <div className="v3-cardhead__meta">
               window · {metric.window_bytes.toLocaleString()} bytes
             </div>
           ) : null}
         </div>
         {metric ? (
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
-              gap: 14,
-            }}
-          >
+          <div className="v3-trng-gauges">
             <Gauge
               label="Entropy bpb"
               value={metric.ent_bpb}
@@ -421,13 +359,7 @@ export function V3TrngDashboard() {
           <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
             <div className="v3-test" data-state={rctState}>
               <div className="v3-test__icon">RCT</div>
-              <div>
-                <div className="v3-test__name">Repetition count test</div>
-                <div className="v3-test__meta">
-                  run {cont.rct.current_run_length} / cutoff {cont.rct.cutoff} · max seen{" "}
-                  {cont.rct.max_run_seen}
-                </div>
-              </div>
+              <div className="v3-test__name">Repetition count test</div>
               <span
                 className={`v3-test__verdict v3-test__verdict--${rctState}`}
                 title={
@@ -438,18 +370,15 @@ export function V3TrngDashboard() {
               >
                 {rctState}
               </span>
+              <div className="v3-test__meta">
+                run {cont.rct.current_run_length} / cutoff {cont.rct.cutoff} · max seen{" "}
+                {cont.rct.max_run_seen}
+              </div>
             </div>
 
             <div className="v3-test" data-state={aptState}>
               <div className="v3-test__icon">APT</div>
-              <div>
-                <div className="v3-test__name">Adaptive proportion test</div>
-                <div className="v3-test__meta">
-                  position {cont.apt.position_in_window} / window {cont.apt.window_size} · cutoff{" "}
-                  {cont.apt.cutoff} · last [{cont.apt.last_verdict[0]} · {cont.apt.last_verdict[1]}/
-                  {cont.apt.last_verdict[2]}]
-                </div>
-              </div>
+              <div className="v3-test__name">Adaptive proportion test</div>
               <span
                 className={`v3-test__verdict v3-test__verdict--${
                   cont.apt.failed_ever ? "fail" : "pass"
@@ -457,6 +386,11 @@ export function V3TrngDashboard() {
               >
                 {cont.apt.failed_ever ? "fail" : "pass"}
               </span>
+              <div className="v3-test__meta">
+                position {cont.apt.position_in_window} / window {cont.apt.window_size} · cutoff{" "}
+                {cont.apt.cutoff} · last [{cont.apt.last_verdict[0]} · {cont.apt.last_verdict[1]}/
+                {cont.apt.last_verdict[2]}]
+              </div>
             </div>
           </div>
         ) : (
@@ -466,16 +400,7 @@ export function V3TrngDashboard() {
 
       {/* BATTERY HISTORY ================================================ */}
       <article className="v3-panel">
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            flexWrap: "wrap",
-            gap: 10,
-            marginBottom: 14,
-          }}
-        >
+        <div className="v3-cardhead" style={{ marginBottom: 14 }}>
           <div className="v3-panel-head" style={{ marginBottom: 0 }}>
             Test battery · last {battery.length || 30}
           </div>
