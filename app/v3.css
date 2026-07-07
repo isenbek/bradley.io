@@ -3219,6 +3219,74 @@ html[data-theme="dark"]:has(.v3) {
 .v3-fleet-count__type { color: var(--v3-ink); }
 .v3-fleet-count__n { color: var(--v3-blue-700); font-weight: 600; font-variant-numeric: tabular-nums; }
 
+/* ============ PILOT ANALYTICS (internal, boring on purpose) ============ */
+.v3-cols {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1px;
+  width: 100%;
+}
+.v3-cols__bar {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  min-width: 0;
+}
+.v3-cols__bar > span {
+  display: block;
+  min-height: 1px;
+  border-radius: 2px 2px 0 0;
+  transition: height 0.4s ease-out;
+}
+.v3-cols__axis {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+  font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
+  font-size: 10px;
+  color: var(--v3-slate);
+  letter-spacing: 0.08em;
+}
+.v3-tbl {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
+  font-size: 12px;
+}
+.v3-tbl th {
+  text-align: right;
+  font-weight: 600;
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--v3-slate);
+  padding: 4px 8px;
+  border-bottom: 1px solid var(--v3-line);
+  white-space: nowrap;
+}
+.v3-tbl th:first-child { text-align: left; }
+.v3-tbl td {
+  text-align: right;
+  padding: 5px 8px;
+  color: var(--v3-ink);
+  border-bottom: 1px solid var(--v3-line);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.v3-tbl td:first-child {
+  text-align: left;
+  color: var(--v3-charcoal);
+  font-weight: 600;
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.v3-tbl tr:last-child td { border-bottom: none; }
+.v3-tbl tbody tr:hover td { background: var(--v3-paper); }
+
 /* ============ QUALITY GAUGE (trng) ============ */
 .v3-gauge {
   padding: 16px 18px;

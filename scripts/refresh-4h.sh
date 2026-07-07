@@ -13,6 +13,7 @@ export PATH=/home/bisenbek/.nvm/versions/node/v24.0.1/bin:/usr/local/bin:/usr/bi
   # Analytical export of Claude activity → data/claude-activity.duckdb (incremental,
   # ~20s). Standalone (not in the && chain) so a hiccup can't block the site pipeline.
   "$PY" "$SCRIPTS/claude-activity-export.py"
+  "$PY" "$SCRIPTS/claude-activity-viz.py" --parquet --zip
   "$PY" "$SCRIPTS/refresh-stats-cache.py" \
     && "$PY" "$SCRIPTS/nightly-pipeline.py" \
     && "$PY" "$SCRIPTS/ai-pilot-pipeline.py" \
