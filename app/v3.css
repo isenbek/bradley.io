@@ -6849,7 +6849,10 @@ html[data-theme="dark"]:has(.v3) {
   margin: 0;
   padding: 24px 26px;
   border-radius: var(--v3-r-lg);
-  background: var(--v3-charcoal);
+  /* Committed-dark accent panel — NOT var(--v3-charcoal), which flips to a light
+     token in dark theme and would strand the light text (the "wrong theme" bug). */
+  background: #1b2130;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   color: #fff;
   font-family: var(--font-v3-display), "Bricolage Grotesque", sans-serif;
   font-weight: 600;
@@ -6857,7 +6860,7 @@ html[data-theme="dark"]:has(.v3) {
   line-height: 1.35;
   letter-spacing: -0.02em;
 }
-.v3-turfy-quote em { color: var(--v3-green-dk); font-style: normal; }
+.v3-turfy-quote em { color: #5fd3a8; font-style: normal; }
 .v3-turfy-quote span {
   display: block;
   margin-top: 14px;
@@ -6992,14 +6995,16 @@ html[data-theme="dark"]:has(.v3) {
   gap: 18px;
   padding: 24px 26px;
   border-radius: var(--v3-r-lg);
-  background: var(--v3-charcoal);
+  /* committed-dark accent panel — see .v3-turfy-quote note (charcoal token flips in dark theme) */
+  background: #1b2130;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   color: #cfd6e0;
 }
 @media (min-width: 820px) { .v3-turfy-foot { grid-template-columns: 1.4fr 1fr; align-items: center; } }
 .v3-turfy-foot__eyebrow {
   display: block;
   font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
-  font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--v3-green-dk); margin-bottom: 10px;
+  font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: #5fd3a8; margin-bottom: 10px;
 }
 .v3-turfy-foot p { margin: 0; font-size: 14.5px; line-height: 1.6; }
 .v3-turfy-foot code { font-family: var(--font-v3-mono), "JetBrains Mono", monospace; font-size: 13px; color: #9fd8c2; }
