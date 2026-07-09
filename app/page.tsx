@@ -1,4 +1,4 @@
-import { ArrowRight, Bot, Atom } from "lucide-react"
+import { ArrowRight, Bot, Atom, Droplets } from "lucide-react"
 import Link from "next/link"
 import { ActivityPulse } from "@/components/v3/ActivityPulse"
 import { ActivityFeedList } from "@/components/v3/ActivityFeedList"
@@ -69,6 +69,23 @@ export default async function V3Home() {
             <div style={{ marginTop: 36 }}>
               <HotbitsHero />
             </div>
+          </V3Reveal>
+
+          <V3Reveal delay={232}>
+            <Link href="/projects/turfy" className="v3-air-promo v3-air-promo--green" style={{ marginTop: 14 }}>
+              <span className="v3-air-promo__ico"><Droplets size={20} strokeWidth={2.2} /></span>
+              <span className="v3-air-promo__body">
+                <span className="v3-air-promo__eyebrow">
+                  <span className="v3-air-promo__new">NEW</span> project · irrigation sidecar
+                </span>
+                <span className="v3-air-promo__title">Turfy — an AI sprinkler brain that fails back to dumb</span>
+                <span className="v3-air-promo__blurb">
+                  A weather-informed sidecar for a 1990s Rain Bird that only takes the lawn when it&apos;s
+                  provably healthy — hardware watchdog, transfer relays, fail-safe by design.
+                </span>
+              </span>
+              <span className="v3-air-promo__right"><ArrowRight className="v3-air-promo__arrow" size={18} strokeWidth={2.4} /></span>
+            </Link>
           </V3Reveal>
 
           <V3Reveal delay={240}>

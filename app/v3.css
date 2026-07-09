@@ -5824,6 +5824,27 @@ html[data-theme="dark"]:has(.v3) {
 }
 .v3-air-promo--gold .v3-air-promo__ico { background: var(--v3-gold); }
 .v3-air-promo--gold .v3-air-promo__eyebrow { color: var(--v3-gold-dk, #7C5605); }
+
+/* Green variant — for the Turfy irrigation-sidecar project promo. */
+.v3-air-promo--green {
+  background: linear-gradient(100deg, color-mix(in srgb, var(--v3-green) 14%, var(--v3-white)), var(--v3-white) 70%);
+  border-color: color-mix(in srgb, var(--v3-green) 36%, var(--v3-line));
+}
+.v3-air-promo--green:hover { border-color: color-mix(in srgb, var(--v3-green) 55%, var(--v3-line)); }
+.v3-air-promo--green .v3-air-promo__ico { background: var(--v3-green); }
+.v3-air-promo--green .v3-air-promo__eyebrow { color: var(--v3-green-dk); }
+/* "NEW" badge inside a promo eyebrow. */
+.v3-air-promo__new {
+  display: inline-block;
+  margin-right: 8px;
+  padding: 2px 7px;
+  border-radius: 999px;
+  background: var(--v3-green);
+  color: #fff;
+  font-size: 9.5px;
+  letter-spacing: 0.1em;
+  vertical-align: 1px;
+}
 .v3-air-promo__body {
   display: flex;
   flex-direction: column;
