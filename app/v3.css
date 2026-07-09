@@ -7018,3 +7018,17 @@ html[data-theme="dark"]:has(.v3) {
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.12);
 }
+
+/* ============================================================
+   Dark-theme charcoal-surface sweep + project-page header align
+   ============================================================ */
+/* --v3-charcoal is a TEXT token that flips light in dark theme. Panels that
+   must stay a dark SURFACE (terminal, bits/code block) need it pinned so they
+   don't invert to a light panel with unreadable text. (Buttons using
+   charcoal-bg + paper-text invert cleanly and are intentionally left alone.) */
+[data-theme="dark"] .v3-term { background: #12161f; }
+[data-theme="dark"] .v3-bits { background: #1b2130; color: #9EE2FA; }
+
+/* Project pages: heading + intro flush-left instead of the centered hero. */
+.v3-projects .v3-page-head__lockup { text-align: left; }
+.v3-projects .v3-page-head__lede { margin-inline: 0; }
