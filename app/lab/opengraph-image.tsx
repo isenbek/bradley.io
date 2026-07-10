@@ -3,7 +3,8 @@ import { join } from "path"
 import { ogV3ImageResponse, OG_V3_SIZE, OG_V3_CONTENT_TYPE } from "@/lib/og-card-v3"
 
 export const runtime = "nodejs"
-export const alt = "Lab · bio·bradley.io"
+export const alt =
+  "The bradley.io lab: a live camera view of the hardware bench, with an oscilloscope, radios, LED-lit modules, and a box fan. bio·bradley.io"
 export const size = OG_V3_SIZE
 export const contentType = OG_V3_CONTENT_TYPE
 

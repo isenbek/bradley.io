@@ -3,7 +3,8 @@ import { join } from "path"
 import { ogV3ImageResponse, OG_V3_SIZE, OG_V3_CONTENT_TYPE } from "@/lib/og-card-v3"
 
 export const runtime = "nodejs"
-export const alt = "Turfy: a fail-safe AI irrigation sidecar · bio·bradley.io"
+export const alt =
+  "Turfy, a fail-safe AI irrigation sidecar, with a photo of the 1990s Rain Bird controller's dial. bio·bradley.io"
 export const size = OG_V3_SIZE
 export const contentType = OG_V3_CONTENT_TYPE
 
