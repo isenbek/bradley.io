@@ -29,6 +29,10 @@ step "Running lint..."
 bun run lint
 ok "Lint passed"
 
+# 2b. Refresh live-data OG card images (fault-tolerant: never fails the deploy)
+step "Refreshing live card images..."
+bash scripts/gen-card-images.sh || true
+
 # 3. Commit (if there are changes)
 step "Checking for changes..."
 if [[ -n "$(git status --porcelain)" ]]; then

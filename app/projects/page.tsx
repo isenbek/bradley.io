@@ -53,7 +53,7 @@ export default async function V3ProjectsPage() {
                 style={{
                   display: "flex",
                   gap: 12,
-                  justifyContent: "center",
+                  justifyContent: "flex-start",
                   marginTop: 28,
                   flexWrap: "wrap",
                 }}
