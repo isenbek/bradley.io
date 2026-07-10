@@ -86,7 +86,7 @@ export default function V3AIPilotPage() {
             </V3Reveal>
             <V3Reveal eager>
               <p className="v3-page-head__lede">
-                Public dashboard for work shipped with Claude as co-pilot — sessions,
+                Public dashboard for work shipped with Claude as co-pilot: sessions,
                 missions, models flown, and the token economy that pays for the runway.
               </p>
             </V3Reveal>
@@ -121,7 +121,7 @@ export default function V3AIPilotPage() {
             <div className="v3-sec-head__num">RELATED · KEEP READING</div>
             <h2 style={{ marginBottom: 8 }}>This page is the receipts.</h2>
             <p>
-              Two longer reads built on the same data — the argument, and the bottom-up
+              Two longer reads built on the same data: the argument, and the bottom-up
               cost model.
             </p>
           </div>

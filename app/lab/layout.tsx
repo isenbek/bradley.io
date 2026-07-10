@@ -1,22 +1,22 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Lab — bio·bradley.io",
+  title: "Lab · bio·bradley.io",
   description:
-    "Frontier experiments — hardware, AI, signals, and creative computing. Things that might not ship but push the boundary.",
+    "Frontier experiments: hardware, AI, signals, and creative computing. Things that might not ship but push the boundary.",
   alternates: { canonical: "/lab" },
   openGraph: {
-    title: "Lab — bio·bradley.io",
+    title: "Lab · bio·bradley.io",
     description:
-      "Frontier experiments — hardware, AI, signals, creative computing. Things that might not ship.",
+      "Frontier experiments: hardware, AI, signals, creative computing. Things that might not ship.",
     url: "https://bradley.io/lab",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Lab — bio·bradley.io",
+    title: "Lab · bio·bradley.io",
     description:
-      "Frontier experiments — hardware, AI, signals, creative computing. Things that might not ship.",
+      "Frontier experiments: hardware, AI, signals, creative computing. Things that might not ship.",
   },
 }
 
@@ -31,7 +31,7 @@ export default function V3LabLayout({ children }: { children: React.ReactNode })
             "@type": "CollectionPage",
             "@id": "https://bradley.io/lab",
             url: "https://bradley.io/lab",
-            name: "Lab — bradley.io",
+            name: "Lab · bradley.io",
             description:
               "Frontier research and experiments by Bradley Isenbek.",
             isPartOf: { "@id": "https://bradley.io/#website" },

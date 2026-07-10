@@ -1,22 +1,22 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Dragonfli — bio·bradley.io",
+  title: "Dragonfli · bio·bradley.io",
   description:
-    "Live ADS-B receiver at 1090 MHz — local radar, active aircraft, FAA registry breakdown, and trajectory predictor.",
+    "Live ADS-B receiver at 1090 MHz: local radar, active aircraft, FAA registry breakdown, and trajectory predictor.",
   alternates: { canonical: "/dragonfli" },
   openGraph: {
-    title: "Dragonfli — bio·bradley.io",
+    title: "Dragonfli · bio·bradley.io",
     description:
-      "Live 1090 MHz ADS-B receiver — radar, active aircraft, FAA registry, predictor.",
+      "Live 1090 MHz ADS-B receiver: radar, active aircraft, FAA registry, predictor.",
     url: "https://bradley.io/dragonfli",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Dragonfli — bio·bradley.io",
+    title: "Dragonfli · bio·bradley.io",
     description:
-      "Live 1090 MHz ADS-B receiver — radar, active aircraft, FAA registry, predictor.",
+      "Live 1090 MHz ADS-B receiver: radar, active aircraft, FAA registry, predictor.",
   },
 }
 
@@ -31,9 +31,9 @@ export default function V3DragonfliLayout({ children }: { children: React.ReactN
             "@type": "WebApplication",
             "@id": "https://bradley.io/dragonfli",
             url: "https://bradley.io/dragonfli",
-            name: "Dragonfli — live ADS-B radar",
+            name: "Dragonfli: live ADS-B radar",
             description:
-              "Live ADS-B receiver at 1090 MHz — local radar, active aircraft, FAA registry breakdown, and trajectory predictor.",
+              "Live ADS-B receiver at 1090 MHz: local radar, active aircraft, FAA registry breakdown, and trajectory predictor.",
             applicationCategory: "Data Visualization",
             isPartOf: { "@id": "https://bradley.io/#website" },
             breadcrumb: {

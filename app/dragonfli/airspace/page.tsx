@@ -33,7 +33,7 @@ export default function V3AirspacePage() {
             </V3Reveal>
             <V3Reveal eager>
               <p className="v3-page-head__lede">
-                Live ADS-B aircraft on a self-hosted vector basemap — track-oriented and
+                Live ADS-B aircraft on a self-hosted vector basemap, track-oriented and
                 altitude-colored. Toggle the 15-minute density forecast, per-aircraft
                 trajectory ribbons, and a signal-strength bloom that traces the receiver&apos;s
                 reach. Click any aircraft for its registry card.

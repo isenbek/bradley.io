@@ -8,12 +8,12 @@ import { MissionTimeline } from "../_timeline/MissionTimeline"
 export const revalidate = 3600
 
 export const metadata: Metadata = {
-  title: "Nominate-AI — Platform Timeline | bio·bradley.io",
+  title: "Nominate-AI: Platform Timeline | bio·bradley.io",
   description:
-    "Full development timeline of the Nominate-AI platform — 115 repos, 17k+ commits, AI-synthesized into phase-based milestones.",
+    "Full development timeline of the Nominate-AI platform: 115 repos, 17k+ commits, AI-synthesized into phase-based milestones.",
   alternates: { canonical: "/projects/nominate-ai" },
   openGraph: {
-    title: "Nominate-AI — Platform Timeline",
+    title: "Nominate-AI: Platform Timeline",
     description:
       "Three years across 115 repos and 17k+ commits, indexed by phase.",
     url: "https://bradley.io/projects/nominate-ai",
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Nominate-AI — Platform Timeline",
+    title: "Nominate-AI: Platform Timeline",
     description:
       "Three years across 115 repos and 17k+ commits, indexed by phase.",
   },
@@ -54,9 +54,9 @@ export default function V3NominateAITimeline() {
             "@type": "CreativeWork",
             "@id": "https://bradley.io/projects/nominate-ai",
             url: "https://bradley.io/projects/nominate-ai",
-            name: "Nominate-AI — Platform Timeline",
+            name: "Nominate-AI: Platform Timeline",
             description:
-              "Full development timeline of the Nominate-AI platform — 115 repos, 17k+ commits, AI-synthesized into phase-based milestones.",
+              "Full development timeline of the Nominate-AI platform: 115 repos, 17k+ commits, AI-synthesized into phase-based milestones.",
             author: { "@id": "https://bradley.io/#person" },
             isPartOf: { "@id": "https://bradley.io/#website" },
             breadcrumb: {
@@ -74,7 +74,7 @@ export default function V3NominateAITimeline() {
         displayName="Nominate-AI"
         eyebrow="Platform timeline"
         accent="blue"
-        lede="The AI-native sourcing platform — multi-tenant pipelines, vector search, agent orchestration, and the messaging layer that powers it all."
+        lede="The AI-native sourcing platform: multi-tenant pipelines, vector search, agent orchestration, and the messaging layer that powers it all."
         data={data}
       />
     </>

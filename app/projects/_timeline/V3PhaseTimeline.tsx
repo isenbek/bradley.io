@@ -34,13 +34,13 @@ function formatPhaseRange(startISO: string, endISO: string, isCurrent: boolean):
       timeZone: "UTC",
     })
 
-  if (isCurrent) return `${fmtMY(s)} – Present`
+  if (isCurrent) return `${fmtMY(s)} to Present`
   if (s.getUTCFullYear() === e.getUTCFullYear() && s.getUTCMonth() === e.getUTCMonth()) {
     if (s.getUTCDate() === e.getUTCDate()) return fmtMD(s)
     return fmtMY(s)
   }
-  if (s.getUTCFullYear() === e.getUTCFullYear()) return `${fmtM(s)} – ${fmtMY(e)}`
-  return `${fmtMY(s)} – ${fmtMY(e)}`
+  if (s.getUTCFullYear() === e.getUTCFullYear()) return `${fmtM(s)} to ${fmtMY(e)}`
+  return `${fmtMY(s)} to ${fmtMY(e)}`
 }
 
 interface SparkData {

@@ -1,11 +1,11 @@
 import type { Metadata } from "next"
 
-const TITLE = "Turfy — a fail-safe AI irrigation sidecar"
+const TITLE = "Turfy: a fail-safe AI irrigation sidecar"
 const DESC =
-  "An AI-driven, weather-informed sidecar controller that retrofits a 1990s Rain Bird ESP-6Si. It only takes authority when its daemon is provably alive — any failure hands control back to the Rain Bird with zero software involved."
+  "An AI-driven, weather-informed sidecar controller that retrofits a 1990s Rain Bird ESP-6Si. It only takes authority when its daemon is provably alive. Any failure hands control back to the Rain Bird with zero software involved."
 
 export const metadata: Metadata = {
-  title: `${TITLE} — bio·bradley.io`,
+  title: `${TITLE} · bio·bradley.io`,
   description: DESC,
   alternates: { canonical: "/projects/turfy" },
   openGraph: {
@@ -32,7 +32,7 @@ export default function TurfyLayout({ children }: { children: React.ReactNode })
             "@type": "CreativeWork",
             "@id": "https://bradley.io/projects/turfy",
             url: "https://bradley.io/projects/turfy",
-            name: "Turfy — a fail-safe AI irrigation sidecar",
+            name: "Turfy: a fail-safe AI irrigation sidecar",
             headline: TITLE,
             description: DESC,
             about: ["irrigation", "edge computing", "Raspberry Pi", "hardware watchdog", "automatic transfer switch"],

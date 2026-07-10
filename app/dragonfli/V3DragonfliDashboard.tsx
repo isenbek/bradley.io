@@ -297,7 +297,7 @@ function Radar({
               </div>
               <div className="v3-radar__legend-row">
                 <span className="v3-radar__sw" style={{ background: "var(--v3-blue-500)" }} />
-                10,000 – 25,000 ft
+                10,000 to 25,000 ft
               </div>
               <div className="v3-radar__legend-row">
                 <span className="v3-radar__sw" style={{ background: "var(--v3-green)" }} />

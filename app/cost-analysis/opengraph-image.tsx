@@ -3,7 +3,7 @@ import { join } from "path"
 import { ogV3ImageResponse, OG_V3_SIZE, OG_V3_CONTENT_TYPE } from "@/lib/og-card-v3"
 
 export const runtime = "nodejs"
-export const alt = "Cost Analysis — bio·bradley.io"
+export const alt = "Cost Analysis · bio·bradley.io"
 export const size = OG_V3_SIZE
 export const contentType = OG_V3_CONTENT_TYPE
 
@@ -28,7 +28,7 @@ export default function OG() {
   return ogV3ImageResponse({
     eyebrow: "Cost analysis · real numbers",
     title: `${savings}% cheaper. ${velocity}× faster.`,
-    subtitle: `One operator + Claude shipped Campaign Brain for ${fmt(actual)} — what a 9.5-person team would quote $850K–$1.7M to build.`,
+    subtitle: `One operator + Claude shipped Campaign Brain for ${fmt(actual)}, what a 9.5-person team would quote $850K to $1.7M to build.`,
     tags: ["117 days", "1 operator", "84 repos", "15K commits"],
     accent: "green",
     cta: "See the numbers →",

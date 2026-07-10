@@ -36,7 +36,7 @@ export default function V3EntropySpacePage() {
               <p className="v3-page-head__lede">
                 Live bytes from a radioactive-decay source, rendered as point
                 clouds you can rotate. True entropy fills space as a structureless
-                mist — and a deterministic PRNG, plotted the same way, can&apos;t
+                mist, and a deterministic PRNG, plotted the same way, can&apos;t
                 hide its hidden planes. Drag any plot to explore.
               </p>
             </V3Reveal>

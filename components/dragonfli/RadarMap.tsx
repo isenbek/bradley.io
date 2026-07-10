@@ -220,7 +220,7 @@ export function RadarMap({ aircraft, receiver }: Props) {
           ) : (
             <div className="space-y-1.5 font-mono text-[11px]" style={{ color: "var(--brand-muted)" }}>
               <Legend color="var(--brand-warning, #f59e0b)" label="< 10,000 ft" />
-              <Legend color="var(--brand-primary)" label="10,000 – 25,000 ft" />
+              <Legend color="var(--brand-primary)" label="10,000 to 25,000 ft" />
               <Legend color="var(--brand-secondary)" label="> 25,000 ft" />
               <div className="pt-2 text-[10px]">
                 Receiver at the centre · rings every {Math.round(rangeNm / 4)}nm

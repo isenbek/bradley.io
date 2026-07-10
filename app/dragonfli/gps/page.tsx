@@ -33,7 +33,7 @@ export default function GpsPage() {
             </V3Reveal>
             <V3Reveal eager>
               <p className="v3-page-head__lede">
-                Live GNSS off the same receiver that feeds the airspace map — a skyplot of every
+                Live GNSS off the same receiver that feeds the airspace map: a skyplot of every
                 satellite in view by signal strength, the SNR spectrum, the fix-precision cloud,
                 and the ground track on a self-hosted vector basemap. Fed by the Dragonfli{" "}
                 <code>/stream</code> firehose.

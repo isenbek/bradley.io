@@ -100,7 +100,7 @@ export default function BitRaster({
       </div>
       <p className="v3-espace-caption">
         <strong>Raw bits.</strong> Each pixel is one bit straight off the
-        conditioned pool — blue for 1, ink for 0 — scrolling up through a block
+        conditioned pool (blue for 1, ink for 0) scrolling up through a block
         of live decay. No pattern forms because there is none to form. Pour
         fresh entropy to stream a new block.
       </p>

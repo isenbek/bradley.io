@@ -34,7 +34,7 @@ export default function V3FleetPage() {
             </V3Reveal>
             <V3Reveal eager>
               <p className="v3-page-head__lede">
-                Live health for the collector fleet behind the WorldEvent bus — per-node
+                Live health for the collector fleet behind the WorldEvent bus: per-node
                 vitals, an attention layer that flags trouble, and a self-healing medic
                 that remediates and logs what it did. Polls every 10 seconds.
               </p>

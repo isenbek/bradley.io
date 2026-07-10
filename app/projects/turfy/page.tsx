@@ -21,7 +21,7 @@ const PRINCIPLES = [
     icon: ShieldCheck,
     title: "Rain Bird keeps authority",
     body:
-      "The 1990s controller stays wired exactly as it is. Turfy is a sidecar on the station outputs — it never replaces the brain, it borrows it.",
+      "The 1990s controller stays wired exactly as it is. Turfy is a sidecar on the station outputs. It never replaces the brain; it borrows it.",
   },
   {
     icon: HeartPulse,
@@ -33,7 +33,7 @@ const PRINCIPLES = [
     icon: Droplets,
     title: "Fail back to dumb",
     body:
-      "Power loss, kernel panic, daemon hang, wedged I²C — every failure reverts to the Rain Bird with zero software involved. A stuck valve floods a yard; this can't stick.",
+      "Power loss, kernel panic, daemon hang, wedged I²C: every failure reverts to the Rain Bird with zero software involved. A stuck valve floods a yard, so this can't stick.",
   },
 ]
 
@@ -42,19 +42,19 @@ const TEARDOWN = [
     src: "/turfy/rainbird-faceplate.webp",
     alt: "Rain Bird ESP-6Si faceplate with its analog scheduling dial",
     tag: "The brief",
-    cap: "Rain Bird ESP-6Si — an analog dial, six stations, an ‘Adjust Water %’ knob. About as simple as irrigation controllers get, which makes it perfect to augment rather than tap.",
+    cap: "Rain Bird ESP-6Si: an analog dial, six stations, an ‘Adjust Water %’ knob. About as simple as irrigation controllers get, which makes it perfect to augment rather than tap.",
   },
   {
     src: "/turfy/teardown-open.webp",
     alt: "The opened controller: green logic board over an orange power board, with a soldered-in lithium battery",
     tag: "Fully mapped",
-    cap: "Inside: a 24VAC transformer, a COB micro, one triac per station, and a hobbyist coin-cell hack that holds the schedule through outages — i.e. what makes the fallback trustworthy.",
+    cap: "Inside: a 24VAC transformer, a COB micro, one triac per station, and a hobbyist coin-cell hack that holds the schedule through outages, which is what makes the fallback trustworthy.",
   },
   {
     src: "/turfy/teardown-power.webp",
     alt: "Power board showing station triacs TH1–TH8, red MOVs, a glass fuse and the field terminal block",
     tag: "The tap point",
-    cap: "Power board (949-26330): eight station triacs TH1–TH8, per-output MOVs, and a fused 24VAC feed. Field wires land on this screw terminal — zone wires lift straight off, nothing gets cut.",
+    cap: "Power board (949-26330): eight station triacs TH1 to TH8, per-output MOVs, and a fused 24VAC feed. Field wires land on this screw terminal, so zone wires lift straight off and nothing gets cut.",
   },
   {
     src: "/turfy/teardown-cob.webp",
@@ -73,11 +73,11 @@ const BOOT = [
 
 const FAILURES = [
   ["Pi power loss / kernel panic", "Heartbeat stops → watchdog drops → Rain Bird", true],
-  ["Daemon crash or hang", "Same — the heartbeat is owned by the daemon loop", true],
+  ["Daemon crash or hang", "Same: the heartbeat is owned by the daemon loop", true],
   ["Pi reboot GPIO chatter", "AUTHORITY pull-down + MCP POR = no valve action", true],
   ["I²C bus wedge", "Daemon detects NAK → drops AUTHORITY", true],
   ["Relay 5V supply dies", "Transfer coils drop → Rain Bird", true],
-  ["Both controllers fire one zone", "Harmless — shared transformer, same phase", true],
+  ["Both controllers fire one zone", "Harmless: shared transformer, same phase", true],
   ["Healthy daemon, latched zone", "Not caught by the watchdog → hard-capped by a per-zone max-runtime in the driver layer, plus flow-meter alarm in v0.2", false],
 ]
 
@@ -87,7 +87,7 @@ const ROADMAP = [
     phase: "Phase 0",
     title: "Passive learn",
     body:
-      "An H11AA1 opto per station output logs when the Rain Bird actually waters. Validates zone mapping and collects a baseline schedule — zero risk, Turfy never asserts.",
+      "An H11AA1 opto per station output logs when the Rain Bird actually waters. Validates zone mapping and collects a baseline schedule at zero risk, since Turfy never asserts.",
     state: "instrumentation",
   },
   {
@@ -103,7 +103,7 @@ const ROADMAP = [
     phase: "Phase 2",
     title: "Flow metering",
     body:
-      "An inline pulse flow meter learns each zone's baseline GPM — the killer feature. Detects stuck valves, broken heads (flow too high) and clogged lines (flow too low), per zone.",
+      "An inline pulse flow meter learns each zone's baseline GPM. That's the killer feature: it detects stuck valves, broken heads (flow too high) and clogged lines (flow too low), per zone.",
     state: "closing the loop",
   },
   {
@@ -133,7 +133,7 @@ const SHEETS = [
     n: 3,
     src: "/turfy/sheet3.svg",
     title: "Sense front-end",
-    cap: "One H11AA1 AC-input opto per Rain Bird station output — the passive-logging phase. Typical of seven.",
+    cap: "One H11AA1 AC-input opto per Rain Bird station output: the passive-logging phase. Typical of seven.",
   },
   {
     n: 4,
@@ -184,8 +184,8 @@ export default function TurfyPage() {
             </V3Reveal>
             <V3Reveal eager>
               <p className="v3-page-head__lede">
-                Turfy is a weather-informed, camera-and-sensor irrigation controller — but the clever
-                part isn&rsquo;t the AI, it&rsquo;s that it <strong>only touches your lawn when it&rsquo;s
+                Turfy is a weather-informed, camera-and-sensor irrigation controller, but the clever
+                part isn&rsquo;t the AI. It&rsquo;s that it <strong>only touches your lawn when it&rsquo;s
                 provably healthy</strong>. It rides alongside a 1990s Rain Bird as a fail-safe sidecar:
                 take authority while the watchdog is fed, and hand control straight back the instant
                 anything goes wrong. In hardware. Because a stuck valve is a flooded yard and a very
@@ -203,7 +203,7 @@ export default function TurfyPage() {
             <figure className="v3-turfy-hero">
               <img src="/turfy/rainbird-faceplate.webp" alt="Rain Bird ESP-6Si controller faceplate" loading="eager" />
               <figcaption>
-                The subject: a Rain Bird ESP-6Si. Reused, not replaced — Turfy borrows its transformer,
+                The subject: a Rain Bird ESP-6Si. Reused, not replaced. Turfy borrows its transformer,
                 its valves, and its job as the always-there fallback brain.
               </figcaption>
             </figure>
@@ -236,7 +236,7 @@ export default function TurfyPage() {
               <span className="v3-turfy-invariant__key">The invariant the whole design hangs on</span>
               <p>
                 A de-energized transfer bank leaves the Rain Bird wired <em>exactly</em> as it is today.
-                It&rsquo;s the first line of the acceptance test — proven with a continuity meter before
+                It&rsquo;s the first line of the acceptance test, proven with a continuity meter before
                 anything is ever powered on.
               </p>
             </div>
@@ -257,7 +257,7 @@ export default function TurfyPage() {
             <p className="v3-turfy-lede">
               It&rsquo;s the classic automatic-transfer-switch pattern applied to sprinklers. An SPDT
               relay per zone: Rain Bird output on <strong>NC</strong>, Turfy output on <strong>NO</strong>,
-              valve wire on the common pole. One authority line pulls the whole bank — unpowered,
+              valve wire on the common pole. One authority line pulls the whole bank. Unpowered,
               crashed, or watchdog-tripped, the relays drop and the Rain Bird is back in control.
             </p>
           </V3Reveal>
@@ -324,9 +324,9 @@ export default function TurfyPage() {
           </V3Reveal>
           <V3Reveal delay={80}>
             <p className="v3-turfy-lede">
-              The schematic is parametric <code>schemdraw</code> source — so when a board photo
-              tells us something (no MV terminal, a shorter timeout), it&rsquo;s a one-line edit and
-              re-render, not a redraw.
+              Four sheets carry the build from the 24VAC tap all the way to the Pi&rsquo;s I²C bus:
+              the valve path, the watchdog and authority gate, the sense front-end, and the zone
+              drive.
             </p>
           </V3Reveal>
           <div className="v3-turfy-sheets">
@@ -334,7 +334,7 @@ export default function TurfyPage() {
               <V3Reveal key={s.n} delay={100 + i * 50}>
                 <figure className="v3-turfy-blueprint">
                   <span className="v3-turfy-blueprint__tag">Sheet {s.n}</span>
-                  <img src={s.src} alt={`Turfy schematic — sheet ${s.n}: ${s.title}`} loading="lazy" />
+                  <img src={s.src} alt={`Turfy schematic, sheet ${s.n}: ${s.title}`} loading="lazy" />
                   <figcaption>
                     <strong>{s.title}.</strong> {s.cap}
                   </figcaption>
@@ -392,8 +392,8 @@ export default function TurfyPage() {
               <blockquote className="v3-turfy-quote">
                 &ldquo;The heartbeat must prove <em>application</em> liveness, not kernel liveness.&rdquo;
                 <span>
-                  So it&rsquo;s toggled from the daemon main loop — never cron, never hardware PWM. A
-                  cron job would keep ticking after a crash and defeat the entire point.
+                  So it&rsquo;s toggled from the daemon&rsquo;s own main loop, not a background timer.
+                  A timer would keep ticking after a crash and defeat the entire point.
                 </span>
               </blockquote>
             </V3Reveal>
@@ -417,7 +417,7 @@ export default function TurfyPage() {
 
           <V3Reveal delay={180}>
             <div className="v3-turfy-boot">
-              <span className="v3-turfy-boot__label">Boot sequence — safe at every step</span>
+              <span className="v3-turfy-boot__label">Boot sequence: safe at every step</span>
               <ol>
                 {BOOT.map((step, i) => (
                   <li key={i}>
@@ -505,9 +505,9 @@ export default function TurfyPage() {
               <div>
                 <span className="v3-turfy-foot__eyebrow">v0.1 build package</span>
                 <p>
-                  Two stock relay boards, an MCP23017 for defined power-on state, a 555 watchdog, and
-                  an H11AA1 sense bank — a parametric <code>schemdraw</code> source renders the four
-                  schematic sheets, so a board photo becomes a one-line edit and re-render.
+                  Two stock relay boards, an MCP23017 for a defined power-on state, a 555 watchdog,
+                  and an H11AA1 sense bank: everything a Turfy v0.1 board needs, laid out across the
+                  four sheets above.
                 </p>
               </div>
               <div className="v3-turfy-bom">

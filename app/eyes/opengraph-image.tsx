@@ -8,7 +8,7 @@ export const runtime = "nodejs"
 export const dynamic = "force-dynamic"
 export const revalidate = 0
 
-export const alt = "Eyes — the latest frame from the bradley.io box"
+export const alt = "Eyes: the latest frame from the bradley.io box"
 export const size = OG_V3_SIZE
 export const contentType = OG_V3_CONTENT_TYPE
 
@@ -43,7 +43,7 @@ export default async function Image() {
       eyebrow: "live · eyes",
       title: "A frame, once a minute.",
       subtitle:
-        "A self-hosted frame grab from the attached camera — cached on the box, refreshed every minute. No stream, no cloud.",
+        "A self-hosted frame grab from the attached camera, cached on the box, refreshed every minute. No stream, no cloud.",
       tags: ["v4l2", "ffmpeg", "systemd", "self-hosted"],
       accent: "blue",
       cta: "See the latest frame →",

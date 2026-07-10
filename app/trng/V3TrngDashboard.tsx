@@ -364,7 +364,7 @@ export function V3TrngDashboard() {
                 className={`v3-test__verdict v3-test__verdict--${rctState}`}
                 title={
                   cont.rct.failed_ever
-                    ? "RCT.failed_ever is true (historical transient at startup) — deliberately not gated on at runtime"
+                    ? "RCT.failed_ever is true (historical transient at startup): deliberately not gated on at runtime"
                     : undefined
                 }
               >

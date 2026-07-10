@@ -69,7 +69,7 @@ export function EyesLive() {
       ) : (
         <div className="v3-cam__warm">
           <span className="v3-cam__warm-dot" aria-hidden />
-          {err ? "sensor offline — frame unavailable" : "warming up the sensor…"}
+          {err ? "sensor offline, frame unavailable" : "warming up the sensor…"}
         </div>
       )}
 

@@ -69,7 +69,7 @@ export default function ReturnMap({
       <p className="v3-espace-caption">
         <strong>The return map.</strong> Each cell is a consecutive byte pair
         (value <em>n</em> across, value <em>n+1</em> up). Real entropy paints an
-        even haze — every pairing equally likely. A flawed generator would etch
+        even haze: every pairing equally likely. A flawed generator would etch
         diagonal lines or a grid here; this stays featureless.
       </p>
     </div>

@@ -55,7 +55,7 @@ export function BandRegistry({ bands }: { bands: Band[] }) {
                 </div>
               </div>
               <div className="col-span-6 sm:col-span-6 font-mono text-[11px]" style={{ color: "var(--brand-muted)" }}>
-                {b.channels ? `channels: ${fmtChannels(b.channels)}` : `${b.lo_hz} – ${b.hi_hz} Hz`}
+                {b.channels ? `channels: ${fmtChannels(b.channels)}` : `${b.lo_hz} to ${b.hi_hz} Hz`}
               </div>
               <div className="col-span-12 sm:col-span-2 text-right">
                 <span

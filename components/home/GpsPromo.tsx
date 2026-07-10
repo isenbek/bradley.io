@@ -15,7 +15,7 @@ export function GpsPromo() {
         <span className="v3-air-promo__eyebrow">live · gps board</span>
         <span className="v3-air-promo__title">The sky, from the ground up</span>
         <span className="v3-air-promo__blurb">
-          Live GNSS off the same receiver as the airspace map — a satellite skyplot by signal
+          Live GNSS off the same receiver as the airspace map: a satellite skyplot by signal
           strength, the SNR spectrum, the fix-precision cloud, and the ground track on a
           self-hosted vector basemap.
         </span>

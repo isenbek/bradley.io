@@ -57,17 +57,17 @@ const mono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Bradley Isenbek — Hardware Hacker, Data Architect, AI Pilot",
+    default: "Bradley Isenbek: Hardware Hacker, Data Architect, AI Pilot",
     template: "%s | Bradley Isenbek",
   },
   description:
-    "Bradley Isenbek — AI Systems Architect, hardware hacker, and frontier technologist building at the intersection of enterprise scale and maker culture. ESP32 mesh networks to Fortune 500 data warehouses, with Claude as co-pilot.",
+    "Bradley Isenbek: AI Systems Architect, hardware hacker, and frontier technologist building at the intersection of enterprise scale and maker culture. ESP32 mesh networks to Fortune 500 data warehouses, with Claude as co-pilot.",
   metadataBase: new URL("https://bradley.io"),
   alternates: { canonical: "/" },
   openGraph: {
-    title: "Bradley Isenbek — Hardware Hacker, Data Architect, AI Pilot",
+    title: "Bradley Isenbek: Hardware Hacker, Data Architect, AI Pilot",
     description:
-      "AI Systems Architect & frontier technologist. Building at the intersection of enterprise scale and maker culture — from ESP32 mesh networks to Fortune 500 data warehouses.",
+      "AI Systems Architect & frontier technologist. Building at the intersection of enterprise scale and maker culture: from ESP32 mesh networks to Fortune 500 data warehouses.",
     url: "https://bradley.io",
     siteName: "bio·bradley.io",
     locale: "en_US",
@@ -75,9 +75,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Bradley Isenbek — Hardware Hacker, Data Architect, AI Pilot",
+    title: "Bradley Isenbek: Hardware Hacker, Data Architect, AI Pilot",
     description:
-      "AI Systems Architect & frontier technologist. Enterprise scale meets maker culture — ESP32 mesh networks to Fortune 500 warehouses, with Claude as co-pilot.",
+      "AI Systems Architect & frontier technologist. Enterprise scale meets maker culture: ESP32 mesh networks to Fortune 500 warehouses, with Claude as co-pilot.",
   },
   robots: {
     index: true,
@@ -165,7 +165,7 @@ export default function RootLayout({
                   mainEntityOfPage: "https://bradley.io/about",
                   jobTitle: "Frontier Technologist",
                   description:
-                    "Bradley Isenbek — hardware hacker, data architect, and AI pilot. Building at the intersection of enterprise scale and maker culture.",
+                    "Bradley Isenbek: hardware hacker, data architect, and AI pilot. Building at the intersection of enterprise scale and maker culture.",
                   hasOccupation: {
                     "@type": "Occupation",
                     name: "AI Systems Architect",
@@ -211,7 +211,7 @@ export default function RootLayout({
                 {
                   "@type": "ProfessionalService",
                   "@id": "https://bradley.io/#service",
-                  name: "Bradley Isenbek — AI & Data Engineering Consulting",
+                  name: "Bradley Isenbek: AI & Data Engineering Consulting",
                   url: "https://bradley.io/services",
                   provider: { "@id": "https://bradley.io/#person" },
                   description:

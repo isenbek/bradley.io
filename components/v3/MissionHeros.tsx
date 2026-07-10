@@ -50,7 +50,7 @@ const MISSIONS: MissionMeta[] = [
     eyebrow: "Platform",
     displayName: "Nominate-AI",
     gh: "https://github.com/Nominate-AI",
-    lede: "AI-native sourcing platform — pipelines, vector search, agents.",
+    lede: "AI-native sourcing platform: pipelines, vector search, agents.",
   },
   {
     slug: "tinymachines",
@@ -68,7 +68,7 @@ const MISSIONS: MissionMeta[] = [
     eyebrow: "Personal",
     displayName: "isenbek",
     gh: "https://github.com/isenbek",
-    lede: "Solo namespace — side projects, the through-line, this site.",
+    lede: "Solo namespace: side projects, the through-line, this site.",
   },
   {
     slug: "sysforge-ai",

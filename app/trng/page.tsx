@@ -42,7 +42,7 @@ export default function V3TrngPage() {
             <V3Reveal>
               <Link href="/trng/space" className="v3-espace-cta">
                 <Boxes size={15} strokeWidth={2.4} />
-                See the entropy in 3D — rotatable point clouds
+                See the entropy in 3D: rotatable point clouds
                 <span aria-hidden>→</span>
               </Link>
             </V3Reveal>

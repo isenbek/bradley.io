@@ -1,22 +1,22 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "SDR — bio·bradley.io",
+  title: "SDR · bio·bradley.io",
   description:
-    "Live status for the SDR scanner stack — band registry, soak archive, top frequencies, and job history from rtl-sdr.",
+    "Live status for the SDR scanner stack: band registry, soak archive, top frequencies, and job history from rtl-sdr.",
   alternates: { canonical: "/sdr" },
   openGraph: {
-    title: "SDR — bio·bradley.io",
+    title: "SDR · bio·bradley.io",
     description:
-      "Live SDR scanner status — bands, soaks, top frequencies, jobs. Built on rtl-sdr.",
+      "Live SDR scanner status: bands, soaks, top frequencies, jobs. Built on rtl-sdr.",
     url: "https://bradley.io/sdr",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "SDR — bio·bradley.io",
+    title: "SDR · bio·bradley.io",
     description:
-      "Live SDR scanner status — bands, soaks, top frequencies, jobs. Built on rtl-sdr.",
+      "Live SDR scanner status: bands, soaks, top frequencies, jobs. Built on rtl-sdr.",
   },
 }
 
@@ -31,9 +31,9 @@ export default function V3SdrLayout({ children }: { children: React.ReactNode })
             "@type": "WebApplication",
             "@id": "https://bradley.io/sdr",
             url: "https://bradley.io/sdr",
-            name: "SDR — bradley.io",
+            name: "SDR · bradley.io",
             description:
-              "Live status for the SDR scanner stack — band registry, soak archive, top frequencies, and job history from rtl-sdr.",
+              "Live status for the SDR scanner stack: band registry, soak archive, top frequencies, and job history from rtl-sdr.",
             applicationCategory: "Data Visualization",
             isPartOf: { "@id": "https://bradley.io/#website" },
             breadcrumb: {

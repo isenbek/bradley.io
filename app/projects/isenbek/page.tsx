@@ -8,12 +8,12 @@ import { MissionTimeline } from "../_timeline/MissionTimeline"
 export const revalidate = 3600
 
 export const metadata: Metadata = {
-  title: "isenbek — Personal Timeline | bio·bradley.io",
+  title: "isenbek: Personal Timeline | bio·bradley.io",
   description:
-    "Personal repository timeline — solo work, side quests, and the running thread across platforms.",
+    "Personal repository timeline: solo work, side quests, and the running thread across platforms.",
   alternates: { canonical: "/projects/isenbek" },
   openGraph: {
-    title: "isenbek — Personal Timeline",
+    title: "isenbek: Personal Timeline",
     description:
       "Solo repos, side projects, and the running thread across every platform.",
     url: "https://bradley.io/projects/isenbek",
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "isenbek — Personal Timeline",
+    title: "isenbek: Personal Timeline",
     description:
       "Solo repos, side projects, and the running thread across every platform.",
   },
@@ -54,9 +54,9 @@ export default function V3IsenbekTimeline() {
             "@type": "CreativeWork",
             "@id": "https://bradley.io/projects/isenbek",
             url: "https://bradley.io/projects/isenbek",
-            name: "isenbek — Personal Timeline",
+            name: "isenbek: Personal Timeline",
             description:
-              "Personal repository timeline — solo work, side quests, and the running thread across platforms.",
+              "Personal repository timeline: solo work, side quests, and the running thread across platforms.",
             author: { "@id": "https://bradley.io/#person" },
             isPartOf: { "@id": "https://bradley.io/#website" },
             breadcrumb: {
@@ -74,7 +74,7 @@ export default function V3IsenbekTimeline() {
         displayName="isenbek"
         eyebrow="Personal timeline"
         accent="green"
-        lede="The solo namespace. Side projects, learning exercises, and the through-line — repos that track the career arc across every platform and lab."
+        lede="The solo namespace. Side projects, learning exercises, and the through-line: repos that track the career arc across every platform and lab."
         data={data}
       />
     </>

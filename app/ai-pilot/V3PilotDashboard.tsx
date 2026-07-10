@@ -39,7 +39,7 @@ function ActivityPanel({ data }: { data: AIPilotData }) {
               role="img"
               className="v3-heatmap__cell"
               data-i={d.intensity}
-              title={`${d.date} — ${d.count} messages, ${d.sessions} sessions`}
+              title={`${d.date}: ${d.count} messages, ${d.sessions} sessions`}
               aria-label={`${d.date}: ${d.count} messages`}
             />
           ))}
@@ -76,7 +76,7 @@ function ActivityPanel({ data }: { data: AIPilotData }) {
                 className="v3-bars__bar"
                 data-peak={isPeak ? "true" : "false"}
                 style={{ height: `${Math.max(pct, 4)}%` }}
-                title={`${h.label} — ${h.count} messages`}
+                title={`${h.label}: ${h.count} messages`}
                 aria-label={`${h.label}: ${h.count} messages`}
               />
             )

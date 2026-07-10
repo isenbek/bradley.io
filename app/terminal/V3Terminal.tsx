@@ -45,7 +45,7 @@ function About({ data }: { data: SiteData | null }) {
   const bio = data?.about?.bio
   return (
     <div>
-      <div className="v3-term__accent">bradley.io — frontier technologist</div>
+      <div className="v3-term__accent">bradley.io: frontier technologist</div>
       <div className="v3-term__mute" style={{ marginTop: 6 }}>
         {bio || "loading bio…"}
       </div>
@@ -313,7 +313,7 @@ export function V3Terminal() {
       case "linkedin":
         out = (
           <div className="v3-term__mute">
-            I&apos;m not on LinkedIn — try <span className="v3-term__warn">github</span> or{" "}
+            I&apos;m not on LinkedIn. Try <span className="v3-term__warn">github</span> or{" "}
             <span className="v3-term__warn">contact</span>.
           </div>
         )
@@ -324,7 +324,7 @@ export function V3Terminal() {
         else if (parts[1] === "resume.pdf")
           out = (
             <div className="v3-term__mute">
-              binary file — try <span className="v3-term__warn">resume</span> instead.
+              binary file. Try <span className="v3-term__warn">resume</span> instead.
             </div>
           )
         else

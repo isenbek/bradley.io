@@ -53,7 +53,7 @@ export default function MotionPage() {
             </V3Reveal>
             <V3Reveal eager>
               <p className="v3-page-head__lede">
-                A $20 box fan fooled both of Meatball&apos;s senses at once — it hissed on the mic and it
+                A $20 box fan fooled both of Meatball&apos;s senses at once: it hissed on the mic and it
                 waved at the camera, and the camera kept reporting &quot;someone&apos;s here.&quot; The fix
                 is a small lesson in where the leverage actually is: never on the picture you can see,
                 always upstream of it or in the rule that reads it.
@@ -75,15 +75,15 @@ export default function MotionPage() {
         <p className="v3-prose v3-longform__lead">
           Meatball watches for motion the obvious way: every ~10 seconds it grabs a frame from each
           camera, subtracts the previous one, and scores how much changed across a 32×18 grid. A bright
-          region in the difference means something moved. Simple, cheap, and — with a box fan in the
-          room — wrong constantly. The blades are <em>always</em> in a new position, so the fan&apos;s
+          region in the difference means something moved. Simple, cheap, and (with a box fan in the
+          room) wrong constantly. The blades are <em>always</em> in a new position, so the fan&apos;s
           corner of the frame lights up every single tick. To a plain frame-differ, a spinning fan and
           a walking person are the same event.
         </p>
         <p className="v3-prose">
           The same fan had already shown up on the other sense. When we re-measured the microphones, one
-          mic&apos;s noise floor had jumped <strong>24&nbsp;dB</strong> — from −41&nbsp;dBFS to
-          −17 — and its gain was pinned at the maximum, 255. That was the fan&apos;s draft and hum, and a
+          mic&apos;s noise floor had jumped <strong>24&nbsp;dB</strong> (from −41&nbsp;dBFS to
+          −17) and its gain was pinned at the maximum, 255. That was the fan&apos;s draft and hum, and a
           gained-up sensor amplifying it. One cheap appliance, both senses saturated.
         </p>
         <Code cap="the noise floor that gave it away" receipt>{`brio mic        floor −41.1 dBFS   spread 0.9 dB   quiet, stable
@@ -93,9 +93,9 @@ quickcam gain   255 / 255          maxed → amplifying its own room noise`}</Co
 
       <Sec n="02" title="Why you can't just turn up the contrast">
         <p className="v3-prose">
-          The first instinct is to stretch the difference image — &quot;the motion&apos;s faint, boost
+          The first instinct is to stretch the difference image: &quot;the motion&apos;s faint, boost
           it.&quot; It doesn&apos;t help, and it&apos;s worth knowing exactly why. The difference is dark
-          because most of the frame genuinely <em>didn&apos;t</em> change — that&apos;s correct. Multiply
+          because most of the frame genuinely <em>didn&apos;t</em> change. That&apos;s correct. Multiply
           it and you scale the real motion <strong>and</strong> the sensor speckle and the lighting
           residual by the same factor. The signal-to-noise ratio is unchanged; you&apos;ve just moved
           the numbers around and made the threshold harder to place.
@@ -109,7 +109,7 @@ quickcam gain   255 / 255          maxed → amplifying its own room noise`}</Co
 
       <Sec n="03" title="Two different lies need two different fixes">
         <p className="v3-prose">
-          The false triggers came from two genuinely different causes, and no single trick fixes both —
+          The false triggers came from two genuinely different causes, and no single trick fixes both,
           which is exactly why naïve approaches flail.
         </p>
         <Code cap="the two failure modes">{`cause                       nature                         fix
@@ -126,15 +126,15 @@ the fan, the monitors        real pixel change, just         a smarter decision 
         </p>
       </Sec>
 
-      <Sec n="04" title="Fix one — kill it at the source: lock the camera">
+      <Sec n="04" title="Fix one, kill it at the source: lock the camera">
         <p className="v3-prose">
           A webcam left on auto re-meters constantly. Auto-exposure rebalances when a screen flickers or
           something bright enters frame; auto-white-balance shifts the whole color map; continuous
           autofocus hunts. Every one of those is a <em>whole-frame</em> change you then have to fight in
-          software. The cameras expose a whole galaxy of these knobs over v4l2 — 29 of them across the
-          two we run — and the cure is to stop the automatic ones from moving.
+          software. The cameras expose a whole galaxy of these knobs over v4l2 (29 of them across the
+          two we run) and the cure is to stop the automatic ones from moving.
         </p>
-        <Code cap="the stable profile — pin the autos, freeze the picture">{`auto_exposure              → Manual      (was: Aperture-Priority)
+        <Code cap="the stable profile: pin the autos, freeze the picture">{`auto_exposure              → Manual      (was: Aperture-Priority)
 white_balance_automatic    → off
 exposure_dynamic_framerate → off
 focus_automatic_continuous → off
@@ -143,18 +143,18 @@ auto had just chosen — so the picture doesn't visibly jump,
 it just stops hunting.`}</Code>
         <p className="v3-prose">
           The trick in that last line matters: we read what auto-exposure currently landed on and write
-          it back as the fixed manual value. The image looks identical the instant before and after —
-          the only thing that changes is that it stops chasing the room. The doc that started this
+          it back as the fixed manual value. The image looks identical the instant before and after.
+          The only thing that changes is that it stops chasing the room. The doc that started this
           called locking the camera &quot;the biggest single win, zero compute,&quot; and it&apos;s
           right.
         </p>
       </Sec>
 
-      <Sec n="05" title="Fix two — let every cell set its own bar">
+      <Sec n="05" title="Fix two: let every cell set its own bar">
         <p className="v3-prose">
           The fan is real motion, so no camera setting touches it. The decision rule has to get smarter.
           Instead of one global threshold for the whole frame, every cell of the 32×18 grid keeps a
-          running model of <em>its own</em> history — an exponential mean and variance of how much that
+          running model of <em>its own</em> history: an exponential mean and variance of how much that
           spot normally changes.
         </p>
         <Code>{`# per grid cell, each tick:
@@ -165,7 +165,7 @@ var     = (1−α)·var  + α·resid²`}</Code>
         <p className="v3-prose">
           This is the whole idea: a cell only counts as motion when it beats <strong>its own</strong>
           learned noise floor, not a global one. The fan&apos;s cells see big changes every tick, so
-          their mean and variance climb until the fan no longer surprises them — the fan{" "}
+          their mean and variance climb until the fan no longer surprises them: the fan{" "}
           <strong>raises its own bar and self-mutes</strong>. The monitors do the same. A slow drift in
           room light gets absorbed into each cell&apos;s mean for free. And a person crossing a normally
           still patch of floor blows past that patch&apos;s tiny variance and fires immediately. Same
@@ -173,13 +173,13 @@ var     = (1−α)·var  + α·resid²`}</Code>
         </p>
       </Sec>
 
-      <Sec n="06" title="Fix two-and-a-half — require a real blob">
+      <Sec n="06" title="Fix two-and-a-half: require a real blob">
         <p className="v3-prose">
           One more cheap filter. Even with the adaptive gate, a stray cell occasionally flickers through.
-          A person isn&apos;t one hot cell — they&apos;re a contiguous, body-sized region. So we label the
+          A person isn&apos;t one hot cell. They&apos;re a contiguous, body-sized region. So we label the
           connected components of the fired cells and keep only the largest run (≥ 3 cells), and that
-          becomes the box we hand to the vision model. Scattered single-cell blips — the last gasps of
-          the fan — get dropped; the person-shaped blob wins. It also stops a sudden whole-frame light
+          becomes the box we hand to the vision model. Scattered single-cell blips (the last gasps of
+          the fan) get dropped; the person-shaped blob wins. It also stops a sudden whole-frame light
           change from drawing one enormous box: if more than half the grid fires at once, that&apos;s not
           a person, that&apos;s the lights, and we ignore it.
         </p>
@@ -187,8 +187,8 @@ var     = (1−α)·var  + α·resid²`}</Code>
 
       <Sec n="07" title="The payoff">
         <p className="v3-prose">
-          Tested first on a synthetic scene — a busy &quot;fan&quot; block plus a &quot;person&quot;
-          crossing a quiet area — then live on the real rig. The fan stopped existing as far as the
+          Tested first on a synthetic scene (a busy &quot;fan&quot; block plus a &quot;person&quot;
+          crossing a quiet area), then live on the real rig. The fan stopped existing as far as the
           trigger was concerned, and the person came through clean.
         </p>
         <Code cap="before the gate learned, vs. after" receipt>{`synthetic, fan only      → 0 false fires once warmed (~1 min)
@@ -196,10 +196,10 @@ synthetic, person+fan    → one tight box on the PERSON, fan excluded
 live, raw delta spike 14 → old code: FIRES (threshold was 7)
                            new code: gated motion 0, no box  ✓`}</Code>
         <p className="v3-prose">
-          That last line is the one I like. A global auto-exposure blip pushed the raw difference to 14 —
+          That last line is the one I like. A global auto-exposure blip pushed the raw difference to 14,
           well over the old fixed threshold of 7, a guaranteed false alarm in the old world. The new
           pipeline looked at it cell by cell, saw nothing beat its own bar, and stayed quiet. The fan
-          spins, the lights flicker, the screens scroll — and Meatball only speaks up when something that
+          spins, the lights flicker, the screens scroll, and Meatball only speaks up when something that
           isn&apos;t supposed to move, moves.
         </p>
         <p className="v3-prose" style={{ marginTop: 14 }}>

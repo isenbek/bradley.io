@@ -126,7 +126,7 @@ export function EarsTrack() {
         </div>
       ) : (
         <p className="v3-motion-note">
-          no transcriptions yet — speak near a mic and it&apos;ll trip the floor and land here
+          no transcriptions yet. Speak near a mic and it&apos;ll trip the floor and land here
         </p>
       )}
     </div>

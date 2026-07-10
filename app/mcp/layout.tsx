@@ -1,22 +1,22 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "MCP Catalog — bio·bradley.io",
+  title: "MCP Catalog · bio·bradley.io",
   description:
-    "Campaign Brain MCP catalog — FastAPI microservices for AI, data, communication, infrastructure, and business operations.",
+    "Campaign Brain MCP catalog: FastAPI microservices for AI, data, communication, infrastructure, and business operations.",
   alternates: { canonical: "/mcp" },
   openGraph: {
-    title: "MCP Catalog — bio·bradley.io",
+    title: "MCP Catalog · bio·bradley.io",
     description:
-      "Campaign Brain MCP services — AI, data, communication, infrastructure, business. All open via MCP to LLM agents.",
+      "Campaign Brain MCP services: AI, data, communication, infrastructure, business. All open via MCP to LLM agents.",
     url: "https://bradley.io/mcp",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "MCP Catalog — bio·bradley.io",
+    title: "MCP Catalog · bio·bradley.io",
     description:
-      "Campaign Brain MCP services — AI, data, communication, infrastructure, business. All open via MCP to LLM agents.",
+      "Campaign Brain MCP services: AI, data, communication, infrastructure, business. All open via MCP to LLM agents.",
   },
 }
 
@@ -31,7 +31,7 @@ export default function V3McpLayout({ children }: { children: React.ReactNode })
             "@type": "CollectionPage",
             "@id": "https://bradley.io/mcp",
             url: "https://bradley.io/mcp",
-            name: "MCP Catalog — Campaign Brain",
+            name: "MCP Catalog · Campaign Brain",
             description:
               "Catalog of Campaign Brain MCP microservices: AI, data, communication, infrastructure, business.",
             isPartOf: { "@id": "https://bradley.io/#website" },

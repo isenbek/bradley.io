@@ -1,22 +1,22 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Airspace Map — bio·bradley.io",
+  title: "Airspace Map · bio·bradley.io",
   description:
-    "Live ADS-B aircraft on a self-hosted vector map of the Great Lakes — with a 15-minute density forecast, per-aircraft trajectory ribbons, and an RSSI reception bloom. Fed by the Dragonfli 1090 MHz receiver.",
+    "Live ADS-B aircraft on a self-hosted vector map of the Great Lakes, with a 15-minute density forecast, per-aircraft trajectory ribbons, and an RSSI reception bloom. Fed by the Dragonfli 1090 MHz receiver.",
   alternates: { canonical: "/dragonfli/airspace" },
   openGraph: {
-    title: "Airspace Map — the sky over Grand Rapids, mapped",
+    title: "Airspace Map: the sky over Grand Rapids, mapped",
     description:
-      "Live aircraft, a 15-minute ML density forecast, trajectory ribbons, and a signal-strength bloom — on a self-hosted vector basemap.",
+      "Live aircraft, a 15-minute ML density forecast, trajectory ribbons, and a signal-strength bloom, on a self-hosted vector basemap.",
     url: "https://bradley.io/dragonfli/airspace",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Airspace Map — the sky over Grand Rapids, mapped",
+    title: "Airspace Map: the sky over Grand Rapids, mapped",
     description:
-      "Live aircraft, a 15-minute ML density forecast, trajectory ribbons, and a signal-strength bloom — on a self-hosted vector basemap.",
+      "Live aircraft, a 15-minute ML density forecast, trajectory ribbons, and a signal-strength bloom, on a self-hosted vector basemap.",
   },
 }
 
@@ -31,9 +31,9 @@ export default function V3AirspaceLayout({ children }: { children: React.ReactNo
             "@type": "WebApplication",
             "@id": "https://bradley.io/dragonfli/airspace",
             url: "https://bradley.io/dragonfli/airspace",
-            name: "Airspace Map — bradley.io",
+            name: "Airspace Map · bradley.io",
             description:
-              "Live ADS-B aircraft on a self-hosted vector map of the Great Lakes — with a 15-minute density forecast, per-aircraft trajectory ribbons, and an RSSI reception bloom.",
+              "Live ADS-B aircraft on a self-hosted vector map of the Great Lakes, with a 15-minute density forecast, per-aircraft trajectory ribbons, and an RSSI reception bloom.",
             applicationCategory: "Data Visualization",
             isPartOf: { "@id": "https://bradley.io/#website" },
             breadcrumb: {

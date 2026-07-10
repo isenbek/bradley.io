@@ -8,21 +8,21 @@ import { EarsTrack } from "@/components/meatball/EarsTrack"
 
 // The salvaged rig — junk on the left, the sense it became on the right.
 const RIG: { junk: string; role: string }[] = [
-  { junk: "No case at all", role: "open-air on the bench — a body you can reach into" },
-  { junk: "Two old GPUs", role: "run the local LLM, Whisper STT, and a neural voice — on the metal" },
+  { junk: "No case at all", role: "open-air on the bench, a body you can reach into" },
+  { junk: "Two old GPUs", role: "run the local LLM, Whisper STT, and a neural voice, on the metal" },
   { junk: "20 assorted second-hand external drives", role: "the memory" },
-  { junk: "A pile of Plantronics ADACs from an abandoned office", role: "the audio lanes — speaker + mics over USB" },
+  { junk: "A pile of Plantronics ADACs from an abandoned office", role: "the audio lanes: speaker + mics over USB" },
   { junk: "An old factory start/stop button", role: "the power switch" },
   { junk: "Altec Lansing speakers, early '90s", role: "the mouth" },
   { junk: "A mic from my grandfather's garage, '60s", role: "an ear" },
   { junk: "A Realistic condenser mic, Salvation Army", role: "another ear" },
   { junk: "A baseless Salvation Army monitor", role: "the display" },
-  { junk: "Scrounged Logitech webcams", role: "the eyes — and, it turned out, the best ears too" },
+  { junk: "Scrounged Logitech webcams", role: "the eyes. And, it turned out, the best ears too" },
 ]
 
 const SENSES = [
   { icon: Eye, label: "Eyes", body: "Two scrounged webcams. One grabs a frame a minute and serves it live; the vision model narrates what's in front of it.", href: "/eyes", cta: "see live" },
-  { icon: Ear, label: "Ears", body: "A '60s garage mic, a thrift-store condenser, and the webcam mics — feeding a local Whisper that transcribes the room.", href: null, cta: null },
+  { icon: Ear, label: "Ears", body: "A '60s garage mic, a thrift-store condenser, and the webcam mics, feeding a local Whisper that transcribes the room.", href: null, cta: null },
   { icon: Speaker, label: "Mouth", body: "Early-'90s Altec Lansings driven by a local neural voice. First word lands in about a third of a second.", href: null, cta: null },
   { icon: Brain, label: "Brain", body: "A local LLM on two old GPUs, plus a self-calibrating audio rig. No keys, no cloud, ever.", href: null, cta: null },
 ]
@@ -33,7 +33,7 @@ const ENTRIES = [
     href: "/lab/senses",
     kicker: "field note · 01",
     title: "I gave a junk-pile eyes, ears, and a voice",
-    blurb: "The whole saga: the salvaged bill of materials, the debugging traps that cost an hour each, the calibration insight, and — finally — talking to the WOPR out loud.",
+    blurb: "The whole saga: the salvaged bill of materials, the debugging traps that cost an hour each, the calibration insight, and (finally) talking to the WOPR out loud.",
   },
   {
     href: "/lab/listening",
@@ -45,7 +45,7 @@ const ENTRIES = [
     href: "/lab/motion",
     kicker: "field note · 03",
     title: "Teaching the eyes to ignore a box fan",
-    blurb: "One cheap fan fooled both senses. Locking the camera's auto-exposure galaxy, then an adaptive per-cell gate that self-mutes the fan, the monitors, and lighting blips — so it only fires on what shouldn't move.",
+    blurb: "One cheap fan fooled both senses. Locking the camera's auto-exposure galaxy, then an adaptive per-cell gate that self-mutes the fan, the monitors, and lighting blips, so it only fires on what shouldn't move.",
   },
 ]
 
@@ -71,8 +71,8 @@ export default function MeatballPage() {
                 </V3Reveal>
                 <V3Reveal eager>
                   <p className="v3-page-head__lede">
-                    A caseless home server built from other people&apos;s cast-offs — salvaged GPUs, an
-                    abandoned-office pile of audio dongles, a &apos;60s microphone, early-&apos;90s speakers — taught to
+                    A caseless home server built from other people&apos;s cast-offs (salvaged GPUs, an
+                    abandoned-office pile of audio dongles, a &apos;60s microphone, early-&apos;90s speakers) taught to
                     see, hear, think, and speak. Every model runs on the metal. Nothing touches the cloud.
                     This is its home.
                   </p>
@@ -83,7 +83,7 @@ export default function MeatballPage() {
                 src="/meatball-mascot.png"
                 width={512}
                 height={279}
-                alt="Meatball — a grinning ball of salvaged electronics with cable arms, waving hello"
+                alt="Meatball: a grinning ball of salvaged electronics with cable arms, waving hello"
               />
             </div>
           </div>
@@ -122,7 +122,7 @@ export default function MeatballPage() {
           <V3Reveal><MotionTrack /></V3Reveal>
           <V3Reveal>
             <Link href="/meatball/log" className="v3-espace-cta" style={{ marginTop: 16 }}>
-              <ScrollText size={15} strokeWidth={2.4} /> the logbook — what it noticed <span aria-hidden>→</span>
+              <ScrollText size={15} strokeWidth={2.4} /> the logbook: what it noticed <span aria-hidden>→</span>
             </Link>
           </V3Reveal>
         </div>
@@ -140,7 +140,7 @@ export default function MeatballPage() {
           <V3Reveal><EarsTrack /></V3Reveal>
           <V3Reveal>
             <Link href="/meatball/memory" className="v3-espace-cta" style={{ marginTop: 16 }}>
-              <Brain size={15} strokeWidth={2.4} /> the memory — moments lined up <span aria-hidden>→</span>
+              <Brain size={15} strokeWidth={2.4} /> the memory: moments lined up <span aria-hidden>→</span>
             </Link>
           </V3Reveal>
         </div>

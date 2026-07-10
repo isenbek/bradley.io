@@ -8,22 +8,22 @@ import { MissionTimeline } from "../_timeline/MissionTimeline"
 export const revalidate = 3600
 
 export const metadata: Metadata = {
-  title: "tinymachines — Lab Timeline | bio·bradley.io",
+  title: "tinymachines: Lab Timeline | bio·bradley.io",
   description:
-    "Development timeline of the tinymachines lab — hardware, signals, agentic experiments. 60+ repos across 9 phases.",
+    "Development timeline of the tinymachines lab: hardware, signals, agentic experiments. 60+ repos across 9 phases.",
   alternates: { canonical: "/projects/tinymachines" },
   openGraph: {
-    title: "tinymachines — Lab Timeline",
+    title: "tinymachines: Lab Timeline",
     description:
-      "Hardware, signals, agentic experiments — the lab umbrella behind SDR, TRNG, Dragonfli, and more.",
+      "Hardware, signals, agentic experiments: the lab umbrella behind SDR, TRNG, Dragonfli, and more.",
     url: "https://bradley.io/projects/tinymachines",
     type: "article",
   },
   twitter: {
     card: "summary_large_image",
-    title: "tinymachines — Lab Timeline",
+    title: "tinymachines: Lab Timeline",
     description:
-      "Hardware, signals, agentic experiments — the lab umbrella behind SDR, TRNG, Dragonfli, and more.",
+      "Hardware, signals, agentic experiments: the lab umbrella behind SDR, TRNG, Dragonfli, and more.",
   },
 }
 
@@ -54,9 +54,9 @@ export default function V3TinyMachinesTimeline() {
             "@type": "CreativeWork",
             "@id": "https://bradley.io/projects/tinymachines",
             url: "https://bradley.io/projects/tinymachines",
-            name: "tinymachines — Lab Timeline",
+            name: "tinymachines: Lab Timeline",
             description:
-              "Development timeline of the tinymachines lab — hardware, signals, agentic experiments. 60+ repos across 9 phases.",
+              "Development timeline of the tinymachines lab: hardware, signals, agentic experiments. 60+ repos across 9 phases.",
             author: { "@id": "https://bradley.io/#person" },
             isPartOf: { "@id": "https://bradley.io/#website" },
             breadcrumb: {
@@ -74,7 +74,7 @@ export default function V3TinyMachinesTimeline() {
         displayName="tinymachines"
         eyebrow="Lab umbrella"
         accent="gold"
-        lede="The garage-lab umbrella. ESP32 mesh, software-defined radio, true randomness from radioactive decay, ADS-B receivers — all the hardware-meets-AI experiments live here."
+        lede="The garage-lab umbrella. ESP32 mesh, software-defined radio, true randomness from radioactive decay, ADS-B receivers. All the hardware-meets-AI experiments live here."
         data={data}
       />
     </>

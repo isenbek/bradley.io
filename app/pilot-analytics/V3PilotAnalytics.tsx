@@ -103,7 +103,7 @@ export function V3PilotAnalytics() {
       .catch(() => setErr(true))
   }, [])
 
-  if (err) return <div className="v3-empty">analytics not built yet — run scripts/claude-activity-viz.py</div>
+  if (err) return <div className="v3-empty">analytics not built yet: run scripts/claude-activity-viz.py</div>
   if (!d) return <div className="v3-empty">loading…</div>
 
   const s = d.summary

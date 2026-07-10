@@ -65,7 +65,7 @@ export function EventLog() {
   if (loaded && events.length === 0) {
     return (
       <div className="v3-log__empty">
-        Nothing logged yet — the cameras have been still. Walk past one and Meatball will note what
+        Nothing logged yet. The cameras have been still. Walk past one and Meatball will note what
         it saw, right here.
       </div>
     )

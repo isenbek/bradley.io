@@ -3,7 +3,7 @@ import { join } from "path"
 import { ogV3ImageResponse, OG_V3_SIZE, OG_V3_CONTENT_TYPE } from "@/lib/og-card-v3"
 
 export const runtime = "nodejs"
-export const alt = "MCP Catalog — bio·bradley.io"
+export const alt = "MCP Catalog · bio·bradley.io"
 export const size = OG_V3_SIZE
 export const contentType = OG_V3_CONTENT_TYPE
 
@@ -24,7 +24,7 @@ export default function OG() {
     eyebrow: "Campaign Brain · MCP",
     title: `${s.totalServices} services. ${s.totalEndpoints} endpoints.`,
     subtitle:
-      "FastAPI microservices for AI, data, communication, infrastructure, and business — all open via MCP to LLM agents.",
+      "FastAPI microservices for AI, data, communication, infrastructure, and business: all open via MCP to LLM agents.",
     tags: ["AI", "Data", "Comms", "Infra", "Business"],
     accent: "blue",
     cta: "Browse catalog →",

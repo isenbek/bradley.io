@@ -1,22 +1,22 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Fleet Health — bio·bradley.io",
+  title: "Fleet Health · bio·bradley.io",
   description:
-    "Live health for the collector fleet behind the WorldEvent bus — per-node vitals, an attention layer, and a self-healing auto-medic.",
+    "Live health for the collector fleet behind the WorldEvent bus: per-node vitals, an attention layer, and a self-healing auto-medic.",
   alternates: { canonical: "/fleet" },
   openGraph: {
-    title: "Fleet Health — bio·bradley.io",
+    title: "Fleet Health · bio·bradley.io",
     description:
-      "Live collector-fleet health — per-node vitals, attention gating, and a self-healing medic. Powered by worldsink.",
+      "Live collector-fleet health: per-node vitals, attention gating, and a self-healing medic. Powered by worldsink.",
     url: "https://bradley.io/fleet",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Fleet Health — bio·bradley.io",
+    title: "Fleet Health · bio·bradley.io",
     description:
-      "Live collector-fleet health — per-node vitals, attention gating, and a self-healing medic. Powered by worldsink.",
+      "Live collector-fleet health: per-node vitals, attention gating, and a self-healing medic. Powered by worldsink.",
   },
 }
 
@@ -31,9 +31,9 @@ export default function V3FleetLayout({ children }: { children: React.ReactNode 
             "@type": "WebApplication",
             "@id": "https://bradley.io/fleet",
             url: "https://bradley.io/fleet",
-            name: "Fleet Health — bradley.io",
+            name: "Fleet Health · bradley.io",
             description:
-              "Live health for the collector fleet behind the WorldEvent bus — per-node vitals, attention gating, and a self-healing auto-medic.",
+              "Live health for the collector fleet behind the WorldEvent bus: per-node vitals, attention gating, and a self-healing auto-medic.",
             applicationCategory: "Data Visualization",
             isPartOf: { "@id": "https://bradley.io/#website" },
             breadcrumb: {

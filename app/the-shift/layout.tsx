@@ -1,22 +1,22 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "The Shift — bio·bradley.io",
+  title: "The Shift · bio·bradley.io",
   description:
     "How AI rewrites the economics of building software. Five sections of evidence from a year of shipping with Claude as co-pilot.",
   alternates: { canonical: "/the-shift" },
   openGraph: {
-    title: "The Shift — bio·bradley.io",
+    title: "The Shift · bio·bradley.io",
     description:
-      "How AI rewrites the economics of building software — one person covering ground that used to need a team.",
+      "How AI rewrites the economics of building software: one person covering ground that used to need a team.",
     url: "https://bradley.io/the-shift",
     type: "article",
   },
   twitter: {
     card: "summary_large_image",
-    title: "The Shift — bio·bradley.io",
+    title: "The Shift · bio·bradley.io",
     description:
-      "How AI rewrites the economics of building software — one person covering ground that used to need a team.",
+      "How AI rewrites the economics of building software: one person covering ground that used to need a team.",
   },
 }
 
@@ -31,7 +31,7 @@ export default function V3TheShiftLayout({ children }: { children: React.ReactNo
             "@type": "Article",
             "@id": "https://bradley.io/the-shift",
             url: "https://bradley.io/the-shift",
-            headline: "The Shift — how AI rewrites the economics of building software",
+            headline: "The Shift: how AI rewrites the economics of building software",
             author: { "@id": "https://bradley.io/#person" },
             publisher: { "@id": "https://bradley.io/#person" },
             isPartOf: { "@id": "https://bradley.io/#website" },

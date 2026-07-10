@@ -72,8 +72,8 @@ export function FleetPromo() {
         <span className="v3-air-promo__eyebrow">live · fleet health</span>
         <span className="v3-air-promo__title">The collector fleet, watched</span>
         <span className="v3-air-promo__blurb">
-          Per-node vitals for the boxes behind the WorldEvent bus — disk, temp, uplink,
-          services — with an attention layer that flags trouble and a self-healing medic
+          Per-node vitals for the boxes behind the WorldEvent bus (disk, temp, uplink,
+          services) with an attention layer that flags trouble and a self-healing medic
           that fixes it and logs what it did.
         </span>
       </span>

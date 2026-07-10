@@ -1,12 +1,12 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Contact — bio·bradley.io",
+  title: "Contact · bio·bradley.io",
   description:
-    "Get in touch with Bradley Isenbek — email, GitHub, project inquiries. Based in Grand Rapids, MI. Replies within ~24 hours.",
+    "Get in touch with Bradley Isenbek: email, GitHub, project inquiries. Based in Grand Rapids, MI. Replies within ~24 hours.",
   alternates: { canonical: "/contact" },
   openGraph: {
-    title: "Contact — bio·bradley.io",
+    title: "Contact · bio·bradley.io",
     description:
       "Drop me a line. Email, GitHub, or just a sketch. Based in Grand Rapids, MI.",
     url: "https://bradley.io/contact",
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Contact — bio·bradley.io",
+    title: "Contact · bio·bradley.io",
     description:
       "Drop me a line. Email, GitHub, or just a sketch. Based in Grand Rapids, MI.",
   },
@@ -31,7 +31,7 @@ export default function V3ContactLayout({ children }: { children: React.ReactNod
             "@type": "ContactPage",
             "@id": "https://bradley.io/contact",
             url: "https://bradley.io/contact",
-            name: "Contact — bradley.io",
+            name: "Contact · bradley.io",
             mainEntity: { "@id": "https://bradley.io/#person" },
             isPartOf: { "@id": "https://bradley.io/#website" },
             breadcrumb: {

@@ -1,12 +1,12 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Services — bio·bradley.io",
+  title: "Services · bio·bradley.io",
   description:
     "AI & data engineering consulting. Distributed systems, data pipelines, APIs, edge/IoT, and AI/ML integration. Project, hourly, and retainer engagements.",
   alternates: { canonical: "/services" },
   openGraph: {
-    title: "Services — bio·bradley.io",
+    title: "Services · bio·bradley.io",
     description:
       "Distributed systems, data pipelines, edge/IoT, AI/ML integration. 15+ years building production systems at scale.",
     url: "https://bradley.io/services",
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Services — bio·bradley.io",
+    title: "Services · bio·bradley.io",
     description:
       "Distributed systems, data pipelines, edge/IoT, AI/ML integration. 15+ years building production systems at scale.",
   },
@@ -30,7 +30,7 @@ export default function V3ServicesLayout({ children }: { children: React.ReactNo
             "@context": "https://schema.org",
             "@type": "ProfessionalService",
             "@id": "https://bradley.io/#service",
-            name: "Bradley Isenbek — AI & Data Engineering Consulting",
+            name: "Bradley Isenbek: AI & Data Engineering Consulting",
             url: "https://bradley.io/services",
             provider: { "@id": "https://bradley.io/#person" },
             areaServed: "US",

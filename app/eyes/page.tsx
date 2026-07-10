@@ -33,10 +33,10 @@ export default function EyesPage() {
             </V3Reveal>
             <V3Reveal eager>
               <p className="v3-page-head__lede">
-                A live still from the camera attached to the bradley.io box — grabbed with{" "}
+                A live still from the camera attached to the bradley.io box, grabbed with{" "}
                 <code>ffmpeg</code> straight off <code>/dev/video0</code> once a minute, cached on
                 the metal, and served same-origin. No stream, no cloud, no third party in the
-                middle. Just the most recent frame — also at{" "}
+                middle. Just the most recent frame, also at{" "}
                 <Link href="/eyes.png" className="v3-accent">/eyes.png</Link>.
               </p>
             </V3Reveal>

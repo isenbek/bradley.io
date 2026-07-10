@@ -43,7 +43,7 @@ export default async function V3ProjectsPage() {
             </V3Reveal>
             <V3Reveal eager>
               <p className="v3-page-head__lede">
-                Hardware, AI, data pipelines, distributed systems, frontier research — most shipped
+                Hardware, AI, data pipelines, distributed systems, frontier research. Most shipped
                 with Claude as co-pilot, all self-hosted.
               </p>
             </V3Reveal>

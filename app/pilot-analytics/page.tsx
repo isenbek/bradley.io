@@ -19,7 +19,7 @@ export default function PilotAnalyticsPage() {
               The work, <span className="v3-accent">counted.</span>
             </h1>
             <p className="v3-page-head__lede">
-              Every Claude Code session across the fleet, flattened for analysis — turns, token
+              Every Claude Code session across the fleet, flattened for analysis: turns, token
               flow, tool usage, projects, and cadence. Built from the local + DC-1 session logs.
             </p>
           </div>

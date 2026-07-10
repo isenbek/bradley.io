@@ -44,7 +44,7 @@ const FACTS = [
   },
   {
     title: "~24h reply",
-    desc: "Most weekdays. Weekends are reserved for the lab — but I do peek.",
+    desc: "Most weekdays. Weekends are reserved for the lab, but I do peek.",
     Icon: Clock,
   },
   {
@@ -57,7 +57,7 @@ const FACTS = [
 const WHAT_TO_SEND = [
   {
     title: "What you're building.",
-    desc: "Two sentences is plenty. Skip the company pitch — go straight to the system.",
+    desc: "Two sentences is plenty. Skip the company pitch. Go straight to the system.",
   },
   {
     title: "What hurts right now.",
@@ -65,7 +65,7 @@ const WHAT_TO_SEND = [
   },
   {
     title: "What success looks like.",
-    desc: "A metric, a date, an outcome — anything more concrete than \"AI strategy.\"",
+    desc: "A metric, a date, an outcome: anything more concrete than \"AI strategy.\"",
   },
   {
     title: "Constraints if any.",
@@ -93,7 +93,7 @@ export default function V3ContactPage() {
             </V3Reveal>
             <V3Reveal eager>
               <p className="v3-page-head__lede">
-                Project, second opinion, weird hardware question, or just a hello — all welcome.
+                Project, second opinion, weird hardware question, or just a hello. All welcome.
                 Email is the front door; GitHub is the side door; both lead to the same room.
               </p>
             </V3Reveal>
@@ -151,7 +151,7 @@ export default function V3ContactPage() {
                     className="v3-prose"
                     style={{ fontSize: 15, marginBottom: 22 }}
                   >
-                    None of this is required — but a paragraph hitting these four points means
+                    None of this is required, but a paragraph hitting these four points means
                     I can reply with something useful instead of a follow-up question.
                   </p>
                   <ol className="v3-numbered">
@@ -262,7 +262,7 @@ export default function V3ContactPage() {
                       marginBottom: 18,
                     }}
                   >
-                    Pricing and fit examples for each are on the services page — useful background
+                    Pricing and fit examples for each are on the services page, useful background
                     if you're not sure which shape you need.
                   </p>
                   <Link
@@ -295,7 +295,7 @@ export default function V3ContactPage() {
                       marginBottom: 12,
                     }}
                   >
-                    Open a GitHub issue on any of my repos and tag @isenbek — totally fine
+                    Open a GitHub issue on any of my repos and tag @isenbek, totally fine
                     for technical conversations.
                   </p>
                   <a
@@ -353,7 +353,7 @@ export default function V3ContactPage() {
                 }}
               >
                 Bring the problem. I&apos;ll bring the questions. Worst case you walk away
-                with a clearer picture of what to do next — and that&apos;s free.
+                with a clearer picture of what to do next. And that&apos;s free.
               </p>
               <a
                 href="mailto:brad@bradley.io?subject=hello%20bradley"

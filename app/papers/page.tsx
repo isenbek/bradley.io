@@ -70,7 +70,7 @@ export default function V3PapersPage() {
             </V3Reveal>
             <V3Reveal eager>
               <p className="v3-page-head__lede">
-                Active research in environmental data science — seismology, space weather,
+                Active research in environmental data science: seismology, space weather,
                 climate, hydrology, and the cross-domain bits where everything starts to look
                 the same. All studies built on open government data.
               </p>

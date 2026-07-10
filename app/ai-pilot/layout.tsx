@@ -1,22 +1,22 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "AI Pilot License — bio·bradley.io",
+  title: "AI Pilot License · bio·bradley.io",
   description:
-    "Public flight log of work shipped with Claude as co-pilot — sessions, missions, model usage, token economy, and activity patterns.",
+    "Public flight log of work shipped with Claude as co-pilot: sessions, missions, model usage, token economy, and activity patterns.",
   alternates: { canonical: "/ai-pilot" },
   openGraph: {
-    title: "AI Pilot License — bio·bradley.io",
+    title: "AI Pilot License · bio·bradley.io",
     description:
-      "Live flight log — sessions, missions, models, tokens. Built with Claude as co-pilot.",
+      "Live flight log: sessions, missions, models, tokens. Built with Claude as co-pilot.",
     url: "https://bradley.io/ai-pilot",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "AI Pilot License — bio·bradley.io",
+    title: "AI Pilot License · bio·bradley.io",
     description:
-      "Live flight log — sessions, missions, models, tokens. Built with Claude as co-pilot.",
+      "Live flight log: sessions, missions, models, tokens. Built with Claude as co-pilot.",
   },
 }
 
@@ -31,7 +31,7 @@ export default function V3AIPilotLayout({ children }: { children: React.ReactNod
             "@type": "WebPage",
             "@id": "https://bradley.io/ai-pilot",
             url: "https://bradley.io/ai-pilot",
-            name: "AI Pilot License — bradley.io",
+            name: "AI Pilot License · bradley.io",
             description:
               "Public dashboard tracking sessions, missions, models, and token economy from work shipped with Claude.",
             isPartOf: { "@id": "https://bradley.io/#website" },

@@ -127,12 +127,12 @@ export function HotbitsHero() {
           live · radioactive entropy
         </span>
         <h2 className="v3-hotbits__title">
-          HOTBITS — true random,<br />
+          HOTBITS: true random,<br />
           from <span className="v3-hotbits__accent">nuclear decay.</span>
         </h2>
         <p className="v3-hotbits__lede">
           A Geiger counter watches a radioactive source; the gaps between decays
-          become NIST-tested bits. No algorithm, no seed — just physics, served
+          become NIST-tested bits. No algorithm, no seed: just physics, served
           live.
         </p>
 

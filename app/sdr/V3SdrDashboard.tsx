@@ -439,7 +439,7 @@ export function V3SdrDashboard() {
                 <div className="v3-bandcard__scanner">{b.scanner}</div>
                 {b.lo_hz != null && b.hi_hz != null ? (
                   <div className="v3-bandcard__freq">
-                    {fmtFreq(b.lo_hz)} – {fmtFreq(b.hi_hz)}
+                    {fmtFreq(b.lo_hz)} to {fmtFreq(b.hi_hz)}
                   </div>
                 ) : null}
                 {b.channels && b.channels.length > 0 ? (

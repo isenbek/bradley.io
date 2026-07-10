@@ -36,7 +36,7 @@ export default function BioMarkPage() {
             <V3Reveal eager>
               <p className="v3-page-head__lede">
                 The bradley.io wordmark as pure geometry: the b/i/o ligature drawn as chords, Bézier
-                offset handles, and anchors — with the i-tittle plumb that aligns the dot over the
+                offset handles, and anchors, with the i-tittle plumb that aligns the dot over the
                 centre crest, implying the b→o connection (the hidden ∞). Drag the dot to test the
                 tolerance, morph chords↔curves, and watch every measurement update live.
               </p>

@@ -112,7 +112,7 @@ export function MemoryTimeline() {
   if (loaded && moments.length === 0) {
     return (
       <div className="v3-log__empty">
-        No moments yet — once motion or speech happens, the scene before &amp; after each event lands
+        No moments yet. Once motion or speech happens, the scene before &amp; after each event lands
         here, with anything heard or seen nearby lined up alongside it.
       </div>
     )

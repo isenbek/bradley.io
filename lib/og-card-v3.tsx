@@ -39,6 +39,8 @@ export interface OgCardV3Config {
   cta?: string
   /** Optional data-URI (e.g. a mascot) rendered on the right side of the card. */
   image?: string
+  /** Frame the image as a photo card (rounded corners + border + shadow). */
+  imageFrame?: boolean
 }
 
 /**
@@ -144,15 +146,33 @@ export function ogV3ImageResponse(cfg: OgCardV3Config): ImageResponse {
           </div>
         </div>
 
-        {/* Optional image (e.g. mascot) on the right */}
+        {/* Optional image on the right — a bare mascot, or a framed photo card */}
         {cfg.image ? (
-          <img
-            src={cfg.image}
-            width={420}
-            height={229}
-            alt=""
-            style={{ position: "absolute", right: 44, top: 198, zIndex: 1 }}
-          />
+          cfg.imageFrame ? (
+            <div
+              style={{
+                position: "absolute",
+                right: 52,
+                top: 168,
+                display: "flex",
+                borderRadius: 20,
+                overflow: "hidden",
+                border: `4px solid ${accent.primary}`,
+                boxShadow: `0 26px 50px -18px ${accent.ink}99`,
+                zIndex: 1,
+              }}
+            >
+              <img src={cfg.image} width={430} height={234} alt="" />
+            </div>
+          ) : (
+            <img
+              src={cfg.image}
+              width={420}
+              height={229}
+              alt=""
+              style={{ position: "absolute", right: 44, top: 198, zIndex: 1 }}
+            />
+          )
         ) : null}
 
         {/* Main content */}

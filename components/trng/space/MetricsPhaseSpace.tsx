@@ -155,10 +155,10 @@ export default function MetricsPhaseSpace() {
       </div>
       <p className="v3-espace-caption">
         <strong>Quality, drifting in real time.</strong> Each dot is a 1-hour
-        trailing mean of the source&apos;s health — bias, Shannon entropy, and the
-        χ² uniformity p-value — colored from oldest (blue) to newest (amber).
+        trailing mean of the source&apos;s health: bias, Shannon entropy, and the
+        χ² uniformity p-value, colored from oldest (blue) to newest (amber).
         The smoothing matters: at the 1024-byte window the per-5-minute χ² swings
-        across the full 0–100 range by design, so raw points would paint noise as
+        across the full 0 to 100 range by design, so raw points would paint noise as
         drift. Smoothed, a healthy TRNG hovers in a tight knot near the origin;
         sustained drift in any direction is the first sign of trouble.
       </p>

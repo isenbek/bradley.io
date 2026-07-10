@@ -166,7 +166,7 @@ export function MissionTimeline({
               <h2 style={{ marginBottom: 8 }}>Development phases.</h2>
               <p>
                 {data.phases.length === 1
-                  ? "A single phase so far — but actively growing."
+                  ? "A single phase so far, but actively growing."
                   : `${data.phases.length} AI-synthesized phases, newest first. Click any phase to expand its repos.`}
               </p>
             </div>

@@ -67,7 +67,7 @@ export default async function V3LabPage() {
             <V3Reveal eager>
               <p className="v3-page-head__lede">
                 Hardware hacks, signal toys, AI agents off the leash. The room where the next
-                product gets sketched — and most of the sketches stay sketches.
+                product gets sketched, and most of the sketches stay sketches.
               </p>
             </V3Reveal>
           </div>
@@ -82,7 +82,7 @@ export default async function V3LabPage() {
               <span className="v3-air-promo__ico"><Atom size={20} strokeWidth={2.2} /></span>
               <span className="v3-air-promo__body">
                 <span className="v3-air-promo__eyebrow">vector x-ray</span>
-                <span className="v3-air-promo__title">The bio mark — chords, offsets &amp; the implied ∞</span>
+                <span className="v3-air-promo__title">The bio mark: chords, offsets &amp; the implied ∞</span>
                 <span className="v3-air-promo__blurb">
                   The bio·bradley.io wordmark decomposed: the b/i/o ligature as chords, Bézier offset
                   handles, anchors, and the i-tittle plumb. Drag the dot, morph chords↔curves, measure live.
@@ -203,8 +203,8 @@ export default async function V3LabPage() {
               <h2>The rest of the bench.</h2>
               <p>
                 Live dashboards, hardware demos, catalogs, and the long-form mission
-                timelines for the multi-year platforms. Each one is its own page —
-                no aggregator, no marketing wrapper.
+                timelines for the multi-year platforms. Each one is its own page.
+                No aggregator, no marketing wrapper.
               </p>
             </div>
           </V3Reveal>
@@ -217,7 +217,7 @@ export default async function V3LabPage() {
                 {
                   Icon: Plane,
                   title: "AI Pilot License",
-                  blurb: "Live flight log — sessions, missions, models, tokens.",
+                  blurb: "Live flight log: sessions, missions, models, tokens.",
                   href: "/ai-pilot",
                   tag: "Flagship",
                   tagColor: "blue" as const,
@@ -225,7 +225,7 @@ export default async function V3LabPage() {
                 {
                   Icon: Zap,
                   title: "The Shift",
-                  blurb: "Thesis — how AI rewrites the economics of building.",
+                  blurb: "Thesis: how AI rewrites the economics of building.",
                   href: "/the-shift",
                   tag: "Read",
                   tagColor: "coral" as const,
@@ -247,7 +247,7 @@ export default async function V3LabPage() {
                 {
                   Icon: Plane,
                   title: "Dragonfli",
-                  blurb: "1090 MHz ADS-B receiver — radar, registry, predictor.",
+                  blurb: "1090 MHz ADS-B receiver: radar, registry, predictor.",
                   href: "/dragonfli",
                   tag: "Live",
                   tagColor: "green" as const,
@@ -255,7 +255,7 @@ export default async function V3LabPage() {
                 {
                   Icon: Radio,
                   title: "sdr-api",
-                  blurb: "Software-defined radio scanner — bands, soaks, top freqs.",
+                  blurb: "Software-defined radio scanner: bands, soaks, top freqs.",
                   href: "/sdr",
                   tag: "Live",
                   tagColor: "green" as const,
@@ -263,7 +263,7 @@ export default async function V3LabPage() {
                 {
                   Icon: HeartPulse,
                   title: "Fleet Health",
-                  blurb: "Collector-fleet vitals — attention gating + self-healing medic.",
+                  blurb: "Collector-fleet vitals: attention gating + self-healing medic.",
                   href: "/fleet",
                   tag: "Live",
                   tagColor: "green" as const,
@@ -271,7 +271,7 @@ export default async function V3LabPage() {
                 {
                   Icon: Atom,
                   title: "HOTBITS TRNG",
-                  blurb: "Random bits from radioactive decay — NIST-tested.",
+                  blurb: "Random bits from radioactive decay: NIST-tested.",
                   href: "/trng",
                   tag: "Live",
                   tagColor: "green" as const,
@@ -279,7 +279,7 @@ export default async function V3LabPage() {
                 {
                   Icon: TerminalSquare,
                   title: "Terminal",
-                  blurb: "Interactive CLI portfolio — type help and poke around.",
+                  blurb: "Interactive CLI portfolio: type help and poke around.",
                   href: "/terminal",
                   tag: "CLI",
                   tagColor: "blue" as const,
@@ -293,7 +293,7 @@ export default async function V3LabPage() {
                 {
                   Icon: Map,
                   title: "Airspace Map",
-                  blurb: "Full-map ADS-B view — tracks, trails, layer toggles.",
+                  blurb: "Full-map ADS-B view: tracks, trails, layer toggles.",
                   href: "/dragonfli/airspace",
                   tag: "Live",
                   tagColor: "green" as const,
@@ -301,7 +301,7 @@ export default async function V3LabPage() {
                 {
                   Icon: Satellite,
                   title: "GPS Ground Track",
-                  blurb: "Receiver fixes on a vector map — skyplot, signal arrivals.",
+                  blurb: "Receiver fixes on a vector map: skyplot, signal arrivals.",
                   href: "/dragonfli/gps",
                   tag: "Live",
                   tagColor: "green" as const,
@@ -309,7 +309,7 @@ export default async function V3LabPage() {
                 {
                   Icon: Waves,
                   title: "WorldEvent Bus",
-                  blurb: "The lab's UDP firehose decoded live — ADS-B, GPS, mesh, NTP.",
+                  blurb: "The lab's UDP firehose decoded live: ADS-B, GPS, mesh, NTP.",
                   href: "/dragonfli/worldevent",
                   tag: "Live",
                   tagColor: "green" as const,
@@ -325,7 +325,7 @@ export default async function V3LabPage() {
               ],
             },
             {
-              title: "Meatball — the sensory robot",
+              title: "Meatball: the sensory robot",
               accent: "var(--v3-green-dk)",
               items: [
                 {
@@ -339,7 +339,7 @@ export default async function V3LabPage() {
                 {
                   Icon: Eye,
                   title: "Senses",
-                  blurb: "Field notes — wiring the eyes, ears, and voice rig.",
+                  blurb: "Field notes: wiring the eyes, ears, and voice rig.",
                   href: "/lab/senses",
                   tag: "Notes",
                   tagColor: "gold" as const,
@@ -347,7 +347,7 @@ export default async function V3LabPage() {
                 {
                   Icon: Ear,
                   title: "Listening",
-                  blurb: "Field notes — teaching the box to hear over its own fans.",
+                  blurb: "Field notes: teaching the box to hear over its own fans.",
                   href: "/lab/listening",
                   tag: "Notes",
                   tagColor: "gold" as const,
@@ -355,7 +355,7 @@ export default async function V3LabPage() {
                 {
                   Icon: Activity,
                   title: "Motion",
-                  blurb: "Field notes — the box-fan problem and the variance gate.",
+                  blurb: "Field notes: the box-fan problem and the variance gate.",
                   href: "/lab/motion",
                   tag: "Notes",
                   tagColor: "gold" as const,
@@ -377,7 +377,7 @@ export default async function V3LabPage() {
                 {
                   Icon: BookOpen,
                   title: "Papers",
-                  blurb: "TerraPulse research — 72 studies across 7 domains, open data.",
+                  blurb: "TerraPulse research: 72 studies across 7 domains, open data.",
                   href: "/papers",
                   tag: "Research",
                   tagColor: "coral" as const,
@@ -407,7 +407,7 @@ export default async function V3LabPage() {
                 {
                   Icon: GitBranch,
                   title: "Sysforge-AI",
-                  blurb: "AI consulting & development firm — phase-based timeline.",
+                  blurb: "AI consulting & development firm: phase-based timeline.",
                   href: "/projects/sysforge-ai",
                   tag: "Timeline",
                   tagColor: "blue" as const,
@@ -415,7 +415,7 @@ export default async function V3LabPage() {
                 {
                   Icon: GitBranch,
                   title: "tinymachines",
-                  blurb: "Lab umbrella — 60+ repos of hardware, signals, agents.",
+                  blurb: "Lab umbrella: 60+ repos of hardware, signals, agents.",
                   href: "/projects/tinymachines",
                   tag: "Timeline",
                   tagColor: "blue" as const,
@@ -423,7 +423,7 @@ export default async function V3LabPage() {
                 {
                   Icon: GitBranch,
                   title: "isenbek",
-                  blurb: "Personal timeline — career arc across the platforms.",
+                  blurb: "Personal timeline: career arc across the platforms.",
                   href: "/projects/isenbek",
                   tag: "Timeline",
                   tagColor: "blue" as const,
@@ -592,7 +592,7 @@ export default async function V3LabPage() {
                 </div>
                 <p style={{ fontSize: 14.5, color: "var(--v3-ink)" }}>
                   Got a wild experiment, a signal you can't explain, or a thing you want
-                  built — bring it. Half the lab is conversations that started this way.
+                  built. Bring it. Half the lab is conversations that started this way.
                 </p>
               </div>
               <Link href="/contact" className="v3-btn v3-btn--coral">

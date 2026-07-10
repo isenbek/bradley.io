@@ -36,28 +36,28 @@ export default function V3DragonfliPage() {
             <V3Reveal eager>
               <p className="v3-page-head__lede">
                 A Raspberry Pi, a 1090 MHz ADS-B receiver, and an FAA registry lookup
-                running in the garage. Polar radar, live tracks, and a trajectory predictor
-                — refreshed every 5 seconds.
+                running in the garage. Polar radar, live tracks, and a trajectory predictor,
+                refreshed every 5 seconds.
               </p>
             </V3Reveal>
             <V3Reveal>
               <Link href="/dragonfli/airspace" className="v3-espace-cta">
                 <MapIcon size={15} strokeWidth={2.4} />
-                Open the live airspace map — aircraft, density &amp; trajectories
+                Open the live airspace map: aircraft, density &amp; trajectories
                 <span aria-hidden>→</span>
               </Link>
             </V3Reveal>
             <V3Reveal>
               <Link href="/dragonfli/gps" className="v3-espace-cta">
                 <Satellite size={15} strokeWidth={2.4} />
-                Open the live GPS board — skyplot, SNR, fix precision &amp; track
+                Open the live GPS board: skyplot, SNR, fix precision &amp; track
                 <span aria-hidden>→</span>
               </Link>
             </V3Reveal>
             <V3Reveal>
               <Link href="/dragonfli/worldevent" className="v3-espace-cta">
                 <Radio size={15} strokeWidth={2.4} />
-                Open the WorldEvent bus — the live perception firehose, every sense at once
+                Open the WorldEvent bus: the live perception firehose, every sense at once
                 <span aria-hidden>→</span>
               </Link>
             </V3Reveal>

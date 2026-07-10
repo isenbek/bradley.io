@@ -34,7 +34,7 @@ export async function generateMetadata({
   if (project) {
     const description = project.tagline || project.description?.slice(0, 160) || ""
     return {
-      title: `${project.name} — Projects`,
+      title: `${project.name}: Projects`,
       description,
       alternates: { canonical: `/projects/${slug}` },
       openGraph: {
@@ -58,7 +58,7 @@ export async function generateMetadata({
       match.repo.description?.slice(0, 160) ||
       `Repository in the ${match.org} timeline (${match.repo.commits.toLocaleString()} commits).`
     return {
-      title: `${match.repo.name} — ${match.org} | bio·bradley.io`,
+      title: `${match.repo.name}: ${match.org} | bio·bradley.io`,
       description,
       alternates: { canonical: `/projects/${slug}` },
       openGraph: {

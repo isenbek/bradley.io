@@ -1,20 +1,20 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Projects — bio·bradley.io",
+  title: "Projects · bio·bradley.io",
   description:
-    "86+ projects across hardware, AI, data, systems, and creative research — most shipped with Claude as co-pilot, all self-hosted.",
+    "86+ projects across hardware, AI, data, systems, and creative research. Most shipped with Claude as co-pilot, all self-hosted.",
   alternates: { canonical: "/projects" },
   openGraph: {
-    title: "Projects — bio·bradley.io",
-    description: "Hardware, AI, data, systems, research — 86+ projects, mostly open, all self-hosted.",
+    title: "Projects · bio·bradley.io",
+    description: "Hardware, AI, data, systems, research: 86+ projects, mostly open, all self-hosted.",
     url: "https://bradley.io/projects",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Projects — bio·bradley.io",
-    description: "Hardware, AI, data, systems, research — 86+ projects, mostly open, all self-hosted.",
+    title: "Projects · bio·bradley.io",
+    description: "Hardware, AI, data, systems, research: 86+ projects, mostly open, all self-hosted.",
   },
 }
 
@@ -29,7 +29,7 @@ export default function V3ProjectsLayout({ children }: { children: React.ReactNo
             "@type": "CollectionPage",
             "@id": "https://bradley.io/projects",
             url: "https://bradley.io/projects",
-            name: "Projects — bradley.io",
+            name: "Projects · bradley.io",
             isPartOf: { "@id": "https://bradley.io/#website" },
             about: { "@id": "https://bradley.io/#person" },
             breadcrumb: {

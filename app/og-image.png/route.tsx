@@ -61,7 +61,7 @@ export async function GET() {
 
         {/* Subtitle */}
         <div style={{ fontSize: "22px", color: "#9CA3AF", lineHeight: 1.5, maxWidth: "700px" }}>
-          Building at the intersection of enterprise scale and maker culture — from ESP32 mesh networks to Fortune 500 data warehouses.
+          Building at the intersection of enterprise scale and maker culture: from ESP32 mesh networks to Fortune 500 data warehouses.
         </div>
 
         {/* Bottom badges */}

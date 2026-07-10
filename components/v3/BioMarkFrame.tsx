@@ -50,7 +50,7 @@ export function BioMarkFrame() {
     <iframe
       ref={ref}
       src="/bio-mark.html"
-      title="The bio mark — chords, offsets & the implied infinity (interactive vector x-ray)"
+      title="The bio mark: chords, offsets & the implied infinity (interactive vector x-ray)"
       className="v3-embed-stage__frame"
       style={height ? { height } : undefined}
       scrolling="no"

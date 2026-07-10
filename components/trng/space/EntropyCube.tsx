@@ -83,7 +83,7 @@ export default function EntropyCube({
   const overlay =
     source === "live" && !bytes
       ? status === "pool-low"
-        ? "archive unavailable — retrying"
+        ? "archive unavailable, retrying"
         : "drawing entropy…"
       : null
 
@@ -135,16 +135,16 @@ export default function EntropyCube({
         {source === "live" ? (
           <>
             <strong>Live radioactive decay.</strong> Every byte from the Geiger
-            source becomes one axis of a point. True entropy has no structure —
-            the cloud fills the cube as a uniform mist, with no plane, axis, or
+            source becomes one axis of a point. True entropy has no structure.
+            The cloud fills the cube as a uniform mist, with no plane, axis, or
             seam anywhere you rotate.
           </>
         ) : (
           <>
             <strong>RANDU, a deterministic PRNG.</strong> The exact same plot,
             fed by IBM&apos;s infamous LCG. Its arithmetic (z = 6y − 9x mod 1)
-            forces every point onto just <strong>15 parallel planes</strong> —
-            rotate until they snap into view. That hidden lattice is what
+            forces every point onto just <strong>15 parallel planes</strong>.
+            Rotate until they snap into view. That hidden lattice is what
             radioactive decay does not have.
           </>
         )}

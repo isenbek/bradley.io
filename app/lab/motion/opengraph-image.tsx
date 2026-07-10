@@ -1,7 +1,7 @@
 import { ogV3ImageResponse, OG_V3_SIZE, OG_V3_CONTENT_TYPE } from "@/lib/og-card-v3"
 
 export const runtime = "nodejs"
-export const alt = "Teaching the eyes to ignore a box fan — field note · bradley.io"
+export const alt = "Teaching the eyes to ignore a box fan: field note · bradley.io"
 export const size = OG_V3_SIZE
 export const contentType = OG_V3_CONTENT_TYPE
 

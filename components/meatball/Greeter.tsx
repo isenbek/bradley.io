@@ -124,7 +124,7 @@ export function Greeter() {
       <p className="v3-greet__note">
         Meatball says hi through the Altec Lansings, then listens on the always-on mics. A reply →
         probably a person. Silence → probably not. It also does this on its own when the cameras
-        catch someone — the simplest sensor there is.
+        catch someone, the simplest sensor there is.
       </p>
     </div>
   )

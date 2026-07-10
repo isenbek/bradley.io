@@ -41,7 +41,7 @@ export function AirspacePromo() {
         <span className="v3-air-promo__eyebrow">live · airspace map</span>
         <span className="v3-air-promo__title">The sky over Grand Rapids, mapped</span>
         <span className="v3-air-promo__blurb">
-          Live ADS-B aircraft on a self-hosted vector map — 15-min density forecast,
+          Live ADS-B aircraft on a self-hosted vector map: 15-min density forecast,
           trajectory ribbons, and an RSSI reception bloom.
         </span>
       </span>

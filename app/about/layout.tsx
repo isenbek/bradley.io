@@ -1,22 +1,22 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "About — bio·bradley.io",
+  title: "About · bio·bradley.io",
   description:
-    "Bradley Isenbek — AI Systems Architect and Frontier Technologist in Grand Rapids, MI. 15+ years building at the seam of enterprise scale and maker culture.",
+    "Bradley Isenbek, AI Systems Architect and Frontier Technologist in Grand Rapids, MI. 15+ years building at the seam of enterprise scale and maker culture.",
   alternates: { canonical: "/about" },
   openGraph: {
-    title: "About — bio·bradley.io",
+    title: "About · bio·bradley.io",
     description:
-      "Bradley Isenbek — hardware hacker, data architect, AI pilot. 15+ years, ESP32 to Fortune-500 warehouses.",
+      "Bradley Isenbek: hardware hacker, data architect, AI pilot. 15+ years, ESP32 to Fortune-500 warehouses.",
     url: "https://bradley.io/about",
     type: "profile",
   },
   twitter: {
     card: "summary_large_image",
-    title: "About — bio·bradley.io",
+    title: "About · bio·bradley.io",
     description:
-      "Bradley Isenbek — hardware hacker, data architect, AI pilot. 15+ years, ESP32 to Fortune-500 warehouses.",
+      "Bradley Isenbek: hardware hacker, data architect, AI pilot. 15+ years, ESP32 to Fortune-500 warehouses.",
   },
 }
 

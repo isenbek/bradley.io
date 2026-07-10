@@ -110,7 +110,7 @@ export default function V3McpPage() {
             </V3Reveal>
             <V3Reveal eager>
               <p className="v3-page-head__lede">
-                {stats.totalServices} FastAPI microservices powering Campaign Brain — AI, data,
+                {stats.totalServices} FastAPI microservices powering Campaign Brain: AI, data,
                 communication, infrastructure, and business operations. All open via MCP to LLM
                 agents.
               </p>

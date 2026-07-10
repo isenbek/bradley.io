@@ -8,22 +8,22 @@ import { MissionTimeline } from "../_timeline/MissionTimeline"
 export const revalidate = 3600
 
 export const metadata: Metadata = {
-  title: "Sysforge-AI — Timeline | bio·bradley.io",
+  title: "Sysforge-AI: Timeline | bio·bradley.io",
   description:
-    "Development timeline of Sysforge-AI — AI consulting and development firm delivering frontier AI solutions.",
+    "Development timeline of Sysforge-AI: AI consulting and development firm delivering frontier AI solutions.",
   alternates: { canonical: "/projects/sysforge-ai" },
   openGraph: {
-    title: "Sysforge-AI — Timeline",
+    title: "Sysforge-AI: Timeline",
     description:
-      "AI consulting practice — frontier integrations, agentic pipelines, AI-augmented toolchains.",
+      "AI consulting practice: frontier integrations, agentic pipelines, AI-augmented toolchains.",
     url: "https://bradley.io/projects/sysforge-ai",
     type: "article",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Sysforge-AI — Timeline",
+    title: "Sysforge-AI: Timeline",
     description:
-      "AI consulting practice — frontier integrations, agentic pipelines, AI-augmented toolchains.",
+      "AI consulting practice: frontier integrations, agentic pipelines, AI-augmented toolchains.",
   },
 }
 
@@ -54,9 +54,9 @@ export default function V3SysforgeAITimeline() {
             "@type": "CreativeWork",
             "@id": "https://bradley.io/projects/sysforge-ai",
             url: "https://bradley.io/projects/sysforge-ai",
-            name: "Sysforge-AI — Timeline",
+            name: "Sysforge-AI: Timeline",
             description:
-              "Development timeline of Sysforge-AI — AI consulting and development firm delivering frontier AI solutions.",
+              "Development timeline of Sysforge-AI: AI consulting and development firm delivering frontier AI solutions.",
             author: { "@id": "https://bradley.io/#person" },
             isPartOf: { "@id": "https://bradley.io/#website" },
             breadcrumb: {

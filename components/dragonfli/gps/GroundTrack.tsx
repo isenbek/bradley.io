@@ -335,7 +335,7 @@ export default function GroundTrack({ history, tpv, sats }: { history: Tpv[]; tp
       {!tpv && (
         <div className="v3-gps-map-note">
           <span className="v3-gps-empty__dot" aria-hidden />
-          awaiting GPS fix — basemap centred on the receiver
+          awaiting GPS fix, basemap centred on the receiver
         </div>
       )}
     </div>

@@ -2,7 +2,7 @@ import { ogV3ImageResponse, OG_V3_SIZE, OG_V3_CONTENT_TYPE } from "@/lib/og-card
 import { loadMissionTimeline, missionTags } from "../_timeline/mission-og"
 
 export const runtime = "nodejs"
-export const alt = "Sysforge-AI — Timeline"
+export const alt = "Sysforge-AI: Timeline"
 export const size = OG_V3_SIZE
 export const contentType = OG_V3_CONTENT_TYPE
 

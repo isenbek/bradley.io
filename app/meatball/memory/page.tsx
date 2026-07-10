@@ -28,7 +28,7 @@ export default function MeatballMemoryPage() {
             </V3Reveal>
             <V3Reveal eager>
               <p className="v3-page-head__lede">
-                Meatball&apos;s two timelines — what it saw move and what it heard said — folded onto
+                Meatball&apos;s two timelines (what it saw move and what it heard said) folded onto
                 one. Every event keeps the scene <em>before</em> and <em>after</em> it, plus anything
                 from the other sense that happened nearby. This is the substrate for relating image
                 patches to speech over time. Newest first, updating live.

@@ -33,7 +33,7 @@ export default function WorldEventPage() {
             </V3Reveal>
             <V3Reveal eager>
               <p className="v3-page-head__lede">
-                Not a feed — a <strong>nervous system</strong>. Every sensor in the garage
+                Not a feed. A <strong>nervous system</strong>. Every sensor in the garage
                 broadcasts a schema-tagged <code>worldevent/1</code> envelope onto one UDP wire,
                 and this is the live, type-agnostic view of it: which event types are firing,
                 from which hosts, how fast, and a rolling tail of everything happening in the

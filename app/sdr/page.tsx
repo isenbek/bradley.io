@@ -34,7 +34,7 @@ export default function V3SdrPage() {
             </V3Reveal>
             <V3Reveal eager>
               <p className="v3-page-head__lede">
-                Live status for the rtl-sdr scanner stack — band registry, soak archive,
+                Live status for the rtl-sdr scanner stack: band registry, soak archive,
                 top frequencies, and the job history that fed them. Polls every 30 seconds.
               </p>
             </V3Reveal>

@@ -16,7 +16,7 @@ const SERVICES = [
   {
     title: "Data Engineering",
     description:
-      "Pipelines that ingest, transform, and serve — real-time and batch, without a cloud provider on the bill.",
+      "Pipelines that ingest, transform, and serve: real-time and batch, without a cloud provider on the bill.",
     skills: ["ETL Pipelines", "Data Warehousing", "Stream Processing", "Analytics"],
     examples: [
       "4.9B data point integration",
@@ -49,7 +49,7 @@ const SERVICES = [
   {
     title: "AI/ML Integration",
     description:
-      "Production-grade ML — sub-100ms inference, multi-provider orchestration, the unglamorous plumbing that keeps it safe in prod.",
+      "Production-grade ML: sub-100ms inference, multi-provider orchestration, the unglamorous plumbing that keeps it safe in prod.",
     skills: ["LLM Integration", "Model Deployment", "Vector Search", "ML Pipelines"],
     examples: [
       "Multi-provider AI orchestration",
@@ -63,19 +63,19 @@ const ENGAGEMENTS = [
   {
     type: "Project-based",
     description: "Fixed scope, defined deliverables",
-    range: "$25K – $100K",
+    range: "$25K to $100K",
     ideal: "Specific initiatives with clear requirements",
   },
   {
     type: "Hourly consulting",
     description: "Flexible, as-needed expertise",
-    range: "$150 – $275/hr",
+    range: "$150 to $275/hr",
     ideal: "Technical guidance and architecture review",
   },
   {
     type: "Retainer",
     description: "Dedicated monthly support",
-    range: "$15K – $50K/mo",
+    range: "$15K to $50K/mo",
     ideal: "Ongoing partnership, continuous improvement",
   },
 ]
@@ -101,7 +101,7 @@ const DIFFS = [
   {
     color: "gold" as const,
     title: "Full stack",
-    desc: "From low-level protocols to cloud architecture to ML pipelines — one head, one accountability.",
+    desc: "From low-level protocols to cloud architecture to ML pipelines. One head, one accountability.",
   },
   {
     color: "green" as const,
@@ -131,7 +131,7 @@ export default function V3ServicesPage() {
             </V3Reveal>
             <V3Reveal eager>
               <p className="v3-page-head__lede">
-                15+ years architecting production systems at scale — Fortune-500 data
+                15+ years architecting production systems at scale: Fortune-500 data
                 infrastructure to garage-lab innovations. Same rigor, both rooms.
               </p>
             </V3Reveal>
@@ -148,7 +148,7 @@ export default function V3ServicesPage() {
               <h2>Five practices, one practitioner.</h2>
               <p>
                 Each engagement draws from one or more of these. Nothing is bolted on after the
-                fact — security, observability, and a graceful retire path come standard.
+                fact: security, observability, and a graceful retire path come standard.
               </p>
             </div>
           </V3Reveal>
@@ -193,7 +193,7 @@ export default function V3ServicesPage() {
               <h2>Three shapes. Pick the one that fits.</h2>
               <p>
                 Most engagements start as a short scoping call, then drop into one of the shapes
-                below. Hybrid arrangements are fine — say so up front.
+                below. Hybrid arrangements are fine. Say so up front.
               </p>
             </div>
           </V3Reveal>
@@ -227,7 +227,7 @@ export default function V3ServicesPage() {
               <div className="v3-sec-head__num">03 / PROCESS</div>
               <h2>Four steps, no theater.</h2>
               <p>
-                The same rhythm every time. Discovery is unbillable — if the work doesn't fit, I'll
+                The same rhythm every time. Discovery is unbillable. If the work doesn't fit, I'll
                 say so before we sign anything.
               </p>
             </div>
@@ -255,7 +255,7 @@ export default function V3ServicesPage() {
               <div className="v3-sec-head__num">04 / WHY ME</div>
               <h2>What you get that doesn't come standard.</h2>
               <p>
-                A short list — but each one is the reason somebody hired me, not a hypothetical
+                A short list, but each one is the reason somebody hired me, not a hypothetical
                 advantage.
               </p>
             </div>
@@ -306,7 +306,7 @@ export default function V3ServicesPage() {
               </h2>
               <p style={{ maxWidth: 540, margin: "0 auto 28px", color: "var(--v3-ink)" }}>
                 Bring the problem. I'll bring the questions. Worst case you walk away with a
-                clearer picture of what to do next — and that's free.
+                clearer picture of what to do next, and that's free.
               </p>
               <div
                 style={{

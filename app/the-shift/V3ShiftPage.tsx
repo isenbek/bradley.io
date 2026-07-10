@@ -539,7 +539,7 @@ export function V3ShiftPage({
                 marginTop: 10,
               }}
             >
-              Domain coverage score (0–100) · radar from competency ratings
+              Domain coverage score (0 to 100) · radar from competency ratings
             </p>
           </article>
 
@@ -555,7 +555,7 @@ export function V3ShiftPage({
                 </strong>
                 . Legacy model:{" "}
                 <strong style={{ color: "var(--v3-charcoal)" }}>
-                  4–6 specialists
+                  4 to 6 specialists
                 </strong>
                 .
               </p>
@@ -567,7 +567,7 @@ export function V3ShiftPage({
                 }}
               >
                 AI doesn&apos;t just make you faster at what you already know. It makes
-                adjacent domains accessible — security, DevOps, systems programming.
+                adjacent domains accessible: security, DevOps, systems programming.
                 Domains that used to need a dedicated hire become reachable with the right
                 co-pilot.
               </p>
@@ -710,7 +710,7 @@ export function V3ShiftPage({
             }}
           >
             The sprint model assumes work arrives in discrete batches. AI-assisted
-            development is continuous — deploy when ready, iterate in real time, no
+            development is continuous: deploy when ready, iterate in real time, no
             ceremony between idea and production.
           </p>
         </article>
@@ -744,7 +744,7 @@ export function V3ShiftPage({
               }}
             >
               Every message is productive output. No standups, no retros, no &ldquo;can
-              you see my screen?&rdquo; — just building.
+              you see my screen?&rdquo; Just building.
             </p>
           </div>
         </article>
@@ -879,7 +879,7 @@ export function V3ShiftPage({
               </div>
               <div>
                 <div className="v3-cachepoint__lbl">Legacy onboarding</div>
-                <div className="v3-cachepoint__big v3-cachepoint__big--coral">2–6 weeks</div>
+                <div className="v3-cachepoint__big v3-cachepoint__big--coral">2 to 6 weeks</div>
                 <p className="v3-cachepoint__desc">
                   New team member ramp-up. Context lost at every handoff.
                 </p>
@@ -909,7 +909,7 @@ export function V3ShiftPage({
                 }}
               >
                 {cacheEfficiency}% of tokens are served from cache. The AI retains
-                virtually all context from prior work — project structure, decisions,
+                virtually all context from prior work: project structure, decisions,
                 patterns. No re-explaining. No documentation lag. The entire codebase is
                 always loaded.
               </p>
@@ -957,7 +957,7 @@ export function V3ShiftPage({
                 <strong style={{ color: "var(--v3-charcoal)" }}>
                   {missionCount} projects
                 </strong>{" "}
-                aren&apos;t {missionCount} isolated efforts — they&apos;re an
+                aren&apos;t {missionCount} isolated efforts. They&apos;re an
                 interconnected ecosystem.
               </p>
               <div className="v3-cycle">
@@ -1050,7 +1050,7 @@ export function V3ShiftPage({
             }}
           >
             AI doesn&apos;t replace developers. It changes the ratio. One person with the
-            right tools can now cover the ground that once required a team — faster, with
+            right tools can now cover the ground that once required a team, faster, with
             less overhead, and with perfect context retention.
           </p>
           <div

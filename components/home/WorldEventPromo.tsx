@@ -81,7 +81,7 @@ export function WorldEventPromo() {
         <span className="v3-air-promo__eyebrow">live · worldevent bus</span>
         <span className="v3-air-promo__title">The perception bus</span>
         <span className="v3-air-promo__blurb">
-          One schema-tagged UDP firehose carrying everything the lab senses — a wireless
+          One schema-tagged UDP firehose carrying everything the lab senses: a wireless
           mesh mapped by RSSI, chrony holding true time, ADS-B, GPS. Decoded live; new
           senses just appear.
         </span>

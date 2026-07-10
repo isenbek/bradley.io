@@ -28,7 +28,7 @@ export default function MeatballLogPage() {
             </V3Reveal>
             <V3Reveal eager>
               <p className="v3-page-head__lede">
-                A running log of every motion the cameras caught and the vision model named — the
+                A running log of every motion the cameras caught and the vision model named: the
                 cropped region, what it was, which camera, and when. Newest first, updating live.
                 Built as it happens.
               </p>
