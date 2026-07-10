@@ -7143,3 +7143,49 @@ html[data-theme="dark"]:has(.v3) {
   .v3-turfy-flow__inputs { flex-direction: column; }
   .v3-turfy-flow__body > .v3-turfy-flow__ar { align-self: center; transform: rotate(90deg); }
 }
+
+/* ============================================================
+   Services: local (West Michigan) pill + FAQ accordion
+   ============================================================ */
+.v3-svc-local {
+  display: inline-block;
+  margin-top: 18px;
+  font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--v3-blue-ink);
+  background: var(--v3-blue-50);
+  border: 1px solid color-mix(in srgb, var(--v3-blue-400) 30%, var(--v3-line));
+  padding: 7px 14px;
+  border-radius: 999px;
+}
+.v3-svc-faq { display: grid; gap: 10px; margin-top: 8px; max-width: 760px; }
+.v3-svc-faq__item {
+  background: var(--v3-white);
+  border: 1px solid var(--v3-line);
+  border-radius: var(--v3-r-md);
+  padding: 14px 18px;
+  box-shadow: var(--v3-sh-1);
+}
+.v3-svc-faq__item summary {
+  cursor: pointer;
+  font-family: var(--font-v3-display), "Bricolage Grotesque", sans-serif;
+  font-weight: 700; font-size: 16px; color: var(--v3-charcoal);
+  list-style: none;
+}
+.v3-svc-faq__item summary::-webkit-details-marker { display: none; }
+.v3-svc-faq__item summary::after { content: "+"; float: right; color: var(--v3-slate); font-weight: 400; }
+.v3-svc-faq__item[open] summary::after { content: "\2212"; }
+.v3-svc-faq__item p { margin: 10px 0 0; font-size: 14.5px; line-height: 1.6; color: var(--v3-ink); }
+
+/* Project pages: every headline + description flush-left (comprehensive). */
+.v3-projects .v3-page-head__lockup,
+.v3-projects .v3-sec-head,
+.v3-projects .v3-detail-name,
+.v3-projects .v3-detail-tag,
+.v3-projects .v3-mission-hero__body,
+.v3-projects .v3-panel-head,
+.v3-projects .v3-pcard__title,
+.v3-projects .v3-pcard__tagline { text-align: left; }
+.v3-projects .v3-page-head__lede,
+.v3-projects .v3-sec-head p { margin-inline: 0; }

@@ -110,6 +110,21 @@ const DIFFS = [
   },
 ]
 
+const LOCAL_FAQ = [
+  {
+    q: "Do you provide AI and data-engineering consulting in Grand Rapids?",
+    a: "Yes. I'm based in Forest Hills, Michigan and work with teams across Grand Rapids and Kent County, on-site or remote, on AI integration, data pipelines, and production systems at scale.",
+  },
+  {
+    q: "What is edge computing, and can you build it for a West Michigan business?",
+    a: "Edge computing runs data processing on local hardware instead of a distant cloud, cutting latency and cloud bills. I design and build edge and IoT systems for businesses in Grand Rapids, Ada, Cascade, and the wider Kent County area.",
+  },
+  {
+    q: "Do you work on-site in the Grand Rapids area?",
+    a: "Yes. As a Forest Hills-based technologist I can work on-site across Kent County when it helps, and remotely for everything else.",
+  },
+]
+
 export default function V3ServicesPage() {
   return (
     <>
@@ -134,6 +149,11 @@ export default function V3ServicesPage() {
                 15+ years architecting production systems at scale: Fortune-500 data
                 infrastructure to garage-lab innovations. Same rigor, both rooms.
               </p>
+            </V3Reveal>
+            <V3Reveal delay={140}>
+              <span className="v3-svc-local">
+                Forest Hills, MI · Serving Grand Rapids &amp; Kent County
+              </span>
             </V3Reveal>
           </div>
         </div>
@@ -283,6 +303,35 @@ export default function V3ServicesPage() {
         </div>
       </section>
 
+      {/* WEST MICHIGAN =================================================== */}
+      <section className="v3-section">
+        <div className="v3-wrap">
+          <V3Reveal>
+            <div className="v3-sec-head">
+              <div className="v3-sec-head__num">05 / WEST MICHIGAN</div>
+              <h2>AI &amp; edge computing, based in Grand Rapids.</h2>
+              <p>
+                Anti-cloud means host-local, and that goes for the practice too. I&rsquo;m based in
+                Forest Hills, Michigan and work with teams across Grand Rapids, Ada, Cascade, East
+                Grand Rapids, Kentwood, and the wider Kent County: on-site when it helps, remote when
+                it doesn&rsquo;t. AI integration, edge computing, IoT, and data engineering for West
+                Michigan businesses that want production systems without a cloud provider on the bill.
+              </p>
+            </div>
+          </V3Reveal>
+          <div className="v3-svc-faq">
+            {LOCAL_FAQ.map((f, i) => (
+              <V3Reveal key={f.q} delay={i * 60}>
+                <details className="v3-svc-faq__item">
+                  <summary>{f.q}</summary>
+                  <p>{f.a}</p>
+                </details>
+              </V3Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* CTA ============================================================ */}
       <section className="v3-section">
         <div className="v3-wrap">
@@ -296,7 +345,7 @@ export default function V3ServicesPage() {
               }}
             >
               <div className="v3-sec-head__num" style={{ marginBottom: 8 }}>
-                05 / NEXT
+                06 / NEXT
               </div>
               <h2
                 className="v3-font-display"
