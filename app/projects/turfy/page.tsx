@@ -12,6 +12,7 @@ import {
   CircuitBoard,
   AlertTriangle,
   Radio,
+  PencilRuler,
 } from "lucide-react"
 import { V3Reveal } from "@/components/v3/V3Reveal"
 
@@ -130,6 +131,33 @@ const ROADMAP = [
     body:
       "ET-based scheduling (Penman-Monteith / Hargreaves) scales runtime to replace the daily deficit, minus rainfall. A cheap camera adds an NDVI-ish turf-stress index on top.",
     state: "the AI layer",
+  },
+]
+
+const SHEETS = [
+  {
+    n: 1,
+    src: "/turfy/sheet1.svg",
+    title: "Power + valve path",
+    cap: "24VAC tap → fuse + MOV → zone-bank relay → transfer-bank relay → valve solenoid. One channel of seven.",
+  },
+  {
+    n: 2,
+    src: "/turfy/sheet2.svg",
+    title: "Watchdog + authority",
+    cap: "The 555 missing-pulse detector (t ≈ 1.1·R·C ≈ 24 s) feeding the Q1/Q2 series-AND that sinks the transfer bank's authority bus.",
+  },
+  {
+    n: 3,
+    src: "/turfy/sheet3.svg",
+    title: "Sense front-end",
+    cap: "One H11AA1 AC-input opto per Rain Bird station output — the passive-logging phase. Typical of seven.",
+  },
+  {
+    n: 4,
+    src: "/turfy/sheet4.svg",
+    title: "Zone drive",
+    cap: "Pi I²C → MCP23017 (0x20) → zone-bank inputs. Power-on leaves every pin hi-Z, so relays stay off.",
   },
 ]
 
@@ -267,6 +295,38 @@ export default function TurfyPage() {
               the transfer relay = circulating current and dead triacs. Turfy steals 24VAC from the
               Rain Bird&rsquo;s own terminals so both controllers switch the same hot leg.
             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* BUILD SHEETS ================================================== */}
+      <section className="v3-section" style={{ paddingTop: 28 }}>
+        <div className="v3-wrap">
+          <V3Reveal>
+            <div className="v3-cardhead">
+              <PencilRuler size={18} strokeWidth={2.2} />
+              <h2>The four build sheets</h2>
+            </div>
+          </V3Reveal>
+          <V3Reveal delay={80}>
+            <p className="v3-turfy-lede">
+              The schematic is parametric <code>schemdraw</code> source — so when a board photo
+              tells us something (no MV terminal, a shorter timeout), it&rsquo;s a one-line edit and
+              re-render, not a redraw.
+            </p>
+          </V3Reveal>
+          <div className="v3-turfy-sheets">
+            {SHEETS.map((s, i) => (
+              <V3Reveal key={s.n} delay={100 + i * 50}>
+                <figure className="v3-turfy-blueprint">
+                  <span className="v3-turfy-blueprint__tag">Sheet {s.n}</span>
+                  <img src={s.src} alt={`Turfy schematic — sheet ${s.n}: ${s.title}`} loading="lazy" />
+                  <figcaption>
+                    <strong>{s.title}.</strong> {s.cap}
+                  </figcaption>
+                </figure>
+              </V3Reveal>
+            ))}
           </div>
         </div>
       </section>

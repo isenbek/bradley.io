@@ -7032,3 +7032,25 @@ html[data-theme="dark"]:has(.v3) {
 /* Project pages: heading + intro flush-left instead of the centered hero. */
 .v3-projects .v3-page-head__lockup { text-align: left; }
 .v3-projects .v3-page-head__lede { margin-inline: 0; }
+
+/* Turfy build-schematic sheets — schemdraw SVGs (black-on-transparent). Sit on a
+   paper card; in dark theme the card flips (token) and the SVG inverts to white. */
+.v3-turfy-sheets { display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; margin-top: 4px; }
+.v3-turfy-blueprint {
+  margin: 0;
+  position: relative;
+  background: var(--v3-white);
+  border: 1px solid var(--v3-line);
+  border-radius: var(--v3-r-md);
+  padding: 22px 20px 16px;
+  box-shadow: var(--v3-sh-1);
+}
+.v3-turfy-blueprint__tag {
+  position: absolute; left: 16px; top: 13px;
+  font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
+  font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--v3-slate);
+}
+.v3-turfy-blueprint img { display: block; width: 100%; height: auto; margin: 16px 0 12px; }
+[data-theme="dark"] .v3-turfy-blueprint img { filter: invert(0.9); }
+.v3-turfy-blueprint figcaption { font-size: 13px; line-height: 1.5; color: var(--v3-slate); }
+.v3-turfy-blueprint figcaption strong { color: var(--v3-charcoal); }
