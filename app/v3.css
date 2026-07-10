@@ -7054,3 +7054,92 @@ html[data-theme="dark"]:has(.v3) {
 [data-theme="dark"] .v3-turfy-blueprint img { filter: invert(0.9); }
 .v3-turfy-blueprint figcaption { font-size: 13px; line-height: 1.5; color: var(--v3-slate); }
 .v3-turfy-blueprint figcaption strong { color: var(--v3-charcoal); }
+
+/* ============================================================
+   Turfy signal-path flow diagram (replaces the ASCII terminal)
+   Theme-aware via tokens — clean in light + dark.
+   ============================================================ */
+.v3-turfy-flow {
+  border: 1px solid var(--v3-line);
+  border-radius: var(--v3-r-lg);
+  background: var(--v3-cloud);
+  box-shadow: var(--v3-sh-1);
+  overflow: hidden;
+}
+.v3-turfy-flow__head {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 20px;
+  font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
+  font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--v3-slate);
+  background: var(--v3-white);
+  border-bottom: 1px solid var(--v3-line);
+}
+.v3-turfy-flow__body {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 12px;
+  padding: 22px 20px;
+}
+.v3-turfy-flow__inputs { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+
+/* node chip (main path) */
+.v3-turfy-nd {
+  display: flex; flex-direction: column; gap: 2px;
+  padding: 12px 15px;
+  background: var(--v3-white);
+  border: 1px solid var(--v3-line);
+  border-top-width: 2px;
+  border-radius: var(--v3-r-md);
+  min-width: 0;
+}
+.v3-turfy-nd__k {
+  font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
+  font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--v3-slate);
+}
+.v3-turfy-nd__t {
+  font-family: var(--font-v3-display), "Bricolage Grotesque", sans-serif;
+  font-weight: 700; font-size: 15px; letter-spacing: -0.01em; color: var(--v3-charcoal);
+}
+.v3-turfy-nd__s { font-size: 12px; line-height: 1.4; color: var(--v3-slate); }
+.v3-turfy-nd__w {
+  font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
+  font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--v3-blue-ink); margin-top: 2px;
+}
+/* accents */
+.v3-turfy-nd--fb  { border-top-color: var(--v3-gold); }
+.v3-turfy-nd--fb  .v3-turfy-nd__k, .v3-turfy-nd--fb .v3-turfy-nd__w { color: var(--v3-gold-dk); }
+.v3-turfy-nd--sm  { border-top-color: var(--v3-blue-400); }
+.v3-turfy-nd--hub { border-top-color: var(--v3-green); box-shadow: var(--v3-sh-2); }
+.v3-turfy-nd--hub .v3-turfy-nd__k { color: var(--v3-green-dk); }
+.v3-turfy-nd--out { border-top-color: var(--v3-slate); }
+
+/* connectors */
+.v3-turfy-flow__ar { color: var(--v3-mist); font-size: 22px; line-height: 1; flex: 0 0 auto; }
+.v3-turfy-flow__ar--sm { font-size: 16px; }
+.v3-turfy-flow__op { font-size: 17px; font-weight: 700; color: var(--v3-slate); }
+
+/* authority gate row */
+.v3-turfy-flow__gate {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 10px;
+  padding: 14px 20px;
+  border-top: 1px solid var(--v3-line);
+  background: color-mix(in srgb, var(--v3-coral) 6%, transparent);
+}
+.v3-turfy-flow__gk {
+  flex-basis: 100%;
+  font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
+  font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--v3-coral-dk);
+}
+.v3-turfy-nd--wd, .v3-turfy-nd--gpio {
+  flex-direction: row; gap: 0;
+  padding: 6px 13px; border-top-width: 1px; border-radius: 999px;
+  font-family: var(--font-v3-mono), "JetBrains Mono", monospace; font-size: 12px; font-weight: 600;
+}
+.v3-turfy-nd--wd   { border-color: color-mix(in srgb, var(--v3-coral) 42%, var(--v3-line)); color: var(--v3-coral-dk); }
+.v3-turfy-nd--gpio { border-color: color-mix(in srgb, var(--v3-blue-400) 42%, var(--v3-line)); color: var(--v3-blue-ink); }
+.v3-turfy-flow__hb { font-size: 12px; color: var(--v3-slate); }
+
+/* stack cleanly on phones — arrows rotate to point down */
+@media (max-width: 640px) {
+  .v3-turfy-flow__body { flex-direction: column; align-items: stretch; }
+  .v3-turfy-flow__inputs { flex-direction: column; }
+  .v3-turfy-flow__body > .v3-turfy-flow__ar { align-self: center; transform: rotate(90deg); }
+}

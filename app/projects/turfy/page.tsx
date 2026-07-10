@@ -16,24 +16,6 @@ import {
 } from "lucide-react"
 import { V3Reveal } from "@/components/v3/V3Reveal"
 
-const ARCH_ASCII = `                     24VAC (Rain Bird VT terminals, shared transformer)
-                          │
-                ┌─────────┴──────────┐
-                │ fuse 1A + MOV       │
-   ┌────────────┐   ┌─────────────┐   │
-   │ Rain Bird  │──▶│ ZONE BANK   │◀──┼── MCP23017 (I2C 0x20) ◀── Pi
-   │ ESP-6Si    │   │ (Turfy out) │   │
-   │ ST1..ST6   │   └──────┬──────┘   │
-   └─────┬──────┘          │ NO       │
-         │ NC              ▼          │
-   ┌──────────────────────────────┐   │
-   │ TRANSFER BANK  8ch SPDT relay │◀──┴── AUTHORITY line
-   │ COM ─▶ valve field wires 1..6 │       (Pi GPIO ∧ watchdog)
-   └──────────────────────────────┘            ▲
-                                    555 missing-pulse detector
-                                                ▲
-                                    HEARTBEAT GPIO (daemon-toggled)`
-
 const PRINCIPLES = [
   {
     icon: ShieldCheck,
@@ -280,11 +262,43 @@ export default function TurfyPage() {
             </p>
           </V3Reveal>
           <V3Reveal delay={140}>
-            <div className="v3-turfy-ascii-wrap">
-              <div className="v3-turfy-ascii-bar">
-                <span className="v3-turfy-dot" /> signal path — v0.1
+            <div className="v3-turfy-flow">
+              <div className="v3-turfy-flow__head">
+                <span className="v3-turfy-dot" /> signal path · v0.1
               </div>
-              <pre className="v3-turfy-ascii">{ARCH_ASCII}</pre>
+              <div className="v3-turfy-flow__body">
+                <div className="v3-turfy-flow__inputs">
+                  <div className="v3-turfy-nd v3-turfy-nd--fb">
+                    <span className="v3-turfy-nd__k">fallback</span>
+                    <span className="v3-turfy-nd__t">Rain Bird ESP-6Si</span>
+                    <span className="v3-turfy-nd__w">on&nbsp;NC</span>
+                  </div>
+                  <div className="v3-turfy-nd v3-turfy-nd--sm">
+                    <span className="v3-turfy-nd__k">smart path</span>
+                    <span className="v3-turfy-nd__t">Pi → MCP23017 → zone bank</span>
+                    <span className="v3-turfy-nd__w">on&nbsp;NO</span>
+                  </div>
+                </div>
+                <span className="v3-turfy-flow__ar" aria-hidden>→</span>
+                <div className="v3-turfy-nd v3-turfy-nd--hub">
+                  <span className="v3-turfy-nd__k">transfer bank</span>
+                  <span className="v3-turfy-nd__t">8× SPDT relay</span>
+                  <span className="v3-turfy-nd__s">one authority line picks NC or NO</span>
+                </div>
+                <span className="v3-turfy-flow__ar" aria-hidden>→</span>
+                <div className="v3-turfy-nd v3-turfy-nd--out">
+                  <span className="v3-turfy-nd__k">field · COM</span>
+                  <span className="v3-turfy-nd__t">Valves 1–6 + MV</span>
+                </div>
+              </div>
+              <div className="v3-turfy-flow__gate">
+                <span className="v3-turfy-flow__gk">authority ⇢ picks the bank · active-low</span>
+                <div className="v3-turfy-nd v3-turfy-nd--wd">555 watchdog</div>
+                <span className="v3-turfy-flow__op">∧</span>
+                <div className="v3-turfy-nd v3-turfy-nd--gpio">Pi GPIO17</div>
+                <span className="v3-turfy-flow__ar v3-turfy-flow__ar--sm" aria-hidden>←</span>
+                <span className="v3-turfy-flow__hb">heartbeat · daemon loop · ~24&nbsp;s</span>
+              </div>
             </div>
           </V3Reveal>
           <div className="v3-turfy-rule">
