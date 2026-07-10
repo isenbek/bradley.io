@@ -15,7 +15,7 @@ export default function OG() {
     eyebrow: "turfy · irrigation sidecar · v0.1",
     title: "Waters the lawn only when it's provably healthy.",
     subtitle:
-      "An AI sidecar for a 1990s Rain Bird: it takes authority only while its watchdog is fed, then falls back to the dumb controller, in hardware.",
+      "A fail-safe AI sidecar for a 1990s Rain Bird. It only takes over while its watchdog is fed.",
     tags: ["Raspberry Pi", "24VAC", "transfer relays", "555 watchdog"],
     accent: "green",
     cta: "Read the build →",

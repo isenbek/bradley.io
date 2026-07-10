@@ -203,9 +203,9 @@ export function ogV3ImageResponse(cfg: OgCardV3Config): ImageResponse {
 
           <div
             style={{
-              fontSize: 76,
+              fontSize: cfg.image ? 60 : 76,
               fontWeight: 800,
-              lineHeight: 1.02,
+              lineHeight: 1.03,
               letterSpacing: "-0.035em",
               color: "#252521",
             }}
