@@ -7189,3 +7189,72 @@ html[data-theme="dark"]:has(.v3) {
 .v3-projects .v3-pcard__tagline { text-align: left; }
 .v3-projects .v3-page-head__lede,
 .v3-projects .v3-sec-head p { margin-inline: 0; }
+
+/* ============================================================
+   Prime Orchestra project page (/projects/prime-orchestra)
+   ============================================================ */
+.v3-po .v3-section { padding: 30px 0; }
+
+/* self-sizing dark-well embed of the instrument */
+.v3-po-embed {
+  border-radius: var(--v3-r-lg);
+  overflow: hidden;
+  border: 1px solid #1b3048;
+  box-shadow: var(--v3-sh-2);
+  background: #0a1420;
+  line-height: 0;
+}
+.v3-po-embed iframe { display: block; width: 100%; border: 0; background: #0a1420; }
+.v3-po-cap { margin: 12px 2px 0; font-size: 13px; line-height: 1.55; color: var(--v3-slate); max-width: 68ch; }
+
+.v3-po-lede {
+  font-size: 16.5px; line-height: 1.65; color: var(--v3-ink); max-width: 70ch; margin: 0 0 20px;
+}
+.v3-po-lede strong { color: var(--v3-charcoal); }
+.v3-po-lede code, .v3-po-math code:not(.v3-po-eq) {
+  font-family: var(--font-v3-mono), "JetBrains Mono", monospace; font-size: 0.92em; color: var(--v3-blue-ink);
+}
+
+/* four channel cards */
+.v3-po-grid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; margin-top: 4px; }
+@media (min-width: 720px) { .v3-po-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; } }
+.v3-po-card {
+  background: var(--v3-white);
+  border: 1px solid var(--v3-line);
+  border-top: 2px solid var(--v3-blue-400);
+  border-radius: var(--v3-r-lg);
+  padding: 20px 22px;
+  box-shadow: var(--v3-sh-1);
+  height: 100%;
+}
+.v3-po-card__k {
+  font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
+  font-size: 11px; letter-spacing: 0.14em; color: var(--v3-blue-ink);
+}
+.v3-po-card h3 {
+  font-family: var(--font-v3-display), "Bricolage Grotesque", sans-serif;
+  font-weight: 700; font-size: 18px; letter-spacing: -0.02em; color: var(--v3-charcoal); margin: 6px 0 8px;
+}
+.v3-po-card p { margin: 0; font-size: 14.5px; line-height: 1.6; color: var(--v3-slate); }
+
+/* play-it steps */
+.v3-po-try ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; max-width: 780px; }
+.v3-po-try li { display: flex; gap: 14px; font-size: 15px; line-height: 1.55; color: var(--v3-ink); }
+.v3-po-try__n {
+  flex: 0 0 auto; width: 26px; height: 26px; border-radius: 999px; display: grid; place-items: center;
+  font-family: var(--font-v3-mono), "JetBrains Mono", monospace; font-size: 12px; font-weight: 600;
+  color: var(--v3-blue-ink);
+  background: var(--v3-blue-50);
+  border: 1px solid color-mix(in srgb, var(--v3-blue-400) 30%, var(--v3-line));
+}
+
+/* the math */
+.v3-po-math { max-width: 840px; }
+.v3-po-math p { font-size: 15px; line-height: 1.65; color: var(--v3-ink); margin: 0 0 14px; }
+.v3-po-eq {
+  display: block;
+  font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
+  font-size: 15px; color: #9fd8f5;
+  background: #0e1522; border: 1px solid #1b3048; border-radius: var(--v3-r-md);
+  padding: 14px 18px; margin: 0 0 16px; overflow-x: auto; white-space: nowrap;
+}

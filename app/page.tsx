@@ -1,4 +1,4 @@
-import { ArrowRight, Bot, Atom, Droplets } from "lucide-react"
+import { ArrowRight, Bot, Atom, Droplets, Sigma } from "lucide-react"
 import Link from "next/link"
 import { ActivityPulse } from "@/components/v3/ActivityPulse"
 import { ActivityFeedList } from "@/components/v3/ActivityFeedList"
@@ -128,6 +128,22 @@ export default async function V3Home() {
                 <span className="v3-air-promo__blurb">
                   The wordmark as pure geometry: chords, Bézier offset handles, anchors, and the
                   i-tittle plumb. Drag the dot, morph chords↔curves, measure live.
+                </span>
+              </span>
+              <span className="v3-air-promo__right"><ArrowRight className="v3-air-promo__arrow" size={18} strokeWidth={2.4} /></span>
+            </Link>
+          </V3Reveal>
+
+          <V3Reveal delay={259}>
+            <Link href="/projects/prime-orchestra" className="v3-air-promo" style={{ marginTop: 14 }}>
+              <span className="v3-air-promo__ico"><Sigma size={20} strokeWidth={2.2} /></span>
+              <span className="v3-air-promo__body">
+                <span className="v3-air-promo__eyebrow">project · frontier math</span>
+                <span className="v3-air-promo__title">Prime Orchestra: the primes, played by zeta&rsquo;s zeros</span>
+                <span className="v3-air-promo__blurb">
+                  An interactive instrument that rebuilds the prime staircase from the nontrivial
+                  zeros of the Riemann zeta function, one wave at a time. Drag the zeros in and watch
+                  the primes resolve.
                 </span>
               </span>
               <span className="v3-air-promo__right"><ArrowRight className="v3-air-promo__arrow" size={18} strokeWidth={2.4} /></span>

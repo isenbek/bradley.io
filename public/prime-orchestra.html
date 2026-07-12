@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PRIME ORCHESTRA — Explicit Formula Instrument</title>
+<style>
+  :root {
+    --bg: #0A1420;
+    --panel: #0F1D2E;
+    --grid: #1B3048;
+    --grid-soft: #142438;
+    --trace: #35D3E7;
+    --trace-dim: #1A7E8C;
+    --prime: #F5A93C;
+    --truth: #4A6580;
+    --text: #DCE9F2;
+    --muted: #6C8299;
+    --rule: #23405C;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
+    min-height: 100vh;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+  }
+  .frame { width: 100%; max-width: 1060px; }
+
+  header {
+    border: 1px solid var(--rule);
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 8px;
+    background: var(--panel);
+  }
+  h1 {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    color: var(--trace);
+  }
+  .spec { font-size: 10px; color: var(--muted); letter-spacing: 0.08em; }
+
+  .scope-block {
+    border: 1px solid var(--rule);
+    border-top: none;
+    background: var(--panel);
+  }
+  .scope-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 18px;
+    border-bottom: 1px solid var(--grid-soft);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+  }
+  .scope-head .readout { color: var(--trace); }
+  canvas { display: block; width: 100%; }
+
+  .controls {
+    border: 1px solid var(--rule);
+    border-top: none;
+    background: var(--panel);
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .n-display {
+    min-width: 118px;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+  }
+  .n-display b { color: var(--prime); font-size: 15px; font-weight: 600; }
+  input[type=range] {
+    flex: 1;
+    min-width: 200px;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 2px;
+    background: var(--grid);
+    outline: none;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px; height: 22px;
+    background: var(--trace);
+    cursor: pointer;
+    border: none;
+  }
+  input[type=range]::-moz-range-thumb {
+    width: 14px; height: 22px;
+    background: var(--trace);
+    cursor: pointer;
+    border: none;
+    border-radius: 0;
+  }
+  input[type=range]:focus-visible::-webkit-slider-thumb { outline: 2px solid var(--prime); }
+  button, .toggle {
+    background: transparent;
+    border: 1px solid var(--rule);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    padding: 8px 14px;
+    cursor: pointer;
+  }
+  button:hover, .toggle:hover { border-color: var(--trace); color: var(--trace); }
+  button:focus-visible, .toggle:focus-visible { outline: 2px solid var(--prime); outline-offset: 2px; }
+  .toggle.on { border-color: var(--trace); color: var(--trace); background: rgba(53,211,231,0.08); }
+
+  .legend {
+    display: flex;
+    gap: 20px;
+    padding: 10px 18px;
+    border: 1px solid var(--rule);
+    border-top: none;
+    background: var(--panel);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    flex-wrap: wrap;
+  }
+  .key { display: flex; align-items: center; gap: 7px; }
+  .swatch { width: 18px; height: 2px; }
+  .swatch.dashed { background: repeating-linear-gradient(90deg, var(--truth) 0 4px, transparent 4px 7px); height: 2px; }
+
+  footer {
+    margin-top: 14px;
+    font-size: 10px;
+    line-height: 1.7;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+    padding: 0 4px;
+  }
+  footer .f { color: var(--text); }
+  @media (prefers-reduced-motion: reduce) { .anim { display: none; } }
+</style>
+</head>
+<body>
+<div class="frame">
+
+  <header>
+    <h1>PRIME ORCHESTRA</h1>
+    <div class="spec">RIEMANN EXPLICIT FORMULA · ψ(x) = x − Σ<sub>ρ</sub> x<sup>ρ</sup>/ρ − log 2π · ZEROS N=1…300 · RANGE 2–500</div>
+  </header>
+
+  <div class="scope-block">
+    <div class="scope-head">
+      <span>CH·1 — RECONSTRUCTION vs TRUE PRIME STAIRCASE ψ(x)</span>
+      <span class="readout" id="err-readout">RMS ERROR: —</span>
+    </div>
+    <canvas id="scope" height="380"></canvas>
+  </div>
+
+  <div class="controls">
+    <div class="n-display">WAVES <b id="n-val">0</b> / 300</div>
+    <input type="range" id="n-slider" min="0" max="300" value="0" step="1"
+           aria-label="Number of zeta-zero waves in the sum">
+    <button id="play-btn" class="anim">▶ RESOLVE</button>
+    <button id="axis-btn" class="toggle">LOG X</button>
+    <button id="zoom-in" aria-label="Zoom in">Z+</button>
+    <button id="zoom-out" aria-label="Zoom out">Z−</button>
+    <button id="zoom-probe" aria-label="Zoom to probe">⌖ PROBE</button>
+    <button id="zoom-reset" aria-label="Reset view">2–500</button>
+  </div>
+
+  <div class="scope-block" style="border-top:none;">
+    <div class="scope-head">
+      <span>CH·2 — ISOLATED WAVE (LAST INSTRUMENT ADDED)</span>
+      <span class="readout" id="gamma-readout">γ = —</span>
+    </div>
+    <canvas id="wavescope" height="150"></canvas>
+  </div>
+
+  <div class="scope-block" style="border-top:none;">
+    <div class="scope-head">
+      <span>CH·3 — CONVERGENCE TRACE · ψ<sub>N</sub>(x₀) vs WAVE COUNT N · CLICK CH·1 TO SET PROBE</span>
+      <span class="readout" id="probe-readout">x₀ = —</span>
+    </div>
+    <canvas id="convscope" height="170"></canvas>
+  </div>
+
+  <div class="scope-block" style="border-top:none;">
+    <div class="scope-head">
+      <span>CH·4 — RETURN MAP · (ψ<sub>N−1</sub>, ψ<sub>N</sub>) · LAG-1 EMBEDDING AT PROBE</span>
+      <span class="readout" id="ret-readout">FIXED POINT: —</span>
+    </div>
+    <canvas id="retscope" height="300"></canvas>
+  </div>
+
+  <div class="legend">
+    <span class="key"><span class="swatch" style="background:var(--trace)"></span> WAVE SUM</span>
+    <span class="key"><span class="swatch dashed"></span> TRUE ψ(x) STAIRCASE</span>
+    <span class="key"><span class="swatch" style="background:var(--prime)"></span> PRIMES</span>
+    <span class="key"><span class="swatch" style="background:var(--trace-dim)"></span> PRIME POWERS (4, 8, 9, 25, 27…)</span>
+  </div>
+
+  <footer>
+    <span class="f">OPERATION —</span> Drag the slider (or press RESOLVE) to add zeta-zero waves to the smooth
+    axis one instrument at a time. Each wave is 2√x·cos(γ·log x − α)/|ρ| — featureless alone. Watch the
+    interference sharpen into vertical jumps at exactly the primes and prime powers (each jump has height
+    log p). <span class="f">CH·2</span> shows the single wave you just added: a stretching chirp in linear x —
+    hit <span class="f">LOG X</span> and it snaps into a pure sinusoid, the primes' native coordinate system.
+    Staircase teeth at 2, 3, 5, 7, 11… emerge from waves that individually know nothing.
+    <span class="f">CH·3</span> tracks the reconstruction's y-value at one probe point x₀ (crosshair — click
+    anywhere on CH·1 to move it) as a function of wave count N. The amber trace is the partial sum hunting
+    the true value (dashed); the dim tail is its future. Probe mid-gap and it settles fast; probe just next
+    to a prime and watch it ring — each wave overshoots and corrects, the Gibbs struggle at a discontinuity
+    rendered as a time series. <span class="f">CH·4</span> replots the same trace as a lag-1 return map:
+    each point is (ψ<sub>N−1</sub>, ψ<sub>N</sub>). The dashed diagonal is y = x; the circled dot is the
+    fixed point (true ψ, true ψ). Convergence appears as an orbit spiraling into the fixed point — points
+    hugging the diagonal mean consecutive sums barely changed, wide loops mean a big-amplitude wave just
+    joined. Move the probe and watch the orbit's geometry change character.
+    <span class="f">VIEWPORT —</span> scroll-wheel or pinch to zoom (centered on cursor), drag to pan,
+    single click/tap sets the probe. <span class="f">⌖ PROBE</span> zooms to a window of ~4 average
+    prime gaps (8·ln x₀) around the probe — the staircase's natural local scale. Note what happens past
+    x ≈ 300 at full wave count: the reconstruction blurs. At N=100 the top instrument is γ ≈ 236.5 — it resolves log-space detail no finer than 2π/γ, blurring past x ≈ 300. Push N toward 270 (γ₂₇₀ ≈ 500.3) and watch the far staircase sharpen — the zero-counting formula predicts ~270 instruments to articulate primes to 500, and the slider now lets you verify it. More primes, more instruments, forever.
+  </footer>
+
+</div>
+
+<script>
+const GAMMAS = [
+  14.134725142, 21.022039639, 25.010857580, 30.424876126, 32.935061588, 37.586178159,
+  40.918719012, 43.327073281, 48.005150881, 49.773832478, 52.970321478, 56.446247697,
+  59.347044003, 60.831778525, 65.112544048, 67.079810529, 69.546401711, 72.067157674,
+  75.704690699, 77.144840069, 79.337375020, 82.910380854, 84.735492981, 87.425274613,
+  88.809111208, 92.491899271, 94.651344041, 95.870634228, 98.831194218, 101.317851006,
+  103.725538040, 105.446623052, 107.168611184, 111.029535543, 111.874659177, 114.320220915,
+  116.226680321, 118.790782866, 121.370125002, 122.946829294, 124.256818554, 127.516683880,
+  129.578704200, 131.087688531, 133.497737203, 134.756509753, 138.116042055, 139.736208952,
+  141.123707404, 143.111845808, 146.000982487, 147.422765343, 150.053520421, 150.925257612,
+  153.024693811, 156.112909294, 157.597591818, 158.849988171, 161.188964138, 163.030709687,
+  165.537069188, 167.184439978, 169.094515416, 169.911976479, 173.411536520, 174.754191523,
+  176.441434298, 178.377407776, 179.916484020, 182.207078484, 184.874467848, 185.598783678,
+  187.228922584, 189.416158656, 192.026656361, 193.079726604, 195.265396680, 196.876481841,
+  198.015309676, 201.264751944, 202.493594514, 204.189671803, 205.394697202, 207.906258888,
+  209.576509717, 211.690862595, 213.347919360, 214.547044783, 216.169538508, 219.067596349,
+  220.714918839, 221.430705555, 224.007000255, 224.983324670, 227.421444280, 229.337413306,
+  231.250188700, 231.987235253, 233.693404179, 236.524229666, 237.769820481, 239.555477573,
+  241.049157796, 242.823271934, 244.070898497, 247.136990075, 248.101990060, 249.573689645,
+  251.014947795, 253.069986748, 255.306256455, 256.380713694, 258.610439492, 259.874406990,
+  260.805084505, 263.573893905, 265.557851839, 266.614973782, 267.921915083, 269.970449024,
+  271.494055642, 273.459609188, 275.587492649, 276.452049503, 278.250743530, 279.229250928,
+  282.465114765, 283.211185733, 284.835963981, 286.667445363, 287.911920501, 289.579854929,
+  291.846291329, 293.558434139, 294.965369619, 295.573254879, 297.979277062, 299.840326054,
+  301.649325462, 302.696749590, 304.864371341, 305.728912602, 307.219496128, 310.109463147,
+  311.165141530, 312.427801181, 313.985285731, 315.475616089, 317.734805942, 318.853104256,
+  321.160134309, 322.144558672, 323.466969558, 324.862866052, 327.443901262, 329.033071680,
+  329.953239728, 331.474467583, 333.645378525, 334.211354833, 336.841850428, 338.339992851,
+  339.858216725, 341.042261111, 342.054877510, 344.661702940, 346.347870566, 347.272677584,
+  349.316260871, 350.408419349, 351.878649025, 353.488900489, 356.017574977, 357.151302252,
+  357.952685102, 359.743754953, 361.289361696, 363.331330579, 364.736024114, 366.212710288,
+  367.993575482, 368.968438096, 370.050919212, 373.061928372, 373.864873911, 375.825912767,
+  376.324092231, 378.436680250, 379.872975347, 381.484468617, 383.443529450, 384.956116815,
+  385.861300846, 387.222890222, 388.846128354, 391.456083564, 392.245083340, 393.427743844,
+  395.582870011, 396.381854223, 397.918736210, 399.985119876, 401.839228601, 402.861917764,
+  404.236441800, 405.134387460, 407.581460387, 408.947245502, 410.513869193, 411.972267804,
+  413.262736070, 415.018809755, 415.455214996, 418.387705790, 419.861364818, 420.643827625,
+  422.076710059, 423.716579627, 425.069882494, 427.208825084, 428.127914077, 430.328745431,
+  431.301306931, 432.138641735, 433.889218481, 436.161006433, 437.581698168, 438.621738656,
+  439.918442214, 441.683199201, 442.904546303, 444.319336278, 446.860622696, 447.441704194,
+  449.148545685, 450.126945780, 451.403308445, 453.986737807, 454.974683769, 456.328426689,
+  457.903893064, 459.513415281, 460.087944422, 462.065367275, 464.057286911, 465.671539211,
+  466.570286931, 467.439046210, 469.536004559, 470.773655478, 472.799174662, 473.835232345,
+  475.600339369, 476.769015237, 478.075263767, 478.942181535, 481.830339376, 482.834782791,
+  483.851427212, 485.539148129, 486.528718262, 488.380567090, 489.661761578, 491.398821594,
+  493.314441582, 493.957997805, 495.358828822, 496.429696216, 498.580782430, 500.309084942,
+  501.604446965, 502.276270327, 504.499773313, 505.415231742, 506.464152710, 508.800700336,
+  510.264227944, 511.562289700, 512.623144531, 513.668985555, 515.435057167, 517.589668572,
+  518.234223148, 520.106310412, 521.525193449, 522.456696178, 523.960530892, 525.077385687,
+  527.903641601, 528.406213852, 529.806226319, 530.866917884, 532.688183028, 533.779630754,
+  535.664314076, 537.069759083, 538.428526176, 540.213166376, 540.631390247, 541.847437121,
+];
+
+// Precompute per-zero amplitude factor and phase: rho = 1/2 + i*gamma
+const NMAX = GAMMAS.length;
+const MODS = GAMMAS.map(g => Math.sqrt(0.25 + g * g));
+const PHASES = GAMMAS.map(g => Math.atan2(g, 0.5));
+
+const XMIN = 2, XMAX = 500;
+const LOG2PI = Math.log(2 * Math.PI);
+let vMin = XMIN, vMax = XMAX; // current viewport
+
+// ---- primes & true psi staircase ----
+function sieve(n) {
+  const p = [], f = new Uint8Array(n + 1);
+  for (let i = 2; i <= n; i++) {
+    if (!f[i]) { p.push(i); for (let j = i * i; j <= n; j += i) f[j] = 1; }
+  }
+  return p;
+}
+const PRIMES = sieve(XMAX);
+// jumps: at each prime power p^k <= XMAX, psi jumps by log p
+const JUMPS = [];
+for (const p of PRIMES) {
+  let pk = p;
+  while (pk <= XMAX) { JUMPS.push({ x: pk, h: Math.log(p), isPrime: pk === p, p }); pk *= p; }
+}
+JUMPS.sort((a, b) => a.x - b.x);
+function truePsi(x) {
+  let s = 0;
+  for (const j of JUMPS) { if (j.x <= x) s += j.h; else break; }
+  return s;
+}
+
+// ---- explicit formula approximation ----
+function smoothTerm(x) {
+  return x - LOG2PI - 0.5 * Math.log(1 - 1 / (x * x));
+}
+function waveTerm(x, k) { // contribution of k-th zero pair (negative in the sum)
+  const lx = Math.log(x);
+  return -2 * Math.sqrt(x) * Math.cos(GAMMAS[k] * lx - PHASES[k]) / MODS[k];
+}
+function psiApprox(x, N) {
+  let s = smoothTerm(x);
+  for (let k = 0; k < N; k++) s += waveTerm(x, k);
+  return s;
+}
+
+// ---- canvases ----
+const scope = document.getElementById('scope');
+const wavescope = document.getElementById('wavescope');
+const convscope = document.getElementById('convscope');
+const retscope = document.getElementById('retscope');
+const slider = document.getElementById('n-slider');
+const nVal = document.getElementById('n-val');
+const errRead = document.getElementById('err-readout');
+const gammaRead = document.getElementById('gamma-readout');
+const playBtn = document.getElementById('play-btn');
+const axisBtn = document.getElementById('axis-btn');
+
+let N = 0;
+let logAxis = false;
+let playing = false;
+let probeX = 29.5; // default: just before prime 31, after 29 — sits mid-jump territory
+
+function convergenceTrace(x0) {
+  // psi_N(x0) for N = 0..100, computed incrementally
+  const out = [smoothTerm(x0)];
+  for (let k = 0; k < GAMMAS.length; k++) out.push(out[k] + waveTerm(x0, k));
+  return out;
+}
+
+function sizeCanvas(c, h) {
+  const dpr = window.devicePixelRatio || 1;
+  const w = c.clientWidth;
+  c.width = w * dpr; c.height = h * dpr;
+  c.getContext('2d').setTransform(dpr, 0, 0, dpr, 0, 0);
+  return { w, h };
+}
+
+function css(v) { return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
+
+const PADL = 46, PADR = 16;
+function viewPx(x, w) { // map x -> pixel within current viewport
+  const t = logAxis
+    ? (Math.log(x) - Math.log(vMin)) / (Math.log(vMax) - Math.log(vMin))
+    : (x - vMin) / (vMax - vMin);
+  return PADL + t * (w - PADL - PADR);
+}
+function pxToX(p, w) { // inverse
+  const t = Math.max(0, Math.min(1, (p - PADL) / (w - PADL - PADR)));
+  return logAxis ? vMin * Math.pow(vMax / vMin, t) : vMin + (vMax - vMin) * t;
+}
+function niceTicks(lo, hi) {
+  const span = hi - lo;
+  const steps = [1, 2, 5, 10, 20, 25, 50, 100];
+  let step = steps[steps.length - 1];
+  for (const s of steps) { if (span / s <= 10) { step = s; break; } }
+  const out = [];
+  for (let v = Math.ceil(lo / step) * step; v <= hi; v += step) out.push(v);
+  return out;
+}
+
+function drawScope() {
+  const { w, h } = sizeCanvas(scope, 380);
+  const ctx = scope.getContext('2d');
+  const padT = 14, padB = 30;
+  ctx.clearRect(0, 0, w, h);
+
+  // y autoscale from viewport
+  const yLoRaw = truePsi(vMin), yHiRaw = truePsi(vMax);
+  const ySpan = Math.max(yHiRaw - yLoRaw, 5);
+  const YLO = Math.max(0, yLoRaw - ySpan * 0.12 - 3);
+  const YHI = yHiRaw + ySpan * 0.12 + 3;
+  const yToPix = y => padT + (1 - (y - YLO) / (YHI - YLO)) * (h - padT - padB);
+
+  // grid
+  ctx.strokeStyle = css('--grid-soft');
+  ctx.lineWidth = 1;
+  ctx.font = '9px ui-monospace, monospace';
+  ctx.fillStyle = css('--muted');
+  for (const y of niceTicks(YLO, YHI)) {
+    ctx.beginPath(); ctx.moveTo(PADL, yToPix(y)); ctx.lineTo(w - PADR, yToPix(y)); ctx.stroke();
+    ctx.fillText(String(y), 10, yToPix(y) + 3);
+  }
+  const xt = logAxis
+    ? [2,3,5,10,20,30,50,100,200,300,500].filter(v => v >= vMin && v <= vMax)
+    : niceTicks(vMin, vMax);
+  for (const v of xt) {
+    const px = viewPx(v, w);
+    ctx.beginPath(); ctx.moveTo(px, padT); ctx.lineTo(px, h - padB); ctx.stroke();
+    ctx.fillText(String(v), px - 6, h - padB + 14);
+  }
+
+  const px = x => viewPx(x, w);
+
+  // prime & prime power markers (viewport only, labels density-limited)
+  let lastLabelPx = -Infinity;
+  for (const j of JUMPS) {
+    if (j.x < vMin || j.x > vMax) continue;
+    const X = px(j.x);
+    ctx.strokeStyle = j.isPrime ? css('--prime') : css('--trace-dim');
+    ctx.globalAlpha = j.isPrime ? 0.5 : 0.28;
+    ctx.beginPath(); ctx.moveTo(X, padT); ctx.lineTo(X, h - padB); ctx.stroke();
+    if (j.isPrime && X - lastLabelPx > 22) {
+      ctx.globalAlpha = 0.9;
+      ctx.fillStyle = css('--prime');
+      ctx.fillText(String(j.p), X - 3, padT + 9);
+      ctx.fillStyle = css('--muted');
+      lastLabelPx = X;
+    }
+  }
+  ctx.globalAlpha = 1;
+
+  // true staircase (dashed) within viewport
+  ctx.strokeStyle = css('--truth');
+  ctx.setLineDash([4, 3]);
+  ctx.lineWidth = 1.4;
+  ctx.beginPath();
+  let y0 = truePsi(vMin);
+  ctx.moveTo(px(vMin), yToPix(y0));
+  for (const j of JUMPS) {
+    if (j.x <= vMin) continue;
+    if (j.x > vMax) break;
+    ctx.lineTo(px(j.x), yToPix(y0));
+    y0 += j.h;
+    ctx.lineTo(px(j.x), yToPix(y0));
+  }
+  ctx.lineTo(px(vMax), yToPix(y0));
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  // wave-sum reconstruction over viewport
+  ctx.strokeStyle = css('--trace');
+  ctx.lineWidth = 1.6;
+  ctx.beginPath();
+  const SAMPLES = 2000;
+  let sumErr = 0, cnt = 0;
+  for (let i = 0; i <= SAMPLES; i++) {
+    const x = logAxis
+      ? vMin * Math.pow(vMax / vMin, i / SAMPLES)
+      : vMin + (vMax - vMin) * i / SAMPLES;
+    const y = psiApprox(x, N);
+    const e = y - truePsi(x);
+    sumErr += e * e; cnt++;
+    const X = px(x), Y = yToPix(Math.max(YLO, Math.min(YHI, y)));
+    if (i === 0) ctx.moveTo(X, Y); else ctx.lineTo(X, Y);
+  }
+  ctx.stroke();
+
+  errRead.textContent = 'RMS ERROR: ' + Math.sqrt(sumErr / cnt).toFixed(3) +
+    ' · VIEW ' + vMin.toFixed(0) + '–' + vMax.toFixed(0);
+
+  // probe marker
+  if (probeX >= vMin && probeX <= vMax) {
+    const ppx = px(probeX);
+    ctx.strokeStyle = css('--text');
+    ctx.globalAlpha = 0.85;
+    ctx.setLineDash([1, 3]);
+    ctx.beginPath(); ctx.moveTo(ppx, padT); ctx.lineTo(ppx, h - padB); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = css('--text');
+    ctx.beginPath();
+    ctx.moveTo(ppx, h - padB); ctx.lineTo(ppx - 4, h - padB + 7); ctx.lineTo(ppx + 4, h - padB + 7);
+    ctx.closePath(); ctx.fill();
+    ctx.globalAlpha = 1;
+  }
+}
+
+function drawConv() {
+  const { w, h } = sizeCanvas(convscope, 170);
+  const ctx = convscope.getContext('2d');
+  const padL = 46, padR = 16, padT = 12, padB = 24;
+  ctx.clearRect(0, 0, w, h);
+
+  const trace = convergenceTrace(probeX);
+  const target = truePsi(probeX);
+  document.getElementById('probe-readout').textContent =
+    'x₀ = ' + probeX.toFixed(2) + ' · TRUE ψ = ' + target.toFixed(3) +
+    ' · ψ_N = ' + trace[N].toFixed(3);
+
+  let lo = Math.min(target, ...trace), hi = Math.max(target, ...trace);
+  const span = (hi - lo) || 1; lo -= span * 0.12; hi += span * 0.12;
+  const yToPix = y => padT + (1 - (y - lo) / (hi - lo)) * (h - padT - padB);
+  const nToPix = n => padL + (n / NMAX) * (w - padL - padR);
+
+  // grid
+  ctx.strokeStyle = css('--grid-soft');
+  ctx.font = '9px ui-monospace, monospace';
+  ctx.fillStyle = css('--muted');
+  for (const n of [0, 50, 100, 150, 200, 250, 300]) {
+    ctx.beginPath(); ctx.moveTo(nToPix(n), padT); ctx.lineTo(nToPix(n), h - padB); ctx.stroke();
+    ctx.fillText(String(n), nToPix(n) - 6, h - padB + 14);
+  }
+  ctx.fillText('N →', w - padR - 24, h - 4);
+
+  // target line = true psi at probe
+  ctx.strokeStyle = css('--truth');
+  ctx.setLineDash([4, 3]);
+  ctx.beginPath(); ctx.moveTo(padL, yToPix(target)); ctx.lineTo(w - padR, yToPix(target)); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle = css('--truth');
+  ctx.fillText('TRUE ' + target.toFixed(2), padL + 4, yToPix(target) - 4);
+
+  // convergence trace: past (up to N) bright, future dim
+  for (const seg of [{a: 0, b: N, col: css('--prime'), alpha: 1},
+                     {a: N, b: NMAX, col: css('--muted'), alpha: 0.35}]) {
+    if (seg.b <= seg.a) continue;
+    ctx.strokeStyle = seg.col; ctx.globalAlpha = seg.alpha; ctx.lineWidth = 1.4;
+    ctx.beginPath();
+    for (let n = seg.a; n <= seg.b; n++) {
+      const X = nToPix(n), Y = yToPix(trace[n]);
+      if (n === seg.a) ctx.moveTo(X, Y); else ctx.lineTo(X, Y);
+    }
+    ctx.stroke();
+  }
+  ctx.globalAlpha = 1; ctx.lineWidth = 1;
+
+  // current N cursor
+  ctx.fillStyle = css('--trace');
+  ctx.beginPath(); ctx.arc(nToPix(N), yToPix(trace[N]), 3.5, 0, 2 * Math.PI); ctx.fill();
+  ctx.strokeStyle = css('--trace'); ctx.globalAlpha = 0.4;
+  ctx.beginPath(); ctx.moveTo(nToPix(N), padT); ctx.lineTo(nToPix(N), h - padB); ctx.stroke();
+  ctx.globalAlpha = 1;
+}
+
+function drawReturn() {
+  const { w, h } = sizeCanvas(retscope, 300);
+  const ctx = retscope.getContext('2d');
+  const padL = 56, padR = 16, padT = 14, padB = 30;
+  ctx.clearRect(0, 0, w, h);
+
+  const trace = convergenceTrace(probeX);
+  const target = truePsi(probeX);
+  document.getElementById('ret-readout').textContent =
+    'FIXED POINT: (' + target.toFixed(2) + ', ' + target.toFixed(2) + ')';
+
+  let lo = Math.min(target, ...trace), hi = Math.max(target, ...trace);
+  const span = (hi - lo) || 1; lo -= span * 0.1; hi += span * 0.1;
+
+  // square plot region
+  const plotW = w - padL - padR, plotH = h - padT - padB;
+  const xToP = v => padL + ((v - lo) / (hi - lo)) * plotW;
+  const yToP = v => padT + (1 - (v - lo) / (hi - lo)) * plotH;
+
+  // grid + labels
+  ctx.strokeStyle = css('--grid-soft');
+  ctx.font = '9px ui-monospace, monospace';
+  ctx.fillStyle = css('--muted');
+  const nticks = 5;
+  for (let i = 0; i <= nticks; i++) {
+    const v = lo + (hi - lo) * i / nticks;
+    ctx.beginPath(); ctx.moveTo(xToP(v), padT); ctx.lineTo(xToP(v), h - padB); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(padL, yToP(v)); ctx.lineTo(w - padR, yToP(v)); ctx.stroke();
+    ctx.fillText(v.toFixed(1), xToP(v) - 9, h - padB + 14);
+    ctx.fillText(v.toFixed(1), 18, yToP(v) + 3);
+  }
+  ctx.fillText('ψ(N−1) →', w - padR - 56, h - 4);
+  ctx.save(); ctx.translate(8, padT + 46); ctx.rotate(-Math.PI / 2);
+  ctx.fillText('ψ(N) →', 0, 0); ctx.restore();
+
+  // identity diagonal y = x
+  ctx.strokeStyle = css('--rule');
+  ctx.setLineDash([3, 4]);
+  ctx.beginPath(); ctx.moveTo(xToP(lo), yToP(lo)); ctx.lineTo(xToP(hi), yToP(hi)); ctx.stroke();
+  ctx.setLineDash([]);
+
+  // orbit path: segments (trace[n-1], trace[n]) -> (trace[n], trace[n+1])
+  for (const seg of [{a: 1, b: N, col: css('--prime'), alpha: 0.9},
+                     {a: Math.max(1, N), b: NMAX, col: css('--muted'), alpha: 0.25}]) {
+    if (seg.b <= seg.a) continue;
+    ctx.strokeStyle = seg.col; ctx.globalAlpha = seg.alpha; ctx.lineWidth = 1.1;
+    ctx.beginPath();
+    for (let n = seg.a; n <= seg.b; n++) {
+      const X = xToP(trace[n - 1]), Y = yToP(trace[n]);
+      if (n === seg.a) ctx.moveTo(X, Y); else ctx.lineTo(X, Y);
+    }
+    ctx.stroke();
+    // points
+    ctx.fillStyle = seg.col;
+    for (let n = seg.a; n <= seg.b; n++) {
+      ctx.beginPath(); ctx.arc(xToP(trace[n - 1]), yToP(trace[n]), 1.6, 0, 2 * Math.PI); ctx.fill();
+    }
+  }
+  ctx.globalAlpha = 1; ctx.lineWidth = 1;
+
+  // fixed point = (true, true) on the diagonal
+  ctx.strokeStyle = css('--truth');
+  ctx.beginPath(); ctx.arc(xToP(target), yToP(target), 6, 0, 2 * Math.PI); ctx.stroke();
+  ctx.beginPath(); ctx.arc(xToP(target), yToP(target), 1.5, 0, 2 * Math.PI);
+  ctx.fillStyle = css('--truth'); ctx.fill();
+
+  // current orbit point
+  if (N >= 1) {
+    ctx.fillStyle = css('--trace');
+    ctx.beginPath(); ctx.arc(xToP(trace[N - 1]), yToP(trace[N]), 4, 0, 2 * Math.PI); ctx.fill();
+  }
+}
+
+function drawWave() {
+  const { w, h } = sizeCanvas(wavescope, 150);
+  const ctx = wavescope.getContext('2d');
+  const padL = 46, padR = 16;
+  ctx.clearRect(0, 0, w, h);
+
+  const mid = h / 2;
+  ctx.strokeStyle = css('--grid');
+  ctx.beginPath(); ctx.moveTo(padL, mid); ctx.lineTo(w - padR, mid); ctx.stroke();
+
+  if (N === 0) {
+    ctx.fillStyle = css('--muted');
+    ctx.font = '10px ui-monospace, monospace';
+    ctx.fillText('NO INSTRUMENT SELECTED — ADD A WAVE', padL, mid - 8);
+    gammaRead.textContent = 'γ = —';
+    return;
+  }
+  const k = N - 1;
+  gammaRead.textContent = 'ZERO #' + N + ' · γ = ' + GAMMAS[k].toFixed(4);
+
+  const px = x => viewPx(x, w);
+
+  // envelope +-2sqrt(x)/|rho|, scaled to visible max
+  ctx.strokeStyle = css('--trace-dim');
+  ctx.setLineDash([2, 3]);
+  const AMP = 2 * Math.sqrt(vMax) / MODS[k];
+  const scale = (h / 2 - 12) / AMP;
+  for (const sgn of [1, -1]) {
+    ctx.beginPath();
+    for (let i = 0; i <= 400; i++) {
+      const x = logAxis ? vMin * Math.pow(vMax / vMin, i / 400) : vMin + (vMax - vMin) * i / 400;
+      const env = sgn * 2 * Math.sqrt(x) / MODS[k];
+      const Y = mid - env * scale;
+      if (i === 0) ctx.moveTo(px(x), Y); else ctx.lineTo(px(x), Y);
+    }
+    ctx.stroke();
+  }
+  ctx.setLineDash([]);
+
+  // the wave itself
+  ctx.strokeStyle = css('--prime');
+  ctx.lineWidth = 1.4;
+  ctx.beginPath();
+  const WS = 3000;
+  for (let i = 0; i <= WS; i++) {
+    const x = logAxis ? vMin * Math.pow(vMax / vMin, i / WS) : vMin + (vMax - vMin) * i / WS;
+    const y = waveTerm(x, k);
+    const Y = mid - y * scale;
+    if (i === 0) ctx.moveTo(px(x), Y); else ctx.lineTo(px(x), Y);
+  }
+  ctx.stroke();
+  ctx.lineWidth = 1;
+}
+
+function render() {
+  nVal.textContent = N;
+  slider.value = N;
+  drawScope();
+  drawWave();
+  drawConv();
+  drawReturn();
+}
+
+// ---- viewport interaction: click = probe, drag = pan, wheel = zoom ----
+let dragging = false, dragMoved = false, dragStartPx = 0, dragStartView = null;
+
+function clampView() {
+  const minSpan = 4;
+  if (vMax - vMin < minSpan) { const c = (vMin + vMax) / 2; vMin = c - minSpan / 2; vMax = c + minSpan / 2; }
+  if (vMin < XMIN) { vMax += XMIN - vMin; vMin = XMIN; }
+  if (vMax > XMAX) { vMin -= vMax - XMAX; vMax = XMAX; }
+  vMin = Math.max(XMIN, vMin); vMax = Math.min(XMAX, vMax);
+}
+
+function zoomAt(xCenter, factor) {
+  if (logAxis) {
+    const lc = Math.log(xCenter);
+    let lLo = lc - (lc - Math.log(vMin)) * factor;
+    let lHi = lc + (Math.log(vMax) - lc) * factor;
+    vMin = Math.exp(lLo); vMax = Math.exp(lHi);
+  } else {
+    vMin = xCenter - (xCenter - vMin) * factor;
+    vMax = xCenter + (vMax - xCenter) * factor;
+  }
+  clampView();
+  render();
+}
+
+scope.addEventListener('mousedown', (e) => {
+  dragging = true; dragMoved = false;
+  dragStartPx = e.clientX;
+  dragStartView = { min: vMin, max: vMax };
+});
+window.addEventListener('mousemove', (e) => {
+  if (!dragging) return;
+  const dx = e.clientX - dragStartPx;
+  if (Math.abs(dx) > 3) dragMoved = true;
+  if (!dragMoved) return;
+  const rect = scope.getBoundingClientRect();
+  const plotW = rect.width - PADL - PADR;
+  if (logAxis) {
+    const lSpan = Math.log(dragStartView.max) - Math.log(dragStartView.min);
+    const shift = -dx / plotW * lSpan;
+    vMin = Math.exp(Math.log(dragStartView.min) + shift);
+    vMax = Math.exp(Math.log(dragStartView.max) + shift);
+  } else {
+    const span = dragStartView.max - dragStartView.min;
+    const shift = -dx / plotW * span;
+    vMin = dragStartView.min + shift;
+    vMax = dragStartView.max + shift;
+  }
+  clampView();
+  render();
+});
+window.addEventListener('mouseup', (e) => {
+  if (dragging && !dragMoved) {
+    const rect = scope.getBoundingClientRect();
+    probeX = pxToX(e.clientX - rect.left, rect.width);
+    for (const j of JUMPS) if (Math.abs(probeX - j.x) < 0.05) probeX = j.x + 0.06;
+    render();
+  }
+  dragging = false;
+});
+scope.addEventListener('wheel', (e) => {
+  e.preventDefault();
+  const rect = scope.getBoundingClientRect();
+  const xc = pxToX(e.clientX - rect.left, rect.width);
+  zoomAt(xc, e.deltaY > 0 ? 1.25 : 0.8);
+}, { passive: false });
+
+// touch: pinch zoom + one-finger pan
+let touchState = null;
+scope.addEventListener('touchstart', (e) => {
+  if (e.touches.length === 2) {
+    touchState = { d: Math.abs(e.touches[0].clientX - e.touches[1].clientX), min: vMin, max: vMax };
+  } else if (e.touches.length === 1) {
+    dragging = true; dragMoved = false;
+    dragStartPx = e.touches[0].clientX;
+    dragStartView = { min: vMin, max: vMax };
+  }
+}, { passive: true });
+scope.addEventListener('touchmove', (e) => {
+  if (e.touches.length === 2 && touchState) {
+    const d = Math.abs(e.touches[0].clientX - e.touches[1].clientX);
+    const f = touchState.d / Math.max(d, 10);
+    const rect = scope.getBoundingClientRect();
+    const cx = pxToX((e.touches[0].clientX + e.touches[1].clientX) / 2 - rect.left, rect.width);
+    vMin = touchState.min; vMax = touchState.max;
+    zoomAt(cx, f);
+  } else if (e.touches.length === 1 && dragging) {
+    const dx = e.touches[0].clientX - dragStartPx;
+    if (Math.abs(dx) > 3) dragMoved = true;
+    if (!dragMoved) return;
+    const rect = scope.getBoundingClientRect();
+    const plotW = rect.width - PADL - PADR;
+    const span = dragStartView.max - dragStartView.min;
+    vMin = dragStartView.min - dx / plotW * span;
+    vMax = dragStartView.max - dx / plotW * span;
+    clampView(); render();
+  }
+}, { passive: true });
+scope.addEventListener('touchend', () => { dragging = false; touchState = null; });
+
+document.getElementById('zoom-in').addEventListener('click', () => zoomAt((vMin + vMax) / 2, 0.6));
+document.getElementById('zoom-out').addEventListener('click', () => zoomAt((vMin + vMax) / 2, 1.7));
+document.getElementById('zoom-reset').addEventListener('click', () => { vMin = XMIN; vMax = XMAX; render(); });
+document.getElementById('zoom-probe').addEventListener('click', () => {
+  // center on probe at a span of ~4 average gaps around it: span = 8*ln(probe)
+  const span = Math.max(8 * Math.log(probeX), 10);
+  vMin = probeX - span / 2; vMax = probeX + span / 2;
+  clampView(); render();
+});
+scope.style.cursor = 'crosshair';
+
+slider.addEventListener('input', () => { N = +slider.value; playing = false; playBtn.textContent = '▶ RESOLVE'; render(); });
+
+axisBtn.addEventListener('click', () => {
+  logAxis = !logAxis;
+  axisBtn.classList.toggle('on', logAxis);
+  render();
+});
+
+let timer = null;
+playBtn.addEventListener('click', () => {
+  if (playing) { playing = false; playBtn.textContent = '▶ RESOLVE'; return; }
+  if (N >= NMAX) N = 0;
+  playing = true; playBtn.textContent = '❚❚ HOLD';
+  const step = () => {
+    if (!playing) return;
+    if (N < NMAX) { N++; render(); setTimeout(step, N < 15 ? 340 : N < 100 ? 80 : 30); }
+    else { playing = false; playBtn.textContent = '▶ RESOLVE'; }
+  };
+  step();
+});
+
+window.addEventListener('resize', render);
+render();
+</script>
+<script>
+(function(){
+  function report(){ try{ parent.postMessage({t:"po-h", h: Math.ceil(document.documentElement.getBoundingClientRect().height)}, "*"); }catch(e){} }
+  window.addEventListener("load", report);
+  window.addEventListener("resize", report);
+  if (window.ResizeObserver){ try{ new ResizeObserver(report).observe(document.body); }catch(e){} }
+  setInterval(report, 1500);
+})();
+</script>
+</body>
+</html>
