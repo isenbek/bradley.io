@@ -7258,3 +7258,12 @@ html[data-theme="dark"]:has(.v3) {
   background: #0e1522; border: 1px solid #1b3048; border-radius: var(--v3-r-md);
   padding: 14px 18px; margin: 0 0 16px; overflow-x: auto; white-space: nowrap;
 }
+
+/* Homepage hero: subtle local (West Michigan) signal line. */
+.v3-hero__local {
+  margin-top: 16px;
+  font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
+  font-size: 12.5px;
+  letter-spacing: 0.02em;
+  color: var(--v3-slate);
+}

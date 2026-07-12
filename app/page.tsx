@@ -65,6 +65,13 @@ export default async function V3Home() {
             </div>
           </V3Reveal>
 
+          <V3Reveal delay={140}>
+            <p className="v3-hero__local">
+              Based in Forest Hills, Michigan · working across Grand Rapids &amp; Kent County,
+              on-site or remote.
+            </p>
+          </V3Reveal>
+
           <V3Reveal delay={220}>
             <div style={{ marginTop: 36 }}>
               <HotbitsHero />

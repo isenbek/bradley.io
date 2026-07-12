@@ -202,9 +202,14 @@ export default function RootLayout({
                   ],
                   address: {
                     "@type": "PostalAddress",
-                    addressLocality: "Grand Rapids",
+                    addressLocality: "Forest Hills",
                     addressRegion: "MI",
                     addressCountry: "US",
+                  },
+                  homeLocation: {
+                    "@type": "Place",
+                    name: "Forest Hills, Michigan",
+                    geo: { "@type": "GeoCoordinates", latitude: 42.958, longitude: -85.49 },
                   },
                   image: "https://bradley.io/og-image.png",
                 },
@@ -216,7 +221,14 @@ export default function RootLayout({
                   provider: { "@id": "https://bradley.io/#person" },
                   description:
                     "Consulting in data engineering, distributed systems, AI/ML integration, and edge computing.",
-                  areaServed: "US",
+                  areaServed: [
+                    { "@type": "AdministrativeArea", name: "Kent County, Michigan" },
+                    { "@type": "City", name: "Grand Rapids, Michigan" },
+                    { "@type": "City", name: "Forest Hills, Michigan" },
+                    { "@type": "City", name: "Ada, Michigan" },
+                    { "@type": "City", name: "Cascade, Michigan" },
+                    { "@type": "City", name: "Kentwood, Michigan" },
+                  ],
                   serviceType: [
                     "Data Engineering",
                     "Distributed Systems Architecture",
@@ -226,10 +238,11 @@ export default function RootLayout({
                   ],
                   address: {
                     "@type": "PostalAddress",
-                    addressLocality: "Grand Rapids",
+                    addressLocality: "Forest Hills",
                     addressRegion: "MI",
                     addressCountry: "US",
                   },
+                  geo: { "@type": "GeoCoordinates", latitude: 42.958, longitude: -85.49 },
                 },
                 {
                   "@type": "WebSite",
