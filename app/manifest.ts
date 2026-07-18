@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next"
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Bradley Isenbek — bradley.io",
+    name: "Bradley Isenbek · bradley.io",
     short_name: "bradley.io",
     description:
       "Hardware hacker, data architect, and AI pilot. Building at the intersection of enterprise scale and maker culture.",

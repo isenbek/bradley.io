@@ -114,7 +114,7 @@ quickcam gain   255 / 255          maxed → amplifying its own room noise`}</Co
         </p>
         <Code cap="the two failure modes">{`cause                       nature                         fix
 ─────────────────────────   ────────────────────────────   ───────────────────────
-auto-exposure / white-bal   photometric — the scene         lock it at the source
+auto-exposure / white-bal   photometric: the scene         lock it at the source
 re-metering (a light, a       didn't move, the camera         (camera controls)
 bright shirt walks in)        re-mapped brightness
 ─────────────────────────   ────────────────────────────   ───────────────────────
@@ -139,7 +139,7 @@ white_balance_automatic    → off
 exposure_dynamic_framerate → off
 focus_automatic_continuous → off
 then PIN exposure / white-balance / focus / gain to whatever
-auto had just chosen — so the picture doesn't visibly jump,
+auto had just chosen, so the picture doesn't visibly jump,
 it just stops hunting.`}</Code>
         <p className="v3-prose">
           The trick in that last line matters: we read what auto-exposure currently landed on and write

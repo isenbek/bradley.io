@@ -3550,9 +3550,15 @@ html[data-theme="dark"]:has(.v3) {
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: 6px 16px;
+  gap: 6px 10px;
   margin-bottom: 16px;
 }
+/* An icon + heading pair must read as one lockup. Without this the
+   space-between pushes the heading away from its icon and the pair looks
+   misaligned; letting the heading absorb the slack keeps the icon tight to
+   the text while any trailing __meta still sits hard right. */
+.v3-cardhead > h2 { margin-right: auto; }
+.v3-cardhead > svg { flex: none; }
 .v3-cardhead__meta {
   font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
   font-size: 11px;
@@ -7236,6 +7242,59 @@ html[data-theme="dark"]:has(.v3) {
   font-weight: 700; font-size: 18px; letter-spacing: -0.02em; color: var(--v3-charcoal); margin: 6px 0 8px;
 }
 .v3-po-card p { margin: 0; font-size: 14.5px; line-height: 1.6; color: var(--v3-slate); }
+/* PRIMALITY suite — three related instruments bound into one panel so the
+   homepage reads them as a set, not three unrelated promos. */
+.v3-suite {
+  margin-top: 14px;
+  border: 1px solid color-mix(in srgb, var(--v3-blue-500) 22%, var(--v3-line));
+  border-top: 2px solid var(--v3-blue-400);
+  border-radius: var(--v3-r-lg);
+  background: var(--v3-white);
+  box-shadow: var(--v3-sh-1);
+  overflow: hidden;
+}
+.v3-suite__head {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  flex-wrap: wrap;
+  padding: 15px 20px 14px;
+  border-bottom: 1px solid var(--v3-line);
+  background: linear-gradient(100deg, var(--v3-blue-50), var(--v3-white) 72%);
+}
+.v3-suite__badge {
+  flex: none;
+  font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  color: var(--v3-blue-ink);
+  border: 1px solid color-mix(in srgb, var(--v3-blue-400) 34%, var(--v3-line));
+  border-radius: 999px;
+  padding: 3px 10px;
+}
+.v3-suite__headtext { display: grid; gap: 3px; min-width: 0; }
+.v3-suite__title {
+  font-family: var(--font-v3-display), "Bricolage Grotesque", sans-serif;
+  font-weight: 700; font-size: 17px; letter-spacing: -0.02em; color: var(--v3-charcoal);
+}
+.v3-suite__sub { font-size: 13.5px; line-height: 1.55; color: var(--v3-slate); max-width: 62ch; }
+/* Rows shed their standalone card chrome and become parts of the panel. */
+.v3-suite__row.v3-air-promo {
+  margin: 0;
+  border: 0;
+  border-bottom: 1px solid var(--v3-line);
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+}
+.v3-suite__row.v3-air-promo:last-child { border-bottom: 0; }
+.v3-suite__row.v3-air-promo:hover {
+  transform: none;
+  box-shadow: none;
+  background: var(--v3-blue-50);
+}
+@media (max-width: 560px) { .v3-suite__head { padding: 14px 16px 12px; } }
+
 /* Full-viewport instruments (the atlas) size to the frame, not to a reported
    document height — give the iframe a viewport-relative box instead. */
 .v3-po-embed--fixed iframe { height: min(80vh, 800px); min-height: 500px; }

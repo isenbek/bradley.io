@@ -63,7 +63,7 @@ footer{color:var(--dim);font-size:10px;letter-spacing:.06em;margin-top:8px;line-
 <section class="panel">
   <div class="phead">
     <span class="chan">CH·A</span>
-    <span class="ptitle">COVERAGE ENGINE — laws L1 / L2</span>
+    <span class="ptitle">COVERAGE ENGINE · laws L1 / L2</span>
   </div>
   <div class="controls">
     <span class="lbl">offsets</span>
@@ -92,7 +92,7 @@ footer{color:var(--dim);font-size:10px;letter-spacing:.06em;margin-top:8px;line-
 <section class="panel">
   <div class="phead">
     <span class="chan">CH·B1</span>
-    <span class="ptitle">CHEBYSHEV RACE — non-residues vs residues</span>
+    <span class="ptitle">CHEBYSHEV RACE · non-residues vs residues</span>
   </div>
   <div class="controls">
     <span class="lbl">modulus</span>
@@ -103,7 +103,7 @@ footer{color:var(--dim);font-size:10px;letter-spacing:.06em;margin-top:8px;line-
   <div id="statB1" class="stat"></div>
   <div class="note">
     Cyan band = π(x; q, nonres) − π(x; q, res). Amber dash = <b>½·π(√x)</b>, the prime-power
-    mass secretly parked in the residue class (every odd p² ≡ 1). The race hugs the mass curve —
+    mass secretly parked in the residue class (every odd p² ≡ 1). The race hugs the mass curve:
     the bias <b>is</b> the ψ→π correction, i.e. the wavelets between staircase steps. Magenta =
     residual after removing it: pure L-function zero music around 0. Amber ticks mark lead
     inversions (first at x = 26,861 for mod 4).
@@ -114,7 +114,7 @@ footer{color:var(--dim);font-size:10px;letter-spacing:.06em;margin-top:8px;line-
 <section class="panel">
   <div class="phead">
     <span class="chan">CH·B2</span>
-    <span class="ptitle">GAP TRANSITION MATRIX — consecutive-prime residue memory</span>
+    <span class="ptitle">GAP TRANSITION MATRIX · consecutive-prime residue memory</span>
   </div>
   <div class="controls">
     <span class="lbl">modulus</span>
@@ -134,7 +134,7 @@ footer{color:var(--dim);font-size:10px;letter-spacing:.06em;margin-top:8px;line-
     memoryless fair die reads flat <b>1/φ(q)</b> everywhere (printed under each cell as Δ).
     The dark diagonal = primes avoid repeating their residue; mechanism is gap economics
     (returning home costs a gap ≡ 0 mod q, fresh classes sit at gaps 2, 6, 8…). Invariance
-    knob: switch modulus — the diagonal stripe survives, so it's residue structure, not a
+    knob: switch modulus, and the diagonal stripe survives, so it's residue structure, not a
     base-10 costume. Watch it fade (glacially) in the upper windows: real, and converging to
     fair like a coastline erodes. This matrix is the GAPFORMER probe target.
   </div>
@@ -258,16 +258,16 @@ function runA(raw){
   const st=computeA(raw);
   const lamp=document.getElementById('lamp'), v=document.getElementById('verdict'),
         stat=document.getElementById('statA');
-  if(!st){ v.innerHTML='<span class="v-kill">parse error — comma-separated offsets 0–200</span>';
+  if(!st){ v.innerHTML='<span class="v-kill">parse error: comma-separated offsets 0–200</span>';
     lamp.className='lamp'; return; }
   Astate=st;
   if (st.killer){
     lamp.className='lamp kill';
-    v.innerHTML='<span class="v-kill">KILLED</span> — full coverage at p = '+st.killer+
+    v.innerHTML='<span class="v-kill">KILLED</span>: full coverage at p = '+st.killer+
       ' → at most one occurrence, ever (L1 fails / L2 fires)';
   } else {
     lamp.className='lamp live';
-    v.innerHTML='<span class="v-live">LIVES</span> — escapes every residue row → believed infinite (Hardy–Littlewood)';
+    v.innerHTML='<span class="v-live">LIVES</span>: escapes every residue row → believed infinite (Hardy–Littlewood)';
   }
   stat.innerHTML='pattern n + {'+st.off.join(', ')+'} · occurrences ≤ 2M: <em>'+
     st.occ.length.toLocaleString()+'</em> · singular series S = <em>'+st.S.toPrecision(4)+'</em>'+
@@ -344,7 +344,7 @@ function drawB1(){
   stat.innerHTML = st.flips.length
     ? 'lead inversions in range: <em>'+st.flips.length+'</em> · first at x ≈ <em>'+
       st.flips[0][0].toLocaleString()+'</em>'
-    : 'no strict lead inversion in range — mod 3\u2019s first is out at x \u2248 6.1\u00d710\u00b9\u00b9 (Bays\u2013Hudson); Littlewood guarantees infinitely many';
+    : 'no strict lead inversion in range · mod 3\u2019s first is out at x \u2248 6.1\u00d710\u00b9\u00b9 (Bays\u2013Hudson); Littlewood guarantees infinitely many';
 }
 
 /* ============ CH·B2 ============ */
@@ -395,7 +395,7 @@ function drawB2(){
     total.toLocaleString(), left, top+m*cs+18);
   document.getElementById('statB2').innerHTML =
     'mod <em>'+q+'</em> · window x ∈ [<em>'+fmt(Math.round(lo))+'</em>, 2M] · diagonal outlined '+
-    '(self-transition — suppressed everywhere it can be measured)';
+    '(self-transition, suppressed everywhere it can be measured)';
 }
 
 /* ============ wiring ============ */

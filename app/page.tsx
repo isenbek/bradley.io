@@ -1,7 +1,8 @@
-import { ArrowRight, Bot, Atom, Droplets, Sigma, Microscope, Map } from "lucide-react"
+import { ArrowRight, Bot, Atom, Droplets } from "lucide-react"
 import Link from "next/link"
 import { ActivityPulse } from "@/components/v3/ActivityPulse"
 import { ActivityFeedList } from "@/components/v3/ActivityFeedList"
+import { PrimalitySuite } from "@/components/home/PrimalitySuite"
 import { HotbitsHero } from "@/components/home/HotbitsHero"
 import { AirspacePromo } from "@/components/home/AirspacePromo"
 import { GpsPromo } from "@/components/home/GpsPromo"
@@ -58,9 +59,6 @@ export default async function V3Home() {
             <div className="v3-hero__meta">
               <Link href="/projects" className="v3-btn v3-btn--primary">
                 See the work →
-              </Link>
-              <Link href="/services" className="v3-btn v3-btn--ghost">
-                Hire me
               </Link>
             </div>
           </V3Reveal>
@@ -142,51 +140,7 @@ export default async function V3Home() {
           </V3Reveal>
 
           <V3Reveal delay={259}>
-            <Link href="/projects/prime-orchestra" className="v3-air-promo" style={{ marginTop: 14 }}>
-              <span className="v3-air-promo__ico"><Sigma size={20} strokeWidth={2.2} /></span>
-              <span className="v3-air-promo__body">
-                <span className="v3-air-promo__eyebrow">project · frontier math</span>
-                <span className="v3-air-promo__title">Prime Orchestra: the primes, played by zeta&rsquo;s zeros</span>
-                <span className="v3-air-promo__blurb">
-                  An interactive instrument that rebuilds the prime staircase from the nontrivial
-                  zeros of the Riemann zeta function, one wave at a time. Drag the zeros in and watch
-                  the primes resolve.
-                </span>
-              </span>
-              <span className="v3-air-promo__right"><ArrowRight className="v3-air-promo__arrow" size={18} strokeWidth={2.4} /></span>
-            </Link>
-          </V3Reveal>
-
-          <V3Reveal delay={260}>
-            <Link href="/projects/prime-atlas" className="v3-air-promo" style={{ marginTop: 14 }}>
-              <span className="v3-air-promo__ico"><Map size={20} strokeWidth={2.2} /></span>
-              <span className="v3-air-promo__body">
-                <span className="v3-air-promo__eyebrow">project · frontier math</span>
-                <span className="v3-air-promo__title">Primality Atlas: a terrain map of the territory</span>
-                <span className="v3-air-promo__blurb">
-                  Twenty-nine landmarks from the Euler spring to the parity cliff, drawn as ground
-                  you can walk: what is proven, what is merely believed, what nobody knows, and what
-                  has been proven impassable.
-                </span>
-              </span>
-              <span className="v3-air-promo__right"><ArrowRight className="v3-air-promo__arrow" size={18} strokeWidth={2.4} /></span>
-            </Link>
-          </V3Reveal>
-
-          <V3Reveal delay={260}>
-            <Link href="/projects/prime-zoo" className="v3-air-promo" style={{ marginTop: 14 }}>
-              <span className="v3-air-promo__ico"><Microscope size={20} strokeWidth={2.2} /></span>
-              <span className="v3-air-promo__body">
-                <span className="v3-air-promo__eyebrow">project · frontier math</span>
-                <span className="v3-air-promo__title">Primality Zoo: the structure hiding in the primes</span>
-                <span className="v3-air-promo__blurb">
-                  Three field instruments over a live two-million sieve. Test whether a prime
-                  constellation can exist at all, watch the residue-class race, and read the matrix
-                  where consecutive primes avoid repeating themselves.
-                </span>
-              </span>
-              <span className="v3-air-promo__right"><ArrowRight className="v3-air-promo__arrow" size={18} strokeWidth={2.4} /></span>
-            </Link>
+            <PrimalitySuite />
           </V3Reveal>
 
           <V3Reveal delay={260}>

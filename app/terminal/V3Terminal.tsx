@@ -33,7 +33,7 @@ function Help() {
         {HELP_LINES.map(([cmd, desc]) => (
           <div key={cmd}>
             <span className="v3-term__warn">{cmd.padEnd(12)}</span>
-            <span className="v3-term__mute">— {desc}</span>
+            <span className="v3-term__mute">· {desc}</span>
           </div>
         ))}
       </div>

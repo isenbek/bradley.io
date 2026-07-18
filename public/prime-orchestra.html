@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PRIME ORCHESTRA — Explicit Formula Instrument</title>
+<title>PRIME ORCHESTRA · Explicit Formula Instrument</title>
 <style>
   :root {
     --bg: #0A1420;
@@ -159,7 +159,7 @@
 
   <div class="scope-block">
     <div class="scope-head">
-      <span>CH·1 — RECONSTRUCTION vs TRUE PRIME STAIRCASE ψ(x)</span>
+      <span>CH·1 · RECONSTRUCTION vs TRUE PRIME STAIRCASE ψ(x)</span>
       <span class="readout" id="err-readout">RMS ERROR: —</span>
     </div>
     <canvas id="scope" height="380"></canvas>
@@ -179,7 +179,7 @@
 
   <div class="scope-block" style="border-top:none;">
     <div class="scope-head">
-      <span>CH·2 — ISOLATED WAVE (LAST INSTRUMENT ADDED)</span>
+      <span>CH·2 · ISOLATED WAVE (LAST INSTRUMENT ADDED)</span>
       <span class="readout" id="gamma-readout">γ = —</span>
     </div>
     <canvas id="wavescope" height="150"></canvas>
@@ -187,7 +187,7 @@
 
   <div class="scope-block" style="border-top:none;">
     <div class="scope-head">
-      <span>CH·3 — CONVERGENCE TRACE · ψ<sub>N</sub>(x₀) vs WAVE COUNT N · CLICK CH·1 TO SET PROBE</span>
+      <span>CH·3 · CONVERGENCE TRACE · ψ<sub>N</sub>(x₀) vs WAVE COUNT N · CLICK CH·1 TO SET PROBE</span>
       <span class="readout" id="probe-readout">x₀ = —</span>
     </div>
     <canvas id="convscope" height="170"></canvas>
@@ -195,7 +195,7 @@
 
   <div class="scope-block" style="border-top:none;">
     <div class="scope-head">
-      <span>CH·4 — RETURN MAP · (ψ<sub>N−1</sub>, ψ<sub>N</sub>) · LAG-1 EMBEDDING AT PROBE</span>
+      <span>CH·4 · RETURN MAP · (ψ<sub>N−1</sub>, ψ<sub>N</sub>) · LAG-1 EMBEDDING AT PROBE</span>
       <span class="readout" id="ret-readout">FIXED POINT: —</span>
     </div>
     <canvas id="retscope" height="300"></canvas>
@@ -209,25 +209,25 @@
   </div>
 
   <footer>
-    <span class="f">OPERATION —</span> Drag the slider (or press RESOLVE) to add zeta-zero waves to the smooth
-    axis one instrument at a time. Each wave is 2√x·cos(γ·log x − α)/|ρ| — featureless alone. Watch the
+    <span class="f">OPERATION ·</span> Drag the slider (or press RESOLVE) to add zeta-zero waves to the smooth
+    axis one instrument at a time. Each wave is 2√x·cos(γ·log x − α)/|ρ|, featureless alone. Watch the
     interference sharpen into vertical jumps at exactly the primes and prime powers (each jump has height
-    log p). <span class="f">CH·2</span> shows the single wave you just added: a stretching chirp in linear x —
+    log p). <span class="f">CH·2</span> shows the single wave you just added: a stretching chirp in linear x;
     hit <span class="f">LOG X</span> and it snaps into a pure sinusoid, the primes' native coordinate system.
     Staircase teeth at 2, 3, 5, 7, 11… emerge from waves that individually know nothing.
-    <span class="f">CH·3</span> tracks the reconstruction's y-value at one probe point x₀ (crosshair — click
+    <span class="f">CH·3</span> tracks the reconstruction's y-value at one probe point x₀ (crosshair, click
     anywhere on CH·1 to move it) as a function of wave count N. The amber trace is the partial sum hunting
     the true value (dashed); the dim tail is its future. Probe mid-gap and it settles fast; probe just next
-    to a prime and watch it ring — each wave overshoots and corrects, the Gibbs struggle at a discontinuity
+    to a prime and watch it ring: each wave overshoots and corrects, the Gibbs struggle at a discontinuity
     rendered as a time series. <span class="f">CH·4</span> replots the same trace as a lag-1 return map:
     each point is (ψ<sub>N−1</sub>, ψ<sub>N</sub>). The dashed diagonal is y = x; the circled dot is the
-    fixed point (true ψ, true ψ). Convergence appears as an orbit spiraling into the fixed point — points
+    fixed point (true ψ, true ψ). Convergence appears as an orbit spiraling into the fixed point: points
     hugging the diagonal mean consecutive sums barely changed, wide loops mean a big-amplitude wave just
     joined. Move the probe and watch the orbit's geometry change character.
-    <span class="f">VIEWPORT —</span> scroll-wheel or pinch to zoom (centered on cursor), drag to pan,
+    <span class="f">VIEWPORT ·</span> scroll-wheel or pinch to zoom (centered on cursor), drag to pan,
     single click/tap sets the probe. <span class="f">⌖ PROBE</span> zooms to a window of ~4 average
-    prime gaps (8·ln x₀) around the probe — the staircase's natural local scale. Note what happens past
-    x ≈ 300 at full wave count: the reconstruction blurs. At N=100 the top instrument is γ ≈ 236.5 — it resolves log-space detail no finer than 2π/γ, blurring past x ≈ 300. Push N toward 270 (γ₂₇₀ ≈ 500.3) and watch the far staircase sharpen — the zero-counting formula predicts ~270 instruments to articulate primes to 500, and the slider now lets you verify it. More primes, more instruments, forever.
+    prime gaps (8·ln x₀) around the probe: the staircase's natural local scale. Note what happens past
+    x ≈ 300 at full wave count: the reconstruction blurs. At N=100 the top instrument is γ ≈ 236.5, and it resolves log-space detail no finer than 2π/γ, blurring past x ≈ 300. Push N toward 270 (γ₂₇₀ ≈ 500.3) and watch the far staircase sharpen: the zero-counting formula predicts ~270 instruments to articulate primes to 500, and the slider now lets you verify it. More primes, more instruments, forever.
   </footer>
 
 </div>
@@ -635,7 +635,7 @@ function drawWave() {
   if (N === 0) {
     ctx.fillStyle = css('--muted');
     ctx.font = '10px ui-monospace, monospace';
-    ctx.fillText('NO INSTRUMENT SELECTED — ADD A WAVE', padL, mid - 8);
+    ctx.fillText('NO INSTRUMENT SELECTED · ADD A WAVE', padL, mid - 8);
     gammaRead.textContent = 'γ = —';
     return;
   }
