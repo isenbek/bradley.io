@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PRIMALITY ZOO · FIELD INSTRUMENTS</title>
+<style>
+:root{
+  --bg:#07090c; --panel:#0b1016; --line:#182230; --ink:#c8d6d4; --dim:#5b6d74;
+  --cyan:#3fe0d0; --amber:#ffb454; --kill:#ff4f7b; --live:#6fe08f; --blue:#4f8fd8;
+  --mono:"SF Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--mono);font-size:13px;
+  padding:14px 12px 60px;max-width:980px;margin:0 auto;-webkit-font-smoothing:antialiased}
+header{margin-bottom:18px;border-bottom:1px solid var(--line);padding-bottom:12px}
+h1{font-size:15px;letter-spacing:.28em;font-weight:600;color:var(--cyan)}
+h1 span{color:var(--dim);font-weight:400}
+.sub{color:var(--dim);font-size:11px;margin-top:5px;letter-spacing:.06em}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:6px;
+  margin-bottom:16px;padding:12px 12px 14px}
+.phead{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:10px}
+.chan{color:var(--amber);font-size:11px;letter-spacing:.18em;border:1px solid var(--amber);
+  border-radius:3px;padding:2px 7px}
+.ptitle{font-size:12px;letter-spacing:.1em;color:var(--ink)}
+.note{color:var(--dim);font-size:11px;line-height:1.55;margin-top:9px}
+.note b{color:var(--ink);font-weight:600}
+canvas{display:block;width:100%;background:#080c10;border:1px solid var(--line);
+  border-radius:4px;margin-top:8px}
+.controls{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:8px}
+.btn{background:#0e1620;border:1px solid var(--line);color:var(--dim);font-family:var(--mono);
+  font-size:11px;padding:5px 10px;border-radius:4px;cursor:pointer;letter-spacing:.05em}
+.btn:hover{color:var(--ink);border-color:var(--dim)}
+.btn.on{color:var(--cyan);border-color:var(--cyan)}
+.btn:focus-visible{outline:2px solid var(--cyan);outline-offset:1px}
+input[type=text]{background:#0e1620;border:1px solid var(--line);color:var(--cyan);
+  font-family:var(--mono);font-size:13px;padding:6px 9px;border-radius:4px;width:180px;
+  letter-spacing:.08em}
+input[type=text]:focus-visible{outline:2px solid var(--cyan);outline-offset:1px}
+.lampline{display:flex;align-items:center;gap:9px;margin-top:10px}
+.lamp{width:13px;height:13px;border-radius:50%;flex:none;background:#222;
+  box-shadow:0 0 0 2px #10161d}
+.lamp.live{background:var(--live);box-shadow:0 0 10px 1px rgba(111,224,143,.7)}
+.lamp.kill{background:var(--kill);box-shadow:0 0 10px 1px rgba(255,79,123,.7)}
+.verdict{font-size:12px;letter-spacing:.08em}
+.verdict .v-live{color:var(--live)} .verdict .v-kill{color:var(--kill)}
+.stat{color:var(--dim);font-size:11px;margin-top:4px}
+.stat em{color:var(--amber);font-style:normal}
+.lbl{color:var(--dim);font-size:11px;letter-spacing:.08em;margin-right:2px}
+footer{color:var(--dim);font-size:10px;letter-spacing:.06em;margin-top:8px;line-height:1.6}
+@media (prefers-reduced-motion: no-preference){
+  .lamp.live,.lamp.kill{transition:box-shadow .25s ease}
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>PRIMALITY ZOO <span>·</span> FIELD INSTRUMENTS</h1>
+  <div class="sub">sieve range 2 … 2,000,000 · wings A/B live · each channel carries its own hallucination guard (independent prediction overlay)</div>
+</header>
+
+<!-- ============ CH·A COVERAGE ENGINE ============ -->
+<section class="panel">
+  <div class="phead">
+    <span class="chan">CH·A</span>
+    <span class="ptitle">COVERAGE ENGINE — laws L1 / L2</span>
+  </div>
+  <div class="controls">
+    <span class="lbl">offsets</span>
+    <input id="offIn" type="text" value="0,2,6,8" inputmode="numeric" aria-label="gap pattern offsets">
+    <button class="btn" data-off="0,2">twin</button>
+    <button class="btn" data-off="0,2,4">3-5-7 type</button>
+    <button class="btn" data-off="0,2,6">triple a</button>
+    <button class="btn" data-off="0,4,6">triple b</button>
+    <button class="btn on" data-off="0,2,6,8">quad</button>
+    <button class="btn" data-off="0,2,4,6,8">penta trap</button>
+  </div>
+  <div class="lampline"><div id="lamp" class="lamp"></div><div id="verdict" class="verdict"></div></div>
+  <div id="statA" class="stat"></div>
+  <canvas id="covC" style="height:210px"></canvas>
+  <canvas id="chartA" style="height:230px"></canvas>
+  <div class="note">
+    Residue rows: cells the pattern occupies mod p light cyan. Fill an entire row → a full
+    residue class is forced composite at every position → <b>KILLED</b> (one stray occurrence
+    allowed if the covering prime is itself in the pattern). Escape every row → <b>LIVES</b>,
+    and Hardy–Littlewood predicts the count (amber curve = S·∫dx/ln<sup>k</sup>x). Guard: if the
+    white staircase tracks the amber curve, your eyes are seeing real structure.
+  </div>
+</section>
+
+<!-- ============ CH·B1 RESIDUE RACE ============ -->
+<section class="panel">
+  <div class="phead">
+    <span class="chan">CH·B1</span>
+    <span class="ptitle">CHEBYSHEV RACE — non-residues vs residues</span>
+  </div>
+  <div class="controls">
+    <span class="lbl">modulus</span>
+    <button class="btn on" data-q="4">mod 4 · (3) − (1)</button>
+    <button class="btn" data-q="3">mod 3 · (2) − (1)</button>
+  </div>
+  <canvas id="chartB1" style="height:250px"></canvas>
+  <div id="statB1" class="stat"></div>
+  <div class="note">
+    Cyan band = π(x; q, nonres) − π(x; q, res). Amber dash = <b>½·π(√x)</b>, the prime-power
+    mass secretly parked in the residue class (every odd p² ≡ 1). The race hugs the mass curve —
+    the bias <b>is</b> the ψ→π correction, i.e. the wavelets between staircase steps. Magenta =
+    residual after removing it: pure L-function zero music around 0. Amber ticks mark lead
+    inversions (first at x = 26,861 for mod 4).
+  </div>
+</section>
+
+<!-- ============ CH·B2 GAP TRANSITION MATRIX ============ -->
+<section class="panel">
+  <div class="phead">
+    <span class="chan">CH·B2</span>
+    <span class="ptitle">GAP TRANSITION MATRIX — consecutive-prime residue memory</span>
+  </div>
+  <div class="controls">
+    <span class="lbl">modulus</span>
+    <button class="btn on" data-m="10">10 (last digit)</button>
+    <button class="btn" data-m="8">8</button>
+    <button class="btn" data-m="12">12</button>
+    <button class="btn" data-m="3">3</button>
+    <span class="lbl" style="margin-left:10px">window</span>
+    <button class="btn on" data-w="0">full</button>
+    <button class="btn" data-w="0.5">upper half</button>
+    <button class="btn" data-w="0.9">top 10%</button>
+  </div>
+  <canvas id="chartB2" style="height:300px"></canvas>
+  <div id="statB2" class="stat"></div>
+  <div class="note">
+    Row = residue of prime pₙ, column = residue of pₙ₊₁; cell = row-percentage. Guard: a
+    memoryless fair die reads flat <b>1/φ(q)</b> everywhere (printed under each cell as Δ).
+    The dark diagonal = primes avoid repeating their residue; mechanism is gap economics
+    (returning home costs a gap ≡ 0 mod q, fresh classes sit at gaps 2, 6, 8…). Invariance
+    knob: switch modulus — the diagonal stripe survives, so it's residue structure, not a
+    base-10 costume. Watch it fade (glacially) in the upper windows: real, and converging to
+    fair like a coastline erodes. This matrix is the GAPFORMER probe target.
+  </div>
+</section>
+
+<footer>
+PRIMALITY · zoo wings A (constellations) + B (bias hall) · guards: H-L singular series /
+√x prime-power mass / flat 1/φ(q) · CH·μ (Mertens walk) reserved for the orchestra
+</footer>
+
+<script>
+"use strict";
+/* ============ sieve ============ */
+const N = 2000000;
+const sieve = new Uint8Array(N+1); sieve.fill(1); sieve[0]=0; sieve[1]=0;
+for (let i=2;i*i<=N;i++) if (sieve[i]) for (let j=i*i;j<=N;j+=i) sieve[j]=0;
+const primes=[]; for (let i=2;i<=N;i++) if (sieve[i]) primes.push(i);
+const piS = new Int32Array(1501); { let c=0; for (let i=0;i<=1500;i++){ if (sieve[i]) c++; piS[i]=c; } }
+
+const dpr = window.devicePixelRatio||1;
+function fit(cv){ const r=cv.getBoundingClientRect();
+  cv.width=Math.round(r.width*dpr); cv.height=Math.round(parseFloat(getComputedStyle(cv).height)*dpr);
+  const ctx=cv.getContext('2d'); ctx.setTransform(dpr,0,0,dpr,0,0); return ctx; }
+const fmt = x => x>=1e6 ? (x/1e6).toFixed(1)+'M' : x>=1e3 ? Math.round(x/1e3)+'k' : ''+x;
+
+/* ============ CH·A ============ */
+const testP=[2,3,5,7,11,13];
+let Astate=null;
+
+function computeA(raw){
+  let off = raw.split(/[,\s]+/).filter(s=>s.length).map(Number);
+  if (!off.length || off.some(x=>!Number.isInteger(x)||x<0||x>200)) return null;
+  off=[...new Set(off)].sort((a,b)=>a-b);
+  const m0=off[0]; off=off.map(o=>o-m0);
+  const span=off[off.length-1], k=off.length;
+  // coverage per test prime
+  const rows=testP.map(p=>{
+    const hit=new Set(off.map(o=>o%p));
+    return {p,hit,covered:hit.size===p};
+  });
+  const killer=rows.find(r=>r.covered)?.p ?? null;
+  // occurrences
+  const occ=[];
+  for (let n=2;n<=N-span;n++){
+    let ok=1; for (let i=0;i<k;i++){ if(!sieve[n+off[i]]){ok=0;break;} }
+    if (ok) occ.push(n);
+  }
+  // singular series
+  let S=1;
+  for (const p of primes){ if (p>5000) break;
+    const nu = p>span ? k : new Set(off.map(o=>o%p)).size;
+    if (nu===p){ S=0; break; }
+    S *= (1-nu/p)/Math.pow(1-1/p,k);
+  }
+  // curves
+  const B=1024, bs=N/B, pred=new Float64Array(B), emp=new Int32Array(B);
+  let acc=0, oi=0;
+  for (let b=0;b<B;b++){
+    const x0=Math.max(2,Math.floor(b*bs)), x1=Math.floor((b+1)*bs);
+    for (let n=x0;n<x1;n++) acc+=Math.pow(Math.log(n),-k);
+    pred[b]=S*acc;
+    while (oi<occ.length && occ[oi]<x1) oi++;
+    emp[b]=oi;
+  }
+  return {off,span,k,rows,killer,occ,S,pred,emp,B};
+}
+
+function drawCoverage(){
+  const st=Astate, ctx=fit(document.getElementById('covC'));
+  const W=ctx.canvas.width/dpr, H=ctx.canvas.height/dpr;
+  ctx.clearRect(0,0,W,H);
+  ctx.font='11px '+getComputedStyle(document.body).getPropertyValue('--mono');
+  const rowH=Math.min(30,(H-14)/testP.length), left=64, right=W-88;
+  st.rows.forEach((r,i)=>{
+    const y=8+i*rowH, cw=Math.min(26,(right-left)/r.p - 2);
+    ctx.fillStyle = r.covered ? '#ff4f7b' : '#5b6d74';
+    ctx.fillText('mod '+r.p, 8, y+rowH/2+4);
+    for (let c=0;c<r.p;c++){
+      const x=left+c*(cw+2), hit=r.hit.has(c);
+      ctx.fillStyle = hit ? (r.covered?'rgba(255,79,123,.85)':'rgba(63,224,208,.8)') : '#101822';
+      ctx.strokeStyle = '#1d2a38';
+      ctx.beginPath(); ctx.rect(x,y+3,cw,rowH-9); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = hit ? '#06090c' : '#3a4a55';
+      if (cw>=14) ctx.fillText(''+c, x+cw/2-3.5, y+rowH/2+3.5);
+    }
+    ctx.fillStyle = r.covered ? '#ff4f7b' : '#26424a';
+    ctx.fillText(r.covered ? 'COVERED' : (r.p - r.hit.size)+' escape', right+8, y+rowH/2+4);
+  });
+}
+
+function drawChartA(){
+  const st=Astate, ctx=fit(document.getElementById('chartA'));
+  const W=ctx.canvas.width/dpr, H=ctx.canvas.height/dpr;
+  ctx.clearRect(0,0,W,H);
+  const L=52,R=10,T=12,Bm=30, pw=W-L-R, ph=H-T-Bm;
+  const yMax=Math.max(st.emp[st.B-1], st.pred[st.B-1], 2)*1.12;
+  const X=b=>L+(b/(st.B-1))*pw, Y=v=>T+ph-(v/yMax)*ph;
+  ctx.strokeStyle='#141d28'; ctx.beginPath();
+  for(let g=1;g<5;g++){ ctx.moveTo(L,T+ph*g/5); ctx.lineTo(W-R,T+ph*g/5); } ctx.stroke();
+  ctx.font='10px monospace'; ctx.fillStyle='#5b6d74';
+  for(let g=0;g<=5;g++) ctx.fillText(fmt(Math.round(yMax*(1-g/5))), 6, T+ph*g/5+3);
+  for(let g=0;g<=4;g++) ctx.fillText(fmt(Math.round(N*g/4)), L+pw*g/4-8, H-10);
+  // occurrence ticks
+  ctx.strokeStyle='rgba(200,214,212,.16)'; ctx.beginPath();
+  const stp=Math.max(1,Math.floor(st.occ.length/900));
+  for(let i=0;i<st.occ.length;i+=stp){ const x=L+(st.occ[i]/N)*pw;
+    ctx.moveTo(x,T+ph-8); ctx.lineTo(x,T+ph); } ctx.stroke();
+  // predicted (amber)
+  ctx.strokeStyle='#ffb454'; ctx.setLineDash([5,4]); ctx.lineWidth=1.4; ctx.beginPath();
+  for(let b=0;b<st.B;b++){ const x=X(b),y=Y(st.pred[b]); b?ctx.lineTo(x,y):ctx.moveTo(x,y); }
+  ctx.stroke(); ctx.setLineDash([]);
+  // empirical (white)
+  ctx.strokeStyle='#e8f2f0'; ctx.lineWidth=1.4; ctx.beginPath();
+  for(let b=0;b<st.B;b++){ const x=X(b),y=Y(st.emp[b]); b?ctx.lineTo(x,y):ctx.moveTo(x,y); }
+  ctx.stroke();
+  ctx.fillStyle='#e8f2f0'; ctx.fillText('empirical count', L+8, T+12);
+  ctx.fillStyle='#ffb454'; ctx.fillText('H-L prediction  S = '+st.S.toPrecision(4), L+8, T+26);
+}
+
+function runA(raw){
+  const st=computeA(raw);
+  const lamp=document.getElementById('lamp'), v=document.getElementById('verdict'),
+        stat=document.getElementById('statA');
+  if(!st){ v.innerHTML='<span class="v-kill">parse error — comma-separated offsets 0–200</span>';
+    lamp.className='lamp'; return; }
+  Astate=st;
+  if (st.killer){
+    lamp.className='lamp kill';
+    v.innerHTML='<span class="v-kill">KILLED</span> — full coverage at p = '+st.killer+
+      ' → at most one occurrence, ever (L1 fails / L2 fires)';
+  } else {
+    lamp.className='lamp live';
+    v.innerHTML='<span class="v-live">LIVES</span> — escapes every residue row → believed infinite (Hardy–Littlewood)';
+  }
+  stat.innerHTML='pattern n + {'+st.off.join(', ')+'} · occurrences ≤ 2M: <em>'+
+    st.occ.length.toLocaleString()+'</em> · singular series S = <em>'+st.S.toPrecision(4)+'</em>'+
+    (st.occ.length? ' · first at n = '+st.occ[0] : '');
+  drawCoverage(); drawChartA();
+}
+
+/* ============ CH·B1 ============ */
+let B1q=4, B1state=null;
+function computeB1(q){
+  const nonres = q===4?3:2;
+  const B=1200, bs=N/B;
+  const mn=new Float64Array(B).fill(Infinity), mx=new Float64Array(B).fill(-Infinity),
+        end=new Float64Array(B);
+  let race=0; const flips=[]; let fs=-1;
+  for (let n=2;n<=N;n++){
+    if (sieve[n] && n%q!==0){
+      const r=n%q;
+      if (r===nonres) race++; else if (r===1) race--;
+    }
+    const b=Math.min(B-1,Math.floor((n-1)/bs));
+    if (race<mn[b]) mn[b]=race; if (race>mx[b]) mx[b]=race; end[b]=race;
+    if (race<0 && fs<0) fs=n;
+    else if (race>=0 && fs>=0){ flips.push([fs,n]); fs=-1; }
+  }
+  if (fs>=0) flips.push([fs,N]);
+  const mass=new Float64Array(B), resid=new Float64Array(B);
+  for (let b=0;b<B;b++){
+    const x=(b+1)*bs, s=Math.min(1500,Math.floor(Math.sqrt(x)));
+    mass[b]=0.5*Math.max(0,piS[s]-1);
+    resid[b]=end[b]-mass[b];
+  }
+  return {q,B,bs,mn,mx,end,mass,resid,flips};
+}
+function drawB1(){
+  const st=B1state, ctx=fit(document.getElementById('chartB1'));
+  const W=ctx.canvas.width/dpr, H=ctx.canvas.height/dpr;
+  ctx.clearRect(0,0,W,H);
+  const L=46,R=10,T=12,Bm=28, pw=W-L-R, ph=H-T-Bm;
+  let hi=0, lo=0;
+  for(let b=0;b<st.B;b++){ hi=Math.max(hi,st.mx[b],st.mass[b]); lo=Math.min(lo,st.mn[b],st.resid[b]); }
+  hi*=1.1; lo=Math.min(lo*1.3,-hi*0.12);
+  const X=b=>L+(b/(st.B-1))*pw, Y=v=>T+(hi-v)/(hi-lo)*ph;
+  ctx.font='10px monospace'; ctx.fillStyle='#5b6d74';
+  for(let g=0;g<=4;g++){ const v=hi-(hi-lo)*g/4;
+    ctx.fillText(Math.round(v), 6, T+ph*g/4+3); }
+  for(let g=0;g<=4;g++) ctx.fillText(fmt(Math.round(N*g/4)), L+pw*g/4-8, H-8);
+  ctx.strokeStyle='#141d28'; ctx.beginPath();
+  ctx.moveTo(L,Y(0)); ctx.lineTo(W-R,Y(0)); ctx.stroke();
+  // race band
+  ctx.fillStyle='rgba(63,224,208,.35)'; ctx.beginPath();
+  ctx.moveTo(X(0),Y(st.mx[0]));
+  for(let b=1;b<st.B;b++) ctx.lineTo(X(b),Y(st.mx[b]));
+  for(let b=st.B-1;b>=0;b--) ctx.lineTo(X(b),Y(st.mn[b]));
+  ctx.closePath(); ctx.fill();
+  ctx.strokeStyle='#3fe0d0'; ctx.lineWidth=1; ctx.beginPath();
+  for(let b=0;b<st.B;b++){ const x=X(b),y=Y(st.end[b]); b?ctx.lineTo(x,y):ctx.moveTo(x,y); } ctx.stroke();
+  // mass overlay
+  ctx.strokeStyle='#ffb454'; ctx.setLineDash([5,4]); ctx.lineWidth=1.4; ctx.beginPath();
+  for(let b=0;b<st.B;b++){ const x=X(b),y=Y(st.mass[b]); b?ctx.lineTo(x,y):ctx.moveTo(x,y); }
+  ctx.stroke(); ctx.setLineDash([]);
+  // residual
+  ctx.strokeStyle='rgba(255,79,123,.7)'; ctx.lineWidth=1; ctx.beginPath();
+  for(let b=0;b<st.B;b++){ const x=X(b),y=Y(st.resid[b]); b?ctx.lineTo(x,y):ctx.moveTo(x,y); }
+  ctx.stroke();
+  // flips
+  ctx.strokeStyle='#ffb454'; ctx.beginPath();
+  for(const [a,e] of st.flips){ const x0=L+(a/N)*pw, x1=Math.max(x0+1.5,L+(e/N)*pw);
+    ctx.moveTo(x0,T+ph-6); ctx.lineTo(x1,T+ph-6); } ctx.lineWidth=4; ctx.stroke(); ctx.lineWidth=1;
+  ctx.fillStyle='#3fe0d0'; ctx.fillText('race π(x;'+st.q+','+(st.q===4?3:2)+') − π(x;'+st.q+',1)', L+8, T+12);
+  ctx.fillStyle='#ffb454'; ctx.fillText('½·π(√x) prime-power mass', L+8, T+26);
+  ctx.fillStyle='rgba(255,79,123,.9)'; ctx.fillText('residual (zero music)', L+8, T+40);
+  const stat=document.getElementById('statB1');
+  stat.innerHTML = st.flips.length
+    ? 'lead inversions in range: <em>'+st.flips.length+'</em> · first at x ≈ <em>'+
+      st.flips[0][0].toLocaleString()+'</em>'
+    : 'no strict lead inversion in range — mod 3\u2019s first is out at x \u2248 6.1\u00d710\u00b9\u00b9 (Bays\u2013Hudson); Littlewood guarantees infinitely many';
+}
+
+/* ============ CH·B2 ============ */
+let B2m=10, B2w=0;
+const gcd=(a,b)=>b?gcd(b,a%b):a;
+function drawB2(){
+  const q=B2m, ctx=fit(document.getElementById('chartB2'));
+  const W=ctx.canvas.width/dpr, H=ctx.canvas.height/dpr;
+  ctx.clearRect(0,0,W,H);
+  const classes=[]; for(let r=1;r<q;r++) if(gcd(r,q)===1) classes.push(r);
+  const m=classes.length, idx={}; classes.forEach((r,i)=>idx[r]=i);
+  const counts=Array.from({length:m},()=>new Float64Array(m));
+  const lo=B2w*N; let prev=-1, total=0;
+  for (const p of primes){
+    if (p<=q || p<lo) { if(p>=lo&&p<=q) prev=-1; continue; }
+    const r=idx[p%q];
+    if (prev>=0){ counts[prev][r]++; total++; }
+    prev=r;
+  }
+  const fair=100/m;
+  const left=64, top=30, cs=Math.min((W-left-14)/m, (H-top-40)/m);
+  ctx.font='11px monospace';
+  classes.forEach((r,j)=>{ ctx.fillStyle='#5b6d74';
+    ctx.fillText('→'+r, left+j*cs+cs/2-9, top-8); });
+  classes.forEach((r,i)=>{
+    ctx.fillStyle='#5b6d74'; ctx.fillText(r+'·', 40, top+i*cs+cs/2+4);
+    let rs=0; for(let j=0;j<m;j++) rs+=counts[i][j];
+    for(let j=0;j<m;j++){
+      const pct=rs? counts[i][j]/rs*100 : 0, dev=pct-fair;
+      const x=left+j*cs, y=top+i*cs;
+      const a=Math.min(.85, Math.abs(dev)/fair*1.6+.06);
+      ctx.fillStyle = dev>=0 ? 'rgba(255,180,84,'+a+')' : 'rgba(28,44,66,'+(a+.25)+')';
+      ctx.fillRect(x+1,y+1,cs-2,cs-2);
+      if (i===j){ ctx.strokeStyle='#ff4f7b'; ctx.lineWidth=1.5;
+        ctx.strokeRect(x+1,y+1,cs-2,cs-2); ctx.lineWidth=1; }
+      ctx.fillStyle = Math.abs(dev)>fair*.15 ? '#0a0d10' : '#c8d6d4';
+      if (dev<0 && a<.5) ctx.fillStyle='#c8d6d4';
+      ctx.fillText(pct.toFixed(1), x+cs/2-13, y+cs/2);
+      ctx.fillStyle = dev<0 ? '#7fb2c9' : '#4a3416';
+      if (Math.abs(dev)<=fair*.15) ctx.fillStyle='#5b6d74';
+      ctx.font='9px monospace';
+      ctx.fillText((dev>=0?'+':'')+dev.toFixed(1), x+cs/2-11, y+cs/2+12);
+      ctx.font='11px monospace';
+    }
+  });
+  ctx.fillStyle='#5b6d74';
+  ctx.fillText('fair = '+fair.toFixed(1)+'%  ·  Δ printed per cell  ·  n(transitions) = '+
+    total.toLocaleString(), left, top+m*cs+18);
+  document.getElementById('statB2').innerHTML =
+    'mod <em>'+q+'</em> · window x ∈ [<em>'+fmt(Math.round(lo))+'</em>, 2M] · diagonal outlined '+
+    '(self-transition — suppressed everywhere it can be measured)';
+}
+
+/* ============ wiring ============ */
+function wire(sel, attr, fn){
+  document.querySelectorAll(sel).forEach(b=>{
+    b.addEventListener('click',()=>{
+      document.querySelectorAll(sel).forEach(x=>x.classList.remove('on'));
+      b.classList.add('on'); fn(b.dataset[attr]);
+    });
+  });
+}
+wire('.btn[data-off]','off',v=>{ document.getElementById('offIn').value=v; runA(v); });
+wire('.btn[data-q]','q',v=>{ B1q=+v; B1state=computeB1(B1q); drawB1(); });
+wire('.btn[data-m]','m',v=>{ B2m=+v; drawB2(); });
+wire('.btn[data-w]','w',v=>{ B2w=+v; drawB2(); });
+document.getElementById('offIn').addEventListener('change',e=>runA(e.target.value));
+document.getElementById('offIn').addEventListener('keydown',e=>{ if(e.key==='Enter') runA(e.target.value); });
+window.addEventListener('resize',()=>{ if(Astate){drawCoverage();drawChartA();} if(B1state)drawB1(); drawB2(); });
+
+runA('0,2,6,8');
+B1state=computeB1(4); drawB1();
+drawB2();
+</script>
+<script>
+(function(){
+  function report(){ try{ parent.postMessage({t:"po-h", h: Math.ceil(document.documentElement.getBoundingClientRect().height)}, "*"); }catch(e){} }
+  window.addEventListener("load", report);
+  window.addEventListener("resize", report);
+  if (window.ResizeObserver){ try{ new ResizeObserver(report).observe(document.body); }catch(e){} }
+  setInterval(report, 1500);
+})();
+</script>
+</body>
+</html>

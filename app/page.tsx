@@ -1,4 +1,4 @@
-import { ArrowRight, Bot, Atom, Droplets, Sigma } from "lucide-react"
+import { ArrowRight, Bot, Atom, Droplets, Sigma, Microscope } from "lucide-react"
 import Link from "next/link"
 import { ActivityPulse } from "@/components/v3/ActivityPulse"
 import { ActivityFeedList } from "@/components/v3/ActivityFeedList"
@@ -151,6 +151,22 @@ export default async function V3Home() {
                   An interactive instrument that rebuilds the prime staircase from the nontrivial
                   zeros of the Riemann zeta function, one wave at a time. Drag the zeros in and watch
                   the primes resolve.
+                </span>
+              </span>
+              <span className="v3-air-promo__right"><ArrowRight className="v3-air-promo__arrow" size={18} strokeWidth={2.4} /></span>
+            </Link>
+          </V3Reveal>
+
+          <V3Reveal delay={260}>
+            <Link href="/projects/prime-zoo" className="v3-air-promo" style={{ marginTop: 14 }}>
+              <span className="v3-air-promo__ico"><Microscope size={20} strokeWidth={2.2} /></span>
+              <span className="v3-air-promo__body">
+                <span className="v3-air-promo__eyebrow">project · frontier math</span>
+                <span className="v3-air-promo__title">Primality Zoo: the structure hiding in the primes</span>
+                <span className="v3-air-promo__blurb">
+                  Three field instruments over a live two-million sieve. Test whether a prime
+                  constellation can exist at all, watch the residue-class race, and read the matrix
+                  where consecutive primes avoid repeating themselves.
                 </span>
               </span>
               <span className="v3-air-promo__right"><ArrowRight className="v3-air-promo__arrow" size={18} strokeWidth={2.4} /></span>

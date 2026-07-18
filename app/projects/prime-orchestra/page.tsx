@@ -1,7 +1,7 @@
 import Link from "next/link"
-import { ArrowLeft, Activity, AudioWaveform, Sigma, MousePointerClick } from "lucide-react"
+import { ArrowLeft, ArrowRight, Activity, AudioWaveform, Sigma, MousePointerClick, Microscope } from "lucide-react"
 import { V3Reveal } from "@/components/v3/V3Reveal"
-import { PrimeOrchestraEmbed } from "@/components/projects/PrimeOrchestraEmbed"
+import { ProjectEmbed } from "@/components/projects/ProjectEmbed"
 
 const CHANNELS = [
   {
@@ -81,7 +81,10 @@ export default function PrimeOrchestraPage() {
       <section className="v3-section" style={{ paddingTop: 6, paddingBottom: 10 }}>
         <div className="v3-wrap">
           <V3Reveal>
-            <PrimeOrchestraEmbed />
+            <ProjectEmbed
+              src="/prime-orchestra.html"
+              title="Prime Orchestra: a Riemann explicit-formula instrument"
+            />
           </V3Reveal>
           <p className="v3-po-cap">
             Fully self-contained: one HTML file, no build step, no network. The first 300 nontrivial
@@ -144,7 +147,7 @@ export default function PrimeOrchestraPage() {
       </section>
 
       {/* THE MATH ====================================================== */}
-      <section className="v3-section" style={{ paddingTop: 24, paddingBottom: 48 }}>
+      <section className="v3-section" style={{ paddingTop: 24 }}>
         <div className="v3-wrap">
           <V3Reveal>
             <div className="v3-cardhead">
@@ -168,6 +171,27 @@ export default function PrimeOrchestraPage() {
                 discontinuity. That is the demonstration, not a defect.
               </p>
             </div>
+          </V3Reveal>
+        </div>
+      </section>
+
+      {/* COMPANION ===================================================== */}
+      <section className="v3-section" style={{ paddingTop: 8, paddingBottom: 48 }}>
+        <div className="v3-wrap">
+          <V3Reveal>
+            <Link href="/projects/prime-zoo" className="v3-air-promo">
+              <span className="v3-air-promo__ico"><Microscope size={20} strokeWidth={2.2} /></span>
+              <span className="v3-air-promo__body">
+                <span className="v3-air-promo__eyebrow">companion instrument</span>
+                <span className="v3-air-promo__title">Primality Zoo: the structure hiding in the primes</span>
+                <span className="v3-air-promo__blurb">
+                  The other direction. Three field instruments over a live two-million sieve: which
+                  prime constellations can exist, which residue class is winning, and whether one
+                  prime remembers the last.
+                </span>
+              </span>
+              <span className="v3-air-promo__right"><ArrowRight className="v3-air-promo__arrow" size={18} strokeWidth={2.4} /></span>
+            </Link>
           </V3Reveal>
         </div>
       </section>

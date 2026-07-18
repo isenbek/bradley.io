@@ -7236,6 +7236,19 @@ html[data-theme="dark"]:has(.v3) {
   font-weight: 700; font-size: 18px; letter-spacing: -0.02em; color: var(--v3-charcoal); margin: 6px 0 8px;
 }
 .v3-po-card p { margin: 0; font-size: 14.5px; line-height: 1.6; color: var(--v3-slate); }
+/* The question a zoo channel answers — sits above its body copy. */
+.v3-po-card__q {
+  font-weight: 600;
+  color: var(--v3-charcoal) !important;
+  margin: 0 0 8px !important;
+}
+.v3-po .v3-page-head__lede a {
+  color: var(--v3-blue-ink);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+}
+.v3-po .v3-page-head__lede a:hover { text-decoration-thickness: 2px; }
 
 /* play-it steps */
 .v3-po-try ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; max-width: 780px; }
