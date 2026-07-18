@@ -1,7 +1,6 @@
 import Link from "next/link"
 import {
   ArrowLeft,
-  ArrowRight,
   Activity,
   Microscope,
   MousePointerClick,
@@ -10,6 +9,7 @@ import {
 } from "lucide-react"
 import { V3Reveal } from "@/components/v3/V3Reveal"
 import { ProjectEmbed } from "@/components/projects/ProjectEmbed"
+import { PrimeCompanions } from "@/components/projects/PrimeCompanions"
 
 const CHANNELS = [
   {
@@ -244,26 +244,7 @@ export default function PrimeZooPage() {
         </div>
       </section>
 
-      {/* COMPANION ===================================================== */}
-      <section className="v3-section" style={{ paddingTop: 8, paddingBottom: 48 }}>
-        <div className="v3-wrap">
-          <V3Reveal>
-            <Link href="/projects/prime-orchestra" className="v3-air-promo">
-              <span className="v3-air-promo__ico"><Sigma size={20} strokeWidth={2.2} /></span>
-              <span className="v3-air-promo__body">
-                <span className="v3-air-promo__eyebrow">companion instrument</span>
-                <span className="v3-air-promo__title">Prime Orchestra: the primes, played by zeta&rsquo;s zeros</span>
-                <span className="v3-air-promo__blurb">
-                  The other direction. Rebuild the prime staircase from the nontrivial zeros of the
-                  zeta function, one wave at a time, and watch the primes precipitate out of pure
-                  harmonics.
-                </span>
-              </span>
-              <span className="v3-air-promo__right"><ArrowRight className="v3-air-promo__arrow" size={18} strokeWidth={2.4} /></span>
-            </Link>
-          </V3Reveal>
-        </div>
-      </section>
+      <PrimeCompanions current="prime-zoo" />
     </div>
   )
 }

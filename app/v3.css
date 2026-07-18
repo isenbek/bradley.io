@@ -7236,6 +7236,37 @@ html[data-theme="dark"]:has(.v3) {
   font-weight: 700; font-size: 18px; letter-spacing: -0.02em; color: var(--v3-charcoal); margin: 6px 0 8px;
 }
 .v3-po-card p { margin: 0; font-size: 14.5px; line-height: 1.6; color: var(--v3-slate); }
+/* Full-viewport instruments (the atlas) size to the frame, not to a reported
+   document height — give the iframe a viewport-relative box instead. */
+.v3-po-embed--fixed iframe { height: min(80vh, 800px); min-height: 500px; }
+@media (max-width: 720px) { .v3-po-embed--fixed iframe { height: min(70vh, 560px); min-height: 420px; } }
+
+/* Atlas legend — swatch, label, gloss. */
+.v3-atlas-legend { display: grid; gap: 10px; max-width: 780px; margin-top: 4px; }
+.v3-atlas-legend__row {
+  display: grid;
+  grid-template-columns: 14px 132px minmax(0, 1fr);
+  align-items: baseline;
+  gap: 12px;
+  font-size: 14.5px;
+  line-height: 1.55;
+}
+.v3-atlas-legend__sw {
+  width: 11px; height: 11px; border-radius: 3px;
+  align-self: center;
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--v3-charcoal) 18%, transparent);
+}
+.v3-atlas-legend__lbl {
+  font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
+  font-size: 11px; letter-spacing: 0.12em; color: var(--v3-charcoal);
+}
+.v3-atlas-legend__body { color: var(--v3-slate); }
+@media (max-width: 640px) {
+  .v3-atlas-legend__row { grid-template-columns: 14px minmax(0, 1fr); row-gap: 2px; }
+  .v3-atlas-legend__body { grid-column: 2; }
+}
+.v3-po-cap a { color: var(--v3-blue-ink); text-decoration: underline; text-underline-offset: 2px; }
+
 /* The question a zoo channel answers — sits above its body copy. */
 .v3-po-card__q {
   font-weight: 600;

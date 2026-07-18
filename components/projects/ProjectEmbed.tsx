@@ -12,14 +12,20 @@ export function ProjectEmbed({
   src,
   title,
   initialHeight = 1320,
+  fixed = false,
 }: {
   src: string
   title: string
   initialHeight?: number
+  /** For full-viewport instruments (the atlas) that size themselves to the
+   *  frame instead of reporting a document height. Uses a viewport-relative
+   *  CSS height and skips the message listener entirely. */
+  fixed?: boolean
 }) {
   const [height, setHeight] = useState(initialHeight)
 
   useEffect(() => {
+    if (fixed) return
     function onMessage(e: MessageEvent) {
       const d = e.data as { t?: string; h?: number } | null
       if (d && d.t === "po-h" && typeof d.h === "number") {
@@ -28,11 +34,16 @@ export function ProjectEmbed({
     }
     window.addEventListener("message", onMessage)
     return () => window.removeEventListener("message", onMessage)
-  }, [])
+  }, [fixed])
 
   return (
-    <div className="v3-po-embed">
-      <iframe src={src} title={title} loading="lazy" style={{ height }} />
+    <div className={fixed ? "v3-po-embed v3-po-embed--fixed" : "v3-po-embed"}>
+      <iframe
+        src={src}
+        title={title}
+        loading="lazy"
+        style={fixed ? undefined : { height }}
+      />
     </div>
   )
 }

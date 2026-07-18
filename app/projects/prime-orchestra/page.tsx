@@ -1,7 +1,8 @@
 import Link from "next/link"
-import { ArrowLeft, ArrowRight, Activity, AudioWaveform, Sigma, MousePointerClick, Microscope } from "lucide-react"
+import { ArrowLeft, Activity, AudioWaveform, Sigma, MousePointerClick } from "lucide-react"
 import { V3Reveal } from "@/components/v3/V3Reveal"
 import { ProjectEmbed } from "@/components/projects/ProjectEmbed"
+import { PrimeCompanions } from "@/components/projects/PrimeCompanions"
 
 const CHANNELS = [
   {
@@ -175,26 +176,7 @@ export default function PrimeOrchestraPage() {
         </div>
       </section>
 
-      {/* COMPANION ===================================================== */}
-      <section className="v3-section" style={{ paddingTop: 8, paddingBottom: 48 }}>
-        <div className="v3-wrap">
-          <V3Reveal>
-            <Link href="/projects/prime-zoo" className="v3-air-promo">
-              <span className="v3-air-promo__ico"><Microscope size={20} strokeWidth={2.2} /></span>
-              <span className="v3-air-promo__body">
-                <span className="v3-air-promo__eyebrow">companion instrument</span>
-                <span className="v3-air-promo__title">Primality Zoo: the structure hiding in the primes</span>
-                <span className="v3-air-promo__blurb">
-                  The other direction. Three field instruments over a live two-million sieve: which
-                  prime constellations can exist, which residue class is winning, and whether one
-                  prime remembers the last.
-                </span>
-              </span>
-              <span className="v3-air-promo__right"><ArrowRight className="v3-air-promo__arrow" size={18} strokeWidth={2.4} /></span>
-            </Link>
-          </V3Reveal>
-        </div>
-      </section>
+      <PrimeCompanions current="prime-orchestra" />
     </div>
   )
 }

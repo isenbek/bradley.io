@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PRIMALITY ATLAS · TERRAIN MAP</title>
+<style>
+:root{
+  --bg:#07090c; --panel:#0b1016; --line:#182230; --ink:#c8d6d4; --dim:#5b6d74;
+  --cyan:#3fe0d0; --amber:#ffb454; --kill:#ff4f7b; --live:#6fe08f; --blue:#4f8fd8;
+  --mono:"SF Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--mono);font-size:13px;
+  overflow:hidden;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column}
+header{border-bottom:1px solid var(--line);padding:10px 14px;flex:none;
+  display:flex;flex-wrap:wrap;gap:10px;align-items:baseline}
+h1{font-size:14px;letter-spacing:.28em;font-weight:600;color:var(--cyan)}
+h1 span{color:var(--dim);font-weight:400}
+.sub{color:var(--dim);font-size:10.5px;letter-spacing:.06em}
+.tog{margin-left:auto;display:flex;gap:6px}
+.btn{background:#0e1620;border:1px solid var(--line);color:var(--dim);font-family:var(--mono);
+  font-size:11px;padding:4px 10px;border-radius:4px;cursor:pointer;letter-spacing:.05em}
+.btn:hover{color:var(--ink);border-color:var(--dim)}
+.btn.on{color:var(--cyan);border-color:var(--cyan)}
+.btn:focus-visible{outline:2px solid var(--cyan);outline-offset:1px}
+#wrap{flex:1;position:relative;overflow:hidden;touch-action:none;cursor:grab}
+#wrap.drag{cursor:grabbing}
+svg{position:absolute;inset:0;width:100%;height:100%}
+text{font-family:var(--mono);pointer-events:none;user-select:none}
+.terr{stroke-width:1}
+.rname{fill:#3a4a55;font-size:11px;letter-spacing:.3em}
+.nlab{fill:var(--ink);font-size:10px;letter-spacing:.08em}
+.nsub{fill:var(--dim);font-size:8.5px;letter-spacing:.05em}
+.node{cursor:pointer}
+.node circle,.node rect{transition:filter .15s ease}
+.node:hover circle,.node:hover rect,.node.sel circle,.node.sel rect{filter:drop-shadow(0 0 6px currentColor)}
+.flowA{stroke:var(--cyan);fill:none;stroke-width:1.4;opacity:.8;stroke-dasharray:5 7}
+.flowG{stroke:var(--amber);fill:none;stroke-width:1.2;opacity:.65;stroke-dasharray:4 8}
+.flowE{stroke:#8fa3ab;fill:none;stroke-width:1;opacity:.4;stroke-dasharray:2 6}
+.trail{stroke:#2a3a48;fill:none;stroke-width:1;stroke-dasharray:2 4}
+@media (prefers-reduced-motion: no-preference){
+  body.anim .flowA{animation:fw 1.4s linear infinite}
+  body.anim .flowG{animation:fw 2.2s linear infinite}
+  body.anim .flowE{animation:fw 1.8s linear infinite reverse}
+}
+@keyframes fw{to{stroke-dashoffset:-24}}
+#legend{position:absolute;left:10px;bottom:10px;background:rgba(11,16,22,.92);
+  border:1px solid var(--line);border-radius:6px;padding:9px 11px;font-size:10px;
+  color:var(--dim);line-height:1.9;letter-spacing:.05em;pointer-events:none}
+#legend b{font-weight:400}
+.sw{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+#sheet{position:absolute;right:10px;top:10px;width:min(330px,calc(100% - 20px));
+  background:rgba(11,16,22,.96);border:1px solid var(--line);border-radius:6px;
+  padding:12px 14px;display:none;max-height:calc(100% - 20px);overflow:auto}
+#sheet.open{display:block}
+#sheet h2{font-size:12px;letter-spacing:.14em;color:var(--ink);margin-bottom:6px;padding-right:24px}
+#sheet .chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px}
+.chip{font-size:9.5px;letter-spacing:.1em;border:1px solid;border-radius:3px;padding:2px 7px}
+#sheet p{color:var(--dim);font-size:11.5px;line-height:1.6}
+#sheet p b{color:var(--ink);font-weight:600}
+#sheet .ch{margin-top:8px;color:var(--amber);font-size:10px;letter-spacing:.1em}
+#x{position:absolute;top:8px;right:8px;background:none;border:none;color:var(--dim);
+  font-family:var(--mono);font-size:14px;cursor:pointer;padding:4px}
+#x:hover{color:var(--ink)}
+@media (max-width:640px){
+  #sheet{right:auto;left:10px;top:auto;bottom:10px;width:calc(100% - 20px);max-height:45%}
+  #legend{display:none}
+}
+</style>
+</head>
+<body class="anim">
+<header>
+  <h1>PRIMALITY ATLAS <span>·</span> TERRAIN MAP</h1>
+  <div class="sub">euler → zoo · cyan = zeta water · amber = guard ducts · grey dots = sieve water · drag / wheel / pinch · tap anything</div>
+  <div class="tog">
+    <button class="btn on" id="bFlow">flow</button>
+    <button class="btn" id="bReset">reset view</button>
+  </div>
+</header>
+<div id="wrap">
+<svg id="map" viewBox="0 0 1300 820" role="img" aria-label="Map of the PRIMALITY territory">
+<g id="cam">
+
+<!-- ================= TERRAIN ================= -->
+<!-- Analytic highlands (solid analytic ground, re s > 1 down through the strip) -->
+<path class="terr" fill="#0b141a" stroke="#14222c" d="M30,45 Q220,25 300,50 L300,545 Q180,585 60,555 Q25,420 38,250 Z"/>
+<!-- Critical canyon (the strip) -->
+<path class="terr" fill="#081018" stroke="#152634" d="M300,45 L372,45 L372,430 Q340,470 300,545 Z"/>
+<!-- Aqueduct channel -->
+<path class="terr" fill="#0a1319" stroke="#14222c" d="M372,168 L640,168 L640,232 L372,232 Z"/>
+<!-- Farm north: proven pastures -->
+<path class="terr" fill="#0a1712" stroke="#15301f" d="M640,45 Q980,25 1265,50 L1265,255 Q950,235 640,255 Z"/>
+<!-- Farm middle: instrument row (junction ground) -->
+<path class="terr" fill="#0a1319" stroke="#14222c" d="M640,255 Q950,235 1265,255 L1265,345 Q950,330 640,345 Z"/>
+<!-- Farm south: H-L grazing fields (conjectured) -->
+<path class="terr" fill="#151006" stroke="#3a2c10" d="M640,345 Q950,330 1265,345 L1265,730 Q940,765 640,725 Z"/>
+<!-- Function-field isle -->
+<path class="terr" fill="#0a1712" stroke="#1c3a26" d="M45,605 Q120,575 195,608 Q215,665 180,705 Q100,730 55,695 Q30,650 45,605 Z"/>
+<!-- Beyond the parity cliff: twin den hollow -->
+<path class="terr" fill="#0c0910" stroke="#241a2c" d="M700,632 Q860,610 1010,635 L1010,720 Q855,748 700,718 Z"/>
+
+<!-- region names -->
+<text class="rname" x="70" y="70">ANALYTIC HIGHLANDS</text>
+<text class="rname" x="308" y="440" transform="rotate(-90 308 440)">CRITICAL CANYON</text>
+<text class="rname" x="418" y="160">THE AQUEDUCT</text>
+<text class="rname" x="800" y="70">PROVEN PASTURES</text>
+<text class="rname" x="765" y="385">H·L GRAZING FIELDS</text>
+<text class="rname" x="62" y="725">FUNCTION-FIELD ISLE</text>
+<text class="rname" x="60" y="592">— the strait: missing geometry over ℤ —</text>
+
+<!-- critical line -->
+<line x1="336" y1="50" x2="336" y2="520" stroke="#1e4a46" stroke-width="1" stroke-dasharray="3 5"/>
+<g fill="#3fe0d0" opacity=".55">
+  <circle cx="336" cy="95" r="1.6"/><circle cx="336" cy="128" r="1.6"/><circle cx="336" cy="147" r="1.6"/>
+  <circle cx="336" cy="176" r="1.6"/><circle cx="336" cy="199" r="1.6"/><circle cx="336" cy="228" r="1.6"/>
+  <circle cx="336" cy="243" r="1.6"/><circle cx="336" cy="271" r="1.6"/><circle cx="336" cy="288" r="1.6"/>
+  <circle cx="336" cy="311" r="1.6"/><circle cx="336" cy="336" r="1.6"/><circle cx="336" cy="352" r="1.6"/>
+  <circle cx="336" cy="379" r="1.6"/><circle cx="336" cy="404" r="1.6"/><circle cx="336" cy="431" r="1.6"/>
+  <circle cx="336" cy="459" r="1.6"/><circle cx="336" cy="486" r="1.6"/>
+</g>
+
+<!-- cliffs / ridges -->
+<g stroke="#ff4f7b" stroke-width="1.4" fill="none" opacity=".8">
+  <path d="M262,60 l0,14 m-6,4 l12,0 m-6,4 l0,14 m-6,4 l12,0 m-6,4 l0,14 m-6,4 l12,0 m-6,4 l0,14 m-6,4 l12,0 m-6,4 l0,14 m-6,4 l12,0 m-6,4 l0,14"/><!-- convergence wall -->
+  <path d="M158,470 l14,6 m2,-14 l14,6 m2,-14 l14,6 m2,-14 l14,6 m2,-14 l14,6"/><!-- lambda knife edge -->
+  <path d="M700,616 l16,-7 16,7 16,-7 16,7 16,-7 16,7 16,-7 16,7 16,-7 16,7 16,-7 16,7 16,-7 16,7 16,-7 16,7 16,-7 16,7"/><!-- parity cliff -->
+</g>
+
+<!-- ================= FLOWS ================= -->
+<!-- zeta water: euler -> bridge -> canyon -> aqueduct -> staircase -> bias hall -->
+<path class="flowA" d="M128,100 Q200,86 246,96"/>
+<path class="flowA" d="M262,96 Q300,104 328,138"/>
+<path class="flowA" d="M340,200 Q360,200 470,197"/>
+<path class="flowA" d="M470,197 Q540,197 592,202"/>
+<path class="flowA" d="M600,210 Q760,265 918,286"/>
+<!-- staircase -> PNT (the x term) -->
+<path class="trail" d="M598,192 Q680,140 742,110"/>
+<!-- guard ducts (amber): euler -> singular series -> coverage court; dirichlet spring -> bias hall -->
+<path class="flowG" d="M126,88 Q420,-8 748,272"/>
+<path class="flowG" d="M446,462 Q700,420 928,300"/>
+<!-- sieve water -->
+<path class="flowE" d="M1218,192 Q1000,240 782,282"/>
+<path class="flowE" d="M1222,198 Q1090,245 952,280"/>
+<path class="flowE" d="M1228,204 Q1180,250 1128,278"/>
+<!-- H-L guard prices the species -->
+<path class="trail" d="M766,306 Q850,390 942,470"/>
+<!-- reasoning trail: zeros -> GUE -> chair -> keep -->
+<path class="trail" d="M322,300 Q250,300 196,308"/>
+<path class="trail" d="M172,318 Q140,345 128,372"/>
+<path class="trail" d="M136,392 Q170,415 190,428"/>
+<!-- probe -->
+<path class="trail" d="M1126,306 Q1150,430 1164,548"/>
+
+<!-- nodes injected by script -->
+<g id="nodes"></g>
+</g>
+</svg>
+<div id="legend">
+  <b><span class="sw" style="background:#6fe08f"></span>proven ground</b><br>
+  <b><span class="sw" style="background:#ffb454"></span>conjectured field (guarded)</b><br>
+  <b><span class="sw" style="background:#4f8fd8"></span>dark room (open)</b><br>
+  <b><span class="sw" style="background:#ff4f7b"></span>cliff (no-go theorem)</b><br>
+  <b><span class="sw" style="background:#3fe0d0"></span>instrument junction</b>
+</div>
+<div id="sheet" role="dialog" aria-modal="false">
+  <button id="x" aria-label="close">×</button>
+  <h2 id="sT"></h2>
+  <div class="chips" id="sC"></div>
+  <p id="sB"></p>
+  <div class="ch" id="sCh"></div>
+</div>
+</div>
+
+<script>
+"use strict";
+const STATUS = {
+  proven:      {c:'#6fe08f', label:'PROVEN'},
+  conjectured: {c:'#ffb454', label:'CONJECTURED'},
+  open:        {c:'#4f8fd8', label:'DARK ROOM'},
+  barrier:     {c:'#ff4f7b', label:'CLIFF · NO-GO'},
+  instrument:  {c:'#3fe0d0', label:'INSTRUMENT'},
+  empirical:   {c:'#8fa3ab', label:'EMPIRICAL'},
+  planned:     {c:'#5b6d74', label:'PLANNED'},
+};
+
+const NODES = [
+// ---- highlands ----
+{id:'euler', x:112, y:96, s:'proven', name:'EULER SPRING', sub:'ζ = Π 1/(1−p⁻ˢ)',
+ body:'The source. Every drop of analytic water on this map originates here — the identity welding zeta to the primes. <b>But the spring only flows for re(s) > 1.</b> Two ducts leave it: the main channel (via continuation, into the canyon) and the singular-series duct arcing over the top straight to the coverage court — Hardy–Littlewood constants are Euler products in miniature, no zeros required.'},
+{id:'wall', x:262, y:150, s:'barrier', name:'CONVERGENCE WALL', sub:'re(s) = 1',
+ body:'The product diverges past this ridge. The lookalike problem proves any RH proof must use the Euler product <b>at</b> re = ½ — on the far side of this wall. Continuation carries the function over, but not the product structure. This is the unbuilt bridge.'},
+{id:'bridge', x:254, y:96, s:'proven', name:'CONTINUATION BRIDGE', sub:'Riemann 1859',
+ body:'Analytic continuation extends ζ over the wall to the whole plane, and the functional equation ζ(s) ↔ ζ(1−s) installs the mirror whose fixed axis is re = ½. The bridge carries the <b>function</b> across; the product stays behind. That asymmetry is the whole RH predicament in one picture.'},
+{id:'canyon', x:336, y:140, s:'proven', name:'CRITICAL CANYON', sub:'0 < re(s) < 1',
+ body:'The strip where all nontrivial zeros are proven to live. The dashed fault down the middle is the critical line; the cyan dots are the orchestra\u2019s 300 residents. Functional-equation mirror symmetry means off-line zeros come in ⅓/⅔-style pairs — a rogue loud instrument and its quiet twin.', ch:'orchestra CH·ρ'},
+{id:'line', x:336, y:262, s:'open', name:'THE LINE', sub:'re(s) = ½ · occupancy',
+ body:'The mirror axis itself is a theorem; <b>full occupancy is RH</b>. Proven so far: at least ~41–42% of zeros sit exactly on it (Conrey → Pratt et al.), and every zero ever computed does. The gap between "41%" and "all" has not moved in decades.'},
+{id:'zfr', x:306, y:352, s:'proven', name:'ZERO-FREE LEDGE', sub:'Vinogradov–Korobov 1958',
+ body:'A thin strip near re = 1 proven empty of zeros — the ledge that makes PNT error bounds unconditional. The fence has not moved since 1958. Progress on this front is the stalled classical route to RH.'},
+{id:'gue', x:180, y:308, s:'conjectured', name:'GUE TERRACE', sub:'Montgomery–Dyson 1973',
+ body:'Zero spacings statistically match GUE random-matrix eigenvalues — the tea-time coincidence with uranium energy levels. Numerically overwhelming, proven only for restricted test functions. The fingerprint of a quantum system nobody has produced.'},
+{id:'chair', x:124, y:382, s:'open', name:'HILBERT–PÓLYA CHAIR', sub:'the empty seat',
+ body:'If the zeros are eigenvalues of a self-adjoint operator, self-adjointness <b>forces</b> them onto the line and RH follows. GUE statistics are the fingerprint; the hand is unfound. Berry–Keating H = xp is the closest sketch of who might sit here. "Not mysterious that primes are random — mysterious what forces the randomness."'},
+{id:'keep', x:200, y:436, s:'open', name:'RH KEEP', sub:'Λ ∈ [0, 0.2]',
+ body:'The central dark room. Rodgers–Tao 2018 proved Λ ≥ 0; Polymath15 pinned Λ ≤ 0.2. RH ⟺ Λ ≤ 0, so RH is now <b>boundary-exact</b>: true with zero margin, if true at all. Cash value: √x envelope democracy, fair-polling primes, square-root PNT error.'},
+{id:'knife', x:196, y:472, s:'barrier', name:'Λ KNIFE EDGE', sub:'anti-extrapolation',
+ body:'Λ ≥ 0 means the pinch cannot converge like 70M → 246 did. Approximation arguments — the backbone of analysis — prove "< 1 + ε" and shrink ε; they structurally cannot land on an exact boundary point. Proving "= 0" needs a different kind of weapon.'},
+{id:'swamp', x:118, y:508, s:'barrier', name:'LOOKALIKE SWAMP', sub:'Davenport–Heilbronn',
+ body:'Functions exist that satisfy zeta-style functional equations yet have zeros off the line. So no proof can succeed on functional-equation symmetry alone — it must invoke the Euler product where the product does not converge. This swamp drowns every "pure symmetry" route.'},
+{id:'isle', x:118, y:652, s:'proven', name:'FUNCTION-FIELD ISLE', sub:'Weil 1948 · Deligne 1974',
+ body:'RH is a <b>theorem</b> here — for zeta functions of curves and varieties over finite fields, where zeros are Frobenius eigenvalues and geometry supplies the operator. The strait separating the isle from the mainland is the missing geometry over ℤ; Connes–Consani\u2019s "field with one element" program is an attempt to build the causeway.'},
+{id:'dspring', x:436, y:466, s:'proven', name:'DIRICHLET SPRING', sub:'L(s, χ) family',
+ body:'Zeta\u2019s siblings — one L-function per character, each with its own Euler product, functional equation, and zero orchestra. Their water feeds the bias hall: the magenta residual in CH·B1 is L(s, χ₋₄) zero music. GRH (all siblings obey the line) is the dark annex to the RH keep.', ch:'zoo CH·B1 residual · backlog: rigorous L-zero reconstruction'},
+// ---- aqueduct ----
+{id:'ef', x:470, y:190, s:'proven', name:'EXPLICIT AQUEDUCT', sub:'ψ(x) = x − Σ x^ρ/ρ − …',
+ body:'The exact, proven duct carrying zero-music from the canyon to the number line. Not an approximation: an identity. One wave per zero, √x envelopes, conditional convergence in frequency order. This is what the orchestra plays.', ch:'orchestra CH·1 / CH·2'},
+{id:'stair', x:596, y:202, s:'instrument', name:'STAIRCASE STATION', sub:'ψ(x) reconstruction',
+ body:'Where the aqueduct water becomes a visible staircase — 300 zeros, range 2–500, teeth materializing only at envelope exactly ½. Side tap: the wavelets ψ − θ, the prime-power mass that flows onward and resurfaces as the amber curve in the bias hall. Same signal, two costumes.', ch:'orchestra CH·1/2/3 · backlog: wavelets panel join'},
+// ---- farm north ----
+{id:'pnt', x:762, y:104, s:'proven', name:'PNT PASTURE', sub:'π(x) ~ x/ln x · 1896',
+ body:'The zeroth-order fact and the oldest fenced field: the smooth x term of the explicit formula, isolated. Proven via the zero-free ledge. Everything else on this map is a statement about the <b>error</b> around this pasture.'},
+{id:'dcom', x:932, y:104, s:'proven', name:'DIRICHLET COMMONS', sub:'fair marginals · L4',
+ body:'Primes equidistribute among residue classes coprime to q — the marginals are exactly fair. This is why the zoo\u2019s transition matrix is interesting at all: the bias lives purely in the <b>transitions</b>, not the totals.'},
+{id:'gt', x:1108, y:104, s:'proven', name:'GREEN–TAO RANGE', sub:'AP cockroaches · 2004',
+ body:'Arithmetic progressions of primes, arbitrarily long — proven, and indestructible: the structure survives 99% deletion of the primes. Top of the destructibility hierarchy; contrast with the fragile twin den across the map. Fell via ergodic theory: a field-transport victory.'},
+// ---- instrument row ----
+{id:'cha', x:760, y:292, s:'instrument', name:'COVERAGE COURT', sub:'CH·A · kill / live calculus',
+ body:'Junction where two waters meet: sieve water (white staircase) and the singular-series duct straight from the Euler spring (amber guard). Split verdicts: <b>KILLED patterns are theorems</b> (complete residue coverage — the Sierpiński mechanism), <b>LIVES verdicts are conjectures</b> priced by Hardy–Littlewood. Prohibition is proven; eternity is not.', ch:'zoo CH·A · anchor: quad 295 vs 298 predicted'},
+{id:'chb1', x:938, y:292, s:'instrument', name:'BIAS HALL', sub:'CH·B1 · Chebyshev race',
+ body:'Three waters converge: sieve counts (cyan race), staircase wavelets (amber ½·π(√x) mass), and Dirichlet-spring zero music (magenta residual). The bias <b>is</b> the ψ→π correction made visible. Lead flips proven infinite (Littlewood 1914); their density known only under GRH + LI.', ch:'zoo CH·B1 · anchors: x = 26,861 · 53 flips ≤ 2M'},
+{id:'chb2', x:1120, y:292, s:'instrument', name:'TRANSITION PADDOCK', sub:'CH·B2 · residue memory',
+ body:'Lemke Oliver–Soundararajan 2016: consecutive primes avoid repeating their residue. Guard: flat 1/φ(q). The dark diagonal survives every modulus switch — structure, not costume — and erodes toward fair at coastline speed. This matrix is the shadow of the coverage court\u2019s singular series, and the designated GAPFORMER probe target.', ch:'zoo CH·B2 · anchor: 9→1 at 35.1%'},
+{id:'sieve', x:1226, y:186, s:'empirical', name:'SIEVE WELL', sub:'2 … 2,000,000',
+ body:'The farm\u2019s own pump: raw primes computed live, no theory in the water. Every instrument junction compares this empirical stream against an analytic guard that was <b>not fitted to it</b>. Tracks the guard → priced-in structure. Deviates → the residual is the finding.'},
+// ---- south fields ----
+{id:'hl', x:826, y:428, s:'conjectured', name:'H·L GRAZING FIELDS', sub:'k-tuple conjecture',
+ body:'The great amber territory. Every admissible constellation is conjectured infinite with a computable density — census predictable to many digits, immortality unproven for <b>every single species</b>. The entire genuine wing of the bestiary grazes here: H-L k-tuples wearing different masks.'},
+{id:'pens', x:958, y:486, s:'conjectured', name:'SPECIES PENS', sub:'the bestiary',
+ body:'Sorted by the invariance test. <b>Genuine wing:</b> gap/cluster/arithmetic creatures, twins through Wieferich — real structure, base-independent. <b>Costume gallery:</b> palindromes, emirps — serialization artifacts; one costume with a genuine wearer (base-2 repunits = Mersennes). <b>Honorary paddock:</b> Carmichael impostors, lucky-number controls, jumping champions (primorials).', ch:'GAPFORMER hook: species = labeled token patterns for residual scans'},
+{id:'246', x:738, y:534, s:'proven', name:'BOUNDED-GAPS OUTPOST', sub:'gap ≤ 246 forever',
+ body:'A proven fort deep inside conjectured territory. Zhang 2013 (≤ 70M, first finite bound ever) → Maynard + Polymath8b (246). Read as conspiracy calculus: the primes cannot rig all gap sizes at once — some gap ≤ 246 recurs forever, no telling which. An impossibility theorem about conspiracy budgets.'},
+{id:'parity', x:846, y:600, s:'barrier', name:'PARITY CLIFF', sub:'the 50% ceiling',
+ body:'Sieves embed primes in almost-primes and pigeonhole; twins would follow from > 50% relative density; sieves are <b>proven</b> unable to exceed 50%. A certified toolbox ceiling, not a skill issue. The road from the outpost to the twin den ends at this cliff face — gap 2 needs a non-sieve weapon.'},
+{id:'twins', x:864, y:680, s:'open', name:'TWIN DEN', sub:'below the statistical layer',
+ body:'The hollow past the cliff. Twins are fragile: redact ~0.1% of primes (well chosen) and every twin dies while the censored set still passes all statistical tests. So the twin secret lives <b>below</b> anything a statistical instrument — or a statistical-layer ML probe — can certify. H-L prices their census (2C₂·x/log²x); nothing proves their immortality.'},
+{id:'li', x:1096, y:432, s:'open', name:'LI VAULT', sub:'linear independence',
+ body:'No zero frequency is a rational combination of others — no two waves ever phase-lock. Unproven, unprovable-looking, and quietly powering the race results: Rubinstein–Sarnak\u2019s 0.9959 lead density for mod-3 assumes GRH + LI. A conjecture stacked on a conjecture, holding up real numbers.'},
+{id:'rig', x:1164, y:562, s:'planned', name:'GAPFORMER RIG', sub:'ML drill site',
+ body:'Planned drill into the transition paddock: transformer-vs-Markov perplexity delta as the folding hypothesis operationalized — the loss floor is the measurement. Honesty clauses posted at the site: statistical layer only (the twin den is out of reach by the censored-DB argument), memorization is the null, split along the number line.', ch:'GAPFORMER-plan.md · phase 0–1 in fabrication'},
+];
+
+const nodesG = document.getElementById('nodes');
+const svgNS = 'http://www.w3.org/2000/svg';
+let selected = null;
+
+NODES.forEach(n=>{
+  const g = document.createElementNS(svgNS,'g');
+  g.setAttribute('class','node'); g.setAttribute('color',STATUS[n.s].c);
+  g.setAttribute('tabindex','0'); g.setAttribute('role','button');
+  g.setAttribute('aria-label',n.name+' — '+STATUS[n.s].label);
+  let shape;
+  if (n.s==='open'){ shape=document.createElementNS(svgNS,'rect');
+    shape.setAttribute('x',n.x-7);shape.setAttribute('y',n.y-7);
+    shape.setAttribute('width',14);shape.setAttribute('height',14);
+    shape.setAttribute('fill','#0b0e18');
+  } else if (n.s==='instrument'){ shape=document.createElementNS(svgNS,'rect');
+    shape.setAttribute('x',n.x-7);shape.setAttribute('y',n.y-7);
+    shape.setAttribute('width',14);shape.setAttribute('height',14);
+    shape.setAttribute('transform','rotate(45 '+n.x+' '+n.y+')');
+    shape.setAttribute('fill','#081418');
+  } else { shape=document.createElementNS(svgNS,'circle');
+    shape.setAttribute('cx',n.x);shape.setAttribute('cy',n.y);shape.setAttribute('r',7);
+    shape.setAttribute('fill','#0b1016');
+  }
+  shape.setAttribute('stroke',STATUS[n.s].c);
+  shape.setAttribute('stroke-width', n.s==='planned' ? '1.2' : '1.6');
+  if (n.s==='planned') shape.setAttribute('stroke-dasharray','3 3');
+  g.appendChild(shape);
+  const t1=document.createElementNS(svgNS,'text');
+  t1.setAttribute('class','nlab'); t1.setAttribute('x',n.x+12); t1.setAttribute('y',n.y-1);
+  t1.textContent=n.name; g.appendChild(t1);
+  const t2=document.createElementNS(svgNS,'text');
+  t2.setAttribute('class','nsub'); t2.setAttribute('x',n.x+12); t2.setAttribute('y',n.y+10);
+  t2.textContent=n.sub; g.appendChild(t2);
+  const open=()=>show(n,g);
+  g.addEventListener('click',e=>{e.stopPropagation();open();});
+  g.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open();}});
+  nodesG.appendChild(g);
+});
+// left-side labels for right-edge nodes
+[['sieve'],['chb2'],['rig'],['li']].forEach(([id])=>{
+  const n=NODES.find(m=>m.id===id);
+  const g=[...nodesG.children][NODES.indexOf(n)];
+  const [t1,t2]=[...g.querySelectorAll('text')];
+  t1.setAttribute('x',n.x-12); t1.setAttribute('text-anchor','end');
+  t2.setAttribute('x',n.x-12); t2.setAttribute('text-anchor','end');
+});
+
+const sheet=document.getElementById('sheet');
+function show(n,g){
+  if(selected) selected.classList.remove('sel');
+  selected=g; g.classList.add('sel');
+  document.getElementById('sT').textContent=n.name+' · '+n.sub;
+  const c=document.getElementById('sC'); c.innerHTML='';
+  const chip=document.createElement('span'); chip.className='chip';
+  chip.style.color=STATUS[n.s].c; chip.style.borderColor=STATUS[n.s].c;
+  chip.textContent=STATUS[n.s].label; c.appendChild(chip);
+  document.getElementById('sB').innerHTML=n.body;
+  const ch=document.getElementById('sCh');
+  ch.textContent=n.ch?('▸ '+n.ch):''; ch.style.display=n.ch?'block':'none';
+  sheet.classList.add('open');
+}
+document.getElementById('x').addEventListener('click',()=>{
+  sheet.classList.remove('open');
+  if(selected){selected.classList.remove('sel');selected=null;}
+});
+
+/* ---- pan / zoom ---- */
+const wrap=document.getElementById('wrap'), cam=document.getElementById('cam');
+let vx=0,vy=0,vs=1;
+function apply(){cam.setAttribute('transform','translate('+vx+','+vy+') scale('+vs+')');}
+function svgPt(cx,cy){
+  const svg=document.getElementById('map'), r=svg.getBoundingClientRect();
+  const k=Math.min(r.width/1300,r.height/820);
+  const ox=(r.width-1300*k)/2, oy=(r.height-820*k)/2;
+  return [(cx-r.left-ox)/k,(cy-r.top-oy)/k];
+}
+wrap.addEventListener('wheel',e=>{
+  e.preventDefault();
+  const [mx,my]=svgPt(e.clientX,e.clientY);
+  const f=Math.exp(-e.deltaY*0.0015), ns=Math.min(6,Math.max(.5,vs*f)), r=ns/vs;
+  vx=mx-(mx-vx)*r; vy=my-(my-vy)*r; vs=ns; apply();
+},{passive:false});
+const ptrs=new Map(); let last=null,pinch=null;
+wrap.addEventListener('pointerdown',e=>{
+  ptrs.set(e.pointerId,[e.clientX,e.clientY]); wrap.setPointerCapture(e.pointerId);
+  if(ptrs.size===1){last=[e.clientX,e.clientY];wrap.classList.add('drag');}
+  else if(ptrs.size===2){const p=[...ptrs.values()];pinch={d:Math.hypot(p[0][0]-p[1][0],p[0][1]-p[1][1]),s:vs};}
+});
+wrap.addEventListener('pointermove',e=>{
+  if(!ptrs.has(e.pointerId))return;
+  ptrs.set(e.pointerId,[e.clientX,e.clientY]);
+  if(ptrs.size===1&&last){
+    const svg=document.getElementById('map'),r=svg.getBoundingClientRect();
+    const k=Math.min(r.width/1300,r.height/820);
+    vx+=(e.clientX-last[0])/k; vy+=(e.clientY-last[1])/k; last=[e.clientX,e.clientY]; apply();
+  } else if(ptrs.size===2&&pinch){
+    const p=[...ptrs.values()];
+    const d=Math.hypot(p[0][0]-p[1][0],p[0][1]-p[1][1]);
+    const cx=(p[0][0]+p[1][0])/2, cy=(p[0][1]+p[1][1])/2;
+    const [mx,my]=svgPt(cx,cy);
+    const ns=Math.min(6,Math.max(.5,pinch.s*d/pinch.d)), r=ns/vs;
+    vx=mx-(mx-vx)*r; vy=my-(my-vy)*r; vs=ns; apply();
+  }
+});
+function up(e){ptrs.delete(e.pointerId);
+  if(ptrs.size<2)pinch=null;
+  if(ptrs.size===0){last=null;wrap.classList.remove('drag');}
+  else if(ptrs.size===1)last=[...ptrs.values()][0];}
+wrap.addEventListener('pointerup',up); wrap.addEventListener('pointercancel',up);
+document.getElementById('bReset').addEventListener('click',()=>{vx=0;vy=0;vs=1;apply();});
+document.getElementById('bFlow').addEventListener('click',e=>{
+  document.body.classList.toggle('anim');
+  e.currentTarget.classList.toggle('on');
+});
+</script>
+</body>
+</html>
