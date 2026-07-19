@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { ArrowRight, Map, Microscope, Sigma } from "lucide-react"
+import { ArrowRight, Hammer, Map, Microscope, Sigma } from "lucide-react"
 import { V3Reveal } from "@/components/v3/V3Reveal"
 
 /**
@@ -13,6 +13,13 @@ const INSTRUMENTS = [
     title: "Primality Atlas: a terrain map of the territory",
     blurb:
       "The map the other two instruments stand on. Proven ground, conjectured pasture, dark rooms, and the cliffs that are known to be impassable. Drag, zoom, tap anything.",
+  },
+  {
+    slug: "zeta-forge",
+    Icon: Hammer,
+    title: "Zeta Forge: build zeta one arrow at a time",
+    blurb:
+      "Every term of ζ(s) = Σ n⁻ˢ becomes an arrow. Laid head to tail they walk the complex plane, and where the walk lands is the value. A zero is the walk that comes home.",
   },
   {
     slug: "prime-orchestra",

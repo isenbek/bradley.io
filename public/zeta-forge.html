@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZETA FORGE · SERIES INTUITION BUILDER</title>
+<style>
+:root{
+  --bg:#07090c; --panel:#0b1016; --line:#182230; --ink:#c8d6d4; --dim:#5b6d74;
+  --cyan:#3fe0d0; --amber:#ffb454; --kill:#ff4f7b; --live:#6fe08f; --blue:#4f8fd8;
+  --mono:"SF Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--mono);font-size:13px;
+  padding:14px 12px 60px;max-width:980px;margin:0 auto;-webkit-font-smoothing:antialiased}
+header{margin-bottom:18px;border-bottom:1px solid var(--line);padding-bottom:12px}
+h1{font-size:15px;letter-spacing:.28em;font-weight:600;color:var(--cyan)}
+h1 span{color:var(--dim);font-weight:400}
+.sub{color:var(--dim);font-size:11px;margin-top:5px;letter-spacing:.06em}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:6px;
+  margin-bottom:16px;padding:12px 12px 14px}
+.phead{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:10px}
+.chan{color:var(--amber);font-size:11px;letter-spacing:.18em;border:1px solid var(--amber);
+  border-radius:3px;padding:2px 7px}
+.ptitle{font-size:12px;letter-spacing:.1em;color:var(--ink)}
+.note{color:var(--dim);font-size:11px;line-height:1.55;margin-top:9px}
+.note b{color:var(--ink);font-weight:600}
+canvas{display:block;width:100%;background:#080c10;border:1px solid var(--line);
+  border-radius:4px;margin-top:8px;touch-action:none}
+.controls{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:8px}
+.btn{background:#0e1620;border:1px solid var(--line);color:var(--dim);font-family:var(--mono);
+  font-size:11px;padding:5px 10px;border-radius:4px;cursor:pointer;letter-spacing:.05em}
+.btn:hover{color:var(--ink);border-color:var(--dim)}
+.btn.on{color:var(--cyan);border-color:var(--cyan)}
+.btn:focus-visible{outline:2px solid var(--cyan);outline-offset:1px}
+.lbl{color:var(--dim);font-size:11px;letter-spacing:.08em;margin-right:2px}
+input[type=range]{flex:1;min-width:140px;accent-color:#3fe0d0}
+.badges{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+.badge{font-size:10px;letter-spacing:.12em;border:1px solid;border-radius:3px;padding:3px 8px}
+.b-euler{color:var(--live);border-color:var(--live)}
+.b-strip{color:var(--amber);border-color:var(--amber)}
+.b-off{color:var(--kill);border-color:var(--kill)}
+.b-pole{color:var(--kill);border-color:var(--kill)}
+.b-conv{color:var(--cyan);border-color:var(--cyan)}
+.b-div{color:var(--dim);border-color:var(--dim)}
+.lampline{display:flex;align-items:center;gap:9px}
+.lamp{width:13px;height:13px;border-radius:50%;flex:none;background:#222;
+  box-shadow:0 0 0 2px #10161d}
+.lamp.zero{background:var(--amber);box-shadow:0 0 10px 1px rgba(255,180,84,.7)}
+.stat{color:var(--dim);font-size:11px;margin-top:6px;line-height:1.7}
+.stat em{color:var(--amber);font-style:normal}
+.stat b{color:var(--cyan);font-weight:400}
+footer{color:var(--dim);font-size:10px;letter-spacing:.06em;margin-top:8px;line-height:1.6}
+@media (prefers-reduced-motion: no-preference){
+  .lamp.zero{transition:box-shadow .25s ease}
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>ZETA FORGE <span>·</span> SERIES INTUITION BUILDER</h1>
+  <div class="sub">ζ(s) = Σ n⁻ˢ, manufactured one term at a time · each step forges a complex number · drag s, watch the walk</div>
+</header>
+
+<!-- ============ CH·s INPUT PLANE ============ -->
+<section class="panel">
+  <div class="phead">
+    <span class="chan">CH·s</span>
+    <span class="ptitle">INPUT PLANE · pick your s</span>
+  </div>
+  <div class="controls">
+    <span class="lbl">presets</span>
+    <button class="btn" data-s="2,0">basel s=2</button>
+    <button class="btn" data-s="1,0">pole s=1</button>
+    <button class="btn on" data-s="0.5,14.134725142">γ₁</button>
+    <button class="btn" data-s="0.5,21.022039639">γ₂</button>
+    <button class="btn" data-s="0.5,25.010857580">γ₃</button>
+    <button class="btn" data-s="0.5,20">line, no zero</button>
+    <button class="btn" data-s="0.2,14.134725142">off-line γ₁</button>
+  </div>
+  <canvas id="planeC" style="height:250px"></canvas>
+  <div class="note">
+    Vertical amber band = the <b>critical strip</b>; dashed fault = re(s) = ½; cyan dots = the
+    first zeros; × = the pole at s = 1. Drag anywhere (snaps to zeros when close). Green country
+    east of the strip: the raw series converges: Euler's spring flows. Inside the strip the raw
+    walk never settles: that boundary is the <b>convergence wall</b>, crossed below via the η bridge.
+  </div>
+</section>
+
+<!-- ============ CH·Σ THE WALK ============ -->
+<section class="panel">
+  <div class="phead">
+    <span class="chan">CH·Σ</span>
+    <span class="ptitle">THE WALK · partial sums in the output plane</span>
+  </div>
+  <div class="controls">
+    <span class="lbl">series</span>
+    <button class="btn on" id="mAuto">auto</button>
+    <button class="btn" id="mRaw">raw Σ n⁻ˢ</button>
+    <button class="btn" id="mBridge">η bridge</button>
+    <span class="lbl" style="margin-left:10px">steps</span>
+    <input id="nSlider" type="range" min="1" max="600" value="1" aria-label="number of terms">
+    <button class="btn" id="play">▶ forge</button>
+  </div>
+  <div class="badges">
+    <span class="badge" id="bRegion"></span>
+    <span class="badge" id="bConv"></span>
+    <div class="lampline" style="margin-left:auto">
+      <div id="zLamp" class="lamp"></div>
+      <span class="lbl" id="zTxt">walk open</span>
+    </div>
+  </div>
+  <canvas id="walkC" style="height:340px"></canvas>
+  <div id="stat" class="stat"></div>
+  <div class="note">
+    Step n forges one arrow: length <b>n⁻ᔆ</b> (σ = the shrink rate, the envelope knob), spun by
+    <b>−t·ln n</b> (t = spin rate against the log-clock, the same clock the orchestra's waves read).
+    Head-to-tail, the arrows walk the output plane. σ &gt; 1: shrink wins, the walk lands, and that
+    landing point <b>is</b> ζ(s). In the strip the raw walk drifts forever; flip the signs
+    (η(s) = Σ(−1)ⁿ⁻¹n⁻ˢ) and rescale by 1/(1−2¹⁻ˢ) and the <b>same terms</b> land: analytic
+    continuation as a playable move, not a spell. Amber crosshair = ζ(s) (Euler–Maclaurin guard,
+    computed independently of the walk). <b>A zero is the walk that comes home:</b> at ½ + γ₁i
+    the six-hundred-arrow spiral closes back onto the origin.
+  </div>
+</section>
+
+<footer>
+ZETA FORGE · raw series = EULER SPRING · strip edge = CONVERGENCE WALL · η rescale = CONTINUATION
+BRIDGE, playable · guard: Euler–Maclaurin ζ(s), M=60, verified |ζ(½+γ₁i)| ≈ 4×10⁻⁹ ·
+sources: zetaexplained #01/#07/#08/#10
+</footer>
+
+<script>
+"use strict";
+/* ---------- complex helpers ---------- */
+const L2 = Math.log(2);
+function termRaw(n, sig, t){ // n^{-s}
+  const m = Math.pow(n, -sig), a = -t*Math.log(n);
+  return [m*Math.cos(a), m*Math.sin(a)];
+}
+function bridgeFactor(sig, t){ // 1/(1-2^{1-s}); null near pole of the factor
+  const m = Math.pow(2, 1-sig), a = -t*L2;
+  const wr = 1 - m*Math.cos(a), wi = -m*Math.sin(a);
+  const d = wr*wr + wi*wi;
+  if (d < 1e-9) return null;
+  return [wr/d, -wi/d];
+}
+function zetaEM(sig, t){ // Euler–Maclaurin reference, M=60; null at the pole
+  if (Math.abs(sig-1) < 1e-6 && Math.abs(t) < 1e-6) return null;
+  const M = 60;
+  let re = 0, im = 0;
+  for (let n = 1; n < M; n++){ const z = termRaw(n, sig, t); re += z[0]; im += z[1]; }
+  const lm = Math.log(M);
+  const m1 = Math.pow(M, 1-sig), a1 = -t*lm;
+  const nr = m1*Math.cos(a1), ni = m1*Math.sin(a1);
+  const dr = sig-1, di = t, d2 = dr*dr + di*di;
+  re += (nr*dr + ni*di)/d2; im += (ni*dr - nr*di)/d2;
+  const z0 = termRaw(M, sig, t); re += z0[0]/2; im += z0[1]/2;
+  const z1 = termRaw(M, sig+1, t);
+  re += (sig*z1[0] - t*z1[1])/12; im += (sig*z1[1] + t*z1[0])/12;
+  // - s(s+1)(s+2) M^{-s-3}/720
+  let cr = sig, ci = t;
+  let r2 = cr*(sig+1) - ci*t, i2 = cr*t + ci*(sig+1); cr = r2; ci = i2;
+  r2 = cr*(sig+2) - ci*t; i2 = cr*t + ci*(sig+2); cr = r2; ci = i2;
+  const z3 = termRaw(M, sig+3, t);
+  re -= (cr*z3[0] - ci*z3[1])/720; im -= (cr*z3[1] + ci*z3[0])/720;
+  return [re, im];
+}
+
+/* ---------- state ---------- */
+const GAMMAS = [14.134725142, 21.022039639, 25.010857580, 30.424876126, 32.935061588];
+let S = {sig: 0.5, t: 14.134725142};
+let mode = 'auto';         // auto | raw | bridge
+let Nshow = 1;
+const NMAX = 600;
+let playing = false;
+
+let walk = null;           // {pts:[[x,y]...], kind:'raw'|'bridge', zref, bounds}
+function effKind(){
+  if (mode === 'raw') return 'raw';
+  if (mode === 'bridge') return 'bridge';
+  return (S.sig > 1) ? 'raw' : 'bridge';
+}
+function rebuild(){
+  const kind = effKind();
+  const pts = [[0,0]];
+  let x = 0, y = 0;
+  const f = kind === 'bridge' ? bridgeFactor(S.sig, S.t) : null;
+  const usable = kind === 'raw' || f !== null;
+  for (let n = 1; n <= NMAX; n++){
+    let [tr, ti] = termRaw(n, S.sig, S.t);
+    if (kind === 'bridge'){
+      if (!usable){ break; }
+      if (n % 2 === 0){ tr = -tr; ti = -ti; }
+      const r2 = tr*f[0] - ti*f[1], i2 = tr*f[1] + ti*f[0];
+      tr = r2; ti = i2;
+    }
+    x += tr; y += ti;
+    pts.push([x, y]);
+  }
+  const zref = (S.sig > -0.5) ? zetaEM(S.sig, S.t) : null;
+  // bounds over walk + target + origin
+  let x0 = 0, x1 = 0, y0 = 0, y1 = 0;
+  for (const p of pts){ x0 = Math.min(x0,p[0]); x1 = Math.max(x1,p[0]);
+                        y0 = Math.min(y0,p[1]); y1 = Math.max(y1,p[1]); }
+  if (zref){ x0 = Math.min(x0,zref[0]); x1 = Math.max(x1,zref[0]);
+             y0 = Math.min(y0,zref[1]); y1 = Math.max(y1,zref[1]); }
+  walk = {pts, kind, zref, usable, bounds:[x0,x1,y0,y1]};
+}
+
+/* ---------- canvas plumbing ---------- */
+const dpr = window.devicePixelRatio || 1;
+function fit(cv){
+  const r = cv.getBoundingClientRect();
+  cv.width = Math.round(r.width*dpr);
+  cv.height = Math.round(parseFloat(getComputedStyle(cv).height)*dpr);
+  const ctx = cv.getContext('2d'); ctx.setTransform(dpr,0,0,dpr,0,0); return ctx;
+}
+
+/* ---------- CH·s input plane ---------- */
+const planeC = document.getElementById('planeC');
+const SIG0 = -0.6, SIG1 = 2.8, T0 = -2, T1 = 34;
+function planeXY(sig, t, W, H){
+  return [ (sig-SIG0)/(SIG1-SIG0)*W, H - (t-T0)/(T1-T0)*H ];
+}
+function planeInv(px, py, W, H){
+  return [ SIG0 + px/W*(SIG1-SIG0), T0 + (H-py)/H*(T1-T0) ];
+}
+function drawPlane(){
+  const ctx = fit(planeC);
+  const W = planeC.width/dpr, H = planeC.height/dpr;
+  ctx.clearRect(0,0,W,H);
+  const inStrip = S.sig > 0 && S.sig < 1;
+  // strip
+  const [sx0] = planeXY(0,0,W,H), [sx1] = planeXY(1,0,W,H);
+  ctx.fillStyle = inStrip ? 'rgba(255,180,84,.10)' : 'rgba(255,180,84,.05)';
+  ctx.fillRect(sx0,0,sx1-sx0,H);
+  ctx.strokeStyle = inStrip ? 'rgba(255,180,84,.5)' : 'rgba(255,180,84,.25)';
+  ctx.strokeRect(sx0,.5,sx1-sx0,H-1);
+  // euler country tint
+  ctx.fillStyle = 'rgba(111,224,143,.04)';
+  ctx.fillRect(sx1,0,W-sx1,H);
+  // critical line
+  const [cx] = planeXY(0.5,0,W,H);
+  ctx.strokeStyle = '#1e4a46'; ctx.setLineDash([3,5]);
+  ctx.beginPath(); ctx.moveTo(cx,0); ctx.lineTo(cx,H); ctx.stroke(); ctx.setLineDash([]);
+  // t axis (t=0)
+  const [,ay] = planeXY(0,0,W,H);
+  ctx.strokeStyle = '#141d28';
+  ctx.beginPath(); ctx.moveTo(0,ay); ctx.lineTo(W,ay); ctx.stroke();
+  // labels
+  ctx.font = '10px monospace'; ctx.fillStyle = '#3a4a55';
+  ctx.fillText('THE STRIP', sx0+6, 14);
+  ctx.fillText('EULER COUNTRY · Σ converges', sx1+8, 14);
+  ctx.fillText('re(s)=½', cx+4, H-6);
+  // zeros
+  for (const g of GAMMAS){
+    const [zx,zy] = planeXY(0.5,g,W,H);
+    ctx.fillStyle = '#3fe0d0';
+    ctx.beginPath(); ctx.arc(zx,zy,3,0,7); ctx.fill();
+  }
+  // pole
+  const [px,py] = planeXY(1,0,W,H);
+  ctx.strokeStyle = '#ff4f7b'; ctx.lineWidth = 1.4;
+  ctx.beginPath();
+  ctx.moveTo(px-4,py-4); ctx.lineTo(px+4,py+4);
+  ctx.moveTo(px-4,py+4); ctx.lineTo(px+4,py-4); ctx.stroke();
+  ctx.lineWidth = 1;
+  // s marker
+  const [mx,my] = planeXY(S.sig,S.t,W,H);
+  ctx.strokeStyle = '#ffb454';
+  ctx.beginPath(); ctx.moveTo(mx-8,my); ctx.lineTo(mx+8,my);
+  ctx.moveTo(mx,my-8); ctx.lineTo(mx,my+8); ctx.stroke();
+  ctx.beginPath(); ctx.arc(mx,my,5,0,7); ctx.stroke();
+  ctx.fillStyle = '#ffb454'; ctx.font = '10px monospace';
+  ctx.fillText('s = '+S.sig.toFixed(3)+' + '+S.t.toFixed(3)+'i', Math.min(mx+10,W-150), Math.max(my-8,12));
+}
+function setS(sig, t, fromDrag){
+  // snap to zeros
+  if (!fromDrag || true){
+    for (const g of GAMMAS){
+      if (Math.abs(sig-0.5) < 0.07 && Math.abs(t-g) < 0.9){ sig = 0.5; t = g; break; }
+    }
+  }
+  S = {sig: Math.min(SIG1, Math.max(SIG0, sig)), t: Math.min(T1, Math.max(T0, t))};
+  rebuild(); drawAll();
+  document.querySelectorAll('[data-s]').forEach(b=>b.classList.remove('on'));
+}
+let dragging = false;
+planeC.addEventListener('pointerdown', e=>{
+  dragging = true; planeC.setPointerCapture(e.pointerId); movePt(e);
+});
+planeC.addEventListener('pointermove', e=>{ if (dragging) movePt(e); });
+planeC.addEventListener('pointerup', ()=> dragging = false);
+planeC.addEventListener('pointercancel', ()=> dragging = false);
+function movePt(e){
+  const r = planeC.getBoundingClientRect();
+  const [sig,t] = planeInv(e.clientX-r.left, e.clientY-r.top, r.width, r.height);
+  setS(sig, t, true);
+}
+
+/* ---------- CH·Σ walk ---------- */
+const walkC = document.getElementById('walkC');
+function drawWalk(){
+  const ctx = fit(walkC);
+  const W = walkC.width/dpr, H = walkC.height/dpr;
+  ctx.clearRect(0,0,W,H);
+  const [bx0,bx1,by0,by1] = walk.bounds;
+  const pad = 0.12;
+  const dx = (bx1-bx0)||1, dy = (by1-by0)||1;
+  const sc = Math.min(W*(1-2*pad)/dx, H*(1-2*pad)/dy);
+  const ox = W/2 - sc*(bx0+bx1)/2, oy = H/2 + sc*(by0+by1)/2;
+  const PX = p => [ox + sc*p[0], oy - sc*p[1]];
+  // axes through origin
+  const [zx,zy] = PX([0,0]);
+  ctx.strokeStyle = '#141d28';
+  ctx.beginPath(); ctx.moveTo(0,zy); ctx.lineTo(W,zy);
+  ctx.moveTo(zx,0); ctx.lineTo(zx,H); ctx.stroke();
+  ctx.fillStyle = '#3a4a55'; ctx.font = '10px monospace';
+  ctx.fillText('0', zx+4, zy-4);
+  // walk up to Nshow
+  const pts = walk.pts;
+  const n = Math.min(Nshow, pts.length-1);
+  const col = walk.kind === 'bridge' ? '63,224,208' : '143,163,171';
+  for (let i = 1; i <= n; i++){
+    const a = PX(pts[i-1]), b = PX(pts[i]);
+    const alpha = 0.15 + 0.75*(i/n);
+    ctx.strokeStyle = 'rgba('+col+','+alpha.toFixed(3)+')';
+    ctx.lineWidth = i === n ? 1.8 : 1;
+    ctx.beginPath(); ctx.moveTo(a[0],a[1]); ctx.lineTo(b[0],b[1]); ctx.stroke();
+  }
+  // last arrow head, amber
+  if (n >= 1){
+    const a = PX(pts[n-1]), b = PX(pts[n]);
+    const ang = Math.atan2(b[1]-a[1], b[0]-a[0]);
+    ctx.strokeStyle = '#ffb454'; ctx.lineWidth = 1.8;
+    ctx.beginPath(); ctx.moveTo(a[0],a[1]); ctx.lineTo(b[0],b[1]);
+    ctx.moveTo(b[0],b[1]);
+    ctx.lineTo(b[0]-7*Math.cos(ang-0.4), b[1]-7*Math.sin(ang-0.4));
+    ctx.moveTo(b[0],b[1]);
+    ctx.lineTo(b[0]-7*Math.cos(ang+0.4), b[1]-7*Math.sin(ang+0.4));
+    ctx.stroke(); ctx.lineWidth = 1;
+    // walker dot
+    ctx.fillStyle = '#c8d6d4';
+    ctx.beginPath(); ctx.arc(b[0],b[1],2.6,0,7); ctx.fill();
+  }
+  // target crosshair
+  if (walk.zref){
+    const [tx,ty] = PX(walk.zref);
+    ctx.strokeStyle = '#ffb454';
+    ctx.beginPath(); ctx.moveTo(tx-7,ty); ctx.lineTo(tx+7,ty);
+    ctx.moveTo(tx,ty-7); ctx.lineTo(tx,ty+7); ctx.stroke();
+    ctx.beginPath(); ctx.arc(tx,ty,4,0,7); ctx.stroke();
+    ctx.fillStyle = '#ffb454'; ctx.font = '10px monospace';
+    ctx.fillText('ζ(s)', tx+9, ty-6);
+  }
+}
+
+/* ---------- badges + stats ---------- */
+function fmtC(z){ if(!z) return '—';
+  const s = z[1] >= 0 ? ' + '+z[1].toFixed(4)+'i' : ' − '+(-z[1]).toFixed(4)+'i';
+  return z[0].toFixed(4)+s; }
+function drawBadges(){
+  const bR = document.getElementById('bRegion');
+  const bC = document.getElementById('bConv');
+  const atPole = Math.abs(S.sig-1) < 0.02 && Math.abs(S.t) < 0.2;
+  if (atPole){ bR.className='badge b-pole'; bR.textContent='POLE · s = 1 · harmonic march'; }
+  else if (S.sig > 1){ bR.className='badge b-euler'; bR.textContent='EULER COUNTRY · re(s) > 1'; }
+  else if (S.sig > 0){ bR.className='badge b-strip'; bR.textContent='THE STRIP · raw Σ diverges'; }
+  else { bR.className='badge b-off'; bR.textContent='OFF-DOMAIN · functional-equation territory'; }
+  const k = walk.kind;
+  if (k === 'raw' && S.sig > 1){ bC.className='badge b-conv'; bC.textContent='raw walk lands'; }
+  else if (k === 'raw'){ bC.className='badge b-div'; bC.textContent='raw walk drifts · no landing'; }
+  else if (walk.usable && S.sig > 0){ bC.className='badge b-conv'; bC.textContent='η bridge · walk lands'; }
+  else { bC.className='badge b-div'; bC.textContent='η bridge out of range (σ ≤ 0)'; }
+  // zero lamp
+  const lamp = document.getElementById('zLamp'), zt = document.getElementById('zTxt');
+  const mag = walk.zref ? Math.hypot(walk.zref[0], walk.zref[1]) : Infinity;
+  if (mag < 0.05){ lamp.classList.add('zero'); zt.textContent='WALK CLOSES → ZERO'; zt.style.color='#ffb454'; }
+  else { lamp.classList.remove('zero'); zt.textContent='walk open · |ζ| = '+(walk.zref?mag.toFixed(3):'—'); zt.style.color=''; }
+  // stat line
+  const n = Math.min(Nshow, walk.pts.length-1);
+  const p = walk.pts[n];
+  const tm = Math.pow(n, -S.sig), ta = (-S.t*Math.log(Math.max(n,1)));
+  const dist = walk.zref ? Math.hypot(p[0]-walk.zref[0], p[1]-walk.zref[1]) : null;
+  document.getElementById('stat').innerHTML =
+    'step <em>n = '+n+'</em> · arrow length n⁻ᔆ = <b>'+tm.toExponential(2)+'</b>'+
+    ' · spin −t·ln n = <b>'+ta.toFixed(1)+' rad</b><br>'+
+    'walker at <b>'+fmtC(p)+'</b>'+
+    (walk.zref ? ' · guard ζ(s) = <b>'+fmtC(walk.zref)+'</b> · gap = <em>'+dist.toExponential(2)+'</em>' : ' · guard: no finite target here');
+}
+function drawAll(){ drawPlane(); drawWalk(); drawBadges(); }
+
+/* ---------- controls ---------- */
+document.querySelectorAll('[data-s]').forEach(b=>{
+  b.addEventListener('click', ()=>{
+    const [sig,t] = b.dataset.s.split(',').map(Number);
+    S = {sig,t}; rebuild();
+    Nshow = 1; document.getElementById('nSlider').value = 1;
+    startPlay();
+    document.querySelectorAll('[data-s]').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on');
+    drawAll();
+  });
+});
+const modeBtns = {mAuto:'auto', mRaw:'raw', mBridge:'bridge'};
+Object.entries(modeBtns).forEach(([id,m])=>{
+  document.getElementById(id).addEventListener('click', ()=>{
+    mode = m;
+    Object.keys(modeBtns).forEach(k=>document.getElementById(k).classList.toggle('on', k===id));
+    rebuild(); drawAll();
+  });
+});
+const slider = document.getElementById('nSlider');
+slider.addEventListener('input', ()=>{ stopPlay(); Nshow = +slider.value; drawAll(); });
+const playBtn = document.getElementById('play');
+let raf = null;
+function startPlay(){
+  playing = true; playBtn.textContent = '❚❚ hold'; playBtn.classList.add('on');
+  const step = ()=>{
+    if (!playing) return;
+    Nshow = Math.min(NMAX, Nshow + Math.max(1, Math.round(Nshow*0.03)));
+    slider.value = Nshow;
+    drawAll();
+    if (Nshow >= NMAX){ stopPlay(); return; }
+    raf = requestAnimationFrame(step);
+  };
+  raf = requestAnimationFrame(step);
+}
+function stopPlay(){
+  playing = false; playBtn.textContent = '▶ forge'; playBtn.classList.remove('on');
+  if (raf) cancelAnimationFrame(raf);
+}
+playBtn.addEventListener('click', ()=> playing ? stopPlay() : (Nshow>=NMAX && (Nshow=1), startPlay()));
+window.addEventListener('resize', drawAll);
+
+/* ---------- boot ---------- */
+rebuild(); Nshow = 1; startPlay();
+</script>
+<script>
+(function(){
+  function report(){ try{ parent.postMessage({t:"po-h", h: Math.ceil(document.documentElement.getBoundingClientRect().height)}, "*"); }catch(e){} }
+  window.addEventListener("load", report);
+  window.addEventListener("resize", report);
+  if (window.ResizeObserver){ try{ new ResizeObserver(report).observe(document.body); }catch(e){} }
+  setInterval(report, 1500);
+})();
+</script>
+</body>
+</html>

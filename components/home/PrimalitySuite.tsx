@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { ArrowRight, Map, Microscope, Sigma } from "lucide-react"
+import { ArrowRight, Hammer, Map, Microscope, Sigma } from "lucide-react"
 
 /**
  * The three PRIMALITY instruments presented as one suite rather than three
@@ -14,6 +14,14 @@ const SUITE = [
     title: "Primality Atlas",
     blurb:
       "Twenty-nine landmarks from the Euler spring to the parity cliff, drawn as ground you can walk: what is proven, what is merely believed, what nobody knows, and what has been proven impassable.",
+  },
+  {
+    slug: "zeta-forge",
+    Icon: Hammer,
+    role: "the workbench",
+    title: "Zeta Forge",
+    blurb:
+      "Build ζ(s) = Σ n⁻ˢ one term at a time. Each term is an arrow; where the walk lands is the value, and a zero is the walk that comes home to the origin.",
   },
   {
     slug: "prime-orchestra",
@@ -39,10 +47,11 @@ export function PrimalitySuite() {
       <div className="v3-suite__head">
         <span className="v3-suite__badge">PRIMALITY</span>
         <span className="v3-suite__headtext">
-          <span className="v3-suite__title">Three instruments, one territory</span>
+          <span className="v3-suite__title">Four instruments, one territory</span>
           <span className="v3-suite__sub">
-            A map of prime-number theory and two machines built where it pointed. All three run in
-            the browser, no dependencies, no network.
+            A map of prime-number theory and three machines built where it pointed: forge zeta,
+            hear its zeros play the primes, then probe the primes directly. All four run in the
+            browser, no dependencies, no network.
           </span>
         </span>
       </div>
