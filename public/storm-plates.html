@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>STORM PLATES · WAVE PRESENTATIONS OF THE SIEVE</title>
+<style>
+:root{
+  --bg:#07090c; --panel:#0b1016; --line:#182230; --ink:#c8d6d4; --dim:#5b6d74;
+  --cyan:#3fe0d0; --amber:#ffb454; --kill:#ff4f7b; --live:#6fe08f; --blue:#4f8fd8;
+  --mono:"SF Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--mono);font-size:13px;
+  padding:14px 12px 60px;max-width:980px;margin:0 auto;-webkit-font-smoothing:antialiased}
+header{margin-bottom:18px;border-bottom:1px solid var(--line);padding-bottom:12px}
+h1{font-size:15px;letter-spacing:.28em;font-weight:600;color:var(--cyan)}
+h1 span{color:var(--dim);font-weight:400}
+.sub{color:var(--dim);font-size:11px;margin-top:5px;letter-spacing:.06em}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:6px;
+  margin-bottom:16px;padding:12px 12px 14px}
+.phead{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-bottom:10px}
+.chan{color:var(--amber);font-size:11px;letter-spacing:.18em;border:1px solid var(--amber);
+  border-radius:3px;padding:2px 7px}
+.ptitle{font-size:12px;letter-spacing:.1em;color:var(--ink)}
+.badge{font-size:10px;letter-spacing:.08em;border:1px solid var(--blue);color:var(--blue);
+  border-radius:3px;padding:2px 7px}
+.note{color:var(--dim);font-size:11px;line-height:1.55;margin-top:9px}
+.note b{color:var(--ink);font-weight:600}
+canvas{display:block;width:100%;background:#080c10;border:1px solid var(--line);
+  border-radius:4px;margin-top:8px}
+.controls{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:2px}
+.btn{background:#0e1620;border:1px solid var(--line);color:var(--dim);font-family:var(--mono);
+  font-size:11px;padding:5px 10px;border-radius:4px;cursor:pointer;letter-spacing:.05em}
+.btn:hover{color:var(--ink);border-color:var(--dim)}
+.btn.on{color:var(--cyan);border-color:var(--cyan)}
+.btn:focus-visible{outline:2px solid var(--cyan);outline-offset:1px}
+.lbl{color:var(--dim);font-size:11px;letter-spacing:.08em;margin-right:2px}
+.stat{color:var(--dim);font-size:11px;margin-top:4px}
+.stat em{color:var(--amber);font-style:normal}
+.stat b{color:var(--cyan);font-weight:600}
+footer{color:var(--dim);font-size:10px;letter-spacing:.06em;margin-top:8px;line-height:1.6}
+</style>
+</head>
+<body>
+<header>
+  <h1>STORM PLATES <span>·</span> WAVE PRESENTATIONS OF THE SIEVE</h1>
+  <div class="sub">six cartoon plates · Tropical Storm Prime vs the plank bridge · every kill verified against a live sieve · crests are pinned, only the surge is animated</div>
+</header>
+
+<!-- ═══════════ PLATE I ═══════════ -->
+<section class="panel">
+  <div class="phead"><span class="chan">PL·I</span>
+    <span class="ptitle">ONE WAVE, ONE PRIME · a single swell under the bridge</span></div>
+  <div class="controls"><span class="lbl">swell</span>
+    <button class="btn p1" data-p="2">p = 2</button>
+    <button class="btn p1 on" data-p="3">p = 3</button>
+    <button class="btn p1" data-p="5">p = 5</button>
+    <button class="btn p1" data-p="7">p = 7</button>
+  </div>
+  <canvas id="c1" style="height:190px" aria-label="single prime wave plate"></canvas>
+  <div class="stat" id="s1"></div>
+  <div class="note"><b>The elementary presentation: prime p is a swell of wavelength exactly p.</b>
+    Every crest lands on a multiple of p and breaks that plank, except plank p itself,
+    which is where the swell was born and stands proven-green. The crests never drift:
+    the animation surges vertically but the phase is pinned to n ≡ 0 mod p, which is
+    what makes this a specimen and not a costume. Guard: kill positions re-derived live
+    by trial division, not painted. Knob: swap the swell and watch wavelength = p hold.</div>
+</section>
+
+<!-- ═══════════ PLATE II ═══════════ -->
+<section class="panel">
+  <div class="phead"><span class="chan">PL·II</span>
+    <span class="ptitle">THE STORM STACK · superposed swells, survivors between crests</span></div>
+  <div class="controls"><span class="lbl">swells</span>
+    <button class="btn p2 on" data-p="2">2</button>
+    <button class="btn p2 on" data-p="3">3</button>
+    <button class="btn p2 on" data-p="5">5</button>
+    <button class="btn p2 on" data-p="7">7</button>
+  </div>
+  <canvas id="c2" style="height:240px" aria-label="superposed prime waves plate"></canvas>
+  <div class="stat" id="s2"></div>
+  <div class="note"><b>The full storm to 60 needs only swells ≤ √60: four waves make every gap.</b>
+    A plank drowns if <i>any</i> crest reaches it; it survives only by standing at a node of
+    every swell at once. Survival is a conjunction: that is the whole sieve. Guard: the
+    Mertens density ∏(1−1/p) (amber in the stat line) predicts the survivor fraction
+    without looking at the bridge. Knob: mute swells and watch false survivors flood in.
+    A muted wave is a hallucinated prime.</div>
+</section>
+
+<!-- ═══════════ PLATE III ═══════════ -->
+<section class="panel">
+  <div class="phead"><span class="chan">PL·III</span>
+    <span class="ptitle">CREST PILE-UP · constructive interference eats a span</span></div>
+  <canvas id="c3" style="height:250px" aria-label="record gap crest pile-up plate"></canvas>
+  <div class="stat" id="s3"></div>
+  <div class="note"><b>The record gap 113 → 127: thirteen consecutive planks gone, gap 14, the
+    first of its size.</b> This is your constructive-interference intuition, drawn: across the
+    span every position is under at least one crest, and each broken plank is tagged with
+    the swell that took it. Erdős–Rankin large-gap engineering is exactly this: CRT-tuning
+    phases so many swells crest together. Guard: gap 14 at 113 pre-verified in Node and
+    re-derived by the live sieve here. Note the tag pattern: swell 2 does half the work,
+    the long-wavelength swells (7, 11) arrive only to break the planks nobody else reached.</div>
+</section>
+
+<!-- ═══════════ PLATE IV ═══════════ -->
+<section class="panel">
+  <div class="phead"><span class="chan">PL·IV</span>
+    <span class="ptitle">TWIN NODES · mutual destructive miss, not a sharper peak</span>
+    <span class="badge">TWIN DEN · open</span></div>
+  <canvas id="c4" style="height:220px" aria-label="twin prime node alignment plate"></canvas>
+  <div class="stat" id="s4"></div>
+  <div class="note"><b>The sign flip that matters: small gaps are not sharp crests but
+    coordinated calms.</b> At 29 and 31 every active swell (2, 3, 5) sits at a node on both
+    planks simultaneously: residues 29 ≡ {1,2,4}, 31 ≡ {1,1,1}, never zero. Constructive
+    interference only destroys; twins exist where the whole storm misses twice, two planks
+    apart. This is the CH·A habitat law wearing water: offset {0,2} LIVES because no residue
+    row of any swell covers it. Whether the storm grants this calm infinitely often is the
+    twin conjecture (blue door, still open); ≤ 246 is the proven bound on some recurring calm.</div>
+</section>
+
+<!-- ═══════════ PLATE V ═══════════ -->
+<section class="panel">
+  <div class="phead"><span class="chan">PL·V</span>
+    <span class="ptitle">SWELLS JOIN AT p² · lower frequencies farther out</span></div>
+  <canvas id="c5" style="height:240px" aria-label="wave activation frontier plate"></canvas>
+  <div class="stat" id="s5"></div>
+  <div class="note"><b>Your breakthrough line, drawn: the farther you walk the bridge, the more
+    long-wavelength swells have joined the storm.</b> Swell p breaks its first fresh plank at
+    p². Before that, every multiple of p was already under a shorter wave. So the storm at
+    position x is the set of swells with p ≤ √x, and the active count (amber staircase) is
+    π(√x): the guard, computed from the prime list, not from the picture. More swells, longer
+    wavelengths, thicker interference: mean gap ln x falls out of exactly this crowding.</div>
+</section>
+
+<!-- ═══════════ PLATE VI ═══════════ -->
+<section class="panel">
+  <div class="phead"><span class="chan">PL·VI</span>
+    <span class="ptitle">TWO SPECTROGRAMS, ONE STORM · sieve water · zero music</span></div>
+  <canvas id="c6" style="height:250px" aria-label="dual spectrogram plate"></canvas>
+  <div class="stat" id="s6"></div>
+  <div class="note"><b>The duality plate.</b> Left weather station: the storm as swells, one
+    square wave per prime, periodic in <b>n</b>. This is the Euler-product view; it is what
+    PL·I–V drew. Right weather station: the same storm as spectral lines, one tone per zeta
+    zero, cos(γₖ·log x), periodic in <b>log x</b>. This is the explicit-formula view; it is what
+    the ORCHESTRA plays. Amber ticks mark γ₁, γ₂, γ₃ ≈ 14.134 · 21.022 · 25.011. Neither
+    station is the storm; both are exact transcriptions. CH·A and CH·ρ pointed at the same water.</div>
+</section>
+
+<footer>PRIMALITY · STORM PLATES · plates I–VI live · guards: trial division · Mertens ∏(1−1/p) · record gap 14@113 · π(√x) staircase · γ₁₋₃ anchors · reserved: wavelets between steps · animation honors prefers-reduced-motion</footer>
+
+<script>
+"use strict";
+const dpr = window.devicePixelRatio||1;
+function fit(cv){ const r=cv.getBoundingClientRect();
+  cv.width=Math.round(r.width*dpr);
+  cv.height=Math.round(parseFloat(getComputedStyle(cv).height)*dpr);
+  const ctx=cv.getContext('2d'); ctx.setTransform(dpr,0,0,dpr,0,0); return ctx; }
+const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ── live sieve · nothing painted ── */
+const N=300, comp=new Uint8Array(N+1);
+for(let p=2;p*p<=N;p++){ if(!comp[p]) for(let m=p*p;m<=N;m+=p) comp[m]=p; }
+const isPrime=n=>n>=2&&!comp[n];
+const smallestKiller=(n,ws)=>{ for(const p of ws) if(n%p===0&&n!==p) return p; return 0; };
+
+const CO={ink:'#c8d6d4',dim:'#5b6d74',cyan:'#3fe0d0',amber:'#ffb454',kill:'#ff4f7b',
+  live:'#6fe08f',blue:'#4f8fd8',axis:'#141d28',water:'#3a4a55'};
+
+/* ── shared drawing vocabulary ── */
+function planks(ctx,lo,hi,x0,x1,y,killer,opts={}){
+  const w=(x1-x0)/(hi-lo+1), pw=Math.min(w*0.62,14);
+  for(let n=lo;n<=hi;n++){
+    const cx=x0+(n-lo+0.5)*w, k=killer(n);
+    if(n<2){ ctx.fillStyle='#1a232e'; ctx.fillRect(cx-pw/2,y-4,pw,8); }
+    else if(k){ // broken plank: two magenta stubs
+      ctx.fillStyle=CO.kill; ctx.globalAlpha=.85;
+      ctx.fillRect(cx-pw/2,y-4,pw*0.26,8); ctx.fillRect(cx+pw/2-pw*0.26,y-4,pw*0.26,8);
+      ctx.globalAlpha=1;
+    } else { ctx.fillStyle=isPrime(n)?CO.live:CO.ink; ctx.fillRect(cx-pw/2,y-4,pw,8); }
+    if(opts.labels && (opts.labels==='all'||opts.labels(n))){
+      ctx.fillStyle=k?CO.kill:(isPrime(n)?CO.live:CO.dim);
+      ctx.font='10px '+getComputedStyle(document.body).fontFamily;
+      ctx.textAlign='center'; ctx.fillText(n,cx,y-10);
+    }
+  }
+  return {w,pw};
+}
+function swell(ctx,p,lo,hi,x0,x1,yBase,amp,t,color,alpha=1){
+  const w=(x1-x0)/(hi-lo+1);
+  const A=amp*(reduced?1:(0.82+0.18*Math.sin(t*1.4+p*2.1)));
+  ctx.strokeStyle=color; ctx.globalAlpha=alpha; ctx.lineWidth=1.4; ctx.beginPath();
+  for(let px=x0;px<=x1;px+=1.5){
+    const n=lo+(px-x0)/w-0.5;                    // continuous plank coordinate
+    const y=yBase - A*Math.cos(2*Math.PI*n/p);   // crest (max) exactly at n≡0 mod p
+    px===x0?ctx.moveTo(px,y):ctx.lineTo(px,y);
+  }
+  ctx.stroke(); ctx.globalAlpha=1;
+}
+function crestSpikes(ctx,p,lo,hi,x0,x1,yBase,amp,plankY,color){
+  const w=(x1-x0)/(hi-lo+1);
+  for(let m=Math.ceil(lo/p)*p;m<=hi;m+=p){ if(m===p||m<2)continue;
+    const cx=x0+(m-lo+0.5)*w;
+    ctx.strokeStyle=color; ctx.globalAlpha=.5; ctx.setLineDash([2,3]);
+    ctx.beginPath(); ctx.moveTo(cx,yBase-amp); ctx.lineTo(cx,plankY+6); ctx.stroke();
+    ctx.setLineDash([]); ctx.globalAlpha=1;
+  }
+}
+const font10='10px '+'"SF Mono",ui-monospace,Menlo,monospace';
+
+/* ═══ PLATE I ═══ */
+let P1=3;
+const c1=document.getElementById('c1');
+function draw1(t){
+  const ctx=fit(c1),W=c1.getBoundingClientRect().width,H=parseFloat(getComputedStyle(c1).height);
+  ctx.clearRect(0,0,W,H);
+  const lo=1,hi=40,x0=16,x1=W-16,py=44,wy=H-52,amp=26;
+  crestSpikes(ctx,P1,lo,hi,x0,x1,wy,amp,py,CO.kill);
+  planks(ctx,lo,hi,x0,x1,py,n=>n!==P1&&n%P1===0&&n>1?P1:0,
+    {labels:n=>n%P1===0||n===1});
+  swell(ctx,P1,lo,hi,x0,x1,wy,amp,t,CO.water);
+  ctx.fillStyle=CO.dim; ctx.font=font10; ctx.textAlign='left';
+  ctx.fillText('wavelength = '+P1+' planks · crest ⇒ plank breaks',x0,H-8);
+  document.getElementById('s1').innerHTML=
+    'swell <em>p = '+P1+'</em> · kills in view <b>'+
+    Math.floor(hi/P1-1)+'</b> · plank '+P1+' itself survives green · the swell\u2019s birthplace';
+}
+document.querySelectorAll('.p1').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('.p1').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on'); P1=+b.dataset.p; });
+
+/* ═══ PLATE II ═══ */
+let ON2=new Set([2,3,5,7]);
+const c2=document.getElementById('c2');
+function draw2(t){
+  const ctx=fit(c2),W=c2.getBoundingClientRect().width,H=parseFloat(getComputedStyle(c2).height);
+  ctx.clearRect(0,0,W,H);
+  const lo=1,hi=60,x0=14,x1=W-14,py=40;
+  const ws=[...ON2].sort((a,b)=>a-b);
+  const killer=n=>smallestKiller(n,ws);
+  planks(ctx,lo,hi,x0,x1,py,killer,{labels:n=>isPrime(n)&&!killer(n)});
+  ws.forEach((p,i)=>{
+    const yb=86+i*36;
+    swell(ctx,p,lo,hi,x0,x1,yb,14,t,CO.water,0.9);
+    ctx.fillStyle=CO.dim;ctx.font=font10;ctx.textAlign='left';
+    ctx.fillText('p='+p,x0+2,yb-16);
+  });
+  let sur=0; for(let n=8;n<=hi;n++) if(!killer(n)&&n>1) sur++;
+  const mert=ws.reduce((a,p)=>a*(1-1/p),1);
+  document.getElementById('s2').innerHTML=
+    'survivors in (7,60]: <b>'+sur+'</b>/53 = <b>'+(sur/53).toFixed(3)+
+    '</b> · Mertens guard ∏(1−1/p) = <em>'+mert.toFixed(3)+'</em> · '+
+    (ON2.size<4?'<em>storm muted · hallucinated planks standing</em>':'full storm · gaps are honest');
+}
+document.querySelectorAll('.p2').forEach(b=>b.onclick=()=>{
+  const p=+b.dataset.p;
+  if(ON2.has(p)&&ON2.size>1){ON2.delete(p);b.classList.remove('on');}
+  else{ON2.add(p);b.classList.add('on');} });
+
+/* ═══ PLATE III ═══ */
+const c3=document.getElementById('c3');
+function draw3(t){
+  const ctx=fit(c3),W=c3.getBoundingClientRect().width,H=parseFloat(getComputedStyle(c3).height);
+  ctx.clearRect(0,0,W,H);
+  const lo=108,hi=132,x0=16,x1=W-16,py=52;
+  const ws=[2,3,5,7,11];
+  const killer=n=>smallestKiller(n,ws);
+  // amber gap span shading (the pre-verified record span)
+  const w=(x1-x0)/(hi-lo+1);
+  ctx.fillStyle='rgba(255,180,84,.07)';
+  ctx.fillRect(x0+(114-lo)*w, py-24, 13*w, 40);
+  planks(ctx,lo,hi,x0,x1,py,killer,{labels:n=>n===113||n===127});
+  // killer tags
+  ctx.font=font10;ctx.textAlign='center';
+  for(let n=lo;n<=hi;n++){ const k=killer(n); if(!k)continue;
+    const cx=x0+(n-lo+0.5)*w;
+    ctx.fillStyle=CO.kill; ctx.globalAlpha=.9; ctx.fillText(k,cx,py+20); ctx.globalAlpha=1;
+  }
+  ctx.fillStyle=CO.dim; ctx.fillText('↑ which swell broke it',x0+ (x1-x0)/2, py+34);
+  ws.forEach((p,i)=>{
+    const yb=118+i*24;
+    swell(ctx,p,lo,hi,x0,x1,yb,9,t,CO.water,0.85);
+    ctx.fillStyle=CO.dim;ctx.font=font10;ctx.textAlign='left';
+    ctx.fillText('p='+p,x0+2,yb-11);
+  });
+  // verify live
+  let g=0,last=0,firstAt=0;
+  for(let n=2;n<=N;n++) if(isPrime(n)){ if(last&&n-last>=14&&!firstAt)firstAt=last; last=n; }
+  document.getElementById('s3').innerHTML=
+    'live sieve: first gap ≥ 14 opens at <b>'+firstAt+'</b> · anchor <em>113</em> · '+
+    (firstAt===113?'guard <b>HOLDS</b>':'guard <em>BREACH</em>')+
+    ' · span 114–126: every plank under ≥1 crest';
+}
+
+/* ═══ PLATE IV ═══ */
+const c4=document.getElementById('c4');
+function draw4(t){
+  const ctx=fit(c4),W=c4.getBoundingClientRect().width,H=parseFloat(getComputedStyle(c4).height);
+  ctx.clearRect(0,0,W,H);
+  const lo=24,hi=36,x0=16,x1=W-16,py=46;
+  const ws=[2,3,5];
+  const killer=n=>smallestKiller(n,ws);
+  const w=(x1-x0)/(hi-lo+1);
+  // green calm columns through 29 and 31
+  [29,31].forEach(n=>{
+    const cx=x0+(n-lo+0.5)*w;
+    ctx.fillStyle='rgba(111,224,143,.08)'; ctx.fillRect(cx-w*0.35,py-26,w*0.7,H-py-14);
+    ctx.strokeStyle=CO.live; ctx.globalAlpha=.45; ctx.setLineDash([3,4]);
+    ctx.beginPath();ctx.moveTo(cx,py+8);ctx.lineTo(cx,H-18);ctx.stroke();
+    ctx.setLineDash([]);ctx.globalAlpha=1;
+  });
+  planks(ctx,lo,hi,x0,x1,py,killer,{labels:'all'});
+  ws.forEach((p,i)=>{
+    const yb=104+i*34;
+    swell(ctx,p,lo,hi,x0,x1,yb,13,t,CO.water,0.9);
+    ctx.fillStyle=CO.dim;ctx.font=font10;ctx.textAlign='left';
+    ctx.fillText('p='+p+' · 29≡'+(29%p)+' · 31≡'+(31%p),x0+2,yb-16);
+  });
+  document.getElementById('s4').innerHTML=
+    'offset {0,2} at 29 · residues all nonzero ⇒ every swell at a node twice · CH·A verdict: <b>LIVES</b> · contrast: 25 drowned by p=5 crest';
+}
+
+/* ═══ PLATE V ═══ */
+const c5=document.getElementById('c5');
+function draw5(t){
+  const ctx=fit(c5),W=c5.getBoundingClientRect().width,H=parseFloat(getComputedStyle(c5).height);
+  ctx.clearRect(0,0,W,H);
+  const X=200,x0=34,x1=W-14;
+  const sx=x=>x0+(x/X)*(x1-x0);
+  const ps=[2,3,5,7,11,13];
+  ps.forEach((p,i)=>{
+    const yb=26+i*30, born=p*p;
+    // dormant: faint line before p²
+    ctx.strokeStyle='#1a232e';ctx.lineWidth=1;ctx.beginPath();
+    ctx.moveTo(x0,yb);ctx.lineTo(sx(born),yb);ctx.stroke();
+    // surfacing marker
+    ctx.fillStyle=CO.amber;ctx.beginPath();ctx.arc(sx(born),yb,2.5,0,7);ctx.fill();
+    // active swell from p² on
+    const A=9*(reduced?1:(0.82+0.18*Math.sin(t*1.4+p)));
+    ctx.strokeStyle=CO.water;ctx.lineWidth=1.4;ctx.beginPath();
+    for(let px=sx(born);px<=x1;px+=1.5){
+      const x=(px-x0)/(x1-x0)*X;
+      const y=yb-A*Math.cos(2*Math.PI*x/p);
+      px===sx(born)?ctx.moveTo(px,y):ctx.lineTo(px,y);
+    }
+    ctx.stroke();
+    ctx.fillStyle=CO.dim;ctx.font=font10;ctx.textAlign='left';
+    ctx.fillText('p='+p+' ⇠ '+born,4,yb+3);
+  });
+  // amber guard staircase: π(√x)
+  ctx.strokeStyle=CO.amber;ctx.setLineDash([4,3]);ctx.lineWidth=1.4;ctx.beginPath();
+  const gy=v=>H-14-v*16;
+  let prev=0;
+  for(let x=1;x<=X;x++){
+    let c=0;for(const p of ps)if(p*p<=x)c++;
+    if(x===1)ctx.moveTo(sx(x),gy(c));
+    else{ctx.lineTo(sx(x),gy(prev));ctx.lineTo(sx(x),gy(c));}
+    prev=c;
+  }
+  ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle=CO.amber;ctx.font=font10;ctx.textAlign='right';
+  ctx.fillText('π(√x) active swells →',x1-4,gy(6)-6);
+  document.getElementById('s5').innerHTML=
+    'surfacing points <em>4 · 9 · 25 · 49 · 121 · 169</em> = p² · at x=200 the storm holds <b>6</b> swells · longest wavelength 13';
+}
+
+/* ═══ PLATE VI ═══ */
+const GAM=[14.134725,21.022040,25.010858];
+const c6=document.getElementById('c6');
+function draw6(t){
+  const ctx=fit(c6),W=c6.getBoundingClientRect().width,H=parseFloat(getComputedStyle(c6).height);
+  ctx.clearRect(0,0,W,H);
+  const mid=W/2;
+  ctx.strokeStyle=CO.axis;ctx.beginPath();ctx.moveTo(mid,10);ctx.lineTo(mid,H-10);ctx.stroke();
+  ctx.font=font10;ctx.textAlign='center';
+  ctx.fillStyle=CO.dim;
+  ctx.fillText('SIEVE WATER · periodic in n',mid/2,18);
+  ctx.fillText('ZERO MUSIC · periodic in log x',mid+mid/2,18);
+  // left: square waves p=2,3,5 over n∈[1,30]
+  const lx0=16,lx1=mid-16;
+  [2,3,5].forEach((p,i)=>{
+    const yb=58+i*56;
+    ctx.strokeStyle=CO.water;ctx.lineWidth=1.4;ctx.beginPath();
+    for(let px=lx0;px<=lx1;px+=1){
+      const n=1+(px-lx0)/(lx1-lx0)*29;
+      const hi=(Math.round(n)%p===0)?-16:8;   // square: crest slab on multiples
+      const y=yb+(Math.abs(n-Math.round(n))<0.5?hi:8);
+      px===lx0?ctx.moveTo(px,y):ctx.lineTo(px,y);
+    }
+    ctx.stroke();
+    ctx.fillStyle=CO.dim;ctx.textAlign='left';ctx.fillText('p='+p,lx0,yb-22);
+  });
+  ctx.fillStyle=CO.dim;ctx.textAlign='center';
+  ctx.fillText('one square wave per prime · the Euler side',mid/2,H-10);
+  // right: cos(γ log x) over x∈[2,50]
+  const rx0=mid+16,rx1=W-16;
+  GAM.forEach((g,i)=>{
+    const yb=58+i*56;
+    const A=12*(reduced?1:(0.85+0.15*Math.sin(t+g/8)));
+    ctx.strokeStyle=CO.cyan;ctx.globalAlpha=.85;ctx.lineWidth=1.3;ctx.beginPath();
+    for(let px=rx0;px<=rx1;px+=1){
+      const x=2+(px-rx0)/(rx1-rx0)*48;
+      const y=yb-A*Math.cos(g*Math.log(x));
+      px===rx0?ctx.moveTo(px,y):ctx.lineTo(px,y);
+    }
+    ctx.stroke();ctx.globalAlpha=1;
+    ctx.fillStyle=CO.amber;ctx.textAlign='left';
+    ctx.fillText('γ'+'₁₂₃'[i]+' ≈ '+g.toFixed(3),rx0,yb-22);
+  });
+  ctx.fillStyle=CO.dim;ctx.textAlign='center';
+  ctx.fillText('one tone per zero · the explicit-formula side',mid+mid/2,H-10);
+  document.getElementById('s6').innerHTML=
+    'left clock ticks in <b>n</b> · right clock ticks in <b>log x</b> · the tones compress rightward because the log-clock slows · same storm, two transcriptions';
+}
+
+/* ── loop ── */
+function frame(ts){
+  const t=ts/1000;
+  draw1(t);draw2(t);draw3(t);draw4(t);draw5(t);draw6(t);
+  if(!reduced) requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+addEventListener('resize',()=>{ if(reduced) requestAnimationFrame(frame); });
+</script>
+<script>
+(function(){
+  function report(){ try{ parent.postMessage({t:"po-h", h: Math.ceil(document.documentElement.getBoundingClientRect().height)}, "*"); }catch(e){} }
+  window.addEventListener("load", report);
+  window.addEventListener("resize", report);
+  if (window.ResizeObserver){ try{ new ResizeObserver(report).observe(document.body); }catch(e){} }
+  setInterval(report, 1500);
+})();
+</script>
+</body>
+</html>

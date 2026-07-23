@@ -26,6 +26,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/projects/prime-zoo`, changeFrequency: "monthly", priority: 0.7, lastModified: now },
     { url: `${base}/projects/prime-atlas`, changeFrequency: "monthly", priority: 0.7, lastModified: now },
     { url: `${base}/projects/zeta-forge`, changeFrequency: "monthly", priority: 0.7, lastModified: now },
+    { url: `${base}/projects/storm-plates`, changeFrequency: "monthly", priority: 0.7, lastModified: now },
     { url: `${base}/services`, changeFrequency: "monthly", priority: 0.8, lastModified: now },
     { url: `${base}/ai-pilot`, changeFrequency: "daily", priority: 0.7, lastModified: now },
     { url: `${base}/lab`, changeFrequency: "weekly", priority: 0.6, lastModified: now },

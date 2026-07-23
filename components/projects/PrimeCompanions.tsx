@@ -1,10 +1,10 @@
 import Link from "next/link"
-import { ArrowRight, Hammer, Map, Microscope, Sigma } from "lucide-react"
+import { ArrowRight, Hammer, Map, Microscope, Sigma, Waves } from "lucide-react"
 import { V3Reveal } from "@/components/v3/V3Reveal"
 
 /**
- * The three PRIMALITY instruments cross-link to each other. Each page renders
- * this with its own slug so it promotes the other two.
+ * The PRIMALITY instruments cross-link to each other. Each page renders this
+ * with its own slug so it promotes the rest of the suite.
  */
 const INSTRUMENTS = [
   {
@@ -34,6 +34,13 @@ const INSTRUMENTS = [
     title: "Primality Zoo: the structure hiding in the primes",
     blurb:
       "Three field instruments over a live two-million sieve: which prime constellations can exist, which residue class is winning, and whether one prime remembers the last.",
+  },
+  {
+    slug: "storm-plates",
+    Icon: Waves,
+    title: "Storm Plates: the sieve, drawn as weather",
+    blurb:
+      "One wave per prime rolls under a plank bridge and every crest breaks the plank it lands on. Record gaps become pile-ups, twins become coordinated calms, and the zeros turn up as a second transcription of the same water.",
   },
 ]
 

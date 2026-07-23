@@ -1,8 +1,8 @@
 import Link from "next/link"
-import { ArrowRight, Hammer, Map, Microscope, Sigma } from "lucide-react"
+import { ArrowRight, Hammer, Map, Microscope, Sigma, Waves } from "lucide-react"
 
 /**
- * The three PRIMALITY instruments presented as one suite rather than three
+ * The PRIMALITY instruments presented as one suite rather than a run of
  * unrelated promos — a single panel, hairline-separated rows, so the homepage
  * reads them as a set that belongs together.
  */
@@ -39,6 +39,14 @@ const SUITE = [
     blurb:
       "Three scopes over a live two-million sieve. Test whether a prime constellation can exist at all, watch the residue-class race, and read the matrix where consecutive primes avoid repeating themselves.",
   },
+  {
+    slug: "storm-plates",
+    Icon: Waves,
+    role: "the weather",
+    title: "Storm Plates",
+    blurb:
+      "The sieve as wave interference, in six plates. One swell per prime under a plank bridge: crests break planks, survivors are prime, and the last plate shows the same storm written twice, once in primes and once in zeros.",
+  },
 ]
 
 export function PrimalitySuite() {
@@ -47,11 +55,11 @@ export function PrimalitySuite() {
       <div className="v3-suite__head">
         <span className="v3-suite__badge">PRIMALITY</span>
         <span className="v3-suite__headtext">
-          <span className="v3-suite__title">Four instruments, one territory</span>
+          <span className="v3-suite__title">Five instruments, one territory</span>
           <span className="v3-suite__sub">
-            A map of prime-number theory and three machines built where it pointed: forge zeta,
-            hear its zeros play the primes, then probe the primes directly. All four run in the
-            browser, no dependencies, no network.
+            A map of prime-number theory and four machines built where it pointed: forge zeta,
+            hear its zeros play the primes, probe the primes directly, then watch the sieve run as
+            weather. All five run in the browser, no dependencies, no network.
           </span>
         </span>
       </div>
