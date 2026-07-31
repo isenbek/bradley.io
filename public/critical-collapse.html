@@ -364,7 +364,14 @@ function silentRun(A){
 /* ================= Canvas helpers ================= */
 function fitCanvas(cv){
   const dpr=Math.min(window.devicePixelRatio||1,2);
-  const w=cv.clientWidth, h=parseInt(cv.getAttribute('height'));
+  // Cache the intended CSS height once: setting cv.height below rewrites the
+  // height attribute, so reading it back each call compounds by dpr and the
+  // canvas grows without bound on retina screens (dpr>1). Pin style.height so
+  // the displayed size stays fixed no matter what the backing store is.
+  let h=+cv.dataset.cssh;
+  if(!h){ h=parseInt(cv.getAttribute('height')); cv.dataset.cssh=h; }
+  const w=cv.clientWidth;
+  cv.style.height=h+'px';
   cv.width=w*dpr; cv.height=h*dpr;
   const ctx=cv.getContext('2d'); ctx.setTransform(dpr,0,0,dpr,0,0);
   return {ctx,w,h};
