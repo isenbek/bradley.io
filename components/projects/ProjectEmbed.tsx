@@ -29,7 +29,7 @@ export function ProjectEmbed({
     function onMessage(e: MessageEvent) {
       const d = e.data as { t?: string; h?: number } | null
       if (d && d.t === "po-h" && typeof d.h === "number") {
-        setHeight(Math.max(700, Math.min(3200, Math.ceil(d.h))))
+        setHeight(Math.max(700, Math.min(6000, Math.ceil(d.h))))
       }
     }
     window.addEventListener("message", onMessage)

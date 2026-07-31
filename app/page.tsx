@@ -1,4 +1,4 @@
-import { ArrowRight, Bot, Atom, Droplets } from "lucide-react"
+import { ArrowRight, Bot, Atom, Droplets, Orbit } from "lucide-react"
 import Link from "next/link"
 import { ActivityPulse } from "@/components/v3/ActivityPulse"
 import { ActivityFeedList } from "@/components/v3/ActivityFeedList"
@@ -141,6 +141,24 @@ export default async function V3Home() {
 
           <V3Reveal delay={259}>
             <PrimalitySuite />
+          </V3Reveal>
+
+          <V3Reveal delay={259.5}>
+            <Link href="/projects/critical-collapse" className="v3-air-promo v3-air-promo--coral" style={{ marginTop: 14 }}>
+              <span className="v3-air-promo__ico"><Orbit size={20} strokeWidth={2.2} /></span>
+              <span className="v3-air-promo__body">
+                <span className="v3-air-promo__eyebrow">
+                  <span className="v3-air-promo__new">NEW</span> instrument · numerical relativity
+                </span>
+                <span className="v3-air-promo__title">Critical Collapse: a black hole solved in your browser</span>
+                <span className="v3-air-promo__blurb">
+                  Einstein&apos;s equations, integrating live on your device. Tune a scalar pulse to the
+                  knife edge between dispersal and collapse, bisect for the threshold, and measure the
+                  universal exponent γ ≈ 0.374 yourself.
+                </span>
+              </span>
+              <span className="v3-air-promo__right"><ArrowRight className="v3-air-promo__arrow" size={18} strokeWidth={2.4} /></span>
+            </Link>
           </V3Reveal>
 
           <V3Reveal delay={260}>
