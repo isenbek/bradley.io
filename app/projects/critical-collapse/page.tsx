@@ -113,7 +113,8 @@ export default function CriticalCollapsePage() {
             One HTML file. An 800-point radial grid in the polar-areal gauge, SSP-RK3 in time, the
             two constraint ODEs re-solved fresh on every slice with Kreiss–Oliger dissipation for
             stability. Every line in the lab log is a genuine solve of Einstein's equations coupled
-            to a massless scalar field, not a lookup. Equations typeset with KaTeX.
+            to a massless scalar field, not a lookup. KaTeX is vendored locally, so the whole
+            instrument runs with no network at all.
           </p>
         </div>
       </section>
