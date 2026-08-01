@@ -65,6 +65,7 @@
   button.primary{border-color:var(--amber);color:var(--amber)}
   button.go{border-color:var(--violet);color:var(--violet)}
   button:disabled{opacity:.4;pointer-events:none}
+  button.mini{padding:5px 10px;font-size:11px;color:var(--dim)}
   .toggle{font-size:12px}
   .toggle.on{border-color:var(--cyan);color:var(--cyan)}
 
@@ -95,7 +96,29 @@
   .prose p{margin-bottom:10px}
   .prose b{color:var(--ink);font-weight:600}
   .prose .hl{color:var(--amber)}
-  .footnote{font-size:12px;color:var(--faint);margin-top:10px;border-left:2px solid var(--line);padding-left:10px}
+  .footnote{font-size:12px;color:var(--faint);margin-top:10px;border-left:2px solid var(--line);padding-left:10px;max-width:78ch}
+
+  /* ---- larger screens: spread the blocks across the width ---- */
+  .sim-col canvas{margin-top:14px}
+  .sim-col canvas:first-of-type{margin-top:0}
+  @media(min-width:900px){
+    .wrap{max-width:1160px}
+    /* equations flow into two balanced columns, cards never split */
+    .eq-grid{column-count:2;column-gap:16px}
+    .eq-grid .eqcard{break-inside:avoid}
+    /* live collapse: geometry views | field diagnostics */
+    .sim-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
+    /* hunt for p*: intro + controls | lab log */
+    .bisect-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
+    /* power law: plot | readout */
+    .scale-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px;align-items:center}
+    /* closing read: two text columns */
+    .reading{column-count:2;column-gap:30px}
+    .reading p{break-inside:avoid}
+  }
+  @media(max-width:899px){
+    .sim-col + .sim-col{margin-top:14px}
+  }
 </style>
 </head>
 <body>
@@ -104,7 +127,7 @@
 <header>
   <div class="eyebrow">Numerical Relativity · 1+1D</div>
   <h1>Choptuik Critical Collapse <span class="thin">Lab</span></h1>
-  <p class="sub">A live integration of Einstein's equations coupled to a massless scalar field, in spherical symmetry: the exact system where Choptuik found the echoes in 1993. Nothing below is pre-rendered: your device is solving the field equations.</p>
+  <p class="sub">A live integration of Einstein's equations coupled to a massless scalar field, in spherical symmetry — the exact system where Choptuik found the echoes in 1993. Nothing below is pre-rendered: your device is solving the field equations.</p>
   <div class="constants">
     <div class="chip">γ ≈ <b>0.374</b> · mass exponent</div>
     <div class="chip">Δ ≈ <b>3.4453</b> · echo period</div>
@@ -116,26 +139,27 @@
 <section>
   <div class="sec-label"><span>The Equations</span><span class="n">01</span></div>
 
+  <div class="eq-grid">
   <div class="eqcard">
-    <h3>Geometry · polar-areal gauge</h3>
-    <div class="note">Two metric functions, both fixed on each time slice by constraints. No gravitational waves in spherical symmetry: geometry is a slave to the matter.</div>
+    <h3>Geometry — polar-areal gauge</h3>
+    <div class="note">Two metric functions, both fixed on each time slice by constraints. No gravitational waves in spherical symmetry — geometry is a slave to the matter.</div>
     <div class="eq" data-tex="ds^2 = -\alpha^2(t,r)\,dt^2 + a^2(t,r)\,dr^2 + r^2 d\Omega^2"></div>
   </div>
 
   <div class="eqcard">
-    <h3>Matter · massless scalar field</h3>
+    <h3>Matter — massless scalar field</h3>
     <div class="note">First-order variables: Φ is the field's slope, Π its momentum.</div>
     <div class="eq" data-tex="\Box\varphi = 0, \qquad \Phi \equiv \partial_r \varphi, \qquad \Pi \equiv \tfrac{a}{\alpha}\,\partial_t \varphi"></div>
   </div>
 
   <div class="eqcard">
-    <h3>Evolution · a wave equation on curved spacetime</h3>
+    <h3>Evolution — a wave equation on curved spacetime</h3>
     <div class="eq" data-tex="\partial_t \Phi = \partial_r\!\Big(\tfrac{\alpha}{a}\,\Pi\Big), \qquad \partial_t \Pi = \frac{1}{r^2}\,\partial_r\!\Big(r^2\,\tfrac{\alpha}{a}\,\Phi\Big)"></div>
   </div>
 
   <div class="eqcard">
-    <h3>Constraints · geometry responds instantly</h3>
-    <div class="note">Radial ODEs solved fresh on every slice. The Φ²+Π² source is the field's energy; note it appears in <i>both</i>: energy curves space and warps time.</div>
+    <h3>Constraints — geometry responds instantly</h3>
+    <div class="note">Radial ODEs solved fresh on every slice. The Φ²+Π² source is the field's energy; note it appears in <i>both</i> — energy curves space and warps time.</div>
     <div class="eq" data-tex="\frac{a'}{a} = \frac{1-a^2}{2r} + 2\pi r\,(\Phi^2+\Pi^2)"></div>
     <div class="eq" data-tex="\frac{\alpha'}{\alpha} = \frac{a^2-1}{2r} + 2\pi r\,(\Phi^2+\Pi^2)"></div>
   </div>
@@ -150,9 +174,10 @@
     <h3>Choptuik's discoveries</h3>
     <div class="note">Tune any parameter p of the initial data to the threshold p*. Just above it, the black hole mass obeys a power law with a <b>universal</b> exponent:</div>
     <div class="eq" data-tex="M_{\rm BH} \simeq C\,|p - p^*|^{\gamma}, \qquad \gamma \approx 0.374"></div>
-    <div class="note" style="margin-top:8px">And the critical solution echoes, discretely self-similar. In log time τ and scale-free coordinate x, it repeats exactly, each echo 31× smaller and faster:</div>
+    <div class="note" style="margin-top:8px">And the critical solution echoes — discretely self-similar. In log time τ and scale-free coordinate x, it repeats exactly, each echo 31× smaller and faster:</div>
     <div class="eq" data-tex="Z^*(x,\ \tau + \Delta) = Z^*(x,\ \tau), \qquad \tau = -\ln(t^*-t), \quad \Delta \approx 3.4453"></div>
-    <div class="note" style="margin-top:8px">The two numbers are linked: the mass law carries a tiny periodic wiggle with period Δ/(2γ) ≈ 4.61 in ln|p−p*|, the echoes' fingerprint on the scaling law.</div>
+    <div class="note" style="margin-top:8px">The two numbers are linked: the mass law carries a tiny periodic wiggle with period Δ/(2γ) ≈ 4.61 in ln|p−p*| — the echoes' fingerprint on the scaling law.</div>
+  </div>
   </div>
 </section>
 
@@ -160,15 +185,29 @@
 <section>
   <div class="sec-label"><span>Live Collapse</span><span class="n">02</span></div>
   <div class="panel">
+    <div class="sim-grid">
+    <div class="sim-col">
+    <canvas id="cv-space" height="330"></canvas>
+    <div class="canvas-cap">
+      <span class="key"><span class="swatch" style="background:var(--amber)"></span>field energy</span>
+      <span class="key"><span class="swatch" style="background:#33406e"></span>rings = equal steps of real distance — they crowd where space stretches</span>
+      <span class="key"><span class="swatch" style="background:#000;border:1px solid var(--line)"></span>darkening = time slowing (lapse)</span>
+      <span class="key"><span class="swatch" style="background:var(--red)"></span>horizon</span>
+    </div>
+    <canvas id="cv-well" height="150"></canvas>
+    <div class="canvas-cap"><span class="key"><span class="swatch" style="background:var(--cyan)"></span>the well — embedding cross-section of space itself, computed live from the metric: depth = ∫√(a²−1) dr</span></div>
+    </div>
+    <div class="sim-col">
     <canvas id="cv-field" height="300"></canvas>
     <div class="canvas-cap">
       <span class="key"><span class="swatch" style="background:var(--amber)"></span>φ(r) field</span>
       <span class="key"><span class="swatch" style="background:var(--cyan)"></span>2m/r horizon signal</span>
       <span class="key"><span class="swatch" style="background:var(--red)"></span>2m/r = 1</span>
     </div>
-
-    <canvas id="cv-central" height="120" style="margin-top:10px"></canvas>
-    <div class="canvas-cap"><span class="key"><span class="swatch" style="background:var(--amber)"></span>φ(0,t): the field at the origin. Near-critical runs oscillate here: that's the first echo.</span></div>
+    <canvas id="cv-central" height="120"></canvas>
+    <div class="canvas-cap"><span class="key"><span class="swatch" style="background:var(--amber)"></span>φ(0,t) — the field at the origin. Near-critical runs oscillate here: that's the first echo.</span></div>
+    </div>
+    </div>
 
     <div class="controls">
       <div class="ctl-row">
@@ -181,9 +220,10 @@
         <button id="btn-reset">Reset</button>
         <button class="toggle" id="btn-logr">log r</button>
         <button class="toggle" id="btn-slow">slow-mo</button>
+        <button class="toggle" id="btn-zoom">zoom ×1</button>
       </div>
     </div>
-    <div class="status" id="status">Ready. Grid: 800 points, polar-areal gauge, RK3, CFL 0.4. Pick an amplitude and run, or let the bisector hunt for p* below.</div>
+    <div class="status" id="status">Ready. Grid: 800 points, polar-areal gauge, RK3, CFL 0.4. Pick an amplitude and run — or let the bisector hunt for p* below.</div>
   </div>
 </section>
 
@@ -191,44 +231,73 @@
 <section>
   <div class="sec-label"><span>Hunt for p*</span><span class="n">03</span></div>
   <div class="panel">
-    <p class="prose" style="margin-bottom:10px">This is Choptuik's actual method: bisect on the amplitude. Each run either <b style="color:var(--green)">disperses</b> or <b style="color:var(--red)">forms a horizon</b>; the boundary between them is the critical point. Every line below is a full solve of the field equations.</p>
+    <div class="bisect-grid">
+    <div>
+    <p class="prose" style="margin-bottom:10px">This is Choptuik's actual method: bisect on the amplitude. Each run either <b style="color:var(--green)">disperses</b> or <b style="color:var(--red)">forms a horizon</b>; the boundary between them is the critical point. Every line in the log is a full solve of the field equations.</p>
     <div class="ctl-row">
       <button class="go" id="btn-bisect">◎ Bisect to p*</button>
       <button id="btn-scaling" disabled>Δ Mass-scaling study</button>
     </div>
-    <div class="lablog" id="lablog"><div class="row"><span class="msg">— lab log idle —</span></div></div>
     <div class="result-strip">
       <div class="metric"><div class="k">p* (this grid)</div><div class="v dim" id="m-pstar">—</div></div>
       <div class="metric"><div class="k">bracket width</div><div class="v dim" id="m-width">—</div></div>
+    </div>
+    </div>
+    <div class="lablog" id="lablog"><div class="row"><span class="msg">— lab log idle —</span></div></div>
     </div>
   </div>
 </section>
 
 <!-- ============ SCALING ============ -->
-<section>
+<section id="sec-scaling" style="display:none">
   <div class="sec-label"><span>The Power Law</span><span class="n">04</span></div>
   <div class="panel">
+    <div class="scale-grid">
+    <div>
     <canvas id="cv-scaling" height="300"></canvas>
     <div class="canvas-cap">
       <span class="key"><span class="swatch" style="background:var(--amber)"></span>measured ln M vs ln(p−p*)</span>
       <span class="key"><span class="swatch" style="background:var(--violet)"></span>fit</span>
       <span class="key"><span class="swatch" style="background:var(--cyan)"></span>slope 0.374 reference</span>
     </div>
-    <div class="result-strip">
+    </div>
+    <div>
+    <div class="result-strip" style="margin-top:0">
       <div class="metric"><div class="k">γ measured</div><div class="v" id="m-gamma">—</div></div>
       <div class="metric"><div class="k">γ literature</div><div class="v" style="color:var(--cyan)">0.374</div></div>
     </div>
-    <div class="footnote" id="scaling-note">Run the bisection first, then the scaling study: it launches supercritical runs at log-spaced distances above p* and fits the slope. On a uniform 800-point grid expect the right ballpark, not four digits: Choptuik needed adaptive mesh refinement to nail it.</div>
+    <div class="ctl-row" style="margin-top:12px"><button class="mini" id="btn-scaling-reset">reset</button></div>
+    <div class="footnote" id="scaling-note">Run the bisection first, then the scaling study: it launches supercritical runs at log-spaced distances above p* and fits the slope. On a uniform 800-point grid expect the right ballpark, not four digits — Choptuik needed adaptive mesh refinement to nail it.</div>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PHASE ============ -->
+<section>
+  <div class="sec-label"><span>Phase Space</span><span class="n">05</span></div>
+  <div class="panel">
+    <p class="prose" style="margin-bottom:10px;max-width:76ch">The deepest view of criticality: plot the field at the origin against its velocity. Every run traces a trajectory in this plane, and the critical solution is a <b>saddle</b> — an orbit with exactly one unstable direction. Near-critical runs shadow it, loop with it, then get thrown off: <b style="color:var(--green)">green</b> to dispersal, <b style="color:var(--red)">red</b> to collapse. The exponent from the power law is hiding here too: <b>γ = 1/λ</b>, the inverse growth rate of the saddle's single unstable mode.</p>
+    <div class="ctl-row"><button class="go" id="btn-phase">◉ Draw phase portrait</button><button class="mini" id="btn-phase-reset">reset</button></div>
+    <div id="phase-body" style="display:none">
+    <canvas id="cv-phase" height="330" style="margin-top:12px"></canvas>
+    <div class="canvas-cap">
+      <span class="key"><span class="swatch" style="background:var(--green)"></span>subcritical</span>
+      <span class="key"><span class="swatch" style="background:var(--red)"></span>supercritical</span>
+      <span class="key">brightness = time · asinh axes</span>
+    </div>
+    </div>
+    <div class="footnote">Launches eight solves straddling p* at |p−p*|/p* = 3×10⁻² … 3×10⁻⁵. The tighter the pair, the longer they travel together before the unstable mode separates them — that shared stretch <i>is</i> the critical solution. This is the renormalization-group picture in miniature: the critical solution is a fixed point of the zoom, its echoes a limit cycle, and γ a critical exponent in the same sense as boiling water. If p* hasn't been found yet, a quick bisection runs first.</div>
   </div>
 </section>
 
 <!-- ============ READING ============ -->
 <section>
-  <div class="sec-label"><span>What You're Seeing</span><span class="n">05</span></div>
-  <div class="prose panel">
-    <p><b>The knife edge.</b> Below p*, gravity loses: the pulse implodes through the origin and re-explodes to infinity, leaving flat space. Above p*, gravity wins: 2m/r pins to 1 and a horizon forms. Exactly at p* sits the critical solution: a universal attractor that has forgotten everything about your initial data.</p>
-    <p><b>The echoes.</b> Watch φ(0,t) on a near-critical run: the field rings at the origin, each oscillation ~31× faster and smaller than the last. In the variables (x, τ) that's an exact period-Δ repetition: <span class="hl">a fractal falling straight out of Einstein's equations</span>. A uniform grid resolves the first echo or two; Choptuik's adaptive code marched through dozens, which is precisely why the discovery needed him.</p>
-    <p><b>Why it matters for the blank zone.</b> The critical solution is a naked, self-similar spacetime region where curvature climbs without bound, classically it cascades through every scale on the ruler, from the star all the way down toward Planck. It's the cleanest mathematical thread we have that runs continuously into the unmapped basement. Whatever cuts the cascade off is, by definition, quantum gravity.</p>
+  <div class="sec-label"><span>What You're Seeing</span><span class="n">06</span></div>
+  <div class="prose panel reading">
+    <p><b>The knife edge.</b> Below p*, gravity loses: the pulse implodes through the origin and re-explodes to infinity, leaving flat space. Above p*, gravity wins: 2m/r pins to 1 and a horizon forms. Exactly at p* sits the critical solution — a universal attractor that has forgotten everything about your initial data.</p>
+    <p><b>The echoes.</b> Watch φ(0,t) on a near-critical run: the field rings at the origin, each oscillation ~31× faster and smaller than the last. In the variables (x, τ) that's an exact period-Δ repetition — <span class="hl">a fractal falling straight out of Einstein's equations</span>. A uniform grid resolves the first echo or two; Choptuik's adaptive code marched through dozens, which is precisely why the discovery needed him.</p>
+    <p><b>Why it matters for the blank zone.</b> The critical solution is a naked, self-similar spacetime region where curvature climbs without bound — classically it cascades through every scale on the ruler, from the star all the way down toward Planck. It's the cleanest mathematical thread we have that runs continuously into the unmapped basement. Whatever cuts the cascade off is, by definition, quantum gravity.</p>
     <p style="margin-bottom:0"><b>Same math as boiling water.</b> γ is a critical exponent in the exact sense of phase transitions; the black-hole threshold is a second-order transition with M as the order parameter, and the echoes are a discrete version of the scale-invariance at a critical point. The universe reuses the pattern.</p>
   </div>
 </section>
@@ -396,7 +465,9 @@ function resetSim(){
   sim=makeState(); initData(sim,curAmp); centralHist=[[0,sim.phi[0],0]];
   statusEl.className='status';
   statusEl.textContent=`p = ${curAmp.toFixed(5)}   ·   t = 0.0   ·   ready`;
-  drawField(); drawCentral();
+  wellScale=1e-3;
+  if(typeof phaseCollapse==='function') phaseCollapse();
+  drawField(); drawCentral(); drawSpace(); drawWell();
 }
 
 function xMap(r,w){
@@ -495,12 +566,129 @@ document.getElementById('btn-run').addEventListener('click',e=>{
       statusEl.className='status';
       statusEl.textContent=`p = ${curAmp.toFixed(5)}   ·   t = ${sim.t.toFixed(1)}   ·   max 2m/r = ${h.max2mr.toFixed(3)}`;
     }
-    drawField(); drawCentral();
+    drawField(); drawCentral(); drawSpace(); drawWell();
     if(ended){ running=false; document.getElementById('btn-run').textContent='▶ Run collapse'; return; }
     animId=requestAnimationFrame(frame);
   };
   animId=requestAnimationFrame(frame);
 });
+
+/* ================= Space view ================= */
+const cvS=document.getElementById('cv-space'), cvW=document.getElementById('cv-well');
+const ZOOMS=[16,4,1]; let zoomIdx=0, wellScale=1e-3;
+document.getElementById('btn-zoom').addEventListener('click',e=>{
+  zoomIdx=(zoomIdx+1)%ZOOMS.length;
+  e.target.textContent='zoom ×'+[1,4,16][zoomIdx];
+  e.target.classList.toggle('on',zoomIdx>0);
+  drawSpace(); drawWell();
+});
+function sampleAt(arr,r){ const x=Math.max(0,Math.min(r/dr,N-1e-9)), i=Math.floor(x), f=x-i; return arr[i]*(1-f)+arr[i+1]*f; }
+function rhoAt(r){ const P=sampleAt(sim.Phi,r), Q=sampleAt(sim.Pi,r), A=sampleAt(sim.a,r); return (P*P+Q*Q)/(2*A*A); }
+
+function drawSpace(){
+  const {ctx,w,h}=fitCanvas(cvS);
+  ctx.clearRect(0,0,w,h);
+  const Rv=ZOOMS[zoomIdx], cx=w/2, cy=h/2, Rpx=Math.min(w,h)/2-12;
+  const px=r=>Rpx*r/Rv;
+  // spokes
+  ctx.strokeStyle='#1c2440'; ctx.lineWidth=1;
+  for(let k=0;k<12;k++){ const th=k*Math.PI/6;
+    ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(cx+Rpx*Math.cos(th),cy+Rpx*Math.sin(th)); ctx.stroke(); }
+  // rings at equal PROPER distance — the geometry made visible
+  ctx.strokeStyle='#33406e';
+  let L=0, next=Rv/8, drawn=0;
+  for(let i=0;i<N && drawn<48;i++){
+    const rmid=rr[i]+dr/2; if(rmid>Rv) break;
+    L+=sim.a[i]*dr;
+    while(L>=next && drawn<48){
+      ctx.beginPath(); ctx.arc(cx,cy,px(rmid),0,7); ctx.stroke();
+      next+=Rv/8; drawn++;
+    }
+  }
+  // energy glow + lapse veil
+  const M=150, rhos=new Float64Array(M+1); let rhoMax=1e-12;
+  for(let k=1;k<=M;k++){ rhos[k]=rhoAt(Rv*k/M); if(rhos[k]>rhoMax)rhoMax=rhos[k]; }
+  const alOut=sampleAt(sim.al,Rv);
+  const lw=Rpx/M+1.0;
+  for(let k=1;k<=M;k++){
+    const r=Rv*k/M, rp=px(r);
+    const g=Math.pow(rhos[k]/rhoMax,0.45);
+    if(g>0.02){ ctx.globalAlpha=Math.min(0.9,g); ctx.strokeStyle=css('--amber'); ctx.lineWidth=lw;
+      ctx.beginPath(); ctx.arc(cx,cy,rp,0,7); ctx.stroke(); }
+    const lap=sampleAt(sim.al,r)/Math.max(alOut,1e-12);
+    const dk=Math.max(0,Math.min(0.82,(1-lap)));
+    if(dk>0.04){ ctx.globalAlpha=dk; ctx.strokeStyle='#000'; ctx.lineWidth=lw;
+      ctx.beginPath(); ctx.arc(cx,cy,rp,0,7); ctx.stroke(); }
+  }
+  ctx.globalAlpha=1;
+  // horizon
+  const hz=horizonScan(sim);
+  if(hz.max2mr>0.9 && hz.rAt<=Rv){
+    const formed=statusEl.classList.contains('super');
+    if(formed){
+      ctx.fillStyle='#000'; ctx.beginPath(); ctx.arc(cx,cy,px(hz.rAt),0,7); ctx.fill();
+      ctx.strokeStyle=css('--red'); ctx.lineWidth=2;
+      ctx.beginPath(); ctx.arc(cx,cy,px(hz.rAt),0,7); ctx.stroke();
+    } else {
+      ctx.strokeStyle=css('--red'); ctx.setLineDash([5,4]); ctx.lineWidth=1.5;
+      ctx.beginPath(); ctx.arc(cx,cy,px(hz.rAt),0,7); ctx.stroke(); ctx.setLineDash([]);
+    }
+  }
+  ctx.fillStyle=css('--faint'); ctx.font='10px IBM Plex Mono';
+  ctx.fillText('overhead slice · view r < '+Rv, 8, 13);
+  ctx.fillText('t = '+sim.t.toFixed(1), w-66, 13);
+}
+
+function drawWell(){
+  const {ctx,w,h}=fitCanvas(cvW);
+  ctx.clearRect(0,0,w,h);
+  const Rv=ZOOMS[zoomIdx], M=160;
+  const zs=new Float64Array(M+1), rhos=new Float64Array(M+1);
+  let z=0, rhoMax=1e-12;
+  for(let k=1;k<=M;k++){
+    const r=Rv*k/M, A=sampleAt(sim.a,r);
+    z+=Math.sqrt(Math.max(A*A-1,0))*(Rv/M);
+    zs[k]=z; rhos[k]=rhoAt(r); if(rhos[k]>rhoMax)rhoMax=rhos[k];
+  }
+  wellScale=Math.max(wellScale,zs[M],0.3);
+  const topY=18, depthPx=h-36;
+  const X=r=>w/2+(w/2-10)*r/Rv;
+  const Yk=k=>topY+depthPx*(zs[M]-zs[k])/wellScale;
+  // flat-space rim reference
+  ctx.strokeStyle='#1c2440'; ctx.setLineDash([3,5]);
+  ctx.beginPath(); ctx.moveTo(10,topY); ctx.lineTo(w-10,topY); ctx.stroke(); ctx.setLineDash([]);
+  // the sheet
+  ctx.strokeStyle=css('--cyan'); ctx.lineWidth=1.7; ctx.beginPath();
+  for(let k=-M;k<=M;k++){
+    const x=X(Rv*k/M), y=Yk(Math.abs(k));
+    k===-M?ctx.moveTo(x,y):ctx.lineTo(x,y);
+  }
+  ctx.stroke();
+  // energy riding the sheet
+  ctx.lineWidth=3.2;
+  for(let k=-M+1;k<=M;k++){
+    const g=Math.pow(rhos[Math.abs(k)]/rhoMax,0.45);
+    if(g<=0.03) continue;
+    ctx.globalAlpha=Math.min(0.9,g); ctx.strokeStyle=css('--amber');
+    ctx.beginPath();
+    ctx.moveTo(X(Rv*(k-1)/M),Yk(Math.abs(k-1)));
+    ctx.lineTo(X(Rv*k/M),Yk(Math.abs(k)));
+    ctx.stroke();
+  }
+  ctx.globalAlpha=1;
+  // horizon ticks
+  const hz=horizonScan(sim);
+  if(hz.max2mr>0.9 && hz.rAt<=Rv){
+    ctx.strokeStyle=css('--red'); ctx.setLineDash([3,3]);
+    for(const sgn of [-1,1]){
+      const x=X(sgn*hz.rAt);
+      ctx.beginPath(); ctx.moveTo(x,topY); ctx.lineTo(x,h-10); ctx.stroke();
+    }
+    ctx.setLineDash([]);
+  }
+  ctx.fillStyle=css('--faint'); ctx.font='10px IBM Plex Mono';
+  ctx.fillText('depth of the well: '+zs[M].toFixed(2)+' (proper length excess)', 8, h-4);
+}
 
 /* ================= Bisection ================= */
 const lablog=document.getElementById('lablog');
@@ -536,7 +724,7 @@ document.getElementById('btn-bisect').addEventListener('click',async ()=>{
   logRow(`<span class="msg">p* ≈ ${pStar.toFixed(8)}  ·  every digit here cost one full solve of Einstein's equations</span>`);
   // set slider near critical for echo watching
   ampSlider.value=Math.log10(pStar*1.0005).toFixed(4); setAmp(); resetSim();
-  logRow('<span class="msg">slider parked just above p*, hit Run and watch φ(0,t) ring</span>');
+  logRow('<span class="msg">slider parked just above p* — hit Run and watch φ(0,t) ring</span>');
   document.getElementById('btn-scaling').disabled=false;
   btn.disabled=false;
 });
@@ -557,7 +745,7 @@ document.getElementById('btn-scaling').addEventListener('click',async ()=>{
       pts.push([Math.log(A-pStar),Math.log(res.M)]);
       logRow(`<span class="it">·</span><span class="amp">p−p*=${(A-pStar).toExponential(2)}</span><span class="SUP">M=${res.M.toFixed(5)}</span>`);
     } else if(res.outcome==='SUP'){
-      logRow(`<span class="it">·</span><span class="amp">p−p*=${(A-pStar).toExponential(2)}</span><span style="color:var(--faint)">M=${res.M.toFixed(4)} · horizon under grid resolution, excluded</span>`);
+      logRow(`<span class="it">·</span><span class="amp">p−p*=${(A-pStar).toExponential(2)}</span><span style="color:var(--faint)">M=${res.M.toFixed(4)} — horizon under grid resolution, excluded</span>`);
     }
   }
   if(pts.length>=3){
@@ -566,12 +754,14 @@ document.getElementById('btn-scaling').addEventListener('click',async ()=>{
     for(const[x,y]of pts){sx+=x;sy+=y;sxx+=x*x;sxy+=x*y;}
     const slope=(n*sxy-sx*sy)/(n*sxx-sx*sx), icpt=(sy-slope*sx)/n;
     document.getElementById('m-gamma').textContent=slope.toFixed(3);
+    const sec=document.getElementById('sec-scaling'); sec.style.display='';
     drawScaling(pts,slope,icpt);
-    logRow(`<span class="msg">fit: γ ≈ ${slope.toFixed(3)}   (Choptuik: 0.374, AMR territory)</span>`);
+    sec.scrollIntoView({behavior:'smooth',block:'nearest'});
+    logRow(`<span class="msg">fit: γ ≈ ${slope.toFixed(3)}   (Choptuik: 0.374 — AMR territory)</span>`);
     document.getElementById('scaling-note').textContent=
-      `Fitted over ${n} runs. The residual wiggle around the fit line is real physics (the fine structure with period Δ/(2γ) ≈ 4.61), though at this resolution grid error contributes too.`;
+      `Fitted over ${n} runs. The residual wiggle around the fit line is real physics — the fine structure with period Δ/(2γ) ≈ 4.61 — though at this resolution grid error contributes too.`;
   } else {
-    logRow('<span class="msg">not enough clean supercritical runs, try re-running bisection</span>');
+    logRow('<span class="msg">not enough clean supercritical runs — try re-running bisection</span>');
   }
   btn.disabled=false;
 });
@@ -599,8 +789,99 @@ function drawScaling(pts,slope,icpt){
   for(const[x,y]of pts){ctx.beginPath();ctx.arc(X(x),Y(y),3.4,0,7);ctx.fill();}
 }
 
+/* ================= Phase portrait ================= */
+async function quickBisect(iters){
+  logRow('<span class="msg">phase portrait needs p* — quick bisection first…</span>');
+  let lo=0.005, hi=0.30;
+  let rLo=silentRun(lo), rHi=silentRun(hi);
+  while(rLo.outcome==='SUP'){lo/=3;rLo=silentRun(lo);}
+  while(rHi.outcome==='SUB'&&hi<2){hi*=1.8;rHi=silentRun(hi);}
+  for(let i=0;i<iters;i++){
+    await new Promise(r=>setTimeout(r,8));
+    const mid=0.5*(lo+hi);
+    (silentRun(mid).outcome==='SUP')?(hi=mid):(lo=mid);
+  }
+  pStar=0.5*(lo+hi); bracket=[lo,hi];
+  document.getElementById('m-pstar').textContent=pStar.toFixed(8);
+  document.getElementById('m-width').textContent=(hi-lo).toExponential(2);
+  document.getElementById('btn-scaling').disabled=false;
+  logRow(`<span class="msg">p* ≈ ${pStar.toFixed(8)}</span>`);
+}
+
+function trackedRun(A){
+  const S=makeState(); initData(S,A);
+  const pts=[]; const maxSteps=Math.ceil(TMAX/dt);
+  for(let st=0;st<maxSteps;st++){
+    step(S);
+    if((st%3)===0) pts.push([S.phi[0], S.al[0]*S.Pi[0]/S.a[0]]);
+    if(!isFinite(S.Pi[2])) return {outcome:'SUP',pts};
+    if((st&7)===0){ const h=horizonScan(S); if(h.max2mr>HORIZON||S.al[0]<1e-5) return {outcome:'SUP',pts}; }
+  }
+  return {outcome:'SUB',pts};
+}
+
+document.getElementById('btn-phase').addEventListener('click', async ()=>{
+  const btn=document.getElementById('btn-phase'); btn.disabled=true;
+  try{
+    if(pStar===null) await quickBisect(18);
+    logRow('<span class="msg">phase portrait: family of runs straddling p*…</span>');
+    const eps=[3e-2,3e-3,3e-4,3e-5], trajs=[];
+    for(const e of eps){ for(const sgn of [-1,1]){
+      await new Promise(r=>setTimeout(r,8));
+      const res=trackedRun(pStar*(1+sgn*e));
+      trajs.push({outcome:res.outcome, pts:res.pts, tight:e<=3e-4});
+      logRow(`<span class="it">·</span><span class="amp">p−p* = ${sgn>0?'+':'−'}${(e*pStar).toExponential(1)}</span><span class="${res.outcome==='SUP'?'SUP':'SUB'}">${res.outcome}</span>`);
+    }}
+    document.getElementById('phase-body').style.display='';
+    drawPhase(trajs);
+  } finally { btn.disabled=false; }
+});
+
+function drawPhase(trajs){
+  const {ctx,w,h}=fitCanvas(document.getElementById('cv-phase'));
+  ctx.clearRect(0,0,w,h);
+  const s1=0.05, s2=0.05, T=v=>Math.asinh(v);
+  let x0=1e9,x1=-1e9,y0=1e9,y1=-1e9;
+  for(const t of trajs) for(const[p,q]of t.pts){
+    const x=T(p/s1), y=T(q/s2);
+    if(x<x0)x0=x; if(x>x1)x1=x; if(y<y0)y0=y; if(y>y1)y1=y;
+  }
+  if(x0>x1){x0=-1;x1=1;y0=-1;y1=1;}
+  const pX=(x1-x0)*0.07+1e-6, pY=(y1-y0)*0.07+1e-6; x0-=pX;x1+=pX;y0-=pY;y1+=pY;
+  const X=x=>10+(w-20)*(x-x0)/(x1-x0), Y=y=>h-14-(h-28)*(y-y0)/(y1-y0);
+  ctx.strokeStyle=css('--line'); ctx.lineWidth=1;
+  ctx.beginPath();
+  ctx.moveTo(X(0),12); ctx.lineTo(X(0),h-12);
+  ctx.moveTo(10,Y(0)); ctx.lineTo(w-10,Y(0));
+  ctx.stroke();
+  ctx.fillStyle=css('--faint'); ctx.font='10px IBM Plex Mono';
+  ctx.fillText('φ(0) →', w-54, Y(0)-5);
+  ctx.fillText('φ̇(0)', X(0)+7, 20);
+  for(const t of trajs){
+    const col=t.outcome==='SUP'?css('--red'):css('--green');
+    const n=t.pts.length; if(n<2) continue;
+    ctx.strokeStyle=col; ctx.lineWidth=t.tight?1.5:1.0;
+    let px=X(T(t.pts[0][0]/s1)), py=Y(T(t.pts[0][1]/s2));
+    for(let i=1;i<n;i++){
+      const nx=X(T(t.pts[i][0]/s1)), ny=Y(T(t.pts[i][1]/s2));
+      ctx.globalAlpha=0.10+0.78*(i/n);
+      ctx.beginPath(); ctx.moveTo(px,py); ctx.lineTo(nx,ny); ctx.stroke();
+      px=nx; py=ny;
+    }
+  }
+  ctx.globalAlpha=1;
+}
+
+/* ================= section resets ================= */
+function phaseCollapse(){ document.getElementById('phase-body').style.display='none'; }
+document.getElementById('btn-phase-reset').addEventListener('click', phaseCollapse);
+document.getElementById('btn-scaling-reset').addEventListener('click', ()=>{
+  document.getElementById('sec-scaling').style.display='none';
+  document.getElementById('m-gamma').textContent='—';
+});
+
 /* ================= boot ================= */
-window.addEventListener('resize',()=>{drawField();drawCentral();});
+window.addEventListener('resize',()=>{drawField();drawCentral();drawSpace();drawWell();});
 resetSim();
 </script>
 <script>
