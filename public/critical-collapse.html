@@ -127,7 +127,7 @@
 <header>
   <div class="eyebrow">Numerical Relativity · 1+1D</div>
   <h1>Choptuik Critical Collapse <span class="thin">Lab</span></h1>
-  <p class="sub">A live integration of Einstein's equations coupled to a massless scalar field, in spherical symmetry — the exact system where Choptuik found the echoes in 1993. Nothing below is pre-rendered: your device is solving the field equations.</p>
+  <p class="sub">A live integration of Einstein's equations coupled to a massless scalar field, in spherical symmetry, the exact system where Choptuik found the echoes in 1993. Nothing below is pre-rendered: your device is solving the field equations.</p>
   <div class="constants">
     <div class="chip">γ ≈ <b>0.374</b> · mass exponent</div>
     <div class="chip">Δ ≈ <b>3.4453</b> · echo period</div>
@@ -141,25 +141,25 @@
 
   <div class="eq-grid">
   <div class="eqcard">
-    <h3>Geometry — polar-areal gauge</h3>
-    <div class="note">Two metric functions, both fixed on each time slice by constraints. No gravitational waves in spherical symmetry — geometry is a slave to the matter.</div>
+    <h3>Geometry · polar-areal gauge</h3>
+    <div class="note">Two metric functions, both fixed on each time slice by constraints. No gravitational waves in spherical symmetry: geometry is a slave to the matter.</div>
     <div class="eq" data-tex="ds^2 = -\alpha^2(t,r)\,dt^2 + a^2(t,r)\,dr^2 + r^2 d\Omega^2"></div>
   </div>
 
   <div class="eqcard">
-    <h3>Matter — massless scalar field</h3>
+    <h3>Matter · massless scalar field</h3>
     <div class="note">First-order variables: Φ is the field's slope, Π its momentum.</div>
     <div class="eq" data-tex="\Box\varphi = 0, \qquad \Phi \equiv \partial_r \varphi, \qquad \Pi \equiv \tfrac{a}{\alpha}\,\partial_t \varphi"></div>
   </div>
 
   <div class="eqcard">
-    <h3>Evolution — a wave equation on curved spacetime</h3>
+    <h3>Evolution · a wave equation on curved spacetime</h3>
     <div class="eq" data-tex="\partial_t \Phi = \partial_r\!\Big(\tfrac{\alpha}{a}\,\Pi\Big), \qquad \partial_t \Pi = \frac{1}{r^2}\,\partial_r\!\Big(r^2\,\tfrac{\alpha}{a}\,\Phi\Big)"></div>
   </div>
 
   <div class="eqcard">
-    <h3>Constraints — geometry responds instantly</h3>
-    <div class="note">Radial ODEs solved fresh on every slice. The Φ²+Π² source is the field's energy; note it appears in <i>both</i> — energy curves space and warps time.</div>
+    <h3>Constraints · geometry responds instantly</h3>
+    <div class="note">Radial ODEs solved fresh on every slice. The Φ²+Π² source is the field's energy; note it appears in <i>both</i>: energy curves space and warps time.</div>
     <div class="eq" data-tex="\frac{a'}{a} = \frac{1-a^2}{2r} + 2\pi r\,(\Phi^2+\Pi^2)"></div>
     <div class="eq" data-tex="\frac{\alpha'}{\alpha} = \frac{a^2-1}{2r} + 2\pi r\,(\Phi^2+\Pi^2)"></div>
   </div>
@@ -174,9 +174,9 @@
     <h3>Choptuik's discoveries</h3>
     <div class="note">Tune any parameter p of the initial data to the threshold p*. Just above it, the black hole mass obeys a power law with a <b>universal</b> exponent:</div>
     <div class="eq" data-tex="M_{\rm BH} \simeq C\,|p - p^*|^{\gamma}, \qquad \gamma \approx 0.374"></div>
-    <div class="note" style="margin-top:8px">And the critical solution echoes — discretely self-similar. In log time τ and scale-free coordinate x, it repeats exactly, each echo 31× smaller and faster:</div>
+    <div class="note" style="margin-top:8px">And the critical solution echoes, discretely self-similar. In log time τ and scale-free coordinate x, it repeats exactly, each echo 31× smaller and faster:</div>
     <div class="eq" data-tex="Z^*(x,\ \tau + \Delta) = Z^*(x,\ \tau), \qquad \tau = -\ln(t^*-t), \quad \Delta \approx 3.4453"></div>
-    <div class="note" style="margin-top:8px">The two numbers are linked: the mass law carries a tiny periodic wiggle with period Δ/(2γ) ≈ 4.61 in ln|p−p*| — the echoes' fingerprint on the scaling law.</div>
+    <div class="note" style="margin-top:8px">The two numbers are linked: the mass law carries a tiny periodic wiggle with period Δ/(2γ) ≈ 4.61 in ln|p−p*|, the echoes' fingerprint on the scaling law.</div>
   </div>
   </div>
 </section>
@@ -190,12 +190,12 @@
     <canvas id="cv-space" height="330"></canvas>
     <div class="canvas-cap">
       <span class="key"><span class="swatch" style="background:var(--amber)"></span>field energy</span>
-      <span class="key"><span class="swatch" style="background:#33406e"></span>rings = equal steps of real distance — they crowd where space stretches</span>
+      <span class="key"><span class="swatch" style="background:#33406e"></span>rings = equal steps of real distance: they crowd where space stretches</span>
       <span class="key"><span class="swatch" style="background:#000;border:1px solid var(--line)"></span>darkening = time slowing (lapse)</span>
       <span class="key"><span class="swatch" style="background:var(--red)"></span>horizon</span>
     </div>
     <canvas id="cv-well" height="150"></canvas>
-    <div class="canvas-cap"><span class="key"><span class="swatch" style="background:var(--cyan)"></span>the well — embedding cross-section of space itself, computed live from the metric: depth = ∫√(a²−1) dr</span></div>
+    <div class="canvas-cap"><span class="key"><span class="swatch" style="background:var(--cyan)"></span>the well: embedding cross-section of space itself, computed live from the metric: depth = ∫√(a²−1) dr</span></div>
     </div>
     <div class="sim-col">
     <canvas id="cv-field" height="300"></canvas>
@@ -205,7 +205,7 @@
       <span class="key"><span class="swatch" style="background:var(--red)"></span>2m/r = 1</span>
     </div>
     <canvas id="cv-central" height="120"></canvas>
-    <div class="canvas-cap"><span class="key"><span class="swatch" style="background:var(--amber)"></span>φ(0,t) — the field at the origin. Near-critical runs oscillate here: that's the first echo.</span></div>
+    <div class="canvas-cap"><span class="key"><span class="swatch" style="background:var(--amber)"></span>φ(0,t), the field at the origin. Near-critical runs oscillate here: that's the first echo.</span></div>
     </div>
     </div>
 
@@ -223,7 +223,7 @@
         <button class="toggle" id="btn-zoom">zoom ×1</button>
       </div>
     </div>
-    <div class="status" id="status">Ready. Grid: 800 points, polar-areal gauge, RK3, CFL 0.4. Pick an amplitude and run — or let the bisector hunt for p* below.</div>
+    <div class="status" id="status">Ready. Grid: 800 points, polar-areal gauge, RK3, CFL 0.4. Pick an amplitude and run, or let the bisector hunt for p* below.</div>
   </div>
 </section>
 
@@ -267,7 +267,7 @@
       <div class="metric"><div class="k">γ literature</div><div class="v" style="color:var(--cyan)">0.374</div></div>
     </div>
     <div class="ctl-row" style="margin-top:12px"><button class="mini" id="btn-scaling-reset">reset</button></div>
-    <div class="footnote" id="scaling-note">Run the bisection first, then the scaling study: it launches supercritical runs at log-spaced distances above p* and fits the slope. On a uniform 800-point grid expect the right ballpark, not four digits — Choptuik needed adaptive mesh refinement to nail it.</div>
+    <div class="footnote" id="scaling-note">Run the bisection first, then the scaling study: it launches supercritical runs at log-spaced distances above p* and fits the slope. On a uniform 800-point grid expect the right ballpark, not four digits: Choptuik needed adaptive mesh refinement to nail it.</div>
     </div>
     </div>
   </div>
@@ -277,7 +277,7 @@
 <section>
   <div class="sec-label"><span>Phase Space</span><span class="n">05</span></div>
   <div class="panel">
-    <p class="prose" style="margin-bottom:10px;max-width:76ch">The deepest view of criticality: plot the field at the origin against its velocity. Every run traces a trajectory in this plane, and the critical solution is a <b>saddle</b> — an orbit with exactly one unstable direction. Near-critical runs shadow it, loop with it, then get thrown off: <b style="color:var(--green)">green</b> to dispersal, <b style="color:var(--red)">red</b> to collapse. The exponent from the power law is hiding here too: <b>γ = 1/λ</b>, the inverse growth rate of the saddle's single unstable mode.</p>
+    <p class="prose" style="margin-bottom:10px;max-width:76ch">The deepest view of criticality: plot the field at the origin against its velocity. Every run traces a trajectory in this plane, and the critical solution is a <b>saddle</b>, an orbit with exactly one unstable direction. Near-critical runs shadow it, loop with it, then get thrown off: <b style="color:var(--green)">green</b> to dispersal, <b style="color:var(--red)">red</b> to collapse. The exponent from the power law is hiding here too: <b>γ = 1/λ</b>, the inverse growth rate of the saddle's single unstable mode.</p>
     <div class="ctl-row"><button class="go" id="btn-phase">◉ Draw phase portrait</button><button class="mini" id="btn-phase-reset">reset</button></div>
     <div id="phase-body" style="display:none">
     <canvas id="cv-phase" height="330" style="margin-top:12px"></canvas>
@@ -287,7 +287,7 @@
       <span class="key">brightness = time · asinh axes</span>
     </div>
     </div>
-    <div class="footnote">Launches eight solves straddling p* at |p−p*|/p* = 3×10⁻² … 3×10⁻⁵. The tighter the pair, the longer they travel together before the unstable mode separates them — that shared stretch <i>is</i> the critical solution. This is the renormalization-group picture in miniature: the critical solution is a fixed point of the zoom, its echoes a limit cycle, and γ a critical exponent in the same sense as boiling water. If p* hasn't been found yet, a quick bisection runs first.</div>
+    <div class="footnote">Launches eight solves straddling p* at |p−p*|/p* = 3×10⁻² … 3×10⁻⁵. The tighter the pair, the longer they travel together before the unstable mode separates them: that shared stretch <i>is</i> the critical solution. This is the renormalization-group picture in miniature: the critical solution is a fixed point of the zoom, its echoes a limit cycle, and γ a critical exponent in the same sense as boiling water. If p* hasn't been found yet, a quick bisection runs first.</div>
   </div>
 </section>
 
@@ -295,9 +295,9 @@
 <section>
   <div class="sec-label"><span>What You're Seeing</span><span class="n">06</span></div>
   <div class="prose panel reading">
-    <p><b>The knife edge.</b> Below p*, gravity loses: the pulse implodes through the origin and re-explodes to infinity, leaving flat space. Above p*, gravity wins: 2m/r pins to 1 and a horizon forms. Exactly at p* sits the critical solution — a universal attractor that has forgotten everything about your initial data.</p>
-    <p><b>The echoes.</b> Watch φ(0,t) on a near-critical run: the field rings at the origin, each oscillation ~31× faster and smaller than the last. In the variables (x, τ) that's an exact period-Δ repetition — <span class="hl">a fractal falling straight out of Einstein's equations</span>. A uniform grid resolves the first echo or two; Choptuik's adaptive code marched through dozens, which is precisely why the discovery needed him.</p>
-    <p><b>Why it matters for the blank zone.</b> The critical solution is a naked, self-similar spacetime region where curvature climbs without bound — classically it cascades through every scale on the ruler, from the star all the way down toward Planck. It's the cleanest mathematical thread we have that runs continuously into the unmapped basement. Whatever cuts the cascade off is, by definition, quantum gravity.</p>
+    <p><b>The knife edge.</b> Below p*, gravity loses: the pulse implodes through the origin and re-explodes to infinity, leaving flat space. Above p*, gravity wins: 2m/r pins to 1 and a horizon forms. Exactly at p* sits the critical solution, a universal attractor that has forgotten everything about your initial data.</p>
+    <p><b>The echoes.</b> Watch φ(0,t) on a near-critical run: the field rings at the origin, each oscillation ~31× faster and smaller than the last. In the variables (x, τ) that's an exact period-Δ repetition: <span class="hl">a fractal falling straight out of Einstein's equations</span>. A uniform grid resolves the first echo or two; Choptuik's adaptive code marched through dozens, which is precisely why the discovery needed him.</p>
+    <p><b>Why it matters for the blank zone.</b> The critical solution is a naked, self-similar spacetime region where curvature climbs without bound: classically it cascades through every scale on the ruler, from the star all the way down toward Planck. It's the cleanest mathematical thread we have that runs continuously into the unmapped basement. Whatever cuts the cascade off is, by definition, quantum gravity.</p>
     <p style="margin-bottom:0"><b>Same math as boiling water.</b> γ is a critical exponent in the exact sense of phase transitions; the black-hole threshold is a second-order transition with M as the order parameter, and the echoes are a discrete version of the scale-invariance at a critical point. The universe reuses the pattern.</p>
   </div>
 </section>
@@ -724,7 +724,7 @@ document.getElementById('btn-bisect').addEventListener('click',async ()=>{
   logRow(`<span class="msg">p* ≈ ${pStar.toFixed(8)}  ·  every digit here cost one full solve of Einstein's equations</span>`);
   // set slider near critical for echo watching
   ampSlider.value=Math.log10(pStar*1.0005).toFixed(4); setAmp(); resetSim();
-  logRow('<span class="msg">slider parked just above p* — hit Run and watch φ(0,t) ring</span>');
+  logRow('<span class="msg">slider parked just above p*: hit Run and watch φ(0,t) ring</span>');
   document.getElementById('btn-scaling').disabled=false;
   btn.disabled=false;
 });
@@ -745,7 +745,7 @@ document.getElementById('btn-scaling').addEventListener('click',async ()=>{
       pts.push([Math.log(A-pStar),Math.log(res.M)]);
       logRow(`<span class="it">·</span><span class="amp">p−p*=${(A-pStar).toExponential(2)}</span><span class="SUP">M=${res.M.toFixed(5)}</span>`);
     } else if(res.outcome==='SUP'){
-      logRow(`<span class="it">·</span><span class="amp">p−p*=${(A-pStar).toExponential(2)}</span><span style="color:var(--faint)">M=${res.M.toFixed(4)} — horizon under grid resolution, excluded</span>`);
+      logRow(`<span class="it">·</span><span class="amp">p−p*=${(A-pStar).toExponential(2)}</span><span style="color:var(--faint)">M=${res.M.toFixed(4)} (horizon under grid resolution, excluded)</span>`);
     }
   }
   if(pts.length>=3){
@@ -757,11 +757,11 @@ document.getElementById('btn-scaling').addEventListener('click',async ()=>{
     const sec=document.getElementById('sec-scaling'); sec.style.display='';
     drawScaling(pts,slope,icpt);
     sec.scrollIntoView({behavior:'smooth',block:'nearest'});
-    logRow(`<span class="msg">fit: γ ≈ ${slope.toFixed(3)}   (Choptuik: 0.374 — AMR territory)</span>`);
+    logRow(`<span class="msg">fit: γ ≈ ${slope.toFixed(3)}   (Choptuik: 0.374, AMR territory)</span>`);
     document.getElementById('scaling-note').textContent=
-      `Fitted over ${n} runs. The residual wiggle around the fit line is real physics — the fine structure with period Δ/(2γ) ≈ 4.61 — though at this resolution grid error contributes too.`;
+      `Fitted over ${n} runs. The residual wiggle around the fit line is real physics (the fine structure with period Δ/(2γ) ≈ 4.61), though at this resolution grid error contributes too.`;
   } else {
-    logRow('<span class="msg">not enough clean supercritical runs — try re-running bisection</span>');
+    logRow('<span class="msg">not enough clean supercritical runs: try re-running bisection</span>');
   }
   btn.disabled=false;
 });
@@ -791,7 +791,7 @@ function drawScaling(pts,slope,icpt){
 
 /* ================= Phase portrait ================= */
 async function quickBisect(iters){
-  logRow('<span class="msg">phase portrait needs p* — quick bisection first…</span>');
+  logRow('<span class="msg">phase portrait needs p*: quick bisection first…</span>');
   let lo=0.005, hi=0.30;
   let rLo=silentRun(lo), rHi=silentRun(hi);
   while(rLo.outcome==='SUP'){lo/=3;rLo=silentRun(lo);}
