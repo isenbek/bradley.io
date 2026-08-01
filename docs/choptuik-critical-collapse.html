@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Choptuik Critical Collapse Lab</title>
+<!-- KaTeX + IBM Plex vendored locally (public/vendor) — this instrument makes
+     zero external requests. -->
+<link rel="stylesheet" href="/vendor/katex/katex.min.css">
+<script src="/vendor/katex/katex.min.js"></script>
+<link rel="stylesheet" href="/vendor/ibm-plex/ibm-plex.css">
+<style>
+  :root{
+    --bg:#0a0d16; --panel:#101524; --panel2:#0d1120; --line:#1e2740;
+    --ink:#dce3f5; --dim:#8a94b8; --faint:#5a6485;
+    --amber:#f5a83c; --cyan:#4fc8e8; --red:#f25d6e; --green:#59d89a; --violet:#9b7bf2;
+    --mono:'IBM Plex Mono',ui-monospace,monospace;
+    --sans:'IBM Plex Sans',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.55;
+       padding:0 0 60px 0; overflow-x:hidden}
+  .wrap{max-width:760px;margin:0 auto;padding:0 14px}
+
+  header{padding:34px 0 10px}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.22em;color:var(--violet);text-transform:uppercase}
+  h1{font-size:30px;font-weight:700;letter-spacing:-.01em;line-height:1.12;margin:6px 0 8px}
+  h1 .thin{color:var(--dim);font-weight:400}
+  .sub{color:var(--dim);font-size:14px;max-width:60ch}
+  .constants{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+  .chip{font-family:var(--mono);font-size:12px;border:1px solid var(--line);border-radius:6px;
+        padding:5px 10px;color:var(--dim);background:var(--panel2)}
+  .chip b{color:var(--ink);font-weight:600}
+
+  section{margin-top:30px}
+  .sec-label{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+             color:var(--faint);border-bottom:1px solid var(--line);padding-bottom:7px;margin-bottom:14px;
+             display:flex;justify-content:space-between;align-items:baseline}
+  .sec-label .n{color:var(--violet)}
+
+  .eqcard{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 14px 12px;margin-bottom:10px}
+  .eqcard h3{font-size:13px;font-weight:600;color:var(--ink);margin-bottom:2px}
+  .eqcard .note{font-size:12.5px;color:var(--dim);margin-bottom:8px}
+  .eq{overflow-x:auto;padding:6px 2px;font-size:15px}
+  .eq::-webkit-scrollbar{height:4px}
+  .eq::-webkit-scrollbar-thumb{background:var(--line);border-radius:2px}
+  .katex{font-size:1.02em;color:var(--ink)}
+
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px}
+  canvas{width:100%;display:block;border-radius:8px;background:var(--panel2);touch-action:none}
+  .canvas-cap{font-family:var(--mono);font-size:11px;color:var(--faint);margin-top:6px;display:flex;gap:14px;flex-wrap:wrap}
+  .key{display:inline-flex;align-items:center;gap:5px}
+  .swatch{width:14px;height:3px;border-radius:2px;display:inline-block}
+
+  .controls{display:flex;flex-direction:column;gap:12px;margin-top:14px}
+  .ctl-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  label.ctl{font-family:var(--mono);font-size:12px;color:var(--dim)}
+  input[type=range]{flex:1;min-width:120px;accent-color:var(--amber);height:24px}
+  .amp-read{font-family:var(--mono);font-size:13px;color:var(--amber);min-width:9ch;text-align:right}
+  button{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--ink);
+         background:var(--panel2);border:1px solid var(--line);border-radius:8px;
+         padding:9px 14px;cursor:pointer;transition:border-color .15s}
+  button:active{border-color:var(--violet)}
+  button.primary{border-color:var(--amber);color:var(--amber)}
+  button.go{border-color:var(--violet);color:var(--violet)}
+  button:disabled{opacity:.4;pointer-events:none}
+  button.mini{padding:5px 10px;font-size:11px;color:var(--dim)}
+  .toggle{font-size:12px}
+  .toggle.on{border-color:var(--cyan);color:var(--cyan)}
+
+  .status{font-family:var(--mono);font-size:12.5px;margin-top:12px;padding:9px 11px;border-radius:8px;
+          border:1px solid var(--line);background:var(--panel2);color:var(--dim);white-space:pre-wrap}
+  .status.sub{border-color:rgba(89,216,154,.5);color:var(--green)}
+  .status.super{border-color:rgba(242,93,110,.55);color:var(--red)}
+
+  /* lab log — the signature */
+  .lablog{font-family:var(--mono);font-size:12px;line-height:1.7;background:var(--panel2);
+          border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin-top:12px;
+          max-height:230px;overflow-y:auto}
+  .lablog .row{display:flex;gap:10px;white-space:nowrap}
+  .lablog .it{color:var(--faint);min-width:3ch;text-align:right}
+  .lablog .amp{color:var(--ink)}
+  .lablog .SUB{color:var(--green)} .lablog .SUP{color:var(--red)}
+  .lablog .msg{color:var(--violet)}
+  .lablog::-webkit-scrollbar{width:4px}
+  .lablog::-webkit-scrollbar-thumb{background:var(--line)}
+
+  .result-strip{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+  .metric{flex:1;min-width:130px;background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:9px 11px}
+  .metric .k{font-family:var(--mono);font-size:10.5px;color:var(--faint);letter-spacing:.12em;text-transform:uppercase}
+  .metric .v{font-family:var(--mono);font-size:17px;color:var(--amber);margin-top:2px}
+  .metric .v.dim{color:var(--dim);font-size:13px}
+
+  .prose{color:var(--dim);font-size:14px}
+  .prose p{margin-bottom:10px}
+  .prose b{color:var(--ink);font-weight:600}
+  .prose .hl{color:var(--amber)}
+  .footnote{font-size:12px;color:var(--faint);margin-top:10px;border-left:2px solid var(--line);padding-left:10px;max-width:78ch}
+
+  /* ---- larger screens: spread the blocks across the width ---- */
+  .sim-col canvas{margin-top:14px}
+  .sim-col canvas:first-of-type{margin-top:0}
+  @media(min-width:900px){
+    .wrap{max-width:1160px}
+    /* equations flow into two balanced columns, cards never split */
+    .eq-grid{column-count:2;column-gap:16px}
+    .eq-grid .eqcard{break-inside:avoid}
+    /* live collapse: geometry views | field diagnostics */
+    .sim-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
+    /* hunt for p*: intro + controls | lab log */
+    .bisect-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
+    /* power law: plot | readout */
+    .scale-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:18px;align-items:center}
+    /* closing read: two text columns */
+    .reading{column-count:2;column-gap:30px}
+    .reading p{break-inside:avoid}
+  }
+  @media(max-width:899px){
+    .sim-col + .sim-col{margin-top:14px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">Numerical Relativity · 1+1D</div>
+  <h1>Choptuik Critical Collapse <span class="thin">Lab</span></h1>
+  <p class="sub">A live integration of Einstein's equations coupled to a massless scalar field, in spherical symmetry, the exact system where Choptuik found the echoes in 1993. Nothing below is pre-rendered: your device is solving the field equations.</p>
+  <div class="constants">
+    <div class="chip">γ ≈ <b>0.374</b> · mass exponent</div>
+    <div class="chip">Δ ≈ <b>3.4453</b> · echo period</div>
+    <div class="chip">e<sup>Δ</sup> ≈ <b>31.3</b> · shrink factor</div>
+  </div>
+</header>
+
+<!-- ============ EQUATIONS ============ -->
+<section>
+  <div class="sec-label"><span>The Equations</span><span class="n">01</span></div>
+
+  <div class="eq-grid">
+  <div class="eqcard">
+    <h3>Geometry · polar-areal gauge</h3>
+    <div class="note">Two metric functions, both fixed on each time slice by constraints. No gravitational waves in spherical symmetry: geometry is a slave to the matter.</div>
+    <div class="eq" data-tex="ds^2 = -\alpha^2(t,r)\,dt^2 + a^2(t,r)\,dr^2 + r^2 d\Omega^2"></div>
+  </div>
+
+  <div class="eqcard">
+    <h3>Matter · massless scalar field</h3>
+    <div class="note">First-order variables: Φ is the field's slope, Π its momentum.</div>
+    <div class="eq" data-tex="\Box\varphi = 0, \qquad \Phi \equiv \partial_r \varphi, \qquad \Pi \equiv \tfrac{a}{\alpha}\,\partial_t \varphi"></div>
+  </div>
+
+  <div class="eqcard">
+    <h3>Evolution · a wave equation on curved spacetime</h3>
+    <div class="eq" data-tex="\partial_t \Phi = \partial_r\!\Big(\tfrac{\alpha}{a}\,\Pi\Big), \qquad \partial_t \Pi = \frac{1}{r^2}\,\partial_r\!\Big(r^2\,\tfrac{\alpha}{a}\,\Phi\Big)"></div>
+  </div>
+
+  <div class="eqcard">
+    <h3>Constraints · geometry responds instantly</h3>
+    <div class="note">Radial ODEs solved fresh on every slice. The Φ²+Π² source is the field's energy; note it appears in <i>both</i>: energy curves space and warps time.</div>
+    <div class="eq" data-tex="\frac{a'}{a} = \frac{1-a^2}{2r} + 2\pi r\,(\Phi^2+\Pi^2)"></div>
+    <div class="eq" data-tex="\frac{\alpha'}{\alpha} = \frac{a^2-1}{2r} + 2\pi r\,(\Phi^2+\Pi^2)"></div>
+  </div>
+
+  <div class="eqcard">
+    <h3>Diagnostics</h3>
+    <div class="note">The mass inside radius r, and the horizon signal: a black hole is forming where 2m/r → 1.</div>
+    <div class="eq" data-tex="m(r) = \frac{r}{2}\Big(1 - \frac{1}{a^2}\Big), \qquad \frac{2m}{r} \to 1 \;\Rightarrow\; \text{horizon}"></div>
+  </div>
+
+  <div class="eqcard">
+    <h3>Choptuik's discoveries</h3>
+    <div class="note">Tune any parameter p of the initial data to the threshold p*. Just above it, the black hole mass obeys a power law with a <b>universal</b> exponent:</div>
+    <div class="eq" data-tex="M_{\rm BH} \simeq C\,|p - p^*|^{\gamma}, \qquad \gamma \approx 0.374"></div>
+    <div class="note" style="margin-top:8px">And the critical solution echoes, discretely self-similar. In log time τ and scale-free coordinate x, it repeats exactly, each echo 31× smaller and faster:</div>
+    <div class="eq" data-tex="Z^*(x,\ \tau + \Delta) = Z^*(x,\ \tau), \qquad \tau = -\ln(t^*-t), \quad \Delta \approx 3.4453"></div>
+    <div class="note" style="margin-top:8px">The two numbers are linked: the mass law carries a tiny periodic wiggle with period Δ/(2γ) ≈ 4.61 in ln|p−p*|, the echoes' fingerprint on the scaling law.</div>
+  </div>
+  </div>
+</section>
+
+<!-- ============ SIMULATOR ============ -->
+<section>
+  <div class="sec-label"><span>Live Collapse</span><span class="n">02</span></div>
+  <div class="panel">
+    <div class="sim-grid">
+    <div class="sim-col">
+    <canvas id="cv-space" height="330"></canvas>
+    <div class="canvas-cap">
+      <span class="key"><span class="swatch" style="background:var(--amber)"></span>field energy</span>
+      <span class="key"><span class="swatch" style="background:#33406e"></span>rings = equal steps of real distance: they crowd where space stretches</span>
+      <span class="key"><span class="swatch" style="background:#000;border:1px solid var(--line)"></span>darkening = time slowing (lapse)</span>
+      <span class="key"><span class="swatch" style="background:var(--red)"></span>horizon</span>
+    </div>
+    <canvas id="cv-well" height="150"></canvas>
+    <div class="canvas-cap"><span class="key"><span class="swatch" style="background:var(--cyan)"></span>the well: embedding cross-section of space itself, computed live from the metric: depth = ∫√(a²−1) dr</span></div>
+    </div>
+    <div class="sim-col">
+    <canvas id="cv-field" height="300"></canvas>
+    <div class="canvas-cap">
+      <span class="key"><span class="swatch" style="background:var(--amber)"></span>φ(r) field</span>
+      <span class="key"><span class="swatch" style="background:var(--cyan)"></span>2m/r horizon signal</span>
+      <span class="key"><span class="swatch" style="background:var(--red)"></span>2m/r = 1</span>
+    </div>
+    <canvas id="cv-central" height="120"></canvas>
+    <div class="canvas-cap"><span class="key"><span class="swatch" style="background:var(--amber)"></span>φ(0,t), the field at the origin. Near-critical runs oscillate here: that's the first echo.</span></div>
+    </div>
+    </div>
+
+    <div class="controls">
+      <div class="ctl-row">
+        <label class="ctl">amplitude p</label>
+        <input type="range" id="amp" min="-3" max="-0.3" step="0.001" value="-1.15">
+        <span class="amp-read" id="amp-read">0.0708</span>
+      </div>
+      <div class="ctl-row">
+        <button class="primary" id="btn-run">▶ Run collapse</button>
+        <button id="btn-reset">Reset</button>
+        <button class="toggle" id="btn-logr">log r</button>
+        <button class="toggle" id="btn-slow">slow-mo</button>
+        <button class="toggle" id="btn-zoom">zoom ×1</button>
+      </div>
+    </div>
+    <div class="status" id="status">Ready. Grid: 800 points, polar-areal gauge, RK3, CFL 0.4. Pick an amplitude and run, or let the bisector hunt for p* below.</div>
+  </div>
+</section>
+
+<!-- ============ BISECTION ============ -->
+<section>
+  <div class="sec-label"><span>Hunt for p*</span><span class="n">03</span></div>
+  <div class="panel">
+    <div class="bisect-grid">
+    <div>
+    <p class="prose" style="margin-bottom:10px">This is Choptuik's actual method: bisect on the amplitude. Each run either <b style="color:var(--green)">disperses</b> or <b style="color:var(--red)">forms a horizon</b>; the boundary between them is the critical point. Every line in the log is a full solve of the field equations.</p>
+    <div class="ctl-row">
+      <button class="go" id="btn-bisect">◎ Bisect to p*</button>
+      <button id="btn-scaling" disabled>Δ Mass-scaling study</button>
+    </div>
+    <div class="result-strip">
+      <div class="metric"><div class="k">p* (this grid)</div><div class="v dim" id="m-pstar">—</div></div>
+      <div class="metric"><div class="k">bracket width</div><div class="v dim" id="m-width">—</div></div>
+    </div>
+    </div>
+    <div class="lablog" id="lablog"><div class="row"><span class="msg">— lab log idle —</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SCALING ============ -->
+<section id="sec-scaling" style="display:none">
+  <div class="sec-label"><span>The Power Law</span><span class="n">04</span></div>
+  <div class="panel">
+    <div class="scale-grid">
+    <div>
+    <canvas id="cv-scaling" height="300"></canvas>
+    <div class="canvas-cap">
+      <span class="key"><span class="swatch" style="background:var(--amber)"></span>measured ln M vs ln(p−p*)</span>
+      <span class="key"><span class="swatch" style="background:var(--violet)"></span>fit</span>
+      <span class="key"><span class="swatch" style="background:var(--cyan)"></span>slope 0.374 reference</span>
+    </div>
+    </div>
+    <div>
+    <div class="result-strip" style="margin-top:0">
+      <div class="metric"><div class="k">γ measured</div><div class="v" id="m-gamma">—</div></div>
+      <div class="metric"><div class="k">γ literature</div><div class="v" style="color:var(--cyan)">0.374</div></div>
+    </div>
+    <div class="ctl-row" style="margin-top:12px"><button class="mini" id="btn-scaling-reset">reset</button></div>
+    <div class="footnote" id="scaling-note">Run the bisection first, then the scaling study: it launches supercritical runs at log-spaced distances above p* and fits the slope. On a uniform 800-point grid expect the right ballpark, not four digits: Choptuik needed adaptive mesh refinement to nail it.</div>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PHASE ============ -->
+<section>
+  <div class="sec-label"><span>Phase Space</span><span class="n">05</span></div>
+  <div class="panel">
+    <p class="prose" style="margin-bottom:10px;max-width:76ch">The deepest view of criticality: plot the field at the origin against its velocity. Every run traces a trajectory in this plane, and the critical solution is a <b>saddle</b>, an orbit with exactly one unstable direction. Near-critical runs shadow it, loop with it, then get thrown off: <b style="color:var(--green)">green</b> to dispersal, <b style="color:var(--red)">red</b> to collapse. The exponent from the power law is hiding here too: <b>γ = 1/λ</b>, the inverse growth rate of the saddle's single unstable mode.</p>
+    <div class="ctl-row"><button class="go" id="btn-phase">◉ Draw phase portrait</button><button class="mini" id="btn-phase-reset">reset</button></div>
+    <div id="phase-body" style="display:none">
+    <canvas id="cv-phase" height="330" style="margin-top:12px"></canvas>
+    <div class="canvas-cap">
+      <span class="key"><span class="swatch" style="background:var(--green)"></span>subcritical</span>
+      <span class="key"><span class="swatch" style="background:var(--red)"></span>supercritical</span>
+      <span class="key">brightness = time · asinh axes</span>
+    </div>
+    </div>
+    <div class="footnote">Launches eight solves straddling p* at |p−p*|/p* = 3×10⁻² … 3×10⁻⁵. The tighter the pair, the longer they travel together before the unstable mode separates them: that shared stretch <i>is</i> the critical solution. This is the renormalization-group picture in miniature: the critical solution is a fixed point of the zoom, its echoes a limit cycle, and γ a critical exponent in the same sense as boiling water. If p* hasn't been found yet, a quick bisection runs first.</div>
+  </div>
+</section>
+
+<!-- ============ READING ============ -->
+<section>
+  <div class="sec-label"><span>What You're Seeing</span><span class="n">06</span></div>
+  <div class="prose panel reading">
+    <p><b>The knife edge.</b> Below p*, gravity loses: the pulse implodes through the origin and re-explodes to infinity, leaving flat space. Above p*, gravity wins: 2m/r pins to 1 and a horizon forms. Exactly at p* sits the critical solution, a universal attractor that has forgotten everything about your initial data.</p>
+    <p><b>The echoes.</b> Watch φ(0,t) on a near-critical run: the field rings at the origin, each oscillation ~31× faster and smaller than the last. In the variables (x, τ) that's an exact period-Δ repetition: <span class="hl">a fractal falling straight out of Einstein's equations</span>. A uniform grid resolves the first echo or two; Choptuik's adaptive code marched through dozens, which is precisely why the discovery needed him.</p>
+    <p><b>Why it matters for the blank zone.</b> The critical solution is a naked, self-similar spacetime region where curvature climbs without bound: classically it cascades through every scale on the ruler, from the star all the way down toward Planck. It's the cleanest mathematical thread we have that runs continuously into the unmapped basement. Whatever cuts the cascade off is, by definition, quantum gravity.</p>
+    <p style="margin-bottom:0"><b>Same math as boiling water.</b> γ is a critical exponent in the exact sense of phase transitions; the black-hole threshold is a second-order transition with M as the order parameter, and the echoes are a discrete version of the scale-invariance at a critical point. The universe reuses the pattern.</p>
+  </div>
+</section>
+
+</div>
+
+<script>
+"use strict";
+/* ================= KaTeX render ================= */
+document.querySelectorAll('[data-tex]').forEach(el=>{
+  try{ katex.render(el.dataset.tex, el, {throwOnError:false, displayMode:true}); }
+  catch(e){ el.textContent = el.dataset.tex; }
+});
+
+/* ================= Numerical core =================
+   Einstein + massless scalar, spherical symmetry, polar-areal gauge.
+   Choptuik (1993) system. Units G=c=1.                              */
+const N = 800, R = 40.0, dr = R/N, CFL = 0.4, dt = CFL*dr;
+const R0 = 12.0, DELTA = 2.5, TMAX = 60.0, HORIZON = 0.90;
+const rr = new Float64Array(N+1); for(let i=0;i<=N;i++) rr[i]=i*dr;
+
+function makeState(){ return { phi:new Float64Array(N+1), Phi:new Float64Array(N+1), Pi:new Float64Array(N+1),
+                               a:new Float64Array(N+1), al:new Float64Array(N+1), t:0 }; }
+
+function initData(S, A){
+  S.t=0;
+  for(let i=0;i<=N;i++){
+    const g = A*Math.exp(-(((rr[i]-R0)/DELTA)**2));
+    S.phi[i]=g;
+    S.Phi[i]= g * (-2*(rr[i]-R0)/(DELTA*DELTA));
+    S.Pi[i]=0;
+  }
+  S.Phi[0]=0;
+  constraints(S.Phi,S.Pi,S.a,S.al);
+}
+
+/* Solve the two radial ODE constraints by midpoint integration. */
+function constraints(Phi,Pi,a,al){
+  a[0]=1; let lnal=0; const lal=new Float64Array(N+1); lal[0]=0;
+  for(let i=0;i<N;i++){
+    const r1=rr[i], r2=rr[i+1], rm=r1+0.5*dr;
+    const S1=Phi[i]*Phi[i]+Pi[i]*Pi[i], S2=Phi[i+1]*Phi[i+1]+Pi[i+1]*Pi[i+1], Sm=0.5*(S1+S2);
+    // ln a
+    let f1 = (i===0?0:(1-a[i]*a[i])/(2*r1)) + 2*Math.PI*r1*S1;
+    const aMid = a[i]*Math.exp(0.5*dr*f1);
+    let fm = (1-aMid*aMid)/(2*rm) + 2*Math.PI*rm*Sm;
+    a[i+1] = a[i]*Math.exp(dr*fm);
+    // ln alpha (uses a at endpoints/midpoint)
+    let g1 = (i===0?0:(a[i]*a[i]-1)/(2*r1)) + 2*Math.PI*r1*S1;
+    let gm = (aMid*aMid-1)/(2*rm) + 2*Math.PI*rm*Sm;
+    lnal += dr*gm;
+    lal[i+1]=lnal;
+  }
+  // normalize: alpha(R) = 1/a(R)  (matches Schwarzschild exterior)
+  const off = -lal[N] - Math.log(a[N]);
+  for(let i=0;i<=N;i++) al[i]=Math.exp(lal[i]+off);
+}
+
+/* RHS of evolution equations. */
+function rhs(Phi,Pi,a,al,dPhi,dPi,dphi){
+  const X=new Float64Array(N+1), Y=new Float64Array(N+1);
+  for(let i=0;i<=N;i++){ const f=al[i]/a[i]; X[i]=f*Pi[i]; Y[i]=f*Phi[i]; }
+  dPhi[0]=0;
+  dPi[0]=3*Y[1]/dr;                     // l'Hôpital at the origin (Y odd)
+  if(dphi) dphi[0]=X[0];
+  for(let i=1;i<N;i++){
+    dPhi[i]=(X[i+1]-X[i-1])/(2*dr);
+    dPi[i]=(rr[i+1]*rr[i+1]*Y[i+1]-rr[i-1]*rr[i-1]*Y[i-1])/(2*dr*rr[i]*rr[i]);
+    if(dphi) dphi[i]=X[i];
+  }
+  // outgoing-wave outer boundary
+  const dPhiN=(Phi[N]-Phi[N-1])/dr, dPiN=(Pi[N]-Pi[N-1])/dr;
+  dPhi[N]=-(dPhiN+Phi[N]/R); dPi[N]=-(dPiN+Pi[N]/R);
+  if(dphi) dphi[N]=X[N];
+}
+
+const T={ // scratch
+  P1:new Float64Array(N+1),Q1:new Float64Array(N+1),F1:new Float64Array(N+1),
+  P2:new Float64Array(N+1),Q2:new Float64Array(N+1),F2:new Float64Array(N+1),
+  dP:new Float64Array(N+1),dQ:new Float64Array(N+1),dF:new Float64Array(N+1)
+};
+
+function step(S){
+  const {Phi,Pi,phi,a,al}=S, {P1,Q1,F1,P2,Q2,F2,dP,dQ,dF}=T;
+  // SSP-RK3
+  rhs(Phi,Pi,a,al,dP,dQ,dF);
+  for(let i=0;i<=N;i++){P1[i]=Phi[i]+dt*dP[i];Q1[i]=Pi[i]+dt*dQ[i];F1[i]=phi[i]+dt*dF[i];}
+  P1[0]=0; constraints(P1,Q1,a,al);
+  rhs(P1,Q1,a,al,dP,dQ,dF);
+  for(let i=0;i<=N;i++){P2[i]=0.75*Phi[i]+0.25*(P1[i]+dt*dP[i]);Q2[i]=0.75*Pi[i]+0.25*(Q1[i]+dt*dQ[i]);F2[i]=0.75*phi[i]+0.25*(F1[i]+dt*dF[i]);}
+  P2[0]=0; constraints(P2,Q2,a,al);
+  rhs(P2,Q2,a,al,dP,dQ,dF);
+  const c1=1/3,c2=2/3;
+  for(let i=0;i<=N;i++){Phi[i]=c1*Phi[i]+c2*(P2[i]+dt*dP[i]);Pi[i]=c1*Pi[i]+c2*(Q2[i]+dt*dQ[i]);phi[i]=c1*phi[i]+c2*(F2[i]+dt*dF[i]);}
+  Phi[0]=0;
+  // Kreiss–Oliger dissipation
+  const eps=0.15;
+  koFilter(Phi,eps); koFilter(Pi,eps);
+  constraints(Phi,Pi,a,al);
+  S.t+=dt;
+}
+function koFilter(u,eps){
+  const v=T.dF; v.set(u);
+  for(let i=2;i<=N-2;i++) u[i]=v[i]-eps*(v[i-2]-4*v[i-1]+6*v[i]-4*v[i+1]+v[i+2])/16;
+}
+
+function horizonScan(S){ // inner-region scan: innermost near-horizon crossing
+  let mx=-1,ri=1,cross=-1;
+  const iMax=Math.floor(20/dr);
+  for(let i=2;i<=iMax;i++){ const h=1-1/(S.a[i]*S.a[i]);
+    if(h>mx){mx=h;ri=i;}
+    if(cross<0 && h>0.9) cross=i; }
+  const j=cross>0?cross:ri;
+  return {max2mr:mx, rAt:rr[j], mAt:0.5*rr[j]*(1-1/(S.a[j]*S.a[j]))};
+}
+
+/* Full silent run — the workhorse for bisection & scaling.
+   Returns {outcome:'SUB'|'SUP', M, t} */
+function silentRun(A){
+  const S=makeState(); initData(S,A);
+  const maxSteps=Math.ceil(TMAX/dt);
+  for(let s=0;s<maxSteps;s++){
+    step(S);
+    if(!isFinite(S.Pi[2])) return {outcome:'SUP', M:horizonScan(S).mAt, t:S.t, blew:true};
+    if((s&7)===0){
+      const h=horizonScan(S);
+      if(h.max2mr>HORIZON || S.al[0]<1e-5) return {outcome:'SUP', M:h.mAt, t:S.t};
+    }
+  }
+  return {outcome:'SUB', M:0, t:S.t};
+}
+
+/* ================= Canvas helpers ================= */
+function fitCanvas(cv){
+  const dpr=Math.min(window.devicePixelRatio||1,2);
+  // Cache the intended CSS height once: setting cv.height below rewrites the
+  // height attribute, so reading it back each call compounds by dpr and the
+  // canvas grows without bound on retina screens (dpr>1). Pin style.height so
+  // the displayed size stays fixed no matter what the backing store is.
+  let h=+cv.dataset.cssh;
+  if(!h){ h=parseInt(cv.getAttribute('height')); cv.dataset.cssh=h; }
+  const w=cv.clientWidth;
+  cv.style.height=h+'px';
+  cv.width=w*dpr; cv.height=h*dpr;
+  const ctx=cv.getContext('2d'); ctx.setTransform(dpr,0,0,dpr,0,0);
+  return {ctx,w,h};
+}
+const css=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+
+/* ================= Interactive sim ================= */
+const cvF=document.getElementById('cv-field'), cvC=document.getElementById('cv-central');
+let logR=false, slowMo=false, running=false, animId=null;
+let sim=makeState(), curAmp=Math.pow(10,-1.15);
+let centralHist=[];   // [t, phi0, max2mr]
+const ampSlider=document.getElementById('amp'), ampRead=document.getElementById('amp-read');
+const statusEl=document.getElementById('status');
+
+function setAmp(){ curAmp=Math.pow(10,parseFloat(ampSlider.value)); ampRead.textContent=curAmp.toFixed(4); }
+ampSlider.addEventListener('input',()=>{setAmp(); resetSim();});
+setAmp();
+
+function resetSim(){
+  cancelAnimationFrame(animId); running=false;
+  document.getElementById('btn-run').textContent='▶ Run collapse';
+  sim=makeState(); initData(sim,curAmp); centralHist=[[0,sim.phi[0],0]];
+  statusEl.className='status';
+  statusEl.textContent=`p = ${curAmp.toFixed(5)}   ·   t = 0.0   ·   ready`;
+  wellScale=1e-3;
+  if(typeof phaseCollapse==='function') phaseCollapse();
+  drawField(); drawCentral(); drawSpace(); drawWell();
+}
+
+function xMap(r,w){
+  if(!logR) return 8 + (w-16)*r/R;
+  const lo=Math.log10(dr), hi=Math.log10(R);
+  const lr=Math.log10(Math.max(r,dr));
+  return 8 + (w-16)*(lr-lo)/(hi-lo);
+}
+
+function drawField(){
+  const {ctx,w,h}=fitCanvas(cvF);
+  ctx.clearRect(0,0,w,h);
+  const midY=h*0.42, ampScale=h*0.30;
+  // grid
+  ctx.strokeStyle=css('--line'); ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(0,midY); ctx.lineTo(w,midY); ctx.stroke();
+  // horizon line for 2m/r plot region (bottom band)
+  const hy0=h-14, hy1=h*0.62;
+  ctx.strokeStyle=css('--red'); ctx.setLineDash([4,4]);
+  ctx.beginPath(); ctx.moveTo(0,hy1); ctx.lineTo(w,hy1); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle=css('--faint'); ctx.font='10px IBM Plex Mono';
+  ctx.fillText('2m/r = 1',8,hy1-4);
+  ctx.fillText(logR?'log r →':'r →', w-52, h-4);
+  // phi
+  let pmax=1e-6; for(let i=0;i<=N;i++) pmax=Math.max(pmax,Math.abs(sim.phi[i]));
+  const ps=Math.max(pmax,curAmp*1.05);
+  ctx.strokeStyle=css('--amber'); ctx.lineWidth=1.8; ctx.beginPath();
+  for(let i=1;i<=N;i++){
+    const x=xMap(rr[i],w), y=midY - ampScale*sim.phi[i]/ps;
+    i===1?ctx.moveTo(x,y):ctx.lineTo(x,y);
+  }
+  ctx.stroke();
+  // 2m/r
+  ctx.strokeStyle=css('--cyan'); ctx.lineWidth=1.6; ctx.beginPath();
+  for(let i=2;i<=N;i++){
+    const hh=Math.max(0,1-1/(sim.a[i]*sim.a[i]));
+    const x=xMap(rr[i],w), y=hy0-(hy0-hy1)*hh;
+    i===2?ctx.moveTo(x,y):ctx.lineTo(x,y);
+  }
+  ctx.stroke();
+  // scale label for phi
+  ctx.fillStyle=css('--faint');
+  ctx.fillText(`|φ|max ${pmax.toExponential(1)}`,8,12);
+  ctx.fillText(`t = ${sim.t.toFixed(1)}`, w-72, 12);
+}
+
+function drawCentral(){
+  const {ctx,w,h}=fitCanvas(cvC);
+  ctx.clearRect(0,0,w,h);
+  if(centralHist.length<2){ctx.fillStyle=css('--faint');ctx.font='10px IBM Plex Mono';ctx.fillText('φ(0,t) appears here as the run evolves',8,h/2);return;}
+  const midY=h*0.5;
+  ctx.strokeStyle=css('--line'); ctx.beginPath(); ctx.moveTo(0,midY); ctx.lineTo(w,midY); ctx.stroke();
+  let mx=1e-6; for(const p of centralHist) mx=Math.max(mx,Math.abs(p[1]));
+  const t1=centralHist[centralHist.length-1][0]||1;
+  ctx.strokeStyle=css('--amber'); ctx.lineWidth=1.6; ctx.beginPath();
+  centralHist.forEach((p,k)=>{
+    const x=6+(w-12)*p[0]/t1, y=midY-(h*0.4)*p[1]/mx;
+    k===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+  });
+  ctx.stroke();
+  ctx.fillStyle=css('--faint'); ctx.font='10px IBM Plex Mono';
+  ctx.fillText(`φ(0) range ±${mx.toExponential(1)}`,8,11);
+}
+
+document.getElementById('btn-logr').addEventListener('click',e=>{
+  logR=!logR; e.target.classList.toggle('on',logR); drawField();
+});
+document.getElementById('btn-slow').addEventListener('click',e=>{
+  slowMo=!slowMo; e.target.classList.toggle('on',slowMo);
+});
+document.getElementById('btn-reset').addEventListener('click',resetSim);
+
+document.getElementById('btn-run').addEventListener('click',e=>{
+  if(running){ running=false; cancelAnimationFrame(animId); e.target.textContent='▶ Run collapse'; return; }
+  if(sim.t>=TMAX || statusEl.classList.contains('super')) resetSim();
+  running=true; e.target.textContent='⏸ Pause';
+  const frame=()=>{
+    if(!running) return;
+    const stepsPerFrame = slowMo?2:24;
+    let ended=false, why='';
+    for(let k=0;k<stepsPerFrame;k++){
+      step(sim);
+      const h=horizonScan(sim);
+      centralHist.push([sim.t,sim.phi[0],h.max2mr]);
+      if(!isFinite(sim.Pi[2]) || h.max2mr>HORIZON || sim.al[0]<1e-5){ ended=true; why='SUP';
+        statusEl.className='status super';
+        statusEl.textContent=`HORIZON  ·  2m/r → 1 at r ≈ ${h.rAt.toFixed(2)}\nblack hole  M ≈ ${h.mAt.toFixed(4)}   ·   t = ${sim.t.toFixed(2)}`;
+        break; }
+      if(sim.t>=TMAX){ ended=true; why='SUB';
+        statusEl.className='status sub';
+        statusEl.textContent=`DISPERSED  ·  the pulse imploded, passed through the origin, and escaped.\nFlat space remains.  max 2m/r reached ${(Math.max(...centralHist.map(p=>p[2]))).toFixed(3)}`;
+        break; }
+    }
+    if(!ended){
+      const h=horizonScan(sim);
+      statusEl.className='status';
+      statusEl.textContent=`p = ${curAmp.toFixed(5)}   ·   t = ${sim.t.toFixed(1)}   ·   max 2m/r = ${h.max2mr.toFixed(3)}`;
+    }
+    drawField(); drawCentral(); drawSpace(); drawWell();
+    if(ended){ running=false; document.getElementById('btn-run').textContent='▶ Run collapse'; return; }
+    animId=requestAnimationFrame(frame);
+  };
+  animId=requestAnimationFrame(frame);
+});
+
+/* ================= Space view ================= */
+const cvS=document.getElementById('cv-space'), cvW=document.getElementById('cv-well');
+const ZOOMS=[16,4,1]; let zoomIdx=0, wellScale=1e-3;
+document.getElementById('btn-zoom').addEventListener('click',e=>{
+  zoomIdx=(zoomIdx+1)%ZOOMS.length;
+  e.target.textContent='zoom ×'+[1,4,16][zoomIdx];
+  e.target.classList.toggle('on',zoomIdx>0);
+  drawSpace(); drawWell();
+});
+function sampleAt(arr,r){ const x=Math.max(0,Math.min(r/dr,N-1e-9)), i=Math.floor(x), f=x-i; return arr[i]*(1-f)+arr[i+1]*f; }
+function rhoAt(r){ const P=sampleAt(sim.Phi,r), Q=sampleAt(sim.Pi,r), A=sampleAt(sim.a,r); return (P*P+Q*Q)/(2*A*A); }
+
+function drawSpace(){
+  const {ctx,w,h}=fitCanvas(cvS);
+  ctx.clearRect(0,0,w,h);
+  const Rv=ZOOMS[zoomIdx], cx=w/2, cy=h/2, Rpx=Math.min(w,h)/2-12;
+  const px=r=>Rpx*r/Rv;
+  // spokes
+  ctx.strokeStyle='#1c2440'; ctx.lineWidth=1;
+  for(let k=0;k<12;k++){ const th=k*Math.PI/6;
+    ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(cx+Rpx*Math.cos(th),cy+Rpx*Math.sin(th)); ctx.stroke(); }
+  // rings at equal PROPER distance — the geometry made visible
+  ctx.strokeStyle='#33406e';
+  let L=0, next=Rv/8, drawn=0;
+  for(let i=0;i<N && drawn<48;i++){
+    const rmid=rr[i]+dr/2; if(rmid>Rv) break;
+    L+=sim.a[i]*dr;
+    while(L>=next && drawn<48){
+      ctx.beginPath(); ctx.arc(cx,cy,px(rmid),0,7); ctx.stroke();
+      next+=Rv/8; drawn++;
+    }
+  }
+  // energy glow + lapse veil
+  const M=150, rhos=new Float64Array(M+1); let rhoMax=1e-12;
+  for(let k=1;k<=M;k++){ rhos[k]=rhoAt(Rv*k/M); if(rhos[k]>rhoMax)rhoMax=rhos[k]; }
+  const alOut=sampleAt(sim.al,Rv);
+  const lw=Rpx/M+1.0;
+  for(let k=1;k<=M;k++){
+    const r=Rv*k/M, rp=px(r);
+    const g=Math.pow(rhos[k]/rhoMax,0.45);
+    if(g>0.02){ ctx.globalAlpha=Math.min(0.9,g); ctx.strokeStyle=css('--amber'); ctx.lineWidth=lw;
+      ctx.beginPath(); ctx.arc(cx,cy,rp,0,7); ctx.stroke(); }
+    const lap=sampleAt(sim.al,r)/Math.max(alOut,1e-12);
+    const dk=Math.max(0,Math.min(0.82,(1-lap)));
+    if(dk>0.04){ ctx.globalAlpha=dk; ctx.strokeStyle='#000'; ctx.lineWidth=lw;
+      ctx.beginPath(); ctx.arc(cx,cy,rp,0,7); ctx.stroke(); }
+  }
+  ctx.globalAlpha=1;
+  // horizon
+  const hz=horizonScan(sim);
+  if(hz.max2mr>0.9 && hz.rAt<=Rv){
+    const formed=statusEl.classList.contains('super');
+    if(formed){
+      ctx.fillStyle='#000'; ctx.beginPath(); ctx.arc(cx,cy,px(hz.rAt),0,7); ctx.fill();
+      ctx.strokeStyle=css('--red'); ctx.lineWidth=2;
+      ctx.beginPath(); ctx.arc(cx,cy,px(hz.rAt),0,7); ctx.stroke();
+    } else {
+      ctx.strokeStyle=css('--red'); ctx.setLineDash([5,4]); ctx.lineWidth=1.5;
+      ctx.beginPath(); ctx.arc(cx,cy,px(hz.rAt),0,7); ctx.stroke(); ctx.setLineDash([]);
+    }
+  }
+  ctx.fillStyle=css('--faint'); ctx.font='10px IBM Plex Mono';
+  ctx.fillText('overhead slice · view r < '+Rv, 8, 13);
+  ctx.fillText('t = '+sim.t.toFixed(1), w-66, 13);
+}
+
+function drawWell(){
+  const {ctx,w,h}=fitCanvas(cvW);
+  ctx.clearRect(0,0,w,h);
+  const Rv=ZOOMS[zoomIdx], M=160;
+  const zs=new Float64Array(M+1), rhos=new Float64Array(M+1);
+  let z=0, rhoMax=1e-12;
+  for(let k=1;k<=M;k++){
+    const r=Rv*k/M, A=sampleAt(sim.a,r);
+    z+=Math.sqrt(Math.max(A*A-1,0))*(Rv/M);
+    zs[k]=z; rhos[k]=rhoAt(r); if(rhos[k]>rhoMax)rhoMax=rhos[k];
+  }
+  wellScale=Math.max(wellScale,zs[M],0.3);
+  const topY=18, depthPx=h-36;
+  const X=r=>w/2+(w/2-10)*r/Rv;
+  const Yk=k=>topY+depthPx*(zs[M]-zs[k])/wellScale;
+  // flat-space rim reference
+  ctx.strokeStyle='#1c2440'; ctx.setLineDash([3,5]);
+  ctx.beginPath(); ctx.moveTo(10,topY); ctx.lineTo(w-10,topY); ctx.stroke(); ctx.setLineDash([]);
+  // the sheet
+  ctx.strokeStyle=css('--cyan'); ctx.lineWidth=1.7; ctx.beginPath();
+  for(let k=-M;k<=M;k++){
+    const x=X(Rv*k/M), y=Yk(Math.abs(k));
+    k===-M?ctx.moveTo(x,y):ctx.lineTo(x,y);
+  }
+  ctx.stroke();
+  // energy riding the sheet
+  ctx.lineWidth=3.2;
+  for(let k=-M+1;k<=M;k++){
+    const g=Math.pow(rhos[Math.abs(k)]/rhoMax,0.45);
+    if(g<=0.03) continue;
+    ctx.globalAlpha=Math.min(0.9,g); ctx.strokeStyle=css('--amber');
+    ctx.beginPath();
+    ctx.moveTo(X(Rv*(k-1)/M),Yk(Math.abs(k-1)));
+    ctx.lineTo(X(Rv*k/M),Yk(Math.abs(k)));
+    ctx.stroke();
+  }
+  ctx.globalAlpha=1;
+  // horizon ticks
+  const hz=horizonScan(sim);
+  if(hz.max2mr>0.9 && hz.rAt<=Rv){
+    ctx.strokeStyle=css('--red'); ctx.setLineDash([3,3]);
+    for(const sgn of [-1,1]){
+      const x=X(sgn*hz.rAt);
+      ctx.beginPath(); ctx.moveTo(x,topY); ctx.lineTo(x,h-10); ctx.stroke();
+    }
+    ctx.setLineDash([]);
+  }
+  ctx.fillStyle=css('--faint'); ctx.font='10px IBM Plex Mono';
+  ctx.fillText('depth of the well: '+zs[M].toFixed(2)+' (proper length excess)', 8, h-4);
+}
+
+/* ================= Bisection ================= */
+const lablog=document.getElementById('lablog');
+let pStar=null, bracket=null;
+function logRow(html){ const d=document.createElement('div'); d.className='row'; d.innerHTML=html;
+  lablog.appendChild(d); lablog.scrollTop=lablog.scrollHeight; }
+function clearLog(){ lablog.innerHTML=''; }
+
+document.getElementById('btn-bisect').addEventListener('click',async ()=>{
+  const btn=document.getElementById('btn-bisect'); btn.disabled=true;
+  clearLog(); logRow('<span class="msg">bracketing the threshold…</span>');
+  await new Promise(r=>setTimeout(r,30));
+  let lo=0.005, hi=0.30, it=0;
+  const runAt=async A=>{ await new Promise(r=>setTimeout(r,10)); return silentRun(A); };
+  let rLo=await runAt(lo), rHi=await runAt(hi);
+  while(rLo.outcome==='SUP'){ lo/=3; rLo=await runAt(lo); }
+  while(rHi.outcome==='SUB'&&hi<2){ hi*=1.8; rHi=await runAt(hi); }
+  logRow(`<span class="it">·</span><span class="amp">p=${lo.toFixed(6)}</span><span class="SUB">SUB</span><span class="amp">p=${hi.toFixed(6)}</span><span class="SUP">SUPER</span>`);
+  const ITERS=26;
+  for(it=1;it<=ITERS;it++){
+    const mid=0.5*(lo+hi);
+    const res=await runAt(mid);
+    if(res.outcome==='SUP'){ hi=mid;
+      logRow(`<span class="it">${it}</span><span class="amp">p=${mid.toFixed(8)}</span><span class="SUP">SUPER</span><span style="color:var(--faint)">M≈${res.M.toFixed(4)} t=${res.t.toFixed(1)}</span>`);
+    } else { lo=mid;
+      logRow(`<span class="it">${it}</span><span class="amp">p=${mid.toFixed(8)}</span><span class="SUB">SUB&nbsp;&nbsp;</span><span style="color:var(--faint)">t=${res.t.toFixed(1)}</span>`);
+    }
+    document.getElementById('m-pstar').textContent=(0.5*(lo+hi)).toFixed(8);
+    document.getElementById('m-width').textContent=(hi-lo).toExponential(2);
+  }
+  pStar=0.5*(lo+hi); bracket=[lo,hi];
+  document.getElementById('m-pstar').classList.remove('dim');
+  logRow(`<span class="msg">p* ≈ ${pStar.toFixed(8)}  ·  every digit here cost one full solve of Einstein's equations</span>`);
+  // set slider near critical for echo watching
+  ampSlider.value=Math.log10(pStar*1.0005).toFixed(4); setAmp(); resetSim();
+  logRow('<span class="msg">slider parked just above p*: hit Run and watch φ(0,t) ring</span>');
+  document.getElementById('btn-scaling').disabled=false;
+  btn.disabled=false;
+});
+
+/* ================= Mass scaling ================= */
+document.getElementById('btn-scaling').addEventListener('click',async ()=>{
+  if(pStar===null) return;
+  const btn=document.getElementById('btn-scaling'); btn.disabled=true;
+  logRow('<span class="msg">scaling study: supercritical runs at log-spaced p−p*…</span>');
+  const eps=[], NPTS=9;
+  for(let k=0;k<NPTS;k++) eps.push(Math.pow(10,-0.5-2.0*k/(NPTS-1))); // 10^-0.5 .. 10^-2.5
+  const pts=[];
+  for(const e of eps){
+    const A=pStar*(1+e);
+    await new Promise(r=>setTimeout(r,10));
+    const res=silentRun(A);
+    if(res.outcome==='SUP'&&res.M>0.12){
+      pts.push([Math.log(A-pStar),Math.log(res.M)]);
+      logRow(`<span class="it">·</span><span class="amp">p−p*=${(A-pStar).toExponential(2)}</span><span class="SUP">M=${res.M.toFixed(5)}</span>`);
+    } else if(res.outcome==='SUP'){
+      logRow(`<span class="it">·</span><span class="amp">p−p*=${(A-pStar).toExponential(2)}</span><span style="color:var(--faint)">M=${res.M.toFixed(4)} (horizon under grid resolution, excluded)</span>`);
+    }
+  }
+  if(pts.length>=3){
+    // least squares
+    const n=pts.length; let sx=0,sy=0,sxx=0,sxy=0;
+    for(const[x,y]of pts){sx+=x;sy+=y;sxx+=x*x;sxy+=x*y;}
+    const slope=(n*sxy-sx*sy)/(n*sxx-sx*sx), icpt=(sy-slope*sx)/n;
+    document.getElementById('m-gamma').textContent=slope.toFixed(3);
+    const sec=document.getElementById('sec-scaling'); sec.style.display='';
+    drawScaling(pts,slope,icpt);
+    sec.scrollIntoView({behavior:'smooth',block:'nearest'});
+    logRow(`<span class="msg">fit: γ ≈ ${slope.toFixed(3)}   (Choptuik: 0.374, AMR territory)</span>`);
+    document.getElementById('scaling-note').textContent=
+      `Fitted over ${n} runs. The residual wiggle around the fit line is real physics (the fine structure with period Δ/(2γ) ≈ 4.61), though at this resolution grid error contributes too.`;
+  } else {
+    logRow('<span class="msg">not enough clean supercritical runs: try re-running bisection</span>');
+  }
+  btn.disabled=false;
+});
+
+function drawScaling(pts,slope,icpt){
+  const {ctx,w,h}=fitCanvas(document.getElementById('cv-scaling'));
+  ctx.clearRect(0,0,w,h);
+  const xs=pts.map(p=>p[0]), ys=pts.map(p=>p[1]);
+  const x0=Math.min(...xs)-0.3,x1=Math.max(...xs)+0.3;
+  const y0=Math.min(...ys)-0.3,y1=Math.max(...ys)+0.3;
+  const X=x=>10+(w-20)*(x-x0)/(x1-x0), Y=y=>h-18-(h-32)*(y-y0)/(y1-y0);
+  ctx.strokeStyle=css('--line');
+  ctx.beginPath();ctx.moveTo(10,h-18);ctx.lineTo(w-10,h-18);ctx.moveTo(10,h-18);ctx.lineTo(10,14);ctx.stroke();
+  ctx.fillStyle=css('--faint');ctx.font='10px IBM Plex Mono';
+  ctx.fillText('ln(p−p*) →',w-80,h-5); ctx.save();ctx.translate(4,80);ctx.rotate(-Math.PI/2);ctx.fillText('ln M →',0,6);ctx.restore();
+  // reference slope 0.374 through mean point
+  const mx=xs.reduce((a,b)=>a+b)/xs.length, my=ys.reduce((a,b)=>a+b)/ys.length;
+  ctx.strokeStyle=css('--cyan');ctx.setLineDash([5,4]);ctx.beginPath();
+  ctx.moveTo(X(x0),Y(my+0.374*(x0-mx)));ctx.lineTo(X(x1),Y(my+0.374*(x1-mx)));ctx.stroke();ctx.setLineDash([]);
+  // fit
+  ctx.strokeStyle=css('--violet');ctx.lineWidth=1.6;ctx.beginPath();
+  ctx.moveTo(X(x0),Y(icpt+slope*x0));ctx.lineTo(X(x1),Y(icpt+slope*x1));ctx.stroke();
+  // points
+  ctx.fillStyle=css('--amber');
+  for(const[x,y]of pts){ctx.beginPath();ctx.arc(X(x),Y(y),3.4,0,7);ctx.fill();}
+}
+
+/* ================= Phase portrait ================= */
+async function quickBisect(iters){
+  logRow('<span class="msg">phase portrait needs p*: quick bisection first…</span>');
+  let lo=0.005, hi=0.30;
+  let rLo=silentRun(lo), rHi=silentRun(hi);
+  while(rLo.outcome==='SUP'){lo/=3;rLo=silentRun(lo);}
+  while(rHi.outcome==='SUB'&&hi<2){hi*=1.8;rHi=silentRun(hi);}
+  for(let i=0;i<iters;i++){
+    await new Promise(r=>setTimeout(r,8));
+    const mid=0.5*(lo+hi);
+    (silentRun(mid).outcome==='SUP')?(hi=mid):(lo=mid);
+  }
+  pStar=0.5*(lo+hi); bracket=[lo,hi];
+  document.getElementById('m-pstar').textContent=pStar.toFixed(8);
+  document.getElementById('m-width').textContent=(hi-lo).toExponential(2);
+  document.getElementById('btn-scaling').disabled=false;
+  logRow(`<span class="msg">p* ≈ ${pStar.toFixed(8)}</span>`);
+}
+
+function trackedRun(A){
+  const S=makeState(); initData(S,A);
+  const pts=[]; const maxSteps=Math.ceil(TMAX/dt);
+  for(let st=0;st<maxSteps;st++){
+    step(S);
+    if((st%3)===0) pts.push([S.phi[0], S.al[0]*S.Pi[0]/S.a[0]]);
+    if(!isFinite(S.Pi[2])) return {outcome:'SUP',pts};
+    if((st&7)===0){ const h=horizonScan(S); if(h.max2mr>HORIZON||S.al[0]<1e-5) return {outcome:'SUP',pts}; }
+  }
+  return {outcome:'SUB',pts};
+}
+
+document.getElementById('btn-phase').addEventListener('click', async ()=>{
+  const btn=document.getElementById('btn-phase'); btn.disabled=true;
+  try{
+    if(pStar===null) await quickBisect(18);
+    logRow('<span class="msg">phase portrait: family of runs straddling p*…</span>');
+    const eps=[3e-2,3e-3,3e-4,3e-5], trajs=[];
+    for(const e of eps){ for(const sgn of [-1,1]){
+      await new Promise(r=>setTimeout(r,8));
+      const res=trackedRun(pStar*(1+sgn*e));
+      trajs.push({outcome:res.outcome, pts:res.pts, tight:e<=3e-4});
+      logRow(`<span class="it">·</span><span class="amp">p−p* = ${sgn>0?'+':'−'}${(e*pStar).toExponential(1)}</span><span class="${res.outcome==='SUP'?'SUP':'SUB'}">${res.outcome}</span>`);
+    }}
+    document.getElementById('phase-body').style.display='';
+    drawPhase(trajs);
+  } finally { btn.disabled=false; }
+});
+
+function drawPhase(trajs){
+  const {ctx,w,h}=fitCanvas(document.getElementById('cv-phase'));
+  ctx.clearRect(0,0,w,h);
+  const s1=0.05, s2=0.05, T=v=>Math.asinh(v);
+  let x0=1e9,x1=-1e9,y0=1e9,y1=-1e9;
+  for(const t of trajs) for(const[p,q]of t.pts){
+    const x=T(p/s1), y=T(q/s2);
+    if(x<x0)x0=x; if(x>x1)x1=x; if(y<y0)y0=y; if(y>y1)y1=y;
+  }
+  if(x0>x1){x0=-1;x1=1;y0=-1;y1=1;}
+  const pX=(x1-x0)*0.07+1e-6, pY=(y1-y0)*0.07+1e-6; x0-=pX;x1+=pX;y0-=pY;y1+=pY;
+  const X=x=>10+(w-20)*(x-x0)/(x1-x0), Y=y=>h-14-(h-28)*(y-y0)/(y1-y0);
+  ctx.strokeStyle=css('--line'); ctx.lineWidth=1;
+  ctx.beginPath();
+  ctx.moveTo(X(0),12); ctx.lineTo(X(0),h-12);
+  ctx.moveTo(10,Y(0)); ctx.lineTo(w-10,Y(0));
+  ctx.stroke();
+  ctx.fillStyle=css('--faint'); ctx.font='10px IBM Plex Mono';
+  ctx.fillText('φ(0) →', w-54, Y(0)-5);
+  ctx.fillText('φ̇(0)', X(0)+7, 20);
+  for(const t of trajs){
+    const col=t.outcome==='SUP'?css('--red'):css('--green');
+    const n=t.pts.length; if(n<2) continue;
+    ctx.strokeStyle=col; ctx.lineWidth=t.tight?1.5:1.0;
+    let px=X(T(t.pts[0][0]/s1)), py=Y(T(t.pts[0][1]/s2));
+    for(let i=1;i<n;i++){
+      const nx=X(T(t.pts[i][0]/s1)), ny=Y(T(t.pts[i][1]/s2));
+      ctx.globalAlpha=0.10+0.78*(i/n);
+      ctx.beginPath(); ctx.moveTo(px,py); ctx.lineTo(nx,ny); ctx.stroke();
+      px=nx; py=ny;
+    }
+  }
+  ctx.globalAlpha=1;
+}
+
+/* ================= section resets ================= */
+function phaseCollapse(){ document.getElementById('phase-body').style.display='none'; }
+document.getElementById('btn-phase-reset').addEventListener('click', phaseCollapse);
+document.getElementById('btn-scaling-reset').addEventListener('click', ()=>{
+  document.getElementById('sec-scaling').style.display='none';
+  document.getElementById('m-gamma').textContent='—';
+});
+
+/* ================= boot ================= */
+window.addEventListener('resize',()=>{drawField();drawCentral();drawSpace();drawWell();});
+resetSim();
+</script>
+</body>
+</html>
