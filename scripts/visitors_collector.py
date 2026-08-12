@@ -62,9 +62,17 @@ BOT_RE = re.compile(
     r"okhttp|java/|libwww|headless|phantomjs|puppeteer|playwright|monitor|uptime|"
     r"pingdom|statuscake|semrush|ahrefs|mj12|dotbot|petalbot|bytespider|dataforseo|"
     r"gptbot|claudebot|anthropic|perplexity|ccbot|applebot|facebookexternalhit|"
-    r"embedly|preview|feedfetcher|zgrab|masscan|nmap|censys|expanse|internet-measurement",
+    r"embedly|preview|feedfetcher|zgrab|masscan|nmap|censys|expanse|internet-measurement|"
+    # Google ships several agents with no "bot" token at all.
+    r"googleother|google-|lighthouse|chrome-privacy|feedburner|apis-google",
     re.I,
 )
+# Networks that are crawler infrastructure, not people. AS15169 is Google's own
+# backbone (Googlebot et al) — some of its agents claim to be plain mobile
+# Chrome with no bot token, so the user-agent alone is not enough. Deliberately
+# NOT listing cloud ASNs like Hetzner/OVH here: those carry real VPN users.
+BOT_ASNS = {15169}
+
 # Non-browser assets we don't want inflating "pageviews".
 ASSET_RE = re.compile(r"\.(?:webp|png|jpe?g|svg|ico|css|js|woff2?|map|txt|xml|json)(?:$|\?)", re.I)
 
@@ -263,7 +271,8 @@ def main():
         if is_self(ip):
             self_hits += 1
             return
-        bot = bool(BOT_RE.search(ua)) or ua in ("-", "")
+        g = geo.get(ip)
+        bot = bool(BOT_RE.search(ua)) or ua in ("-", "") or g["asn"] in BOT_ASNS
         req = m.group("req").split(" ")
         path = req[1] if len(req) > 1 else "-"
         d = ts.astimezone(timezone.utc).strftime("%Y-%m-%d")
@@ -290,7 +299,6 @@ def main():
         if ref and ref != "-" and "bradley.io" not in ref:
             refs[ref[:160]] += 1
 
-        g = geo.get(ip)
         key = net24(ip)                    # <- the only identifier we keep
         key_net[(ip, ua)] = key
         p = place.get(key)
