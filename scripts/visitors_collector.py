@@ -255,7 +255,7 @@ def main():
     sessions = defaultdict(list)          # (ip, ua) -> [ts...]
     key_net = {}                          # (ip, ua) -> /24, to attribute sessions to a place
     human_ips, bot_ips, self_hits = set(), set(), 0
-    pageviews = bot_hits = 0
+    pageviews = bot_hits = prefetches = 0
     day = defaultdict(lambda: {"humans": 0, "bots": 0})
     hour = [0] * 24
     paths = defaultdict(int)
@@ -266,7 +266,7 @@ def main():
     statuses = defaultdict(int)
 
     def on_access(m, ts):
-        nonlocal pageviews, bot_hits, self_hits
+        nonlocal pageviews, bot_hits, self_hits, prefetches
         ip, ua = m.group("ip"), m.group("ua")
         if is_self(ip):
             self_hits += 1
@@ -291,7 +291,14 @@ def main():
         # This matters — a single tab left open on the homepage polls /api/trng
         # twice a minute, which would otherwise make it the busiest "visitor"
         # on the map without anyone reading anything.
-        read = not ASSET_RE.search(path) and not path.startswith("/api/")
+        # Next.js <Link> prefetches every in-viewport route as an RSC payload
+        # (`?_rsc=`). Sitewide that is ~42% of non-API requests: the browser
+        # fetching pages nobody looked at. Counting them as reads made anyone
+        # who merely LANDED on the homepage look like they toured the site.
+        prefetch = "_rsc=" in path
+        read = not ASSET_RE.search(path) and not path.startswith("/api/") and not prefetch
+        if prefetch:
+            prefetches += 1
         if read:
             pageviews += 1
             paths[path.split("?")[0][:120]] += 1
@@ -408,6 +415,7 @@ def main():
             "uniqueNets": len(place),
             "uniqueIpsSeen": len(human_ips),   # count only — the IPs are discarded
             "pageviews": pageviews,
+            "prefetches": prefetches,
             "selfHits": self_hits,
             "byDay": [{"d": d, **day[d]} for d in days_sorted if d in day],
             "byHourUtc": hour,

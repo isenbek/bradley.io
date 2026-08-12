@@ -22,7 +22,7 @@ type Snap = {
   sources: Record<string, { ok?: boolean; rows?: number; error?: string | null }>
   funnel: { edgeDropped: number; trapped: number; botsServed: number; humanHits: number; sessions: number }
   visitors: {
-    sessions: number; uniqueNets: number; uniqueIpsSeen: number; pageviews: number; selfHits: number
+    sessions: number; uniqueNets: number; uniqueIpsSeen: number; pageviews: number; prefetches?: number; selfHits: number
     byDay: { d: string; humans: number; bots: number }[]
     byHourUtc: number[]
     places: Place[]
@@ -381,7 +381,7 @@ export function VisitorsBoard() {
       <p className="v3-vis-foot">
         Window {s.windowDays} days · snapshot {new Date(s.generated * 1000).toISOString().replace("T", " ").slice(0, 16)} UTC
         · {nf(s.sources.access?.rows)} access rows, {nf(s.sources.scanner?.rows)} trap rows
-        · {nf(s.visitors.selfHits)} of my own hits excluded
+        · {nf(s.visitors.selfHits)} of my own hits and {nf(s.visitors.prefetches)} Next.js link prefetches excluded
       </p>
     </>
   )
