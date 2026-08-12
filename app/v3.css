@@ -8069,23 +8069,33 @@ html[data-theme="dark"]:has(.v3) {
 .v3-lbx__stage {
   position: relative;
   flex: 1 1 auto;
+  min-height: 0;
   overflow: hidden;
   touch-action: none;
   cursor: zoom-in;
-  display: grid;
-  place-items: center;
 }
 .v3-lbx__stage.is-zoomed { cursor: grab; }
 .v3-lbx__stage.is-zoomed:active { cursor: grabbing; }
+/* The img box fills the stage and letterboxes the plate inside it via
+   object-fit, so scale 1 is exactly "fitted" and the transform origin lines
+   up with the stage origin — which is what the zoom-at-pointer maths assumes.
+   (max-width/max-height percentages do NOT resolve reliably against a flex
+   item here, which crops the plate instead of fitting it.) */
 .v3-lbx__img {
-  max-width: 100%;
-  max-height: 100%;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
   transform-origin: 0 0;
   user-select: none;
   -webkit-user-drag: none;
 }
 .v3-lbx__loading {
   position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
   font-family: var(--font-v3-mono), "JetBrains Mono", monospace;
   font-size: 12px;
   color: #7ba2a9;
