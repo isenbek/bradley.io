@@ -6,6 +6,7 @@ import {
   BarChart3,
   BookOpen,
   Bot,
+  Cpu,
   Ear,
   Eye,
   FlaskConical,
@@ -244,6 +245,14 @@ export default async function V3LabPage() {
               title: "Hardware demos",
               accent: "var(--v3-coral)",
               items: [
+                {
+                  Icon: Cpu,
+                  title: "The 6502",
+                  blurb: "A 1975 CPU simulated switch by switch, plus the whole archive.",
+                  href: "/6502",
+                  tag: "New",
+                  tagColor: "coral" as const,
+                },
                 {
                   Icon: Plane,
                   title: "Dragonfli",
