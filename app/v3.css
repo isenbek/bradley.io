@@ -8180,7 +8180,9 @@ html[data-theme="dark"]:has(.v3) {
 
 /* generic panels + bars */
 .v3-vis-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+  /* 440px floor -> a clean 2x2 at desktop; 4 panels in a 3-col grid left a
+     conspicuous hole in the second row. */
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(440px, 1fr));
   gap: 16px; margin-bottom: 20px;
 }
 .v3-vis-bars { display: grid; gap: 7px; margin-top: 14px; }
