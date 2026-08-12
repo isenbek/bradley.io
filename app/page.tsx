@@ -4,6 +4,7 @@ import { ActivityPulse } from "@/components/v3/ActivityPulse"
 import { ActivityFeedList } from "@/components/v3/ActivityFeedList"
 import { PrimalitySuite } from "@/components/home/PrimalitySuite"
 import { HotbitsHero } from "@/components/home/HotbitsHero"
+import { Visual6502Hero } from "@/components/home/Visual6502Hero"
 import { AirspacePromo } from "@/components/home/AirspacePromo"
 import { GpsPromo } from "@/components/home/GpsPromo"
 import { WorldEventPromo } from "@/components/home/WorldEventPromo"
@@ -70,8 +71,14 @@ export default async function V3Home() {
             </p>
           </V3Reveal>
 
-          <V3Reveal delay={220}>
+          <V3Reveal delay={210}>
             <div style={{ marginTop: 36 }}>
+              <Visual6502Hero />
+            </div>
+          </V3Reveal>
+
+          <V3Reveal delay={220}>
+            <div style={{ marginTop: 14 }}>
               <HotbitsHero />
             </div>
           </V3Reveal>
