@@ -13,7 +13,7 @@ type Place = {
   country: string | null; cc: string | null
   lat: number | null; lon: number | null
   asn: number | null; org: string | null
-  hits: number; last?: number; ips?: number
+  hits: number; reads?: number; sessions?: number; last?: number; ips?: number
 }
 type Scanner = Place & { ip: string; target: string | null }
 type Snap = {
@@ -82,12 +82,12 @@ function WorldMap({ humans, scanners }: { humans: Place[]; scanners: Place[] }) 
       .map((r, i) => {
         const xy = project(r.lon as number, r.lat as number)
         if (!xy) return null
-        const rad = 2 + Math.sqrt(r.hits / max) * 9
+        const rad = 2 + Math.sqrt((r.reads ?? r.hits) / max) * 9
         return { key: `${r.net ?? r.cc}-${i}`, x: xy[0], y: xy[1], r: rad, d: r }
       })
       .filter(Boolean) as { key: string; x: number; y: number; r: number; d: Place }[]
 
-  const hMax = Math.max(1, ...humans.map((h) => h.hits))
+  const hMax = Math.max(1, ...humans.map((h) => h.reads ?? h.hits))
   const sMax = Math.max(1, ...scanners.map((s) => s.hits))
   const hDots = useMemo(() => dots(humans, hMax), [humans]) // eslint-disable-line react-hooks/exhaustive-deps
   const sDots = useMemo(() => dots(scanners, sMax), [scanners]) // eslint-disable-line react-hooks/exhaustive-deps
@@ -128,7 +128,7 @@ function WorldMap({ humans, scanners }: { humans: Place[]; scanners: Place[] }) 
         {layer !== "scanners" &&
           hDots.map((p) => (
             <circle key={`h${p.key}`} cx={p.x} cy={p.y} r={p.r} className="v3-vis-pt v3-vis-pt--h">
-              <title>{`${p.d.city ?? "?"}, ${p.d.region ?? p.d.country ?? "?"} — ${nf(p.d.hits)} hits · ${p.d.org ?? "unknown network"}`}</title>
+              <title>{`${p.d.city ?? "?"}, ${p.d.region ?? p.d.country ?? "?"} — ${nf(p.d.reads ?? p.d.hits)} pages read over ${nf(p.d.sessions)} visits · ${p.d.org ?? "unknown network"}`}</title>
             </circle>
           ))}
       </svg>
@@ -253,14 +253,14 @@ export function VisitorsBoard() {
         <section className="v3-panel">
           <div className="v3-cardhead">
             <h3>Where people are</h3>
-            <span className="v3-cardhead__meta">by /24 network</span>
+            <span className="v3-cardhead__meta">by pages read, per /24 network</span>
           </div>
           <Bars
             colorClass="is-blue"
             rows={s.visitors.places.slice(0, 12).map((p) => ({
               label: [p.city, p.region ?? p.country].filter(Boolean).join(", ") || p.net || "unknown",
-              n: p.hits,
-              sub: p.org ?? undefined,
+              n: p.reads ?? p.hits,
+              sub: [p.org, p.sessions ? `${p.sessions} visits` : null].filter(Boolean).join(" · ") || undefined,
             }))}
           />
         </section>

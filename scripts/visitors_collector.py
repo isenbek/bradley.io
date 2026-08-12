@@ -245,6 +245,7 @@ def main():
 
     # --- served traffic -------------------------------------------------
     sessions = defaultdict(list)          # (ip, ua) -> [ts...]
+    key_net = {}                          # (ip, ua) -> /24, to attribute sessions to a place
     human_ips, bot_ips, self_hits = set(), set(), 0
     pageviews = bot_hits = 0
     day = defaultdict(lambda: {"humans": 0, "bots": 0})
@@ -277,7 +278,12 @@ def main():
         hour[ts.astimezone(timezone.utc).hour] += 1
         statuses[m.group("status")] += 1
         sessions[(ip, ua)].append(ts.timestamp())
-        if not ASSET_RE.search(path) and not path.startswith("/api/"):
+        # A "read" is a real page: assets and polled API endpoints are excluded.
+        # This matters — a single tab left open on the homepage polls /api/trng
+        # twice a minute, which would otherwise make it the busiest "visitor"
+        # on the map without anyone reading anything.
+        read = not ASSET_RE.search(path) and not path.startswith("/api/")
+        if read:
             pageviews += 1
             paths[path.split("?")[0][:120]] += 1
         ref = m.group("ref")
@@ -286,14 +292,17 @@ def main():
 
         g = geo.get(ip)
         key = net24(ip)                    # <- the only identifier we keep
+        key_net[(ip, ua)] = key
         p = place.get(key)
         if p is None:
             p = place[key] = {
                 "net": key, "city": g["city"], "region": g["region"],
                 "country": g["country"], "cc": g["cc"], "lat": g["lat"], "lon": g["lon"],
-                "asn": g["asn"], "org": g["org"], "hits": 0, "last": 0,
+                "asn": g["asn"], "org": g["org"],
+                "hits": 0, "reads": 0, "sessions": 0, "last": 0,
             }
         p["hits"] += 1
+        p["reads"] += 1 if read else 0
         p["last"] = max(p["last"], ts.timestamp())
         if g["cc"]:
             countries[g["cc"]] += 1
@@ -306,12 +315,13 @@ def main():
 
     # Sessionise: a gap longer than SESSION_GAP starts a new visit.
     session_count = 0
-    for stamps in sessions.values():
+    for k, stamps in sessions.items():
         stamps.sort()
-        session_count += 1
-        for a, b in zip(stamps, stamps[1:]):
-            if b - a > SESSION_GAP:
-                session_count += 1
+        n = 1 + sum(1 for a, b in zip(stamps, stamps[1:]) if b - a > SESSION_GAP)
+        session_count += n
+        net = key_net.get(k)
+        if net in place:
+            place[net]["sessions"] += n
 
     # --- trapped scanners ----------------------------------------------
     scan_ips = defaultdict(lambda: {"hits": 0, "last": 0, "target": None})
@@ -393,7 +403,7 @@ def main():
             "selfHits": self_hits,
             "byDay": [{"d": d, **day[d]} for d in days_sorted if d in day],
             "byHourUtc": hour,
-            "places": sorted(place.values(), key=lambda p: -p["hits"]),
+            "places": sorted(place.values(), key=lambda p: (-p["reads"], -p["sessions"])),
             "countries": sorted(
                 ({"cc": cc, "hits": n} for cc, n in countries.items()),
                 key=lambda c: -c["hits"],
