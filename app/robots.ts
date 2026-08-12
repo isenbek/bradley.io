@@ -9,7 +9,9 @@ export default function robots(): MetadataRoute.Robots {
       // /eyes/opengraph-image, killing the iOS/social link-unfurl preview. The
       // page stays unpublished via its noindex meta (app/eyes/layout.tsx) and by
       // not being linked anywhere.
-      disallow: ["/api/"],
+      // /visitors is unlisted while its tiers get built out. Unlike /eyes it
+      // has no opengraph-image to protect, so a Disallow is safe here.
+      disallow: ["/api/", "/visitors"],
     },
     sitemap: "https://bradley.io/sitemap.xml",
     host: "https://bradley.io",
