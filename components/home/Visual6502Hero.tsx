@@ -126,6 +126,9 @@ export function Visual6502Hero() {
               width={1000}
               height={617}
               decoding="async"
+              // The h1 is the LCP element on this page — don't let 400 KB of
+              // die plate race it for bandwidth.
+              fetchPriority="low"
               className={`v3-mos-hero__plate${n === i ? " is-on" : ""}`}
             />
           ))}
