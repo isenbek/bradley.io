@@ -1,6 +1,8 @@
 "use client"
 
 import { useState } from "react"
+import { Maximize2 } from "lucide-react"
+import { Lightbox } from "./Lightbox"
 
 // The four images are pixel-aligned crops of the same patch of die (the
 // register/ALU section), so stacking them and crossfading opacity turns the
@@ -41,6 +43,7 @@ const LAYERS = [
 
 export function DieStack() {
   const [i, setI] = useState(0)
+  const [open, setOpen] = useState(false)
 
   return (
     <figure className="v3-mos-stack">
@@ -73,9 +76,26 @@ export function DieStack() {
           />
         ))}
         <span className="v3-mos-stack__badge">register &amp; ALU section</span>
+        <button
+          type="button"
+          className="v3-mos-stack__zoom"
+          onClick={() => setOpen(true)}
+          aria-label={`Open the ${LAYERS[i].label.toLowerCase()} layer full screen`}
+        >
+          <Maximize2 size={14} strokeWidth={2.4} /> zoom
+        </button>
       </div>
 
       <figcaption className="v3-mos-stack__cap">{LAYERS[i].cap}</figcaption>
+
+      {open ? (
+        <Lightbox
+          src={LAYERS[i].src.replace(".webp", "-full.webp")}
+          alt={LAYERS[i].alt}
+          caption={`Register & ALU section · ${LAYERS[i].label.toLowerCase()} · visual6502, CC BY-NC-SA 3.0`}
+          onClose={() => setOpen(false)}
+        />
+      ) : null}
     </figure>
   )
 }

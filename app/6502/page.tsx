@@ -14,6 +14,7 @@ import {
 } from "lucide-react"
 import { V3Reveal } from "@/components/v3/V3Reveal"
 import { DieStack } from "@/components/mos/DieStack"
+import { DiePlates } from "@/components/mos/DiePlates"
 
 /* ------------------------------------------------------------------ *
  * VITALS — the chip itself, in the numbers people actually quote.
@@ -416,49 +417,16 @@ export default function MosPage() {
           </V3Reveal>
 
           <V3Reveal delay={60}>
-            <div className="v3-mos-dies">
-              <figure className="v3-mos-die">
-                <div className="v3-mos-die__frame">
-                  <img
-                    src="/6502/die-surface.webp"
-                    alt="The full MOS 6502 die photographed from above: a dense green-gold grid of circuitry ringed by 40 bond pads"
-                    width={1300}
-                    height={1417}
-                    decoding="async"
-                  />
-                  <span className="v3-mos-die__tag">surface</span>
-                </div>
-                <figcaption>
-                  The die as it came out of the package, metal still on. The ring of dark circles is
-                  the 40 bond pads; the &ldquo;65 0&rdquo; near the left edge is etched into the
-                  silicon itself.
-                </figcaption>
-              </figure>
-
-              <figure className="v3-mos-die">
-                <div className="v3-mos-die__frame">
-                  <img
-                    src="/6502/die-substrate.webp"
-                    alt="The same 6502 die after the metal and polysilicon layers were stripped, showing the pale diffusion regions beneath"
-                    width={1300}
-                    height={1417}
-                    decoding="async"
-                  />
-                  <span className="v3-mos-die__tag">substrate</span>
-                </div>
-                <figcaption>
-                  The same die with the metal and polysilicon stripped off, exposing the diffusion.
-                  Aligning this to the surface shot is what makes buried contacts recoverable.
-                </figcaption>
-              </figure>
-            </div>
+            <DiePlates />
           </V3Reveal>
 
           <V3Reveal delay={100}>
             <p className="v3-mos-note v3-mos-note--wide">
-              Both plates are 4,677 × 5,097 pixels here, and the originals are twice that in each
-              direction. Step through what happens next below: the same patch of die, photographed,
-              stripped, traced, and finally turned into the polygons the simulation actually runs.
+              The plates the team published are 4,677 × 5,097 pixels, and their originals are twice
+              that again in each direction. Click either one to open it full screen and zoom in far
+              enough to pick out individual transistors. Then step through what happens next: the
+              same patch of die, photographed, stripped, traced, and finally turned into the
+              polygons the simulation actually runs.
             </p>
           </V3Reveal>
 

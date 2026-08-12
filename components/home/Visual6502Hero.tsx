@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react"
 import Link from "next/link"
-import { ArrowRight, Cpu, Library } from "lucide-react"
+import { ArrowRight, Cpu, Library, Maximize2 } from "lucide-react"
+import { Lightbox } from "@/components/mos/Lightbox"
 
 // Home hero panel for the Visual 6502 rebuild (6502.tinymachines.ai).
 //
@@ -16,27 +17,35 @@ const PLATES = [
     key: "surface",
     label: "surface",
     src: "/6502/hero-surface.webp",
+    full: "/6502/die-surface-full.webp",
     alt: "A band of the MOS 6502 die photographed from above, dense gold-green circuitry with the 65-D marking visible",
+    lbCap: "MOS 6502 rev D · surface, metal still on · visual6502, CC BY-NC-SA 3.0",
   },
   {
     key: "substrate",
     label: "substrate",
     src: "/6502/hero-substrate.webp",
+    full: "/6502/die-substrate-full.webp",
     alt: "The same band of the 6502 die after the metal and polysilicon layers were stripped, showing pale diffusion regions",
+    lbCap: "MOS 6502 rev D · substrate, metal and poly etched off · visual6502, CC BY-NC-SA 3.0",
   },
 ]
 
 export function Visual6502Hero() {
   const [i, setI] = useState(0)
+  const [open, setOpen] = useState(false)
 
+  // Hold the plate still while it is open full screen — swapping it underneath
+  // the viewer would be maddening.
   useEffect(() => {
+    if (open) return
     if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return
     const id = setInterval(() => {
       if (document.visibilityState === "hidden") return
       setI((n) => (n + 1) % PLATES.length)
     }, 4200)
     return () => clearInterval(id)
-  }, [])
+  }, [open])
 
   return (
     <article className="v3-mos-hero">
@@ -102,7 +111,12 @@ export function Visual6502Hero() {
           <span className="v3-mos-hero__viz-label">MOS 6502 rev D</span>
         </div>
 
-        <div className="v3-mos-hero__die">
+        <button
+          type="button"
+          className="v3-mos-hero__die"
+          onClick={() => setOpen(true)}
+          aria-label={`Open the ${PLATES[i].label} plate full screen`}
+        >
           {PLATES.map((pl, n) => (
             <img
               key={pl.key}
@@ -115,13 +129,25 @@ export function Visual6502Hero() {
               className={`v3-mos-hero__plate${n === i ? " is-on" : ""}`}
             />
           ))}
-        </div>
+          <span className="v3-mos-hero__zoom">
+            <Maximize2 size={13} strokeWidth={2.4} /> zoom
+          </span>
+        </button>
 
         <div className="v3-mos-hero__viz-foot">
           <span>decapped 2009</span>
           <span>die: visual6502</span>
         </div>
       </div>
+
+      {open ? (
+        <Lightbox
+          src={PLATES[i].full}
+          alt={PLATES[i].alt}
+          caption={PLATES[i].lbCap}
+          onClose={() => setOpen(false)}
+        />
+      ) : null}
     </article>
   )
 }
