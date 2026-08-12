@@ -1,55 +1,42 @@
 "use client"
 
-import { useEffect, useMemo, useState } from "react"
+import { useEffect, useState } from "react"
 import Link from "next/link"
 import { ArrowRight, Cpu, Library } from "lucide-react"
 
 // Home hero panel for the Visual 6502 rebuild (6502.tinymachines.ai).
 //
-// The right-hand well is a DIE MOTIF, not live data — there is no endpoint to
-// poll here. It's a stylised mask stack (metal over poly over diffusion) whose
-// contacts light on a two-phase clock, which is the one thing about it that is
-// honest: a real 6502 settles its nodes twice per cycle, on φ1 and φ2.
-
-const COLS = 13
-const ROWS = 7
-
-/** Fixed-seed LCG so the contact layout is identical on server and client. */
-function layout() {
-  let s = 6502
-  const rnd = () => {
-    s = (s * 1103515245 + 12345) & 0x7fffffff
-    return s / 0x7fffffff
-  }
-  const cells: { x: number; y: number; r: number; k: number }[] = []
-  for (let r = 0; r < ROWS; r++) {
-    for (let c = 0; c < COLS; c++) {
-      if (rnd() > 0.62) {
-        cells.push({ x: c, y: r, r: rnd() > 0.78 ? 3.1 : 2.2, k: Math.floor(rnd() * 7) })
-      }
-    }
-  }
-  return cells
-}
+// The right-hand well holds the actual thing: two identically-cropped bands of
+// the visual6502 team's die photographs, the second shot after the metal and
+// polysilicon were etched off. They are pixel-aligned, so slowly crossfading
+// between them reads as the metal dissolving to show what is underneath —
+// which is exactly what happened to the physical chip.
+const PLATES = [
+  {
+    key: "surface",
+    label: "surface",
+    src: "/6502/hero-surface.webp",
+    alt: "A band of the MOS 6502 die photographed from above, dense gold-green circuitry with the 65-D marking visible",
+  },
+  {
+    key: "substrate",
+    label: "substrate",
+    src: "/6502/hero-substrate.webp",
+    alt: "The same band of the 6502 die after the metal and polysilicon layers were stripped, showing pale diffusion regions",
+  },
+]
 
 export function Visual6502Hero() {
-  const cells = useMemo(layout, [])
-  const [phase, setPhase] = useState(0)
+  const [i, setI] = useState(0)
 
-  // Two-phase clock. Parked entirely when the tab is hidden or the visitor has
-  // asked for reduced motion.
   useEffect(() => {
-    const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
-    if (reduce) return
+    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return
     const id = setInterval(() => {
       if (document.visibilityState === "hidden") return
-      setPhase((p) => (p + 1) % 14)
-    }, 620)
+      setI((n) => (n + 1) % PLATES.length)
+    }, 4200)
     return () => clearInterval(id)
   }, [])
-
-  const W = COLS * 26 + 20
-  const H = ROWS * 26 + 20
 
   return (
     <article className="v3-mos-hero">
@@ -110,77 +97,29 @@ export function Visual6502Hero() {
         <div className="v3-mos-hero__viz-head">
           <span className="v3-mos-hero__clk">
             <span className="v3-mos-hero__clk-dot" aria-hidden />
-            {phase % 2 === 0 ? "φ1" : "φ2"}
+            {PLATES[i].label}
           </span>
-          <span className="v3-mos-hero__viz-label">six mask layers</span>
+          <span className="v3-mos-hero__viz-label">MOS 6502 rev D</span>
         </div>
 
-        <svg
-          className="v3-mos-hero__die"
-          viewBox={`0 0 ${W} ${H}`}
-          preserveAspectRatio="xMidYMid meet"
-          role="img"
-          aria-label="Stylised illustration of a chip die: metal traces over polysilicon with contacts lighting on a two-phase clock."
-        >
-          {/* diffusion — the substrate wash */}
-          {Array.from({ length: ROWS }, (_, r) => (
-            <rect
-              key={`d${r}`}
-              x={6}
-              y={12 + r * 26}
-              width={W - 12}
-              height={11}
-              rx={3}
-              fill="#123c2c"
-              opacity={0.45}
+        <div className="v3-mos-hero__die">
+          {PLATES.map((pl, n) => (
+            <img
+              key={pl.key}
+              src={pl.src}
+              alt={n === i ? pl.alt : ""}
+              aria-hidden={n === i ? undefined : true}
+              width={1000}
+              height={617}
+              decoding="async"
+              className={`v3-mos-hero__plate${n === i ? " is-on" : ""}`}
             />
           ))}
-          {/* polysilicon — vertical */}
-          {Array.from({ length: COLS }, (_, c) => (
-            <rect
-              key={`p${c}`}
-              x={14 + c * 26}
-              y={6}
-              width={5}
-              height={H - 12}
-              rx={2}
-              fill="#8a5b2b"
-              opacity={0.55}
-            />
-          ))}
-          {/* metal — horizontal, translucent, sits on top exactly as on silicon */}
-          {Array.from({ length: ROWS }, (_, r) => (
-            <rect
-              key={`m${r}`}
-              x={4}
-              y={9 + r * 26}
-              width={W - 8}
-              height={7}
-              rx={3}
-              fill="#9fd8f5"
-              opacity={0.16}
-            />
-          ))}
-          {/* contacts — lit when high on this half-cycle */}
-          {cells.map((cell, i) => {
-            const high = (cell.k + phase) % 7 < 3
-            return (
-              <circle
-                key={i}
-                cx={16.5 + cell.x * 26}
-                cy={17.5 + cell.y * 26}
-                r={cell.r}
-                fill={high ? "#5fe8ff" : "#1d4257"}
-                opacity={high ? 0.95 : 0.7}
-                style={high ? { filter: "drop-shadow(0 0 4px #5fe8ff)" } : undefined}
-              />
-            )
-          })}
-        </svg>
+        </div>
 
         <div className="v3-mos-hero__viz-foot">
-          <span>die motif · illustration</span>
-          <span>built on visual6502</span>
+          <span>decapped 2009</span>
+          <span>die: visual6502</span>
         </div>
       </div>
     </article>
