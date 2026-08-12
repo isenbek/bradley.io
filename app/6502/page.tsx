@@ -13,6 +13,7 @@ import {
   AlertTriangle,
 } from "lucide-react"
 import { V3Reveal } from "@/components/v3/V3Reveal"
+import { DieStack } from "@/components/mos/DieStack"
 
 /* ------------------------------------------------------------------ *
  * VITALS — the chip itself, in the numbers people actually quote.
@@ -397,11 +398,92 @@ export default function MosPage() {
       </header>
 
       {/* VITALS ======================================================== */}
+      {/* THE DIE ======================================================= */}
+      <section className="v3-section">
+        <div className="v3-wrap">
+          <V3Reveal>
+            <div className="v3-sec-head">
+              <div className="v3-sec-head__num">01 / THE DIE</div>
+              <h2>One chip was destroyed to make this.</h2>
+              <p>
+                Summer 2009: a MOS 6502 revision D had its package dissolved, its surface
+                photographed under a Nikon Optiphot at 10× plus roughly 15× to the camera, and then
+                its metal and polysilicon etched away so the substrate underneath could be shot and
+                aligned to the first image. Around 200 frames per pass, stitched. Everything on this
+                page descends from these two photographs.
+              </p>
+            </div>
+          </V3Reveal>
+
+          <V3Reveal delay={60}>
+            <div className="v3-mos-dies">
+              <figure className="v3-mos-die">
+                <div className="v3-mos-die__frame">
+                  <img
+                    src="/6502/die-surface.webp"
+                    alt="The full MOS 6502 die photographed from above: a dense green-gold grid of circuitry ringed by 40 bond pads"
+                    width={1300}
+                    height={1417}
+                    decoding="async"
+                  />
+                  <span className="v3-mos-die__tag">surface</span>
+                </div>
+                <figcaption>
+                  The die as it came out of the package, metal still on. The ring of dark circles is
+                  the 40 bond pads; the &ldquo;65 0&rdquo; near the left edge is etched into the
+                  silicon itself.
+                </figcaption>
+              </figure>
+
+              <figure className="v3-mos-die">
+                <div className="v3-mos-die__frame">
+                  <img
+                    src="/6502/die-substrate.webp"
+                    alt="The same 6502 die after the metal and polysilicon layers were stripped, showing the pale diffusion regions beneath"
+                    width={1300}
+                    height={1417}
+                    decoding="async"
+                  />
+                  <span className="v3-mos-die__tag">substrate</span>
+                </div>
+                <figcaption>
+                  The same die with the metal and polysilicon stripped off, exposing the diffusion.
+                  Aligning this to the surface shot is what makes buried contacts recoverable.
+                </figcaption>
+              </figure>
+            </div>
+          </V3Reveal>
+
+          <V3Reveal delay={100}>
+            <p className="v3-mos-note v3-mos-note--wide">
+              Both plates are 4,677 × 5,097 pixels here, and the originals are twice that in each
+              direction. Step through what happens next below: the same patch of die, photographed,
+              stripped, traced, and finally turned into the polygons the simulation actually runs.
+            </p>
+          </V3Reveal>
+
+          <V3Reveal delay={140}>
+            <DieStack />
+          </V3Reveal>
+
+          <V3Reveal delay={160}>
+            <p className="v3-mos-credit-line">
+              Die images by the visual6502 team, Greg James et al.
+              <a href="http://visual6502.org/images/6502/index.html" target="_blank" rel="noopener noreferrer">
+                visual6502.org
+              </a>
+              · licensed <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" target="_blank" rel="noopener noreferrer">CC BY-NC-SA 3.0</a>,
+              re-encoded for the web and served from this host under the same terms.
+            </p>
+          </V3Reveal>
+        </div>
+      </section>
+
       <section className="v3-section v3-section--paper">
         <div className="v3-wrap">
           <V3Reveal>
             <div className="v3-sec-head">
-              <div className="v3-sec-head__num">01 / THE PART</div>
+              <div className="v3-sec-head__num">02 / THE PART</div>
               <h2>3,510 transistors that moved the industry.</h2>
               <p>
                 The 6502 was not the best processor of 1975. It was the one an engineer could
@@ -470,7 +552,7 @@ export default function MosPage() {
         <div className="v3-wrap">
           <V3Reveal>
             <div className="v3-sec-head">
-              <div className="v3-sec-head__num">02 / THE REBUILD</div>
+              <div className="v3-sec-head__num">03 / THE REBUILD</div>
               <h2>A photograph of a chip, running.</h2>
               <p>
                 Same polygons, new engine. The die geometry comes from the visual6502 trace
@@ -563,7 +645,7 @@ export default function MosPage() {
         <div className="v3-wrap">
           <V3Reveal>
             <div className="v3-sec-head">
-              <div className="v3-sec-head__num">03 / WHY BOTHER</div>
+              <div className="v3-sec-head__num">04 / WHY BOTHER</div>
               <h2>The archive is one hosting bill from gone.</h2>
               <p>
                 visual6502.org still serves every byte it ever did. It is also visibly unattended,
@@ -617,7 +699,7 @@ export default function MosPage() {
         <div className="v3-wrap">
           <V3Reveal>
             <div className="v3-sec-head">
-              <div className="v3-sec-head__num">04 / THE ARCHIVE</div>
+              <div className="v3-sec-head__num">05 / THE ARCHIVE</div>
               <h2>Everything 6502, in one place.</h2>
               <p>
                 {TOTAL} resources across seven groups, every link fetched and checked. Anything
@@ -679,7 +761,7 @@ export default function MosPage() {
           <V3Reveal>
             <div className="v3-panel v3-mos-credit">
               <div className="v3-sec-head__num" style={{ marginBottom: 10 }}>
-                05 / CREDIT
+                06 / CREDIT
               </div>
               <h2 className="v3-mos-credit__h">Someone had to trace every polygon.</h2>
               <p>
