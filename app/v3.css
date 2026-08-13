@@ -350,7 +350,9 @@ html[data-theme="dark"]:has(.v3) {
   background: var(--v3-blue-50);
 }
 
-@media (max-width: 760px) {
+/* 860, not 760: the "Knock Knock" entry made eight links, which overflowed the
+   bar in the 761-820px band before the drawer used to take over. */
+@media (max-width: 860px) {
   .v3-nav__links {
     display: none;
   }
@@ -408,7 +410,7 @@ html[data-theme="dark"]:has(.v3) {
   color: var(--v3-blue-700);
 }
 
-@media (max-width: 760px) {
+@media (max-width: 860px) {
   .v3-nav__burger {
     display: inline-flex;
     align-items: center;
@@ -7571,8 +7573,9 @@ html[data-theme="dark"]:has(.v3) {
 /* ---- the page ------------------------------------------------------ */
 /* Wider than the 720px longform measure: this page is mostly tables, chips
    and link rows rather than paragraphs. Prose is re-capped in ch below so
-   the reading measure stays sane. */
-.v3-mos .v3-wrap { max-width: 1040px; }
+   the reading measure stays sane. Matches --v3-maxw so the left edge lines up
+   with every other page. */
+.v3-mos .v3-wrap { max-width: var(--v3-maxw); }
 .v3-mos .v3-page-head__lede { max-width: 66ch; }
 .v3-mos .v3-sec-head p { max-width: 70ch; }
 .v3-mos .v3-section { padding: 44px 0; }
