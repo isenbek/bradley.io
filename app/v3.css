@@ -155,9 +155,10 @@ html[data-theme="dark"]:has(.v3) {
    scroll; main pads itself away from both. The wrapper isn't a scroll
    container — html scrolls, nav sticks, footer is fixed. */
 .v3 > main {
-  /* Offsets for the fixed chrome: nav (~57px) on top, footer (~64px) on bottom. */
+  /* Offsets for the fixed chrome: nav (~57px) on top. The bottom clearance is
+     owned by .v3-colophon, which sits between main and the fixed footer bar. */
   padding-top: 58px;
-  padding-bottom: 72px;
+  padding-bottom: 0;
 }
 
 /* Blueprint dotted grid backdrop */
@@ -8295,7 +8296,9 @@ html[data-theme="dark"]:has(.v3) {
 .v3-colophon {
   border-top: 1px solid var(--v3-line);
   background: var(--v3-paper);
-  padding: 20px 0 24px;
+  /* 72px of bottom padding clears the 48px fixed footer bar — the colophon is
+     the last flowing element on every page, so the clearance lives here. */
+  padding: 20px 0 72px;
   margin-top: 40px;
 }
 .v3-colophon__in {
