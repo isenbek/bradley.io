@@ -9,6 +9,7 @@ import "./globals.css"
 import "./v3.css"
 import { V3Nav } from "@/components/v3/V3Nav"
 import { V3Footer } from "@/components/v3/V3Footer"
+import { V3Colophon } from "@/components/v3/V3Colophon"
 import { RegisterSW } from "@/components/pwa/RegisterSW"
 
 // Bricolage (display) — used for h1, hero text, big numbers. Brand-critical.
@@ -262,6 +263,7 @@ export default function RootLayout({
         <div className="v3">
           <V3Nav />
           <main>{children}</main>
+          <V3Colophon />
           <V3Footer />
         </div>
       </body>

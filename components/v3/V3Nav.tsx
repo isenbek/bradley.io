@@ -12,6 +12,7 @@ const LINKS = [
   { href: "/ai-pilot", label: "Pilot" },
   { href: "/projects", label: "Projects" },
   { href: "/lab", label: "Lab" },
+  { href: "/visitors", label: "Knock Knock" },
   { href: "/about", label: "About" },
   { href: "/services", label: "Services" },
   { href: "/contact", label: "Contact" },
