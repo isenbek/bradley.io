@@ -104,7 +104,7 @@ export default async function V3LabPage() {
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+                gridTemplateColumns: "repeat(auto-fit, minmax(min(320px, 100%), 1fr))",
                 gap: 20,
               }}
             >
@@ -474,7 +474,7 @@ export default async function V3LabPage() {
                 <div
                   style={{
                     display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+                    gridTemplateColumns: "repeat(auto-fit, minmax(min(260px, 100%), 1fr))",
                     gap: 14,
                   }}
                 >
@@ -567,29 +567,8 @@ export default async function V3LabPage() {
       <section className="v3-section" style={{ paddingTop: 56 }}>
         <div className="v3-wrap">
           <V3Reveal>
-            <div
-              className="v3-panel"
-              style={{
-                display: "grid",
-                gridTemplateColumns: "auto 1fr auto",
-                gap: 20,
-                alignItems: "center",
-                padding: "28px 32px",
-              }}
-            >
-              <div
-                style={{
-                  width: 56,
-                  height: 56,
-                  borderRadius: "50%",
-                  background:
-                    "linear-gradient(135deg, var(--v3-gold), var(--v3-gold-dk))",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  color: "#fff",
-                }}
-              >
+            <div className="v3-panel v3-labnote">
+              <div className="v3-labnote__ico">
                 <FlaskConical size={26} strokeWidth={2.25} />
               </div>
               <div>
@@ -604,7 +583,7 @@ export default async function V3LabPage() {
                   built. Bring it. Half the lab is conversations that started this way.
                 </p>
               </div>
-              <Link href="/contact" className="v3-btn v3-btn--coral">
+              <Link href="/contact" className="v3-btn v3-btn--coral v3-labnote__cta">
                 Get in touch →
               </Link>
             </div>

@@ -241,7 +241,7 @@ export function V3PapersFilter({
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(440px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fill, minmax(min(440px, 100%), 1fr))",
             gap: 20,
             marginTop: 24,
           }}

@@ -127,7 +127,7 @@ function ModelsPanel({ data }: { data: AIPilotData }) {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fit, minmax(min(160px, 100%), 1fr))",
             gap: 14,
           }}
         >
@@ -223,7 +223,7 @@ function CompetencyPanel({ data }: { data: AIPilotData }) {
     <div
       style={{
         display: "grid",
-        gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+        gridTemplateColumns: "repeat(auto-fit, minmax(min(320px, 100%), 1fr))",
         gap: 22,
       }}
     >
@@ -374,7 +374,7 @@ export function V3PilotDashboard({ data }: { data: AIPilotData }) {
         className="v3-panel"
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
+          gridTemplateColumns: "repeat(auto-fit, minmax(min(150px, 100%), 1fr))",
           gap: 16,
           alignItems: "center",
           background:

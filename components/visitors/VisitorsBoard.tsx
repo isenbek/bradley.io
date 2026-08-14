@@ -298,6 +298,9 @@ export function VisitorsBoard() {
         <div className="v3-vis-wall__grid">
           <div>
             <h4>Busiest probers</h4>
+            {/* 4 columns of IP + geo can't fit a 320px viewport; the wrapper
+                scrolls the table instead of pushing the whole page sideways. */}
+            <div className="v3-vis-tblwrap">
             <table className="v3-vis-tbl">
               <thead>
                 <tr><th>address</th><th>origin</th><th>network</th><th className="num">probes</th></tr>
@@ -313,6 +316,7 @@ export function VisitorsBoard() {
                 ))}
               </tbody>
             </table>
+            </div>
           </div>
           <div>
             <h4>What they came looking for</h4>

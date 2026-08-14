@@ -147,7 +147,7 @@ export function V3PilotAnalytics() {
       </article>
 
       {/* MODEL + TOOLS */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 22 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(300px, 100%), 1fr))", gap: 22 }}>
         <article className="v3-panel">
           <div className="v3-panel-head">By model</div>
           <table className="v3-tbl">

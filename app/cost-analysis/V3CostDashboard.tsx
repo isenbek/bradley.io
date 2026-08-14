@@ -637,7 +637,7 @@ function RoleRow({ role }: { role: Role }) {
         {role.halfTime ? "½" : role.count > 1 ? `${role.count}×` : "1"}
       </div>
       <div className="v3-role__title">{role.title}</div>
-      <div>
+      <div className="v3-role__pay">
         <div className="v3-role__cost">${role.loadedCost.toLocaleString()}/yr</div>
         <div className="v3-role__cost-sub">${monthly.toLocaleString()}/mo</div>
       </div>
@@ -689,7 +689,7 @@ export function V3CostDashboard({ data }: { data: CostModel }) {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+          gridTemplateColumns: "repeat(auto-fit, minmax(min(200px, 100%), 1fr))",
           gap: 14,
         }}
       >
@@ -742,7 +742,7 @@ export function V3CostDashboard({ data }: { data: CostModel }) {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+              gridTemplateColumns: "repeat(auto-fit, minmax(min(320px, 100%), 1fr))",
               gap: 16,
             }}
           >
@@ -761,7 +761,7 @@ export function V3CostDashboard({ data }: { data: CostModel }) {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fit, minmax(min(160px, 100%), 1fr))",
             gap: 14,
           }}
         >
@@ -809,7 +809,7 @@ export function V3CostDashboard({ data }: { data: CostModel }) {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+              gridTemplateColumns: "repeat(auto-fit, minmax(min(200px, 100%), 1fr))",
               gap: 8,
             }}
           >
@@ -829,7 +829,7 @@ export function V3CostDashboard({ data }: { data: CostModel }) {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+              gridTemplateColumns: "repeat(auto-fit, minmax(min(200px, 100%), 1fr))",
               gap: 14,
             }}
           >
@@ -872,7 +872,7 @@ export function V3CostDashboard({ data }: { data: CostModel }) {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fit, minmax(min(320px, 100%), 1fr))",
             gap: 16,
           }}
         >
@@ -1048,7 +1048,7 @@ export function V3CostDashboard({ data }: { data: CostModel }) {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fit, minmax(min(320px, 100%), 1fr))",
             gap: 16,
           }}
         >
@@ -1184,7 +1184,7 @@ export function V3CostDashboard({ data }: { data: CostModel }) {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+              gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))",
               gap: 18,
             }}
           >
@@ -1303,7 +1303,7 @@ export function V3CostDashboard({ data }: { data: CostModel }) {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
+              gridTemplateColumns: "repeat(auto-fit, minmax(min(160px, 100%), 1fr))",
               gap: 16,
               marginBottom: 18,
             }}

@@ -428,7 +428,7 @@ function Registry({ stats }: { stats: RegistryStats | null }) {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+          gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))",
           gap: 20,
         }}
       >
@@ -547,7 +547,7 @@ function Predictor({ status }: { status: PredictStatus | null }) {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fit, minmax(min(180px, 100%), 1fr))",
             gap: 14,
           }}
         >
@@ -779,7 +779,7 @@ export function V3DragonfliDashboard() {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fit, minmax(min(150px, 100%), 1fr))",
             gap: 0,
           }}
         >

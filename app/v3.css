@@ -1185,7 +1185,7 @@ html[data-theme="dark"]:has(.v3) {
 /* ============ NUMBERED STEPS ============ */
 .v3-steps {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(180px, 100%), 1fr));
   gap: 20px;
 }
 
@@ -1281,7 +1281,7 @@ html[data-theme="dark"]:has(.v3) {
 /* ============ PROJECT GRID ============ */
 .v3-project-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
   gap: 18px;
 }
 
@@ -1827,7 +1827,7 @@ html[data-theme="dark"]:has(.v3) {
 /* ============ STAT BAR ============ */
 .v3-statbar {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(140px, 100%), 1fr));
   gap: 0;
   background: var(--v3-white);
   border: 1px solid var(--v3-line);
@@ -2154,7 +2154,7 @@ html[data-theme="dark"]:has(.v3) {
 
 .v3-study__highlights {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(140px, 100%), 1fr));
   gap: 6px;
 }
 
@@ -2383,7 +2383,7 @@ html[data-theme="dark"]:has(.v3) {
 
 .v3-license__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr));
   gap: 18px;
   margin-top: 24px;
   padding-top: 22px;
@@ -2478,7 +2478,7 @@ html[data-theme="dark"]:has(.v3) {
 /* ============ HEATMAP ============ */
 .v3-heatmap {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(14px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(14px, 100%), 1fr));
   gap: 4px;
   background: var(--v3-cloud);
   padding: 14px;
@@ -3081,7 +3081,7 @@ html[data-theme="dark"]:has(.v3) {
 /* node grid */
 .v3-fleet-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(230px, 100%), 1fr));
   gap: 12px;
 }
 .v3-fleet-node {
@@ -3468,7 +3468,7 @@ html[data-theme="dark"]:has(.v3) {
 /* ============ BATTERY STRIP ============ */
 .v3-battery {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(14px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(14px, 100%), 1fr));
   gap: 3px;
   padding: 12px;
   background: var(--v3-cloud);
@@ -4109,7 +4109,7 @@ html[data-theme="dark"]:has(.v3) {
 /* ============ ROLE CHIP (consolidated) ============ */
 .v3-roles-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(170px, 100%), 1fr));
   gap: 8px;
 }
 
@@ -4503,7 +4503,7 @@ html[data-theme="dark"]:has(.v3) {
 /* ============ TIMELINE: STAT STRIP ============ */
 .v3-tlmeta {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(140px, 100%), 1fr));
   background: var(--v3-white);
   border: 1px solid var(--v3-line);
   border-radius: var(--v3-r-lg);
@@ -4777,7 +4777,7 @@ html[data-theme="dark"]:has(.v3) {
 
 .v3-phase__repos {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(240px, 100%), 1fr));
   gap: 12px;
   margin-top: 14px;
 }
@@ -5194,7 +5194,7 @@ html[data-theme="dark"]:has(.v3) {
 
 .v3-espace-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(320px, 100%), 1fr));
   gap: 26px;
 }
 
@@ -6064,7 +6064,7 @@ html[data-theme="dark"]:has(.v3) {
 
 .v3-gps-grid {
   display: grid; gap: 16px;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr));
 }
 
 .v3-gps-panel {
@@ -6560,7 +6560,7 @@ html[data-theme="dark"]:has(.v3) {
 
 /* throughput strip */
 .v3-we-top {
-  display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr));
 }
 .v3-we-stat {
   background: #070d14; border: 1px solid rgba(255, 255, 255, 0.07);
@@ -6576,7 +6576,7 @@ html[data-theme="dark"]:has(.v3) {
 .v3-we-topspark rect { fill: var(--v3-blue-400, #38bdf8); opacity: 0.85; }
 
 /* per-type cards */
-.v3-we-types { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(248px, 1fr)); }
+.v3-we-types { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(min(248px, 100%), 1fr)); }
 .v3-we-card {
   background: #0a0f15; border: 1px solid rgba(255, 255, 255, 0.08);
   border-left: 3px solid hsl(var(--we-hue) 80% 58%);
@@ -7585,7 +7585,7 @@ html[data-theme="dark"]:has(.v3) {
 /* vitals */
 .v3-mos-vitals {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(190px, 100%), 1fr));
   gap: 1px;
   background: var(--v3-line);
   border: 1px solid var(--v3-line);
@@ -7680,7 +7680,7 @@ html[data-theme="dark"]:has(.v3) {
 /* rebuild cards */
 .v3-mos-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
   gap: 16px;
   margin-bottom: 20px;
 }
@@ -7695,7 +7695,7 @@ html[data-theme="dark"]:has(.v3) {
 
 .v3-mos-verify__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(330px, 100%), 1fr));
   gap: 20px 28px;
   margin-top: 16px;
 }
@@ -8141,7 +8141,7 @@ html[data-theme="dark"]:has(.v3) {
 
 /* funnel tiers */
 .v3-vis-tiers {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(210px, 100%), 1fr));
   gap: 12px; margin-bottom: 20px;
 }
 .v3-vis-tier {
@@ -8197,7 +8197,7 @@ html[data-theme="dark"]:has(.v3) {
 .v3-vis-grid {
   /* 440px floor -> a clean 2x2 at desktop; 4 panels in a 3-col grid left a
      conspicuous hole in the second row. */
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(440px, 1fr));
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(440px, 100%), 1fr));
   gap: 16px; margin-bottom: 20px;
 }
 .v3-vis-bars { display: grid; gap: 7px; margin-top: 14px; }
@@ -8240,7 +8240,7 @@ html[data-theme="dark"]:has(.v3) {
 /* scanner wall + tables */
 .v3-vis-wall { margin-bottom: 20px; }
 .v3-vis-wall__grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(340px, 100%), 1fr));
   gap: 24px; margin-top: 14px;
 }
 .v3-vis-wall__grid h4, .v3-vis-planned h4 {
@@ -8261,7 +8261,7 @@ html[data-theme="dark"]:has(.v3) {
 
 /* planned tiers */
 .v3-vis-planned__grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
   gap: 14px; margin-top: 14px;
 }
 .v3-vis-plan {
@@ -8339,4 +8339,58 @@ html[data-theme="dark"]:has(.v3) {
 }
 @media (max-width: 560px) {
   .v3-colophon__in { justify-content: flex-start; }
+}
+
+/* ============ LAB FOOTNOTE PANEL ============ */
+/* icon · copy · CTA. Was an inline `grid-template-columns: auto 1fr auto`,
+   which can't carry a media query — the two `auto` tracks refuse to shrink and
+   the panel blew ~39px past the viewport at 320px. */
+.v3-labnote {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 20px;
+  align-items: center;
+  padding: 28px 32px;
+}
+.v3-labnote__ico {
+  width: 56px;
+  height: 56px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--v3-gold), var(--v3-gold-dk));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+@media (max-width: 560px) {
+  /* CTA drops to its own row; icon + copy stay side by side. */
+  .v3-labnote { grid-template-columns: auto 1fr; gap: 14px 16px; padding: 22px 20px; }
+  .v3-labnote__cta { grid-column: 1 / -1; justify-self: start; }
+}
+
+/* ============ NARROW-VIEWPORT ROW FIXES ============ */
+/* `1fr` carries an implicit min-width:auto (= min-content), so a long role
+   title held the row open and pushed the salary column past the viewport. */
+.v3-role { grid-template-columns: 36px minmax(0, 1fr) auto; }
+
+@media (max-width: 400px) {
+  /* salary drops under the title rather than fighting it for width */
+  .v3-role { grid-template-columns: 30px minmax(0, 1fr); gap: 4px 10px; }
+  .v3-role__pay { grid-column: 2 / -1; }
+}
+
+/* space-between with no wrap: the licence brand string and its status pill
+   couldn't share a 320px row, so the card clipped the brand text. */
+@media (max-width: 620px) {
+  .v3-license__head { flex-wrap: wrap; gap: 8px 12px; }
+}
+
+/* Wide table scrolls inside its own box. A scroll container resolves
+   min-width:auto to 0, so it also lets the grid item shrink — without it the
+   table's min-content (~305px) propagated all the way up and pushed the whole
+   page sideways at 320/360. */
+.v3-vis-tblwrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+@media (max-width: 560px) {
+  .v3-vis-tbl .dim { max-width: 120px; }
 }

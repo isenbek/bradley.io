@@ -205,7 +205,7 @@ export function GitHubCard({ project }: { project: Project }) {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(110px, 1fr))",
+          gridTemplateColumns: "repeat(auto-fit, minmax(min(110px, 100%), 1fr))",
           gap: 10,
         }}
       >

@@ -454,7 +454,7 @@ export function V3ShiftPage({
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fit, minmax(min(150px, 100%), 1fr))",
             gap: 0,
           }}
         >
@@ -523,7 +523,7 @@ export function V3ShiftPage({
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fit, minmax(min(320px, 100%), 1fr))",
             gap: 20,
             alignItems: "start",
           }}
@@ -598,7 +598,7 @@ export function V3ShiftPage({
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fit, minmax(min(150px, 100%), 1fr))",
             gap: 12,
             marginBottom: 20,
           }}
@@ -752,7 +752,7 @@ export function V3ShiftPage({
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))",
             gap: 16,
           }}
         >
@@ -808,7 +808,7 @@ export function V3ShiftPage({
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))",
             gap: 20,
           }}
         >
@@ -929,7 +929,7 @@ export function V3ShiftPage({
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+              gridTemplateColumns: "repeat(auto-fit, minmax(min(300px, 100%), 1fr))",
               gap: 28,
               alignItems: "center",
             }}

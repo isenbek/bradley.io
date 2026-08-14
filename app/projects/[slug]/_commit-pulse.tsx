@@ -139,7 +139,7 @@ export function CommitPulse({ project }: { project: Project }) {
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(120px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fit, minmax(min(120px, 100%), 1fr))",
             gap: 14,
             marginTop: 16,
           }}
