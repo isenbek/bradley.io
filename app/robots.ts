@@ -11,7 +11,9 @@ export default function robots(): MetadataRoute.Robots {
       // not being linked anywhere.
       // /visitors is unlisted while its tiers get built out. Unlike /eyes it
       // has no opengraph-image to protect, so a Disallow is safe here.
-      disallow: ["/api/", "/visitors"],
+      // /junior is a temporary, PIN-gated working session for one person.
+      // Remove this entry when the page comes down.
+      disallow: ["/api/", "/visitors", "/junior"],
     },
     sitemap: "https://bradley.io/sitemap.xml",
     host: "https://bradley.io",
