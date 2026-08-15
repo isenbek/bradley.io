@@ -8574,12 +8574,15 @@ html[data-theme="dark"]:has(.v3) {
   margin: 0;
   flex: 1 1 auto;
   min-width: 0;
-  overflow-x: auto;
   font-family: var(--font-v3-mono), ui-monospace, monospace;
   font-size: 12.5px;
   line-height: 1.6;
   color: #E8F4FA;
-  white-space: pre;
+  /* Wrap rather than scroll. These are long single-line commands and the whole
+     point is that he can READ them; a horizontally-scrolling <pre> hides the
+     back half of the `dd` line on a phone. */
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
 }
 .v3-jr-cmd .v3-jr-copy {
   background: rgba(255, 255, 255, 0.08);
