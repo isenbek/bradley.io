@@ -8621,6 +8621,30 @@ html[data-theme="dark"]:has(.v3) {
   font-size: 11.5px;
   color: #7c8aa5;
 }
+/* pushes the fullscreen button to the right edge of the title bar */
+.v3-jr-term__full {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: var(--font-v3-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  /* literal colors, not tokens: this bar is a fixed dark surface in BOTH
+     themes, so a token that inverts would put dark text on dark. */
+  color: #9fb0c9;
+  background: #1b2436;
+  border: 1px solid #27334a;
+  transition: color 120ms ease, border-color 120ms ease;
+}
+.v3-jr-term__full:hover { color: #ffffff; border-color: rgba(255, 255, 255, 0.4); }
+.v3-jr-term__full:focus-visible {
+  outline: 2px solid var(--v3-blue);
+  outline-offset: 2px;
+}
 .v3-jr-term__frame {
   display: block;
   width: 100%;
@@ -8628,4 +8652,10 @@ html[data-theme="dark"]:has(.v3) {
   min-height: 340px;
   border: 0;
   background: #0b1020;
+}
+/* fullscreen: the bar keeps its ~40px, the terminal takes everything else */
+.v3-jr-term:fullscreen { border: 0; border-radius: 0; }
+.v3-jr-term:fullscreen .v3-jr-term__frame {
+  height: calc(100vh - 40px);
+  max-height: none;
 }

@@ -1,8 +1,8 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useRouter } from "next/navigation"
-import { Download, HardDrive, ShieldCheck, TerminalSquare, Radio, Copy, Check, LogOut } from "lucide-react"
+import { Download, HardDrive, ShieldCheck, TerminalSquare, Radio, Copy, Check, LogOut, Maximize2, Minimize2 } from "lucide-react"
 
 // TEMPORARY — the authed half of /junior. Delete at teardown.
 
@@ -39,6 +39,21 @@ function Cmd({ children }: { children: string }) {
 
 export function JuniorConsole() {
   const router = useRouter()
+  const termRef = useRef<HTMLDivElement>(null)
+  const [isFull, setIsFull] = useState(false)
+
+  // Track fullscreen from the document, not from our own click — Esc and the
+  // browser's own chrome can exit it without ever calling toggleFull().
+  useEffect(() => {
+    const sync = () => setIsFull(document.fullscreenElement === termRef.current)
+    document.addEventListener("fullscreenchange", sync)
+    return () => document.removeEventListener("fullscreenchange", sync)
+  }, [])
+
+  function toggleFull() {
+    if (document.fullscreenElement) document.exitFullscreen()
+    else termRef.current?.requestFullscreen?.()
+  }
 
   async function lock() {
     await fetch("/api/junior/auth", { method: "DELETE" })
@@ -184,17 +199,27 @@ export function JuniorConsole() {
             that&rsquo;s the point of doing it this way.
           </p>
 
-          <div className="v3-jr-term">
-            <div className="v3-jr-term__bar" aria-hidden>
-              <span className="v3-jr-term__dot v3-jr-term__dot--r" />
-              <span className="v3-jr-term__dot v3-jr-term__dot--y" />
-              <span className="v3-jr-term__dot v3-jr-term__dot--g" />
+          <div className="v3-jr-term" ref={termRef}>
+            <div className="v3-jr-term__bar">
+              <span className="v3-jr-term__dot v3-jr-term__dot--r" aria-hidden />
+              <span className="v3-jr-term__dot v3-jr-term__dot--y" aria-hidden />
+              <span className="v3-jr-term__dot v3-jr-term__dot--g" aria-hidden />
               <span className="v3-jr-term__title">tmux · junior</span>
+              <button
+                type="button"
+                className="v3-jr-term__full"
+                onClick={toggleFull}
+                aria-label={isFull ? "Exit full screen" : "Full screen"}
+              >
+                {isFull ? <Minimize2 size={13} strokeWidth={2.4} aria-hidden /> : <Maximize2 size={13} strokeWidth={2.4} aria-hidden />}
+                <span>{isFull ? "Exit" : "Full screen"}</span>
+              </button>
             </div>
             <iframe
               className="v3-jr-term__frame"
               src="/junior/pty/"
               title="Shared terminal session"
+              allow="fullscreen"
             />
           </div>
         </div>
