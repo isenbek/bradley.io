@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react"
 import { useRouter } from "next/navigation"
 import { Download, HardDrive, ShieldCheck, TerminalSquare, Radio, Copy, Check, LogOut, Maximize2, Minimize2 } from "lucide-react"
+import { JuniorDocs } from "./JuniorDocs"
 
 // TEMPORARY — the authed half of /junior. Delete at teardown.
 
@@ -185,6 +186,9 @@ export function JuniorConsole() {
           </article>
         </div>
       </section>
+
+      {/* ---------------------------------------------------------------- */}
+      <JuniorDocs />
 
       {/* ---------------------------------------------------------------- */}
       <section className="v3-section v3-jr-termsec">
