@@ -32,7 +32,24 @@ command -v bun  >/dev/null 2>&1 || fail "bun not on PATH"
 command -v node >/dev/null 2>&1 || fail "node not on PATH"
 
 step "1/2 — deploying the site"
-./deploy.sh
+# deploy.sh's step 9 greps journalctl for "Ready" in a 5s window; when Next
+# takes longer to boot it exits 1 without ever reaching its own HTTP check,
+# even though the deploy landed fine. So don't trust the exit code alone —
+# ask the server directly.
+deploy_rc=0
+./deploy.sh || deploy_rc=$?
+
+if [[ $deploy_rc -ne 0 ]]; then
+  echo -e "  ${ORANGE}!${NC} deploy.sh exited ${deploy_rc} — verifying the site directly"
+  health=""
+  for _ in 1 2 3 4 5 6 7 8 9 10; do
+    health="$(curl -s -o /dev/null -w '%{http_code}' --max-time 5 http://localhost:32221/ || true)"
+    [[ "$health" == "200" ]] && break
+    sleep 2
+  done
+  [[ "$health" == "200" ]] || fail "site is not serving (localhost:32221 -> ${health:-no response}) — fix the deploy before exposing a shell"
+  echo -e "  ${GREEN}✓${NC} site is serving 200 — deploy.sh's log check was a false negative, continuing"
+fi
 
 step "2/2 — standing up the shell, nginx route and PIN"
 # Prompt for the password up front rather than midway through the script.

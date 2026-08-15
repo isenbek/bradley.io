@@ -8554,12 +8554,17 @@ html[data-theme="dark"]:has(.v3) {
 }
 .v3-jr-copy:hover { color: var(--v3-blue-ink); border-color: var(--v3-blue-300); }
 
-/* command block */
+/* Command block — deliberately light-on-dark in BOTH themes, so the surface is
+   a literal, not a token. It used to be `var(--v3-charcoal)`, which inverts to
+   near-white under [data-theme="dark"] while the text stayed hardcoded light:
+   a white box with invisible text. A token used as a surface must pair with a
+   token for its text. */
 .v3-jr-cmd {
   display: flex;
   align-items: flex-start;
   gap: 10px;
-  background: var(--v3-charcoal);
+  background: #131a2b;
+  border: 1px solid #232f45;
   border-radius: var(--v3-r-md);
   padding: 12px 12px 12px 14px;
   margin: 0 0 12px;
@@ -8581,7 +8586,9 @@ html[data-theme="dark"]:has(.v3) {
   border-color: rgba(255, 255, 255, 0.16);
   color: #C4D6E0;
 }
-.v3-jr-cmd .v3-jr-copy:hover { color: var(--v3-white); border-color: rgba(255, 255, 255, 0.4); }
+/* literal, not var(--v3-white) — that token is the elevated *surface* color and
+   goes dark (#18202F) under the dark theme, vanishing on this dark block. */
+.v3-jr-cmd .v3-jr-copy:hover { color: #FFFFFF; border-color: rgba(255, 255, 255, 0.4); }
 
 /* terminal */
 .v3-jr-termsec { padding-top: 26px; }
