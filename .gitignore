@@ -13,6 +13,9 @@
 
 # next.js
 /.next/
+# staged-build scratch dirs (deploy.sh builds here, then swaps into .next)
+/.next-staging/
+/.next-previous/
 /out/
 
 # production

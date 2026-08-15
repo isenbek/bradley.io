@@ -34,6 +34,13 @@ const nextConfig = {
       },
     ]
   },
+  // Staged builds: deploy.sh sets NEXT_DIST_DIR so a build lands in a scratch
+  // directory and is swapped into .next only after it SUCCEEDS. Without this a
+  // failed build corrupts the directory systemd is actively serving — which on
+  // 2026-08-15 left bradley.io serving HTML with a 500 on its stylesheet.
+  // `next start` runs with NEXT_DIST_DIR unset, so it always reads .next.
+  distDir: process.env.NEXT_DIST_DIR || '.next',
+
   trailingSlash: false,
 }
 

@@ -8,6 +8,7 @@ ORANGE='\033[0;33m'
 CYAN='\033[0;36m'
 GREEN='\033[0;32m'
 RED='\033[0;31m'
+YELLOW='\033[0;33m'
 NC='\033[0m'
 
 step() { echo -e "\n${ORANGE}▸${NC} $1"; }
@@ -61,9 +62,36 @@ git commit -m "bump: ${NEW_VER}" --allow-empty
 ok "${OLD_VER} → ${NEW_VER}"
 
 # 5. Build (before push — fail fast)
-step "Building production..."
-bun run build
-ok "Build complete"
+#
+# STAGED: build into .next-staging, and only swap it into place once it has
+# actually succeeded. `.next` is what systemd is serving right now, so building
+# straight into it means a failed build takes the LIVE SITE down — that is how
+# bradley.io ended up serving a 500 on its stylesheet on 2026-08-15.
+# next.config.mjs reads NEXT_DIST_DIR; `next start` runs without it and so
+# always reads .next.
+step "Building production (staged)..."
+STAGING=".next-staging"
+PREVIOUS=".next-previous"
+rm -rf "$STAGING"
+
+if ! NEXT_DIST_DIR="$STAGING" bun run build; then
+    rm -rf "$STAGING"
+    fail "Build failed — LIVE SITE UNTOUCHED, still serving the previous build"
+fi
+
+# Sanity-check the artifact before trusting it. An exit code of 0 with no
+# BUILD_ID means something went wrong in a way the build didn't report.
+if [[ ! -f "$STAGING/BUILD_ID" ]]; then
+    rm -rf "$STAGING"
+    fail "Build produced no BUILD_ID — refusing to swap. Live site untouched."
+fi
+
+# Swap. Keep the old build until the health check has passed so a rollback is
+# a single mv rather than another five-minute build.
+rm -rf "$PREVIOUS"
+[[ -d .next ]] && mv .next "$PREVIOUS"
+mv "$STAGING" .next
+ok "Build complete (swapped in; previous kept at ${PREVIOUS})"
 
 # 5b. Sync build-info — the build just regenerated lib/build-info.json with
 # the bumped version. Commit it so the repo's version pill matches what we're
@@ -98,24 +126,56 @@ else
     ok "Wargames started"
 fi
 
-# 9. Health check
-step "Checking logs..."
-sleep 2
-if sudo journalctl -u bradley-io --since "5 seconds ago" --no-pager | grep -q "Ready"; then
-    ok "Server is ready"
-else
-    sudo journalctl -u bradley-io --since "10 seconds ago" --no-pager
-    fail "Server may not have started cleanly — check logs above"
-fi
+# 9. Health check — poll until it actually answers.
+#
+# This used to grep journalctl for "Ready" in a 5-second window and fail()
+# outright if it missed, which red-✗'d completely successful deploys and meant
+# step 10 (the authoritative check) never even ran. HTTP is the real signal.
+step "Waiting for the server..."
+STATUS=000
+for _ in $(seq 1 20); do
+    STATUS=$(curl -s -o /dev/null -w "%{http_code}" --max-time 5 http://localhost:32221 || echo 000)
+    [[ "$STATUS" == "200" ]] && break
+    sleep 2
+done
 
-# 10. HTTP check
-step "Testing HTTP response..."
-STATUS=$(curl -s -o /dev/null -w "%{http_code}" --max-time 5 http://localhost:32221)
-if [[ "$STATUS" == "200" ]]; then
-    ok "http://localhost:32221 → ${STATUS}"
-else
+if [[ "$STATUS" != "200" ]]; then
+    echo -e "${RED}Last 30 lines of the service log:${NC}"
+    sudo journalctl -u bradley-io -n 30 --no-pager
+    # We still have the previous build — put it back rather than leaving the
+    # site broken while someone reads the log.
+    if [[ -d "$PREVIOUS" ]]; then
+        step "ROLLING BACK to the previous build..."
+        rm -rf .next
+        mv "$PREVIOUS" .next
+        sudo systemctl restart bradley-io
+        sleep 5
+        BACK=$(curl -s -o /dev/null -w "%{http_code}" --max-time 5 http://localhost:32221 || echo 000)
+        [[ "$BACK" == "200" ]] && ok "Rolled back — site is up on the previous build" \
+                               || echo -e "${RED}Rollback did not restore a 200 (got ${BACK})${NC}"
+    fi
     fail "http://localhost:32221 → ${STATUS}"
 fi
+ok "http://localhost:32221 → ${STATUS}"
+
+# 10. Verify the stylesheet, not just the HTML. A half-broken build still
+# serves a 200 on / while its CSS 500s — which is exactly what nobody noticed
+# on 2026-08-15. Check what the page actually references.
+step "Testing CSS..."
+CSSPATH=$(curl -s --max-time 5 http://localhost:32221/ | grep -o '/_next/static/[^"]*\.css' | head -1)
+if [[ -n "$CSSPATH" ]]; then
+    CSSSTATUS=$(curl -s -o /dev/null -w "%{http_code}" --max-time 5 "http://localhost:32221${CSSPATH}" || echo 000)
+    if [[ "$CSSSTATUS" == "200" ]]; then
+        ok "stylesheet → ${CSSSTATUS}"
+    else
+        fail "stylesheet ${CSSPATH} → ${CSSSTATUS} (page would render unstyled)"
+    fi
+else
+    echo -e "${YELLOW}  ⚠ could not find a stylesheet link to test${NC}"
+fi
+
+# Health checks passed — the previous build is no longer needed.
+rm -rf "$PREVIOUS"
 
 VER=$(node -p "require('./package.json').version")
 echo -e "\n${CYAN}🔥 Deployed v${VER} — bradley.io is live${NC}\n"
