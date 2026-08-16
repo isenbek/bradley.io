@@ -1,13 +1,13 @@
 ---
 title: Two ISPs, One Pi
 summary: Armando's Raspberry Pi 5 router — built, cut over, and running
-version: Rev 7
+version: Rev 9
 updated: 2026-08-16
 ---
 
 # Two ISPs, One Pi
 
-**Rev 7 — 16 August 2026** · Armando's Raspberry Pi 5 · OpenWrt 24.10.1
+**Rev 9 — 16 August 2026** · Armando's Raspberry Pi 5 · OpenWrt 24.10.1
 (r28597) · prepared by Brad
 
 Latest version: `bradley.io/junior/doc/two-isps-one-pi`
@@ -36,9 +36,9 @@ WAN port is still free, waiting for AT&T Fiber and automatic failover.
 | Recovery Wi-Fi | join `pi-rescue` → `http://192.168.98.1` |
 | Recovery cable | laptop `192.168.99.2/24` → `http://192.168.99.1` |
 
-⚠️ `192.168.**98**.1` is over the air. `192.168.**99**.1` is over a cable
-plugged straight into the Pi. They look alike and are completely different
-routes.
+⚠️ **`192.168.98.1` is over the air. `192.168.99.1` is over a cable** plugged
+straight into the Pi. They look alike and are completely different routes —
+**98 = Wi-Fi, 99 = cable**.
 
 ---
 
@@ -144,6 +144,33 @@ DNS — which lands on the Pi. Blocklist went from 3,976 to **7,985** addresses.
 
 It can't be perfect: it's an IP list, and new DoH endpoints appear. But it turns
 "filtering works for cooperating devices" into "filtering works".
+
+### ✅ Verified on a real device, 2026-08-16
+
+Before the `doh` feed, a Mac could reach sites the filter was supposed to block
+— its browser was doing DNS-over-HTTPS straight to `1.1.1.1`, invisible to a
+port-53 rule. Installing the NextDNS app **on the Mac** fixed it, which was the
+clue: that machine was not using the Pi's resolver at all.
+
+After adding the feed, the NextDNS app was **switched off on the Mac** and the
+site was **still blocked**. So the filtering is happening at the router, and no
+device needs local software.
+
+That matters because the devices you most want filtered — TVs, cameras,
+streaming sticks — are exactly the ones you cannot install anything on.
+
+Both Mac bypass routes are covered:
+
+| Route | Status |
+|---|---|
+| Browser DoH (Safari / Chrome / Firefox) | blocked — 775-address feed incl. `1.1.1.1`, `8.8.8.8`, `9.9.9.9` |
+| iCloud Private Relay | blocked — `mask.icloud.com`, `mask-h2.icloud.com` |
+
+banIP hooks the `lan-forward` chain, so this applies to traffic **from** your
+devices heading out, not just inbound attacks.
+
+Keeping the NextDNS app on a laptop is still worthwhile — it filters when you're
+away from home. You just don't need it on your own network.
 
 ### If something breaks because of it
 
