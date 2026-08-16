@@ -1,10 +1,5 @@
 import type { Metadata } from "next"
-import {
-  Bricolage_Grotesque,
-  Hanken_Grotesk,
-  Baloo_2,
-  JetBrains_Mono,
-} from "next/font/google"
+import localFont from "next/font/local"
 import "./globals.css"
 import "./v3.css"
 import { V3Nav } from "@/components/v3/V3Nav"
@@ -12,14 +7,28 @@ import { V3Footer } from "@/components/v3/V3Footer"
 import { V3Colophon } from "@/components/v3/V3Colophon"
 import { RegisterSW } from "@/components/pwa/RegisterSW"
 
-// Bricolage (display) — used for h1, hero text, big numbers. Brand-critical.
-// `swap` so the webfont always wins; next/font auto-generates a metric-
-// matched fallback so the swap is visually quiet.
-const display = Bricolage_Grotesque({
-  subsets: ["latin"],
-  weight: ["400", "600", "700", "800"],
+// ─── FONTS ARE VENDORED LOCALLY ────────────────────────────────────────────
+// These were next/font/google until 2026-08-15, when Turbopack's Google-font
+// resolution started failing intermittently — three build failures in an hour,
+// each only clearable with `rm -rf .next/cache`, and one of them took the live
+// stylesheet down. A build that reaches out to Google every time is a build
+// that fails whenever Google, DNS, or a cache feels like it. Anti-Cloud, Host
+// Local: the font files now live in app/fonts/ and the build touches nothing
+// off this machine.
+//
+// All four are VARIABLE fonts, so one file per family covers every weight —
+// hence the `weight: "min max"` ranges rather than a list.
+//
+// To refresh a family: scripts/vendor-fonts.sh
+
+// Bricolage (display) — h1, hero text, big numbers. Brand-critical.
+// `swap` so the webfont always wins.
+const display = localFont({
+  src: "./fonts/bricolage.woff2",
+  weight: "200 800",
   variable: "--font-v3-display",
   display: "swap",
+  adjustFontFallback: "Arial",
 })
 
 // Hanken (body) — used for paragraphs, lede, prose. The LCP element on
@@ -29,31 +38,39 @@ const display = Bricolage_Grotesque({
 // a size-adjust'd fallback @font-face so the layout doesn't shift if the
 // webfont does arrive. Slow-network users keep the fallback for the page
 // session — a 5% identity cost in exchange for ~Good LCP for everyone.
-const body = Hanken_Grotesk({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+const body = localFont({
+  src: "./fonts/hanken.woff2",
+  weight: "100 900",
   variable: "--font-v3-body",
   display: "optional",
-  adjustFontFallback: true,
+  // With a local font next/font can't read Google's metric metadata, so the
+  // fallback is metric-matched against Arial instead of the real face. Close
+  // enough for a grotesk of this proportion; the alternative is layout shift.
+  adjustFontFallback: "Arial",
 })
 
 // Baloo (logo) — only used on the bio·bradley.io wordmark; small surface
 // area, fine to keep on `optional`.
-const logo = Baloo_2({
-  subsets: ["latin"],
-  weight: ["600", "700", "800"],
+const logo = localFont({
+  src: "./fonts/baloo2.woff2",
+  weight: "400 800",
   variable: "--font-v3-logo",
   display: "optional",
+  adjustFontFallback: "Arial",
 })
 
 // JetBrains Mono — used on monospace labels / numerals throughout the UI.
 // Visual character matters less than body / display, `optional` keeps it
 // off the LCP critical path.
-const mono = JetBrains_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
+const mono = localFont({
+  src: "./fonts/jetbrains.woff2",
+  weight: "100 800",
   variable: "--font-v3-mono",
   display: "optional",
+  // Arial-based metric adjustment would be wrong for a monospace face — let
+  // the real monospace stack carry the fallback instead.
+  adjustFontFallback: false,
+  fallback: ["ui-monospace", "SFMono-Regular", "Menlo", "Consolas", "monospace"],
 })
 
 export const metadata: Metadata = {
