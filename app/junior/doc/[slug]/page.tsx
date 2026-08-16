@@ -11,7 +11,7 @@ import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 import Link from "next/link"
 import { marked } from "marked"
-import { ArrowLeft, Download } from "lucide-react"
+import { ArrowLeft, Download, Printer } from "lucide-react"
 import { JUNIOR_COOKIE, verifyToken } from "@/lib/junior-session"
 import type { Metadata } from "next"
 
@@ -92,9 +92,21 @@ export default async function JuniorDocPage({
             <Link href="/junior" className="v3-jr-docnav__back">
               <ArrowLeft size={15} strokeWidth={2.4} aria-hidden /> back to /junior
             </Link>
+            {/* PDF first: it is the one with page numbers, and printing is a
+                real output format here — Armando works from paper next to the
+                hardware. Browsers cannot render CSS page counters, so the
+                paginated version has to be pre-rendered. */}
+            <a
+              className="v3-jr-docnav__dl"
+              href={`/api/junior/recovery/${slug}.pdf`}
+              style={{ marginLeft: "auto" }}
+            >
+              <Printer size={14} strokeWidth={2.4} aria-hidden /> print (pdf)
+            </a>
             <a
               className="v3-jr-docnav__dl"
               href={`/api/junior/docs/${slug}?format=md&download=1`}
+              style={{ marginLeft: 0 }}
             >
               <Download size={14} strokeWidth={2.4} aria-hidden /> markdown
             </a>
