@@ -48,14 +48,14 @@ export async function GET(
     return new Response("unavailable", { status: 503 })
   }
 
-  const isText = match.endsWith(".txt") || match === "sha256sums"
+  const inline = match.endsWith(".txt") || match.endsWith(".pdf") || match === "sha256sums"
   const stream = Readable.toWeb(createReadStream(path)) as ReadableStream
 
   return new Response(stream, {
     headers: {
-      "Content-Type": isText ? "text/plain; charset=utf-8" : "application/octet-stream",
+      "Content-Type": match.endsWith(".pdf") ? "application/pdf" : inline ? "text/plain; charset=utf-8" : "application/octet-stream",
       "Content-Length": String(size),
-      "Content-Disposition": `${isText ? "inline" : "attachment"}; filename="${match}"`,
+      "Content-Disposition": `${inline ? "inline" : "attachment"}; filename="${match}"`,
       "Cache-Control": "no-store",
     },
   })

@@ -42,7 +42,11 @@ const rev = await page
   .evaluate(() => document.body.innerText.match(/Rev\s+\d+/)?.[0] ?? "")
   .catch(() => "")
 
-const title = await page.title().catch(() => "Two ISPs, One Pi")
+// page.title() returns the SITE title ("Junior · bradley.io | ..."), not the
+// document's. Use the rendered H1, which is the doc's own name.
+const title = await page
+  .evaluate(() => document.querySelector(".v3-md h1")?.textContent?.trim() ?? "")
+  .catch(() => "") || "Two ISPs, One Pi"
 
 await page.emulateMedia({ media: "print" })
 await page.pdf({
