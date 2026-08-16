@@ -87,7 +87,9 @@ export function JuniorDocs() {
         <ul className="v3-jr-docs">
           {docs.map((d) => (
             <li key={d.slug} className={`v3-jr-doc${fresh.has(d.slug) ? " v3-jr-doc--new" : ""}`}>
-              <button type="button" className="v3-jr-doc__main" onClick={() => view(d)}>
+              {/* A real link, not just a button: it can be bookmarked, pasted
+                  into a message, and opened in a new tab. */}
+              <a className="v3-jr-doc__main" href={`/junior/doc/${d.slug}`}>
                 <span className="v3-jr-doc__title">
                   {d.title}
                   {fresh.has(d.slug) && <span className="v3-jr-doc__badge">updated</span>}
@@ -97,6 +99,14 @@ export function JuniorDocs() {
                   {d.updated && <>{d.updated} · </>}
                   {sizeOf(d.bytes)} · markdown
                 </span>
+              </a>
+              <button
+                type="button"
+                className="v3-jr-doc__peek"
+                onClick={() => view(d)}
+                aria-label={`Preview ${d.title} without leaving this page`}
+              >
+                read here
               </button>
               <a
                 className="v3-jr-doc__dl"

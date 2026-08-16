@@ -85,6 +85,11 @@ export function JuniorConsole() {
         </div>
       </header>
 
+      {/* Documents first — this used to sit below the walkthrough, ~60% down
+          the page, and went unnoticed. The thing someone comes back for
+          belongs at the top. */}
+      <JuniorDocs />
+
       {/* ---------------------------------------------------------------- */}
       <section className="v3-section" style={{ paddingTop: 10 }}>
         <div className="v3-wrap v3-jr-steps">
@@ -186,9 +191,6 @@ export function JuniorConsole() {
           </article>
         </div>
       </section>
-
-      {/* ---------------------------------------------------------------- */}
-      <JuniorDocs />
 
       {/* ---------------------------------------------------------------- */}
       <section className="v3-section v3-jr-termsec">
