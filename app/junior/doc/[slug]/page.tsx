@@ -99,8 +99,12 @@ export default async function JuniorDocPage({
               <Download size={14} strokeWidth={2.4} aria-hidden /> markdown
             </a>
           </div>
-          {fm.updated && (
-            <p className="v3-jr-docnav__meta">last updated {fm.updated}</p>
+          {(fm.version || fm.updated) && (
+            <p className="v3-jr-docnav__meta">
+              {[fm.version, fm.updated && `last updated ${fm.updated}`]
+                .filter(Boolean)
+                .join(" · ")}
+            </p>
           )}
         </div>
       </header>

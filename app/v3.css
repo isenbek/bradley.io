@@ -8678,6 +8678,75 @@ html[data-theme="dark"]:has(.v3) {
   transition: background 140ms ease, color 140ms ease;
 }
 
+/* ---- printing a /junior doc -------------------------------------------
+   Armando prints these and works from paper next to the hardware, so the
+   printed copy is a real output format, not an afterthought. Goals: no wasted
+   ink, nothing split across a page break mid-thought, and every address still
+   legible in black and white. */
+@media print {
+  /* Screen chrome has no meaning on paper. */
+  .v3-nav, .v3-footer, .v3-colophon,
+  .v3-jr-docnav, .v3-jr-topline, .v3-ambient { display: none !important; }
+
+  html, body, .v3 { background: #fff !important; color: #000 !important; }
+  .v3 > main { padding: 0 !important; }
+  .v3-page-head { padding: 0 !important; }
+  .v3-section { padding: 0 !important; }
+  .v3-wrap { max-width: none !important; padding: 0 !important; }
+
+  @page { margin: 16mm 14mm; }
+
+  .v3-md { font-size: 10.5pt; line-height: 1.45; color: #000; }
+  .v3-md h1 { font-size: 20pt; margin: 0 0 4pt; }
+  .v3-md h2 {
+    font-size: 13pt;
+    margin: 16pt 0 5pt;
+    border-bottom: 0.5pt solid #999;
+    padding-bottom: 3pt;
+    /* never leave a heading alone at the foot of a page */
+    break-after: avoid;
+    page-break-after: avoid;
+  }
+  .v3-md h3 { font-size: 11.5pt; margin: 11pt 0 3pt; break-after: avoid; page-break-after: avoid; }
+  .v3-md p, .v3-md li { max-width: none; orphans: 3; widows: 3; }
+
+  /* A dark code block on paper is a solid rectangle of toner. */
+  .v3-md pre {
+    background: #f4f4f4 !important;
+    color: #000 !important;
+    border: 0.5pt solid #999 !important;
+    font-size: 8.5pt;
+    padding: 6pt 8pt;
+    break-inside: avoid;
+    page-break-inside: avoid;
+    white-space: pre-wrap;      /* the topology diagram must not clip */
+    overflow: visible;
+  }
+  .v3-md code { background: #f0f0f0 !important; color: #000 !important; }
+
+  /* Tables carry the addresses and MACs — keep each one whole. */
+  .v3-md table {
+    display: table !important;
+    overflow: visible !important;
+    font-size: 9pt;
+    break-inside: avoid;
+    page-break-inside: avoid;
+    border: 0.5pt solid #999;
+  }
+  .v3-md th, .v3-md td { border-bottom: 0.5pt solid #bbb; padding: 4pt 6pt; }
+  .v3-md th { background: #f0f0f0 !important; color: #000 !important; }
+
+  .v3-md blockquote {
+    background: #f7f7f7 !important;
+    border-left: 2pt solid #666 !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .v3-md a { color: #000 !important; text-decoration: underline; }
+  .v3-md hr { border-top: 0.5pt solid #bbb; margin: 12pt 0; }
+  .v3-md img { max-width: 100% !important; }
+}
+
 /* standalone doc page header */
 .v3-jr-docnav {
   display: flex;
