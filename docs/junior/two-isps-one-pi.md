@@ -1,13 +1,13 @@
 ---
 title: Two ISPs, One Pi
 summary: Armando's Raspberry Pi 5 router — built, cut over, and running
-version: Rev 5
+version: Rev 7
 updated: 2026-08-16
 ---
 
 # Two ISPs, One Pi
 
-**Rev 5 — 16 August 2026** · Armando's Raspberry Pi 5 · OpenWrt 24.10.1
+**Rev 7 — 16 August 2026** · Armando's Raspberry Pi 5 · OpenWrt 24.10.1
 (r28597) · prepared by Brad
 
 Latest version: `bradley.io/junior/doc/two-isps-one-pi`
@@ -87,7 +87,7 @@ swap on any reboot — silently exchanging your primary and backup ISP.
 | **adblock** | ✅ | 313,909 ad/tracker/malware domains |
 | **NextDNS** | ✅ | profile `a41d67`, DNS-over-HTTPS, per-device reporting |
 | **Force-DNS** | ✅ | every port-53 query intercepted — no device can bypass filtering |
-| **banip** | ✅ | 3,976 malicious addresses, guarding `wan2` |
+| **banip** | ✅ | 7,985 addresses — malicious IPs **+ DoH providers**, guarding `wan2` |
 | IPv6 | ✅ | delegated `/64`, RA + DHCPv6 serving the LAN |
 | `mwan3` failover | ⏸ dormant | waiting for a second ISP |
 
@@ -110,6 +110,105 @@ Deliberately **kept**: `packet-too-big`, `destination-unreachable`,
 `time-exceeded` and the IPv6 neighbour/router messages. Those carry Path MTU
 Discovery and IPv6 addressing itself — blocking "all ICMP" is how people create
 networks where small pages load and large downloads stall forever.
+
+---
+
+## Are all DNS queries going through the Pi?
+
+**Yes for ordinary DNS — proven, not assumed.** The Force-DNS rule counter:
+
+```
+udp dport 53 → redirect :53    counter 2,455 packets, 164 KB
+```
+
+Those are devices that tried to reach an outside DNS server (a smart TV
+hardcoded to `8.8.8.8`, say) and were silently redirected to the Pi instead.
+
+| Method | Port | Forced through the Pi? |
+|---|---|---|
+| Plain DNS | udp/tcp 53 | ✅ intercepted |
+| DNS-over-TLS (DoT) | tcp 853 | ✅ visible — 0 flows, nothing uses it |
+| **DNS-over-HTTPS (DoH)** | **tcp 443** | ⚠️ see below |
+
+### The DoH hole, and what we did about it
+
+DoH is deliberately built to look exactly like ordinary web traffic. At the
+packet level it's indistinguishable from loading a website, so **no firewall
+rule can catch it by port**. Firefox enables it by default in the US, Chrome
+uses it when available, and some TVs and streaming sticks hardcode it
+specifically so they can't be filtered.
+
+**Mitigation: the `doh` feed was added to banIP** (2026-08-16). It blocks the
+addresses of known DoH providers, so DoH fails and devices fall back to plain
+DNS — which lands on the Pi. Blocklist went from 3,976 to **7,985** addresses.
+
+It can't be perfect: it's an IP list, and new DoH endpoints appear. But it turns
+"filtering works for cooperating devices" into "filtering works".
+
+### If something breaks because of it
+
+It looks like **one app or device that won't load while everything else is
+fine** — usually a smart TV, a streaming stick, or a browser that insisted on
+DoH. Most fall back within seconds and you never notice.
+
+**The undo, one command:**
+
+```sh
+ssh root@10.0.0.1 "uci del_list banip.global.ban_feed='doh'; uci commit banip; /etc/init.d/banip restart"
+```
+
+Or in LuCI: **Services → banIP → Feeds**, untick `doh`, Save & Apply. ~90
+seconds to take effect, nothing else touched.
+
+Verified working after the change: google, youtube, apple, icloud, nest, sonos,
+spotify all resolve. Netflix, Amazon and Ring resolve but don't answer ping —
+**that's normal for AWS/CloudFront**, not a symptom.
+
+---
+
+## Where do I configure NextDNS?
+
+**Two different places, and the one you want is the website.**
+
+| Where | What you set there |
+|---|---|
+| **nextdns.io** (your browser) | **All the filtering** — categories (adult, social, gaming), blocklists, allow/deny lists, per-device profiles, query logs |
+| **LuCI → Services → NextDNS** | Only the plumbing — profile ID, on/off, client reporting. **Already done, needs nothing.** |
+
+On nextdns.io: **Parental Control** for category toggles, **Privacy** for
+blocklists, **Settings → Devices** for per-device rules. All ~55 devices now
+appear there by name, because client reporting is enabled on the Pi.
+
+Profile `a41d67` is connected over DNS-over-HTTPS and confirmed working.
+
+---
+
+## The recovery kit — download these
+
+On **`/junior`**, above the terminal, there is a **Recovery kit** panel:
+
+| File | What it's for |
+|---|---|
+| **Recovery image** (14.4 MB) | Write to a fresh SD card and the new Pi **is** the router — nothing to configure |
+| **Config backup** (18 KB) | Restore onto a working Pi via LuCI |
+| **sha256sums** | Verify a download before trusting it |
+
+⚠️ **These contain secrets** — the WireGuard private key, the root password
+hash, ssh host keys, the NextDNS profile. Keep them as private as a password.
+Never put them anywhere public.
+
+### What makes the image "flash and go"
+
+Built from the **live configuration of the running router**, verified to
+contain: the full network config (`lan 10.0.0.1`, `wan1`, `wan2`, `wan6`,
+`wg0`, both recovery paths), firewall, DHCP, NextDNS, banIP, adblock, mwan3,
+the MAC-pinning hotplug rule, ssh keys with correct `700`/`600` permissions,
+and all the extra packages preinstalled — so a fresh card needs no internet to
+become the router.
+
+The original first-boot script is **deliberately excluded**: it rewrote network
+and firewall settings on first boot, which was right for a blank Pi and would
+now overwrite everything we baked in.
 
 ---
 
@@ -267,8 +366,19 @@ turn bridge mode off, and you're back to where you started in about ten minutes.
 
 ## Still to do
 
-1. **AT&T Fiber** → `wan1`, enable `mwan3`, **then test it by unplugging the
-   primary line**. Untested failover is a belief, not a feature.
+1. **Starlink as the second WAN** — AT&T Fiber isn't available yet, but
+   Starlink can be bridged, so failover can be **built and tested now** rather
+   than waited for. When fiber arrives it takes whichever port suits.
+
+   ⚠️ **Starlink needs much more forgiving thresholds than a wired link.** It
+   drops for a second or two regularly — satellite handoffs, obstructions,
+   reroutes — which is normal, not a fault. On `mwan3` defaults it would be
+   marked dead constantly and your traffic would flip back and forth, breaking
+   connections every time. Higher `down`/`up` counts and a longer interval.
+   This is the one part of the build that genuinely needs care.
+
+   Also: Starlink is behind **CGNAT**, so no inbound connections while failed
+   over to it. Fine for a backup.
 2. **NextDNS categories** — the dashboard now sees all 55 devices by name, so
    this is the moment to set adult/social/gaming rules, per device if you want.
 3. **Rotate the root password** — still the placeholder, and this is real
