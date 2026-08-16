@@ -1,283 +1,319 @@
 ---
 title: Two ISPs, One Pi
-summary: Build guide — turning Armando's Pi 5 into a dual-WAN OpenWrt router
-updated: 2026-08-15
+summary: Armando's Raspberry Pi 5 router — built, cut over, and running
+version: Rev 5
+updated: 2026-08-16
 ---
 
 # Two ISPs, One Pi
 
-Turning Armando's Pi into the router for the house — two internet lines with
-automatic failover, its own DHCP server, and filtering. Written in the order the
-work has to happen, because that order is what keeps us from getting locked out
-of it.
+**Rev 5 — 16 August 2026** · Armando's Raspberry Pi 5 · OpenWrt 24.10.1
+(r28597) · prepared by Brad
+
+Latest version: `bradley.io/junior/doc/two-isps-one-pi`
+
+> Working document — it changes as the build progresses. If you're reading a
+> printout, check the revision above against the web version before relying on
+> an address or a command.
+
+**The cutover is done.** The Pi is the router for the house: DHCP, DNS,
+firewall, NAT and filtering for ~55 devices, with Xfinity bridged behind it. One
+WAN port is still free, waiting for AT&T Fiber and automatic failover.
+
+---
+
+## The numbers you'll actually need
 
 | | |
 |---|---|
-| Tunnel | ✅ up |
-| SSH | ✅ working |
-| Recovery Wi-Fi | ✅ **tested** |
-| Phase 1 | ✅ complete |
-| ISP cable | ⏳ not run |
+| **Router (LuCI / ssh)** | **`http://10.0.0.1`** · `ssh root@10.0.0.1` |
+| Public IP | `174.48.82.27` (Xfinity, bridged) |
+| LAN | `10.0.0.0/24` — Pi is `.1` |
+| Reserved | `.1`–`.19` (never handed out) |
+| DHCP pool | `.20`–`.250`, 12h leases |
+| UniFi controller | `10.0.0.3` (reserved to its MAC) |
+| IPv6 | `2601:586:400:135::/64` delegated, dual-stack |
+| Recovery Wi-Fi | join `pi-rescue` → `http://192.168.98.1` |
+| Recovery cable | laptop `192.168.99.2/24` → `http://192.168.99.1` |
+
+⚠️ `192.168.**98**.1` is over the air. `192.168.**99**.1` is over a cable
+plugged straight into the Pi. They look alike and are completely different
+routes.
 
 ---
 
-## Where things stand
-
-The Pi is built, reachable, and loaded with everything it needs. Nothing about
-the current internet has been touched — that connection is also how we reach the
-Pi, so it stays exactly as it is until there's a replacement path.
-
-What's left is physical: a cable from the attic, and one deliberate switchover.
-
-| Done | Detail |
-|---|---|
-| SSH access | Key auth repaired — two separate faults produced one identical error |
-| Timezone | Eastern, with automatic daylight saving |
-| Recovery Wi-Fi | Built *and tested* — a phone joined it and reached the admin page |
-| Failover engine | `mwan3` installed but deliberately dormant |
-| Filtering | `banip` + `adblock` installed, not yet switched on |
-| Adapter naming | Both USB ports pinned to their MAC addresses |
-| Network survey | 64 devices catalogued, including all UniFi gear |
-
----
-
-## Where we're going
+## How it's wired
 
 ```
-  BEFORE                                AFTER
+Xfinity gateway (BRIDGE MODE)  ──→  wan2   174.48.82.27   ← live
+AT&T Fiber (not installed yet) ──→  wan1                  ← free
+                                      │
+                                     Pi     10.0.0.1
+                                      │     DHCP · DNS · firewall · NAT
+                                      ▼
+                            eth0 ──→ attic switch ──→ ~55 devices, 12 UniFi APs
 
-  Xfinity router  10.0.0.1              Xfinity (bridged) ──→ eth1  WAN1
-   ├─ DHCP for 10.0.0.0/24              ATT Fiber ──────────→ eth2  WAN2
-   ├─ Switch ──→ ~64 devices                      │
-   │             12 UniFi APs                     ▼
-   └─ Pi (a guest, .76)                          Pi   10.0.10.1
-                                                  │   DHCP · firewall · filtering
-                                                  ▼
-                                        eth0 ──→ Switch ──→ your devices
-
-  Starlink stays separate — Wi-Fi only, a manual last resort, not wired in.
+Starlink — standalone Wi-Fi, manual last resort, not wired to the Pi.
 ```
 
-Both lines run around 200 Mbps, comfortably inside what every port here can
-carry. **This build is about resilience, not speed.**
+### The ports, by MAC
 
----
-
-## The hardware, as the Pi sees it
-
-| Port | MAC | What it is | Job |
+| Name | MAC | Hardware | Job |
 |---|---|---|---|
-| `eth0` | `88:a2:9e:99:4f:e7` | Built-in ethernet | **LAN** — switch and every device |
-| `eth1` | `6c:6e:07:2d:9d:10` | ASIX AX88179A, USB 3 | **WAN1** — first ISP plugged in |
-| `eth2` | `6c:6e:07:2d:a4:c2` | ASIX AX88179A, USB 3 | **WAN2** — the second ISP |
-| `wlan0` | `88:a2:9e:99:4f:e8` | Built-in Wi-Fi | Recovery access point ✅ live |
+| `eth0` | `88:a2:9e:99:4f:e7` | Built-in ethernet | **LAN** → the switch |
+| `wan2` | `6c:6e:07:2d:a4:c2` | ASIX AX88179A, USB 3 | **Xfinity**, live |
+| `wan1` | `6c:6e:07:2d:9d:10` | ASIX AX88179A, USB 3 | **free** — for the fiber |
+| `phy0-ap0` | `88:a2:9e:99:4f:e8` | Built-in Wi-Fi | recovery AP `pi-rescue` |
 
-Both USB adapters are the same model, so you can't tell them apart by looking.
-**Don't try** — the MAC address is the only reliable name, and the cable decides
-which is which.
+The names are **pinned to MAC addresses** by
+`/etc/hotplug.d/net/20-junior-nicnames`. USB devices are otherwise numbered in
+whatever order the kernel finds them, so without this the two adapters could
+swap on any reboot — silently exchanging your primary and backup ISP.
 
-The adapters landed on separate USB controllers, which is worth having: during a
-failover both lines carry traffic at once, and this way they never compete for
-the same bus.
+> Note `wan2` carries Xfinity and `wan1` is the spare. That reads backwards, and
+> it's fine: the names were assigned before either had a cable, and `mwan3`
+> chooses by *metric*, not by name. Moving the cable to make the numbers tidy
+> would risk more than it's worth.
 
 ---
 
-## What's actually on the network
+## What's running
 
-The Pi surveyed the LAN from the inside — 64 devices responding, 10 of them
-Ubiquiti.
-
-| Address | What | Matters because |
+| | State | |
 |---|---|---|
-| `10.0.0.1` | Xfinity gateway | It keeps this address in bridge mode — the reason the LAN has to move |
-| `10.0.0.3` | UniFi controller | Every AP reports to it. Gets a reserved address so it can't wander |
-| `10.0.0.76` | The Pi (today) | Currently a DHCP guest; becomes the router |
-| ×10 more | UniFi APs | All on plain DHCP — they renumber themselves, no work needed |
-| ×53 more | Everything else | Full MAC inventory captured, in case something turns out to be static |
+| Routing / NAT | ✅ | ~55 devices, IPv4 + IPv6 |
+| DHCP | ✅ | pool `.20`–`.250`, controller reserved at `.3` |
+| Firewall | ✅ | `input REJECT`, `forward REJECT`, `lan→wan` only, SYN-flood protection |
+| **adblock** | ✅ | 313,909 ad/tracker/malware domains |
+| **NextDNS** | ✅ | profile `a41d67`, DNS-over-HTTPS, per-device reporting |
+| **Force-DNS** | ✅ | every port-53 query intercepted — no device can bypass filtering |
+| **banip** | ✅ | 3,976 malicious addresses, guarding `wan2` |
+| IPv6 | ✅ | delegated `/64`, RA + DHCPv6 serving the LAN |
+| `mwan3` failover | ⏸ dormant | waiting for a second ISP |
+
+### From the internet, the Pi is invisible
+
+Verified by scanning the public IP from a machine on another network:
+
+```
+tcp 22, 23, 53, 80, 443, 7547, 8080, 8443  →  all closed
+ICMP ping (IPv4 and IPv6)                  →  no reply
+LAN devices over IPv6                      →  no reply, no open ports
+```
+
+That last one matters: **IPv6 has no NAT**, so every device holds a globally
+routable address. Nothing hides them except the firewall. Inbound forwarding is
+rejected, and `echo-request` is no longer passed through, so the prefix can't be
+swept for live hosts.
+
+Deliberately **kept**: `packet-too-big`, `destination-unreachable`,
+`time-exceeded` and the IPv6 neighbour/router messages. Those carry Path MTU
+Discovery and IPv6 addressing itself — blocking "all ICMP" is how people create
+networks where small pages load and large downloads stall forever.
 
 ---
 
-## Three things that will bite
+## Backup and recovery
 
-### 1. Xfinity doesn't let go of `10.0.0.1`
+### Where the config lives
 
-The LAN is `10.0.0.x` because that's Comcast's factory default, and the survey
-confirmed the gateway really is sitting on `10.0.0.1`. In bridge mode those boxes
-typically **still answer there** for their own admin page, on the segment facing
-the Pi's WAN port.
+Plain text in **`/etc/config/`** — `network`, `firewall`, `dhcp`, `wireless`,
+`adblock`, `banip`, `nextdns`, `system`. On the overlay filesystem; survives
+reboots and power cuts.
 
-So if the Pi's LAN stayed `10.0.0.0/24`, the Pi would want `10.0.0.1` for itself
-while the modem keeps claiming it from the other side. Same address, two
-interfaces. That router does not work, and it fails in ways that look random.
+### Make your own backup — 30 seconds, do it before any change
 
-> **Decided:** the LAN moves to `10.0.10.0/24`. Pi at `.1`, UniFi controller
-> reserved at `.3`, DHCP pool `.100–.199`. The APs are on DHCP, so they renumber
-> themselves and you touch nothing.
+**LuCI → System → Backup / Flash Firmware → Generate archive.** Downloads a
+`.tar.gz` to your computer. Keep it somewhere that isn't the Pi.
 
-### 2. Bridging kills the Wi-Fi — *not a problem here* ✅
+Or over ssh:
 
-Bridge mode turns the Xfinity box into a plain modem: no DHCP, no Wi-Fi. That
-usually means the household loses Wi-Fi mid-cutover and everyone notices within
-ninety seconds.
+```sh
+ssh root@10.0.0.1 sysupgrade -b /tmp/backup.tar.gz
+scp root@10.0.0.1:/tmp/backup.tar.gz .
+```
 
-Armando has 12 UniFi APs and never used the Xfinity radio, so this costs nothing.
-Recorded as retired rather than forgotten.
+### ⚠️ The trap: backups skip custom files by default
 
-### 3. The cutover is when we go blind
+`sysupgrade` saves `/etc/config/` plus a fixed default list — **not** anything
+custom. The first backup taken here was missing
+`/etc/hotplug.d/net/20-junior-nicnames`. Since `/etc/config/network` refers to
+the names that rule creates, restoring without it gives you a router with **no
+WAN at all**.
 
-Brad reaches the Pi through a tunnel that runs over its current internet
-connection. Bridging the Xfinity box drops that connection, so the tunnel dies
-and remote help stops until the Pi has internet again through a WAN port.
+Fixed by naming the extra paths in `/etc/sysupgrade.conf`:
 
-That's expected. It just means the ways back in have to exist **before** we need
-them.
+```
+/etc/hotplug.d/net/
+/etc/adblock/
+/etc/banip/
+/etc/nextdns/
+```
 
-> **Handled:** the recovery Wi-Fi is up and has been tested with a real phone —
-> associated, got an address, loaded the admin page. Plus the wired fallback
-> below, which needs nothing but a laptop and a cable.
+**Add any future custom file's path there too**, or it vanishes silently on the
+next restore or firmware upgrade.
+
+### Restoring
+
+**LuCI → System → Backup / Flash Firmware → Upload archive**, then reboot. Or:
+
+```sh
+scp backup.tar.gz root@10.0.0.1:/tmp/
+ssh root@10.0.0.1 "sysupgrade -r /tmp/backup.tar.gz && reboot"
+```
+
+### Restoring onto a freshly flashed Pi
+
+The backup holds **configuration, not software**. Install the packages *first*,
+then restore — otherwise installing them overwrites the restored config with
+defaults:
+
+```sh
+opkg update
+opkg install mwan3 luci-app-mwan3 banip luci-app-banip \
+             adblock luci-app-adblock nextdns luci-app-nextdns \
+             luci-app-commands
+```
+
+### Off-device copy
+
+Brad holds one on impera at `~/junior-backups/` — 18 KB, 53 files, taken
+2026-08-16 11:52 right after the cutover, plus `packages.txt`. Known-good.
+
+**Take your own copy as well.** A backup only Brad has is a dependency, not a
+safety net.
 
 ---
 
-## The order of work
+## Failover, when the fiber arrives
 
-Every phase ends in a check. If a check fails we stop and fix it there — we never
-stack a risky step on top of an unverified one.
+You never touch it — that's `mwan3`'s whole job.
 
-### Phase 1 — ✅ complete *(Brad, remote)*
+Each WAN pings **tracking IPs** continuously out its own interface.
+Deliberately *not* the ISP's gateway: that stays up even when the ISP's upstream
+is broken, which is exactly the outage that matters.
 
-- Recovery Wi-Fi access point — built and tested
-- `mwan3`, `banip`, `adblock` installed, all inactive
-- USB adapters pinned to their MAC addresses
-- Timezone, and the LAN survey
+```
+track_ip     1.1.1.1  8.8.8.8  9.9.9.9
+interval     5      # seconds between checks
+down         3      # consecutive failures → offline
+up           3      # consecutive successes → back online
+```
 
-**Checked:** the tunnel still works and the current internet is untouched.
-73.5 MB of storage still free.
+≈15 seconds to detect an outage, then traffic moves on its own. When the link
+returns and holds, traffic goes back — **failback is automatic too**. Priority
+is set by **metric**: lower wins, so fiber gets 1 and Xfinity 2.
 
-### Phase 2 — *Armando, hands on hardware*
+### The part nobody mentions until it bites
 
-Get a cable from the attic to the Pi.
+**Failover breaks connections that are already open** — not the internet, the
+*connections*. Your public IP changes, so anything mid-flight dies: video calls
+drop, SSH freezes, big downloads fail. Anything started afterwards is fine. It
+feels like "everything hiccuped for ten seconds", not "the internet went out."
 
-1. Decide where the Pi lives. Attics cook electronics in summer — putting the Pi
-   where you are and running one line up is usually the better trade.
-2. Run ethernet from the Xfinity gear to the Pi.
-3. Plug it into **either** USB adapter. Whichever gets link becomes WAN1 — no
-   labelling, no guessing.
+**Failback does the same thing**, which is why the `up` threshold isn't eager —
+better to sit on the backup than bounce and break connections every minute.
+Avoiding it entirely needs your own IP block and BGP. Not a house-scale thing.
 
-**Check:** Brad confirms which MAC got link and pins it as WAN1.
+**Blocking inbound ping does not affect this.** `mwan3` sends *outbound* pings
+and the replies return as established flows. Verified: all four tracking IPs
+answer through `wan2`.
 
-### Phase 3 — *together, the risky bit*
+---
 
-Flip Xfinity to bridge mode.
+## Where things are in LuCI
 
-1. Enable bridge mode on the Xfinity gateway. Internet drops. The tunnel dies.
-   Expected.
-2. The Pi should pull a public address on WAN1 within a minute or two.
-3. The tunnel returns on its own once it does.
+`http://10.0.0.1`
 
-**Check:** Brad is back in. If he isn't after five minutes, use a recovery path —
-don't start improvising.
+| What | Menu path |
+|---|---|
+| **Power Off / Reboot buttons** | System → **Custom Commands** → Dashboard |
+| Ad / malware blocking | Services → **Adblock** |
+| Bot / malicious IPs | Services → **banIP** |
+| Category filtering | Services → **NextDNS** |
+| ISP failover | Status → **MultiWAN Manager** |
+| Firewall | Network → **Firewall** |
+| DHCP & DNS | Network → **DHCP and DNS** |
+| Interfaces | Network → **Interfaces** |
+| Backup / restore | System → **Backup / Flash Firmware** |
 
-### Phase 4 — *together, the switchover*
+⚠️ It's **MultiWAN Manager**, not "Load Balancing" — that was the old name and
+it's easy to hunt for the wrong label. It sits under *Status*, not *Network*.
 
-Make the Pi the router.
+⚠️ **Power Off has no confirmation prompt.** One click and the household router
+halts, in the attic. Be deliberate.
 
-1. Convert `eth0` from internet-facing to LAN, on `10.0.10.0/24`.
-2. Start the DHCP server, with the controller reserved at `10.0.10.3`.
-3. Move the switch's uplink from the Xfinity box to the Pi's `eth0`.
-4. Reboot a device and confirm it gets an address from the Pi.
-5. Check the UniFi controller sees its APs again — they may take a few minutes to
-   rediscover it.
-
-**Check:** a laptop on the switch reaches the internet, its gateway is the Pi, and
-all 12 APs are online.
-
-### Phase 5 — *together, when the fiber lands*
-
-Add the second line and prove failover.
-
-1. AT&T Fiber into the second adapter, and its gateway into **IP Passthrough** so
-   the Pi gets the real public address.
-2. Enable `mwan3`, set the primary, turn on health checks.
-3. Then actually test it: **unplug the primary line** and watch traffic move.
-
-Untested failover isn't failover — it's a belief. The point is that it works on
-the day something breaks, and the only way to know is to break it yourself on a
-day you chose.
-
-### Phase 6 — *Brad, remote*
-
-Switch on filtering.
-
-1. `banip` — subscribes to threat feeds and drops known-malicious addresses in
-   both directions.
-2. `adblock` — blocks ad and malware domains at the DNS layer, for every device
-   at once.
-3. A firewall rule forcing all DNS through the Pi, so a device can't simply
-   ignore it.
-
-Left until last on purpose: filtering is the only part that can make working
-things mysteriously stop working, and it's much easier to diagnose against a
-network that's otherwise settled.
+There is no `shutdown` command on OpenWrt — it's `poweroff`, `reboot`, `halt`.
+The LED stays lit after `poweroff`; wait for the activity light to stop
+flickering, then unplug.
 
 ---
 
 ## If it all goes wrong
 
-Three ways back into the Pi, in order of how much trouble you're in.
-
 | Route | How | When |
 |---|---|---|
-| Local network | `http://10.0.0.76` | While the Pi is still a guest on the current LAN |
-| **Recovery Wi-Fi** ✅ | Join `pi-rescue`, then `http://192.168.98.1` | **Any time.** Tested. Needs no cable, no internet |
-| Direct cable | Set laptop to `192.168.99.2/24`, then `ssh root@192.168.99.1` | Always. Needs no internet, no DHCP, no Wi-Fi, no luck |
+| Normal | `http://10.0.0.1` | Any time the LAN works |
+| **Recovery Wi-Fi** ✅ tested | join `pi-rescue` → `http://192.168.98.1` | No internet, no LAN, no cable needed |
+| Direct cable | laptop → `192.168.99.2/24`, then `http://192.168.99.1` | Always. Needs nothing but the Pi |
 
-⚠️ Careful with those two `192.168.9x` addresses — they look almost identical and
-are completely different routes. **98** is over the air; **99** is over a cable
-plugged straight into the Pi.
+The first-boot log is at `/root/cb-rpi5-firstboot.log`. Log in as `root` —
+passwords aren't written here on purpose.
 
-That last address is permanent — it answers on the built-in ethernet port no
-matter how badly the rest of the configuration is mangled. The first-boot log
-lives at `/root/cb-rpi5-firstboot.log`.
-
-Log in as `root`. **Passwords aren't written down here on purpose** — Brad has
-them, the Wi-Fi passphrase is the one Armando chose, and passwords in documents
-outlive the passwords themselves.
+**Everything is reversible.** Plug the switch back into the Xfinity gateway and
+turn bridge mode off, and you're back to where you started in about ten minutes.
 
 ---
 
-## The one open question
+## Still to do
 
-**Is the UniFi controller's `10.0.0.3` static, or from DHCP?**
-
-- **From DHCP** → the reservation takes over and there's nothing to do.
-- **Static on the device** → it will keep insisting on `10.0.0.3` after the move
-  and drop off the network. One field, on the one box sitting in the office.
-
-The low number suggests it was set deliberately at some point. Not worth digging
-through admin panels for — we find out within a minute of the switchover either
-way, and the fix is five minutes on a device you can physically reach.
+1. **AT&T Fiber** → `wan1`, enable `mwan3`, **then test it by unplugging the
+   primary line**. Untested failover is a belief, not a feature.
+2. **NextDNS categories** — the dashboard now sees all 55 devices by name, so
+   this is the moment to set adult/social/gaming rules, per device if you want.
+3. **Rotate the root password** — still the placeholder, and this is real
+   infrastructure now.
+4. **Remove the VPN trust** — Brad's WireGuard tunnel currently has full access
+   to the LAN (`vpn2lan` / `lan2vpn` forwarding). Fine while he's helping;
+   remove it when `/junior` is torn down.
 
 ---
 
-## One habit worth stealing
+## What went wrong on cutover day, and why
 
-Several times today the same rule saved us: **bind to what the hardware asserts
-about itself, never to the order things happened to appear.**
+Three faults, all found and fixed. Worth reading before the next one.
 
-- USB adapters get pinned by MAC, because `eth1` and `eth2` can trade places on
-  any reboot — and if they do, the primary and backup ISP quietly swap. Failover
-  would still "work", against the wrong link.
-- The ISP cable identifies its own adapter, rather than anyone labelling one by
-  guess.
-- The UniFi controller gets a reserved address, so twelve access points never
-  have to go looking for it.
-- A USB speaker on another machine once went silent for exactly this reason: it
-  was addressed by card number, and the numbers shifted after a reboot.
+**IPv6 pointed nowhere.** The Phase 4 script deleted the old `wan6` interface
+along with the old WAN, so the Pi had no IPv6 path — but its DNS kept answering
+with IPv6 addresses. Devices tried a road that didn't exist. Now properly
+restored with a delegated prefix.
 
-Names that describe *discovery order* are always temporary. Names that describe
-*the thing itself* survive.
+**`no-dhcp-interface=eth0`** — the big one. The recovery interface
+(`192.168.99.1`) shares the physical port with the LAN, and its "don't hand out
+addresses here" flag applied to the **whole device**, silently disabling DHCP
+for the entire LAN. Devices holding old leases kept working perfectly, so a
+dozen things were online and everything looked healthy. Only devices needing a
+*new* address failed.
 
-And the one from the ssh problem that opened the day: **when two faults produce
-the same error message, fixing the first one changes nothing and looks like
-failure.** Check the simple, checkable fact first — read the file, list the keys,
-confirm the address — before building a theory that explains the symptom.
+The evidence that cracked it: every DHCP request in the log arrived on
+`phy0-ap0`, and not one on `eth0`.
+
+**A dead default route.** After bridge mode engaged, `eth0` still held a route
+to `10.0.0.1` — the gateway that had just ceased to exist — at a better metric
+than the working WAN. The Pi kept sending traffic to a machine that was gone.
+
+---
+
+## Two habits worth stealing
+
+**Bind to what the hardware asserts about itself, never to the order things
+happened to appear.** USB adapters pinned by MAC; the ISP cable identifying its
+own adapter rather than anyone labelling by guess; the UniFi controller given a
+reserved address so twelve APs never go looking. Names that describe *discovery
+order* are temporary. Names that describe *the thing itself* survive.
+
+**When two faults produce the same error, fixing the first changes nothing and
+looks like failure.** The ssh problem that opened this project was a
+permissions bug *and* a wrong key. The cutover was a dead route *and* a disabled
+DHCP server. Check the simple, checkable fact first — read the file, list the
+keys, look at the log — before building a theory that explains the symptom.
