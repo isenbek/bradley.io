@@ -1,13 +1,25 @@
 {
-  "generated": "2026-08-15T20:08:44.680696+00:00",
+  "generated": "2026-08-16T00:02:04.322939+00:00",
   "stats": {
     "totalProjects": 84,
-    "totalSessions": 44,
-    "totalMessages": 217444,
-    "activeDays": 21,
-    "streak": 0
+    "totalSessions": 47,
+    "totalMessages": 219106,
+    "activeDays": 22,
+    "streak": 1
   },
   "activityFeed": [
+    {
+      "type": "claude-code",
+      "title": "Claude Code session (590 messages)",
+      "description": "3 sessions, 174 tool calls",
+      "projectSlug": null,
+      "category": null,
+      "date": "2026-08-15T23:59:00Z",
+      "metadata": {
+        "messages": 590,
+        "sessions": 3
+      }
+    },
     {
       "type": "github",
       "title": "Activity on Sysforge-AI/sfproject",
@@ -21,25 +33,25 @@
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (11718 messages)",
-      "description": "4 sessions, 4023 tool calls",
+      "title": "Claude Code session (11892 messages)",
+      "description": "4 sessions, 4082 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-08-13T23:59:00Z",
       "metadata": {
-        "messages": 11718,
+        "messages": 11892,
         "sessions": 4
       }
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (6866 messages)",
-      "description": "2 sessions, 2286 tool calls",
+      "title": "Claude Code session (7086 messages)",
+      "description": "2 sessions, 2360 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-08-12T23:59:00Z",
       "metadata": {
-        "messages": 6866,
+        "messages": 7086,
         "sessions": 2
       }
     },
@@ -141,13 +153,13 @@
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (7084 messages)",
-      "description": "2 sessions, 2395 tool calls",
+      "title": "Claude Code session (7561 messages)",
+      "description": "2 sessions, 2561 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-07-29T23:59:00Z",
       "metadata": {
-        "messages": 7084,
+        "messages": 7561,
         "sessions": 2
       }
     },
@@ -188,13 +200,13 @@
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (30258 messages)",
-      "description": "2 sessions, 9517 tool calls",
+      "title": "Claude Code session (30459 messages)",
+      "description": "2 sessions, 9575 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-07-23T23:59:00Z",
       "metadata": {
-        "messages": 30258,
+        "messages": 30459,
         "sessions": 2
       }
     },
@@ -567,17 +579,6 @@
       "metadata": {
         "messages": 4
       }
-    },
-    {
-      "type": "claude-web",
-      "title": "Converting meeting notes to structured requirements",
-      "description": "The user requested help converting meeting notes into Markdown format and reviewing them for accuracy, specifically to separate requirements into Mobile App and Backend/Admin categories for feeding to Claude Code for development planning. The meeting",
-      "projectSlug": null,
-      "category": null,
-      "date": "2026-01-27T04:10:39.749314Z",
-      "metadata": {
-        "messages": 2
-      }
     }
   ],
   "projects": [
@@ -603,6 +604,55 @@
       }
     },
     {
+      "slug": "infra",
+      "name": "infra",
+      "tagline": "",
+      "description": "",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-08-15",
+      "totalMessages": 20111,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 1,
+          "totalMessages": 20111,
+          "lastSession": "2026-08-15"
+        }
+      }
+    },
+    {
+      "slug": "bradleyio",
+      "name": "bradleyio",
+      "tagline": "",
+      "description": "",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [
+        "D3.js",
+        "Framer Motion",
+        "Next.js",
+        "Nginx",
+        "Ollama",
+        "Socket.IO",
+        "Tailwind CSS",
+        "TypeScript"
+      ],
+      "lastActivity": "2026-08-15",
+      "totalMessages": 18914,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 2,
+          "totalMessages": 18914,
+          "lastSession": "2026-08-15"
+        }
+      }
+    },
+    {
       "slug": "cbnominate",
       "name": "cbnominate",
       "tagline": "",
@@ -613,11 +663,11 @@
       "status": "active",
       "technologies": [],
       "lastActivity": "2026-08-15",
-      "totalMessages": 6834,
+      "totalMessages": 7008,
       "sources": {
         "claudeCode": {
           "totalSessions": 1,
-          "totalMessages": 6834,
+          "totalMessages": 7008,
           "lastSession": "2026-08-15"
         }
       }
@@ -642,11 +692,31 @@
         "React"
       ],
       "lastActivity": "2026-08-15",
-      "totalMessages": 5639,
+      "totalMessages": 6116,
       "sources": {
         "claudeCode": {
           "totalSessions": 2,
-          "totalMessages": 5639,
+          "totalMessages": 6116,
+          "lastSession": "2026-08-15"
+        }
+      }
+    },
+    {
+      "slug": "cbdc",
+      "name": "cbdc",
+      "tagline": "",
+      "description": "",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-08-15",
+      "totalMessages": 5947,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 5,
+          "totalMessages": 5947,
           "lastSession": "2026-08-15"
         }
       }
@@ -687,55 +757,6 @@
         "claudeCode": {
           "totalSessions": 1,
           "totalMessages": 19955,
-          "lastSession": "2026-08-14"
-        }
-      }
-    },
-    {
-      "slug": "infra",
-      "name": "infra",
-      "tagline": "",
-      "description": "",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-08-14",
-      "totalMessages": 19910,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 1,
-          "totalMessages": 19910,
-          "lastSession": "2026-08-14"
-        }
-      }
-    },
-    {
-      "slug": "bradleyio",
-      "name": "bradleyio",
-      "tagline": "",
-      "description": "",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [
-        "D3.js",
-        "Framer Motion",
-        "Next.js",
-        "Nginx",
-        "Ollama",
-        "Socket.IO",
-        "Tailwind CSS",
-        "TypeScript"
-      ],
-      "lastActivity": "2026-08-14",
-      "totalMessages": 18603,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 1,
-          "totalMessages": 18603,
           "lastSession": "2026-08-14"
         }
       }
@@ -886,26 +907,6 @@
           "totalSessions": 1,
           "totalMessages": 3348,
           "lastSession": "2026-08-12"
-        }
-      }
-    },
-    {
-      "slug": "cbdc",
-      "name": "cbdc",
-      "tagline": "",
-      "description": "",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-08-11",
-      "totalMessages": 5671,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 4,
-          "totalMessages": 5671,
-          "lastSession": "2026-08-11"
         }
       }
     },
@@ -1246,11 +1247,11 @@
       "status": "active",
       "technologies": [],
       "lastActivity": "2025-11-16T23:20:33.365308+00:00",
-      "totalMessages": 6041,
+      "totalMessages": 6261,
       "sources": {
         "claudeCode": {
           "totalSessions": 1,
-          "totalMessages": 6041,
+          "totalMessages": 6261,
           "lastSession": "2026-08-15"
         }
       }
@@ -2022,13 +2023,13 @@
       "Ollama",
       "AWS",
       "React",
-      "Snowflake",
       "FastAPI",
+      "Snowflake",
       "YAML",
       "Markdown",
+      "WireGuard",
       "Docker",
       "CSV",
-      "WireGuard",
       "Pytest",
       "Next.js",
       "JWT",

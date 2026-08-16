@@ -8806,26 +8806,33 @@ html[data-theme="dark"]:has(.v3) {
   font-size: 11.5px;
   color: #7c8aa5;
 }
-/* pushes the fullscreen button to the right edge of the title bar */
+/* Pushes the fullscreen button to the right edge of the title bar.
+   Deliberately high-contrast: the first version was grey-on-dark and the user
+   genuinely could not find it. A control nobody spots is a control that
+   doesn't exist. */
 .v3-jr-term__full {
   margin-left: auto;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 4px 10px;
+  gap: 7px;
+  padding: 6px 13px;
   border-radius: 6px;
   cursor: pointer;
   font-family: var(--font-v3-mono), ui-monospace, monospace;
-  font-size: 11px;
-  letter-spacing: 0.02em;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
   /* literal colors, not tokens: this bar is a fixed dark surface in BOTH
      themes, so a token that inverts would put dark text on dark. */
-  color: #9fb0c9;
-  background: #1b2436;
-  border: 1px solid #27334a;
-  transition: color 120ms ease, border-color 120ms ease;
+  color: #ffffff;
+  background: #1668c4;
+  border: 1px solid #3d8ee0;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.14) inset, 0 2px 8px rgba(0, 0, 0, 0.35);
+  transition: background 120ms ease, border-color 120ms ease, transform 120ms ease;
 }
-.v3-jr-term__full:hover { color: #ffffff; border-color: rgba(255, 255, 255, 0.4); }
+.v3-jr-term__full:hover { background: #2f86e4; border-color: #7ab6ee; }
+.v3-jr-term__full:active { transform: translateY(1px); }
 .v3-jr-term__full:focus-visible {
   outline: 2px solid var(--v3-blue);
   outline-offset: 2px;
