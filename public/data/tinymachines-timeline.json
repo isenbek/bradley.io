@@ -1,20 +1,20 @@
 {
-  "generated": "2026-08-16T09:01:53.018071+00:00",
+  "generated": "2026-08-17T09:09:23.012558+00:00",
   "org": "tinymachines",
-  "totalRepos": 63,
+  "totalRepos": 64,
   "firstCommit": "2016-02-27T16:07:26Z",
-  "latestCommit": "2026-08-15T03:56:40Z",
-  "totalCommits": 5184,
+  "latestCommit": "2026-08-17T04:04:34Z",
+  "totalCommits": 5218,
   "languages": {
     "Python": 26,
     "C": 7,
     "HTML": 6,
     "Shell": 6,
     "TypeScript": 5,
+    "JavaScript": 2,
     "Rust": 2,
     "C++": 1,
-    "Common Lisp": 1,
-    "JavaScript": 1
+    "Common Lisp": 1
   },
   "activityHeatmap": [
     {
@@ -6751,8 +6751,20 @@
     },
     {
       "date": "2026-08-15",
-      "commits": 9,
+      "commits": 25,
       "repos": 2,
+      "intensity": 3
+    },
+    {
+      "date": "2026-08-16",
+      "commits": 8,
+      "repos": 2,
+      "intensity": 1
+    },
+    {
+      "date": "2026-08-17",
+      "commits": 10,
+      "repos": 3,
       "intensity": 2
     }
   ],
@@ -6906,6 +6918,17 @@
         "infrastructure",
         "entropy",
         "krnl"
+      ],
+      "milestones": [],
+      "category": "systems"
+    },
+    {
+      "name": "Phase 10",
+      "startDate": "2026-08-17",
+      "endDate": "2026-08-17",
+      "description": "Development of halfphi.",
+      "repos": [
+        "halfphi"
       ],
       "milestones": [],
       "category": "systems"
@@ -7420,9 +7443,9 @@
       "name": "geiger",
       "description": "Daily Reporting Engine",
       "language": "HTML",
-      "commits": 254,
+      "commits": 256,
       "firstCommit": "2026-05-04T03:01:06Z",
-      "lastCommit": "2026-08-15T03:04:46Z",
+      "lastCommit": "2026-08-17T03:00:47Z",
       "phase": "Phase 9"
     },
     {
@@ -7473,11 +7496,20 @@
     {
       "name": "6502",
       "description": "Commits: Add 6502 Processor Expert Agent with RAG system",
-      "language": "Rust",
-      "commits": 50,
+      "language": "JavaScript",
+      "commits": 79,
       "firstCommit": "2026-08-12T16:38:57Z",
-      "lastCommit": "2026-08-15T03:56:40Z",
+      "lastCommit": "2026-08-17T03:37:20Z",
       "phase": "Phase 7"
+    },
+    {
+      "name": "halfphi",
+      "description": "Switch-level simulation and analysis of transistor-level chip netlists traced from die photographs",
+      "language": "Rust",
+      "commits": 3,
+      "firstCommit": "2026-08-17T03:33:36Z",
+      "lastCommit": "2026-08-17T04:04:34Z",
+      "phase": "Phase 10"
     }
   ]
 }
