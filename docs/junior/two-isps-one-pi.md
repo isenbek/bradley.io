@@ -1,13 +1,13 @@
 ---
 title: Two ISPs, One Pi
 summary: Armando's Raspberry Pi 5 router — built, cut over, and running
-version: Rev 17
+version: Rev 19
 updated: 2026-08-20
 ---
 
 # Two ISPs, One Pi
 
-**Rev 17 — 20 August 2026** · Armando's Raspberry Pi 5 · OpenWrt 24.10.1
+**Rev 19 — 20 August 2026** · Armando's Raspberry Pi 5 · OpenWrt 24.10.1
 (r28597) · prepared by Brad
 
 Latest version: `bradley.io/junior/doc/two-isps-one-pi`
@@ -820,27 +820,148 @@ Leave it.
 
 ---
 
+## Failover alerts — log now, email when you're ready
+
+Every mwan3 transition is recorded automatically. mwan3 calls
+`/etc/mwan3.user` on each event, which runs `/usr/bin/junior-wan-alert`.
+
+**The log works with no setup at all:**
+
+```sh
+ssh root@10.0.0.1
+cat /root/wan/events.log
+```
+
+```
+2026-08-20 15:29:01  DOWN      AT&T Fiber (wan1) - traffic now on Xfinity
+2026-08-20 15:30:07  RESTORED  AT&T Fiber (wan1) after 66s down - traffic now on AT&T Fiber
+```
+
+Last 2000 events are kept, and the log is listed in `/etc/sysupgrade.conf` so a
+restore does not lose it. **This is the evidence to quote at an ISP** when they
+tell you the line never went down.
+
+### Turning on email
+
+Edit `/etc/junior-alert.conf` (mode `600`):
+
+```sh
+MAIL_TO="you@example.com"
+MAIL_FROM="router.alerts@gmail.com"
+SMTP_HOST="smtp.gmail.com"
+SMTP_PORT="587"
+SMTP_USER="router.alerts@gmail.com"
+SMTP_PASS="16-character-app-password"
+```
+
+Nothing else to restart — the next failover sends mail.
+
+> ### ⚠️ Do not use Comcast's or AT&T's SMTP server
+>
+> During an outage on that line the alert would fail to send — exactly when you
+> need it. Use Gmail or similar, which goes out over whichever WAN is still up.
+
+**Gmail needs an App Password, not your account password:**
+
+1. Google Account → **Security** → enable **2-Step Verification**
+2. Go to **myaccount.google.com/apppasswords**
+3. Create one named "router" → you get 16 characters
+4. Put that in `SMTP_PASS`
+
+**Use a dedicated or secondary account.** That password is stored on the router
+and `/etc` is baked into the recovery image. An app password can be revoked on
+its own without touching the main account — which is the whole reason to use
+one.
+
+Test without waiting for a real outage:
+
+```sh
+/usr/bin/junior-wan-alert wan1 disconnected
+/usr/bin/junior-wan-alert wan1 connected
+```
+
+---
+
 ## Still to do
 
-1. **IPv6 from AT&T** — whenever you want it back. AT&T supports DHCPv6-PD, so
-   `wan1` can carry both stacks and failover would cover IPv6 too.
-2. **The AT&T gateway's Wi-Fi is still on.** Anything that joins it lands on
-   `192.168.1.x`, behind the gateway and in front of the Pi — **no adblock, no
-   NextDNS, no banIP**, and no access to your LAN. See the passthrough section
-   for how to switch it off.
-3. **Starlink as a third line.** Both USB 3 ports are used, but **both USB 2
-   ports are free**, and a third adapter there caps around 300 Mbps — irrelevant
-   for Starlink. That would give AT&T → Xfinity → Starlink, all automatic.
+1. **Get IPv6 from AT&T.** They support DHCPv6-PD, so `wan1` can carry both
+   stacks and failover would cover IPv6 as well. IPv6 is currently switched off
+   at the LAN precisely because it was leaving via the *other* ISP and sitting
+   outside the failover.
 
-   ⚠️ **Starlink needs much more forgiving thresholds than a wired link.** It
-   drops for a second or two regularly — satellite handoffs, obstructions,
+2. **Starlink as a third line.** Both USB 3 ports are used, but **both USB 2
+   ports are free** — a third adapter there caps around 300 Mbps, which is
+   irrelevant for Starlink. That gives AT&T → Xfinity → Starlink, all
+   automatic.
+
+   **Needs: one more USB ethernet adapter.** Same model as the two already
+   fitted is the safe choice.
+
+   ⚠️ **Starlink needs far more forgiving thresholds than a wired link.** It
+   drops for a second or two routinely — satellite handoffs, obstructions,
    reroutes — which is normal, not a fault. On the settings used for the wired
-   lines it would be marked dead constantly. Also, Starlink is behind
-   **CGNAT**, so no inbound connections while failed over to it.
+   lines it would be marked dead constantly and flap traffic back and forth.
+   Also, Starlink is behind **CGNAT**, so no inbound connections while failed
+   over to it.
 
-4. **NextDNS categories** — the dashboard sees all devices by name, so this is
+3. **Buying faster USB dongles — read this first.**
+
+   **Buy TWO fast ones, not three.** The Pi has only **two USB 3 ports**, and
+   a 2.5 GbE dongle in a USB 2 port is capped around **300 Mbps** — money spent
+   on speed the port cannot carry.
+
+   **Chipset: RTL8156B (2.5 GbE).** `kmod-usb-net-rtl8152` is already
+   installed, so it works with nothing to configure. Aquantia 5 GbE
+   (`kmod-usb-net-aqc111`) is available but not installed, runs hotter, and has
+   patchier support — only worth it if you actually go past 2.5 G.
+
+   **Where to put them.** Both gigabit bottlenecks matter — the WAN coming in
+   *and* the LAN going out. Put the fast links there and give the slow ISPs the
+   slow ports:
+
+   | Port | Speed | Use |
+   |---|---|---|
+   | USB 3 #1 | 2.5 G | **AT&T Fiber** |
+   | USB 3 #2 | 2.5 G | **LAN** — otherwise the house is still capped at 940 |
+   | `eth0` built-in | 1 G | **Xfinity backup** (~200 Mbps, fits) |
+   | USB 2 | 1 G | **Starlink** (~200 Mbps, fits) |
+
+   This frees the built-in port for a slow WAN instead of spending a 2.5 G slot
+   on one. For the Starlink slot, one of the existing AX88179A adapters is
+   fine — no need to buy a third.
+
+   ⚠️ **A 2.5 G WAN alone changes nothing** if the LAN side stays gigabit. They
+   have to be upgraded as a pair, along with a 2.5 GbE switch, or the ceiling
+   does not move.
+
+4. **Faster than 1 Gbps? Decide before paying for it.** The current plan is
+   1200 Mbps and this router can pass about **940** — both USB adapters and the
+   Pi's own LAN port are gigabit. Two options, and they point in opposite
+   directions:
+
+   - **Down:** drop to the 1 Gbps tier and lose nothing real.
+   - **Up:** to actually exceed a gigabit you need a **2.5 GbE USB adapter on
+     the WAN**, another **on the LAN**, a **2.5 GbE switch**, and the BGW320's
+     **5 Gb port** instead of a 1 Gb one. Then the Pi 5's CPU becomes the
+     limit — realistically **1.4–1.9 Gbps** with flow offloading on. Beyond
+     that the Pi is the wrong box.
+
+   Worth noting every device in the house is gigabit today, so nothing can
+   currently use more than 940 anyway.
+
+5. **Turn off the AT&T gateway's Wi-Fi.** Anything joining it lands on
+   `192.168.1.x`, behind the gateway and in front of the Pi — **no adblock, no
+   NextDNS, no banIP**, and no access to your LAN.
+
+6. **Configure email alerts** — see the section above. The log already works.
+
+7. **Write down your NextDNS allowlist entries.** They live only in NextDNS's
+   cloud and are in no backup.
+
+8. **NextDNS categories** — the dashboard sees all devices by name, so this is
    the moment to set adult/social/gaming rules, per device if you want.
-5. **Remove the VPN trust** — Brad's WireGuard tunnel reaches the Pi only
+
+9. **Remove the VPN trust** — Brad's WireGuard tunnel reaches the Pi only
    (LAN forwarding already removed). Drop it entirely when `/junior` is torn
    down.
 
