@@ -1,13 +1,13 @@
 ---
 title: Two ISPs, One Pi
 summary: Armando's Raspberry Pi 5 router — built, cut over, and running
-version: Rev 14
+version: Rev 15
 updated: 2026-08-20
 ---
 
 # Two ISPs, One Pi
 
-**Rev 14 — 20 August 2026** · Armando's Raspberry Pi 5 · OpenWrt 24.10.1
+**Rev 15 — 20 August 2026** · Armando's Raspberry Pi 5 · OpenWrt 24.10.1
 (r28597) · prepared by Brad
 
 Latest version: `bradley.io/junior/doc/two-isps-one-pi`
@@ -249,6 +249,10 @@ On **`/junior`**, above the terminal, there is a **Recovery kit** panel:
 ⚠️ **These contain secrets** — the WireGuard private key, the root password
 hash, ssh host keys, the NextDNS profile. Keep them as private as a password.
 Never put them anywhere public.
+
+> **The image carries the password you set**, not the original placeholder —
+> `/etc/shadow` is baked in. Verified 20 August 2026: the root password is no
+> longer the default.
 
 ### What makes the image "flash and go"
 
@@ -689,11 +693,9 @@ Leave it.
    lines it would be marked dead constantly. Also, Starlink is behind
    **CGNAT**, so no inbound connections while failed over to it.
 
-4. **Rotate the root password** — still the placeholder, and this is real
-   infrastructure now.
-5. **NextDNS categories** — the dashboard sees all devices by name, so this is
+4. **NextDNS categories** — the dashboard sees all devices by name, so this is
    the moment to set adult/social/gaming rules, per device if you want.
-6. **Remove the VPN trust** — Brad's WireGuard tunnel reaches the Pi only
+5. **Remove the VPN trust** — Brad's WireGuard tunnel reaches the Pi only
    (LAN forwarding already removed). Drop it entirely when `/junior` is torn
    down.
 
