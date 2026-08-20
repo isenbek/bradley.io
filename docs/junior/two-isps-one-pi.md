@@ -1,13 +1,13 @@
 ---
 title: Two ISPs, One Pi
 summary: Armando's Raspberry Pi 5 router — built, cut over, and running
-version: Rev 9
-updated: 2026-08-16
+version: Rev 10
+updated: 2026-08-20
 ---
 
 # Two ISPs, One Pi
 
-**Rev 9 — 16 August 2026** · Armando's Raspberry Pi 5 · OpenWrt 24.10.1
+**Rev 10 — 20 August 2026** · Armando's Raspberry Pi 5 · OpenWrt 24.10.1
 (r28597) · prepared by Brad
 
 Latest version: `bradley.io/junior/doc/two-isps-one-pi`
@@ -312,6 +312,73 @@ safety net.
 ---
 
 ## Failover, when the fiber arrives
+
+### First: AT&T's version of bridge mode is called **IP Passthrough**
+
+You cannot truly bridge an AT&T Fiber gateway. The BGW320 authenticates to the
+fiber line itself (802.1X, with a certificate baked into the box), so it can
+never be removed from the path the way the Xfinity modem was. Don't chase it —
+people burn weekends on this.
+
+**IP Passthrough** is the supported equivalent and it is good enough: the
+gateway keeps running, but hands its **public IP straight to one device you
+name**, and takes its own NAT and firewall out of that device's way.
+
+**Set it up like this:**
+
+1. Plug a laptop into any **yellow LAN port** on the BGW320 and open
+   `http://192.168.1.254`
+2. **Device Access Code** — printed on the sticker on the side of the gateway
+3. **Firewall → IP Passthrough**
+4. Allocation Mode: **Passthrough**
+5. Passthrough Mode: **DHCPS-fixed** — this pins it to one MAC, which is what
+   you want. `Manual` and the DHCP-lease modes drift.
+6. Passthrough Fixed MAC Address: the Pi's free USB adapter —
+
+   ```
+   6c:6e:07:2d:9d:10        ← wan1, the empty one
+   ```
+
+7. **Save.** The gateway reboots, about two minutes.
+8. Now run a cable from a BGW LAN port to that same USB adapter on the Pi.
+
+**The good news: this one is not a cutover.** Unlike the Xfinity day, AT&T is a
+*new* line that isn't carrying anybody's internet yet. Nothing you do to that
+gateway can take the house offline. Take your time.
+
+**Leave yourself a way back in.** Keep a free LAN port on the BGW so a laptop
+can always reach `192.168.1.254` to undo the passthrough. Same rule as the
+recovery AP: build the way back *before* you need it.
+
+**Two things to know afterwards:**
+
+- The gateway still runs its own network on `192.168.1.x` for anything else
+  plugged into it. That's fine — it doesn't collide with your `10.0.0.x`.
+- Once passthrough is live, `wan1` should get a **public** address. If it comes
+  up holding a `192.168.1.x`, passthrough did not take — re-check the MAC.
+
+**Before the cable goes in**, `wan1` is deliberately inert:
+
+```sh
+network.wan1.disabled='1'   # nothing happens when you plug in
+network.wan1.metric='40'    # can never steal the route from Xfinity
+network.wan1.peerdns='0'    # AT&T's DNS can never reach dnsmasq
+```
+
+That second and third line are permanent. The metric keeps DHCP timing from
+ever deciding who's primary — once `mwan3` runs, **`mwan3` decides**. The
+`peerdns` line stops AT&T's resolvers being appended to dnsmasq's upstream
+list, which would quietly punch a hole straight through NextDNS and adblock for
+a share of every lookup.
+
+Bring `wan1` up only when someone's watching:
+
+```sh
+uci del network.wan1.disabled
+uci commit network && /etc/init.d/network reload
+```
+
+### Then the failover itself
 
 You never touch it — that's `mwan3`'s whole job.
 
