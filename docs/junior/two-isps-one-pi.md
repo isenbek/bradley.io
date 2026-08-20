@@ -1,13 +1,13 @@
 ---
 title: Two ISPs, One Pi
 summary: Armando's Raspberry Pi 5 router — built, cut over, and running
-version: Rev 12
+version: Rev 13
 updated: 2026-08-20
 ---
 
 # Two ISPs, One Pi
 
-**Rev 12 — 20 August 2026** · Armando's Raspberry Pi 5 · OpenWrt 24.10.1
+**Rev 13 — 20 August 2026** · Armando's Raspberry Pi 5 · OpenWrt 24.10.1
 (r28597) · prepared by Brad
 
 Latest version: `bradley.io/junior/doc/two-isps-one-pi`
@@ -19,6 +19,32 @@ Latest version: `bradley.io/junior/doc/two-isps-one-pi`
 **The cutover is done.** The Pi is the router for the house: DHCP, DNS,
 firewall, NAT and filtering for ~55 devices, with Xfinity bridged behind it. One
 WAN port is still free, waiting for AT&T Fiber and automatic failover.
+
+---
+
+## ✅ Live as of 20 August 2026 — both ISPs, failover proven
+
+```
+AT&T Fiber   wan1   99.150.197.107   PRIMARY   ~6 ms
+Xfinity      wan2   174.48.82.27     BACKUP
+LAN          eth0   10.0.0.1/24      64 devices
+```
+
+**Failover was tested for real, both ways it can fail:**
+
+| Test | Detect | Move | Result |
+|---|---|---|---|
+| Cable pulled from the Pi | immediate | seconds | ✅ moved to Xfinity |
+| **ISP dead, link still up** | **3 s** | **11 s** | ✅ moved to Xfinity |
+| Cable restored | — | ~8 s | ✅ failed back to fiber |
+
+The second row is the one that matters. A pulled cable is the easy case; the
+common real outage is the box keeping its light on while nothing reaches the
+internet. That was simulated by blackholing the tracking IPs, and mwan3 caught
+it in three seconds.
+
+**IPv6 is currently off at the LAN** (see below), so failover covers 100% of
+household traffic.
 
 ---
 
@@ -526,28 +552,84 @@ not a first move.
 
 ---
 
+## IPv6 — currently OFF at the LAN
+
+Turned off deliberately on 20 August. The reason is worth understanding.
+
+IPv4 exits via AT&T, but IPv6 was still exiting via **Comcast** — `wan6` rides
+`wan2`. Since almost every large site is dual-stack and devices *prefer* IPv6,
+a large share of household traffic was still leaving on the demoted line, and
+**outside the failover entirely**. Failing over IPv4 while IPv6 quietly stayed
+on the other ISP is the worst of both worlds.
+
+Two ways to fix that: get IPv6 from AT&T, or switch it off. You chose off for
+now.
+
+```sh
+dhcp.lan.ra='disabled'
+dhcp.lan.dhcpv6='disabled'
+dhcp.lan.ndp='disabled'
+network.lan.ip6assign          removed
+dhcp.@dnsmasq[0].filter_aaaa='1'
+```
+
+**`filter_aaaa` is the line that makes it immediate.** Disabling RA only stops
+*new* advertisements — devices keep the IPv6 addresses they already hold until
+the lifetimes expire, which can take hours. Making the resolver stop returning
+AAAA records is what changes behaviour now.
+
+`wan6` is deliberately **left intact**, so the router keeps its own IPv6
+upstream and re-enabling later (or moving it to AT&T) is a small change.
+
+### The two AAAA records that remain, and why they should
+
+`www.google.com` and `www.youtube.com` still return IPv6. That is not a leak —
+it is **adblock's SafeSearch** feature, which rewrites those names to
+`forcesafesearch.google.com` as *local authoritative* records. `filter-AAAA`
+only strips answers dnsmasq **forwards**, so locally-answered records pass
+through untouched.
+
+That is the SafeSearch enforcement you asked for as part of content filtering.
+Leave it.
+
+---
+
 ## Still to do
 
-1. **Starlink as the second WAN** — AT&T Fiber isn't available yet, but
-   Starlink can be bridged, so failover can be **built and tested now** rather
-   than waited for. When fiber arrives it takes whichever port suits.
+1. **IPv6 from AT&T** — whenever you want it back. AT&T supports DHCPv6-PD, so
+   `wan1` can carry both stacks and failover would cover IPv6 too.
+2. **The AT&T gateway's Wi-Fi is still on.** Anything that joins it lands on
+   `192.168.1.x`, behind the gateway and in front of the Pi — **no adblock, no
+   NextDNS, no banIP**, and no access to your LAN. See the passthrough section
+   for how to switch it off.
+3. **Starlink as a third line.** Both USB 3 ports are used, but **both USB 2
+   ports are free**, and a third adapter there caps around 300 Mbps — irrelevant
+   for Starlink. That would give AT&T → Xfinity → Starlink, all automatic.
 
    ⚠️ **Starlink needs much more forgiving thresholds than a wired link.** It
    drops for a second or two regularly — satellite handoffs, obstructions,
-   reroutes — which is normal, not a fault. On `mwan3` defaults it would be
-   marked dead constantly and your traffic would flip back and forth, breaking
-   connections every time. Higher `down`/`up` counts and a longer interval.
-   This is the one part of the build that genuinely needs care.
+   reroutes — which is normal, not a fault. On the settings used for the wired
+   lines it would be marked dead constantly. Also, Starlink is behind
+   **CGNAT**, so no inbound connections while failed over to it.
 
-   Also: Starlink is behind **CGNAT**, so no inbound connections while failed
-   over to it. Fine for a backup.
-2. **NextDNS categories** — the dashboard now sees all 55 devices by name, so
-   this is the moment to set adult/social/gaming rules, per device if you want.
-3. **Rotate the root password** — still the placeholder, and this is real
+4. **Rotate the root password** — still the placeholder, and this is real
    infrastructure now.
-4. **Remove the VPN trust** — Brad's WireGuard tunnel currently has full access
-   to the LAN (`vpn2lan` / `lan2vpn` forwarding). Fine while he's helping;
-   remove it when `/junior` is torn down.
+5. **NextDNS categories** — the dashboard sees all devices by name, so this is
+   the moment to set adult/social/gaming rules, per device if you want.
+6. **Remove the VPN trust** — Brad's WireGuard tunnel reaches the Pi only
+   (LAN forwarding already removed). Drop it entirely when `/junior` is torn
+   down.
+
+### Throughput ceiling, so it isn't a surprise
+
+The AT&T plan is 1200 Mbps. **This router can pass about 940.** Both USB
+adapters and the Pi's own LAN port are gigabit — two independent caps. Since
+every device in the house is gigabit too, nothing can actually use more, but
+you are paying for headroom that physically cannot arrive. Dropping to the
+1 Gbps tier would cost you nothing real.
+
+Software **flow offloading is enabled**, which is what gets the Pi close to
+that ceiling instead of making the CPU touch every packet.
 
 ---
 
