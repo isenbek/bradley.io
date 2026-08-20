@@ -1,13 +1,13 @@
 ---
 title: Two ISPs, One Pi
 summary: Armando's Raspberry Pi 5 router — built, cut over, and running
-version: Rev 15
+version: Rev 16
 updated: 2026-08-20
 ---
 
 # Two ISPs, One Pi
 
-**Rev 15 — 20 August 2026** · Armando's Raspberry Pi 5 · OpenWrt 24.10.1
+**Rev 16 — 20 August 2026** · Armando's Raspberry Pi 5 · OpenWrt 24.10.1
 (r28597) · prepared by Brad
 
 Latest version: `bradley.io/junior/doc/two-isps-one-pi`
@@ -216,6 +216,88 @@ seconds to take effect, nothing else touched.
 Verified working after the change: google, youtube, apple, icloud, nest, sonos,
 spotify all resolve. Netflix, Amazon and Ring resolve but don't answer ping —
 **that's normal for AWS/CloudFront**, not a symptom.
+
+---
+
+## When a site breaks — which layer is doing it?
+
+Four things can block a name, and they fail in ways that look identical from a
+laptop. Check them **in this order** — it takes about a minute and stops you
+guessing.
+
+### 0. First, prove the name exists at all
+
+```sh
+dig @1.1.1.1 the-broken-name.com
+```
+
+Run this from **any machine outside the house** — a phone on cellular is fine.
+If that returns `NXDOMAIN`, the name is dead **on the internet** and nothing on
+your network is at fault.
+
+> This is not a theoretical step. Chasing "blocked" Let's Encrypt OCSP
+> hostnames once cost real time here — they had simply been retired worldwide.
+> Always get an outside reading before naming a culprit.
+
+### 1. adblock (on the router)
+
+```sh
+ssh root@10.0.0.1
+grep -rn "thedomain.com" /tmp/dnsmasq.cfg01411c.d/
+```
+
+A hit means adblock. Fix it in **LuCI → Services → Adblock → Allowlist**.
+
+⚠️ Grep for the **whole domain**, not a fragment. Searching `lencr` matches
+`elencrepre.cyou` and sends you down the wrong path.
+
+### 2. NextDNS (in the cloud) — the most likely culprit
+
+If adblock has no hit but the router still returns NXDOMAIN, it is NextDNS.
+
+**my.nextdns.io → Logs** shows every query with a timestamp and *which list
+blocked it*. That is the definitive record — no guessing.
+
+Fix in **Settings → Allowlist**.
+
+Common false positives: **Native Tracking Protection → Apple** blocks several
+domains that turn out to be load-bearing for things people use daily.
+
+### 3. banIP (blocks by IP, not by name)
+
+DNS resolves fine but the connection still fails. Check
+**LuCI → Services → banIP → Log**.
+
+### 4. Deliberate blocks — check before "fixing"
+
+| Blocked | Why |
+|---|---|
+| `mask.icloud.com`, `mask-h2.icloud.com` | **iCloud Private Relay.** Deliberate — it tunnels DNS out of your network, which is the same bypass DoH gives. |
+| DoH endpoints (banIP `doh` feed) | Deliberate — this is what makes filtering apply to devices you cannot configure. |
+
+If Private Relay stops working on a Mac or iPhone, that is this, working
+correctly.
+
+---
+
+## ⚠️ Your NextDNS settings are NOT in any backup
+
+The router stores exactly one thing about NextDNS:
+
+```
+nextdns.main.config = 'a41d67'
+```
+
+That is the profile ID and nothing else. **Every allowlist entry, category
+rule and per-device setting lives in NextDNS's cloud**, not on the Pi.
+
+So the config backup and the recovery image will faithfully restore a router
+that points at profile `a41d67` — and if that profile were ever lost or badly
+edited, nothing on your side could rebuild it.
+
+**Keep your own note of the allowlist entries**, somewhere off the router. A
+text file on your PC is enough. It is the one part of this system that has no
+local copy.
 
 ---
 
