@@ -1,13 +1,13 @@
 ---
 title: Two ISPs, One Pi
 summary: Armando's Raspberry Pi 5 router — built, cut over, and running
-version: Rev 11
+version: Rev 12
 updated: 2026-08-20
 ---
 
 # Two ISPs, One Pi
 
-**Rev 11 — 20 August 2026** · Armando's Raspberry Pi 5 · OpenWrt 24.10.1
+**Rev 12 — 20 August 2026** · Armando's Raspberry Pi 5 · OpenWrt 24.10.1
 (r28597) · prepared by Brad
 
 Latest version: `bradley.io/junior/doc/two-isps-one-pi`
@@ -373,6 +373,9 @@ Home Network → Wi-Fi → disable 2.4 GHz and 5 GHz
 The **wired** LAN ports keep working, so your `192.168.1.254` escape hatch is
 unaffected.
 
+> **This applies to AT&T only.** The Xfinity box needs nothing — bridge mode
+> already switched its radios off. See below.
+
 **Two things to know afterwards:**
 
 - The gateway still runs its own network on `192.168.1.x` for anything else
@@ -478,6 +481,48 @@ passwords aren't written here on purpose.
 
 **Everything is reversible.** Plug the switch back into the Xfinity gateway and
 turn bridge mode off, and you're back to where you started in about ten minutes.
+
+### The Xfinity box has no admin IP now. That's correct, not broken.
+
+Bridge mode tells the modem to **stop being a router**. It deliberately gives
+up three things:
+
+- its DHCP server
+- its LAN admin page
+- **its Wi-Fi radios** — which is why the Xfinity box needs no Wi-Fi cleanup
+
+So "I can't reach it" is the expected result, not a failure. The proof it is
+healthy is that the house is online through it and the Pi holds a public
+address handed straight past it.
+
+**It is still reachable if you want it.** Cable modems keep a hardcoded
+diagnostic page that survives bridge mode:
+
+```
+http://192.168.100.1
+```
+
+Plug a laptop directly into the modem and give it a static address:
+
+```
+IP      192.168.100.10
+Mask    255.255.255.0
+```
+
+Signal levels, uptime, firmware. Read-only, but it tells you whether the line
+itself is healthy — useful when you cannot tell if an outage is Comcast or us.
+
+*(Confirmed from the Pi with a TTL-1 ping: something answered without crossing
+a single router, so the responder is the modem on the local link — not
+Comcast's equipment upstream pretending to be it.)*
+
+**To turn bridge mode off you do not need the box at all.** It is toggled from
+the **Xfinity app** — *WiFi → View WiFi equipment → Advanced Settings → Bridge
+Mode* — or at `xfinity.com/myaccount`.
+
+Last resort is the paperclip reset, held 30 seconds, which returns it to router
+mode. That also wipes its Wi-Fi names and passwords, so it is a last resort,
+not a first move.
 
 ---
 
