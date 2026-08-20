@@ -101,22 +101,22 @@ export function JuniorConsole() {
           </div>
           <ul className="v3-jr-docs">
             <li className="v3-jr-doc">
-              <a className="v3-jr-doc__main" href="/api/junior/recovery/rpi5-router-recovery-20260816.img.gz">
+              <a className="v3-jr-doc__main" href="/api/junior/recovery/rpi5-router-recovery-20260820.img.gz">
                 <span className="v3-jr-doc__title">Recovery image — flash and go</span>
                 <span className="v3-jr-doc__sum">
                   Full OpenWrt image with the live config baked in. Write it to a card,
                   plug it in, and the new Pi <em>is</em> the router — no setup.
                 </span>
-                <span className="v3-jr-doc__meta">14.4 MB · .img.gz · built 2026-08-16</span>
+                <span className="v3-jr-doc__meta">15 MB · .img.gz · built 2026-08-20 — AT&amp;T + mwan3 failover + IPv6 off</span>
               </a>
             </li>
             <li className="v3-jr-doc">
-              <a className="v3-jr-doc__main" href="/api/junior/recovery/rpi5-config-backup-20260816.tar.gz">
+              <a className="v3-jr-doc__main" href="/api/junior/recovery/junior-config-20260820-1534.tar.gz">
                 <span className="v3-jr-doc__title">Config backup</span>
                 <span className="v3-jr-doc__sum">
                   Restore onto a working Pi via LuCI &rarr; System &rarr; Backup / Flash Firmware.
                 </span>
-                <span className="v3-jr-doc__meta">18 KB · .tar.gz · 53 files</span>
+                <span className="v3-jr-doc__meta">19 KB · .tar.gz · taken 2026-08-20 15:34</span>
               </a>
             </li>
             <li className="v3-jr-doc">
