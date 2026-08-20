@@ -1,13 +1,13 @@
 ---
 title: Two ISPs, One Pi
 summary: Armando's Raspberry Pi 5 router — built, cut over, and running
-version: Rev 21
+version: Rev 22
 updated: 2026-08-20
 ---
 
 # Two ISPs, One Pi
 
-**Rev 21 — 20 August 2026** · Armando's Raspberry Pi 5 · OpenWrt 24.10.1
+**Rev 22 — 20 August 2026** · Armando's Raspberry Pi 5 · OpenWrt 24.10.1
 (r28597) · prepared by Brad
 
 Latest version: `bradley.io/junior/doc/two-isps-one-pi`
@@ -344,6 +344,46 @@ uci commit banip && /etc/init.d/banip restart
 **Autodetect is deliberately off.** It follows the *current* uplink — but with
 failover the current uplink changes by design, and banIP must cover both lines
 whichever one happens to be live.
+
+---
+
+## Switching WANs from the couch — LuCI buttons
+
+**LuCI &rarr; System &rarr; Custom Commands** at `http://10.0.0.1`.
+No attic trips to test a line.
+
+| Button | Does |
+|---|---|
+| **WAN — Status** | which line is live, current mode, last 15 failover events |
+| **TEST — AT&T only** | forces everything onto the fibre; a speed test now measures AT&T alone |
+| **TEST — Xfinity only** | same for Xfinity |
+| **TEST — end test, restore both NOW** | immediate restore |
+| **WAN — Failover: AT&T primary** | normal operating mode |
+| **WAN — Failover: Xfinity primary** | swap the priority |
+| **WAN — Load balance: use both lines** | both together, weighted 4:1 |
+
+### The test modes cannot strand you
+
+Each one takes the *other* line out of rotation and **auto-reverts after 10
+minutes**. Disable the line you are currently using and it comes back by
+itself. There is an immediate-restore button too.
+
+Verified working: forcing Xfinity-only moved the public address from
+`99.150.197.107` to `174.48.82.27` and back again.
+
+### Load balance is not what most people expect
+
+It splits **connections**, not bandwidth. A single download does **not** get
+faster. What you gain is more total capacity across many simultaneous
+connections.
+
+`sticky` is enabled, so each device keeps using one line for 10 minutes.
+Without it your public IP changes between connections and **banking sites,
+logins and streaming break constantly** &mdash; which is why load balancing has
+a bad reputation it half deserves.
+
+**For a house, failover is usually the better mode.** Leave it there unless you
+have a specific reason not to.
 
 ---
 

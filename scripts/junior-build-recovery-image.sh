@@ -64,6 +64,17 @@ timeout 90 "${SSH[@]}" 'tar czf - \
     /etc/banip/banip.allowlist \
     /etc/sysupgrade.conf \
     /etc/shadow \
+    /etc/mwan3.user \
+    /etc/junior-alert.conf \
+    /usr/bin/junior-wan-status \
+    /usr/bin/junior-wan-alert \
+    /usr/bin/junior-templog \
+    /usr/bin/junior-mode-failover \
+    /usr/bin/junior-mode-failover-xfinity \
+    /usr/bin/junior-mode-balance \
+    /usr/bin/junior-test-att \
+    /usr/bin/junior-test-xfinity \
+    /usr/bin/junior-test-end \
     2>/dev/null' > "$STAGE/live.tar.gz" 2>/dev/null
 
 if [[ ! -s "$STAGE/live.tar.gz" ]]; then bad "config pull produced nothing"; exit 1; fi
@@ -71,8 +82,15 @@ tar xzf "$STAGE/live.tar.gz" -C "$STAGE/files"
 ok "pulled $(find "$STAGE/files" -type f | wc -l) files"
 
 # --- sanity: the pieces without which the image is worthless ----------------
+# /etc/config/luci registers LuCI Custom Commands that call these scripts. If
+# the config ships without them, a restored router shows buttons that error -
+# worse than not having them at all. Same class of bug as the day the backup
+# silently omitted the NIC-pinning rule.
 for f in etc/config/network etc/config/firewall etc/config/dhcp \
-         etc/hotplug.d/net/20-junior-nicnames etc/dropbear/authorized_keys; do
+         etc/hotplug.d/net/20-junior-nicnames etc/dropbear/authorized_keys \
+         etc/mwan3.user usr/bin/junior-wan-status usr/bin/junior-wan-alert \
+         usr/bin/junior-templog usr/bin/junior-mode-failover \
+         usr/bin/junior-test-att usr/bin/junior-test-end; do
   if [[ -f "$STAGE/files/$f" ]]; then
     printf '    ✅ %s\n' "$f"
   else
@@ -89,6 +107,9 @@ chmod 600 "$STAGE/files/etc/dropbear/authorized_keys"
 chmod 600 "$STAGE/files/etc/shadow" 2>/dev/null || true
 chmod 755 "$STAGE/files/etc/hotplug.d/net"
 chmod 755 "$STAGE/files/etc/hotplug.d/net/"*
+chmod 755 "$STAGE/files/usr/bin/junior-"* 2>/dev/null || true
+chmod 755 "$STAGE/files/etc/mwan3.user" 2>/dev/null || true
+chmod 600 "$STAGE/files/etc/junior-alert.conf" 2>/dev/null || true
 ok "dropbear dir is $(stat -c %a "$STAGE/files/etc/dropbear") (must be 700)"
 
 # --- the old first-boot script must NOT come along -------------------------
