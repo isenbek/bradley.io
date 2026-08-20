@@ -1,13 +1,13 @@
 ---
 title: Two ISPs, One Pi
 summary: Armando's Raspberry Pi 5 router — built, cut over, and running
-version: Rev 16
+version: Rev 17
 updated: 2026-08-20
 ---
 
 # Two ISPs, One Pi
 
-**Rev 16 — 20 August 2026** · Armando's Raspberry Pi 5 · OpenWrt 24.10.1
+**Rev 17 — 20 August 2026** · Armando's Raspberry Pi 5 · OpenWrt 24.10.1
 (r28597) · prepared by Brad
 
 Latest version: `bradley.io/junior/doc/two-isps-one-pi`
@@ -216,6 +216,69 @@ seconds to take effect, nothing else touched.
 Verified working after the change: google, youtube, apple, icloud, nest, sonos,
 spotify all resolve. Netflix, Amazon and Ring resolve but don't answer ping —
 **that's normal for AWS/CloudFront**, not a symptom.
+
+---
+
+## Does every layer cover BOTH ISPs?
+
+Yes — but two of them had to be **told**, and one of those lied about it.
+
+| Layer | Both WANs | Why |
+|---|---|---|
+| **Firewall** | ✅ | `wan` zone contains `wan1`, `wan2`, `wan6` |
+| **banIP** | ✅ | interface-bound — **had to be named explicitly** |
+| **adblock** | ✅ | DNS layer, inherently |
+| **NextDNS** | ✅ | DNS layer, inherently |
+
+**The DNS layers cannot be WAN-dependent.** Blocking happens when a device asks
+for a name — before the router has decided which line to send it out of. So
+adblock and NextDNS covered the fiber from the moment it came up.
+
+**banIP and the firewall match on interfaces**, so a new WAN is invisible to
+them until it is named.
+
+### The trap: banIP's status text was wrong
+
+After adding the fiber, banIP reported:
+
+```
+active_devices : wan: wan2, wan1        <- looks correct
+```
+
+But the rules it had actually installed said:
+
+```
+chain wan-input   iifname != "wan2"  ->  accept
+```
+
+Which means **everything arriving on `wan1` skipped every banIP check** —
+on the line carrying all the traffic.
+
+**Read the rules, not the status.**
+
+```sh
+nft list table inet banIP | grep -E 'iifname|oifname'
+```
+
+Correct output names both:
+
+```
+iifname != { "wan1", "wan2" } ... accept
+```
+
+Fix, if it ever drifts again:
+
+```sh
+uci set banip.global.ban_autodetect='0'
+uci -q delete banip.global.ban_dev
+uci add_list banip.global.ban_dev='wan1'
+uci add_list banip.global.ban_dev='wan2'
+uci commit banip && /etc/init.d/banip restart
+```
+
+**Autodetect is deliberately off.** It follows the *current* uplink — but with
+failover the current uplink changes by design, and banIP must cover both lines
+whichever one happens to be live.
 
 ---
 
