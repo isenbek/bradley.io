@@ -1,13 +1,13 @@
 ---
 title: Two ISPs, One Pi
 summary: Armando's Raspberry Pi 5 router — built, cut over, and running
-version: Rev 13
+version: Rev 14
 updated: 2026-08-20
 ---
 
 # Two ISPs, One Pi
 
-**Rev 13 — 20 August 2026** · Armando's Raspberry Pi 5 · OpenWrt 24.10.1
+**Rev 14 — 20 August 2026** · Armando's Raspberry Pi 5 · OpenWrt 24.10.1
 (r28597) · prepared by Brad
 
 Latest version: `bradley.io/junior/doc/two-isps-one-pi`
@@ -491,6 +491,83 @@ halts, in the attic. Be deliberate.
 There is no `shutdown` command on OpenWrt — it's `poweroff`, `reboot`, `halt`.
 The LED stays lit after `poweroff`; wait for the activity light to stop
 flickering, then unplug.
+
+---
+
+## Heat — how to check it, and what the numbers mean
+
+The Pi feels hot to the touch. That is the heatsink doing its job: conducting
+heat *out* of the chip. A cool case would mean the heat was staying inside.
+
+### Check it in one command
+
+```sh
+ssh root@10.0.0.1
+cat /root/thermal/temp.log | tail -20
+```
+
+Each line is:
+
+```
+2026-08-20T15:40   52.3   3607   75   0x0   0.69
+     time          degC   fanRPM  pwm  throt load
+```
+
+A sample is taken every 5 minutes and about 30 days are kept. The logger is
+listed in `/etc/sysupgrade.conf`, so restoring a backup will not silently drop
+it.
+
+For a single reading right now:
+
+```sh
+vcgencmd measure_temp        # temperature
+vcgencmd get_throttled       # the number that actually matters
+cat /sys/class/hwmon/hwmon*/fan1_input   # fan RPM - 0 means not spinning
+```
+
+### What the numbers mean
+
+| Reading | Meaning |
+|---|---|
+| **under 60 °C** | normal. Nothing to do. |
+| 60–70 °C | warm but fine. Worth knowing why — hot day, or heavy traffic. |
+| 70–80 °C | getting close. Check airflow and where it is sitting. |
+| **80 °C+** | the Pi starts slowing itself down to survive. |
+| 85 °C | hard limit. |
+
+**`get_throttled` is the number to trust.** It is a *sticky* flag: once the Pi
+throttles or browns out, the bit stays set until reboot. So a clean `0x0` after
+days of uptime is proof it has never been in trouble — far better evidence than
+any single temperature reading.
+
+```
+throttled=0x0     ← never throttled, never undervolted. Good.
+anything else     ← it has happened at least once. Investigate.
+```
+
+### The attic
+
+Ambient temperature is the real risk, not the workload. The Pi runs roughly
+25–30 °C above the air around it, so:
+
+```
+25 °C room   →  ~52 °C chip     fine
+40 °C attic  →  ~67 °C chip     warm, still fine
+55 °C attic  →  ~82 °C chip     THROTTLING
+```
+
+Measured at 15:40 on 20 August — close to the worst moment of a Florida
+afternoon — it read **52.3 °C with `0x0`**. That means wherever it is sitting
+is much cooler than the attic's peak. Good news, but one afternoon is not a
+summer, which is why it is now logged.
+
+**If the log ever shows sustained 70 °C+, or `get_throttled` stops being
+`0x0`, move the Pi out of the attic.** Better cooling cannot help when the air
+itself is hot — a fan can only move air that is already too warm. It does not
+need to live up there; it only needs to be where the cables are.
+
+Meanwhile: keep the vents clear and do not sit it on carpet, insulation, or
+anything that traps heat underneath.
 
 ---
 
