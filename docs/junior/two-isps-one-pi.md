@@ -1,13 +1,13 @@
 ---
 title: Two ISPs, One Pi
 summary: Armando's Raspberry Pi 5 router — built, cut over, and running
-version: Rev 20
+version: Rev 21
 updated: 2026-08-20
 ---
 
 # Two ISPs, One Pi
 
-**Rev 20 — 20 August 2026** · Armando's Raspberry Pi 5 · OpenWrt 24.10.1
+**Rev 21 — 20 August 2026** · Armando's Raspberry Pi 5 · OpenWrt 24.10.1
 (r28597) · prepared by Brad
 
 Latest version: `bradley.io/junior/doc/two-isps-one-pi`
@@ -216,6 +216,71 @@ seconds to take effect, nothing else touched.
 Verified working after the change: google, youtube, apple, icloud, nest, sonos,
 spotify all resolve. Netflix, Amazon and Ring resolve but don't answer ping —
 **that's normal for AWS/CloudFront**, not a symptom.
+
+---
+
+## Performance — the measured baseline
+
+Taken 20 August 2026, so there is something real to compare against next time
+instead of arguing from feel.
+
+| Measured | Result |
+|---|---|
+| Gateway &rarr; internet (AT&T line itself) | **1.3 Gbps** |
+| Phone &rarr; AT&T gateway Wi-Fi | 581 Mbps |
+| Phone &rarr; Unifi Wi-Fi | 266 Mbps |
+| Pi &rarr; internet, **single** TCP stream | 307 Mbps |
+| Through the Pi, theoretical max | **~940 Mbps** (gigabit ports) |
+
+**AT&T delivers the full plan.** The 1.3 Gbps figure is the line, and it is not
+flowing through the Pi — it cannot, the Pi's ports are gigabit. Devices behind
+the Pi top out around 940.
+
+### How to measure without fooling yourself
+
+**A single TCP stream never shows line rate.** Over any distance it is limited
+by latency, not bandwidth. 307 Mbps single-stream is a healthy result on a
+gigabit path, not a fault. Real speed tests use 8+ parallel streams.
+
+**Test from a device that holds the public IP.** With IP Passthrough active,
+anything else on the AT&T gateway — a phone on its Wi-Fi, for instance — is a
+*non-passthrough* client stuck behind the gateway's own NAT, and those are
+often badly degraded. Measuring there tells you nothing about the line.
+
+**Separate the Wi-Fi hop from everything else.** Serve a large file from the
+router's RAM and fetch it over the LAN — no internet involved, so the number is
+purely your Wi-Fi:
+
+```sh
+mkdir -p /tmp/speedtest
+head -c 300000000 /dev/zero > /tmp/speedtest/test.bin
+uhttpd -h /tmp/speedtest -p 8080 -f &
+```
+
+Then browse `http://10.0.0.1:8080/test.bin`. Tear it down after:
+
+```sh
+killall uhttpd; rm -rf /tmp/speedtest; /etc/init.d/uhttpd start
+```
+
+⚠️ `killall uhttpd` also stops **LuCI** — restart it, as above.
+
+### ⚠️ Tools that lie on OpenWrt
+
+Chasing a phantom slowdown here burned an hour on broken measurements. All of
+these silently produce believable nonsense:
+
+| Tool | What it does |
+|---|---|
+| `ping -M do` | not supported by busybox &mdash; **every** size fails, looking like an MTU black hole |
+| `stat -c %s` | returns nothing &mdash; byte counts read as 0, so working downloads look like failures |
+| `date +%s%N` | no nanoseconds &mdash; elapsed time computes to 0 |
+| `timeout`, `/dev/tcp` | do not exist &mdash; port scans report everything closed |
+
+**Always run a control first.** Fetch a file you know exists, count bytes in a
+file you know the size of, probe a port you know is open. If the control fails,
+the measurement means nothing &mdash; and a broken tool is far more likely than
+the exotic fault it appears to show.
 
 ---
 
