@@ -1,13 +1,13 @@
 ---
 title: Two ISPs, One Pi
 summary: Armando's Raspberry Pi 5 router — built, cut over, and running
-version: Rev 10
+version: Rev 11
 updated: 2026-08-20
 ---
 
 # Two ISPs, One Pi
 
-**Rev 10 — 20 August 2026** · Armando's Raspberry Pi 5 · OpenWrt 24.10.1
+**Rev 11 — 20 August 2026** · Armando's Raspberry Pi 5 · OpenWrt 24.10.1
 (r28597) · prepared by Brad
 
 Latest version: `bradley.io/junior/doc/two-isps-one-pi`
@@ -349,6 +349,29 @@ gateway can take the house offline. Take your time.
 **Leave yourself a way back in.** Keep a free LAN port on the BGW so a laptop
 can always reach `192.168.1.254` to undo the passthrough. Same rule as the
 recovery AP: build the way back *before* you need it.
+
+**Turn the gateway's Wi-Fi OFF.**
+
+Passthrough does not disable it. The BGW320 keeps broadcasting its own SSID,
+and anything that joins it lands on the gateway's `192.168.1.x` network —
+**behind the gateway, in front of the Pi**. Those devices get:
+
+- no adblock, no NextDNS, no banIP — **none of the filtering**
+- no access to your `10.0.0.x` LAN, printers or Unifi gear
+- no visibility to you at all
+
+It is a shadow network that walks straight around everything we built. Exactly
+the same class of hole as a laptop using its own DNS — and harder to spot,
+because it looks like working Wi-Fi.
+
+You already have Unifi APs covering the house, so there is nothing to lose:
+
+```
+Home Network → Wi-Fi → disable 2.4 GHz and 5 GHz
+```
+
+The **wired** LAN ports keep working, so your `192.168.1.254` escape hatch is
+unaffected.
 
 **Two things to know afterwards:**
 
