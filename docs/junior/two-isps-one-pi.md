@@ -1,13 +1,13 @@
 ---
 title: Two ISPs, One Pi
 summary: Armando's Raspberry Pi 5 router — built, cut over, and running
-version: Rev 19
+version: Rev 20
 updated: 2026-08-20
 ---
 
 # Two ISPs, One Pi
 
-**Rev 19 — 20 August 2026** · Armando's Raspberry Pi 5 · OpenWrt 24.10.1
+**Rev 20 — 20 August 2026** · Armando's Raspberry Pi 5 · OpenWrt 24.10.1
 (r28597) · prepared by Brad
 
 Latest version: `bradley.io/junior/doc/two-isps-one-pi`
@@ -933,6 +933,53 @@ Test without waiting for a real outage:
    ⚠️ **A 2.5 G WAN alone changes nothing** if the LAN side stays gigabit. They
    have to be upgraded as a pair, along with a 2.5 GbE switch, or the ceiling
    does not move.
+
+   #### What to actually buy
+
+   **The chipset matters more than the brand.** Insist the listing says
+   **RTL8156B** (or RTL8156). That is the part `kmod-usb-net-rtl8152` already
+   drives. Many cheap adapters do not say which chip they use — skip those,
+   because the ones that hide it are usually the ones with poor Linux support.
+
+   Known-good RTL8156B USB-A 2.5 GbE adapters:
+
+   | Adapter | Chipset | Note |
+   |---|---|---|
+   | **Plugable USB3-E2500** | RTL8156B | states Linux support explicitly |
+   | **UGREEN CM275** (a.k.a. 30287) | RTL8156B | widely available |
+   | **CableCreation CD0673** | RTL8156B | common, inexpensive |
+   | **StarTech US2GA30** | RTL8156 | pricier, well documented |
+
+   *Buy 2.* Availability changes constantly — verify the chipset on the
+   listing rather than trusting the model number alone.
+
+   2.5 GbE switches (unmanaged is fine):
+
+   | Switch | Ports |
+   |---|---|
+   | **TP-Link TL-SG105-M2** | 5 × 2.5 G |
+   | **TP-Link TL-SG108-M2** | 8 × 2.5 G |
+   | **QNAP QSW-1105-5T** | 5 × 2.5 G |
+   | **Netgear MS105** | 5 × 2.5 G |
+
+   **Already fitted, for reference:** 2 × **ASIX AX88179A** USB 3 gigabit
+   (`6c:6e:07:2d:9d:10` = wan1, `6c:6e:07:2d:a4:c2` = wan2). One of these moves
+   to the Starlink slot — do not buy a third adapter for it.
+
+   #### Verifying a new adapter after it arrives
+
+   ```sh
+   lsusb                                  # should show Realtek
+   dmesg | grep -i r8152                  # driver bound?
+   cat /sys/class/net/<name>/speed         # must read 2500, not 1000
+   ```
+
+   If `speed` reads **1000**, either the cable is Cat5e-or-worse, the switch
+   port is gigabit, or the adapter is not what the listing claimed.
+
+   ⚠️ **Cat5e is the practical minimum** and **Cat6 is safer** for 2.5 G over
+   any real distance. An old Cat5 run will silently negotiate down and you will
+   spend an evening blaming the adapter.
 
 4. **Faster than 1 Gbps? Decide before paying for it.** The current plan is
    1200 Mbps and this router can pass about **940** — both USB adapters and the
