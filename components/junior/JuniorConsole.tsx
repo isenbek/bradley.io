@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import { useRouter } from "next/navigation"
-import { Download, HardDrive, ShieldCheck, TerminalSquare, Radio, Copy, Check, LogOut, Maximize2, Minimize2 } from "lucide-react"
+import { HardDrive, ShieldCheck, TerminalSquare, Radio, Copy, Check, LogOut, Maximize2, Minimize2 } from "lucide-react"
 import { JuniorDocs } from "./JuniorDocs"
 
 // TEMPORARY — the authed half of /junior. Delete at teardown.
@@ -97,12 +97,23 @@ export function JuniorConsole() {
           <div className="v3-cardhead">
             <ShieldCheck size={17} strokeWidth={2.4} aria-hidden />
             <h2>Recovery kit</h2>
-            <span className="v3-cardhead__meta">if the Pi or its card dies</span>
+            <span className="v3-cardhead__meta">current &middot; built 20 Aug 2026</span>
           </div>
+          <p className="v3-jr-note" style={{ marginTop: 0 }}>
+            <strong>Which one do I need?</strong> The <em>image</em> is the whole computer &mdash;
+            OpenWrt, every package, and your settings. The <em>config</em> is only your settings.
+            <br />
+            Hardware died &rarr; <strong>image</strong>. Changed something and regret it &rarr;{" "}
+            <strong>config</strong>.
+            <br />
+            The config alone <strong>cannot</strong> rebuild a dead Pi &mdash; restored onto stock
+            OpenWrt it would reference mwan3, banIP, adblock and NextDNS, none of which would be
+            installed.
+          </p>
           <ul className="v3-jr-docs">
             <li className="v3-jr-doc">
               <a className="v3-jr-doc__main" href="/api/junior/recovery/rpi5-router-recovery-20260820.img.gz">
-                <span className="v3-jr-doc__title">Recovery image — flash and go</span>
+                <span className="v3-jr-doc__title">Recovery image &mdash; flash and go &nbsp;<strong>&larr; if the Pi died</strong></span>
                 <span className="v3-jr-doc__sum">
                   Full OpenWrt image with the live config baked in. Write it to a card,
                   plug it in, and the new Pi <em>is</em> the router — no setup.
@@ -112,7 +123,7 @@ export function JuniorConsole() {
             </li>
             <li className="v3-jr-doc">
               <a className="v3-jr-doc__main" href="/api/junior/recovery/junior-config-20260820-1534.tar.gz">
-                <span className="v3-jr-doc__title">Config backup</span>
+                <span className="v3-jr-doc__title">Config backup &nbsp;<strong>&larr; if you broke a setting</strong></span>
                 <span className="v3-jr-doc__sum">
                   Restore onto a working Pi via LuCI &rarr; System &rarr; Backup / Flash Firmware.
                 </span>
@@ -137,100 +148,89 @@ export function JuniorConsole() {
       {/* ---------------------------------------------------------------- */}
       <section className="v3-section" style={{ paddingTop: 10 }}>
         <div className="v3-wrap v3-jr-steps">
-          {/* Step 1 — download */}
+          {/* Writing a card — only relevant for the RECOVERY image */}
           <article className="v3-jr-step">
             <div className="v3-jr-step__n" aria-hidden>
               1
             </div>
             <div className="v3-jr-step__body">
               <div className="v3-cardhead">
-                <Download size={17} strokeWidth={2.4} aria-hidden />
-                <h2>Download the image</h2>
-              </div>
-              <p>
-                OpenWrt 24.10.1 for the Raspberry Pi 5, built on this host. This is the{" "}
-                <strong>squashfs factory</strong> build — the one you write to a blank card.
-              </p>
-
-              <a className="v3-btn v3-btn--primary v3-jr-dl" href="/api/junior/image" download>
-                <Download size={16} strokeWidth={2.5} aria-hidden />
-                Download image
-                <span className="v3-jr-dl__meta">12 MB · .img.gz</span>
-              </a>
-
-              <dl className="v3-jr-facts">
-                <div>
-                  <dt>Filename</dt>
-                  <dd>
-                    <code>{IMAGE_NAME}</code>
-                  </dd>
-                </div>
-                <div>
-                  <dt>
-                    <ShieldCheck size={13} strokeWidth={2.4} aria-hidden /> SHA-256
-                  </dt>
-                  <dd className="v3-jr-facts__hash">
-                    <code>{IMAGE_SHA}</code>
-                    <Copyable text={IMAGE_SHA} label="hash" />
-                  </dd>
-                </div>
-              </dl>
-
-              <p className="v3-jr-note">
-                Check it before you flash — a half-downloaded image bricks the boot and looks
-                exactly like a hardware fault, which is a miserable thing to debug remotely.
-              </p>
-              <Cmd>{`sha256sum ${IMAGE_NAME}`}</Cmd>
-            </div>
-          </article>
-
-          {/* Step 2 — flash */}
-          <article className="v3-jr-step">
-            <div className="v3-jr-step__n" aria-hidden>
-              2
-            </div>
-            <div className="v3-jr-step__body">
-              <div className="v3-cardhead">
                 <HardDrive size={17} strokeWidth={2.4} aria-hidden />
-                <h2>Write it to the card</h2>
+                <h2>Writing the recovery card</h2>
+                <span className="v3-cardhead__meta">only if the Pi or its card died</span>
               </div>
               <p>
-                Easiest path: <strong>Raspberry Pi Imager</strong> → &ldquo;Use custom&rdquo; → pick
-                the <code>.img.gz</code> (it decompresses for you) → select the card → write.
+                Use the <strong>recovery image</strong> from the kit above &mdash; the one with
+                today&rsquo;s date in the filename. It already contains your whole router.
               </p>
               <p className="v3-jr-note">
-                If you&rsquo;d rather do it from a terminal, confirm the device name first with{" "}
-                <code>lsblk</code>. Getting this wrong overwrites the wrong disk, so read it twice —
-                it&rsquo;s <code>/dev/sdX</code>, the whole disk, not <code>/dev/sdX1</code>.
+                Verify the download first. A truncated image fails to boot and looks exactly like a
+                hardware fault, which is a miserable thing to debug when the network is already down.
+              </p>
+              <Cmd>{`sha256sum rpi5-router-recovery-20260820.img.gz`}</Cmd>
+              <p>
+                Easiest path: <strong>Raspberry Pi Imager</strong> &rarr; &ldquo;Use custom&rdquo;
+                &rarr; pick the <code>.img.gz</code> (it decompresses for you) &rarr; select the card
+                &rarr; write.
+              </p>
+              <p className="v3-jr-note">
+                From a terminal instead, confirm the device name first with <code>lsblk</code>.
+                Getting this wrong overwrites the wrong disk, so read it twice &mdash; it&rsquo;s{" "}
+                <code>/dev/sdX</code>, the whole disk, not <code>/dev/sdX1</code>.
               </p>
               <Cmd>{`lsblk -o NAME,SIZE,TYPE,MOUNTPOINT`}</Cmd>
-              <Cmd>{`gunzip -c ${IMAGE_NAME} | sudo dd of=/dev/sdX bs=4M conv=fsync status=progress`}</Cmd>
+              <Cmd>{`gunzip -c rpi5-router-recovery-20260820.img.gz | sudo dd of=/dev/sdX bs=4M conv=fsync status=progress`}</Cmd>
               <p className="v3-jr-note">
-                Then put the card in the Pi, plug it into your router with an ethernet cable, and
-                power it on.
+                Card into the Pi, ethernet into <strong>the same USB adapter the ISP was in</strong>,
+                power on. It comes up as <code>10.0.0.1</code> already being the router.
               </p>
             </div>
           </article>
 
-          {/* Step 3 — phone home */}
+          {/* Historical — the original blank build */}
           <article className="v3-jr-step">
             <div className="v3-jr-step__n" aria-hidden>
-              3
+              &mdash;
             </div>
             <div className="v3-jr-step__body">
               <div className="v3-cardhead">
                 <Radio size={17} strokeWidth={2.4} aria-hidden />
-                <h2>It calls home</h2>
+                <h2>The original build image</h2>
+                <span className="v3-cardhead__meta">historical &middot; not what you want</span>
               </div>
-              <p>
-                The image already carries its WireGuard key and my endpoint. On boot it brings the
-                tunnel up by itself — nothing to configure on your side, and no ports to open on
-                your router, because the Pi makes the outbound connection.
+              <p className="v3-jr-note">
+                <strong>Do not flash this.</strong> It is the blank OpenWrt build from the first day
+                &mdash; no mwan3, no filtering, no AT&amp;T, none of your settings. Writing it would
+                replace a working router with an empty one.
               </p>
               <p className="v3-jr-note">
-                Give it about a minute after the power light settles. When the handshake lands it
-                shows up on my side and I can start working in the terminal below.
+                Kept only so the original starting point is recoverable. If you need a fresh router
+                from scratch, use the <strong>recovery image</strong> above instead &mdash; it is the
+                same OpenWrt, with everything already configured.
               </p>
+              <details className="v3-jr-note">
+                <summary>Original image details</summary>
+                <dl className="v3-jr-facts">
+                  <div>
+                    <dt>Filename</dt>
+                    <dd>
+                      <code>{IMAGE_NAME}</code>
+                    </dd>
+                  </div>
+                  <div>
+                    <dt>
+                      <ShieldCheck size={13} strokeWidth={2.4} aria-hidden /> SHA-256
+                    </dt>
+                    <dd className="v3-jr-facts__hash">
+                      <code>{IMAGE_SHA}</code>
+                      <Copyable text={IMAGE_SHA} label="hash" />
+                    </dd>
+                  </div>
+                </dl>
+                <a className="v3-jr-doc__meta" href="/api/junior/image" download>
+                  download the original blank image
+                </a>
+              </details>
             </div>
           </article>
         </div>
