@@ -1,23 +1,34 @@
 {
-  "generated": "2026-08-20T16:02:57.791632+00:00",
+  "generated": "2026-08-20T20:03:28.193068+00:00",
   "stats": {
     "totalProjects": 84,
-    "totalSessions": 61,
-    "totalMessages": 275484,
+    "totalSessions": 63,
+    "totalMessages": 278543,
     "activeDays": 27,
     "streak": 6
   },
   "activityFeed": [
     {
       "type": "claude-code",
-      "title": "Claude Code session (110 messages)",
-      "description": "1 sessions, 38 tool calls",
+      "title": "Claude Code session (481 messages)",
+      "description": "3 sessions, 171 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-08-20T23:59:00Z",
       "metadata": {
-        "messages": 110,
-        "sessions": 1
+        "messages": 481,
+        "sessions": 3
+      }
+    },
+    {
+      "type": "github",
+      "title": "Activity on isenbek/terrapulse",
+      "description": "Climate intelligence platform \u2014 ingest, normalize, and serve environmental data",
+      "projectSlug": "terrapulse",
+      "category": "systems",
+      "date": "2026-08-20T18:37:05Z",
+      "metadata": {
+        "repo": "isenbek/terrapulse"
       }
     },
     {
@@ -32,25 +43,14 @@
       }
     },
     {
-      "type": "github",
-      "title": "Activity on isenbek/terrapulse",
-      "description": "Climate intelligence platform \u2014 ingest, normalize, and serve environmental data",
-      "projectSlug": "terrapulse",
-      "category": "systems",
-      "date": "2026-08-20T01:00:20Z",
-      "metadata": {
-        "repo": "isenbek/terrapulse"
-      }
-    },
-    {
       "type": "claude-code",
-      "title": "Claude Code session (2790 messages)",
-      "description": "3 sessions, 931 tool calls",
+      "title": "Claude Code session (4068 messages)",
+      "description": "3 sessions, 1356 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-08-19T23:59:00Z",
       "metadata": {
-        "messages": 2790,
+        "messages": 4068,
         "sessions": 3
       }
     },
@@ -68,13 +68,13 @@
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (2485 messages)",
-      "description": "2 sessions, 793 tool calls",
+      "title": "Claude Code session (2564 messages)",
+      "description": "2 sessions, 814 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-08-17T23:59:00Z",
       "metadata": {
-        "messages": 2485,
+        "messages": 2564,
         "sessions": 2
       }
     },
@@ -116,13 +116,13 @@
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (16638 messages)",
-      "description": "2 sessions, 5547 tool calls",
+      "title": "Claude Code session (16869 messages)",
+      "description": "2 sessions, 5613 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-08-12T23:59:00Z",
       "metadata": {
-        "messages": 16638,
+        "messages": 16869,
         "sessions": 2
       }
     },
@@ -236,13 +236,13 @@
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (57791 messages)",
-      "description": "6 sessions, 18424 tool calls",
+      "title": "Claude Code session (58483 messages)",
+      "description": "6 sessions, 18685 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-07-28T23:59:00Z",
       "metadata": {
-        "messages": 57791,
+        "messages": 58483,
         "sessions": 6
       }
     },
@@ -260,13 +260,13 @@
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (33219 messages)",
-      "description": "2 sessions, 10460 tool calls",
+      "title": "Claude Code session (33627 messages)",
+      "description": "2 sessions, 10579 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-07-23T23:59:00Z",
       "metadata": {
-        "messages": 33219,
+        "messages": 33627,
         "sessions": 2
       }
     },
@@ -588,6 +588,41 @@
   ],
   "projects": [
     {
+      "slug": "terrapulse",
+      "name": "terrapulse",
+      "tagline": "Climate intelligence platform \u2014 ingest, normalize, and serve environmental data",
+      "description": "Climate intelligence platform \u2014 ingest, normalize, and serve environmental data",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": true,
+      "status": "active",
+      "technologies": [
+        "Bash",
+        "FastAPI",
+        "Go",
+        "JSON",
+        "Nginx",
+        "Python",
+        "SPI",
+        "WebSocket"
+      ],
+      "lastActivity": "2026-08-20T18:37:05Z",
+      "totalMessages": 12972,
+      "sources": {
+        "github": {
+          "repo": "isenbek/terrapulse",
+          "stars": 1,
+          "language": "HTML",
+          "lastPush": "2026-08-20"
+        },
+        "claudeCode": {
+          "totalSessions": 7,
+          "totalMessages": 12972,
+          "lastSession": "2026-08-19"
+        }
+      }
+    },
+    {
       "slug": "sysforge",
       "name": "sfproject",
       "tagline": "Building resilient systems, reliably.",
@@ -609,37 +644,42 @@
       }
     },
     {
-      "slug": "terrapulse",
-      "name": "terrapulse",
-      "tagline": "Climate intelligence platform \u2014 ingest, normalize, and serve environmental data",
-      "description": "Climate intelligence platform \u2014 ingest, normalize, and serve environmental data",
+      "slug": "infra",
+      "name": "infra",
+      "tagline": "",
+      "description": "",
       "category": "systems",
       "isResearch": false,
-      "isFeatured": true,
+      "isFeatured": false,
       "status": "active",
-      "technologies": [
-        "Bash",
-        "FastAPI",
-        "Go",
-        "JSON",
-        "Nginx",
-        "Python",
-        "SPI",
-        "WebSocket"
-      ],
-      "lastActivity": "2026-08-20T01:00:20Z",
-      "totalMessages": 12972,
+      "technologies": [],
+      "lastActivity": "2026-08-20",
+      "totalMessages": 21961,
       "sources": {
-        "github": {
-          "repo": "isenbek/terrapulse",
-          "stars": 1,
-          "language": "HTML",
-          "lastPush": "2026-08-20"
-        },
         "claudeCode": {
-          "totalSessions": 7,
-          "totalMessages": 12972,
-          "lastSession": "2026-08-19"
+          "totalSessions": 1,
+          "totalMessages": 21961,
+          "lastSession": "2026-08-20"
+        }
+      }
+    },
+    {
+      "slug": "cbmodels",
+      "name": "cbmodels",
+      "tagline": "",
+      "description": "",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-08-20",
+      "totalMessages": 11666,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 1,
+          "totalMessages": 11666,
+          "lastSession": "2026-08-20"
         }
       }
     },
@@ -654,11 +694,31 @@
       "status": "active",
       "technologies": [],
       "lastActivity": "2026-08-20",
-      "totalMessages": 6618,
+      "totalMessages": 7721,
       "sources": {
         "claudeCode": {
           "totalSessions": 3,
-          "totalMessages": 6618,
+          "totalMessages": 7721,
+          "lastSession": "2026-08-20"
+        }
+      }
+    },
+    {
+      "slug": "cbnative",
+      "name": "cbnative",
+      "tagline": "",
+      "description": "",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-08-20",
+      "totalMessages": 6057,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 1,
+          "totalMessages": 6057,
           "lastSession": "2026-08-20"
         }
       }
@@ -699,26 +759,6 @@
         "claudeCode": {
           "totalSessions": 1,
           "totalMessages": 22572,
-          "lastSession": "2026-08-19"
-        }
-      }
-    },
-    {
-      "slug": "infra",
-      "name": "infra",
-      "tagline": "",
-      "description": "",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-08-19",
-      "totalMessages": 21927,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 1,
-          "totalMessages": 21927,
           "lastSession": "2026-08-19"
         }
       }
@@ -793,26 +833,6 @@
       }
     },
     {
-      "slug": "cbmodels",
-      "name": "cbmodels",
-      "tagline": "",
-      "description": "",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-08-19",
-      "totalMessages": 11292,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 1,
-          "totalMessages": 11292,
-          "lastSession": "2026-08-19"
-        }
-      }
-    },
-    {
       "slug": "cbintel",
       "name": "cbintel",
       "tagline": "",
@@ -828,26 +848,6 @@
         "claudeCode": {
           "totalSessions": 1,
           "totalMessages": 7473,
-          "lastSession": "2026-08-19"
-        }
-      }
-    },
-    {
-      "slug": "cbnative",
-      "name": "cbnative",
-      "tagline": "",
-      "description": "",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-08-19",
-      "totalMessages": 5894,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 1,
-          "totalMessages": 5894,
           "lastSession": "2026-08-19"
         }
       }
@@ -1252,11 +1252,11 @@
       "status": "active",
       "technologies": [],
       "lastActivity": "2025-11-16T23:20:33.365308+00:00",
-      "totalMessages": 15813,
+      "totalMessages": 16044,
       "sources": {
         "claudeCode": {
           "totalSessions": 1,
-          "totalMessages": 15813,
+          "totalMessages": 16044,
           "lastSession": "2026-08-20"
         }
       }
@@ -1896,12 +1896,12 @@
         "TypeScript"
       ],
       "lastActivity": "2025-07-09T01:26:24.698633+00:00",
-      "totalMessages": 36955,
+      "totalMessages": 37484,
       "sources": {
         "claudeCode": {
           "totalSessions": 2,
-          "totalMessages": 36955,
-          "lastSession": "2026-08-19"
+          "totalMessages": 37484,
+          "lastSession": "2026-08-20"
         }
       }
     },
