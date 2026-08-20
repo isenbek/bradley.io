@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-17T12:04:14.923646",
+  "generated": "2026-08-20T12:04:16.270938",
   "scope": "Campaign Brain Last 3 Months",
   "timespan": {
     "start": "2025-12-01",
@@ -9,23 +9,23 @@
   },
   "actual": {
     "teamSize": 1,
-    "sessions": 19,
-    "messages": 119754,
-    "toolCalls": 77331,
-    "commits": 23019,
-    "repos": 116,
+    "sessions": 22,
+    "messages": 136583,
+    "toolCalls": 89822,
+    "commits": 23434,
+    "repos": 119,
     "projects": 13,
     "operatorCost": 60000,
     "aiCost": 800,
     "totalCost": 60800,
     "domains": [
       {
-        "name": "AI / ML",
+        "name": "Backend",
         "score": 79
       },
       {
-        "name": "Backend",
-        "score": 76
+        "name": "AI / ML",
+        "score": 79
       },
       {
         "name": "Security",
@@ -37,7 +37,7 @@
       },
       {
         "name": "Frontend",
-        "score": 51
+        "score": 52
       },
       {
         "name": "Data Engineering",
@@ -49,151 +49,161 @@
       },
       {
         "name": "DevOps",
-        "score": 42
+        "score": 43
       }
     ],
     "skills": [
       {
         "name": "Go",
-        "count": 5997
+        "count": 6578
       },
       {
         "name": "Git",
-        "count": 2200
+        "count": 2343
       },
       {
         "name": "JSON",
-        "count": 1571
+        "count": 1705
       },
       {
         "name": "Rust",
-        "count": 1105
+        "count": 1284
       },
       {
         "name": "HTML",
-        "count": 1018
-      },
-      {
-        "name": "Nginx",
-        "count": 965
+        "count": 1134
       },
       {
         "name": "CSS",
-        "count": 903
+        "count": 1040
+      },
+      {
+        "name": "Nginx",
+        "count": 1022
       },
       {
         "name": "SPI",
-        "count": 658
-      },
-      {
-        "name": "Python",
-        "count": 630
+        "count": 723
       },
       {
         "name": "DuckDB",
-        "count": 605
+        "count": 701
       },
       {
-        "name": "SSH",
-        "count": 530
+        "name": "Python",
+        "count": 683
       },
       {
         "name": "systemd",
-        "count": 518
+        "count": 555
+      },
+      {
+        "name": "SSH",
+        "count": 537
       },
       {
         "name": "Bash",
-        "count": 495
+        "count": 531
       },
       {
         "name": "Redis",
-        "count": 321
+        "count": 331
       },
       {
         "name": "SQLite",
-        "count": 301
-      },
-      {
-        "name": "TLS",
-        "count": 258
+        "count": 313
       },
       {
         "name": "AWS",
-        "count": 233
+        "count": 276
+      },
+      {
+        "name": "TLS",
+        "count": 260
       },
       {
         "name": "Ollama",
-        "count": 232
-      },
-      {
-        "name": "FastAPI",
-        "count": 195
+        "count": 258
       },
       {
         "name": "Snowflake",
-        "count": 195
+        "count": 252
       },
       {
-        "name": "React",
-        "count": 194
-      },
-      {
-        "name": "Markdown",
-        "count": 181
+        "name": "FastAPI",
+        "count": 213
       },
       {
         "name": "YAML",
-        "count": 177
+        "count": 204
+      },
+      {
+        "name": "React",
+        "count": 203
       },
       {
         "name": "Docker",
-        "count": 172
+        "count": 196
       },
       {
-        "name": "WireGuard",
-        "count": 171
+        "name": "Markdown",
+        "count": 191
       },
       {
         "name": "CSV",
-        "count": 165
+        "count": 186
+      },
+      {
+        "name": "WireGuard",
+        "count": 176
       },
       {
         "name": "Pytest",
-        "count": 147
+        "count": 155
       },
       {
         "name": "Next.js",
-        "count": 121
+        "count": 129
       },
       {
         "name": "WebSocket",
-        "count": 110
+        "count": 119
       },
       {
-        "name": "JWT",
-        "count": 110
+        "name": "Anthropic",
+        "count": 117
       }
     ],
     "topProjects": [
       {
         "name": "cbloom",
         "sessions": 1,
-        "messages": 33308
+        "messages": 33371
       },
       {
         "name": "cbelections",
         "sessions": 1,
-        "messages": 22290
+        "messages": 22572
       },
       {
-        "name": "cbnominate",
-        "sessions": 1,
-        "messages": 11594
+        "name": "cbprospect",
+        "sessions": 2,
+        "messages": 13306
       },
       {
         "name": "cbmodels",
         "sessions": 1,
-        "messages": 10481
+        "messages": 11666
+      },
+      {
+        "name": "cbnominate",
+        "sessions": 1,
+        "messages": 11619
+      },
+      {
+        "name": "cbapex",
+        "sessions": 3,
+        "messages": 7721
       },
       {
         "name": "cbweb",
@@ -203,22 +213,17 @@
       {
         "name": "cbintel",
         "sessions": 1,
-        "messages": 7159
+        "messages": 7473
+      },
+      {
+        "name": "cbnative",
+        "sessions": 1,
+        "messages": 6057
       },
       {
         "name": "cbdc",
         "sessions": 5,
         "messages": 5947
-      },
-      {
-        "name": "cbprospect",
-        "sessions": 1,
-        "messages": 5199
-      },
-      {
-        "name": "cbnative",
-        "sessions": 1,
-        "messages": 4506
       },
       {
         "name": "cbforge",
@@ -234,11 +239,6 @@
         "name": "cbhive",
         "sessions": 2,
         "messages": 2548
-      },
-      {
-        "name": "cbea",
-        "sessions": 1,
-        "messages": 2419
       }
     ]
   },
@@ -374,9 +374,9 @@
       "messages": 0,
       "sessions": 0,
       "toolCalls": 0,
-      "issuesOpened": 44,
+      "issuesOpened": 52,
       "issuesClosed": 36,
-      "cumulativeIssuesOpened": 71,
+      "cumulativeIssuesOpened": 79,
       "cumulativeIssuesClosed": 46,
       "cumulativeCostActual": 7153,
       "cumulativeCostLegacy": 65820
@@ -389,10 +389,10 @@
       "messages": 0,
       "sessions": 0,
       "toolCalls": 0,
-      "issuesOpened": 12,
-      "issuesClosed": 11,
-      "cumulativeIssuesOpened": 83,
-      "cumulativeIssuesClosed": 57,
+      "issuesOpened": 21,
+      "issuesClosed": 14,
+      "cumulativeIssuesOpened": 100,
+      "cumulativeIssuesClosed": 60,
       "cumulativeCostActual": 10729,
       "cumulativeCostLegacy": 98730
     },
@@ -406,8 +406,8 @@
       "toolCalls": 0,
       "issuesOpened": 18,
       "issuesClosed": 8,
-      "cumulativeIssuesOpened": 101,
-      "cumulativeIssuesClosed": 65,
+      "cumulativeIssuesOpened": 118,
+      "cumulativeIssuesClosed": 68,
       "cumulativeCostActual": 14306,
       "cumulativeCostLegacy": 131640
     },
@@ -421,8 +421,8 @@
       "toolCalls": 0,
       "issuesOpened": 13,
       "issuesClosed": 4,
-      "cumulativeIssuesOpened": 114,
-      "cumulativeIssuesClosed": 69,
+      "cumulativeIssuesOpened": 131,
+      "cumulativeIssuesClosed": 72,
       "cumulativeCostActual": 17882,
       "cumulativeCostLegacy": 164550
     },
@@ -436,8 +436,8 @@
       "toolCalls": 0,
       "issuesOpened": 41,
       "issuesClosed": 32,
-      "cumulativeIssuesOpened": 155,
-      "cumulativeIssuesClosed": 101,
+      "cumulativeIssuesOpened": 172,
+      "cumulativeIssuesClosed": 104,
       "cumulativeCostActual": 21459,
       "cumulativeCostLegacy": 197460
     },
@@ -451,8 +451,8 @@
       "toolCalls": 0,
       "issuesOpened": 13,
       "issuesClosed": 11,
-      "cumulativeIssuesOpened": 168,
-      "cumulativeIssuesClosed": 112,
+      "cumulativeIssuesOpened": 185,
+      "cumulativeIssuesClosed": 115,
       "cumulativeCostActual": 25035,
       "cumulativeCostLegacy": 230370
     },
@@ -466,8 +466,8 @@
       "toolCalls": 0,
       "issuesOpened": 20,
       "issuesClosed": 3,
-      "cumulativeIssuesOpened": 188,
-      "cumulativeIssuesClosed": 115,
+      "cumulativeIssuesOpened": 205,
+      "cumulativeIssuesClosed": 118,
       "cumulativeCostActual": 28612,
       "cumulativeCostLegacy": 263279
     },
@@ -481,8 +481,8 @@
       "toolCalls": 0,
       "issuesOpened": 75,
       "issuesClosed": 35,
-      "cumulativeIssuesOpened": 263,
-      "cumulativeIssuesClosed": 150,
+      "cumulativeIssuesOpened": 280,
+      "cumulativeIssuesClosed": 153,
       "cumulativeCostActual": 32188,
       "cumulativeCostLegacy": 296189
     },
@@ -496,8 +496,8 @@
       "toolCalls": 0,
       "issuesOpened": 74,
       "issuesClosed": 66,
-      "cumulativeIssuesOpened": 337,
-      "cumulativeIssuesClosed": 216,
+      "cumulativeIssuesOpened": 354,
+      "cumulativeIssuesClosed": 219,
       "cumulativeCostActual": 35765,
       "cumulativeCostLegacy": 329099
     },
@@ -511,8 +511,8 @@
       "toolCalls": 0,
       "issuesOpened": 52,
       "issuesClosed": 21,
-      "cumulativeIssuesOpened": 389,
-      "cumulativeIssuesClosed": 237,
+      "cumulativeIssuesOpened": 406,
+      "cumulativeIssuesClosed": 240,
       "cumulativeCostActual": 39341,
       "cumulativeCostLegacy": 362009
     },
@@ -526,8 +526,8 @@
       "toolCalls": 0,
       "issuesOpened": 45,
       "issuesClosed": 24,
-      "cumulativeIssuesOpened": 434,
-      "cumulativeIssuesClosed": 261,
+      "cumulativeIssuesOpened": 451,
+      "cumulativeIssuesClosed": 264,
       "cumulativeCostActual": 42918,
       "cumulativeCostLegacy": 394919
     },
@@ -541,8 +541,8 @@
       "toolCalls": 0,
       "issuesOpened": 85,
       "issuesClosed": 64,
-      "cumulativeIssuesOpened": 519,
-      "cumulativeIssuesClosed": 325,
+      "cumulativeIssuesOpened": 536,
+      "cumulativeIssuesClosed": 328,
       "cumulativeCostActual": 46494,
       "cumulativeCostLegacy": 427829
     },
@@ -556,8 +556,8 @@
       "toolCalls": 6047,
       "issuesOpened": 102,
       "issuesClosed": 62,
-      "cumulativeIssuesOpened": 621,
-      "cumulativeIssuesClosed": 387,
+      "cumulativeIssuesOpened": 638,
+      "cumulativeIssuesClosed": 390,
       "cumulativeCostActual": 50071,
       "cumulativeCostLegacy": 460739
     },
@@ -569,10 +569,10 @@
       "messages": 0,
       "sessions": 0,
       "toolCalls": 0,
-      "issuesOpened": 160,
+      "issuesOpened": 161,
       "issuesClosed": 59,
-      "cumulativeIssuesOpened": 781,
-      "cumulativeIssuesClosed": 446,
+      "cumulativeIssuesOpened": 799,
+      "cumulativeIssuesClosed": 449,
       "cumulativeCostActual": 53647,
       "cumulativeCostLegacy": 493649
     },
@@ -584,10 +584,10 @@
       "messages": 0,
       "sessions": 0,
       "toolCalls": 0,
-      "issuesOpened": 280,
-      "issuesClosed": 292,
-      "cumulativeIssuesOpened": 1061,
-      "cumulativeIssuesClosed": 738,
+      "issuesOpened": 274,
+      "issuesClosed": 287,
+      "cumulativeIssuesOpened": 1073,
+      "cumulativeIssuesClosed": 736,
       "cumulativeCostActual": 57224,
       "cumulativeCostLegacy": 526559
     },
@@ -601,17 +601,17 @@
       "toolCalls": 970,
       "issuesOpened": 306,
       "issuesClosed": 197,
-      "cumulativeIssuesOpened": 1367,
-      "cumulativeIssuesClosed": 935,
+      "cumulativeIssuesOpened": 1379,
+      "cumulativeIssuesClosed": 933,
       "cumulativeCostActual": 60800,
       "cumulativeCostLegacy": 559469
     }
   ],
   "issues": {
-    "opened": 3773,
-    "closed": 2595,
-    "bugs": 368,
-    "features": 516,
-    "other": 2889
+    "opened": 3841,
+    "closed": 2625,
+    "bugs": 370,
+    "features": 528,
+    "other": 2943
   }
 }
