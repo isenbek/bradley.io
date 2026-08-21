@@ -1,13 +1,13 @@
 ---
 title: Two ISPs, One Pi
 summary: Armando's Raspberry Pi 5 router — built, cut over, and running
-version: Rev 23
+version: Rev 24
 updated: 2026-08-21
 ---
 
 # Two ISPs, One Pi
 
-**Rev 23 — 21 August 2026** · Armando's Raspberry Pi 5 · OpenWrt 24.10.1
+**Rev 24 — 21 August 2026** · Armando's Raspberry Pi 5 · OpenWrt 24.10.1
 (r28597) · prepared by Brad
 
 Latest version: `bradley.io/junior/doc/two-isps-one-pi`
@@ -252,6 +252,61 @@ a different support queue from "my internet is out".
 Seen &rarr; the fibre is physically fine, it is a provisioning problem, push for
 a re-provision. Not seen &rarr; physical, and you want a technician booked while
 still on the phone.
+
+### Recovery, and the silent bug it revealed
+
+AT&T came back at **05:33**, then flapped three times in four minutes before
+settling:
+
+```
+00:20:20  DOWN
+05:33:25  RESTORED
+05:35:18  DOWN
+05:36:22  RESTORED
+05:36:51  DOWN
+05:37:25  RESTORED   - stable after this
+```
+
+Not a clean restore. That pattern suggests something being re-provisioned at
+their end, which is worth telling AT&T — it supports provisioning over a cut.
+
+**But traffic did not move back.** `wan1` was online with the better metric and
+mwan3's policy still read `wan2 (100%)`. The house sat on the slower line with
+nobody any the wiser.
+
+> ### ⚠️ Failback failing is SILENT
+>
+> Failover breaking is obvious — the internet stops. **Failback breaking is
+> invisible**: everything works, you are just quietly on the backup line,
+> paying for a fibre you are not using. No alert fires, because nothing is
+> wrong. It was only caught by noticing the traffic graph.
+
+**Root cause: `mwan3 ifdown`.** Using it during diagnosis left state that
+`mwan3 ifup` did not fully clear. Only a full `/etc/init.d/mwan3 restart`
+rebuilds the policy.
+
+### The four protections now in place
+
+| Protection | Stops |
+|---|---|
+| **Watchdog**, every 5 min | policy pointing at the backup while the primary is healthy — restarts mwan3 automatically, logs to `/root/wan/watchdog.log` |
+| **`last_resort='default'`** | a confused mwan3 black-holing all traffic. Was `unreachable`, which **drops** packets when no member is online; now it falls back to the main routing table |
+| **`initial_state='offline'`** | a restart assuming both lines work and sending the house down a dead one |
+| **TEST buttons do a full restart** | the exact `ifdown`/`ifup` cycle that caused this |
+
+Check it by hand any time:
+
+```sh
+mwan3 status | sed -n '/Current ipv4 policies/,/^$/p'
+```
+
+If `wan1` is online and that says `wan2 (100%)`, the policy is stale:
+
+```sh
+/etc/init.d/mwan3 restart
+```
+
+**Never diagnose with `mwan3 ifdown` and restore with `ifup`.** Restart.
 
 ### Two things this outage exposed
 
