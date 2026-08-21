@@ -118,16 +118,16 @@ export function JuniorConsole() {
                   Full OpenWrt image with the live config baked in. Write it to a card,
                   plug it in, and the new Pi <em>is</em> the router — no setup.
                 </span>
-                <span className="v3-jr-doc__meta">15 MB · .img.gz · rebuilt 2026-08-21 — failover, filtering, LuCI WAN buttons, email alerts</span>
+                <span className="v3-jr-doc__meta">15 MB · .img.gz · rebuilt 2026-08-21 06:32 — failover, filtering, LuCI WAN buttons, email alerts, failback watchdog</span>
               </a>
             </li>
             <li className="v3-jr-doc">
-              <a className="v3-jr-doc__main" href="/api/junior/recovery/junior-config-20260821-0216.tar.gz">
+              <a className="v3-jr-doc__main" href="/api/junior/recovery/junior-config-20260821-0632.tar.gz">
                 <span className="v3-jr-doc__title">Config backup &nbsp;<strong>&larr; if you broke a setting</strong></span>
                 <span className="v3-jr-doc__sum">
                   Restore onto a working Pi via LuCI &rarr; System &rarr; Backup / Flash Firmware.
                 </span>
-                <span className="v3-jr-doc__meta">23 KB · .tar.gz · taken 2026-08-21 02:16</span>
+                <span className="v3-jr-doc__meta">25 KB · .tar.gz · taken 2026-08-21 06:32</span>
               </a>
             </li>
             <li className="v3-jr-doc">

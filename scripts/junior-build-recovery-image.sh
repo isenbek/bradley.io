@@ -75,6 +75,8 @@ timeout 90 "${SSH[@]}" 'tar czf - \
     /usr/bin/junior-test-att \
     /usr/bin/junior-test-xfinity \
     /usr/bin/junior-test-end \
+    /usr/bin/junior-failback-watchdog \
+    /etc/crontabs/root \
     2>/dev/null' > "$STAGE/live.tar.gz" 2>/dev/null
 
 if [[ ! -s "$STAGE/live.tar.gz" ]]; then bad "config pull produced nothing"; exit 1; fi
@@ -90,7 +92,8 @@ for f in etc/config/network etc/config/firewall etc/config/dhcp \
          etc/hotplug.d/net/20-junior-nicnames etc/dropbear/authorized_keys \
          etc/mwan3.user usr/bin/junior-wan-status usr/bin/junior-wan-alert \
          usr/bin/junior-templog usr/bin/junior-mode-failover \
-         usr/bin/junior-test-att usr/bin/junior-test-end; do
+         usr/bin/junior-test-att usr/bin/junior-test-end \
+         usr/bin/junior-failback-watchdog etc/crontabs/root; do
   if [[ -f "$STAGE/files/$f" ]]; then
     printf '    ✅ %s\n' "$f"
   else
