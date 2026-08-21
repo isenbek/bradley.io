@@ -1,13 +1,13 @@
 ---
 title: Two ISPs, One Pi
 summary: Armando's Raspberry Pi 5 router — built, cut over, and running
-version: Rev 22
-updated: 2026-08-20
+version: Rev 23
+updated: 2026-08-21
 ---
 
 # Two ISPs, One Pi
 
-**Rev 22 — 20 August 2026** · Armando's Raspberry Pi 5 · OpenWrt 24.10.1
+**Rev 23 — 21 August 2026** · Armando's Raspberry Pi 5 · OpenWrt 24.10.1
 (r28597) · prepared by Brad
 
 Latest version: `bradley.io/junior/doc/two-isps-one-pi`
@@ -216,6 +216,61 @@ seconds to take effect, nothing else touched.
 Verified working after the change: google, youtube, apple, icloud, nest, sonos,
 spotify all resolve. Netflix, Amazon and Ring resolve but don't answer ping —
 **that's normal for AWS/CloudFront**, not a symptom.
+
+---
+
+## Case study — the first real outage, 21 August 2026
+
+At **00:20:20**, less than twelve hours after installation, AT&T stopped
+working. Nobody in the house noticed. Failover moved everything to Xfinity and
+it stayed there for nine hours.
+
+**What the diagnosis looked like:**
+
+```
+wan1 carrier   1                     <- ethernet link to the BGW UP
+wan1 speed     1000
+wan1 address   99.150.197.107/23     <- lease still held
+ping AT&T gateway (99.150.196.1)     FAIL
+BGW status page: FIBER - No IP Address
+Front LED: RED, still red after a full power cycle
+```
+
+**Link up + lease held + gateway unreachable = the ISP's problem, not yours.**
+That combination is worth memorising: it rules out cabling, the adapter, the Pi
+and the gateway in one glance, and it is exactly what stops an ISP support
+script sending you to reboot things you have already rebooted.
+
+Also useful: AT&T's outage map showed **nothing** for the area. No area outage
+means the fault is specific to your line — provisioning or the drop — which is
+a different support queue from "my internet is out".
+
+**The question that separates the two:**
+
+> "Can you see my ONT registering on the PON from your side?"
+
+Seen &rarr; the fibre is physically fine, it is a provisioning problem, push for
+a re-provision. Not seen &rarr; physical, and you want a technician booked while
+still on the phone.
+
+### Two things this outage exposed
+
+**A gateway with no service hands out private addresses.** Once AT&T went down,
+`wan1`'s lease changed from the public `99.150.197.107` to `192.168.1.66` —
+because IP Passthrough has nothing to pass through when the gateway itself has
+no WAN address. **The passthrough setting was still intact.** Do not go
+reconfiguring it; it re-applies by itself when service returns.
+
+One silver lining: while passthrough is inactive, the BGW admin page at
+`http://192.168.1.254` becomes reachable from the LAN, so you can read its
+status from your desk instead of the attic.
+
+**`initial_state 'online'` is a trap on an unreliable line.** mwan3 was
+configured to assume both WANs work on startup. Restarting it during the outage
+sent the whole house down the dead line for about fifteen seconds, until
+tracking caught up. Both interfaces are now `initial_state 'offline'` — assume
+a line is dead until it proves otherwise. **Never restart mwan3 during an
+outage without checking that setting first.**
 
 ---
 
@@ -946,7 +1001,19 @@ Last 2000 events are kept, and the log is listed in `/etc/sysupgrade.conf` so a
 restore does not lose it. **This is the evidence to quote at an ISP** when they
 tell you the line never went down.
 
-### Turning on email
+### ✅ Email alerts are LIVE (configured 21 Aug 2026)
+
+Alerts are delivered to **escalantea@gmail.com**, sent from the same account
+via Gmail SMTP using a Google **App Password** (not the account password — it
+can be revoked on its own at `myaccount.google.com/apppasswords`).
+
+You get mail the moment either line drops or returns, with how long it was
+down. That last detail is useful evidence when arguing with an ISP.
+
+> First mail from a new sender often lands in **spam**. Mark it "not spam"
+> once, or you will miss a real alert later.
+
+### Changing the settings
 
 Edit `/etc/junior-alert.conf` (mode `600`):
 
