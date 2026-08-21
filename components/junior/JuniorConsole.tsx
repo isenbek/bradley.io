@@ -41,12 +41,31 @@ function Cmd({ children }: { children: string }) {
 export function JuniorConsole() {
   const router = useRouter()
   const termRef = useRef<HTMLDivElement>(null)
+  const frameRef = useRef<HTMLIFrameElement>(null)
   const [isFull, setIsFull] = useState(false)
 
   // Track fullscreen from the document, not from our own click — Esc and the
   // browser's own chrome can exit it without ever calling toggleFull().
+  //
+  // Going fullscreen grows the iframe, but the terminal inside it does not
+  // re-measure: ttyd's xterm never sees a resize, so it keeps drawing at the
+  // old column count and the new space renders as empty cells. Reconnecting
+  // the iframe forces a fresh fit at the real size. tmux holds the session, so
+  // the only cost is a redraw.
   useEffect(() => {
-    const sync = () => setIsFull(document.fullscreenElement === termRef.current)
+    const sync = () => {
+      const full = document.fullscreenElement === termRef.current
+      setIsFull(full)
+      const f = frameRef.current
+      if (f) {
+        // let the browser finish the transition before re-measuring
+        window.setTimeout(() => {
+          // cache-buster forces a genuine reconnect; re-assigning src to
+          // itself is a no-op the linter rightly rejects.
+          f.src = `/junior/pty/?r=${Date.now()}`
+        }, 250)
+      }
+    }
     document.addEventListener("fullscreenchange", sync)
     return () => document.removeEventListener("fullscreenchange", sync)
   }, [])
@@ -266,6 +285,7 @@ export function JuniorConsole() {
               </button>
             </div>
             <iframe
+              ref={frameRef}
               className="v3-jr-term__frame"
               src="/junior/pty/"
               title="Shared terminal session"
