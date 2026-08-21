@@ -76,6 +76,7 @@ timeout 90 "${SSH[@]}" 'tar czf - \
     /usr/bin/junior-test-xfinity \
     /usr/bin/junior-test-end \
     /usr/bin/junior-failback-watchdog \
+    /usr/bin/junior-outage-report \
     /etc/crontabs/root \
     2>/dev/null' > "$STAGE/live.tar.gz" 2>/dev/null
 
@@ -93,7 +94,8 @@ for f in etc/config/network etc/config/firewall etc/config/dhcp \
          etc/mwan3.user usr/bin/junior-wan-status usr/bin/junior-wan-alert \
          usr/bin/junior-templog usr/bin/junior-mode-failover \
          usr/bin/junior-test-att usr/bin/junior-test-end \
-         usr/bin/junior-failback-watchdog etc/crontabs/root; do
+         usr/bin/junior-failback-watchdog usr/bin/junior-outage-report \
+         etc/crontabs/root; do
   if [[ -f "$STAGE/files/$f" ]]; then
     printf '    ✅ %s\n' "$f"
   else
