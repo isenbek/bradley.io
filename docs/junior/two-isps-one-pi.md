@@ -1,13 +1,13 @@
 ---
 title: Two ISPs, One Pi
 summary: Armando's Raspberry Pi 5 router — built, cut over, and running
-version: Rev 25
+version: Rev 26
 updated: 2026-08-21
 ---
 
 # Two ISPs, One Pi
 
-**Rev 25 — 21 August 2026** · Armando's Raspberry Pi 5 · OpenWrt 24.10.1
+**Rev 26 — 21 August 2026** · Armando's Raspberry Pi 5 · OpenWrt 24.10.1
 (r28597) · prepared by Brad
 
 Latest version: `bradley.io/junior/doc/two-isps-one-pi`
@@ -494,6 +494,75 @@ a bad reputation it half deserves.
 
 **For a house, failover is usually the better mode.** Leave it there unless you
 have a specific reason not to.
+
+---
+
+## Case study — the AT&T login CAPTCHA that always failed
+
+**Symptom:** the challenge rendered normally and the puzzles were easy, but
+every correct answer was rejected.
+
+**Cause:** AT&T's login page waits on tracking and monitoring scripts before it
+will validate the challenge. adblock was blocking them, so the answer was never
+submitted. A correct answer looked wrong.
+
+**Now allowlisted** in `/etc/adblock/adblock.allowlist`:
+
+```
+go-mpulse.net          Akamai mPulse performance monitoring
+nr-data.net            New Relic
+js-agent.newrelic.com  New Relic
+demdex.net             Adobe Audience Manager
+quantummetric.com      session replay
+```
+
+Ad and malware blocking is otherwise untouched, and the allowlist is in the
+backup set.
+
+### How it was actually found
+
+Guessing domains failed. What worked was **turning all DNS filtering off for
+fifteen minutes** and retrying — the login went through immediately, which
+proved the filtering was responsible before a single domain was named.
+
+```sh
+/etc/init.d/nextdns stop
+/etc/init.d/adblock stop
+rm -f /tmp/dnsmasq.cfg01411c.d/adb_list.overall
+/etc/init.d/dnsmasq restart
+# verify: doubleclick.net should RESOLVE
+```
+
+Always schedule the restore in the same breath, so a forgotten test cannot
+leave the network unfiltered:
+
+```sh
+( sleep 900; /etc/init.d/nextdns start; sh /usr/bin/adblock.sh reload ) &
+```
+
+> ### ⚠️ `/etc/init.d/adblock reload` is a silent no-op
+>
+> It exits 0, logs nothing, and leaves `blocked_domains : 0` — the lists never
+> load and the network runs unfiltered while the status says "running".
+> **Call the script directly with an explicit action:**
+>
+> ```sh
+> sh /usr/bin/adblock.sh reload
+> ```
+>
+> Then confirm the count is back in the hundreds of thousands, not zero.
+
+### ⚠️ Two hostnames I named as culprits did not exist
+
+`attapi.arkoselabs.com` and `www-att-com.akamaized.net` both returned NXDOMAIN
+and looked blocked. They were invented — they do not resolve anywhere on the
+internet. The same trap as the retired Let's Encrypt OCSP hosts.
+
+**Check the name exists before calling it blocked**, from outside the house:
+
+```sh
+dig @1.1.1.1 the-name.com
+```
 
 ---
 
