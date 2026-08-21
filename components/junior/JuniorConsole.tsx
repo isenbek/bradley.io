@@ -112,22 +112,22 @@ export function JuniorConsole() {
           </p>
           <ul className="v3-jr-docs">
             <li className="v3-jr-doc">
-              <a className="v3-jr-doc__main" href="/api/junior/recovery/rpi5-router-recovery-20260820.img.gz">
+              <a className="v3-jr-doc__main" href="/api/junior/recovery/rpi5-router-recovery-20260821.img.gz">
                 <span className="v3-jr-doc__title">Recovery image &mdash; flash and go &nbsp;<strong>&larr; if the Pi died</strong></span>
                 <span className="v3-jr-doc__sum">
                   Full OpenWrt image with the live config baked in. Write it to a card,
                   plug it in, and the new Pi <em>is</em> the router — no setup.
                 </span>
-                <span className="v3-jr-doc__meta">15 MB · .img.gz · rebuilt 2026-08-20 18:35 — AT&amp;T, failover, filtering, LuCI WAN buttons</span>
+                <span className="v3-jr-doc__meta">15 MB · .img.gz · rebuilt 2026-08-21 — failover, filtering, LuCI WAN buttons, email alerts</span>
               </a>
             </li>
             <li className="v3-jr-doc">
-              <a className="v3-jr-doc__main" href="/api/junior/recovery/junior-config-20260820-1828.tar.gz">
+              <a className="v3-jr-doc__main" href="/api/junior/recovery/junior-config-20260821-0216.tar.gz">
                 <span className="v3-jr-doc__title">Config backup &nbsp;<strong>&larr; if you broke a setting</strong></span>
                 <span className="v3-jr-doc__sum">
                   Restore onto a working Pi via LuCI &rarr; System &rarr; Backup / Flash Firmware.
                 </span>
-                <span className="v3-jr-doc__meta">23 KB · .tar.gz · taken 2026-08-20 18:28</span>
+                <span className="v3-jr-doc__meta">23 KB · .tar.gz · taken 2026-08-21 02:16</span>
               </a>
             </li>
             <li className="v3-jr-doc">
