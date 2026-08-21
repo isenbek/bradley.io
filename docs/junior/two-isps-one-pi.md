@@ -1,13 +1,13 @@
 ---
 title: Two ISPs, One Pi
 summary: Armando's Raspberry Pi 5 router — built, cut over, and running
-version: Rev 24
+version: Rev 25
 updated: 2026-08-21
 ---
 
 # Two ISPs, One Pi
 
-**Rev 24 — 21 August 2026** · Armando's Raspberry Pi 5 · OpenWrt 24.10.1
+**Rev 25 — 21 August 2026** · Armando's Raspberry Pi 5 · OpenWrt 24.10.1
 (r28597) · prepared by Brad
 
 Latest version: `bradley.io/junior/doc/two-isps-one-pi`
@@ -1067,6 +1067,31 @@ down. That last detail is useful evidence when arguing with an ISP.
 
 > First mail from a new sender often lands in **spam**. Mark it "not spam"
 > once, or you will miss a real alert later.
+
+### What the emails say
+
+The subject line answers "is my internet working?" without you opening
+anything:
+
+| Situation | Subject |
+|---|---|
+| One line fails, other takes over | `AT&T Fiber is down - your internet is still working` |
+| **Both** lines fail | `INTERNET IS DOWN - both lines have failed` |
+| Line recovers | `AT&T Fiber is back` |
+
+Every message states plainly whether action is needed, gives real clock times
+rather than timestamps, and reports outage length in human units (`3h 25m`, not
+`12305s`). No `WAN` or `wan1` jargon in the readable part.
+
+### Our own restarts do not email you
+
+Restarting mwan3 transitions every interface down and up, which would send
+**four** emails about nothing. Anything that restarts it — the watchdog, the
+mode buttons, the test buttons — drops `/tmp/junior-mwan3-maint` first, and the
+alert script logs but stays quiet for 90 seconds after.
+
+**An alert you learn to ignore is worse than no alert**, which is the whole
+reason for this.
 
 ### Changing the settings
 
