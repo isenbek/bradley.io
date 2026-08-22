@@ -1,7 +1,7 @@
 ---
 title: Farm Network & Cameras — Build Guide
 summary: Starlink Mini, point-to-multipoint over 20 ft pines, three solar cluster sites and 10 self-powered cameras across 5 acres
-version: Rev 2
+version: Rev 3
 updated: 2026-08-22
 ---
 
@@ -51,6 +51,55 @@ installation.
 Three remote clusters does **not** mean three point-to-point links. One sector
 antenna at the middle serves all of them. Fewer radios, one alignment, and
 adding a fourth cluster later costs one small radio instead of a whole pair.
+
+---
+
+## Build it in two phases — do not buy the bridges yet
+
+You do not yet know how far coverage reaches from the centre, and the cluster
+sites are the expensive part of this build (**$700–900 each**). So prove the
+coverage before you buy anything for them.
+
+### Phase 1 — centre only, then survey
+
+Build the base station and put **one good outdoor access point on the
+25–30 ft mast at the centre**. Nothing else.
+
+Then take **one camera** to each place you eventually want cameras, mount it
+temporarily — a fence post, a ladder, a stake — and see whether it connects and
+*stays* connected for a day.
+
+**Survey with the camera, not your phone.** This is the part people get wrong.
+A phone has a far better radio and a much better antenna than a solar security
+camera. The link is asymmetric: an AP on a 30 ft mast will reach 500 ft with no
+trouble, but the question is whether the **camera** can be heard coming back.
+Your phone showing four bars proves almost nothing about a camera.
+
+Two more things about the survey:
+
+- **Leave it a full day, not five minutes.** A camera that associates and then
+  drops every hour is worse than one that never connects, because you will not
+  notice until you need footage.
+- **Test in bad conditions if you can** — after rain, with the foliage wet.
+  That is the state that decides whether a marginal link is really a link.
+
+At the end of phase 1 you will know exactly which clusters are covered and
+which are not.
+
+### Phase 2 — bridges only where the survey says
+
+Build a cluster site **only** where phase 1 failed. Each one you avoid saves
+$700–900 and one more thing to maintain.
+
+You may well find that one cluster needs a bridge and the others are fine, or
+that a slightly better AP at the centre covers everything. Either way you will
+have spent the money on evidence rather than assumption.
+
+### Why this order is safe
+
+Nothing in phase 1 is wasted if phase 2 turns out to be needed — the mast,
+the AP, the base station and the battery are all part of the final system
+regardless. **The only thing you defer is the part you might not need.**
 
 ---
 
@@ -268,27 +317,34 @@ with that specific question in mind before ordering.
 
 ## Build order
 
-Do it in this sequence and you will never be debugging two unknowns at once.
+Two unknowns at once is how these projects stall. This sequence never has more
+than one.
 
-1. **Starlink Mini at the base**, on mains, working. Confirm speed and that
-   it stays up.
-2. **Add the battery.** Pull the plug and time how long it runs. Do this
-   before you depend on it.
-3. **Walk the paths.** Confirm 25–30 ft clears the pines on each of the three
-   routes, and check whether one sector covers all three clusters or you need
-   two.
-4. **Put the bridge up temporarily** — both ends on tripods or ladders, aimed
-   roughly. Check the signal *before* anything is permanently mounted.
-5. **Mount properly**, ground it, fit surge protectors.
-6. **Remote solar and AP.** Let it run a week untouched, ideally through some
-   bad weather, before adding cameras.
-7. **One camera.** Furthest, worst spot. Live with it a week.
-8. **The other nine.**
+### Phase 1
 
-Step 4 is the one everyone skips. Aiming radios from a ladder in a field is
-unpleasant; aiming them twice because you mounted before testing is worse.
+1. **Starlink Mini at the base**, on mains, working. Confirm speed and that it
+   stays up.
+2. **Add the battery.** Pull the plug and time how long it runs — before you
+   depend on it.
+3. **Mast at the centre**, 25–30 ft, braced and grounded. Surge protector on
+   the cable where it enters the building.
+4. **One good outdoor AP** on the mast, 2.4 GHz enabled and strong.
+5. **Buy ONE camera.** Mount it at the furthest, most awkward spot you have.
+   Live with it a week.
+6. **Survey**: move that same camera to each intended location, a day at a
+   time. Write down what works.
 
----
+### Phase 2 — only where phase 1 fell short
+
+7. **Sector antenna** at the centre, aimed at the clusters that failed.
+8. **One cluster site**: radio, AP, solar, battery. Let it run a week
+   untouched, ideally through bad weather, before adding cameras.
+9. **Repeat** for any other cluster that needs it.
+10. **The remaining cameras.**
+
+Step 5 is worth insisting on. Ten of the wrong camera is an expensive lesson;
+one of the wrong camera is a Tuesday — and that single camera doubles as your
+survey instrument.
 
 ## What to decide first
 
