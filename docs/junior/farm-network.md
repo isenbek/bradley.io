@@ -1,7 +1,7 @@
 ---
 title: Farm Network & Cameras — Build Guide
 summary: Starlink Mini, point-to-multipoint over 20 ft pines, three solar cluster sites and 10 self-powered cameras across 5 acres
-version: Rev 3
+version: Rev 4
 updated: 2026-08-22
 ---
 
@@ -282,6 +282,93 @@ You do not get a public IP, so **nothing can connect inward.** In practice:
 - **You cannot** port-forward to an NVR, or reach anything on the farm directly
 - If you want direct access, use a service that dials *outward* — Tailscale or
   similar — rather than trying to open a port that does not exist
+
+---
+
+## What to actually buy
+
+**Prices and model numbers move.** Treat these as "the right shape of thing" and
+check current availability — but the reasoning behind each pick is the part
+worth keeping.
+
+**Stay in the Ubiquiti/UniFi family where you can.** You already run it at
+home, one app manages both properties, and when something misbehaves while you
+are standing in a field, familiarity is worth more than specifications.
+
+### Base station
+
+| Role | Pick | Why |
+|---|---|---|
+| **Router + controller** | **UniFi Express (UX)** | Router, controller and an AP in one small box, ~10 W. For a site this size it removes a whole component. Alternative: **Cloud Gateway Ultra** if you want the AP separate |
+| **Switch** | **UniFi Switch Lite 8 PoE** | The important part is **per-port power control** — you can reboot a wedged radio from your phone instead of driving out. On an unattended site this is the highest-value item in the build |
+| **Pole-top AP** | **UniFi U6 Mesh** | Outdoor-rated, dual band, PoE. Budget/range alternative: **UAP-AC-M-PRO**, older but with noticeably better antennas |
+
+### The link
+
+| Role | Pick | Why |
+|---|---|---|
+| **Centre (point-to-multipoint)** | **UniFi LiteAP AC** — 120° sector | One antenna serves all three clusters. Two if they are spread wider than 120° |
+| **Each cluster** | **UISP NanoStation 5AC Loco** | Small, cheap, low power, easy to aim. **LiteBeam 5AC Gen2** if you want more gain |
+| **Cluster AP** | **UniFi AC Mesh (UAP-AC-M)** | Lower draw than the U6 Mesh, which matters when solar is carrying it. 2.4 GHz is what the cameras need anyway |
+
+### Power at the base
+
+Two approaches, and the first is far less work.
+
+**Turnkey — a power station with UPS pass-through**
+
+**EcoFlow Delta 2** or **Bluetti AC180**, roughly 1 kWh. Starlink Mini plugs
+into the **USB-C PD** port directly; everything else into the AC outlets. Mains
+in, automatic switchover, done.
+
+- *For:* nothing to design, no wiring, monitors itself, you can carry it
+- *Against:* more expensive per watt-hour, and the fans and screen draw a
+  little continuously
+
+**Proper — a DC system**
+
+**LiTime or Renogy 100 Ah 12 V LiFePO4** + a **Victron** charger, feeding the
+loads at 12 V with a USB-C PD trigger for the Starlink.
+
+- *For:* cheaper per watt-hour, more efficient, lasts longer, expandable
+- *Against:* you are building it
+
+**For a farm you visit every few weeks, I would take the power station.**
+Fewer parts is worth more than efficiency when nobody is there to notice a
+failure.
+
+### Solar at each cluster
+
+| Component | Pick | Note |
+|---|---|---|
+| **Panel** | **200–300 W** rigid — Renogy, Rich Solar, Newpowa | **Oversize the panel, not the battery.** Panels are cheap; a fat panel keeps a site alive through a grey week |
+| **Controller** | **Victron SmartSolar MPPT 75/15** | Bluetooth. You can check its history from the truck without opening the box — that is worth the premium on an unattended site |
+| **Battery** | **100 Ah 12 V LiFePO4** — LiTime, Chins, Renogy | ~1,280 Wh ≈ 3 days at 15 W, more with the bigger panel |
+| **Enclosure** | NEMA 4X fibreglass, vented with a filter | North face, shaded. **Heat kills batteries faster than cycling does** |
+
+### Surge protection — do not skip
+
+| | |
+|---|---|
+| **Ubiquiti ETH-SP-G2** | One at **each end** of every outdoor Ethernet run. About the price of lunch |
+
+Bond everything to the **existing service ground** at the pole. **Never drive a
+separate rod for the radio** — two grounds at different potentials during a
+nearby strike turn your Ethernet cable into the path between them, and
+everything on it dies.
+
+### Cameras
+
+**Reolink** is the usual answer, because local SD recording works without a
+subscription — check that before buying ten of anything, as some vendors gate
+playback behind a cloud plan.
+
+- **Reolink Argus 4 Pro** or **Argus PT** with the matching solar panel
+- **Reolink Altas PT Ultra** if you want pre-roll recording
+- **Eufy SoloCam S340** is the main alternative
+
+All 2.4 GHz, all self-powered, all record locally. **Buy one first**, mount it
+at the worst spot you have, and use it as your phase 1 survey tool.
 
 ---
 
