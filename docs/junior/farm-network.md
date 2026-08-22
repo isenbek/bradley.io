@@ -1,7 +1,7 @@
 ---
 title: Farm Network & Cameras — Build Guide
 summary: Starlink Mini in the well house, point-to-multipoint over 20 ft pines, solar cluster sites and self-powered cameras across 5 unattended acres
-version: Rev 6
+version: Rev 7
 updated: 2026-08-22
 ---
 
@@ -16,7 +16,7 @@ updated: 2026-08-22
 | | |
 |---|---|
 | **Well house** | Walk-in, powered, locked, dry. **Gets very hot.** |
-| **Possible shed** | 100 sq ft, no permit needed, next to the pole — see *Option B* below |
+| **Possible shed** | 100 sq ft, no permit needed, next to the pole — a **future** upgrade, see below |
 | **Power pole** | Treated wood, electrical panel on it, ~50 ft from the well house |
 | **5 cellular cameras** | On tree trunks. Poor coverage, constant dropouts, monthly fees — **prepaid for a year** |
 | **Pines** | ~20 ft |
@@ -110,9 +110,9 @@ clusters best; Starlink wherever the sky is clearest. They need not share a pole
 
 ---
 
-## Where the equipment lives — two options
+## Where the equipment lives
 
-### Option A — the well house (available today)
+### Now — the well house
 
 Walk-in, powered, locked and dry. Everything you need except temperature
 control.
@@ -136,13 +136,17 @@ problem, not a comfort one:
 **A $40 fix for the most likely failure.** Do it before anything electronic goes
 in there.
 
-### Option B — a purpose-built 100 sq ft shed ⭐ better
+### Later — a purpose-built 100 sq ft shed
+
+**This is a future upgrade, not a prerequisite.** Build on the well house now;
+the shed is worth doing when it suits you, and nothing you buy for the well
+house is wasted when you move.
 
 A small shed beside the pole, insulated properly, is a materially better home
 for this: room to work, room to grow, and control over the temperature that the
 well house does not give you.
 
-**If you build it, four things matter.**
+When the time comes, four things matter.
 
 #### 1. Closed-cell foam, sprayed directly on the metal
 
@@ -209,9 +213,9 @@ Do not guess in either direction.
 - **Weatherproof cable entries** with drip loops, positioned for the pole run
 - **Shelving on the cool wall**, with the battery low
 
-> **Option B is the better answer if the build is easy.** Option A works today
-> and nothing done for it is wasted — the ventilation kit and the equipment move
-> across unchanged if you build the shed later.
+> **Do not wait for the shed to start.** The well house works today, and every
+> piece of equipment — plus the ventilation kit — moves across unchanged when
+> the shed exists. The only thing you would gain by waiting is a delay.
 
 ---
 
@@ -411,8 +415,7 @@ converted — the radio is the product — so plan to replace, not repurpose.
 | Starlink Mini hardware | $300–500 |
 | Router + PoE switch + pole AP | $400–500 |
 | Power station (~1 kWh) | $600–900 |
-| Well house ventilation (Option A) | $40–100 |
-| *or* 100 sq ft insulated shed (Option B) | $4,000–8,000 |
+| Well house ventilation | $40–100 |
 | Temperature logger | $20 |
 | New pole + mounts | $200–500 |
 | Grounding + bonding (electrician) | $200–400 |
@@ -426,15 +429,18 @@ converted — the radio is the product — so plan to replace, not repurpose.
 Plus Starlink Residential monthly — offset against the **$600–900/year** the
 five cellular plans cost today.
 
+**Future, not costed above:** the 100 sq ft insulated shed, roughly
+**$4,000–8,000** depending on who builds it. A better home for the equipment,
+but not something to wait for.
+
 ---
 
 ## Build order
 
 ### Phase 1
 
-1. **Sort the enclosure** — ventilate the well house, or build the shed.
-   Either way, **before anything electronic goes in**. Drop a temperature
-   logger in and leave it through a hot spell
+1. **Ventilate the well house** — before anything electronic goes in. Drop a
+   temperature logger in and leave it through a hot spell
 2. **Bond the poles**, fit surge protectors (electrician if it is the service
    entrance)
 3. **Starlink Mini** on mains, working
