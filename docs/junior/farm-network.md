@@ -1,7 +1,7 @@
 ---
 title: Farm Network & Cameras — Build Guide
-summary: Starlink Mini, a point-to-point bridge through pine, solar remote sites and 10 self-powered cameras across 5 acres
-version: Rev 1
+summary: Starlink Mini, point-to-multipoint over 20 ft pines, three solar cluster sites and 10 self-powered cameras across 5 acres
+version: Rev 2
 updated: 2026-08-22
 ---
 
@@ -46,82 +46,73 @@ remote site only has to run **the bridge radio and one access point — about
 This is the difference between a small sealed box on a pole and an off-grid
 installation.
 
-### 3. Decide now whether you can get above the pines
+### 3. One antenna at the centre, not three links
 
-This is the one that costs money, so decide it before buying radios. See below.
+Three remote clusters does **not** mean three point-to-point links. One sector
+antenna at the middle serves all of them. Fewer radios, one alignment, and
+adding a fourth cluster later costs one small radio instead of a whole pair.
 
 ---
 
-## Pine trees are the real engineering problem
+## The pines: resolved — go over the top
 
-500 ft is *nothing* for a point-to-point radio — they are rated in kilometres.
-Your obstacle is not distance, it is **pine**.
+**The pines are about 20 ft.** That settles the biggest open question in this
+build, and settles it the cheap way.
 
-Pine needles are close in length to a 5 GHz wavelength, which makes them
-unusually good at absorbing it. **Wet pine after rain is considerably worse.**
-The failure mode is nasty: the link tests fine on a dry afternoon in August and
-drops out in the storm when you actually want to see the property.
+At 500 ft on 5 GHz the beam needs roughly **1.4 m of clearance radius** at the
+mid-point, and you want ~60% of it free — so about **1 m above the treetops in
+the middle of the path**.
 
-You have two honest options.
+With 20 ft pines that means masts of roughly **25–30 ft**. That is a push-up
+mast, or a pole braced to a barn or the side of a building. Not a tower, no
+guy-wire engineering, no crane.
 
-### Option A — go over the top (best, costs height)
+**So: 5 GHz, above the canopy.** Full bandwidth, and weather stops mattering —
+wet pine is only a problem when you are shooting *through* it.
 
-Put both radios above the canopy with clear line of sight.
+> Earlier drafts of this guide budgeted for 50–65 ft masts and a possible drop
+> to 2.4 GHz. Neither is needed. Measuring the trees was the single most useful
+> thing you could have done.
 
-**How high?** You need the direct path plus a clearance margin. At 500 ft on
-5 GHz, the radio beam needs roughly **1.4 m of clearance radius** at the
-mid-point, and you want at least 60% of that free — so call it **1 m above the
-treetops at the middle of the path**.
-
-With 40–60 ft pines, that means masts in the **50–65 ft** range at both ends.
-That is a real structure: a guyed pole or a small tower, properly anchored,
-properly grounded — not a length of conduit strapped to a fence post.
-
-**If you can do this, do it.** You get a rock-solid several-hundred-Mbps link
-that will not care about weather.
-
-### Option B — go lower in frequency (cheaper, less bandwidth)
-
-Lower frequencies bend around and push through foliage far better.
-
-- **2.4 GHz** point-to-point: noticeably better through trees than 5 GHz,
-  still gives you ~50–100 Mbps, and the gear is common and cheap. **This is the
-  sensible compromise.**
-- **900 MHz**: better again through vegetation, but the gear has become a
-  niche, expensive market and tops out around 20–50 Mbps.
-
-**Given decision #1 — video never crosses the link — even 20 Mbps is plenty.**
-You are carrying alerts and the occasional live stream, not ten recordings.
-
-So: if the masts are a problem, **2.4 GHz on shorter poles is a perfectly good
-answer**, and you can always add height later.
-
-> ⚠️ **Whatever you choose, walk the path first.** Stand at each end and look.
-> Note where the trees are tallest, and remember the middle of the path matters
-> most — obstructions near either end matter far less.
+**Still walk the path before mounting anything.** The middle of the path is
+what matters — a tall pine near either end costs you far less than one halfway.
+Note the highest tree in the middle third and size the masts from that.
 
 ---
 
 ## The shape of it
 
+Three remote clusters plus the central one. **Do not build three separate
+point-to-point links** — that is six radios and three lots of gear at the
+centre. Use **point-to-multipoint**: one sector antenna at the middle, one
+small radio at each cluster.
+
 ```
-   BASE  (mains power, sheltered)
-   ┌──────────────────────────────────────────────┐
-   │  Starlink Mini ── Router ── PoE switch       │
-   │                              ├── house AP    │
-   │                              └── bridge ─────┼───┐
-   │  LiFePO4 battery + DC power  (the "UPS")     │   │
-   └──────────────────────────────────────────────┘   │  ~500 ft
-                                                       │
-   REMOTE SECTION  (no power — solar only)             │
-   ┌──────────────────────────────────────────────┐   │
-   │  bridge ◄────────────────────────────────────┼───┘
-   │     └── PoE ── access point (2.4 GHz)        │
-   │  150 W panel · MPPT · 100 Ah LiFePO4         │
-   └──────────────────────────────────────────────┘
-                      ((( Wi-Fi )))
-        cameras — own solar panel, own battery, own SD card
+                        CENTRE  (mains + battery)
+              Starlink Mini ── Router ── PoE switch
+                                   ├── house AP
+                                   └── SECTOR ANTENNA on a 25-30 ft mast
+                                          ╱      │      ╲
+                          ~500 ft        ╱       │       ╲
+                                        ╱        │        ╲
+                                  CLUSTER A  CLUSTER B  CLUSTER C
+                                  each: small radio + AP + solar
+                                            ((( Wi-Fi )))
+                                   cameras - own panel, battery, SD card
 ```
+
+**Why point-to-multipoint wins here:**
+
+| | Three PtP links | Point-to-multipoint |
+|---|---|---|
+| Radios | 6 | 4–5 |
+| Kit at the centre | 3 sets, 3 alignments | 1 sector (or 2), aimed once |
+| Adding a 4th cluster later | another pair + mast space | one small radio |
+
+If the three clusters are spread widely around the compass you may want **two
+120° sectors** rather than one. Decide that by standing at the mast position
+and looking at where they actually are — if they fall within about 120° of each
+other, one sector does it.
 
 ---
 
@@ -255,17 +246,23 @@ Approximate, and worth checking against current prices.
 | Router + PoE switch + house AP | $300–400 |
 | Bridge pair | $200–400 |
 | Base battery + DC gear | $400–600 |
-| **Remote site** (panel, MPPT, battery, box, AP, mounts) | **$700–900 each** |
-| Masts | $200–800 depending on height |
+| Sector antenna at the centre (1–2) | $150–350 |
+| **Cluster site × 3** (radio, AP, panel, MPPT, battery, box, mounts) | **$700–900 each → $2,100–2,700** |
+| Masts, 25–30 ft × 4 | $400–800 |
 | 10 solar cameras | $1,000–1,500 |
-| Surge protection + grounding | $150 |
-| **Total, one remote site** | **≈ $3,500–5,000** |
+| Surge protection + grounding | $250 |
+| **Total, three clusters** | **≈ $5,000–6,500** |
 
 Plus Starlink Residential service monthly.
 
-**The number that moves most is masts.** Option A with 60 ft towers at both
-ends can add more than everything else combined. That is the real reason to
-decide the tree question first.
+**The number that moves most is now the cluster count.** Three sites at
+$700–900 each is more than everything else combined, and the masts turned out
+cheap once the pines measured 20 ft rather than 50.
+
+**So the money question is: are three sites genuinely necessary?** If two of
+the clusters are within Wi-Fi range of one well-placed access point on a pole,
+collapsing them saves close to a thousand dollars. Worth walking the property
+with that specific question in mind before ordering.
 
 ---
 
@@ -277,7 +274,9 @@ Do it in this sequence and you will never be debugging two unknowns at once.
    it stays up.
 2. **Add the battery.** Pull the plug and time how long it runs. Do this
    before you depend on it.
-3. **Walk the path.** Decide masts-or-2.4 GHz. Buy radios only after this.
+3. **Walk the paths.** Confirm 25–30 ft clears the pines on each of the three
+   routes, and check whether one sector covers all three clusters or you need
+   two.
 4. **Put the bridge up temporarily** — both ends on tripods or ladders, aimed
    roughly. Check the signal *before* anything is permanently mounted.
 5. **Mount properly**, ground it, fit surge protectors.
@@ -293,24 +292,34 @@ unpleasant; aiming them twice because you mounted before testing is worse.
 
 ## What to decide first
 
-**Can you get 50–65 ft masts up at both ends?**
+The tree question is settled — 20 ft pines, 25–30 ft masts, 5 GHz over the top.
 
-- **Yes** → 5 GHz, huge bandwidth, weatherproof link, higher cost
-- **No** → 2.4 GHz on short poles, ~50–100 Mbps, entirely adequate because
-  video never crosses the link
+**The open decision is now how many cluster sites you actually build.** Three
+is the assumption above and it is the expensive part. Before ordering, walk the
+property asking one question: *could one access point on a pole cover two of
+these clusters?*
 
-Everything else follows from that one answer.
+Each site you can eliminate saves **$700–900** and one more thing to maintain.
 
 ---
 
 ## Open questions
 
-Worth settling before ordering:
+1. **Are all three cluster sites necessary?** The money question. See above.
+2. **How are the clusters distributed around the compass?** If they fall within
+   about 120° of the mast, one sector antenna does it; if they are scattered,
+   budget for two.
+3. **Is there anywhere to brace a mast** at each cluster — a barn, a fence
+   corner, an existing post? A braced pole is far easier than a free-standing
+   one.
 
-1. **How many separate clusters** are the cameras in? Each cluster that is out
-   of Wi-Fi range of the others needs its own bridge, AP and solar — that
-   $700–900 is *per site*.
-2. **Anything else out there needing network?** Gate, well pump, weather
-   station? Cheaper to size the solar for it now than to revisit.
-3. **How tall are the pines, really?** This is the number the whole design
-   turns on, and it is worth measuring rather than estimating.
+### Already answered
+
+- **Pines: ~20 ft** → 25–30 ft masts, 5 GHz, no tower needed
+- **Three remote clusters plus the central one**
+- **Weather station: Tempest** — self-powered, and its station talks to its own
+  hub on sub-GHz rather than Wi-Fi, so it needs nothing from this build. Just
+  make sure the hub sits indoors within range of the station.
+- **Starlink Residential** — unlimited standard data, so the data-cap worry
+  that shapes most Starlink camera builds does not apply to you. Recording at
+  the camera is still right, but for link resilience rather than for data.
