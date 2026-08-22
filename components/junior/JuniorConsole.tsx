@@ -48,29 +48,45 @@ export function JuniorConsole() {
   // browser's own chrome can exit it without ever calling toggleFull().
   //
   // Going fullscreen grows the iframe, but the terminal inside does not
-  // re-measure on its own: ttyd's xterm never sees a resize, so it keeps
-  // drawing at the old column count and the new space renders as empty cells.
+  // re-measure on its own, so it keeps drawing at the old column count and the
+  // new space renders as empty cells.
   //
   // Do NOT reload the iframe to fix this. Replacing content inside the
-  // fullscreen element makes the browser drop out of fullscreen entirely —
-  // which is how this got broken once already. Same origin, so just poke a
-  // resize event into the frame and let the fit addon do its job. Fired a few
-  // times because the fullscreen transition is animated and the final size is
-  // not known immediately.
+  // fullscreen element makes the browser drop straight back out — that broke
+  // the button entirely once already.
+  //
+  // A synthetic resize event was not enough either. What works is forcing a
+  // REAL layout change: size the frame explicitly, then nudge it by a pixel so
+  // the terminal's own resize observer fires. Repeated a few times because the
+  // fullscreen transition is animated and the final size is not known at once.
   useEffect(() => {
+    const refit = () => {
+      const f = frameRef.current
+      if (!f) return
+      const full = document.fullscreenElement === termRef.current
+      if (full) {
+        f.style.height = "calc(100vh - 42px)"
+        f.style.maxHeight = "none"
+      } else {
+        f.style.height = ""
+        f.style.maxHeight = ""
+      }
+      // a genuine one-pixel change; layout must actually move
+      const h = f.getBoundingClientRect().height
+      f.style.height = `${Math.max(200, Math.round(h) - 1)}px`
+      window.requestAnimationFrame(() => {
+        f.style.height = full ? "calc(100vh - 42px)" : ""
+        try {
+          f.contentWindow?.dispatchEvent(new Event("resize"))
+        } catch {
+          /* frame not ready; later attempts cover it */
+        }
+      })
+    }
+
     const sync = () => {
       setIsFull(document.fullscreenElement === termRef.current)
-      const win = frameRef.current?.contentWindow
-      if (!win) return
-      for (const delay of [100, 350, 700]) {
-        window.setTimeout(() => {
-          try {
-            win.dispatchEvent(new Event("resize"))
-          } catch {
-            /* frame not ready yet; the later attempts cover it */
-          }
-        }, delay)
-      }
+      for (const delay of [80, 300, 650, 1200]) window.setTimeout(refit, delay)
     }
     document.addEventListener("fullscreenchange", sync)
     return () => document.removeEventListener("fullscreenchange", sync)
