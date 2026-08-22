@@ -141,12 +141,12 @@ export function JuniorConsole() {
               </a>
             </li>
             <li className="v3-jr-doc">
-              <a className="v3-jr-doc__main" href="/api/junior/recovery/junior-config-20260821-1431.tar.gz">
+              <a className="v3-jr-doc__main" href="/api/junior/recovery/junior-config-20260821-2325.tar.gz">
                 <span className="v3-jr-doc__title">Config backup &nbsp;<strong>&larr; if you broke a setting</strong></span>
                 <span className="v3-jr-doc__sum">
                   Restore onto a working Pi via LuCI &rarr; System &rarr; Backup / Flash Firmware.
                 </span>
-                <span className="v3-jr-doc__meta">25 KB · .tar.gz · taken 2026-08-21 14:31</span>
+                <span className="v3-jr-doc__meta">28 KB · .tar.gz · taken 2026-08-21 23:25</span>
               </a>
             </li>
             <li className="v3-jr-doc">
