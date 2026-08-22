@@ -295,7 +295,7 @@ export function JuniorConsole() {
               className="v3-jr-term__frame"
               src="/junior/pty/"
               title="Shared terminal session"
-              allow="fullscreen"
+              allow="fullscreen; clipboard-read; clipboard-write"
             />
           </div>
         </div>
