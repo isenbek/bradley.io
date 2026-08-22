@@ -1,7 +1,7 @@
 ---
 title: Farm Network & Cameras — Build Guide
 summary: Starlink Mini in the well house, point-to-multipoint over 20 ft pines, solar cluster sites and self-powered cameras across 5 unattended acres
-version: Rev 7
+version: Rev 8
 updated: 2026-08-22
 ---
 
@@ -205,6 +205,44 @@ conditioner** — which would hold 100 sq ft at 75 °F trivially.
 
 **Insulate and ventilate now, measure, add cooling only if the data says so.**
 Do not guess in either direction.
+
+#### Cooling later: a mini-split, and why it changes the fan
+
+A small **mini-split** is the better long-term answer for a shed like this —
+inverter-driven so it modulates down to a small load, quiet, efficient, and
+only a small line-set penetration rather than a hole for a window unit.
+
+**But the real argument is humidity.** Florida plus electronics means moisture
+matters as much as heat:
+
+- **A ventilation fan brings humid outside air *in*.** It buys temperature at
+  the cost of importing moisture.
+- **Air conditioning removes moisture continuously**, as a side effect of
+  cooling.
+
+**Which means ventilation and air conditioning are opposing strategies.** Run
+both as primaries and they fight — you cool and dehumidify air, then blow it
+outdoors.
+
+| Approach | Shed is | Fan role |
+|---|---|---|
+| **Ventilate** | vented: low intake, high exhaust | **primary** cooling |
+| **Mini-split** | **sealed** | **failsafe only** |
+
+**The good combination:** mini-split as primary, with the thermostatic exhaust
+fan kept and rewired as a **high-temperature failsafe** — set around **100 °F**
+so it only runs if the AC has failed. On a property visited every few weeks
+that is real insurance: a dead compressor in July becomes a warm shed rather
+than a cooked battery.
+
+**Two practical points:**
+
+- **Set it to 78–80 °F, not 68.** You are protecting equipment, not people.
+  Far less runtime and power, and still well below the ~113 °F where LiFePO4
+  stops charging.
+- **Seal the line-set penetration properly.** A hole through an insulated metal
+  wall is the obvious path for humid air and insects, and it is the detail
+  installers most often rush.
 
 #### Other things worth specifying while they are building it
 
