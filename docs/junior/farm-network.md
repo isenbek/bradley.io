@@ -1,468 +1,376 @@
 ---
 title: Farm Network & Cameras — Build Guide
-summary: Starlink Mini, point-to-multipoint over 20 ft pines, three solar cluster sites and 10 self-powered cameras across 5 acres
-version: Rev 4
+summary: Starlink Mini in the well house, point-to-multipoint over 20 ft pines, solar cluster sites and self-powered cameras across 5 unattended acres
+version: Rev 5
 updated: 2026-08-22
 ---
 
 # Farm Network & Cameras
 
-**5 acres · rural · Starlink Mini · ~10 Wi-Fi cameras · flaky mains at the
-base · no power at all at the remote sections.**
+**5 fenced acres · rural · unattended for weeks · no house yet.**
 
 ---
 
-## The three decisions that shape everything
+## What you already have
 
-Get these right and the rest is shopping. Get them wrong and you rebuild.
+| | |
+|---|---|
+| **Well house** | Walk-in, powered, locked, dry. **Gets very hot.** |
+| **Power pole** | Treated wood, electrical panel on it, ~50 ft from the well house |
+| **5 cellular cameras** | On tree trunks. Poor coverage, constant dropouts, monthly fees — **prepaid for a year** |
+| **Pines** | ~20 ft |
+| **The gate** | One way in, everything fenced |
 
-### 1. Record at the camera, not at the base
+## What we're adding
 
-If the cameras are 500 ft away and the recorder is at the house, **all ten
-video streams cross the radio link continuously** — 20–40 Mbps, day and night,
-forever. Every hiccup in the link is a gap in your footage.
+Starlink Mini for internet, coverage across the property, and **~10 Wi-Fi
+cameras that record locally and cost nothing per month**.
 
-Instead: **each camera records to its own SD card.** The link then carries only
-alerts and the occasional live view — a few hundred kbps.
+---
 
-That single decision:
+## The five decisions that shape everything
 
-- makes the radio link almost irrelevant to whether recording works
-- lets you use a lower, tree-friendly frequency
-- means a dead link costs you *live viewing*, not *evidence*
+### 1. Record at the camera, not centrally
 
-> You already said the cameras alert on movement rather than recording
-> continuously. That fits this design exactly.
+If cameras 500 ft away stream to a central recorder, **every camera's video
+crosses the radio link continuously** — and every hiccup is a gap in your
+footage.
+
+Instead: **each camera records to its own SD card**; the link carries only
+alerts and the occasional live view.
+
+A dead link then costs you *live viewing*, not *evidence*. On a property nobody
+visits for weeks, that distinction is the whole ballgame.
 
 ### 2. Let the cameras power themselves
 
-The remote sections have no mains. The instinct is one big solar system feeding
-everything — which means trenching or stringing cable to ten camera positions.
+Cameras with their **own panel and battery** need nothing but Wi-Fi coverage.
+Solar at each cluster then only runs **the radio and one access point, ~15 W** —
+a sealed box on a pole instead of an off-grid installation.
 
-**Don't.** Use cameras with their **own panel and battery**. Then solar at the
-remote site only has to run **the bridge radio and one access point — about
-15 W**, instead of 60 W plus a wiring project.
+### 3. Build in two phases
 
-This is the difference between a small sealed box on a pole and an off-grid
-installation.
+You do not yet know how far coverage reaches, and the cluster sites are the
+expensive part. **Prove the coverage before buying anything for them.**
 
-### 3. One antenna at the centre, not three links
+### 4. One antenna at the centre, not three links
 
-Three remote clusters does **not** mean three point-to-point links. One sector
-antenna at the middle serves all of them. Fewer radios, one alignment, and
-adding a fourth cluster later costs one small radio instead of a whole pair.
+Three remote clusters does **not** mean three point-to-point links.
 
----
+### 5. Design for nobody being there
 
-## Build it in two phases — do not buy the bridges yet
-
-You do not yet know how far coverage reaches from the centre, and the cluster
-sites are the expensive part of this build (**$700–900 each**). So prove the
-coverage before you buy anything for them.
-
-### Phase 1 — centre only, then survey
-
-Build the base station and put **one good outdoor access point on the
-25–30 ft mast at the centre**. Nothing else.
-
-Then take **one camera** to each place you eventually want cameras, mount it
-temporarily — a fence post, a ladder, a stake — and see whether it connects and
-*stays* connected for a day.
-
-**Survey with the camera, not your phone.** This is the part people get wrong.
-A phone has a far better radio and a much better antenna than a solar security
-camera. The link is asymmetric: an AP on a 30 ft mast will reach 500 ft with no
-trouble, but the question is whether the **camera** can be heard coming back.
-Your phone showing four bars proves almost nothing about a camera.
-
-Two more things about the survey:
-
-- **Leave it a full day, not five minutes.** A camera that associates and then
-  drops every hour is worse than one that never connects, because you will not
-  notice until you need footage.
-- **Test in bad conditions if you can** — after rain, with the foliage wet.
-  That is the state that decides whether a marginal link is really a link.
-
-At the end of phase 1 you will know exactly which clusters are covered and
-which are not.
-
-### Phase 2 — bridges only where the survey says
-
-Build a cluster site **only** where phase 1 failed. Each one you avoid saves
-$700–900 and one more thing to maintain.
-
-You may well find that one cluster needs a bridge and the others are fine, or
-that a slightly better AP at the centre covers everything. Either way you will
-have spent the money on evidence rather than assumption.
-
-### Why this order is safe
-
-Nothing in phase 1 is wasted if phase 2 turns out to be needed — the mast,
-the AP, the base station and the battery are all part of the final system
-regardless. **The only thing you defer is the part you might not need.**
+Unattended for weeks means **recovery matters more than performance**.
 
 ---
 
-## The pines: resolved — go over the top
+## The pines: settled
 
-**The pines are about 20 ft.** That settles the biggest open question in this
-build, and settles it the cheap way.
+**Your pines are ~20 ft**, which resolves the biggest question the cheap way.
 
-At 500 ft on 5 GHz the beam needs roughly **1.4 m of clearance radius** at the
-mid-point, and you want ~60% of it free — so about **1 m above the treetops in
-the middle of the path**.
+At 500 ft on 5 GHz the beam wants roughly **1.4 m of clearance radius** at the
+mid-point, ~60% of it free — so about **1 m above the treetops in the middle of
+the path**. That means antennas at **25–30 ft**.
 
-With 20 ft pines that means masts of roughly **25–30 ft**. That is a push-up
-mast, or a pole braced to a barn or the side of a building. Not a tower, no
-guy-wire engineering, no crane.
+**No tower, no guying, no crane.** 5 GHz over the canopy. Wet pine only matters
+when you are shooting *through* it.
 
-**So: 5 GHz, above the canopy.** Full bandwidth, and weather stops mattering —
-wet pine is only a problem when you are shooting *through* it.
-
-> Earlier drafts of this guide budgeted for 50–65 ft masts and a possible drop
-> to 2.4 GHz. Neither is needed. Measuring the trees was the single most useful
-> thing you could have done.
-
-**Still walk the path before mounting anything.** The middle of the path is
-what matters — a tall pine near either end costs you far less than one halfway.
-Note the highest tree in the middle third and size the masts from that.
+> **Walk each path before mounting.** The middle third is what counts — a tall
+> tree near either end costs far less than one halfway.
 
 ---
 
-## The shape of it
-
-Three remote clusters plus the central one. **Do not build three separate
-point-to-point links** — that is six radios and three lots of gear at the
-centre. Use **point-to-multipoint**: one sector antenna at the middle, one
-small radio at each cluster.
+## Layout
 
 ```
-                        CENTRE  (mains + battery)
-              Starlink Mini ── Router ── PoE switch
-                                   ├── house AP
-                                   └── SECTOR ANTENNA on a 25-30 ft mast
-                                          ╱      │      ╲
-                          ~500 ft        ╱       │       ╲
-                                        ╱        │        ╲
-                                  CLUSTER A  CLUSTER B  CLUSTER C
-                                  each: small radio + AP + solar
-                                            ((( Wi-Fi )))
-                                   cameras - own panel, battery, SD card
+   WELL HOUSE  (locked, powered, sheltered — THE BASE STATION)
+   ┌────────────────────────────────────────────┐
+   │  Starlink feed · Router · PoE switch       │
+   │  Battery / UPS                             │
+   │  Thermostatic exhaust fan  ← see Heat      │
+   └───────────────┬────────────────────────────┘
+                   │  ~50 ft, BONDED + surge protected
+        NEW POLE   │                    EXISTING POLE (electrical panel)
+        ┌──────────┴──────────┐         ┌──────────────────────┐
+        │  Starlink Mini      │  ⎓⎓⎓⎓⎓  │  SECTOR ANTENNA      │
+        │  and/or sector      │  BONDED │  (whichever pole is  │
+        └─────────────────────┘         │  taller / sees best) │
+                                        └───────┬──────────────┘
+                                        ╱       │       ╲
+                          ~500 ft      ╱        │        ╲
+                              CLUSTER A    CLUSTER B    CLUSTER C
+                              radio + AP + solar at each
+                                     ((( 2.4 GHz )))
+                        cameras — own panel, own battery, own SD card
 ```
 
-**Why point-to-multipoint wins here:**
+**Which pole gets what:** 50 ft of Ethernet is nothing, so choose by
+**sightlines, not convenience**. Sector on whichever pole is taller and sees the
+clusters best; Starlink wherever the sky is clearest. They need not share a pole.
 
-| | Three PtP links | Point-to-multipoint |
-|---|---|---|
-| Radios | 6 | 4–5 |
-| Kit at the centre | 3 sets, 3 alignments | 1 sector (or 2), aimed once |
-| Adding a 4th cluster later | another pair + mast space | one small radio |
+---
 
-If the three clusters are spread widely around the compass you may want **two
-120° sectors** rather than one. Decide that by standing at the mast position
-and looking at where they actually are — if they fall within about 120° of each
-other, one sector does it.
+## ⚠️ Heat — the thing most likely to kill this build
+
+A closed well house in Florida reaches **120–140 °F**. That is functional, not
+comfort:
+
+- **LiFePO4 stops charging above about 113 °F.** The BMS simply refuses. Your
+  battery quietly stops topping up in July and you find out during an outage.
+- Most network gear is rated to ~105–115 °F ambient. Past that it throttles,
+  reboots, then fails early.
+
+**The fix is cheap:**
+
+- **Thermostatic exhaust fan** high on one wall — a 12 V fan and a thermostat
+- **Low intake vent** opposite, screened against insects
+- **Battery low, electronics higher, nothing on the floor** — heat stratifies
+  and the battery cares most
+
+**A $40 fix for the most likely failure.** Do it before anything electronic goes
+in there.
+
+---
+
+## ⚠️ Grounding — two poles is the dangerous case
+
+Two poles, separate ground rods, and **Ethernet running between them** is
+precisely the arrangement that destroys equipment. During a nearby strike the
+two grounds sit at different potentials and your Ethernet becomes the path
+between them. Everything on that cable dies at once.
+
+1. **Bond both poles to the same ground system** with a heavy conductor. One
+   reference, not two.
+2. **Surge protector at both ends** of every outdoor run (Ubiquiti
+   **ETH-SP-G2** or equivalent).
+3. **Never leave a radio on its own isolated rod.**
+4. If the panel is your service entrance, **have an electrician make the bond.**
+
+Done right, a nearby strike is a non-event. Done wrong, you replace everything
+about once a year.
+
+---
+
+## Phase 1 — centre only, then survey
+
+Build the base station, put **one good outdoor AP on the pole**, and find out
+what it actually reaches.
+
+### Survey with a camera, not your phone
+
+**A phone has a far better radio and antenna than a $120 solar camera.** The
+link is asymmetric: an AP at 30 ft will be heard at 500 ft easily — the question
+is whether the *camera* can be heard coming back. Four bars on your phone proves
+almost nothing.
+
+**Buy one camera first.** Mount it temporarily at each position you want and see
+whether it connects and *stays* connected.
+
+- **Leave it a full day.** A camera that associates then drops hourly is worse
+  than one that never connects, because you will not notice until you need the
+  footage.
+- **Test after rain**, foliage wet. That is the state that decides whether a
+  marginal link is really a link.
+
+### You already have a survey map
+
+**Your five cellular cameras are sited where you want coverage**, chosen for
+real reasons. That is the expensive part of the planning already done — and
+**the ones that drop cellular worst are your hardest positions**, worth
+designing the sectors around.
+
+**The prepaid year means no rush.** Build in stages with the existing cameras
+still watching.
+
+---
+
+## ⚠️ Tree trunks are poor radio positions
+
+Your existing cameras are on trunks, and the new ones probably will be too.
+Worth knowing what that costs you:
+
+- **Low and surrounded by foliage.** A camera at 6–8 ft on a trunk is shooting
+  through leaves and branches in every direction. This is very likely a large
+  part of why the cellular ones drop.
+- **Trees sway.** Aim drifts in wind — for the camera's view *and* for its
+  antenna.
+- **Trees grow**, and they grow *around* fixings.
+
+**What to do about it:**
+
+1. **Mount as high as you can safely reach**, and on the side of the trunk
+   **facing the access point** — the trunk itself is a solid RF obstacle, so the
+   camera wants a clear line back to the AP, not a tree between them.
+2. **Clear a sight line.** Trimming two branches often does more than any
+   equipment upgrade.
+3. **Use straps, not screws.** Ratchet or lag-strap mounts let you adjust, do
+   not wound the tree, and can be moved when the survey says elsewhere is
+   better.
+4. **Where you have a choice, use a post instead.** A 10 ft 4×4 in open ground
+   beats a trunk in a thicket every time, and it does not move or grow.
+
+Given the cameras are self-powered and record locally, **a position with a clear
+line to the AP is worth more than a position with a slightly better view.** You
+can usually adjust the view; you cannot argue with physics.
+
+---
+
+## Phase 2 — cluster sites, only where the survey says
+
+Build a site **only** where phase 1 fell short. Each one avoided saves
+**$700–900** and one more thing to maintain.
+
+**Nothing in phase 1 is wasted if phase 2 is needed** — poles, AP, base station
+and battery are all part of the final system regardless.
 
 ---
 
 ## Base station
 
-| Item | Why |
-|---|---|
-| **Starlink Mini** | Has a built-in Ethernet port and runs on **USB-C PD** — which matters enormously for the power design below |
-| **Router** | Do not rely on Starlink's built-in Wi-Fi. You want your own DHCP, your own SSID, and somewhere to plug the bridge in |
-| **PoE switch**, 5–8 port | Powers the bridge radio and the house AP over their Ethernet cables |
-| **Access point** | Coverage around the house and outbuildings |
+| Role | Pick | Why |
+|---|---|---|
+| **Router + controller** | **UniFi Express (UX)** | Router, controller and AP in one box, ~10 W |
+| **Switch** | **UniFi Switch Lite 8 PoE** | **Per-port power control** — reboot a wedged radio from your phone instead of driving out. Highest-value item on an unattended site |
+| **Pole AP** | **UniFi U6 Mesh** | Outdoor, dual band, PoE. **UAP-AC-M-PRO** is older with better antennas if range beats speed |
 
-**Stay with UniFi if you can.** You already run it at home, you know the
-controller, and one app managing both sites is worth a lot when something
-misbehaves and you are standing in a field.
+**Stay with UniFi.** One app for both properties is worth more than
+specifications when you are standing in a field.
 
-### Power — use DC, not a computer UPS
+### Power
 
-Here is the trick: **Starlink Mini takes USB-C Power Delivery.** So you do not
-need mains → inverter → power brick, which throws away 20–30% and fails in
-precisely the way cheap UPSs fail.
+**Turnkey — power station with UPS pass-through.** **EcoFlow Delta 2** or
+**Bluetti AC180**, ~1 kWh. Starlink Mini plugs into **USB-C PD** directly;
+everything else into AC. Mains in, automatic switchover.
 
-Run the base off a **LiFePO4 battery that is always charging**, with the loads
-fed directly from DC.
+**Proper — a DC system.** 100 Ah LiFePO4 + **Victron** charger, loads at 12 V.
+Cheaper per watt-hour and more efficient, but you are building it.
 
-**Base load, roughly:**
+**For a farm visited every few weeks, take the power station.** Fewer parts
+beats efficiency when nobody is there to notice a failure.
 
-| | |
-|---|---:|
-| Starlink Mini | ~40 W |
-| Router | ~10 W |
-| PoE switch | ~10 W |
-| Bridge radio | ~8 W |
-| House AP | ~8 W |
-| **Total** | **~75 W** |
-
-A **100 Ah 12 V LiFePO4** holds about 1,280 Wh, so roughly **14 hours** of
-everything running after the power goes. A 50 Ah gives you about 7.
-
-**Why LiFePO4 and not a normal UPS:** a consumer UPS uses lead-acid, dies after
-two or three years, and is sized for minutes, not hours. LiFePO4 tolerates
-being deeply cycled, lasts the better part of a decade, and is the right shape
-for rural power that goes off for hours rather than seconds.
+**Base load ≈ 75 W** → about **14 hours** from 1 kWh.
 
 ---
 
-## Remote site
+## The link
 
-Only two things need power out there, because the cameras look after
-themselves.
+| Role | Pick | Why |
+|---|---|---|
+| **Centre** | **UniFi LiteAP AC**, 120° sector | One antenna serves all three clusters; two if spread wider than 120° |
+| **Each cluster** | **UISP NanoStation 5AC Loco** | Small, cheap, low power, easy to aim. **LiteBeam 5AC Gen2** for more gain |
+| **Cluster AP** | **UniFi AC Mesh (UAP-AC-M)** | Lower draw than U6 Mesh, which matters on solar |
+
+Four or five radios instead of six, one alignment instead of three, and a fourth
+cluster later costs one small radio.
+
+---
+
+## Cluster sites
 
 | Load | Draw |
 |---|---:|
-| Bridge radio | ~7 W |
-| Access point (PoE) | ~8 W |
-| **Total** | **~15 W** — about **360 Wh/day** |
+| Radio | ~7 W |
+| Access point | ~8 W |
+| **Total** | **~15 W** ≈ 360 Wh/day |
 
-**Sizing, with Florida sun and honest margins:**
-
-| Component | Spec | Reasoning |
+| Component | Spec | Note |
 |---|---|---|
-| **Solar panel** | **150–200 W** | 360 Wh ÷ 4 usable sun-hours ÷ 0.7 for losses ≈ 130 W. Round up — winter and cloud are the cases that matter |
-| **Charge controller** | MPPT, 20 A, 12 V | MPPT rather than PWM; it is worth the difference at this size |
-| **Battery** | **100 Ah 12 V LiFePO4** | ~1,280 Wh ≈ **3 days** with no sun at all |
-| **Enclosure** | IP65, vented | Batteries and heat are not friends; keep it shaded |
-| **PoE injector** | 12 V native if possible | Avoid a 12 V → 120 V → 48 V round trip just to feed a radio |
-
-**Do not undersize the battery to save money.** Three days of autonomy is what
-turns a system you have to think about into one you forget exists. A run of
-grey days with a 30 Ah battery means driving out there to reset things.
+| **Panel** | **200–300 W** | **Oversize the panel, not the battery.** Panels are cheap; a fat panel survives a grey week when nobody is coming |
+| **Controller** | **Victron SmartSolar MPPT 75/15** | Bluetooth — read its history from the truck |
+| **Battery** | **100 Ah 12 V LiFePO4** | ~1,280 Wh, several days at 15 W |
+| **Enclosure** | NEMA 4X, vented + filtered | North face, shaded |
 
 ---
 
 ## Cameras
 
-**Choose self-contained solar cameras.** Own panel, own battery, own SD card,
-PIR motion detection, alerts to your phone. Reolink's Argus/Altas line and
-Eufy's SoloCam range are the usual choices.
+- **Reolink Argus 4 Pro** / **Argus PT** with matching solar panel
+- **Reolink Altas PT Ultra** for pre-roll recording
+- **Eufy SoloCam S340** as the alternative
 
-They need **nothing but Wi-Fi coverage** — no power run, no data cable, no
-trenching. On a 5-acre farm that is the whole difference between a weekend and
-a month.
+All 2.4 GHz, self-powered, local SD.
 
-**Three things to check before buying ten of anything:**
+**Check before buying ten:**
 
-1. **2.4 GHz only?** Most are, and that is good news — better range and better
-   tree penetration than 5 GHz. Just make sure your remote AP broadcasts 2.4.
-2. **Local SD recording without a subscription.** Some vendors gate local
-   playback behind a cloud plan. Check before, not after.
-3. **Buy one first.** Mount it at the furthest, most awkward spot you have and
-   live with it for a week. Then buy the other nine.
+1. **Local SD playback without a subscription** — some vendors gate it
+2. **2.4 GHz** — good news for range; make sure your APs broadcast it strongly
+3. **Buy one.** Worst spot. A week. It doubles as your survey tool
 
-That last one is worth repeating. Ten of the wrong camera is an expensive
-lesson; one of the wrong camera is a Tuesday.
+### The gate camera matters most
 
----
+One way in, everything fenced. **It earns more than the other nine combined** —
+mount it first, best coverage, the one you are most confident about.
 
-## The two things people skip and regret
+### Transition
 
-### Surge protection
-
-Elevated radios, long Ethernet runs, rural property, Florida thunderstorms.
-This is not optional.
-
-- **Ethernet surge protectors at both ends of every outdoor run** — where the
-  cable enters a building and at the mast
-- **A ground rod at each mast**, bonded properly
-- Radios grounded to the mast
-
-A surge protector costs about the same as lunch. Replacing a switch, a router,
-a Starlink and two radios does not.
-
-### Starlink is behind CGNAT
-
-You do not get a public IP, so **nothing can connect inward.** In practice:
-
-- Camera apps still work — they reach the vendor's cloud, which relays
-- **You cannot** port-forward to an NVR, or reach anything on the farm directly
-- If you want direct access, use a service that dials *outward* — Tailscale or
-  similar — rather than trying to open a port that does not exist
+**Do not remove the cellular cameras until the Wi-Fi ones are proven.** Run both
+for a few weeks and compare at each position. Cellular trail cameras cannot be
+converted — the radio is the product — so plan to replace, not repurpose.
 
 ---
 
-## What to actually buy
+## Designing for an empty property
 
-**Prices and model numbers move.** Treat these as "the right shape of thing" and
-check current availability — but the reasoning behind each pick is the part
-worth keeping.
-
-**Stay in the Ubiquiti/UniFi family where you can.** You already run it at
-home, one app manages both properties, and when something misbehaves while you
-are standing in a field, familiarity is worth more than specifications.
-
-### Base station
-
-| Role | Pick | Why |
-|---|---|---|
-| **Router + controller** | **UniFi Express (UX)** | Router, controller and an AP in one small box, ~10 W. For a site this size it removes a whole component. Alternative: **Cloud Gateway Ultra** if you want the AP separate |
-| **Switch** | **UniFi Switch Lite 8 PoE** | The important part is **per-port power control** — you can reboot a wedged radio from your phone instead of driving out. On an unattended site this is the highest-value item in the build |
-| **Pole-top AP** | **UniFi U6 Mesh** | Outdoor-rated, dual band, PoE. Budget/range alternative: **UAP-AC-M-PRO**, older but with noticeably better antennas |
-
-### The link
-
-| Role | Pick | Why |
-|---|---|---|
-| **Centre (point-to-multipoint)** | **UniFi LiteAP AC** — 120° sector | One antenna serves all three clusters. Two if they are spread wider than 120° |
-| **Each cluster** | **UISP NanoStation 5AC Loco** | Small, cheap, low power, easy to aim. **LiteBeam 5AC Gen2** if you want more gain |
-| **Cluster AP** | **UniFi AC Mesh (UAP-AC-M)** | Lower draw than the U6 Mesh, which matters when solar is carrying it. 2.4 GHz is what the cameras need anyway |
-
-### Power at the base
-
-Two approaches, and the first is far less work.
-
-**Turnkey — a power station with UPS pass-through**
-
-**EcoFlow Delta 2** or **Bluetti AC180**, roughly 1 kWh. Starlink Mini plugs
-into the **USB-C PD** port directly; everything else into the AC outlets. Mains
-in, automatic switchover, done.
-
-- *For:* nothing to design, no wiring, monitors itself, you can carry it
-- *Against:* more expensive per watt-hour, and the fans and screen draw a
-  little continuously
-
-**Proper — a DC system**
-
-**LiTime or Renogy 100 Ah 12 V LiFePO4** + a **Victron** charger, feeding the
-loads at 12 V with a USB-C PD trigger for the Starlink.
-
-- *For:* cheaper per watt-hour, more efficient, lasts longer, expandable
-- *Against:* you are building it
-
-**For a farm you visit every few weeks, I would take the power station.**
-Fewer parts is worth more than efficiency when nobody is there to notice a
-failure.
-
-### Solar at each cluster
-
-| Component | Pick | Note |
-|---|---|---|
-| **Panel** | **200–300 W** rigid — Renogy, Rich Solar, Newpowa | **Oversize the panel, not the battery.** Panels are cheap; a fat panel keeps a site alive through a grey week |
-| **Controller** | **Victron SmartSolar MPPT 75/15** | Bluetooth. You can check its history from the truck without opening the box — that is worth the premium on an unattended site |
-| **Battery** | **100 Ah 12 V LiFePO4** — LiTime, Chins, Renogy | ~1,280 Wh ≈ 3 days at 15 W, more with the bigger panel |
-| **Enclosure** | NEMA 4X fibreglass, vented with a filter | North face, shaded. **Heat kills batteries faster than cycling does** |
-
-### Surge protection — do not skip
-
-| | |
-|---|---|
-| **Ubiquiti ETH-SP-G2** | One at **each end** of every outdoor Ethernet run. About the price of lunch |
-
-Bond everything to the **existing service ground** at the pole. **Never drive a
-separate rod for the radio** — two grounds at different potentials during a
-nearby strike turn your Ethernet cable into the path between them, and
-everything on it dies.
-
-### Cameras
-
-**Reolink** is the usual answer, because local SD recording works without a
-subscription — check that before buying ten of anything, as some vendors gate
-playback behind a cloud plan.
-
-- **Reolink Argus 4 Pro** or **Argus PT** with the matching solar panel
-- **Reolink Altas PT Ultra** if you want pre-roll recording
-- **Eufy SoloCam S340** is the main alternative
-
-All 2.4 GHz, all self-powered, all record locally. **Buy one first**, mount it
-at the worst spot you have, and use it as your phase 1 survey tool.
+- **Remote power cycling** — a wedged radio should be a tap, not a drive
+- **Alerting** — an email when the link drops, or you find out when the footage
+  is missing
+- **Solar margin** — sized above for a site nobody checks
+- **Theft** — the well house locks; pole gear high enough to need a ladder
+- **CGNAT** — Starlink gives no inbound. Camera apps work via the vendor cloud;
+  for direct access use something that dials *outward*, like Tailscale
 
 ---
 
 ## Rough budget
 
-Approximate, and worth checking against current prices.
-
 | | |
 |---|---:|
 | Starlink Mini hardware | $300–500 |
-| Router + PoE switch + house AP | $300–400 |
-| Bridge pair | $200–400 |
-| Base battery + DC gear | $400–600 |
-| Sector antenna at the centre (1–2) | $150–350 |
-| **Cluster site × 3** (radio, AP, panel, MPPT, battery, box, mounts) | **$700–900 each → $2,100–2,700** |
-| Masts, 25–30 ft × 4 | $400–800 |
+| Router + PoE switch + pole AP | $400–500 |
+| Power station (~1 kWh) | $600–900 |
+| Well house ventilation | $40–100 |
+| New pole + mounts | $200–500 |
+| Grounding + bonding (electrician) | $200–400 |
+| Surge protectors | $100–150 |
+| **Phase 1 subtotal** | **≈ $1,900–3,000** |
+| Sector antenna | $150–350 |
+| **Cluster site × up to 3** | **$700–900 each** |
 | 10 solar cameras | $1,000–1,500 |
-| Surge protection + grounding | $250 |
-| **Total, three clusters** | **≈ $5,000–6,500** |
+| **Full build** | **≈ $5,000–7,000** |
 
-Plus Starlink Residential service monthly.
-
-**The number that moves most is now the cluster count.** Three sites at
-$700–900 each is more than everything else combined, and the masts turned out
-cheap once the pines measured 20 ft rather than 50.
-
-**So the money question is: are three sites genuinely necessary?** If two of
-the clusters are within Wi-Fi range of one well-placed access point on a pole,
-collapsing them saves close to a thousand dollars. Worth walking the property
-with that specific question in mind before ordering.
+Plus Starlink Residential monthly — offset against the **$600–900/year** the
+five cellular plans cost today.
 
 ---
 
 ## Build order
 
-Two unknowns at once is how these projects stall. This sequence never has more
-than one.
-
 ### Phase 1
 
-1. **Starlink Mini at the base**, on mains, working. Confirm speed and that it
-   stays up.
-2. **Add the battery.** Pull the plug and time how long it runs — before you
-   depend on it.
-3. **Mast at the centre**, 25–30 ft, braced and grounded. Surge protector on
-   the cable where it enters the building.
-4. **One good outdoor AP** on the mast, 2.4 GHz enabled and strong.
-5. **Buy ONE camera.** Mount it at the furthest, most awkward spot you have.
-   Live with it a week.
-6. **Survey**: move that same camera to each intended location, a day at a
-   time. Write down what works.
+1. **Ventilate the well house** — before anything electronic goes in
+2. **Bond the poles**, fit surge protectors (electrician if it is the service
+   entrance)
+3. **Starlink Mini** on mains, working
+4. **Add the battery.** Pull the plug and time it — before you depend on it
+5. **Pole AP**, 2.4 GHz strong
+6. **Buy ONE camera.** Worst spot. A week
+7. **Survey** — that camera at each position, a day at a time. Write it down
 
 ### Phase 2 — only where phase 1 fell short
 
-7. **Sector antenna** at the centre, aimed at the clusters that failed.
-8. **One cluster site**: radio, AP, solar, battery. Let it run a week
-   untouched, ideally through bad weather, before adding cameras.
-9. **Repeat** for any other cluster that needs it.
-10. **The remaining cameras.**
-
-Step 5 is worth insisting on. Ten of the wrong camera is an expensive lesson;
-one of the wrong camera is a Tuesday — and that single camera doubles as your
-survey instrument.
-
-## What to decide first
-
-The tree question is settled — 20 ft pines, 25–30 ft masts, 5 GHz over the top.
-
-**The open decision is now how many cluster sites you actually build.** Three
-is the assumption above and it is the expensive part. Before ordering, walk the
-property asking one question: *could one access point on a pole cover two of
-these clusters?*
-
-Each site you can eliminate saves **$700–900** and one more thing to maintain.
+8. **Sector antenna**, aimed at the clusters that failed
+9. **One cluster site.** A week untouched, through bad weather, before cameras
+10. **Repeat** only where needed
+11. **The remaining cameras**, gate first
+12. **Retire the cellular cameras** as their prepaid year expires
 
 ---
 
 ## Open questions
 
-1. **Are all three cluster sites necessary?** The money question. See above.
-2. **How are the clusters distributed around the compass?** If they fall within
-   about 120° of the mast, one sector antenna does it; if they are scattered,
-   budget for two.
-3. **Is there anywhere to brace a mast** at each cluster — a barn, a fence
-   corner, an existing post? A braced pole is far easier than a free-standing
-   one.
-
-### Already answered
-
-- **Pines: ~20 ft** → 25–30 ft masts, 5 GHz, no tower needed
-- **Three remote clusters plus the central one**
-- **Weather station: Tempest** — self-powered, and its station talks to its own
-  hub on sub-GHz rather than Wi-Fi, so it needs nothing from this build. Just
-  make sure the hub sits indoors within range of the station.
-- **Starlink Residential** — unlimited standard data, so the data-cap worry
-  that shapes most Starlink camera builds does not apply to you. Recording at
-  the camera is still right, but for link resilience rather than for data.
+1. **Which of the five cellular cameras drops worst?** That is your hardest
+   link — design the sectors around it
+2. **How are the clusters distributed around the compass?** Within ~120°, one
+   sector does it
+3. **How tall is the existing pole**, really?
+4. **Can any camera move from a trunk to a post?** Often the cheapest
+   improvement available
