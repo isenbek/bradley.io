@@ -1,7 +1,7 @@
 ---
 title: Farm Network & Cameras — Build Guide
 summary: Starlink Mini in the well house, point-to-multipoint over 20 ft pines, solar cluster sites and self-powered cameras across 5 unattended acres
-version: Rev 5
+version: Rev 6
 updated: 2026-08-22
 ---
 
@@ -16,6 +16,7 @@ updated: 2026-08-22
 | | |
 |---|---|
 | **Well house** | Walk-in, powered, locked, dry. **Gets very hot.** |
+| **Possible shed** | 100 sq ft, no permit needed, next to the pole — see *Option B* below |
 | **Power pole** | Treated wood, electrical panel on it, ~50 ft from the well house |
 | **5 cellular cameras** | On tree trunks. Poor coverage, constant dropouts, monthly fees — **prepaid for a year** |
 | **Pines** | ~20 ft |
@@ -82,7 +83,7 @@ when you are shooting *through* it.
 ## Layout
 
 ```
-   WELL HOUSE  (locked, powered, sheltered — THE BASE STATION)
+   WELL HOUSE or SHED  (locked, powered, sheltered — THE BASE STATION)
    ┌────────────────────────────────────────────┐
    │  Starlink feed · Router · PoE switch       │
    │  Battery / UPS                             │
@@ -109,13 +110,19 @@ clusters best; Starlink wherever the sky is clearest. They need not share a pole
 
 ---
 
-## ⚠️ Heat — the thing most likely to kill this build
+## Where the equipment lives — two options
 
-A closed well house in Florida reaches **120–140 °F**. That is functional, not
-comfort:
+### Option A — the well house (available today)
 
-- **LiFePO4 stops charging above about 113 °F.** The BMS simply refuses. Your
-  battery quietly stops topping up in July and you find out during an outage.
+Walk-in, powered, locked and dry. Everything you need except temperature
+control.
+
+A closed well house in Florida reaches **120–140 °F**, and that is a functional
+problem, not a comfort one:
+
+- **LiFePO4 stops charging above about 113 °F.** The BMS simply refuses. The
+  battery quietly stops topping up in July and you discover it during an outage
+  in August.
 - Most network gear is rated to ~105–115 °F ambient. Past that it throttles,
   reboots, then fails early.
 
@@ -128,6 +135,83 @@ comfort:
 
 **A $40 fix for the most likely failure.** Do it before anything electronic goes
 in there.
+
+### Option B — a purpose-built 100 sq ft shed ⭐ better
+
+A small shed beside the pole, insulated properly, is a materially better home
+for this: room to work, room to grow, and control over the temperature that the
+well house does not give you.
+
+**If you build it, four things matter.**
+
+#### 1. Closed-cell foam, sprayed directly on the metal
+
+**This matters more than the R-value.** Humid air against cool metal produces
+condensation on the inside of your walls.
+
+- **Closed-cell** is a vapour barrier and removes the condensing surface
+  entirely
+- **Open-cell would be actively wrong** — it is vapour-permeable, so moisture
+  passes through, reaches the metal, condenses *behind* the insulation where
+  you will never see it, and rusts the shed from the inside
+
+Make sure whoever sprays it knows it is closed-cell, onto metal, with no gap.
+
+#### 2. The roof is where the heat comes from
+
+Most solar gain is overhead, not through the walls.
+
+- **Insulate the roof most heavily**
+- **Specify a light or reflective roof** — white or bare Galvalume against dark
+  metal is worth a genuine **20–30 °F** of interior temperature for no extra
+  cost
+- If the site allows, face the door north and put it where it gets afternoon
+  shade
+
+#### 3. Drywall over the foam — and it is required
+
+Spray foam needs a **15-minute thermal barrier** by code, and ½" drywall is the
+standard way to provide it. Do not let anyone skip it to save a day.
+
+#### 4. ⚠️ Bond the shed to the ground system
+
+A **metal building**, beside a **pole carrying an electrical panel**, with
+**Ethernet running up to antennas**. Every metal thing there — shed, both poles,
+panel — must be bonded to the same ground.
+
+This is the two-pole hazard again, but larger: a metal building is a big
+conductive surface. Bonded, it helps. Left floating, it is one more object at a
+different potential during a strike. Your electrician should handle it as part
+of the shed's electrical work.
+
+#### Ventilation — yes, but know its ceiling
+
+A thermostatic exhaust fan plus a low intake vent is the right baseline, and
+with good insulation it will hold close to outside air.
+
+**But ventilation can never get you below ambient.** A Florida afternoon at
+95 °F means the shed sits around **100–105 °F** with equipment heat added —
+and LiFePO4 stops charging at about 113 °F. That is less margin than is
+comfortable on a site nobody visits.
+
+**So measure before deciding.** Put a **$20 temperature logger** in the finished
+shed and leave it through a hot spell. Then you will know whether ventilation
+is enough, or whether you want a small **5,000 BTU through-wall air
+conditioner** — which would hold 100 sq ft at 75 °F trivially.
+
+**Insulate and ventilate now, measure, add cooling only if the data says so.**
+Do not guess in either direction.
+
+#### Other things worth specifying while they are building it
+
+- **Concrete pad**, not bare ground — keeps damp out
+- **A dedicated circuit** for the equipment
+- **Weatherproof cable entries** with drip loops, positioned for the pole run
+- **Shelving on the cool wall**, with the battery low
+
+> **Option B is the better answer if the build is easy.** Option A works today
+> and nothing done for it is wasted — the ventilation kit and the equipment move
+> across unchanged if you build the shed later.
 
 ---
 
@@ -327,7 +411,9 @@ converted — the radio is the product — so plan to replace, not repurpose.
 | Starlink Mini hardware | $300–500 |
 | Router + PoE switch + pole AP | $400–500 |
 | Power station (~1 kWh) | $600–900 |
-| Well house ventilation | $40–100 |
+| Well house ventilation (Option A) | $40–100 |
+| *or* 100 sq ft insulated shed (Option B) | $4,000–8,000 |
+| Temperature logger | $20 |
 | New pole + mounts | $200–500 |
 | Grounding + bonding (electrician) | $200–400 |
 | Surge protectors | $100–150 |
@@ -346,7 +432,9 @@ five cellular plans cost today.
 
 ### Phase 1
 
-1. **Ventilate the well house** — before anything electronic goes in
+1. **Sort the enclosure** — ventilate the well house, or build the shed.
+   Either way, **before anything electronic goes in**. Drop a temperature
+   logger in and leave it through a hot spell
 2. **Bond the poles**, fit surge protectors (electrician if it is the service
    entrance)
 3. **Starlink Mini** on mains, working
