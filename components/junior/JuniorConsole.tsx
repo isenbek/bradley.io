@@ -153,22 +153,22 @@ export function JuniorConsole() {
           </p>
           <ul className="v3-jr-docs">
             <li className="v3-jr-doc">
-              <a className="v3-jr-doc__main" href="/api/junior/recovery/rpi5-router-recovery-20260821.img.gz">
+              <a className="v3-jr-doc__main" href="/api/junior/recovery/rpi5-router-recovery-20260824.img.gz">
                 <span className="v3-jr-doc__title">Recovery image &mdash; flash and go &nbsp;<strong>&larr; if the Pi died</strong></span>
                 <span className="v3-jr-doc__sum">
                   Full OpenWrt image with the live config baked in. Write it to a card,
                   plug it in, and the new Pi <em>is</em> the router — no setup.
                 </span>
-                <span className="v3-jr-doc__meta">15 MB · .img.gz · rebuilt 2026-08-21 — failover, filtering, LuCI WAN buttons, email alerts, watchdog, ISP report</span>
+                <span className="v3-jr-doc__meta">15 MB · .img.gz · rebuilt 2026-08-24 — 2.5GbE WAN1 adapter, failover, alerts, watchdog</span>
               </a>
             </li>
             <li className="v3-jr-doc">
-              <a className="v3-jr-doc__main" href="/api/junior/recovery/junior-config-20260821-2325.tar.gz">
+              <a className="v3-jr-doc__main" href="/api/junior/recovery/junior-config-20260824-1935.tar.gz">
                 <span className="v3-jr-doc__title">Config backup &nbsp;<strong>&larr; if you broke a setting</strong></span>
                 <span className="v3-jr-doc__sum">
                   Restore onto a working Pi via LuCI &rarr; System &rarr; Backup / Flash Firmware.
                 </span>
-                <span className="v3-jr-doc__meta">28 KB · .tar.gz · taken 2026-08-21 23:25</span>
+                <span className="v3-jr-doc__meta">76 KB · .tar.gz · taken 2026-08-24 19:35</span>
               </a>
             </li>
             <li className="v3-jr-doc">
@@ -208,7 +208,7 @@ export function JuniorConsole() {
                 Verify the download first. A truncated image fails to boot and looks exactly like a
                 hardware fault, which is a miserable thing to debug when the network is already down.
               </p>
-              <Cmd>{`sha256sum rpi5-router-recovery-20260820.img.gz`}</Cmd>
+              <Cmd>{`sha256sum rpi5-router-recovery-20260824.img.gz`}</Cmd>
               <p>
                 Easiest path: <strong>Raspberry Pi Imager</strong> &rarr; &ldquo;Use custom&rdquo;
                 &rarr; pick the <code>.img.gz</code> (it decompresses for you) &rarr; select the card
@@ -220,7 +220,7 @@ export function JuniorConsole() {
                 <code>/dev/sdX</code>, the whole disk, not <code>/dev/sdX1</code>.
               </p>
               <Cmd>{`lsblk -o NAME,SIZE,TYPE,MOUNTPOINT`}</Cmd>
-              <Cmd>{`gunzip -c rpi5-router-recovery-20260820.img.gz | sudo dd of=/dev/sdX bs=4M conv=fsync status=progress`}</Cmd>
+              <Cmd>{`gunzip -c rpi5-router-recovery-20260824.img.gz | sudo dd of=/dev/sdX bs=4M conv=fsync status=progress`}</Cmd>
               <p className="v3-jr-note">
                 Card into the Pi, ethernet into <strong>the same USB adapter the ISP was in</strong>,
                 power on. It comes up as <code>10.0.0.1</code> already being the router.

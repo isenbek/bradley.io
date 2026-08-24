@@ -1,12 +1,12 @@
 {
-  "generated": "2026-08-22T09:01:59.451138+00:00",
+  "generated": "2026-08-24T09:01:54.456332+00:00",
   "org": "tinymachines",
-  "totalRepos": 64,
+  "totalRepos": 65,
   "firstCommit": "2016-02-27T16:07:26Z",
-  "latestCommit": "2026-08-21T03:04:47Z",
-  "totalCommits": 5325,
+  "latestCommit": "2026-08-23T06:00:26Z",
+  "totalCommits": 5400,
   "languages": {
-    "Python": 26,
+    "Python": 27,
     "C": 7,
     "HTML": 6,
     "Shell": 6,
@@ -6787,9 +6787,21 @@
     },
     {
       "date": "2026-08-21",
-      "commits": 5,
+      "commits": 19,
       "repos": 2,
-      "intensity": 1
+      "intensity": 2
+    },
+    {
+      "date": "2026-08-22",
+      "commits": 35,
+      "repos": 4,
+      "intensity": 3
+    },
+    {
+      "date": "2026-08-23",
+      "commits": 26,
+      "repos": 3,
+      "intensity": 3
     }
   ],
   "phases": [
@@ -6949,10 +6961,11 @@
     {
       "name": "Phase 10",
       "startDate": "2026-08-17",
-      "endDate": "2026-08-17",
-      "description": "Development of halfphi.",
+      "endDate": "2026-08-22",
+      "description": "Development of halfphi, public.",
       "repos": [
-        "halfphi"
+        "halfphi",
+        "public"
       ],
       "milestones": [],
       "category": "systems"
@@ -7467,9 +7480,9 @@
       "name": "geiger",
       "description": "Daily Reporting Engine",
       "language": "HTML",
-      "commits": 260,
+      "commits": 262,
       "firstCommit": "2026-05-04T03:01:06Z",
-      "lastCommit": "2026-08-21T03:04:47Z",
+      "lastCommit": "2026-08-23T03:02:20Z",
       "phase": "Phase 9"
     },
     {
@@ -7521,18 +7534,27 @@
       "name": "6502",
       "description": "Commits: Add 6502 Processor Expert Agent with RAG system",
       "language": "JavaScript",
-      "commits": 181,
+      "commits": 220,
       "firstCommit": "2026-08-12T16:38:57Z",
-      "lastCommit": "2026-08-21T03:00:45Z",
+      "lastCommit": "2026-08-23T04:04:04Z",
       "phase": "Phase 7"
     },
     {
       "name": "halfphi",
       "description": "Switch-level simulation and analysis of transistor-level chip netlists traced from die photographs",
       "language": "Rust",
-      "commits": 4,
+      "commits": 6,
       "firstCommit": "2026-08-17T03:33:36Z",
-      "lastCommit": "2026-08-18T23:15:40Z",
+      "lastCommit": "2026-08-22T16:34:09Z",
+      "phase": "Phase 10"
+    },
+    {
+      "name": "public",
+      "description": "tinymachines.ai: the site, the API and the docs for the 6502 work",
+      "language": "Python",
+      "commits": 32,
+      "firstCommit": "2026-08-22T15:44:09Z",
+      "lastCommit": "2026-08-23T06:00:26Z",
       "phase": "Phase 10"
     }
   ]
