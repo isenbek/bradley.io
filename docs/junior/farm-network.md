@@ -1,7 +1,7 @@
 ---
 title: Farm Network & Cameras — Build Guide
 summary: Starlink Mini in the well house, point-to-multipoint over 20 ft pines, solar cluster sites and self-powered cameras across 5 unattended acres
-version: Rev 8
+version: Rev 9
 updated: 2026-08-22
 ---
 
@@ -352,14 +352,23 @@ and battery are all part of the final system regardless.
 
 ## Base station
 
+**Not UniFi.** You've already pulled UniFi's switches and controller software
+out of your setup over the firmware-update treadmill and slow reboots, keeping
+only the APs. That preference applies here too — the picks below are all
+standalone, no controller, no forced update cadence.
+
 | Role | Pick | Why |
 |---|---|---|
-| **Router + controller** | **UniFi Express (UX)** | Router, controller and AP in one box, ~10 W |
-| **Switch** | **UniFi Switch Lite 8 PoE** | **Per-port power control** — reboot a wedged radio from your phone instead of driving out. Highest-value item on an unattended site |
-| **Pole AP** | **UniFi U6 Mesh** | Outdoor, dual band, PoE. **UAP-AC-M-PRO** is older with better antennas if range beats speed |
+| **Router** | **The same Pi 5 + OpenWrt recipe already running the house** | You already own this playbook — mwan3 failover, banIP, adblock, the LuCI WAN-mode buttons, all of it. Same muscle memory, same recovery kit approach, `opkg` upgrades on your schedule instead of a vendor's |
+| **Switch** | Any **unmanaged PoE switch** — TP-Link, Netgear, whatever's cheap | Boots instantly, nothing to configure, nothing to update. See the note below on remote power-cycling — it's the one thing a managed switch buys you, and it's worth having *some* way to do it even if not this way |
+| **Pole AP** | **TP-Link CPE210** or an **airMAX Rocket M2 + omni antenna** | Standalone, own web UI, no controller, weatherproof, cheap. Either does 2.4 GHz for the cameras with nothing to babysit |
 
-**Stay with UniFi.** One app for both properties is worth more than
-specifications when you are standing in a field.
+**One thing you lose by skipping a managed switch: remote per-port power
+cycling.** On a site visited every few weeks, "reboot a wedged radio from your
+phone" is genuinely valuable. If you want that without the UniFi ecosystem,
+look at a **standalone PoE power-cycling relay** (Digital Loggers, or a simple
+WiFi smart plug ahead of the switch's power brick) rather than a managed switch
+with per-port control baked in — same outcome, no controller required.
 
 ### Power
 
@@ -379,11 +388,16 @@ beats efficiency when nobody is there to notice a failure.
 
 ## The link
 
+> **These are Ubiquiti airMAX gear, not UniFi.** Standalone `airOS` firmware,
+> configured through the device's own local web page, no controller app, no
+> forced update cadence. Different product line from the UniFi ecosystem you
+> moved away from.
+
 | Role | Pick | Why |
 |---|---|---|
-| **Centre** | **UniFi LiteAP AC**, 120° sector | One antenna serves all three clusters; two if spread wider than 120° |
-| **Each cluster** | **UISP NanoStation 5AC Loco** | Small, cheap, low power, easy to aim. **LiteBeam 5AC Gen2** for more gain |
-| **Cluster AP** | **UniFi AC Mesh (UAP-AC-M)** | Lower draw than U6 Mesh, which matters on solar |
+| **Centre** | **airMAX LiteAP AC**, 120° sector | One antenna serves all three clusters; two if spread wider than 120° |
+| **Each cluster** | **airMAX NanoStation 5AC Loco** | Small, cheap, low power, easy to aim. **LiteBeam 5AC Gen2** for more gain |
+| **Cluster AP** | **TP-Link CPE210** or another airMAX unit in AP mode | Standalone, no controller, low draw, which matters on solar |
 
 Four or five radios instead of six, one alignment instead of three, and a fourth
 cluster later costs one small radio.
