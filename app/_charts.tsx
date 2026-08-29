@@ -57,13 +57,16 @@ export function RowChart({
     <div className="beta-chart">
       <div className="beta-chart__cap">{caption}</div>
       <div className="beta-chart__rows" role="list">
-        {data.map((d) => {
+        {data.map((d, i) => {
           const share = d.value / max
           return (
             <div
               className="beta-chart__row"
               role="listitem"
-              key={d.label}
+              // Index-suffixed: a caller can legitimately produce two rows with
+              // the same label (two /24s in the same city), and keying on the label
+              // alone makes React drop one of them.
+              key={`${d.label}-${i}`}
               // A `title` attribute, not a <title> element: the latter is an SVG
               // thing and is invalid inside HTML. Both the label and the value
               // are already visible, so this is a convenience rather than the
@@ -132,9 +135,9 @@ export function HeatGrid({
     <div className="beta-chart">
       <div className="beta-chart__cap">{caption}</div>
       <div className="beta-heat" role="img" aria-label={`${caption}. ${data.length} buckets.`}>
-        {data.map((d) => (
+        {data.map((d, i) => (
           <i
-            key={d.label}
+            key={`${d.label}-${i}`}
             title={`${d.label}: ${d.value.toLocaleString()}`}
             style={{ background: rampStep(d.value / max) }}
           />

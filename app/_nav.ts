@@ -64,7 +64,7 @@ export const NAV: NavGroup[] = [
       { href: "/sdr", label: "SDR", blurb: "the scanner stack and what it is hearing", legacy: true },
       { href: "/fleet", label: "Fleet", blurb: "node health across the cluster", legacy: true },
       { href: "/dragonfli", label: "Dragonfli", blurb: "airspace, GPS, and the perception bus", legacy: true },
-      { href: "/visitors", label: "Knock knock", blurb: "who has been trying the doors", legacy: true },
+      { href: "/visitors", label: "Knock knock", blurb: "who has been trying the doors, across every site here" },
       { href: "/6502", label: "6502", blurb: "the transistor-level chip and its archive", legacy: true },
       { href: "/meatball", label: "Meatball", blurb: "the sensory robot: sight, sound, memory", legacy: true },
       { href: "/projects", label: "Projects", blurb: "the full dossier archive", legacy: true },
