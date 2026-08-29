@@ -42,10 +42,10 @@ export function V3Gps() {
           <b>{agg?.n_used ?? 0}</b>/{agg?.n_visible ?? 0} sats
         </span>
         <span className="v3-gps-hud__stat">
-          mode <b>{tpv ? (tpv.mode === 3 ? "3D" : "2D") : "—"}</b>
+          mode <b>{tpv ? (tpv.mode === 3 ? "3D" : "2D") : "-"}</b>
         </span>
         <span className="v3-gps-hud__stat">
-          HDOP <b>{agg?.hdop != null ? agg.hdop.toFixed(1) : "—"}</b>
+          HDOP <b>{agg?.hdop != null ? agg.hdop.toFixed(1) : "-"}</b>
         </span>
         <span className="v3-gps-hud__stat v3-gps-hud__stat--wide">
           {tpv ? `${tpv.lat.toFixed(5)}, ${tpv.lon.toFixed(5)}` : "no position"}
