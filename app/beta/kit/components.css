@@ -1,0 +1,2671 @@
+/* ============================================================================
+   tinymachines.ai: components
+   Reads tokens.css. No framework. Every class here is rendered in zoo.html
+   with the exact markup that produced it.
+
+   Naming: tm- prefix on anything structural, bare class on primitives that
+   docs authors will type by hand in MDX.
+   ========================================================================= */
+
+/* ---------------------------------------------------------------------------
+   1. GROUNDS
+   ------------------------------------------------------------------------ */
+
+.paper {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+}
+
+/* The panel is the machine talking. Bezel is a real edge: a chrome gradient
+   ring, an inner dark lip, and a hard shadow. Nothing inside a panel is
+   allowed to be decorative. */
+.panel {
+  background: var(--bezel-brushed);
+  padding: 3px;
+  border-radius: 6px;
+  box-shadow: var(--shadow-panel);
+  color: var(--color-glass);
+  font-family: var(--font-sans);
+}
+.panel > .panel-face {
+  background: var(--color-panel);
+  border: 1px solid #05050400;
+  border-radius: var(--radius-mod);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.06),
+              inset 0 0 0 1px rgb(0 0 0 / 0.6);
+  padding: calc(var(--u) * 4);
+}
+.panel--polish { background: var(--bezel-polish); }
+
+/* Panel header strip: name left, phase rail right. */
+.panel-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(var(--u) * 3);
+  padding-bottom: calc(var(--u) * 2.5);
+  margin-bottom: calc(var(--u) * 3);
+  border-bottom: 1px solid var(--color-rule-panel);
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-glass-muted);
+}
+.panel-bar b { color: var(--color-glass); font-weight: 600; }
+
+/* ---------------------------------------------------------------------------
+   2. THE PHASE RAIL: the signature
+   Two cells, phi-one and phi-two, and they are never both lit. The
+   non-overlap guarantee is an axiom of the engine, so the component makes
+   it structurally impossible to render a state that violates it: lit-ness
+   is carried by one attribute on the parent, not by a class on each cell.
+   ------------------------------------------------------------------------ */
+
+.phase {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--u) * 1.5);
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: 0.06em;
+}
+.phase i {
+  display: block;
+  width: calc(var(--u) * 7);
+  height: calc(var(--u) * 2.5);
+  border: 1px solid var(--color-rule-panel);
+  background: var(--color-panel-sunk);
+  transition: background var(--t-snap) var(--ease-snap);
+}
+.phase[data-phase="1"] i:first-of-type,
+.phase[data-phase="2"] i:last-of-type {
+  background: var(--color-blue);
+  box-shadow: 0 0 8px rgb(94 146 255 / 0.5);
+}
+.phase span { color: var(--color-glass-muted); }
+.phase[data-phase] b {
+  color: var(--color-glass);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Half-cycle scrubber. Ticks are half-cycles, not cycles: h is the unit the
+   engine counts in and the axis should not quietly convert it. */
+.hcycle { display: grid; gap: calc(var(--u) * 2); }
+.hcycle-track {
+  display: flex;
+  gap: 1px;
+  height: calc(var(--u) * 6);
+  background: var(--color-panel-sunk);
+  border: 1px solid var(--color-rule-panel);
+  padding: 2px;
+}
+.hcycle-track i {
+  flex: 1;
+  background: var(--color-drive-float);
+  transition: background var(--t-snap) var(--ease-snap);
+}
+.hcycle-track i.p1 { background: #1F3A6B; }
+.hcycle-track i.p2 { background: #14304F; }
+.hcycle-track i.here { background: var(--color-blue); }
+.hcycle-foot {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  color: var(--color-glass-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------------------------------------------------------------------------
+   3. TYPE PRIMITIVES
+   ------------------------------------------------------------------------ */
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-tight);
+  line-height: 0.94;
+  margin: 0;
+}
+h1.display { font-size: var(--text-h1); }
+h2.display { font-size: var(--text-h2); }
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--u) * 3);
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+  font-weight: 500;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-accent-ink);
+  margin: 0 0 calc(var(--u) * 3);
+}
+.eyebrow::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--color-rule);
+  opacity: 0.35;
+}
+
+.prose { font-family: var(--font-serif); font-size: var(--text-prose); line-height: 1.62; max-width: 68ch; }
+.data  { font-family: var(--font-mono); font-size: var(--text-data); font-variant-numeric: tabular-nums; }
+.quiet { color: var(--color-ink-muted); }
+
+/* ---------------------------------------------------------------------------
+   4. BUTTONS: two variants, no third.
+   The press is a detent: 1px of travel and a hard stop, not a fade.
+   ------------------------------------------------------------------------ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--u) * 2);
+  padding: calc(var(--u) * 2.5) calc(var(--u) * 4);
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  border: 1px solid var(--color-ink);
+  border-radius: var(--radius-hair);
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform var(--t-snap) var(--ease-detent),
+              box-shadow var(--t-snap) var(--ease-detent),
+              background var(--t-snap) var(--ease-detent);
+}
+.btn-primary {
+  background: var(--color-accent-ink);
+  color: var(--color-paper);
+  box-shadow: 3px 3px 0 var(--color-ink);
+}
+/* The secondary variant, and it is SHADED rather than transparent.
+   It was `background: transparent` with no shadow, which made it a rectangle
+   of text inside a hairline: on a page whose every static box is also a
+   rectangle inside a hairline, nothing about it said it could be pressed. The
+   report was "very hard to see what is clickable", and it was right.
+   A sunk ground and the same 3px detent as the primary put it in the same
+   family: one is the action, both are controls. */
+.btn-ghost {
+  background: var(--color-paper-sunk);
+  color: var(--color-ink);
+  box-shadow: 3px 3px 0 var(--color-ink-faint);
+}
+.btn-ghost:hover { background: var(--color-paper); box-shadow: 3px 3px 0 var(--color-ink); }
+.btn:active { transform: translate(3px, 3px); box-shadow: 0 0 0 var(--color-ink); }
+.btn:focus-visible { outline: 2px solid var(--color-blue-ink); outline-offset: 2px; }
+
+/* ---------------------------------------------------------------------------
+   5. TAGS, CHIPS, SOURCE MARKS
+   ------------------------------------------------------------------------ */
+
+.tag {
+  display: inline-block;
+  padding: 2px calc(var(--u) * 2);
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border: 1px solid var(--color-ink-faint);
+  color: var(--color-ink-muted);
+  background: var(--color-paper);
+}
+.tag.live  { border-color: var(--color-forest-ink); color: var(--color-forest-ink); }
+.tag.warn  { border-color: var(--color-orange-ink); color: var(--color-orange-ink); }
+.tag.fail  { border-color: var(--color-red-ink);    color: var(--color-red-ink); }
+
+/* The measured chip. START-HERE's rule made visible: if a number is on the
+   page, this says which run produced it. The mark is a ::before glyph so it
+   never lands in a copy-paste. */
+.measured {
+  display: inline-flex;
+  align-items: baseline;
+  gap: calc(var(--u) * 1.5);
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+  color: var(--color-ink-muted);
+  border-bottom: 1px dotted var(--color-ink-faint);
+}
+.measured::before {
+  content: "\25A4";
+  color: var(--color-ocean-ink);
+  font-size: 0.9em;
+}
+.measured b { color: var(--color-ink); font-weight: 500; }
+
+.chips { display: flex; flex-wrap: wrap; gap: calc(var(--u) * 2); }
+/* A chip is a toggle, so it is shaded like one. Same reasoning as .btn-ghost:
+   on paper, a hairline box is what every static thing already is. The pressed
+   state below is unchanged and is the strongest signal in the component. */
+.chip {
+  padding: calc(var(--u) * 1.5) calc(var(--u) * 3);
+  font-family: var(--font-sans);
+  font-size: var(--text-fine);
+  font-weight: 500;
+  background: var(--color-paper-sunk);
+  border: 1px solid var(--color-ink-faint);
+  border-radius: var(--radius-hair);
+  color: var(--color-ink);
+  cursor: pointer;
+  transition: all var(--t-snap) var(--ease-snap);
+}
+.chip:hover:not([aria-pressed="true"]) { border-color: var(--color-ink); }
+.chip[aria-pressed="true"] {
+  background: var(--color-ink);
+  border-color: var(--color-ink);
+  color: var(--color-paper);
+}
+.chip:focus-visible { outline: 2px solid var(--color-blue-ink); outline-offset: 2px; }
+
+/* ---------------------------------------------------------------------------
+   6. NOTICE / BREADCRUMB / MASTHEAD
+   ------------------------------------------------------------------------ */
+
+.notice {
+  border-left: 3px solid var(--color-orange-ink);
+  background: var(--color-paper-sunk);
+  padding: calc(var(--u) * 3) calc(var(--u) * 4);
+  font-size: var(--text-body);
+  line-height: 1.55;
+}
+.notice.fail { border-left-color: var(--color-red-ink); }
+.notice b { font-weight: 700; }
+
+/* The untranslated notice (app/components/Untranslated.tsx) on a workbench.
+   .wb-main has no gutter of its own, because the instruments inside it are
+   full bleed, so the notice supplies one rather than sitting flush against
+   the glass. On a Shell page it is already inside the content column and
+   needs nothing. */
+.workbench .untranslated { margin: calc(var(--u) * 4); }
+
+.crumb {
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+.crumb a { color: var(--color-ink-muted); text-decoration: none; border-bottom: 1px solid var(--color-ink-faint); }
+.crumb a:hover { color: var(--color-ink); }
+.crumb b { color: var(--color-ink); font-weight: 600; }
+
+.masthead {
+  display: grid;
+  /* minmax(0, 1fr), not 1fr. A bare 1fr will not shrink below the min-content
+     width of its contents, and the contents include a single unbreakable word
+     at --text-h1. On a 390px viewport "tinymachines" at 48px is wider than the
+     column, so the grid track grew and the whole PAGE scrolled sideways. The
+     symptom is not a clipped heading, it is a document that slides under your
+     thumb, and it was on three routes. */
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: calc(var(--u) * 4);
+  align-items: center;
+  padding-bottom: calc(var(--u) * 4);
+  border-bottom: 2px solid var(--color-rule);
+}
+.masthead .die {
+  width: calc(var(--u) * 14);
+  height: calc(var(--u) * 14);
+  display: grid;
+  place-items: center;
+  background: var(--color-ink);
+  color: var(--color-mustard);
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+  letter-spacing: 0.06em;
+  border-radius: var(--radius-hair);
+  box-shadow: var(--shadow-card);
+}
+.masthead :is(h1, .mh-title) { margin: 0; }
+.masthead > div { min-width: 0; }
+.mh-meta { display: flex; flex-wrap: wrap; gap: calc(var(--u) * 2); margin-top: calc(var(--u) * 2); }
+
+/* ---------------------------------------------------------------------------
+   7. REGISTER FILE: the processor status block from P.5
+   ------------------------------------------------------------------------ */
+
+.regs { display: grid; gap: calc(var(--u) * 1.5); }
+.reg {
+  display: grid;
+  grid-template-columns: calc(var(--u) * 8) 1fr;
+  align-items: center;
+  gap: calc(var(--u) * 2);
+  font-family: var(--font-mono);
+  font-size: var(--text-data);
+}
+.reg > span { color: var(--color-glass-muted); letter-spacing: 0.08em; }
+.reg > b {
+  background: var(--color-panel-sunk);
+  border: 1px solid var(--color-rule-panel);
+  border-left: 2px solid var(--color-forest);
+  color: var(--color-mustard);
+  padding: calc(var(--u) * 1) calc(var(--u) * 2);
+  font-weight: 400;
+  font-variant-numeric: tabular-nums;
+}
+.reg > b.changed {
+  border-left-color: var(--color-blue);
+  color: var(--color-glass);
+  animation: tm-settle var(--t-detent) var(--ease-detent);
+}
+@keyframes tm-settle {
+  from { background: #1B3560; }
+  to   { background: var(--color-panel-sunk); }
+}
+
+/* Status register: eight flags, always eight, always in NV-BDIZC order.
+   A flag that does not exist on the 6502 still occupies its bit. */
+.flags { display: flex; gap: 2px; font-family: var(--font-mono); font-size: var(--text-data); }
+.flags i {
+  width: calc(var(--u) * 6);
+  height: calc(var(--u) * 6);
+  display: grid;
+  place-items: center;
+  font-style: normal;
+  background: var(--color-panel-sunk);
+  border: 1px solid var(--color-rule-panel);
+  color: var(--color-drive-float);
+}
+.flags i.set { background: var(--color-forest-ink); color: var(--color-paper); border-color: var(--color-forest); }
+.flags i.unused { opacity: 0.4; }
+
+/* ---------------------------------------------------------------------------
+   8. MEMORY MONITOR: hex dump
+   Address column is a different hue from data on purpose: address is an
+   index, data is a value, and confusing them is the classic reading error.
+   ------------------------------------------------------------------------ */
+
+.dump {
+  font-family: var(--font-mono);
+  font-size: var(--text-data);
+  line-height: var(--leading-data);
+  font-variant-numeric: tabular-nums;
+  background: var(--color-panel-sunk);
+  border: 1px solid var(--color-rule-panel);
+  padding: calc(var(--u) * 2) calc(var(--u) * 3);
+  overflow-x: auto;
+}
+.dump-row { display: flex; gap: calc(var(--u) * 3); white-space: nowrap; }
+.dump-row .addr { color: var(--color-ocean); }
+.dump-row .bytes { color: var(--color-glass); display: flex; gap: calc(var(--u) * 2); }
+.dump-row .bytes u { text-decoration: none; }
+.dump-row .bytes u.w { background: var(--color-burnt); color: var(--color-panel); padding: 0 2px; }
+.dump-row .bytes u.r { color: var(--color-mustard); }
+.dump-row .ascii { color: var(--color-glass-muted); }
+
+/* ---------------------------------------------------------------------------
+   9. SIGNAL TRACE: logic analyzer
+   Rows are CSS grids of half-cycle cells. A high cell is a top border, a low
+   cell is a bottom border; the vertical edge falls out of adjacency, which is
+   why the transitions land exactly on the grid and never a pixel off.
+   ------------------------------------------------------------------------ */
+
+.trace {
+  background: var(--color-panel-sunk);
+  border: 1px solid var(--color-rule-panel);
+  padding: calc(var(--u) * 3);
+  overflow-x: auto;
+}
+.trace-row {
+  display: grid;
+  grid-template-columns: calc(var(--u) * 18) 1fr;
+  align-items: center;
+  gap: calc(var(--u) * 3);
+  margin-bottom: calc(var(--u) * 2);
+}
+.trace-row > span {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: 0.06em;
+  color: var(--color-glass-muted);
+  text-align: right;
+  text-transform: uppercase;
+}
+.wave { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; height: calc(var(--u) * 5); min-width: calc(var(--u) * 90); }
+.wave i { border-bottom: 2px solid currentColor; }
+.wave i.h { border-bottom: none; border-top: 2px solid currentColor; }
+.wave i.h + i.l, .wave i.l + i.h { box-shadow: inset 2px 0 0 currentColor; }
+.wave.clk  { color: var(--color-blue); }
+.wave.bus  { color: var(--color-ocean); }
+.wave.ctl  { color: var(--color-mustard); }
+.wave.err  { color: var(--color-red); }
+
+/* Bus lanes carry a value, not a level. */
+.lane { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; height: calc(var(--u) * 5); min-width: calc(var(--u) * 90); }
+.lane i {
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  font-style: normal;
+  color: var(--color-panel);
+  background: var(--color-ocean);
+  border-right: 1px solid var(--color-panel-sunk);
+  overflow: hidden;
+}
+.lane i.z { background: repeating-linear-gradient(45deg, #2A2925 0 4px, #201F1C 4px 8px); color: var(--color-glass-muted); }
+
+/* ---------------------------------------------------------------------------
+   10. NODE INSPECTOR: Drive state
+   Legend order is the enum's ordinal order. Do not sort this alphabetically;
+   the order is the resolution rule.
+   ------------------------------------------------------------------------ */
+
+.nodes { display: flex; flex-wrap: wrap; gap: 3px; }
+.nodes { max-width: 100%; }
+.nodes i {
+  width: calc(var(--u) * 4);
+  height: calc(var(--u) * 4);
+  border-radius: 1px;
+  background: var(--color-drive-float);
+  cursor: pointer;
+}
+.nodes i.charged { background: var(--color-drive-charged); }
+.nodes i.pulldn  { background: var(--color-drive-pulldn); }
+.nodes i.pullup  { background: var(--color-drive-pullup); }
+.nodes i.vcc     { background: var(--color-drive-vcc); }
+.nodes i.vss     { background: var(--color-drive-vss); box-shadow: inset 0 0 0 1px var(--color-rule-panel); }
+.nodes i.contest {
+  background: var(--color-drive-contest);
+  animation: tm-strobe var(--t-strobe) steps(1) 4;
+}
+@keyframes tm-strobe { 50% { background: var(--color-panel-sunk); } }
+
+.legend { display: flex; flex-wrap: wrap; gap: calc(var(--u) * 3); font-family: var(--font-mono); font-size: var(--text-micro); color: var(--color-glass-muted); }
+.legend span { display: inline-flex; align-items: center; gap: calc(var(--u) * 1.5); }
+.legend em { width: calc(var(--u) * 3); height: calc(var(--u) * 3); border-radius: 1px; }
+
+/* ---------------------------------------------------------------------------
+   11. STATE GRID / HISTOGRAM
+   ------------------------------------------------------------------------ */
+
+.states { display: grid; grid-template-columns: repeat(auto-fill, minmax(52px, 1fr)); gap: 3px; }
+.states i {
+  height: calc(var(--u) * 7);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  font-style: normal;
+  letter-spacing: 0.04em;
+  background: var(--color-panel-raised);
+  color: var(--color-glass-muted);
+  border-radius: 1px;
+}
+.states i.ok   { background: var(--color-forest-ink); color: #DDF0E2; }
+.states i.warn { background: var(--color-mustard-ink); color: #F6ECCF; }
+.states i.fail { background: var(--color-red-ink); color: #FFE2DE; }
+
+.hist { display: flex; align-items: flex-end; gap: 2px; height: calc(var(--u) * 24); }
+.hist i { flex: 1; background: var(--color-mustard); border-radius: 1px 1px 0 0; }
+.hist i.peak { background: var(--color-red); }
+.hist i.cold { background: var(--color-ocean); }
+
+/* ---------------------------------------------------------------------------
+   12. TACTILE CONTROLS
+   All four share one rule: the moving part travels a real distance in
+   --t-detent, and the lit state is carried by a glow that is a box-shadow on
+   the moving part, never a background change on the housing.
+   ------------------------------------------------------------------------ */
+
+/* Toggle */
+.toggle {
+  --throw: calc(var(--u) * 5);
+  display: inline-grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  gap: calc(var(--u) * 3);
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+  letter-spacing: 0.06em;
+  color: var(--color-glass-muted);
+}
+.toggle .housing {
+  position: relative;
+  width: calc(var(--u) * 13);
+  height: calc(var(--u) * 17);
+  background: var(--bezel-brushed);
+  border-radius: 3px;
+  box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.5), var(--shadow-card);
+}
+/* The slot. Without a recess the lever reads as a bar sitting on a plate,
+   and the throw stops meaning anything. */
+.toggle .housing::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 8%; bottom: 8%;
+  width: calc(var(--u) * 3.5);
+  margin-left: calc(var(--u) * -1.75);
+  border-radius: 2px;
+  background: #2B2C2D;
+  box-shadow: inset 0 1px 3px rgb(0 0 0 / 0.7);
+}
+.toggle .lever {
+  position: absolute;
+  left: 50%;
+  width: calc(var(--u) * 2);
+  height: calc(var(--u) * 9);
+  margin-left: calc(var(--u) * -1);
+  border-radius: 2px 2px 1px 1px;
+  background: linear-gradient(90deg, #8E9092, #F0F1F2 45%, #A9ABAC);
+  z-index: 1;
+  top: calc(var(--u) * 6.5);
+  transition: top var(--t-detent) var(--ease-detent);
+}
+.toggle[aria-pressed="true"] .lever {
+  top: calc(var(--u) * 1.5);
+  box-shadow: 0 0 10px 2px rgb(94 146 255 / 0.65);
+}
+.toggle[aria-pressed="true"] { color: var(--color-blue); }
+.toggle:focus-visible .housing { outline: 2px solid var(--color-blue); outline-offset: 3px; }
+
+/* Rotary encoder */
+.encoder { display: inline-grid; justify-items: center; gap: calc(var(--u) * 2); font-family: var(--font-mono); }
+.encoder .knob {
+  width: calc(var(--u) * 20);
+  height: calc(var(--u) * 20);
+  border-radius: 50%;
+  background:
+    repeating-conic-gradient(#B7B9BA 0deg 3deg, #85878A 3deg 6deg);
+  display: grid;
+  place-items: center;
+  box-shadow: inset 0 0 0 3px #6E7072, var(--shadow-card);
+  position: relative;
+  transition: transform var(--t-detent) var(--ease-detent);
+}
+.encoder .knob::after {
+  content: "";
+  position: absolute;
+  top: calc(var(--u) * 1.5);
+  width: 2px;
+  height: calc(var(--u) * 4);
+  background: var(--color-panel);
+}
+.encoder .cap {
+  width: calc(var(--u) * 13);
+  height: calc(var(--u) * 13);
+  border-radius: 50%;
+  background: var(--bezel-polish);
+  display: grid;
+  place-items: center;
+  font-size: var(--text-data);
+  color: var(--color-ink);
+  font-variant-numeric: tabular-nums;
+}
+.encoder .val { font-size: var(--text-micro); color: var(--color-glass-muted); letter-spacing: 0.06em; }
+
+/* Push-button */
+.push {
+  width: calc(var(--u) * 22);
+  height: calc(var(--u) * 14);
+  border-radius: 3px;
+  border: 1px solid #6E7072;
+  background: var(--bezel-polish);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-body);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+  cursor: pointer;
+  transition: all var(--t-snap) var(--ease-travel);
+  box-shadow: 0 3px 0 #5A5C5E;
+}
+.push:active { transform: translateY(3px); box-shadow: 0 0 0 #5A5C5E; }
+.push.armed {
+  background: linear-gradient(180deg, #F2A15C, #D9631A);
+  color: #2A1405;
+  border-color: #A64A10;
+  box-shadow: 0 3px 0 #8A3D0C, 0 0 16px 2px rgb(228 103 15 / 0.55);
+}
+.push:focus-visible { outline: 2px solid var(--color-blue); outline-offset: 3px; }
+
+/* Logic slider */
+.slider { display: grid; gap: calc(var(--u) * 2); font-family: var(--font-mono); font-size: var(--text-micro); color: var(--color-glass-muted); }
+.slider .track {
+  position: relative;
+  height: calc(var(--u) * 8);
+  background: var(--color-panel-sunk);
+  border: 1px solid var(--color-rule-panel);
+  border-radius: 2px;
+  background-image: repeating-linear-gradient(90deg, var(--color-rule-panel) 0 1px, transparent 1px 12px);
+}
+.slider .handle {
+  position: absolute;
+  top: -3px;
+  width: calc(var(--u) * 5);
+  height: calc(var(--u) * 11);
+  margin-left: calc(var(--u) * -2.5);
+  border-radius: 2px;
+  background: repeating-linear-gradient(90deg, #C6C8C9 0 2px, #8D8F91 2px 4px);
+  box-shadow: var(--shadow-card);
+  transition: left var(--t-slide) var(--ease-travel);
+}
+.slider .ends { display: flex; justify-content: space-between; font-variant-numeric: tabular-nums; }
+
+/* DIP bank */
+.dip { display: inline-flex; gap: 2px; padding: calc(var(--u) * 2); background: var(--color-burnt-ink); border-radius: 2px; }
+.dip i {
+  width: calc(var(--u) * 4);
+  height: calc(var(--u) * 9);
+  background: var(--color-paper-sunk);
+  position: relative;
+  border-radius: 1px;
+  cursor: pointer;
+}
+.dip i::after {
+  content: "";
+  position: absolute;
+  left: 1px; right: 1px;
+  height: calc(var(--u) * 4);
+  bottom: 1px;
+  background: var(--color-ink);
+  transition: bottom var(--t-detent) var(--ease-detent), top var(--t-detent) var(--ease-detent);
+}
+.dip i.on::after { bottom: auto; top: 1px; background: var(--color-forest-ink); }
+
+/* ---------------------------------------------------------------------------
+   13. TABLES AND RAILS  (paper)
+   ------------------------------------------------------------------------ */
+
+.ledger { border: 1px solid var(--color-rule); background: var(--color-paper); }
+/* position: relative is not decoration, and it is not optional.
+   An absolutely positioned descendant with no positioned ancestor is laid out
+   against the INITIAL containing block, which means it escapes this scroll
+   container entirely and its static position lands in the page's scroll
+   width. The admin ledger's visually hidden column label ("Actions", which is
+   position: absolute) sat at x=770 inside a table 819px wide, and dragged the
+   whole document's scrollWidth to 770 at a 390px viewport: the entire page
+   scrolled sideways, on every phone, with nothing visible out there to
+   explain it.
+   Found by driving the real page and asking which elements ended past the
+   viewport with no scrollable ancestor. The answer was "none", and the
+   document still scrolled, which is what pointed at the one element that had
+   left the container instead of overflowing it. */
+.ledger .scroller { overflow-x: auto; position: relative; }
+.ledger table { width: 100%; border-collapse: collapse; font-size: var(--text-fine); }
+.ledger th {
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+  padding: calc(var(--u) * 2) calc(var(--u) * 3);
+  border-bottom: 1px solid var(--color-rule);
+  white-space: nowrap;
+}
+.ledger td {
+  padding: calc(var(--u) * 2) calc(var(--u) * 3);
+  border-bottom: 1px solid var(--color-ink-faint);
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.ledger tr:last-child td { border-bottom: 0; }
+.ledger .num { text-align: right; }
+.ledger .name { font-family: var(--font-sans); font-weight: 600; }
+.ledger tbody tr:hover { background: var(--color-paper-sunk); }
+.tbl-foot {
+  display: flex;
+  justify-content: space-between;
+  padding: calc(var(--u) * 2) calc(var(--u) * 3);
+  border-top: 1px solid var(--color-rule);
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  color: var(--color-ink-muted);
+}
+
+.rail {
+  border: 1px solid var(--color-rule);
+  background: var(--color-paper);
+  padding: calc(var(--u) * 4);
+}
+.rail h3 {
+  font-family: var(--font-display);
+  font-size: var(--text-lead);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-tight);
+  margin: 0 0 calc(var(--u) * 3);
+}
+.kv { margin: 0; display: grid; gap: calc(var(--u) * 2); }
+.kv > div { display: flex; justify-content: space-between; gap: calc(var(--u) * 3); align-items: baseline; }
+.kv dt {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+.kv dd { margin: 0; font-family: var(--font-mono); font-weight: 600; font-variant-numeric: tabular-nums; }
+
+.bar-row { margin-bottom: calc(var(--u) * 3); }
+.bar-top { display: flex; justify-content: space-between; font-size: var(--text-fine); margin-bottom: calc(var(--u) * 1.5); }
+.bar-top b { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.bar { height: calc(var(--u) * 3); background: var(--color-paper-sunk); border: 1px solid var(--color-ink-faint); }
+.bar i { display: block; height: 100%; background: var(--color-forest-ink); }
+.bar i.p { background: repeating-linear-gradient(45deg, var(--color-mustard-ink) 0 4px, transparent 4px 8px); }
+
+/* Coin meter. Coins are given away, never sold, so the meter shows a budget
+   remaining, never a price, and there is deliberately no "buy more" affordance
+   to design around. */
+.coins { display: flex; align-items: center; gap: calc(var(--u) * 3); font-family: var(--font-mono); font-size: var(--text-fine); }
+.coins .stack { display: flex; gap: 2px; }
+.coins .stack i {
+  width: calc(var(--u) * 3);
+  height: calc(var(--u) * 3);
+  border-radius: 50%;
+  background: var(--color-mustard-ink);
+  box-shadow: inset 0 -1px 0 rgb(0 0 0 / 0.3);
+}
+.coins .stack i.spent { background: transparent; box-shadow: inset 0 0 0 1px var(--color-ink-faint); }
+
+/* ---------------------------------------------------------------------------
+   14. CODE AND API
+   ------------------------------------------------------------------------ */
+
+.code {
+  background: var(--color-panel);
+  color: var(--color-glass);
+  border-radius: var(--radius-mod);
+  font-family: var(--font-mono);
+  font-size: var(--text-data);
+  line-height: var(--leading-data);
+  overflow-x: auto;
+}
+.code-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: calc(var(--u) * 2) calc(var(--u) * 3);
+  border-bottom: 1px solid var(--color-rule-panel);
+  font-size: var(--text-micro);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-glass-muted);
+}
+.code pre { margin: 0; padding: calc(var(--u) * 3); }
+.code .k { color: var(--color-ocean); }
+.code .s { color: var(--color-forest); }
+.code .n { color: var(--color-mustard); }
+.code .c { color: var(--color-glass-muted); font-style: italic; }
+.code .out { border-top: 1px solid var(--color-rule-panel); background: var(--color-panel-sunk); }
+.code .out::before {
+  content: "RAN " attr(data-ran);
+  display: block;
+  padding: calc(var(--u) * 1.5) calc(var(--u) * 3) 0;
+  font-size: var(--text-micro);
+  letter-spacing: var(--tracking-caps);
+  color: var(--color-forest);
+}
+
+.endpoint { border: 1px solid var(--color-rule); background: var(--color-paper); }
+.endpoint .ep-head {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--u) * 3);
+  padding: calc(var(--u) * 3);
+  border-bottom: 1px solid var(--color-rule);
+  font-family: var(--font-mono);
+  font-size: var(--text-data);
+}
+.endpoint .verb {
+  padding: 2px calc(var(--u) * 2);
+  background: var(--color-forest-ink);
+  color: var(--color-paper);
+  font-size: var(--text-micro);
+  letter-spacing: 0.08em;
+}
+.endpoint .verb.post { background: var(--color-burnt-ink); }
+.endpoint .path { font-weight: 600; }
+.endpoint .ep-body { padding: calc(var(--u) * 3); font-size: var(--text-fine); }
+.endpoint .params { width: 100%; border-collapse: collapse; margin-top: calc(var(--u) * 2); }
+.endpoint .params td {
+  padding: calc(var(--u) * 1.5) 0;
+  border-bottom: 1px solid var(--color-ink-faint);
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+  vertical-align: top;
+}
+.endpoint .params td:first-child { width: 30%; color: var(--color-ocean-ink); }
+.endpoint .params td:last-child { font-family: var(--font-sans); color: var(--color-ink-muted); }
+
+/* ---------------------------------------------------------------------------
+   15. DOCS TREE NAV
+   Derived from the directory, never hand-listed. Depth is one indent step;
+   there is no third level of visual treatment because the tree has no third
+   kind of node.
+   ------------------------------------------------------------------------ */
+
+.tree { font-family: var(--font-mono); font-size: var(--text-fine); }
+.tree a {
+  display: block;
+  padding: calc(var(--u) * 1.5) calc(var(--u) * 2);
+  color: var(--color-ink-muted);
+  text-decoration: none;
+  border-left: 2px solid transparent;
+}
+.tree a:hover { color: var(--color-ink); background: var(--color-paper-sunk); }
+.tree a[aria-current="page"] {
+  color: var(--color-ink);
+  font-weight: 600;
+  border-left-color: var(--color-accent-ink);
+  background: var(--color-paper-sunk);
+}
+.tree .d { padding-left: calc(var(--u) * 4); }
+.tree .sect {
+  padding: calc(var(--u) * 3) calc(var(--u) * 2) calc(var(--u) * 1);
+  font-size: var(--text-micro);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-ink-faint);
+}
+
+/* ---------------------------------------------------------------------------
+   16. ATTENTION GLOW
+   The one slow curve in the system. Used on a container edge, never on text.
+   ------------------------------------------------------------------------ */
+
+.attn { animation: tm-glow var(--t-glow) var(--ease-travel) infinite; }
+@keyframes tm-glow {
+  0%, 100% { box-shadow: inset 0 0 0 1px var(--color-rule-panel); }
+  50%      { box-shadow: inset 0 0 0 1px var(--color-orange), 0 0 14px rgb(228 103 15 / 0.35); }
+}
+
+/* ---------------------------------------------------------------------------
+   17. THE DOCUMENT SURFACE
+   The /docs shell, and the flow rules for rendered markdown.
+
+   This section exists because of a measured failure, not a preference.
+   Tailwind's preflight sets `h1,h2,h3,h4,h5,h6 { font-size: inherit;
+   font-weight: inherit }`. A markdown tree rendered under it has no heading
+   hierarchy at all: every page is one flat column of body text, which is
+   exactly what the site looked like. Nothing errors. There is no console
+   warning. It reads as "the design is not done yet" rather than as a bug,
+   which is the quiet failure mode this repo keeps a list of.
+
+   Section 1 assigns the grounds and this section obeys it: documentation is
+   paper, and a code block is the machine talking, so `pre` is a panel. That
+   is the one place a dark box appears in a document, and it appears because
+   the content came off the chip, not for contrast.
+
+   No colour, face or size is introduced here. Every value is a token from
+   tokens.css or a multiple of --u, so the style guide still reaches all of
+   it: `check-tokens.py` beside this file fails if any var() below names a
+   token that does not exist, which is the silent-drop trap.
+   ------------------------------------------------------------------------ */
+
+/* The grid only. The frame around it is .page, which wraps this, so the two
+   cannot apply their padding twice or drift to different widths. */
+.docs-shell {
+  display: grid;
+  grid-template-columns: minmax(0, calc(var(--u) * 58)) minmax(0, 1fr);
+  gap: calc(var(--u) * 12);
+  margin-top: calc(var(--u) * 10);
+}
+
+/* One column below the point the two stop fitting. The nav goes first because
+   in a single column it is a table of contents, which is where a reader
+   expects one. */
+@media (max-width: 60rem) {
+  .docs-shell { grid-template-columns: minmax(0, 1fr); gap: calc(var(--u) * 8); }
+}
+
+.docs-nav {
+  position: sticky;
+  top: calc(var(--u) * 12);
+  align-self: start;
+  max-height: calc(100vh - var(--u) * 24);
+  overflow-y: auto;
+  font-family: var(--font-sans);
+  font-size: var(--text-fine);
+  line-height: 1.5;
+}
+.docs-nav ul  { list-style: none; margin: 0; padding: 0; }
+.docs-nav > a {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--text-body);
+  font-weight: 700;
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-ink);
+  text-decoration: none;
+  padding-bottom: calc(var(--u) * 3);
+  margin-bottom: calc(var(--u) * 3);
+  border-bottom: 1px solid var(--color-rule);
+}
+/* Nesting is one indent per level, drawn as a rule rather than as padding
+   alone, so depth is visible when a branch is long. */
+.docs-nav ul ul {
+  margin-left: calc(var(--u) * 2);
+  padding-left: calc(var(--u) * 3);
+  border-left: 1px solid var(--color-rule);
+}
+.docs-nav li > a {
+  display: block;
+  padding: calc(var(--u) * 1.5) 0;
+  color: var(--color-ink-muted);
+  text-decoration: none;
+  transition: color var(--t-snap) var(--ease-snap);
+}
+.docs-nav li > a:hover { color: var(--color-ink); }
+
+/* Immediately after .docs-nav, not up in the shell's media query, and this
+   placement is the whole fix. Written there first, it lost: .docs-nav below
+   sets position: sticky, comes later in the file, and has the same
+   specificity, so the override silently did nothing.
+
+   The result was not subtle. Below 60rem the shell is one column, so the nav
+   and the document occupy the SAME column, and a sticky nav with no
+   background sat on top of the prose scrolling under it. Two sets of words in
+   the same place. Measured across thirteen viewport widths: every one at
+   960px and below.
+
+   This is the second time this file has been bitten by an override that a
+   later rule defeats. style/check-cascade.py now fails on it. */
+@media (max-width: 60rem) {
+  .docs-nav { position: static; max-height: none; overflow-y: visible; }
+}
+
+.docs-body { min-width: 0; }
+
+/* THE CONTENTS BUTTON (owner's call, 2026-08-28). Below 60rem the tree is
+   the first thing on the page and twenty links tall; it waits behind one
+   button in the Read on's shape (explorer.css) until it is asked for. On a
+   desk the button does not exist and the tree is the sidebar. */
+.docs-toc .toc-btn { display: none; }
+@media (max-width: 60rem) {
+  .docs-toc .toc-btn {
+    display: inline-block;
+    cursor: pointer;
+    font-family: var(--font-mono);
+    font-size: var(--text-fine);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-ink-muted);
+    background: none;
+    border: 1px solid var(--color-rule);
+    padding: calc(var(--u) * 1) calc(var(--u) * 3);
+  }
+  .docs-toc .toc-btn::after { content: " \203A"; }
+  .docs-toc.open .toc-btn::after { content: " \2039"; }
+  .docs-toc .toc-btn:hover, .docs-toc .toc-btn:focus-visible { color: var(--color-ink); border-color: var(--color-ink); }
+  .docs-toc .toc-list { display: none; }
+  .docs-toc.open .toc-list { display: block; margin-top: calc(var(--u) * 3); }
+}
+
+/* --- flow: rendered markdown ------------------------------------------- */
+
+/* Headings are display, and the scale is the one in tokens.css. The reason
+   they are restated at all is preflight, above. */
+.prose > h1,
+.prose > h2,
+.prose > h3,
+.prose > h4 {
+  font-family: var(--font-display);
+  color: var(--color-ink);
+  letter-spacing: var(--tracking-tight);
+  line-height: 1.15;
+  text-wrap: balance;
+}
+.prose > h1 { font-size: var(--text-h1); font-weight: 800; margin: 0 0 calc(var(--u) * 5); }
+.prose > h2 { font-size: var(--text-h2); font-weight: 700; margin: calc(var(--u) * 12) 0 calc(var(--u) * 4); }
+.prose > h3 { font-size: var(--text-h3); font-weight: 700; margin: calc(var(--u) * 9) 0 calc(var(--u) * 3); }
+.prose > h4 {
+  font-size: var(--text-body);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-caps);
+  color: var(--color-ink-muted);
+  margin: calc(var(--u) * 8) 0 calc(var(--u) * 2);
+}
+
+/* An h2 opens a section, so it carries the section rule. Not the first one:
+   a rule directly under the title separates a heading from nothing. */
+.prose > h2 { padding-top: calc(var(--u) * 4); border-top: 1px solid var(--color-rule); }
+.prose > h1 + h2 { padding-top: 0; border-top: 0; margin-top: calc(var(--u) * 6); }
+
+.prose > p  { margin: 0 0 calc(var(--u) * 5); }
+.prose > ul,
+.prose > ol { margin: 0 0 calc(var(--u) * 5); padding-left: calc(var(--u) * 6); }
+.prose li   { margin-bottom: calc(var(--u) * 2); }
+.prose li > ul,
+.prose li > ol { margin: calc(var(--u) * 2) 0 0; }
+
+.prose a {
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--color-orange);
+  text-underline-offset: 2px;
+  text-decoration-thickness: 1px;
+  transition: text-decoration-thickness var(--t-snap) var(--ease-snap);
+}
+.prose a:hover { text-decoration-thickness: 2px; }
+
+.prose strong { font-weight: 700; color: var(--color-ink); }
+.prose em     { font-style: italic; }
+.prose hr {
+  border: 0;
+  border-top: 1px solid var(--color-rule);
+  margin: calc(var(--u) * 10) 0;
+}
+
+.prose blockquote {
+  margin: 0 0 calc(var(--u) * 5);
+  padding-left: calc(var(--u) * 4);
+  border-left: 2px solid var(--color-rule);
+  color: var(--color-ink-muted);
+}
+
+/* Inline code stays on paper: it is a name being mentioned, not a value that
+   came out of a run. It may break anywhere, because a name has no spaces in
+   it: a 42-character identifier, or a run of paths joined by an ideographic
+   comma (which the browser will not break before), was one unbreakable line
+   that widened six pages on a 390px phone. Found by the mobile sweep's
+   overflow reading, 2026-08-25. */
+.prose :not(pre) > code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background: var(--color-paper-sunk);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-hair);
+  padding: 0.1em 0.35em;
+  overflow-wrap: anywhere;
+}
+
+/* A code block is the machine talking, so it is a panel. Section 1. */
+.prose pre {
+  margin: 0 0 calc(var(--u) * 6);
+  padding: calc(var(--u) * 4);
+  background: var(--color-panel);
+  color: var(--color-glass);
+  border-radius: var(--radius-mod);
+  overflow-x: auto;
+  font-family: var(--font-mono);
+  font-size: var(--text-data);
+  line-height: var(--leading-data);
+}
+.prose pre code { background: none; border: 0; padding: 0; font-size: inherit; color: inherit; }
+/* The Copy control on a docs code block (components/CopyPre.tsx): the
+   fine mono label the Contents button uses, in the block's top corner, in
+   the glass the block's text is in. The wrapper carries the block's margin
+   so the pre inside it can be the positioning box. */
+.copy-pre { position: relative; }
+.copy-pre .copy-btn {
+  position: absolute;
+  top: calc(var(--u) * 2);
+  right: calc(var(--u) * 2);
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-glass);
+  background: var(--color-panel);
+  border: 1px solid var(--color-glass);
+  border-radius: var(--radius-mod);
+  padding: calc(var(--u) * 1) calc(var(--u) * 2);
+  opacity: 0.7;
+}
+.copy-pre .copy-btn:hover, .copy-pre .copy-btn:focus-visible { opacity: 1; }
+
+/* Tables are documentation, so they stay on paper. A wide one scrolls inside
+   its own box rather than widening the page. */
+.prose table {
+  width: 100%;
+  margin: 0 0 calc(var(--u) * 6);
+  border-collapse: collapse;
+  font-family: var(--font-sans);
+  font-size: var(--text-fine);
+  text-align: left;
+}
+.prose thead th {
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-caps);
+  font-size: var(--text-micro);
+  color: var(--color-ink-muted);
+  border-bottom: 1px solid var(--color-rule);
+  padding: calc(var(--u) * 2);
+}
+.prose tbody td {
+  padding: calc(var(--u) * 2);
+  border-bottom: 1px solid var(--color-rule);
+  vertical-align: top;
+}
+.prose tbody tr:last-child td { border-bottom: 0; }
+
+.prose img { max-width: 100%; height: auto; }
+
+/* ---------------------------------------------------------------------------
+   18. THE PAGE FRAME
+   A single-column page that is not the docs tree.
+
+   This exists because the front page had no frame at all and it showed. The
+   prose measure caps the line length but sets no padding, so on a phone the
+   text ran hard into the left edge and the display heading was clipped by it.
+   Nothing errored, and on a wide screen the measure hid the fault entirely:
+   it only appeared below the width where the column stops being narrower than
+   the viewport.
+
+   Same values as .docs-shell, because it is the same frame with one column
+   rather than two, and two frames that are meant to match should not be able
+   to drift apart.
+   ------------------------------------------------------------------------ */
+
+.page {
+  max-width: calc(var(--u) * 280);
+  margin: 0 auto;
+  padding: calc(var(--u) * 12) calc(var(--u) * 8);
+}
+
+@media (max-width: 40rem) {
+  .page { padding: calc(var(--u) * 8) calc(var(--u) * 5); }
+
+}
+
+/* The measured chip is inline-flex, so a long provenance string on a narrow
+   screen pushed its parts apart instead of wrapping. It is a stamp; it should
+   wrap like a stamp. */
+.measured { flex-wrap: wrap; }
+
+/* The page footer. A rule, and the same mono caps as a crumb, because a
+   footer is a crumb at the other end of the document. Lives here rather than
+   as an inline style on the component: a page does not fork the kit. */
+.site-foot {
+  margin-top: calc(var(--u) * 16);
+  padding-top: calc(var(--u) * 4);
+  border-top: 1px solid var(--color-rule);
+}
+
+/* The masthead's title is a display h1, but .prose > h1 does not reach it:
+   the masthead sits outside the prose column. Stated here so the two cannot
+   drift to different sizes.
+
+   The narrow override sits immediately below rather than up in the page frame
+   media query, and that placement is the fix for a real bug. It was written
+   there first, and this block came later in the file: same specificity, later
+   rule wins, so the override silently did nothing and the heading kept
+   overflowing at 390px. Two rules for one property belong next to each
+   other. */
+.masthead :is(h1, .mh-title) {
+  font-family: var(--font-display);
+  font-size: var(--text-h1);
+  font-weight: 800;
+  letter-spacing: var(--tracking-tight);
+  line-height: 1.1;
+  color: var(--color-ink);
+}
+
+@media (max-width: 40rem) {
+  /* Measured, not guessed: at 390px the frame leaves 350px, the die and its
+     gap take 60 of that, and the longest title the site has, "Documentation",
+     needs about 250 at --text-h2. */
+  .masthead { gap: calc(var(--u) * 3); }
+  .masthead :is(h1, .mh-title) { font-size: var(--text-h2); }
+  .masthead .die { width: calc(var(--u) * 12); height: calc(var(--u) * 12); }
+}
+
+/* A tag used as a link is still a tag, but it has to say so on hover. */
+a.tag {
+  text-decoration: none;
+  color: var(--color-accent-ink);
+  border-color: var(--color-accent-ink);
+  transition: color var(--t-snap) var(--ease-snap),
+    border-color var(--t-snap) var(--ease-snap),
+    background var(--t-snap) var(--ease-snap);
+}
+a.tag:hover { color: var(--color-paper); background: var(--color-accent-ink); }
+a.tag[aria-current="page"] { color: var(--color-ink); border-color: var(--color-accent-ink); }
+
+/* A colour swatch inside an inline code chip. Used by the docs renderer when
+   a code span is a hex value, so the style guide's palette shows the colours
+   it names instead of six characters of monospace.
+
+   The size is in ems rather than units on purpose: it has to match the text
+   it sits in, and that text is already one step down from the body size. */
+.swatch {
+  display: inline-block;
+  width: 0.75em;
+  height: 0.75em;
+  margin-right: 0.4em;
+  vertical-align: -0.05em;
+  border: 1px solid var(--color-ink-faint);
+  border-radius: var(--radius-hair);
+}
+
+/* The front page's piece grid. Cards are .rail, which the kit already
+   provides; this is only how they are placed. auto-fit with a minimum keeps
+   it one column on a phone and three on a wide screen with no breakpoint of
+   its own, so there is no width where it is nearly right. */
+.piece-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(calc(var(--u) * 68), 1fr));
+  gap: calc(var(--u) * 4);
+  margin: calc(var(--u) * 6) 0 calc(var(--u) * 12);
+}
+.piece-grid .rail p { margin: 0 0 calc(var(--u) * 3); font-size: var(--text-fine); line-height: 1.55; }
+.piece-grid .rail h3 { display: flex; align-items: center; gap: calc(var(--u) * 2); flex-wrap: wrap; }
+/* flex-wrap because the project cards put every surface of a project in this
+   row: seven tags for the 6502 card, which is wider than any card at any
+   width this grid produces. The piece cards have at most two and never
+   wrapped anyway. */
+.piece-links { display: flex; flex-wrap: wrap; gap: calc(var(--u) * 2); margin: calc(var(--u) * 3) 0 0; }
+.piece-note { font-size: var(--text-micro); margin-top: calc(var(--u) * 2); }
+
+/* halfphi on the front page: the mark beside its sentence. .rail is the card;
+   this is only the arrangement. It collapses to one column on a narrow screen
+   at the same breakpoint the page frame uses, so there is no width where the
+   mark and the text are fighting over 300 pixels. */
+.halfphi {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: calc(var(--u) * 6);
+  align-items: center;
+  margin: calc(var(--u) * 6) 0 calc(var(--u) * 10);
+}
+.halfphi img { display: block; }
+.halfphi p { margin: 0 0 calc(var(--u) * 3); font-size: var(--text-fine); line-height: 1.55; }
+.halfphi-links { display: flex; flex-wrap: wrap; gap: calc(var(--u) * 2); margin: 0; }
+
+@media (max-width: 40rem) {
+  .halfphi { grid-template-columns: minmax(0, 1fr); justify-items: start; gap: calc(var(--u) * 4); }
+}
+
+/* ---------------------------------------------------------------------------
+   19. READOUT: a table on a panel
+
+   .ledger is the tabular component and it is paper: it sets a paper ground and
+   ink hairlines, which is right for documentation and wrong for values that
+   came off the engine. The panel had .trace for waveforms and .regs for a
+   register file, and nothing for rows of measured numbers, so a page that
+   wanted one had to fork a table inline. This is that component.
+
+   Scoped inside .panel-face on purpose. Section 1's rule is that live engine
+   state belongs on a panel, and a readout that could be dropped onto paper
+   would be an invitation to break it.
+   ------------------------------------------------------------------------ */
+
+.panel-face .readout {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-mono);
+  font-size: var(--text-data);
+  line-height: var(--leading-data);
+  color: var(--color-glass);
+}
+.panel-face .readout th {
+  text-align: left;
+  font-size: var(--text-micro);
+  font-weight: 500;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-glass-muted);
+  padding: 0 calc(var(--u) * 2) calc(var(--u) * 2);
+  border-bottom: 1px solid var(--color-rule-panel);
+  white-space: nowrap;
+}
+.panel-face .readout td {
+  padding: calc(var(--u) * 1.5) calc(var(--u) * 2);
+  border-bottom: 1px solid var(--color-rule-panel);
+}
+.panel-face .readout tbody tr:last-child td { border-bottom: 0; }
+
+/* Numbers right-align and share a column width, so a changing value does not
+   move the ones beside it. */
+.panel-face .readout .num { text-align: right; font-variant-numeric: tabular-nums; }
+
+/* The value that just changed. Mustard is the value colour in section 2's
+   standing assignments, so a changed byte is a value being emphasised rather
+   than a new meaning. */
+.panel-face .readout .changed { color: var(--color-mustard); }
+
+/* ---------------------------------------------------------------------------
+   20. FORM CONTROLS
+
+   The kit had none. Every component above displays something; the admin
+   screen was the first page that had to take something in, and an unstyled
+   <input> on this ground reads exactly like the "no style" bug this file has
+   already been blamed for twice: browser chrome, browser font, browser blue
+   focus ring, sitting inside a designed page.
+
+   So this is structure over the owner's tokens, not a new visual language.
+   Every value below is a var() from tokens.css and nothing here defines a
+   colour, a size or a duration of its own. The vocabulary is the one already
+   established: paper-sunk for a well, ink hairlines, radius-hair on paper, the
+   blue focus ring from .btn and .chip, and the mono uppercase label voice from
+   .kv dt. Replacing this section wholesale costs nothing above it.
+
+   Two things are deliberate rather than incidental.
+
+   A control is a WELL: paper-sunk inside an ink hairline, which is the same
+   figure the panel uses for a readout. On this ground "you may type here" has
+   to be carried by depth, because the ink hairline is already the border of
+   every static box in the kit and would say nothing on its own.
+
+   The invalid state is a border and a message, never colour alone. Red is
+   ASSERTION FAILED in this palette and it is also invisible to a reader who
+   cannot see it, so .field.bad turns on a hint that says what is wrong.
+   ------------------------------------------------------------------------ */
+
+.field { display: grid; gap: calc(var(--u) * 1.5); }
+.field > label {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+
+.input {
+  width: 100%;
+  padding: calc(var(--u) * 2.5) calc(var(--u) * 3);
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  color: var(--color-ink);
+  background: var(--color-paper-sunk);
+  border: 1px solid var(--color-ink-faint);
+  border-radius: var(--radius-hair);
+}
+/* An identifier is data, not prose: a handle, an id or a URL is read
+   character by character and belongs in the mono voice for the same reason
+   the ledger's columns do. */
+.input.data { font-family: var(--font-mono); font-size: var(--text-data); }
+.input::placeholder { color: var(--color-ink-faint); }
+.input:focus-visible {
+  outline: 2px solid var(--color-blue-ink);
+  outline-offset: 1px;
+  border-color: var(--color-ink);
+}
+.input:disabled { color: var(--color-ink-faint); cursor: not-allowed; }
+.input[type="checkbox"] { width: auto; accent-color: var(--color-accent-ink); }
+
+.field .hint { font-size: var(--text-fine); color: var(--color-ink-muted); }
+.field.bad .input { border-color: var(--color-red-ink); }
+.field.bad .hint { color: var(--color-red-ink); }
+
+/* Fields side by side down to one column. minmax(0, 1fr) rather than 1fr,
+   because a grid track defaults to min-content and one long unbroken value in
+   a field widens the whole page: the .masthead bug, which reached production
+   and scrolled three routes sideways at 390px. */
+.form-grid {
+  display: grid;
+  gap: calc(var(--u) * 4);
+  grid-template-columns: repeat(auto-fit, minmax(min(14rem, 100%), 1fr));
+}
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: calc(var(--u) * 3); }
+
+/* The monogram. It stands in for a picture rather than decorating one: the
+   site's img-src is 'self' data:, so an avatar on another host is blocked by
+   the browser and renders as a broken image with no error on the page. A
+   letter is a true thing to draw when the picture cannot be fetched, and the
+   URL goes beside it as a link. */
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(var(--u) * 8);
+  height: calc(var(--u) * 8);
+  flex: none;
+  font-family: var(--font-display);
+  font-size: var(--text-body);
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-paper);
+  background: var(--color-ink);
+  border-radius: var(--radius-hair);
+}
+.avatar.off { background: var(--color-ink-faint); }
+
+/* .sr-only is NOT defined here, and its absence is the point.
+   The admin screen needs a label a screen reader announces and nothing else
+   shows, so one was written here first. It shipped as a SECOND .sr-only rule
+   in the built stylesheet, because Tailwind already emits that utility, and
+   this one came later and therefore won. It was also strictly worse: Tailwind's
+   carries margin: -1px, padding: 0 and border-width: 0, which are the parts
+   that stop a visually hidden element from occupying layout in engines that
+   ignore clip-path.
+
+   Found by deliberately renaming it and watching the build check stay green,
+   which is the only reason anybody would notice: two rules with the same name
+   and different contents produce a page that looks entirely correct.
+
+   So the kit uses Tailwind's. A component here that needs a hidden label
+   should use `sr-only` and not define one. If components.css is ever served
+   somewhere Tailwind is not (zoo.html is served exactly that way today, and
+   uses no hidden labels), that page needs the utility, not a copy of it here. */
+
+/* ---------------------------------------------------------------------------
+   21. THE APP SHELL: locked chrome, and the document still scrolls
+
+   The masthead and the footer hold still and the content between them moves.
+   That is what an installed app does, and this site is installable now, so a
+   page that scrolls its own header away reads as a web page inside an app
+   frame.
+
+   ## Sticky, not a scroll container, and that was a correction
+
+   The first version made the middle a real scrolling element: a 100dvh grid
+   with overflow hidden on the shell. It locked the chrome perfectly and broke
+   three things, all of which were found by driving a browser rather than by
+   looking at it.
+
+   **The keyboard stopped scrolling.** PageDown, End and space act on the
+   focused element or on the document, and the document no longer scrolled. A
+   reader with no mouse could not get past the first screen of any page on the
+   site, and nothing on screen said so.
+
+   **The wheel did nothing over the chrome.** The masthead is a wide target at
+   the top of every page. Landing the pointer there and scrolling moved
+   nothing, because a wheel event looks for a scrollable ancestor and found an
+   overflow:hidden shell.
+
+   **Find-in-page, scroll restoration on Back, and hash links** all address the
+   document, and all of them would have needed reimplementing.
+
+   Sticky gives up none of that. The document is the scroller, so every one of
+   those behaves exactly as it did before, and the two bands stay put anyway.
+   The lesson is worth keeping: the browser does a great deal for a page that
+   scrolls normally, and taking that over costs all of it at once.
+
+   ## Why the shell is a flex column as well
+
+   Sticky alone is not enough when a page is SHORT. A footer whose natural
+   position is halfway up the viewport sticks nowhere, because it never leaves
+   the screen, so it sits in the middle looking dropped. `min-height: 100dvh`
+   with the middle set to grow puts it at the bottom when there is not enough
+   content, and sticky pins it there when there is.
+
+   100dvh, not 100vh: on a phone vh is the viewport with the URL bar
+   retracted, and the bar is usually out. The 100vh line is a fallback for
+   engines with no dvh and is deliberately first, because a later property
+   wins.
+
+   ## The bands must be opaque
+
+   Content scrolls UNDER a sticky band rather than being clipped by it, so a
+   band with no background is one you read the page through. Both are paper,
+   which is the ground they sit on, stated rather than inherited.
+
+   The zoo does not use this and should not. It brings its own full-page
+   chrome, including its own sticky header at top: 0, and two of those on one
+   page is one covering the other.
+   ------------------------------------------------------------------------ */
+
+.app-shell {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-head,
+.app-foot {
+  /* In the flow, not sticky. Docked, it sat over every page all the time and
+     ate three lines of a phone's viewport; a footer is an ending, and an
+     ending that follows you around is neither. */
+  background: var(--color-paper);
+}
+/* No border of its own: the masthead inside it already draws the 2px rule at
+   the content measure, and the band's full-bleed hairline under that read as
+   a second, stray line. One rule, the heavy one.
+
+   The z-index arrived with the footer's move into the flow: a sticky element
+   without one is painted in plain positioned order, so the docs sidebar,
+   positioned and later in the DOM, slid OVER the header the first time
+   anybody scrolled a docs page to the bottom. */
+.app-head { position: sticky; top: 0; z-index: 25; background: var(--color-paper); }
+.app-foot { border-top: 1px solid var(--color-rule); }
+
+/* Grow, so a short page still puts its footer on the floor. flex-basis auto
+   rather than 0 so the content's own height is the starting point: with 0 the
+   band would size purely from the flex line and a tall page would be laid out
+   from nothing. */
+.app-main { flex: 1 0 auto; }
+
+/* The measure, shared by all three bands so the chrome lines up with the
+   content under it. Same max-width as .page and .docs-shell, because three
+   frames meant to agree should not be able to drift. */
+.band {
+  max-width: calc(var(--u) * 280);
+  margin: 0 auto;
+  padding: calc(var(--u) * 4) calc(var(--u) * 8);
+}
+@media (max-width: 40rem) {
+  .band { padding: calc(var(--u) * 3) calc(var(--u) * 5); }
+}
+
+/* Inside the shell the bands own the frame, so the parts that drew their own
+   separation stop: the footer's rule is now the band's, and its top margin
+   would open a gap above a band that is pinned to the floor. */
+.app-foot .site-foot { margin-top: 0; padding-top: 0; border-top: 0; }
+.app-shell .masthead { margin-bottom: 0; }
+
+/* A locked band is chrome, not a page heading, so where the screen is short it
+   gives up the vertical space it can without becoming a different component.
+
+   Placed immediately after the rules it overrides, which is the placement
+   check-cascade.py exists to enforce: the same override written further up
+   was silently defeated twice in this file. */
+@media (max-height: 46rem) {
+  .app-shell .masthead :is(h1, .mh-title) { font-size: var(--text-h3); }
+  .app-shell .band { padding-top: calc(var(--u) * 2); padding-bottom: calc(var(--u) * 2); }
+}
+
+/* A sticky masthead hides whatever a fragment link scrolls to.
+   `#some-heading` scrolls its target to y = 0, which is underneath the band,
+   so the link works, the URL changes, and the one thing hidden is the heading
+   that was asked for. scroll-margin-top is the browser's answer: it is how far
+   above the target the scroll should stop.
+
+   The height comes from AppMetrics, which measures the band, because it is not
+   a constant: the title wraps at a narrow width, the nav wraps with it, and a
+   media query already changes the band's padding twice. The fallback is the
+   desktop measurement plus a little, so the page is correct before the script
+   runs and correct if it never does.
+
+   On every heading rather than only on the ones with ids today, because an id
+   arrives when somebody writes a heading, not when somebody remembers a rule.
+
+   .zoo-head is not covered here: the zoo has its own sticky header and its own
+   scroll-margin-top for it, and it is not inside this shell. */
+.app-shell :is(h1, h2, h3, h4, h5, h6, [id]) {
+  scroll-margin-top: calc(var(--app-head-h, 11rem) + var(--u) * 4);
+}
+
+/* ---------------------------------------------------------------------------
+   22. THE MENU: one hamburger, and the section you are standing in
+
+   Every page carries the same control and it opens a different menu, because
+   what a reader wants next depends on where they are. The site's own sections
+   are always there; below them, the contents of whichever section they are in.
+   Neither list is written down: lib/nav.ts derives the first from
+   data/projects.json and the second from the directory tree, and a group
+   appears when the path matches its prefix.
+
+   The button carries the word MENU rather than three bare lines. A hamburger
+   drawn as an icon alone is the ghost button's problem one step worse: an icon
+   with no border, no ground and no word is a thing a reader has to already
+   know.
+
+   The panel is a sheet on paper rather than a dark overlay. Panel means the
+   machine talking, and a navigation menu is not the machine talking.
+   ------------------------------------------------------------------------ */
+
+.menu-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--u) * 2);
+  padding: calc(var(--u) * 2) calc(var(--u) * 3);
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-ink);
+  background: var(--color-paper-sunk);
+  border: 1px solid var(--color-ink);
+  border-radius: var(--radius-hair);
+  box-shadow: 3px 3px 0 var(--color-ink-faint);
+  cursor: pointer;
+  transition: box-shadow var(--t-snap) var(--ease-detent),
+              transform var(--t-snap) var(--ease-detent);
+}
+.menu-btn:hover { box-shadow: 3px 3px 0 var(--color-ink); }
+.menu-btn:active { transform: translate(3px, 3px); box-shadow: 0 0 0 var(--color-ink); }
+.menu-btn:focus-visible { outline: 2px solid var(--color-blue-ink); outline-offset: 2px; }
+
+/* The three bars, drawn rather than typed. A glyph would come from whatever
+   font resolved, and the one thing this control cannot afford is to render as
+   a box in a fallback face. */
+.menu-btn .bars { display: grid; gap: 2px; width: calc(var(--u) * 4); }
+.menu-btn .bars i {
+  display: block;
+  height: 2px;
+  background: currentColor;
+  transition: transform var(--t-detent) var(--ease-detent), opacity var(--t-snap) linear;
+}
+/* Open, the bars become a cross: the control says what pressing it does now
+   rather than what it did a moment ago. */
+.menu-btn[aria-expanded="true"] .bars i:first-child { transform: translateY(4px) rotate(45deg); }
+.menu-btn[aria-expanded="true"] .bars i:nth-child(2) { opacity: 0; }
+.menu-btn[aria-expanded="true"] .bars i:last-child { transform: translateY(-4px) rotate(-45deg); }
+
+/* THE PANEL, which is the 6502 site's layout rather than a dropdown.
+   That one was worked out the hard way over there and the reasoning is worth
+   carrying across rather than rediscovering.
+
+   It is one organised panel at every width, attached under the header with no
+   gap, so the button and the sheet read as one object rather than a control
+   and a thing floating near it. It is not a narrow menu hanging off the
+   button: that was what this had, and a 24rem sheet cannot put a heading and a
+   line of description beside anything.
+
+   The groups sit side by side when there is room. `minmax(12.5rem, 1fr)` is
+   the number from that site and it is measured, not chosen: at 15rem the fifth
+   group wrapped, and a wrapped group reads as a sixth one that lost its
+   heading.
+
+   Each entry carries a line of what it is, which is the part a list of nouns
+   cannot do. Over there the example was that "Blueprint", "Schematic" and
+   "Exploded" are three drawings of the same silicon and the bare list gave a
+   reader no way to choose between them. The same is true here of the explorer,
+   the lab and the console.
+
+   Full width, with the content on the site's own measure inside it, so the
+   panel spans the header it hangs from while its columns line up with
+   everything else on the page. */
+.menu-panel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 30;
+  /* The script measures the real room below the header; this is the floor for
+     the moment before it runs. */
+  max-height: 100vh;
+  max-height: calc(100dvh - var(--app-head-h, 11rem));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  background: var(--color-paper);
+  border-bottom: 2px solid var(--color-rule);
+  box-shadow: var(--shadow-card);
+}
+
+.menu-sheet {
+  max-width: calc(var(--u) * 280);
+  margin: 0 auto;
+  padding: calc(var(--u) * 4) calc(var(--u) * 8) calc(var(--u) * 6);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12.5rem, 1fr));
+  gap: calc(var(--u) * 1) calc(var(--u) * 6);
+  align-items: start;
+}
+@media (max-width: 40rem) {
+  .menu-sheet { padding-inline: calc(var(--u) * 5); }
+}
+
+/* Open, the button gives up its detent and joins the panel: a control that is
+   still floating above a sheet it is attached to is the seam this is here to
+   remove. */
+.menu-btn[aria-expanded="true"] {
+  box-shadow: none;
+  transform: translate(3px, 3px);
+}
+
+.menu-group { min-width: 0; padding-bottom: calc(var(--u) * 2); }
+/* The account row, at the foot of the sheet: on the site's measure, over a
+   hairline, one line. */
+.menu-account {
+  max-width: calc(var(--u) * 280);   /* the sheet's own measure */
+  margin: 0 auto;
+  padding: calc(var(--u) * 3) calc(var(--u) * 8) calc(var(--u) * 4);
+  border-top: 1px solid var(--color-rule);
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(var(--u) * 3);
+  align-items: baseline;
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+  color: var(--color-ink-muted);
+}
+.menu-account b { color: var(--color-ink); font-weight: 600; }
+.menu-account a, .menu-account .linkish { color: var(--color-accent-ink); background: none; border: 0; padding: 0; font: inherit; text-decoration: underline; cursor: pointer; }
+.menu-account .menu-signin { font-weight: 600; }
+
+.menu-group > h2 {
+  margin: calc(var(--u) * 1.5) 0 calc(var(--u) * 1.5);
+  padding-bottom: calc(var(--u) * 1.5);
+  border-bottom: 1px solid var(--color-ink-faint);
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+  font-weight: 600;
+}
+
+.menu-item {
+  display: block;
+  padding: calc(var(--u) * 2) calc(var(--u) * 3);
+  border-radius: var(--radius-hair);
+  text-decoration: none;
+  color: var(--color-ink);
+  border-left: 3px solid transparent;
+}
+.menu-item b { display: block; font-family: var(--font-sans); font-size: var(--text-body); font-weight: 600; }
+/* One line on what it is. A bare list of nouns cannot tell a reader that
+   "Blueprint" and "Schematic" are two drawings of the same silicon. */
+.menu-item span { display: block; font-size: var(--text-fine); color: var(--color-ink-muted); line-height: 1.4; }
+.menu-item:hover { background: var(--color-paper-sunk); }
+.menu-item:focus-visible { outline: 2px solid var(--color-blue-ink); outline-offset: -2px; }
+.menu-item[aria-current="page"] {
+  background: var(--color-paper-sunk);
+  border-left-color: var(--color-accent-ink);
+}
+
+/* The crumb trail is navigation now rather than a label, so its parts look
+   like the links they are. The last one is where you are standing and is
+   deliberately not a link: a link to the page you are on is a control that
+   does nothing. */
+.crumb a { color: var(--color-ink-muted); text-decoration: none; border-bottom: 1px solid var(--color-ink-faint); }
+.crumb a:hover { color: var(--color-ink); border-bottom-color: var(--color-ink); }
+.crumb a:focus-visible { outline: 2px solid var(--color-blue-ink); outline-offset: 2px; }
+.crumb [aria-current="page"] { color: var(--color-ink); font-weight: 600; }
+
+/* The head band's two halves: the masthead, and the control beside it.
+   align-items: flex-start so the menu stays level with the crumb whether the
+   title runs to one line or two, rather than drifting down a page with a long
+   name. It wraps below 40rem, where the two of them side by side leave the
+   title about a hundred pixels. */
+.app-head-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: calc(var(--u) * 4);
+}
+.app-head-row > .masthead { flex: 1 1 auto; min-width: 0; }
+/* The menu does not wrap below the masthead, and that was a correction. It did
+   at first, and the panel then opened off the left of the screen: it is
+   positioned right: 0 against the button, so a button that has moved to the
+   start of its own line anchors a 24rem sheet somewhere past the left edge.
+   Keeping it in the corner is also where a reader looks for it. */
+.app-head-row > .menu-wrap { flex: 0 0 auto; }
+
+/* The language switcher joined the row after this section was written, and a
+   phone showed why the row needs a rule about crowding: at 390px the wordmark
+   ran underneath the switcher. The title yields (it may truncate; the die
+   tile beside it still names the page family), the controls never do, because
+   a control that is half off-screen is a control that does not exist. */
+.app-head-row > .lang-switch { flex: 0 0 auto; }
+
+/* On a phone the row becomes two: the controls dock top-right on their own
+   line and the masthead takes the full width beneath them. The previous
+   answer was truncation, and it solved the overlap by damaging the title. */
+@media (max-width: 34rem) {
+  .app-head-row { flex-wrap: wrap; row-gap: calc(var(--u) * 2); }
+  .app-head-row > .masthead { order: 2; flex-basis: 100%; }
+  .app-head-row > .lang-switch { order: 1; margin-left: auto; }
+  .app-head-row > .menu-wrap { order: 1; }
+}
+
+
+/* ==========================================================================
+   THE HERO
+   The binder's H1 layout (IMG_5323, COMP_LAYOUT_H1) and the zoo's own header,
+   promoted from zoo-local CSS into the kit: display caps, tight and heavy,
+   over a serif lede and a CTA row. --text-hero sat in the tokens unused from
+   the day they landed; this is the component it was cut for. The clamp is the
+   zoo's: 8vw between the floor and the token, so the one place it renders
+   small is a phone, not a narrow window of desktop widths where it is merely
+   too big. On paper the CTAs are .btn, never .push: STYLE.md's rule is that
+   chrome lives only at the paper/panel boundary, and a chrome button on a
+   paper page is decoration.
+   ========================================================================== */
+
+.hero { padding: calc(var(--u) * 8) 0 calc(var(--u) * 6); }
+.hero h1,
+.hero .hero-title {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-size: clamp(2.6rem, 8vw, var(--text-hero));
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+  line-height: 0.9;
+  margin: calc(var(--u) * 2) 0 calc(var(--u) * 4);
+  text-wrap: balance;
+}
+.hero .lede {
+  max-width: 60ch;
+  font-family: var(--font-serif);
+  font-size: var(--text-prose);
+  line-height: 1.6;
+  margin: 0 0 calc(var(--u) * 5);
+}
+.hero .hero-ctas { display: flex; gap: calc(var(--u) * 3); flex-wrap: wrap; }
+
+/* ==========================================================================
+   MODULE MOTION
+   Binder section 7.3: rigid modules require rigid motion; clean slide, fast
+   snap; excess zoom and fade are named as the incorrect pattern. The menu
+   panel is a module, so it arrives as one: a short slide on the detent
+   timing, no fade, no scale. 150ms and the hard-stop ease are the binder's
+   own numbers, already in the tokens.
+   ========================================================================== */
+
+@keyframes module-snap {
+  from { transform: translateY(calc(var(--u) * -2)); }
+  to   { transform: translateY(0); }
+}
+.menu-panel { animation: module-snap var(--t-detent) var(--ease-detent); }
+
+/* ==========================================================================
+   REDUCED MOTION
+   The kit had transitions and, as of the block above, an animation, and not
+   one respected the reader's setting. State is legible with zero animation
+   by design (tokens.css says so about the strobe), so honouring the setting
+   costs nothing but this block.
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+
+/* ==========================================================================
+   THE LANGUAGE SWITCH
+   Two small flags, the current one lit. Flags rather than a word, at the
+   owner's call: a reader hunting for their language finds a shape before a
+   label. Drawn inline as SVG so they render identically everywhere; emoji
+   flags do not.
+   ========================================================================== */
+/* One flag, the other language's: press it and that is where you go. Sized
+   as a control (the menu button's height), not as a badge. */
+.lang-switch { display: inline-flex; align-items: center; padding: 3px calc(var(--u) * 1.5); border-radius: var(--radius-hair); }
+.lang-switch svg { display: block; width: 33px; height: 22.5px; border: 1px solid var(--color-ink-faint); border-radius: 2px; }
+.lang-switch:hover svg { border-color: var(--color-ink); }
+.lang-switch:focus-visible { outline: 2px solid var(--color-blue-ink); outline-offset: 2px; }
+
+
+/* A markdown table is born without a scroll container: the docs pipeline
+   renders GFM tables as bare <table>, and the walk's half-cycle table was
+   392px wide on a 390px phone, scrolling the whole document sideways. The
+   house rule is that wide content scrolls inside its own box, and a table
+   the author cannot wrap gets the box here. position: relative because a
+   scroll container without it lets an absolutely positioned child escape
+   into the page's scroll width, which is a trap this file already paid for.
+   Found by the triptych harness's overflow metric, not by eye. */
+.docs-body table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  position: relative;
+}
+
+/* ==========================================================================
+   THE WORKBENCH
+   A frame for the pages that ARE an instrument: the Halfwave Lab first, the
+   explorer's tools as they earn it. The owner's call, 2026-08-24: these were
+   "nice and tight" on their own subdomains and lost it inside the content
+   panel, so a workbench takes the whole viewport. One slim bar keeps the
+   site's thread: the crumb trail home, and the flags. No footer; an
+   instrument ends where its last control does.
+   ========================================================================== */
+
+.workbench { min-height: 100dvh; display: flex; flex-direction: column; background: var(--color-paper); }
+/* The instrument's name in the bar, beside the mark. One line that YIELDS:
+   the tracer's full name is 459px, and nowrap without shrink scrolled every
+   phone sideways. On a phone the wordmark's word steps aside for it and the
+   tile alone is the way home. */
+.topbar .tb-page {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-body);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+.topbar .tb-page::before { content: "/"; margin-right: calc(var(--u) * 3); color: var(--color-ink-faint); font-weight: 400; }
+.topbar:has(.tb-page) .wordmark { flex: 0 0 auto; }
+@media (max-width: 34rem) {
+  .topbar:has(.tb-page) .wordmark b { display: none; }
+  .topbar .tb-page::before { content: none; }
+}
+.wb-main { flex: 1 0 auto; }
+
+
+/* The console workbench: prose keeps the reading measure, the stage takes
+   the room. .wb-page is the site column reborn inside a workbench for the
+   sections that are sentences; .wb-stage is everything that is machine, and
+   it runs wall to wall with only the gutter. The cartridge blurb game.js
+   writes sits under the bar, quiet, and empty until a cartridge loads. */
+.wb-page {
+  max-width: calc(var(--u) * 280);
+  margin-inline: auto;
+  padding-inline: calc(var(--u) * 8);
+}
+.wb-stage { padding: calc(var(--u) * 4) calc(var(--u) * 8); }
+.wb-sub { display: block; padding: 0 calc(var(--u) * 4) calc(var(--u) * 1); font-size: var(--text-fine); }
+.wb-sub:empty { display: none; }
+@media (max-width: 40rem) {
+  .wb-page { padding-inline: calc(var(--u) * 5); }
+  .wb-stage { padding-inline: calc(var(--u) * 5); }
+}
+
+
+/* ==========================================================================
+   THE SECOND STYLING PASS, 2026-08-24. Four of these close items STYLE.md
+   section 9 left open; the others were found by measuring the deployed pages
+   at 1440px. Every value is a token or a kit literal that already exists.
+   ========================================================================== */
+
+/* A horizontal rule immediately before a section heading drew two lines: the
+   hr's own, then the border-top every .prose h2 carries. Measured on the
+   walk-snake page: two hairlines 37px apart where the author meant one break.
+   The h2's rule is the structural one, so the hr yields. Browsers without
+   :has() keep the doubled line, which is the state everyone saw until today,
+   not a regression. */
+.prose hr:has(+ h2),
+.prose hr:has(+ h3) { display: none; }
+
+/* The ledger was clipped by the reading measure. .prose is 68ch for the sake
+   of sentences, but a table is not a sentence: the 6502 landing's surface
+   table is 1019px of content inside a 694px column while 1120px of page sit
+   there unused. Above the point where the wide column exists, a ledger takes
+   the width it needs, capped at the page's own content width: 264u is
+   .page's 280u minus its 8u padding each side. */
+@media (min-width: 72rem) {
+  .prose .ledger {
+    width: max-content;
+    min-width: 100%;
+    max-width: calc(var(--u) * 264);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   DIE IMAGERY. STYLE.md section 9 left the rule open with an instinct: panel
+   content, framed by a bezel, never bled to the page edge. Decided here
+   against the real page (the walk-snake figures) rather than in the
+   abstract, and the instinct held. The figures paint their own panel-dark
+   ground, so the page's job is the frame: the same 3px brushed bezel, 6px
+   radius and panel shadow the kit's .panel wears, which is what makes a
+   pulled schematic read as an instrument photographed into the binder
+   rather than a picture that fell onto the paper.
+
+   The selector is the shape markdown gives a lone image, a paragraph that
+   contains nothing else, so the generated docs get the treatment without
+   the generator learning any class names. fit-content is the "never bled"
+   clause. */
+.docs-body p:has(> img:only-child) {
+  width: fit-content;
+  max-width: 100%;
+  margin: calc(var(--u) * 6) 0 calc(var(--u) * 2);
+  padding: 3px;
+  background: var(--bezel-brushed);
+  border-radius: 6px;
+  box-shadow: var(--shadow-panel);
+}
+.docs-body p:has(> img:only-child) > img {
+  display: block;
+  max-width: 100%;
+  border-radius: var(--radius-mod);
+  background: var(--color-panel);
+}
+/* The caption: the italic paragraph the generated docs write directly under
+   each figure. Set as a caption, small and muted, tucked to the frame. */
+.docs-body p:has(> img:only-child) + p:has(> em:first-child) {
+  font-size: var(--text-fine);
+  color: var(--color-ink-muted);
+  margin-top: 0;
+  max-width: 58ch;
+}
+
+/* --------------------------------------------------------------------------
+   DENSE MODE. STYLE.md section 9, verbatim: the 13px mono workhorse is right
+   for a docs page; a full-screen instrument wants 12px and 1.35 leading, as
+   a container-scoped token override rather than a second scale. This is that
+   container. Everything inside that reads --text-data or --leading-data
+   tightens together; nothing else changes, which is the point of it being
+   two tokens and not a font-size rule. */
+.dense {
+  --text-data: 0.75rem;
+  --leading-data: 1.35;
+}
+
+/* --------------------------------------------------------------------------
+   THE HERO, above the width where half the viewport was silence. The title
+   already spans the page; the lede held its 60ch and the right half of a
+   1440px screen carried nothing. The measured chips are the material that
+   belongs there: they are the page's own facts, so the rail fills with
+   something true rather than decoration. Below 80rem nothing changes and
+   the chips render exactly as every other .chips row. */
+@media (min-width: 80rem) {
+  /* Only a hero that actually carries a chip rail becomes a grid. The bare
+     .hero selector was a regression shipped in 1.0.55: the explorer's own
+     pages also name their lead section .hero, this rule is kit CSS and so
+     reaches inside .explorer-shell, and eighteen instrument pages had their
+     titles shoved into a 22rem rail cut for the home page's chips. Scoping
+     by what the section contains rather than where it is keeps the kit from
+     legislating for markup it has never seen. */
+  .hero:has(> .hero-chips) {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(16rem, 22rem);
+    column-gap: calc(var(--u) * 12);
+    align-items: start;
+  }
+  .hero:has(> .hero-chips) .hero-title { grid-column: 1 / -1; }
+  .hero:has(> .hero-chips) .lede,
+  .hero:has(> .hero-chips) .hero-ctas { grid-column: 1; }
+  .hero .hero-chips {
+    grid-column: 2;
+    grid-row: 2 / span 2;
+    display: grid;
+    align-content: start;
+    gap: calc(var(--u) * 3);
+    padding-top: calc(var(--u) * 1);
+  }
+}
+
+/* ==========================================================================
+   PRINT. STYLE.md section 9: the whole system came off paper and it would be
+   a shame if a docs page printed badly; panels inverted to white-on-white,
+   because browsers drop background colour and the glass text stayed light.
+   The rule for print is the paper form of the same semantics: what was a
+   panel keeps a hairline border saying "this was the machine talking", and
+   its text becomes ink so it survives on white. Screen chrome that navigates
+   rather than informs does not print.
+   ========================================================================== */
+@media print {
+  .menu-btn,
+  .menu-panel,
+  .lang-switch,
+  .hero-ctas,
+  .docs-nav { display: none; }
+
+  .app-head { position: static; }
+  .docs-shell { display: block; }
+
+  /* The panel grounds, in ink. The border is what remains of "dark means
+     the engine said it" when the dark cannot be relied on to print. */
+  .prose pre,
+  .code {
+    background: var(--color-paper-sunk);
+    color: var(--color-ink);
+    border: 1px solid var(--color-rule);
+  }
+  .docs-body p:has(> img:only-child) {
+    background: none;
+    box-shadow: none;
+    border: 1px solid var(--color-rule);
+  }
+
+  h2, h3 { break-after: avoid; }
+  pre, table,
+  .ledger,
+  .docs-body p:has(> img:only-child) { break-inside: avoid; }
+}
+
+/* ==========================================================================
+   JAPANESE TYPOGRAPHY, 2026-08-25. The kit's faces carry no kana, so every
+   Japanese glyph was falling through to whatever the browser had, behind
+   metrics tuned for English. These rules make the fallback a decision.
+
+   The stacks restate the Latin families before the Japanese ones, and that
+   duplication is deliberate and unavoidable: CSS cannot append to a custom
+   property, and the Latin faces must stay first so numerals and inline code
+   keep the same forms on both languages of every page. If a family changes
+   in tokens.css, change it here too; check-tokens cannot catch that, so
+   this comment is the tripwire.
+   ========================================================================== */
+html[lang="ja"] {
+  --font-display: "Archivo", "IBM Plex Sans Condensed", "Hiragino Sans",
+                  "Hiragino Kaku Gothic ProN", "Noto Sans CJK JP",
+                  "Noto Sans JP", "Helvetica Neue", system-ui, sans-serif;
+  --font-sans:    "IBM Plex Sans", "Hiragino Sans", "Hiragino Kaku Gothic ProN",
+                  "Yu Gothic", "Noto Sans CJK JP", "Noto Sans JP",
+                  system-ui, -apple-system, sans-serif;
+  --font-serif:   "IBM Plex Serif", Georgia, "Hiragino Mincho ProN",
+                  "Yu Mincho", "Noto Serif CJK JP", "Noto Serif JP", serif;
+  --font-mono:    "IBM Plex Mono", "Berkeley Mono", ui-monospace,
+                  "SFMono-Regular", "Noto Sans Mono CJK JP", monospace;
+}
+
+/* Kana is a full-height square: the hero's 0.9 leading clipped a handakuten
+   against the line above, and its negative tracking pressed the squares
+   together. Zero and a little air, for Japanese only. */
+html[lang="ja"] .hero :is(h1, .hero-title) {
+  letter-spacing: 0;
+  line-height: 1.12;
+  font-feature-settings: "palt";
+}
+html[lang="ja"] .prose :is(h1, h2, h3) { letter-spacing: 0; }
+
+/* Japanese wants looser leading than English at the same size: the squares
+   have no ascender rhythm to separate the lines. 1.62 was measured right
+   for the Latin serif; 1.85 is the Japanese equivalent. */
+html[lang="ja"] .prose { line-height: 1.85; }
+html[lang="ja"] .hero .lede { line-height: 1.8; }
+
+/* Japanese has no italic. A slanted kana is a synthetic distortion, not an
+   emphasis convention, so em keeps its meaning and drops the slant. */
+html[lang="ja"] em { font-style: normal; }
+
+/* A Japanese crumb was wrapping inside a word (シミュレ / ータ). Names in a
+   trail are short, so forbidding intra-word breaks costs nothing: the trail
+   still wraps between its own links and at spaces. keep-all alone was not
+   enough: the prolonged sound mark is line-break class CJ, and a break
+   BEFORE it stays legal until strict says otherwise, which is how
+   "アーカイブ" still split after its first character. */
+html[lang="ja"] .crumb { word-break: keep-all; line-break: strict; }
+
+/* ==========================================================================
+   23. THE SLIM FRAME, 2026-08-25. Owner's iteration: the bar was fighting
+   its own title at 390px, the menu read as a page, the footer scrolled away.
+
+   Written as overrides after the rules they replace, which is the placement
+   check-cascade.py enforces. The older .masthead and .app-head-row rules
+   stay for the zoo's specimens and are no longer what the shell renders.
+   ========================================================================== */
+
+/* THE BAR: one row, three things, never wraps. */
+.app-head .band.topbar {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--u) * 3);
+  padding-top: calc(var(--u) * 2);
+  padding-bottom: calc(var(--u) * 2);
+  border-bottom: 1px solid var(--color-rule);
+}
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--u) * 2.5);
+  min-width: 0;
+  text-decoration: none;
+  color: var(--color-ink);
+}
+.wordmark b {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: var(--text-lead);
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+/* The die tile, wearing the section's accent. This is where the colour knob
+   is seen first: the tile is the same ink block on every page and its text
+   is the one thing that changes as you cross into a project. */
+.topbar .die {
+  width: calc(var(--u) * 9);
+  height: calc(var(--u) * 9);
+  display: grid;
+  place-items: center;
+  background: var(--color-ink);
+  color: var(--color-accent);
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: 0.06em;
+  border-radius: var(--radius-hair);
+  flex: 0 0 auto;
+}
+.topbar > .lang-switch { flex: 0 0 auto; margin-left: auto; }
+.topbar > .menu-wrap { flex: 0 0 auto; }
+
+/* THE PAGE HEAD: the trail, the name, the page's own meta. The 2px rule that
+   used to close the masthead closes this, so the page still opens the way it
+   always did; it just no longer competes with the controls for the row. */
+.page-head {
+  padding: calc(var(--u) * 4) 0 calc(var(--u) * 4);
+  margin-bottom: calc(var(--u) * 6);
+  border-bottom: 2px solid var(--color-rule);
+}
+.page-head .crumb { margin-bottom: calc(var(--u) * 2); }
+.page-head :is(h1, .mh-title) {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-h1);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  text-wrap: balance;
+}
+.page-head .mh-meta { margin-top: calc(var(--u) * 3); }
+@media (max-width: 34rem) {
+  .page-head :is(h1, .mh-title) { font-size: var(--text-h2); }
+}
+
+/* The bar is short now, so the fallbacks that assumed an 11rem masthead
+   would leave every fragment target floating a page-height too low. */
+.app-shell :is(h1, h2, h3, h4, h5, h6, [id]) {
+  scroll-margin-top: calc(var(--app-head-h, 4rem) + var(--u) * 4);
+}
+
+/* THE MENU IS A CARD, hung from its button. Right-aligned under the control
+   that opened it, the width of a recipe card, and it scrolls inside itself
+   past the viewport. It used to span the header and read as a second page
+   dropping over the first. */
+.menu-wrap { position: relative; }
+.menu-panel {
+  top: calc(100% + var(--u) * 2);
+  left: auto;
+  right: 0;
+  width: min(24rem, calc(100vw - var(--u) * 8));
+  max-height: calc(100dvh - var(--app-head-h, 4rem) - var(--u) * 6);
+  border: 1px solid var(--color-ink);
+  border-top: 2px solid var(--color-ink);
+  border-radius: var(--radius-hair);
+  box-shadow: 4px 4px 0 var(--color-ink-faint), var(--shadow-card);
+}
+.menu-sheet {
+  display: block;
+  max-width: none;
+  padding: calc(var(--u) * 2) calc(var(--u) * 3) calc(var(--u) * 3);
+}
+.menu-group + .menu-group { margin-top: calc(var(--u) * 2); }
+.menu-item { padding: calc(var(--u) * 1.5) calc(var(--u) * 2.5); }
+/* The scrim is the page, as far as the panel is concerned: a click on it
+   closes the menu at every width. It paints nothing above a phone; below,
+   the wash in the block further down. */
+.menu-scrim { position: fixed; inset: 0; z-index: 29; background: transparent; }
+/* The page holds still while the panel is up. The panel scrolls itself. */
+html.menu-open, html.menu-open body { overflow: hidden; }
+
+/* On a phone the card floats over a faint wash of paper, centred, still a
+   card: the wash is what stops it reading as a page. */
+@media (max-width: 34rem) {
+  .menu-scrim {
+    background: color-mix(in srgb, var(--color-paper) 72%, transparent);
+  }
+  .menu-panel {
+    position: fixed;
+    top: calc(var(--app-head-h, 4rem) + var(--u) * 2);
+    left: calc(var(--u) * 3);
+    right: calc(var(--u) * 3);
+    width: auto;
+    max-height: calc(100dvh - var(--app-head-h, 4rem) - var(--app-foot-h, 3rem) - var(--u) * 6);
+  }
+}
+
+/* THE FOOTER, LOCKED. The earlier note in section 21 argued the other way
+   and it was right about the version it described, which was three lines of
+   links. This one is one line: the name and what is running. That is chrome,
+   and chrome may stay put. The main region pads for it so nothing ends
+   underneath. */
+.app-foot {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 24;
+  border-top: 1px solid var(--color-rule);
+  background: var(--color-paper);
+}
+.app-foot .band {
+  padding-top: calc(var(--u) * 1.5);
+  padding-bottom: calc(var(--u) * 1.5);
+}
+.app-foot .site-foot {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: calc(var(--u) * 1) calc(var(--u) * 4);
+  white-space: nowrap;
+}
+/* The name and the run are the two items. On a phone the pair does not fit
+   one line (it was clipped mid-word behind overflow: hidden, seen in the
+   mobile sweep of 2026-08-25), so the run drops whole to a second line. The
+   footer's height is measured live, so the main region's padding follows. */
+.app-foot .foot-run { white-space: nowrap; }
+.app-main { padding-bottom: calc(var(--app-foot-h, 3rem) + var(--u) * 6); }
+
+/* Where the content owns the h1, the page head's title is a section label,
+   not a second display heading over the document's own. Docs read
+   "Documentation" at 48px over "Verification" at 48px until this. */
+.page-head .mh-title {
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+  font-weight: 500;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+  line-height: 1.4;
+}
+
+/* The wordmark yields before the controls do. At 390px in Japanese the
+   wider menu label left the flags sitting on the wordmark's last letter:
+   the mark shrinks a step on a phone and, if the row is still short, it is
+   the one thing allowed to truncate. */
+.wordmark { flex: 1 1 auto; }
+.wordmark b { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+@media (max-width: 34rem) {
+  .wordmark b { font-size: var(--text-body); }
+}
+
+/* ==========================================================================
+   24. THE CHIP TRANSPORT, in the Lab's shape. The owner's standard for every
+   instrument page: the Lab's player strip. Paper ground with the page
+   showing through, locked to the floor, the controls the Lab has in the
+   order the Lab has them, the rate as a slider with its label, the position
+   on the right. What the Lab has and this does not (power off, opcode step,
+   the scrubber) waits on the driver shape upstream; the strip shows only
+   what the page's chip can honour.
+   ========================================================================== */
+.chip-transport {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 24;
+  padding: calc(var(--u) * 2) max(calc(var(--u) * 3.5), env(safe-area-inset-left)) calc(var(--u) * 2 + env(safe-area-inset-bottom, 0px)) max(calc(var(--u) * 3.5), env(safe-area-inset-right));
+  background: color-mix(in srgb, var(--color-paper) 96%, var(--color-ink));
+  border-top: 1px solid var(--color-rule);
+  backdrop-filter: blur(8px);
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+  color: var(--color-ink);
+}
+.ct-row { display: flex; gap: calc(var(--u) * 1.5); align-items: center; flex-wrap: wrap; }
+.chip-transport .tbtn {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--u) * 1.25);
+  min-height: calc(var(--u) * 8);
+  padding: calc(var(--u) * 1.5) calc(var(--u) * 2.25);
+  background: var(--color-paper-sunk);
+  color: var(--color-ink-muted);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-hair);
+  font: inherit;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.chip-transport .tbtn:hover:not(:disabled) { color: var(--color-ink); border-color: var(--color-accent-ink); }
+.chip-transport .tbtn:disabled { opacity: 0.35; cursor: not-allowed; }
+.chip-transport .tbtn:focus-visible { outline: 2px solid var(--color-blue-ink); outline-offset: 2px; }
+.chip-transport .tbtn.play { min-width: calc(var(--u) * 16); color: var(--color-ink); }
+.chip-transport .tbtn.play.on { background: var(--color-accent-ink); color: var(--color-paper); border-color: var(--color-accent-ink); }
+.chip-transport .ic { width: 14px; height: 14px; flex: none; display: block; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+/* Power: solid only while a machine is powered. Off, it is a key like the
+   others, and every other key is grey behind it. */
+.chip-transport .tbtn.pw { font-weight: 600; }
+.chip-transport .tbtn.pw.on { background: var(--color-accent-ink); color: var(--color-paper); border-color: var(--color-accent-ink); }
+/* The engine key: one toggle, like power (owner's call, 2026-08-27; it was
+   a pair, and the pair cost the phone's key row a slot). The key shows the
+   engine that is stepping: the rabbit, solid, for the chip in this page,
+   the turtle for halfwave over HTTP. The latency readout beside the rate is
+   the API's own measure. */
+.chip-transport .tbtn.eng.on { background: var(--color-accent-ink); color: var(--color-paper); border-color: var(--color-accent-ink); }
+.chip-transport .ct-lat { min-width: 0; }
+.chip-transport .ct-lat.err { color: var(--color-red-ink, var(--color-ink)); }
+.ct-rate { display: flex; align-items: center; gap: calc(var(--u) * 1.5); flex: 0 0 auto; margin-left: calc(var(--u) * 1); }
+.ct-rate input { width: calc(var(--u) * 20); height: calc(var(--u) * 6.5); accent-color: var(--color-accent-ink); }
+.chip-transport .tlab { min-width: 5ch; color: var(--color-ink-muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+/* The seek slider takes what is left of its line, as the Lab's does, so the
+   rate, the position and full screen are one line on a phone (the second)
+   and the whole strip is one line on a desk. A fixed-width seek is what put
+   "full" on a row of its own. */
+.ct-seek { flex: 1 1 calc(var(--u) * 12); min-width: calc(var(--u) * 10); height: calc(var(--u) * 6.5); accent-color: var(--color-accent-ink); }
+.ct-pos { color: var(--color-ink-muted); font-variant-numeric: tabular-nums; white-space: nowrap; min-width: 12ch; text-align: right; }
+.ct-pos b { color: var(--color-ink); font-weight: 600; }
+.chip-transport input:disabled { opacity: 0.35; cursor: not-allowed; }
+/* The page keeps its floor clear of the strip: two rows on a phone, and
+   the footer band under them where the page has one (.wb-foot). */
+.workbench.has-transport .wb-main { padding-bottom: calc(var(--u) * 16 + var(--app-foot-h, 0px)); }
+/* The footer on a workbench (the version on every page, owner's call
+   2026-08-27): the same two items the app shell's footer has, name and run,
+   on one line. On the console it sits on the status page, on panel, so the
+   ink there is glass. Everywhere else it is .wb-foot, below. */
+.workbench .site-foot {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: calc(var(--u) * 1) calc(var(--u) * 4);
+  margin-top: calc(var(--u) * 8);
+  padding: calc(var(--u) * 3) 0 0;
+  white-space: nowrap;
+}
+.pane-status .site-foot { border-top-color: var(--color-rule-panel); color: var(--color-glass-muted); }
+.pane-status .site-foot a { color: var(--color-glass-muted); border-bottom-color: var(--color-rule-panel); }
+.pane-status .site-foot a:hover { color: var(--color-glass); }
+/* THE FLOOR FOOTER (owner's call, 2026-08-27, on the Lab: "the footer goes
+   below everything, like the homepage"). The app shell locks its footer to
+   the floor; a workbench does the same, and the strip sits on it, so the
+   floor reads as one stack: keys, then the name and the run under them.
+   The strip's bottom is the footer's measured height (AppMetrics publishes
+   --app-foot-h for .wb-foot too), so a wrapped footer on a phone moves the
+   strip up rather than sliding under it. The safe area is the footer's
+   now: it is the band on the very edge. Full screen takes the footer with
+   the bar, and the strip lands back on the floor. */
+.workbench .wb-foot {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 24;
+  margin: 0;
+  padding: calc(var(--u) * 1.5) max(calc(var(--u) * 3.5), env(safe-area-inset-left)) calc(var(--u) * 1.5 + env(safe-area-inset-bottom, 0px)) max(calc(var(--u) * 3.5), env(safe-area-inset-right));
+  background: var(--color-paper);
+  border-top: 1px solid var(--color-rule);
+}
+/* On :root, not the workbench: the strip is the 6502 layout's, a sibling
+   of the workbench, not a child. */
+:root:has(.wb-foot) .chip-transport {
+  bottom: var(--app-foot-h, 2rem);
+  padding-bottom: calc(var(--u) * 2);
+}
+html.has-fullscreen .workbench .wb-foot { display: none; }
+html.has-fullscreen:has(.wb-foot) .chip-transport { bottom: 0; }
+/* On a phone the steppers keep only their icon, as the Lab's do; power and
+   play keep their words, because no icon says "power cycle" or "run" to
+   somebody who has not read the caption. The engine key is an icon here
+   too: eight keys on a 390px row, and the rabbit and the turtle are the
+   caption. */
+@media (max-width: 30rem) {
+  .chip-transport .tbtn:not(.play):not(.pw) .lb { display: none; }
+  /* The latency stays in the engine key's title on a phone; the row has
+     no room for the number. */
+  /* And the second row gives: the seek slider and the readout shrink so
+     rate, position, the pair and full screen share it on a 390px phone
+     even while the key row reads "pause". */
+  .ct-seek { flex: 1 1 calc(var(--u) * 6); min-width: calc(var(--u) * 6); }
+  .ct-pos { min-width: 0; }
+  .chip-transport .ct-lat { display: none; }
+  /* Eight keys and full screen on the first row at 390px (owner's call,
+     2026-08-27: the full-screen key moves up); rate and position take the
+     second. The Lab's own gap and padding. */
+  .ct-row { gap: calc(var(--u) * 1); }
+  .ct-rate, .ct-seek, .ct-pos { order: 1; }
+  .chip-transport .ct-row .tbtn.fs { margin-left: auto; }
+  /* 1.25u inline, not 1.5u: with eight keys, full screen and the play key
+     reading "pause", 1.5u was two pixels too wide for 390 and the
+     full-screen key wrapped (measured on the primer, 2026-08-27). */
+  .chip-transport .tbtn { padding: calc(var(--u) * 1.5) calc(var(--u) * 1.25); gap: calc(var(--u) * 1); }
+  .chip-transport .tbtn.play { min-width: calc(var(--u) * 14); }
+  .workbench.has-transport .wb-main { padding-bottom: calc(var(--u) * 26 + var(--app-foot-h, 0px)); }
+}
+
+/* ==========================================================================
+   25. THE LESSON. A numbered sequence on the 6502 landing, numbered because
+   it IS one: token, cartridge, publish, walk. Paper, like every list of
+   things to read; the numbers are display type because they are the
+   structure of the page, not decoration.
+   ========================================================================== */
+.lesson {
+  list-style: none;
+  margin: 0 0 calc(var(--u) * 12);
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: calc(var(--u) * 4);
+}
+.step {
+  position: relative;
+  padding: calc(var(--u) * 5) calc(var(--u) * 5) calc(var(--u) * 4);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-hair);
+  background: var(--color-paper);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--u) * 2);
+}
+.step-n {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: var(--text-h2);
+  line-height: 1;
+  color: var(--color-accent-ink);
+}
+.step h3 { margin: 0; font-family: var(--font-display); font-size: var(--text-lead); font-weight: 700; line-height: 1.15; }
+.step p { margin: 0; font-family: var(--font-serif); font-size: var(--text-body); line-height: 1.55; }
+.step-links { display: flex; flex-wrap: wrap; gap: calc(var(--u) * 2); margin-top: auto; padding-top: calc(var(--u) * 2); }
+
+/* An instrument cluster: the explorer's own grouping, as a list of links
+   with the one line each carries. */
+.rail-list { list-style: none; margin: 0; padding: 0; display: grid; gap: calc(var(--u) * 2); }
+.rail-list a { font-family: var(--font-sans); font-weight: 600; color: var(--color-ink); text-decoration: none; border-bottom: 1px solid var(--color-ink-faint); }
+.rail-list a:hover { border-bottom-color: var(--color-accent-ink); color: var(--color-accent-ink); }
+.rail-list span { display: block; font-size: var(--text-fine); color: var(--color-ink-muted); line-height: 1.4; }
+/* Four steps across where there is room, two by two on a tablet, a column
+   on a phone. Deterministic rather than auto-fit, which left the fourth
+   step orphaned on a row of its own at the desktop width. */
+@media (min-width: 40rem) { .lesson { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 64rem) { .lesson { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+/* The reading list: a title and its one line, not a table, so it wraps on
+   a phone instead of scrolling. */
+.reading-list { list-style: none; margin: 0 0 calc(var(--u) * 12); padding: 0; display: grid; gap: calc(var(--u) * 2.5); max-width: 68ch; }
+.reading-list li { display: grid; gap: calc(var(--u) * 0.5); padding-bottom: calc(var(--u) * 2.5); border-bottom: 1px solid var(--color-paper-sunk); }
+.reading-list a { font-family: var(--font-sans); font-weight: 600; color: var(--color-ink); text-decoration: none; width: fit-content; border-bottom: 1px solid var(--color-ink-faint); }
+.reading-list a:hover { color: var(--color-accent-ink); border-bottom-color: var(--color-accent-ink); }
+.reading-list span { font-family: var(--font-serif); font-size: var(--text-body); color: var(--color-ink-muted); line-height: 1.5; }
+
+/* The minted token, shown once: on panel because it came out of the
+   machine, wrapped so it never scrolls a phone, selectable as one run. */
+.mint-token {
+  margin: calc(var(--u) * 2) 0 0;
+  padding: calc(var(--u) * 3);
+  background: var(--color-panel);
+  color: var(--color-glass);
+  border-radius: var(--radius-mod);
+  font-family: var(--font-mono);
+  font-size: var(--text-data);
+  white-space: pre-wrap;
+  word-break: break-all;
+  user-select: all;
+}
+
+/* ==========================================================================
+   26. THE TRACKS. Four doors on the 6502 landing, each with a floor behind
+   it. A track is a section, not a card: a name that is a link, a line, the
+   headline links, and the way in.
+   ========================================================================== */
+.track-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  gap: calc(var(--u) * 6) calc(var(--u) * 8);
+  margin: 0 0 calc(var(--u) * 14);
+  padding-top: calc(var(--u) * 4);
+  border-top: 1px solid var(--color-rule);
+}
+.track h2 { margin: 0 0 calc(var(--u) * 2); font-family: var(--font-display); font-size: var(--text-h2); font-weight: 800; letter-spacing: -0.01em; line-height: 1; }
+.track h2 a { color: var(--color-ink); text-decoration: none; }
+.track h2 a:hover { color: var(--color-accent-ink); }
+.track > p { font-family: var(--font-serif); font-size: var(--text-body); line-height: 1.55; max-width: 44ch; margin: 0 0 calc(var(--u) * 3); }
+.track .piece-links { margin-bottom: calc(var(--u) * 2); }
+.track-more { font-family: var(--font-mono); font-size: var(--text-fine); letter-spacing: var(--tracking-caps); text-transform: uppercase; }
+.track-more a { color: var(--color-accent-ink); text-decoration: none; }
+@media (min-width: 64rem) { .lesson.lesson-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+/* A track sub-landing opens with its line; give it the room the hero gives
+   its lede, so the eyebrow beneath does not sit on it. */
+.page > .lede { max-width: 60ch; font-family: var(--font-serif); font-size: var(--text-prose); line-height: 1.6; margin: 0 0 calc(var(--u) * 6); }
+
+/* ==========================================================================
+   27. FULL SCREEN. The whole document, not the content area (owner's call,
+   2026-08-25). Native through the Fullscreen API on the document element
+   where the browser has it; by hand where it does not (every iPhone). Either
+   way `html.has-fullscreen` is the fact, and what it means is: the site's
+   bar leaves, the instrument keeps the screen, and the floor strip stays
+   with the way out on it. The document still scrolls; an instrument page
+   is longer than a screen and full screen is not a reason to lose the rest.
+   ========================================================================== */
+html.has-fullscreen .workbench .app-head { display: none; }
+
+/* ONE FULL SCREEN CONTROL. The explorer and the chip map each ship their
+   own (an unlabelled glyph in their toolbars). Hidden, not removed: their
+   scripts bind them by id. The strip's control is the one that works the
+   same on every page. */
+.workbench .explorer-shell :is(#btn-fullscreen, #cm-fullscreen, #tc-fullscreen, #sch-fullscreen) { display: none; }
+
+/* ONE TRANSPORT. The explorer's demo pages paint a copy of their transport
+   into every example panel (demos.js: "they all drive the one chip"). With
+   the floor transport present those copies are the same control five times,
+   and the one on the floor is the one the site standardised on (the Lab).
+   Hidden, not removed: their script builds and repaints them by reference. */
+.workbench.has-transport .explorer-shell .dm-bar { display: none; }
+/* And the pages' own transports, where the strip honours the same action
+   (measured 2026-08-25: every driver's `step` is a half-step, `reset` a
+   power cycle, `back` a half-step back, and the clock select is a view of
+   the store's one clock). The explorer's instruction step and timeline
+   stayed while the strip's op and seek were not live; trace's and
+   halfshot's transports joined the list when they joined the store
+   (2026-08-26; record and export stay, they are not transport).
+   The tracer's transport box holds nothing else, so the box goes with its
+   buttons; the blueprint's keeps its readout. */
+.workbench.has-transport .explorer-shell :is(
+  #btn-reset, #btn-back, #btn-run, #btn-half, #btn-cycle, .console-foot .field.speed,
+  #bp-run, #bp-step, #bp-cycle, #bp-reset, #bp-speed,
+  #tc-transport, .tc-transport, #tc-back, #tc-run, #tc-step, #tc-cycle, #tc-reset,
+  #ex-run, #ex-step, #ex-reset,
+  #sch-run, #sch-step, #sch-reset,
+  #tr-run, #tr-step, #tr-back, #tr-restart,
+  #hs-run, #hs-back, #hs-next, #hs-reset, label:has(> #hs-clock)
+) { display: none; }
+.workbench.has-transport .explorer-shell :is(label.field):has(> #bp-speed, > #tc-speed) { display: none; }
+
+/* The control, at the right end of the strip, a .tbtn like its neighbours.
+   Lit while it holds. */
+.chip-transport .tbtn.fs { margin-left: calc(var(--u) * 1); }
+.chip-transport .tbtn.fs.on { background: var(--color-accent-ink); color: var(--color-paper); border-color: var(--color-accent-ink); }
+
+/* ==========================================================================
+   28. THE SECTION STRIP. A page's sections under the workbench bar, the
+   Lab's tab row for pages that read rather than run. Sticky under the bar,
+   sideways on a phone with the edge fade, the top edge in fullscreen.
+   ========================================================================== */
+.wb-strip {
+  position: sticky;
+  top: var(--app-head-h, calc(var(--u) * 13));
+  z-index: 24;
+  display: flex;
+  gap: 1px;
+  padding: 0 calc(var(--u) * 4);
+  background: var(--color-paper);
+  border-bottom: 1px solid var(--color-rule);
+  overflow-x: auto;
+  scrollbar-width: none;
+  scroll-snap-type: x proximity;
+  mask-image: linear-gradient(90deg, #000 calc(100% - 2.5rem), transparent);
+  -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 2.5rem), transparent);
+}
+.wb-strip::-webkit-scrollbar { display: none; }
+.wb-strip a {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  padding: calc(var(--u) * 2.5) calc(var(--u) * 2.5);
+  font-family: var(--font-display);
+  font-size: var(--text-micro);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  white-space: nowrap;
+}
+.wb-strip a:hover { color: var(--color-ink); }
+.wb-strip a[aria-current] { color: var(--color-ink); border-bottom-color: var(--color-accent-ink); }
+.wb-strip a:focus-visible { outline: 2px solid var(--color-blue-ink); outline-offset: -2px; }
+html.has-fullscreen .wb-strip { top: 0; }
+/* A section reached through the strip lands under it, not beneath it. */
+.workbench .explorer-shell :is(section[id], h2[id]) { scroll-margin-top: calc(var(--u) * 24); }

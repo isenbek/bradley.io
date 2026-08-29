@@ -1,0 +1,288 @@
+/* ============================================================================
+   bradley.io's own beta rules. NOT part of the vendored kit.
+
+   Everything here is either a handoff between bradley.io's shell and the kit's,
+   or a rule the kit has no opinion about because it is specific to this site.
+   Nothing here restyles a kit component: STYLE.md rule 10 is "fix the component,
+   do not fork it", and a copy of the kit makes forking easy enough that the rule
+   needs restating next to the temptation. If a beta page wants a kit component to
+   look different, the answer is upstream, not here.
+   ========================================================================= */
+
+/* ---------------------------------------------------------------------------
+   THE GROUND HANDOFF
+
+   Upstream serves the kit from its own root layout, so it can put the ground on
+   <body class="paper"> directly. Here the root layout is shared with v3 and a
+   nested layout cannot reach up to set a class on <body>, so the ground is
+   claimed from below instead: the beta layout stamps .beta-root, and :has()
+   walks it back up.
+
+   Painting <body> and not just the wrapper matters for overscroll. Without it,
+   rubber-banding past the top or bottom of a beta page on iOS exposes v3's white
+   through the gap, and the page reads as broken at exactly the moment someone is
+   flicking through it.
+   --------------------------------------------------------------------------- */
+body:has(.beta-root) {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* v3 sets a dark ground under [data-theme="dark"] on the root element. beta is a
+   single design in one ground and does not participate: paper and panel are a
+   semantic distinction here, not a light/dark theme, and honouring the toggle
+   would turn documentation into machine output. The no-FOUC script still stamps
+   the attribute, so it has to be answered rather than ignored. */
+:root[data-theme="dark"] body:has(.beta-root) {
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+
+.beta-root {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------------------------------------------------------------------------
+   THE MENU
+
+   The kit ships no JavaScript, so html.menu-open is a class its CSS reacts to
+   and nothing sets. BetaNav sets it. The rules for the open state are the kit's;
+   the only thing needed here is the closed state, because a panel that is merely
+   off-screen still takes focus and still answers a screen reader.
+   --------------------------------------------------------------------------- */
+.beta-root .menu-panel[hidden] {
+  display: none;
+}
+
+/* ---------------------------------------------------------------------------
+   SKIP LINK
+
+   Visible only on focus. The kit has no opinion here and v3's lives inside .v3.
+   --------------------------------------------------------------------------- */
+.beta-skip {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  padding: calc(var(--u) * 3) calc(var(--u) * 4);
+  background: var(--color-ink);
+  color: var(--color-paper);
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+  text-decoration: none;
+}
+.beta-skip:focus {
+  left: calc(var(--u) * 2);
+  top: calc(var(--u) * 2);
+}
+
+/* ---------------------------------------------------------------------------
+   CHARTS
+
+   bradley.io's own, because the kit has no chart component: its .bar is a
+   coverage meter on paper and these are magnitude plots on panel. Written as a
+   grid of rows rather than as an SVG plot so the whole thing reflows, which is
+   what makes it legible at 320px without a scroll container.
+
+   Every colour here comes from lib/beta/chart-theme.ts through an inline style.
+   Nothing paints itself from this file.
+   --------------------------------------------------------------------------- */
+.beta-chart { margin: calc(var(--u) * 4) 0 0; }
+
+.beta-chart__cap {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-glass-muted);
+  margin-bottom: calc(var(--u) * 2);
+}
+
+.beta-chart__rows { display: grid; gap: calc(var(--u) * 1.5); }
+
+/* minmax(0, 1fr) on the track, not 1fr: a grid track's implicit min-width is
+   auto, which resolves to min-content, and a long label would otherwise hold
+   the row open past the panel. The label column is capped for the same reason
+   and truncates rather than pushing. */
+.beta-chart__row {
+  display: grid;
+  grid-template-columns: minmax(0, 7rem) minmax(0, 1fr) auto;
+  align-items: center;
+  gap: calc(var(--u) * 2);
+}
+
+.beta-chart__lbl {
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+  color: var(--color-glass-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.beta-chart__track {
+  display: block;
+  height: calc(var(--u) * 4);
+  background: var(--color-panel-sunk);
+  border-radius: var(--radius-hair);
+  overflow: hidden;
+}
+
+/* Rounded on the data end only, anchored to the baseline at the left. A bar
+   rounded at both ends floats and stops reading as a measurement from zero. */
+.beta-chart__fill {
+  display: block;
+  height: 100%;
+  border-radius: 0 4px 4px 0;
+  transition: width var(--t-slide) var(--ease-detent);
+}
+
+.beta-chart__val {
+  font-family: var(--font-mono);
+  font-size: var(--text-data);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-glass);
+  text-align: right;
+}
+
+/* Below a small phone, the label takes its own row and the bar spans full
+   width. The breakpoint is measured rather than picked: at 390px the three
+   columns leave the track about 150px, which still reads as a proportion, and
+   stacking there instead made the work page 4453px tall for no gain. At 320px
+   the track drops to roughly 90px, which does not, so that is where it stacks.
+   The narrower label column below 30rem is what buys the 390px case. */
+@media (max-width: 30rem) {
+  .beta-chart__row { grid-template-columns: minmax(0, 4.5rem) minmax(0, 1fr) auto; }
+}
+@media (max-width: 22rem) {
+  .beta-chart__row { grid-template-columns: minmax(0, 1fr) auto; }
+  .beta-chart__lbl { grid-column: 1 / -1; }
+  .beta-chart__track { grid-column: 1; }
+}
+
+/* The ramp key. Once per page, never per chart. */
+.beta-ramp {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--u) * 2);
+  margin: calc(var(--u) * 3) 0 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-glass-muted);
+}
+.beta-ramp__swatches { display: flex; gap: 2px; }
+.beta-ramp__swatches i {
+  display: block;
+  width: calc(var(--u) * 5);
+  height: calc(var(--u) * 3);
+  border-radius: var(--radius-hair);
+}
+
+/* A panel that holds a chart needs its own vertical rhythm between blocks. */
+.beta-orggrid { display: grid; gap: calc(var(--u) * 6); margin: calc(var(--u) * 6) 0; }
+.beta-org__what { color: var(--color-glass-muted); font-size: var(--text-fine); margin: 0 0 calc(var(--u) * 4); }
+
+/* ---------------------------------------------------------------------------
+   SECTION HEADINGS ON A COMPONENT PAGE
+
+   .prose is 68ch, which is the right measure for a document and the wrong one
+   for a section heading that introduces a full-width panel: the rule above the
+   heading stopped at 680px while the panel under it ran to 1056px, and the two
+   read as unrelated.
+
+   So the heading block spans the page and its paragraphs keep the reading
+   measure. This overrides nothing in the kit: .beta-sec is bradley.io's own
+   class on bradley.io's own wrapper, and .prose is untouched everywhere else.
+   --------------------------------------------------------------------------- */
+.beta-sec { max-width: none; }
+.beta-sec > p { max-width: 68ch; }
+
+/* A chart's own footnote: what the chart does not cover. Sits on panel with the
+   chart it belongs to, quieter than the axis labels because it is prose. */
+.beta-chart__note {
+  margin: calc(var(--u) * 2) 0 0;
+  font-size: var(--text-fine);
+  line-height: 1.5;
+  color: var(--color-glass-muted);
+  max-width: 60ch;
+}
+
+/* ---------------------------------------------------------------------------
+   FAQ ACCORDION
+
+   The kit has no disclosure component, so this is bradley.io's. Styled as a
+   paper card matching .rail, because a question and its answer are documentation
+   and belong on paper.
+
+   The marker is drawn rather than typed, same reasoning as the kit's menu bars:
+   a glyph comes from whatever font resolved, and the one thing a control cannot
+   afford is to render as a box in a fallback face.
+   --------------------------------------------------------------------------- */
+.beta-faq { display: grid; gap: calc(var(--u) * 2); margin: calc(var(--u) * 4) 0; }
+
+.beta-faq details {
+  border: 1px solid var(--color-rule);
+  background: var(--color-paper);
+  padding: calc(var(--u) * 3) calc(var(--u) * 4);
+}
+
+.beta-faq summary {
+  display: flex;
+  align-items: baseline;
+  gap: calc(var(--u) * 3);
+  cursor: pointer;
+  font-weight: 600;
+  list-style: none;
+}
+.beta-faq summary::-webkit-details-marker { display: none; }
+
+.beta-faq summary::before {
+  content: "";
+  flex: 0 0 auto;
+  width: 0;
+  height: 0;
+  border-left: 6px solid var(--color-accent-ink);
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  transform: translateY(-1px);
+  transition: transform var(--t-detent) var(--ease-detent);
+}
+.beta-faq details[open] summary::before { transform: translateY(-1px) rotate(90deg); }
+
+.beta-faq summary:focus-visible {
+  outline: 2px solid var(--color-blue-ink);
+  outline-offset: 2px;
+}
+
+.beta-faq p {
+  margin: calc(var(--u) * 3) 0 0 calc(var(--u) * 5);
+  font-size: var(--text-body);
+  line-height: 1.55;
+  color: var(--color-ink-muted);
+  max-width: 68ch;
+}
+
+/* .chips inside a .rail: the kit's own flex-wrap row, with the vertical rhythm
+   a card needs around it. */
+.rail .chips { margin: calc(var(--u) * 3) 0; }
+
+/* The magnitude grid. auto-fill with a `min()` clamp on the floor: a bare
+   minmax(14px, 1fr) keeps its 14px floor when the column count drops to one,
+   which is the sitewide overflow bug this codebase already paid for once. */
+.beta-heat {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(14px, 100%), 1fr));
+  gap: 3px;
+}
+.beta-heat i {
+  display: block;
+  aspect-ratio: 1;
+  border-radius: var(--radius-hair);
+}

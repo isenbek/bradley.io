@@ -74,6 +74,24 @@ STAGING=".next-staging"
 PREVIOUS=".next-previous"
 rm -rf "$STAGING"
 
+# Drop the PREVIOUS build's typed-route definitions before generating this
+# build's. tsconfig.json includes both .next/types and .next-staging/types, so
+# during a staged build tsc sees two generated declarations of the same
+# LayoutRoutes union: the live one from the last deploy, and the fresh one. The
+# moment the route set changes they stop being assignable to each other and the
+# type check fails on generated code, naming a route nobody touched:
+#
+#   Type '"/junior"' is not assignable to type 'LayoutRoutes'
+#
+# Found 2026-08-28, when adding /beta hit it against types left over from the
+# torn-down /junior. It fires on any deploy that adds or removes a route, which
+# is most of them, and it reads as a compile error in the app rather than as
+# stale build output.
+#
+# Safe to delete: .next/types is consumed by tsc at build time only, never read
+# by `next start`, and the swap below restores it from the staged build.
+rm -rf .next/types
+
 if ! NEXT_DIST_DIR="$STAGING" bun run build; then
     rm -rf "$STAGING"
     fail "Build failed — LIVE SITE UNTOUCHED, still serving the previous build"

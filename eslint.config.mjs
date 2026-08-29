@@ -40,6 +40,14 @@ export default tseslint.config(
     ignores: [
       "archive/**",
       ".next/**",
+      // deploy.sh builds into .next-staging and keeps the last build at
+      // .next-previous for rollback, so both exist on disk when `eslint .` runs
+      // at step 2. Neither was ignored, and linting compiled output produced
+      // 35,181 errors in webpack chunks: `eslint .` walking a build directory
+      // fails the deploy before it reaches the build, and the error list gives
+      // no hint that the cause is a generated file. .next-* covers any future
+      // variant rather than naming these two and waiting for a third.
+      ".next-*/**",
       "node_modules/**",
       "scripts/**",
       "public/**",

@@ -2,9 +2,7 @@ import type { Metadata } from "next"
 import localFont from "next/font/local"
 import "./globals.css"
 import "./v3.css"
-import { V3Nav } from "@/components/v3/V3Nav"
-import { V3Footer } from "@/components/v3/V3Footer"
-import { V3Colophon } from "@/components/v3/V3Colophon"
+import { SiteChrome } from "@/components/SiteChrome"
 import { RegisterSW } from "@/components/pwa/RegisterSW"
 
 // ─── FONTS ARE VENDORED LOCALLY ────────────────────────────────────────────
@@ -277,12 +275,7 @@ export default function RootLayout({
       </head>
       <body>
         <RegisterSW />
-        <div className="v3">
-          <V3Nav />
-          <main>{children}</main>
-          <V3Colophon />
-          <V3Footer />
-        </div>
+        <SiteChrome>{children}</SiteChrome>
       </body>
     </html>
   )

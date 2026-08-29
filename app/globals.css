@@ -1,5 +1,40 @@
 @import "tailwindcss";
 
+/* ---------------------------------------------------------------------------
+   THE STYLE-KIT SEAM
+
+   The tinymachines design kit, vendored in beta/kit/ and used by /beta. See
+   beta/kit/VENDORED-FROM.md for provenance and the resync path.
+
+   These are CSS @imports and not `import "..."` in layout.tsx, and that
+   distinction is load-bearing rather than stylistic. tokens.css is an
+   `@theme static` block, so Tailwind has to compile it in the SAME unit as the
+   utilities it extends. A JS-side import makes it a separate entry point, where
+   the theme either emits nothing or emits variables no utility can reach, and
+   neither failure is loud: a var() naming a token that is not there does not
+   error, it silently drops the whole declaration. Upstream's own globals.css
+   does exactly this, for exactly this reason.
+
+   Order matters twice over. Tailwind first, because @theme extends it and
+   because CSS requires every @import to precede other rules, which is also why
+   this block sits at the very top of this file. Then fonts.css, because it
+   defines the four families tokens.css goes on to name in --font-*. Then
+   components.css, which reads the tokens.
+
+   Loading it sitewide is safe and was checked rather than assumed:
+   components.css is class-scoped, its only non-class rules being html[lang="ja"],
+   html.menu-open and html.has-fullscreen guards. Of its 224 classes exactly
+   three share a name with something bradley.io uses in JSX, and all three are
+   inert: `.num` is descendant-scoped on both sides (.ledger .num vs
+   .v3-vis-tbl .num), `sr-only` is Tailwind's own on both sides because the kit
+   deliberately declines to define it, and `.btn-primary` is referenced only by
+   app/_legacy/, which is excluded from routing. tokens.css carries no Tailwind
+   import of its own, so preflight still emits exactly once, from the line above.
+   --------------------------------------------------------------------------- */
+@import "./beta/kit/fonts.css";
+@import "./beta/kit/tokens.css";
+@import "./beta/kit/components.css";
+
 /* ═══════════════════════════════════════════════════════════
    Default: Ember
    "Warm minimalism. Firelight in a dark workshop."
