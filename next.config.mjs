@@ -13,6 +13,15 @@ const nextConfig = {
       // bare path. Permanent redirects preserve any bookmarks / shared links.
       { source: '/v3', destination: '/', permanent: true },
       { source: '/v3/:path*', destination: '/:path*', permanent: true },
+
+      // Same story one design later: /beta was where the style-kit rebuild was
+      // previewed, and at the cutover those eleven pages took the canonical
+      // paths. Every /beta URL shared while it was a preview keeps working.
+      //
+      // These sit AFTER the /v3 rules and before nothing: order only matters
+      // against another rule that could match the same path, and none can.
+      { source: '/beta', destination: '/', permanent: true },
+      { source: '/beta/:path*', destination: '/:path*', permanent: true },
     ]
   },
   async headers() {

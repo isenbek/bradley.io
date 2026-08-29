@@ -1,48 +1,40 @@
-import type { Metadata } from "next"
 import Link from "next/link"
 import buildInfo from "@/lib/build-info.json"
 import { timeAgo } from "@/lib/time-ago"
-import { BetaNav } from "./BetaNav"
-import "./beta.css"
+import { KitNav } from "./KitNav"
 
 /**
- * The beta shell: the tinymachines style kit's chrome, on bradley.io's content.
+ * The tinymachines style kit's chrome: masthead, page, fixed footer.
  *
- * There is no `.v3` wrapper anywhere in here, and that is the point of the whole
- * arrangement. components/SiteChrome.tsx sees a /beta path and renders children
- * bare, so this layout is the first thing under <body> and owns the ground.
+ * This was app/beta/layout.tsx until the cutover. It stopped being a layout
+ * because the pages it wraps no longer share a path prefix: they are at /, and
+ * /about, and /papers, spread across the app root and interleaved with routes
+ * that still run the v3 design. A layout cannot express "these eleven routes",
+ * so SiteChrome picks per route and renders this.
  */
-
-export const metadata: Metadata = {
-  // Beta is a work in progress at a public URL. Keeping it out of the index is
-  // the difference between showing someone a draft and publishing one, and it
-  // also stops it competing with the live pages it is a copy of.
-  robots: { index: false, follow: false },
-}
-
-export default function BetaLayout({ children }: { children: React.ReactNode }) {
+export function KitShell({ children }: { children: React.ReactNode }) {
   const shortHash = buildInfo.commitHash?.slice(0, 7) ?? ""
   const deployedAgo = buildInfo.buildTime ? timeAgo(buildInfo.buildTime) : ""
 
   return (
     <div className="beta-root">
-      <a className="beta-skip" href="#beta-main">
+      <a className="beta-skip" href="#kit-main">
         Skip to content
       </a>
 
       <div className="app-shell">
-        <BetaNav />
+        <KitNav />
 
-        <main className="app-main" id="beta-main">
+        <main className="app-main" id="kit-main">
           {children}
         </main>
 
         {/* One line: the name, and what is running. The version is the visible
-            "did this ship?" signal, so it keeps the same shape it has on v3. */}
+            "did this ship?" signal, so it keeps the shape it had on v3. */}
         <footer className="app-foot">
           <div className="band">
             <footer className="crumb site-foot">
-              <Link href="/beta">bradley.io</Link>
+              <Link href="/">bradley.io</Link>
               <span>
                 {" / "}
                 <a

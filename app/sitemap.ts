@@ -31,6 +31,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/projects/critical-collapse`, changeFrequency: "monthly", priority: 0.7, lastModified: now },
     { url: `${base}/services`, changeFrequency: "monthly", priority: 0.8, lastModified: now },
     { url: `${base}/ai-pilot`, changeFrequency: "daily", priority: 0.7, lastModified: now },
+    // New at the style-kit cutover: the four GitHub orgs rolled up. It replaces
+    // what the per-repository dossiers under /projects used to answer, so it
+    // carries their weight rather than /projects' 0.9.
+    { url: `${base}/work`, changeFrequency: "weekly", priority: 0.8, lastModified: now },
+    { url: `${base}/pilot-analytics`, changeFrequency: "daily", priority: 0.6, lastModified: now },
     { url: `${base}/lab`, changeFrequency: "weekly", priority: 0.6, lastModified: now },
     { url: `${base}/mcp`, changeFrequency: "weekly", priority: 0.7, lastModified: now },
     { url: `${base}/papers`, changeFrequency: "weekly", priority: 0.8, lastModified: now },

@@ -1,23 +1,31 @@
 import { readFileSync } from "fs"
 import { join } from "path"
-import {
-  ArrowUpRight,
-  Briefcase,
-  Cpu,
-  Database,
-  Globe,
-  Hash,
-  Lock,
-  MessageSquare,
-  Server,
-  Shield,
-} from "lucide-react"
-import { timeAgo } from "@/lib/time-ago"
-import { V3Reveal } from "@/components/v3/V3Reveal"
+import Link from "next/link"
+import type { Metadata } from "next"
+import { RowChart, RampKey } from "../_charts"
+import { BetaMeasured } from "../_measured"
 
 export const revalidate = 3600
 
-interface McpService {
+export const metadata: Metadata = {
+  title: "MCP catalog",
+  description:
+    "The Model Context Protocol servers running here, with their live tool lists, and the Campaign Brain REST fleet behind them.",
+}
+
+interface McpServer {
+  id: string
+  name: string
+  url: string
+  transport: string
+  auth: string
+  what: string
+  reachable: boolean
+  note?: string
+  tools: { name: string; description: string }[]
+}
+
+interface Service {
   id: string
   name: string
   url: string
@@ -27,258 +35,196 @@ interface McpService {
   endpointCount: number
 }
 
-interface McpCategory {
-  id: string
-  name: string
-  services: McpService[]
-}
-
-interface McpCatalog {
+interface McpData {
   generated: string
-  stats: { totalServices: number; totalEndpoints: number; totalCategories: number }
-  categories: McpCategory[]
-}
-
-type CatId = "ai" | "data" | "communication" | "infrastructure" | "business"
-
-const CAT_STYLE: Record<
-  CatId,
-  { color: string; ink: string; Icon: typeof Cpu }
-> = {
-  // `color` = bright brand hue used for borders, dots, gradient accents.
-  // `ink`   = darker accessible variant used for TEXT (passes 4.5:1 on cream).
-  ai:             { color: "#EE766C", ink: "#B43A30", Icon: Cpu },           // coral
-  data:           { color: "#13B8F3", ink: "#08749B", Icon: Database },      // bio blue
-  communication:  { color: "#169E73", ink: "#0F7355", Icon: MessageSquare }, // green
-  infrastructure: { color: "#EDB427", ink: "#8C6306", Icon: Shield },        // gold
-  business:       { color: "#A855F7", ink: "#7E22CE", Icon: Briefcase },     // violet
-}
-
-function loadCatalog(): McpCatalog | null {
-  try {
-    return JSON.parse(
-      readFileSync(join(process.cwd(), "public/data/mcp-catalog.json"), "utf-8")
-    )
-  } catch {
-    return null
+  sources: { unifiedSpec: string; metadata: string }
+  stats: {
+    totalServices: number
+    totalEndpoints: number
+    totalCategories: number
+    mcpServers: number
+    mcpServersReachable: number
+    fleetServices: number
+    fleetEndpoints: number
+    uncataloguedServices: number
   }
+  mcpServers: McpServer[]
+  categories: { id: string; name: string; services: Service[] }[]
+  uncatalogued: { id: string; endpointCount: number }[]
 }
 
-export default function V3McpPage() {
-  const catalog = loadCatalog()
+const clean = (s: string) => s.replace(/\s*—\s*/g, ": ")
 
-  if (!catalog) {
-    return (
-      <section className="v3-section">
-        <div className="v3-wrap">
-          <div className="v3-empty">Catalog unavailable. Try again shortly.</div>
-        </div>
-      </section>
-    )
-  }
+export default function BetaMcpPage() {
+  const d = JSON.parse(
+    readFileSync(join(process.cwd(), "public/data/mcp-catalog.json"), "utf-8")
+  ) as McpData
+  const st = d.stats
 
-  const { stats, categories } = catalog
+  const byCategory = d.categories
+    .map((c) => ({
+      label: c.name,
+      value: c.services.reduce((s, x) => s + x.endpointCount, 0),
+      display: `${c.services.length} svc`,
+    }))
+    .sort((a, b) => b.value - a.value)
+
+  // Answered, but would not enumerate: an auth gate rather than an outage.
+  // Counted rather than written into the copy, so the sentence cannot go stale
+  // the first time a server gains or drops a credential requirement.
+  const gated = d.mcpServers.filter((s) => s.reachable && s.tools.length === 0).length
 
   return (
-    <>
-      {/* HEADER ========================================================= */}
-      <header className="v3-page-head">
-        <div className="v3-blob v3-blob--1" aria-hidden style={{ right: "-80px", top: "-40px" }} />
-        <div className="v3-blob v3-blob--3" aria-hidden style={{ right: "160px", top: "220px" }} />
+    <div className="page">
+      <div className="page-head">
+        <nav className="crumb" aria-label="Breadcrumb">
+          <Link href="/">bradley.io</Link>
+          <span>
+            {" / "}
+            <span aria-current="page">MCP catalog</span>
+          </span>
+        </nav>
+        <h1>MCP catalog</h1>
+      </div>
 
-        <div className="v3-wrap">
-          <div className="v3-page-head__lockup">
-            <V3Reveal>
-              <span
-                className="v3-pill v3-pill--blue"
-                style={{
-                  padding: "8px 16px",
-                  fontSize: 13,
-                  display: "inline-flex",
-                  gap: 8,
-                  alignItems: "center",
-                }}
-              >
-                <Server size={14} strokeWidth={2.25} />
-                Campaign Brain · MCP catalog
-              </span>
-            </V3Reveal>
-            <V3Reveal eager>
-              <h1>
-                Services, <span className="v3-accent">indexed.</span>
-              </h1>
-            </V3Reveal>
-            <V3Reveal eager>
-              <p className="v3-page-head__lede">
-                {stats.totalServices} FastAPI microservices powering Campaign Brain: AI, data,
-                communication, infrastructure, and business operations. All open via MCP to LLM
-                agents.
-              </p>
-            </V3Reveal>
-          </div>
-        </div>
-      </header>
+      <p className="lede">
+        {st.mcpServers} Model Context Protocol servers, and the {st.fleetServices}-service REST
+        fleet behind them.
+      </p>
 
-      {/* STAT BAR ======================================================= */}
-      <section style={{ padding: "0 0 24px" }}>
-        <div className="v3-wrap">
-          <V3Reveal>
-            <div className="v3-statbar">
-              <div
-                className="v3-statbar__cell"
-                style={{ ["--v3-statbar-color" as string]: "var(--v3-blue-600)" }}
-              >
-                <div className="v3-statbar__val">{stats.totalServices}</div>
-                <div className="v3-statbar__lbl">Services</div>
-              </div>
-              <div
-                className="v3-statbar__cell"
-                style={{ ["--v3-statbar-color" as string]: "var(--v3-coral-dk)" }}
-              >
-                <div className="v3-statbar__val">{stats.totalEndpoints}</div>
-                <div className="v3-statbar__lbl">Endpoints</div>
-              </div>
-              <div
-                className="v3-statbar__cell"
-                style={{ ["--v3-statbar-color" as string]: "var(--v3-gold-dk)" }}
-              >
-                <div className="v3-statbar__val">{stats.totalCategories}</div>
-                <div className="v3-statbar__lbl">Categories</div>
-              </div>
-            </div>
-          </V3Reveal>
-        </div>
-      </section>
+      <div className="prose beta-sec">
+        <h2>The MCP servers</h2>
+        <p>
+          Each was asked for its tool list when this page was built, so what is below is what the
+          server answered with, not what a README claims.
+          {gated > 0
+            ? ` ${gated} of the ${st.mcpServers} require a credential and answered by refusing, which is the
+               correct behaviour and is recorded as such rather than as an outage.`
+            : ""}
+        </p>
+      </div>
 
-      {/* CATEGORIES ===================================================== */}
-      <section className="v3-section" style={{ paddingTop: 24 }}>
-        <div className="v3-wrap">
-          <div style={{ display: "flex", flexDirection: "column", gap: 56 }}>
-            {categories.map((cat) => {
-              const style = CAT_STYLE[cat.id as CatId] ?? {
-                color: "var(--v3-blue-500)",
-                Icon: Server,
-              }
-              const endpointSum = cat.services.reduce((s, x) => s + x.endpointCount, 0)
-              return (
-                <section key={cat.id}>
-                  <V3Reveal>
-                    <div
-                      className="v3-cathead"
-                      style={{ ["--v3-cat-color" as string]: style.color }}
-                    >
-                      <div className="v3-cathead__ico">
-                        <style.Icon size={22} strokeWidth={2.25} />
-                      </div>
-                      <div>
-                        <div className="v3-cathead__name">{cat.name}</div>
-                        <div className="v3-cathead__meta">
-                          {cat.services.length} services · {endpointSum} endpoints
-                        </div>
-                      </div>
-                    </div>
-                  </V3Reveal>
-
-                  <div
-                    style={{
-                      display: "grid",
-                      gridTemplateColumns: "repeat(auto-fill, minmax(min(280px, 100%), 1fr))",
-                      gap: 16,
-                    }}
-                  >
-                    {cat.services.map((svc, i) => (
-                      <V3Reveal key={svc.id} delay={i * 35}>
-                        <article
-                          className="v3-svc"
-                          style={{
-                            ["--v3-svc-color" as string]: style.color,
-                            ["--v3-svc-ink" as string]: style.ink,
-                          }}
-                        >
-                          <div className="v3-svc__bar" aria-hidden />
-                          <div className="v3-svc__body">
-                            <div className="v3-svc__head">
-                              <span className="v3-svc__id">{svc.id}</span>
-                              <span className="v3-svc__count">
-                                <Hash size={11} strokeWidth={2.5} />
-                                {svc.endpointCount}
-                              </span>
-                            </div>
-                            <h3 className="v3-svc__name">{svc.name}</h3>
-                            <p className="v3-svc__desc">{svc.description}</p>
-                            {svc.capabilities.length > 0 ? (
-                              <div className="v3-svc__caps">
-                                {svc.capabilities.map((c) => (
-                                  <span key={c} className="v3-svc__cap">
-                                    {c}
-                                  </span>
-                                ))}
-                              </div>
-                            ) : null}
-                            <div className="v3-svc__auth">
-                              <Lock size={11} strokeWidth={2.5} />
-                              <span>{svc.auth}</span>
-                              {svc.url ? (
-                                <a
-                                  href={svc.url}
-                                  target="_blank"
-                                  rel="noreferrer noopener"
-                                  className="v3-svc__url"
-                                >
-                                  open <ArrowUpRight size={11} strokeWidth={2.5} />
-                                </a>
-                              ) : null}
-                            </div>
-                          </div>
-                        </article>
-                      </V3Reveal>
-                    ))}
-                  </div>
-                </section>
-              )
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* FOOTER NOTE =================================================== */}
-      <section className="v3-section v3-section--paper" style={{ paddingTop: 56 }}>
-        <div className="v3-wrap">
-          <V3Reveal>
-            <div
-              className="v3-panel"
-              style={{
-                textAlign: "center",
-                padding: "32px 28px",
-              }}
-            >
-              <div
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: 8,
-                  marginBottom: 6,
-                  color: "var(--v3-blue-700)",
-                }}
-              >
-                <Globe size={16} strokeWidth={2.25} />
-                <span
-                  className="v3-font-display"
-                  style={{ fontWeight: 700, fontSize: 16 }}
-                >
-                  All services hosted at <code style={{ fontFamily: "var(--font-v3-mono), monospace", fontSize: 14 }}>*.campaignbrain.dev</code>
+      <div className="beta-orggrid">
+        {d.mcpServers.map((s) => (
+          <div className="panel" key={s.id}>
+            <div className="panel-face">
+              <div className="panel-bar">
+                <b>{s.name}</b>
+                <span>
+                  {s.transport} · {s.auth}
                 </span>
               </div>
-              <div
-                className="v3-font-mono"
-                style={{ fontSize: 11, color: "var(--v3-slate)", letterSpacing: "0.06em" }}
-              >
-                catalog updated {timeAgo(catalog.generated)}
+
+              <p className="beta-org__what">{s.what}</p>
+
+              <table className="readout">
+                <tbody>
+                  <tr>
+                    <td>Endpoint</td>
+                    <td className="num beta-url">{s.url.replace(/^https:\/\//, "")}</td>
+                  </tr>
+                  <tr>
+                    <td>Answered</td>
+                    <td className="num">{s.reachable ? "yes" : "no"}</td>
+                  </tr>
+                  <tr>
+                    <td>Tools listed</td>
+                    <td className="num">{s.tools.length || "not enumerated"}</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              {s.tools.length > 0 ? (
+                <div className="beta-tools">
+                  {s.tools.map((t) => (
+                    <div className="beta-tool" key={t.name}>
+                      <b>{t.name}</b>
+                      <span>{clean(t.description)}</span>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="beta-chart__note">{s.note}</p>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="prose beta-sec">
+        <h2>The REST fleet</h2>
+        <p>
+          {st.fleetServices} services exposing {st.fleetEndpoints.toLocaleString()} operations,
+          counted from the unified OpenAPI spec. {st.totalServices} of them carry descriptions and
+          are grouped below.
+        </p>
+      </div>
+
+      {st.uncataloguedServices > 0 && (
+        <div className="notice">
+          <b>{st.uncataloguedServices} services are not described here.</b> They exist in the spec
+          and their endpoints are counted in the fleet total, but the catalog has no name or
+          description for them yet, so they are not in the groups below. The grouped figures
+          therefore cover {st.totalEndpoints.toLocaleString()} of{" "}
+          {st.fleetEndpoints.toLocaleString()} operations.
+        </div>
+      )}
+
+      <RampKey low="fewer endpoints" high="more" />
+
+      <div className="panel">
+        <div className="panel-face">
+          <div className="panel-bar">
+            <b>By group</b>
+            <span>endpoints</span>
+          </div>
+          <RowChart caption="Operations per group" data={byCategory} />
+        </div>
+      </div>
+
+      {d.categories.map((c) => (
+        <section key={c.id}>
+          <div className="prose beta-sec">
+            <h2>{c.name}</h2>
+          </div>
+          <div className="ledger">
+            <div className="scroller" tabIndex={0} role="region" aria-label={c.name}>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Service</th>
+                    <th>What it does</th>
+                    <th className="num">Ops</th>
+                    <th>Auth</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {c.services.map((s) => (
+                    <tr key={s.id}>
+                      <td className="name">{s.name}</td>
+                      <td>{clean(s.description)}</td>
+                      <td className="num">{s.endpointCount || "-"}</td>
+                      <td>{s.auth}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <div className="tbl-foot">
+                <span>{c.services.length} services</span>
               </div>
             </div>
-          </V3Reveal>
-        </div>
-      </section>
-    </>
+          </div>
+        </section>
+      ))}
+
+      <BetaMeasured generated={d.generated} source="mcp-catalog.json" />
+      <p className="quiet">
+        Service list and endpoint counts from{" "}
+        <a href={d.sources.unifiedSpec} target="_blank" rel="noopener noreferrer">
+          the unified OpenAPI spec
+        </a>
+        . Tool lists probed live at build time.
+      </p>
+    </div>
   )
 }

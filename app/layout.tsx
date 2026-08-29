@@ -2,6 +2,12 @@ import type { Metadata } from "next"
 import localFont from "next/font/local"
 import "./globals.css"
 import "./v3.css"
+// bradley.io's own rules for the kit routes. Loaded here because the layout that
+// used to import it (app/beta/layout.tsx) went away at the cutover: the kit
+// routes no longer share a path prefix, so there is no nested layout to hang it
+// on. The vendored kit itself is @imported from globals.css, which is where the
+// note about why that has to be a CSS import lives.
+import "./kit.css"
 import { SiteChrome } from "@/components/SiteChrome"
 import { RegisterSW } from "@/components/pwa/RegisterSW"
 

@@ -3,10 +3,10 @@
 import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { BETA_NAV } from "./_nav"
+import { NAV } from "@/app/_nav"
 
 /**
- * The beta masthead and its menu.
+ * The site masthead and its menu.
  *
  * The kit ships no JavaScript by design, so its menu CSS reacts to state that
  * something else has to set. This component is that something else, and the
@@ -21,7 +21,7 @@ import { BETA_NAV } from "./_nav"
  *     need to or runs off the bottom of a phone.
  *   - .menu-scrim, which closes on click at every width
  */
-export function BetaNav() {
+export function KitNav() {
   const pathname = usePathname() ?? ""
   const [open, setOpen] = useState(false)
   const headRef = useRef<HTMLElement>(null)
@@ -83,7 +83,7 @@ export function BetaNav() {
   return (
     <header className="app-head" ref={headRef}>
       <div className="band topbar">
-        <Link className="wordmark" href="/beta" aria-label="bradley.io beta home">
+        <Link className="wordmark" href="/" aria-label="bradley.io home">
           <span className="die">BIO</span>
           <b>bradley.io</b>
         </Link>
@@ -94,7 +94,7 @@ export function BetaNav() {
             className="menu-btn"
             ref={btnRef}
             aria-expanded={open}
-            aria-controls="beta-menu"
+            aria-controls="site-menu"
             onClick={() => setOpen((v) => !v)}
           >
             <span className="bars" aria-hidden="true">
@@ -109,9 +109,9 @@ export function BetaNav() {
             <>
               {/* Before the panel in source order so it never covers it. */}
               <div className="menu-scrim" onClick={() => setOpen(false)} aria-hidden="true" />
-              <div className="menu-panel" id="beta-menu">
+              <div className="menu-panel" id="site-menu">
                 <div className="menu-sheet">
-                  {BETA_NAV.map((group) => (
+                  {NAV.map((group) => (
                     <nav className="menu-group" key={group.title} aria-label={group.title}>
                       <h2>{group.title}</h2>
                       {group.links.map((l) => {

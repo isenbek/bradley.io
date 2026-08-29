@@ -68,7 +68,7 @@ export default function BetaWorkPage() {
     <div className="page">
       <div className="page-head">
         <nav className="crumb" aria-label="Breadcrumb">
-          <Link href="/beta">bradley.io</Link>
+          <Link href="/">bradley.io</Link>
           <span>
             {" / "}
             <span aria-current="page">Work</span>
@@ -84,7 +84,7 @@ export default function BetaWorkPage() {
       </p>
 
       {/* .prose for the text run only; the panels below are siblings. See the
-          note in app/beta/page.tsx for why they are not nested inside it. */}
+          note in app/page.tsx for why they are not nested inside it. */}
       <div className="prose beta-sec">
         <p>
           This is the org-level view on purpose. The per-repository write-ups moved out of this
