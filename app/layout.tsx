@@ -145,7 +145,9 @@ export const viewport = {
   viewportFit: "cover" as const,
   themeColor: [
     { media: "(prefers-color-scheme: dark)", color: "#252521" },
-    { media: "(prefers-color-scheme: light)", color: "#FBFAF5" },
+    // The kit's --color-paper. The dark value below still serves the v3
+    // routes, which are the only ones that answer the theme toggle.
+    { media: "(prefers-color-scheme: light)", color: "#F4F2EC" },
   ],
 }
 

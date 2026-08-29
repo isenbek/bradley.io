@@ -10,8 +10,11 @@ export default function manifest(): MetadataRoute.Manifest {
     scope: "/",
     display: "standalone",
     orientation: "portrait-primary",
-    background_color: "#1C1412",
-    theme_color: "#1C1412",
+    // The style kit's paper. #1C1412 here was a leftover from the Ember
+    // theme, retired two designs ago: an installed icon was opening onto a
+    // near-black splash and then painting a warm off-white page.
+    background_color: "#F4F2EC",
+    theme_color: "#F4F2EC",
     categories: ["productivity", "developer", "technology"],
     lang: "en-US",
     dir: "ltr",

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { NAV } from "@/app/_nav"
+import { BioLogo } from "@/components/v3/BioLogo"
 
 /**
  * The site masthead and its menu.
@@ -83,8 +84,20 @@ export function KitNav() {
   return (
     <header className="app-head" ref={headRef}>
       <div className="band topbar">
+        {/* The real wordmark in the die, not the letters "BIO".
+            Recoloured onto the kit palette: mustard body on the ink tile
+            (9.5:1, the same treatment the kit gives its own die text) with the
+            i-dot in the accent, which is what the three-piece split in
+            lib/bio-logo-path.ts exists for. Nothing here is Bio Blue any more. */}
         <Link className="wordmark" href="/" aria-label="bradley.io home">
-          <span className="die">BIO</span>
+          <span className="die die--mark">
+            <BioLogo
+              height={18}
+              title=""
+              bodyColor="var(--color-mustard)"
+              dotColor="var(--color-accent)"
+            />
+          </span>
           <b>bradley.io</b>
         </Link>
 

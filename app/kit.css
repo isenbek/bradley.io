@@ -397,3 +397,21 @@ body:has(.beta-root) {
   word-break: break-all;
   white-space: pre-wrap;
 }
+
+/* ---------------------------------------------------------------------------
+   THE MARK IN THE DIE
+
+   The kit's .die is a tile of ink carrying a three-letter code. bradley.io has
+   an actual wordmark, so the tile carries that instead. The tile itself is
+   untouched: this only clears the padding the letters wanted and lets the SVG
+   overflow its own box, because the i-dot sits a whisker above the glyph's
+   nominal top and gets clipped otherwise.
+   --------------------------------------------------------------------------- */
+.die--mark {
+  padding: 0;
+  overflow: visible;
+}
+.die--mark svg {
+  display: block;
+  overflow: visible;
+}
