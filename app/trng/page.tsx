@@ -1,61 +1,39 @@
 import Link from "next/link"
-import { Atom, Boxes } from "lucide-react"
-import { V3Reveal } from "@/components/v3/V3Reveal"
-import { V3TrngDashboard } from "./V3TrngDashboard"
+import { TrngBoard } from "@/components/trng/TrngBoard"
 
-export default function V3TrngPage() {
+export default function TrngPage() {
   return (
-    <>
-      {/* HEADER ========================================================= */}
-      <header className="v3-page-head" style={{ paddingBottom: 28 }}>
-        <div className="v3-blob v3-blob--3" aria-hidden style={{ right: "-60px", top: "0px" }} />
-        <div className="v3-blob v3-blob--1" aria-hidden style={{ right: "220px", top: "200px" }} />
+    <div className="page">
+      <div className="page-head">
+        <nav className="crumb" aria-label="Breadcrumb">
+          <Link href="/">bradley.io</Link>
+          <span>
+            {" / "}
+            <span aria-current="page">Hotbits</span>
+          </span>
+        </nav>
+        <h1>Random, from radioactive decay</h1>
+      </div>
 
-        <div className="v3-wrap">
-          <div className="v3-page-head__lockup">
-            <V3Reveal>
-              <span
-                className="v3-pill v3-pill--green"
-                style={{
-                  padding: "8px 16px",
-                  fontSize: 13,
-                  display: "inline-flex",
-                  gap: 8,
-                  alignItems: "center",
-                }}
-              >
-                <Atom size={14} strokeWidth={2.25} />
-                hotbits · radioactive entropy
-              </span>
-            </V3Reveal>
-            <V3Reveal eager>
-              <h1>
-                Random, from radioactive <span className="v3-accent">decay.</span>
-              </h1>
-            </V3Reveal>
-            <V3Reveal eager>
-              <p className="v3-page-head__lede">
-                A CAJOE Geiger counter, a Raspberry Pi, and a Δt₁/Δt₂ comparison turn cosmic
-                noise into NIST-tested bits. Polls fast for the pool, slower for the labs.
-              </p>
-            </V3Reveal>
-            <V3Reveal>
-              <Link href="/trng/space" className="v3-espace-cta">
-                <Boxes size={15} strokeWidth={2.4} />
-                See the entropy in 3D: rotatable point clouds
-                <span aria-hidden>→</span>
-              </Link>
-            </V3Reveal>
-          </div>
-        </div>
-      </header>
+      <p className="lede">
+        A CAJOE Geiger counter, a Raspberry Pi, and a comparison of one gap between decay events
+        with the next. If the first is shorter the bit is a one, if the second is shorter it is a
+        zero, and equal gaps are thrown away.
+      </p>
 
-      {/* DASHBOARD ====================================================== */}
-      <section className="v3-section" style={{ paddingTop: 16 }}>
-        <div className="v3-wrap">
-          <V3TrngDashboard />
-        </div>
-      </section>
-    </>
+      <div className="prose beta-sec">
+        <p>
+          Nothing here generates a number. The bias cancels by symmetry rather than by correction,
+          which is why the raw stream is worth measuring at all: everything below is that
+          measurement, taken continuously and not smoothed.
+        </p>
+        <p>
+          <Link href="/trng/space">See the entropy in 3D</Link>: rotatable point clouds built from
+          the same bits.
+        </p>
+      </div>
+
+      <TrngBoard />
+    </div>
   )
 }

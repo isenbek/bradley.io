@@ -60,7 +60,7 @@ export const NAV: NavGroup[] = [
     // design would trade real content for consistency.
     title: "Running instruments",
     links: [
-      { href: "/trng", label: "Hotbits", blurb: "true random numbers from radioactive decay", legacy: true },
+      { href: "/trng", label: "Hotbits", blurb: "true random numbers from radioactive decay" },
       { href: "/sdr", label: "SDR", blurb: "the scanner stack and what it is hearing", legacy: true },
       { href: "/fleet", label: "Fleet", blurb: "node health across the cluster", legacy: true },
       { href: "/dragonfli", label: "Dragonfli", blurb: "airspace, GPS, and the perception bus", legacy: true },

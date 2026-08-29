@@ -381,3 +381,19 @@ body:has(.beta-root) {
   text-align: right;
   font-variant-numeric: normal;
 }
+
+/* Live bits from the entropy pool. break-all because it is one continuous hex
+   string with no break opportunities: without it the pre sets a min-width equal
+   to its full length and pushes the panel off a phone. */
+.beta-bits {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-data);
+  line-height: var(--leading-data);
+  color: var(--color-ocean);
+  background: var(--color-panel-sunk);
+  border-radius: var(--radius-mod);
+  padding: calc(var(--u) * 3);
+  word-break: break-all;
+  white-space: pre-wrap;
+}
