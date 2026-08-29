@@ -1,9 +1,34 @@
 #!/usr/bin/env python3
 """
-Generate MCP catalog JSON from Campaign Brain service OpenAPI specs.
+Generate public/data/mcp-catalog.json for the /mcp page.
 
-Fetches service details from each service's /openapi.json endpoint and writes
-public/data/mcp-catalog.json for the /mcp showcase page.
+Two halves, from two live sources:
+
+  1. MCP SERVERS. The Model Context Protocol endpoints actually run here. Each is
+     probed with a real `tools/list` JSON-RPC call, so the tool list on the page
+     is what the server answers with today, not what a doc said once.
+
+  2. THE CAMPAIGN BRAIN SERVICE CATALOG. The REST fleet behind mcp.campaignbrain.dev.
+
+WHY THIS WAS REWRITTEN (2026-08-29)
+-----------------------------------
+The previous version hardcoded the service list and fetched only the endpoint
+COUNTS live. That gets the failure mode exactly backwards: a service could be
+added to the fleet and never appear on the page, and nothing would look wrong,
+because every service that WAS listed had a fresh, correct number beside it.
+
+Measured when it was replaced, it was badly behind:
+
+  * 44 services listed, 84 present in the unified spec
+  * 275 endpoints claimed, 3,891 present
+  * every URL still on the retired *.nominate.ai domain, now *.campaignbrain.dev
+
+So the authority is inverted. The unified OpenAPI spec decides what exists and
+how big it is. scripts/mcp-catalog-meta.json supplies only the human-readable
+metadata (friendly name, category, auth, capabilities), because that is behind
+cbauth and cannot be fetched unauthenticated. A service in the spec with no
+metadata is reported as UNCATALOGUED rather than silently dropped: the page says
+how many there are, which is the part that used to be invisible.
 
 Usage:
   python3 scripts/generate-mcp-catalog.py [--verbose]
@@ -11,15 +36,69 @@ Usage:
 
 import json
 import sys
+import urllib.error
 import urllib.request
+from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 
 SCRIPT_DIR = Path(__file__).parent
 PROJECT_ROOT = SCRIPT_DIR.parent
 OUTPUT_FILE = PROJECT_ROOT / "public" / "data" / "mcp-catalog.json"
+META_FILE = SCRIPT_DIR / "mcp-catalog-meta.json"
+
+# One request for the whole fleet. Every path is prefixed with its service id
+# (/cbai/..., /cbradio/...), which is what makes per-service counts possible
+# without asking 84 hosts individually.
+UNIFIED_SPEC = "https://mcp.campaignbrain.dev/openapi.json"
+
+# The MCP endpoints themselves. `auth_expected` marks the ones that are supposed
+# to refuse an unauthenticated probe, so a 401 from those is a PASS: the server
+# answered, which is what is being tested. Treating it as an outage would put a
+# red mark on a healthy server every night.
+MCP_SERVERS = [
+    {
+        "id": "tinymachines",
+        "name": "tinymachines",
+        "url": "https://tinymachines.ai/api/mcp",
+        "transport": "streamable HTTP",
+        "auth": "None",
+        "what": "The six pieces of the 6502 work, what each one is, and the licence position.",
+        "auth_expected": False,
+    },
+    {
+        "id": "6502",
+        "name": "6502",
+        "url": "https://6502.tinymachines.ai/api/mcp",
+        "transport": "streamable HTTP",
+        "auth": "None",
+        "what": "Assemble, run and mint ROMs against a transistor-level 6502, and ask the die about any of its 1,725 nodes.",
+        "auth_expected": False,
+    },
+    {
+        "id": "junior",
+        "name": "junior",
+        "url": "https://junior.bradley.io/mcp",
+        "transport": "streamable HTTP",
+        "auth": "Bearer token",
+        "what": "Home network management: the OpenWrt router, its dual WAN, and the fleet behind it.",
+        "auth_expected": True,
+    },
+    {
+        "id": "cbmcp",
+        "name": "Campaign Brain catalog",
+        "url": "https://mcp.campaignbrain.dev/sse",
+        "transport": "SSE",
+        "auth": "cbauth",
+        "what": "Service discovery over the whole Campaign Brain fleet: search services, read endpoints, fetch OpenAPI specs.",
+        # Gated at nginx, which answers 401 before the app sees the request, so
+        # the probe gets HTML rather than JSON-RPC. Expected, not an outage.
+        "auth_expected": True,
+    },
+]
 
 VERBOSE = "--verbose" in sys.argv or "-v" in sys.argv
+TIMEOUT = 20
 
 
 def log(msg: str):
@@ -27,232 +106,211 @@ def log(msg: str):
         print(f"  [{datetime.now().strftime('%H:%M:%S')}] {msg}")
 
 
-# Each service: (id, name, base_url, description, auth, capabilities)
-SERVICES = {
-    "ai": {
-        "name": "AI & Intelligence",
-        "services": [
-            ("cbai", "AI API", "https://ai.nominate.ai",
-             "Unified AI provider — Claude, Ollama, Mistral. Chat completions, embeddings, OCR, summarization, topic extraction.",
-             "Optional API key", ["chat", "embeddings", "ocr", "summarization", "topics", "tool-use", "streaming"]),
-            ("cbintel", "Intelligence API", "https://intel.nominate.ai",
-             "Web crawling, screenshot capture, transcript generation, and intelligence gathering with vector search.",
-             "X-API-Key", ["crawl", "screenshot", "transcript", "vector-search", "jobs"]),
-            ("cbscout", "Agent Memory", "https://scout.nominate.ai",
-             "Hierarchical memory for AI agents. Three layers: Resources (raw) → Items (facts) → Categories (summaries). Temporal awareness with decay.",
-             "X-Campaign-ID header", ["memory-store", "memory-retrieve", "entity-profiles", "temporal-decay", "consolidation"]),
-            ("cbindex", "Document Index", "https://index.nominate.ai",
-             "Vectorless RAG document indexing using PageIndex. PDF/markdown indexing, YouTube transcripts, LLM-powered document chat.",
-             "X-API-Key", ["index-pdf", "index-markdown", "ocr", "youtube-transcript", "rag-chat", "workspaces"]),
-            ("cbunstruct", "Document Partitioning", "https://unstruct.nominate.ai",
-             "Document parsing and element extraction via Unstructured library. PDF, DOCX, images, email, markdown.",
-             "None", ["partition", "pdf", "docx", "images", "email"]),
-            ("cbcomfy", "Generative AI Proxy", "https://comfy.nominate.ai",
-             "Thin FastAPI proxy for ComfyUI generative AI backend. Health checks, GPU status, sprite generation, output management.",
-             "None (PIN gate via cbauth)", ["image-generation", "comfyui", "gpu", "sprites"]),
-            ("cbtts", "Text-to-Speech", "https://tts.nominate.ai",
-             "Real-time neural text-to-speech powered by VibeVoice. Multiple voice presets, streaming PCM16, complete WAV generation.",
-             "None", ["tts", "speech-synthesis", "audio", "streaming", "wav"]),
-        ],
-    },
-    "data": {
-        "name": "Data & Analytics",
-        "services": [
-            ("cbetl", "Contact Data ETL", "https://etl.nominate.ai",
-             "Contact data processing ETL. Address normalization and parsing via libpostal, batch processing, deduplication hashes.",
-             "None (PIN gate via cbauth)", ["etl", "address-normalization", "address-parsing", "batch-processing", "deduplication", "mcp-tools"]),
-            ("cbdistricts", "Congressional Districts", "https://districts.nominate.ai",
-             "119th Congress, 441 districts. Demographics, GeoJSON boundaries, radio coverage, state data.",
-             "None (public)", ["districts", "demographics", "geojson", "states", "radio-coverage", "intersections"]),
-            ("cbmodels", "Voter Analysis", "https://models.nominate.ai",
-             "AI-powered voter segment analysis. Demographics vs baseline, behavioral enrichment, affinity scoring, donor propensity.",
-             "X-API-Key", ["segment-analysis", "behavioral-enrichment", "affinity-scoring", "donor-propensity", "baseline-stats"]),
-            ("cbsurveys", "Survey Platform (YASP)", "https://surveys.nominate.ai",
-             "Create surveys, manage questions, collect and analyze responses.",
-             "X-API-Key", ["surveys", "questions", "responses", "publish"]),
-            ("cbfiles", "File Storage & CDN", "https://files.nominate.ai",
-             "S3-compatible object storage via MinIO. Buckets, upload/download, presigned URLs, public CDN.",
-             "X-API-Key", ["buckets", "upload", "download", "presigned-urls", "cdn"]),
-            ("cbmaps", "City Map Posters", "https://maps.nominate.ai",
-             "Minimalist city map poster generation from OpenStreetMap. Vector, raster, and district render modes, 17 themes, 300 DPI PNG output.",
-             "None (PIN gate via cbauth)", ["map-generation", "poster", "openstreetmap", "geocoding", "cartography", "themes", "mcp-tools"]),
-            ("cbtiles", "Map Tile Cache", "https://tiles.nominate.ai",
-             "CartoDB tile caching proxy with look-ahead prefetching. 9 basemap styles for CB mapping apps.",
-             "None (PIN gate via cbauth)", ["tiles", "map-tiles", "caching", "cartodb", "basemap", "prefetch", "mcp-tools"]),
-            ("cbuserguide", "User Guide Generator", "https://userguide.nominate.ai",
-             "Automated documentation generation for CB apps. Playwright-based crawling, screenshot capture, markdown generation.",
-             "None (PIN gate via cbauth)", ["documentation", "screenshots", "playwright", "crawling", "markdown", "user-guide", "mcp-tools"]),
-            ("cbgeo", "Geocoding Service", "https://geo.nominate.ai",
-             "Geocoding service using Nominatim with OpenStreetMap data. Forward geocoding, reverse geocoding, and OSM object lookup.",
-             "None (PIN gate via cbauth)", ["geocoding", "reverse-geocoding", "address-lookup", "coordinates", "osm", "mcp-tools"]),
-            ("cbiterable", "Iterable API Wrapper", "https://iterable.nominate.ai",
-             "Multi-tenant Iterable API wrapper with local DuckDB sync. Email marketing projects, contacts, campaigns, lists.",
-             "None (PIN gate via cbauth)", ["iterable", "email-marketing", "contacts", "campaigns", "lists", "templates", "sync", "duckdb"]),
-            ("cbairtable", "Airtable API Wrapper", "https://airtable.nominate.ai",
-             "Multi-tenant Airtable API wrapper with local DuckDB sync. Proxies CRUD operations, syncs bases/tables for fast SQL querying.",
-             "None (PIN gate via cbauth)", ["airtable", "bases", "tables", "records", "sync", "duckdb", "sql-query"]),
-        ],
-    },
-    "communication": {
-        "name": "Communication",
-        "services": [
-            ("cbsms", "SMS/MMS Gateway", "https://sms.nominate.ai",
-             "Unified SMS/MMS gateway for Ejoin devices. Single send, bulk send, device management.",
-             "Webhook secret", ["sms-send", "mms-send", "bulk-sms", "device-control", "delivery-reports"]),
-            ("cbsocial", "WhatsApp Ingestion", "https://social.nominate.ai",
-             "WhatsApp message ingestion via Node.js relay. Message processing pipeline, AI gist generation.",
-             "None", ["whatsapp-messages", "message-processing", "ai-gists"]),
-            ("cbwebhook", "Webhook Router", "https://webhook.nominate.ai",
-             "Centralized webhook ingestion (Typeform, GitHub, Stripe). HMAC verification, async persistence, consumer-scoped access.",
-             "X-API-Key / X-Admin-Key", ["typeform-webhooks", "event-storage", "form-responses", "consumer-management"]),
-            ("cbfront", "Front Email Proxy", "https://front.nominate.ai",
-             "Front App email integration — inboxes, conversations, messages, drafts, contacts, tags, canned responses, teammates, analytics.",
-             "X-API-Key", ["email", "conversations", "messages", "drafts", "contacts", "tags", "templates", "analytics", "mcp-tools"]),
-            ("cblinks", "URL Shortener", "https://links.nominate.ai",
-             "Short links with privacy-preserving click analytics. Custom/auto slugs, expiry, enable/disable.",
-             "X-API-Key", ["short-links", "click-analytics", "custom-slugs", "link-expiry"]),
-            ("cbemail", "Headless Email Client", "https://email.nominate.ai",
-             "Headless email client API for IMAP/SMTP mailbox management. Session-based access, folder management, message CRUD, send/batch-send.",
-             "X-API-Key", ["imap", "smtp", "email-send", "email-read", "mailbox", "batch-send", "mcp-tools"]),
-        ],
-    },
-    "infrastructure": {
-        "name": "Infrastructure",
-        "services": [
-            ("cbinfra", "Infrastructure Manager", "https://infra.nominate.ai",
-             "Infrastructure inventory, GitHub issues, project bootstrap, config management (nginx, systemd, DNS, certs), AI orchestration, deployment.",
-             "None (PIN gate via cbauth)", ["inventory", "github-issues", "bootstrap", "config", "nginx", "systemd", "dns", "deploy", "mcp-tools"]),
-            ("cbvpn", "Network Inventory", "https://network.nominate.ai",
-             "Fleet management for OpenWRT router/VPN/Tor network. Inventory, topology, fleet status, device snapshots.",
-             "None (internal)", ["fleet-status", "inventory", "topology", "device-snapshots"]),
-            ("cbtor", "TOR Cluster", "https://tor.nominate.ai",
-             "Anonymous web fetching through Tor worker pool. Load balancing: round_robin, sticky, random, least_connections.",
-             "X-API-Key", ["anonymous-fetch", "tor-workers", "load-balancing"]),
-            ("cbauth", "Authentication Platform", "https://auth.nominate.ai",
-             "Domain-wide PIN authentication gateway for nominate.ai subdomains. HMAC-SHA256, 7-day sessions.",
-             "Session cookie", ["pin-auth", "session-management", "nginx-auth-request"]),
-            ("cboverseer", "System Monitor", "https://overseer.nominate.ai",
-             "Central monitoring, 8 agents, incident management, SMS alerts, AI diagnosis, self-healing.",
-             "X-API-Key", ["telemetry", "real-time-metrics", "incidents", "monitoring-agents", "sms-alerts", "dependency-map"]),
-            ("cblogs", "Log Query & Analysis", "https://logs.nominate.ai",
-             "Read-only log querying and analysis across DC0. 8 log groups, syslog analysis, nginx access/error logs, CB service journals.",
-             "None (PIN gate via cbauth)", ["log-query", "log-analysis", "system-logs", "service-logs", "nginx-logs", "syslog-analysis", "mcp-tools"]),
-            ("cbmcp", "MCP Service Catalog", "https://mcp.nominate.ai",
-             "MCP server exposing the CB service catalog to LLM agents. SSE transport for remote clients, Inspector UI for humans.",
-             "None (PIN gate via cbauth)", ["service-discovery", "endpoint-search", "openapi-specs", "mcp-tools", "mcp-resources"]),
-            ("cbcron", "Scheduled Task Engine", "https://cron.nominate.ai",
-             "Configurable scheduled task engine. Cron-based HTTP dispatch with retry logic, overlap protection, run history, timezone support.",
-             "X-API-Key", ["cron-scheduling", "http-dispatch", "job-management", "retry-logic", "run-history", "mcp-tools"]),
-            ("cbdocs", "Documentation Site", "https://docs.nominate.ai",
-             "MkDocs Material documentation hub for the Campaign Brain platform. Architecture guides, service docs, API catalog.",
-             "None (PIN gate via cbauth)", ["documentation", "architecture", "api-reference", "guides", "changelog"]),
-            ("cbmesh", "API Mesh Gateway", "https://mesh.nominate.ai",
-             "WebSocket gateway for the API Mesh network. Service discovery, cluster health, request proxying across all registered CB services.",
-             "None", ["service-mesh", "service-discovery", "request-proxy", "websocket", "cluster-health"]),
-            ("cbos", "Claude Code Session Manager", "https://os.nominate.ai",
-             "Claude Code operating system — manage interactive Claude sessions, stash/apply context, AI-powered task routing and prioritization.",
-             "None (PIN gate via cbauth)", ["claude-sessions", "session-management", "stash", "task-routing", "intelligence", "mcp-tools"]),
-            ("cbrouter", "OpenWRT Router Manager", "https://router.nominate.ai",
-             "MCP/API frontend for OpenWRT router management. UCI config CRUD with rollback, network/firewall/wireless monitoring, VPN rotation.",
-             "None (PIN gate via cbauth)", ["openwrt", "uci-config", "network-monitoring", "firewall", "wireless", "vpn", "packages", "mcp-tools"]),
-        ],
-    },
-    "business": {
-        "name": "Business",
-        "services": [
-            ("cbapp", "Campaign Management Platform", "https://app.nominate.ai",
-             "Core campaign management platform. Person/contact CRM, events, campaigns, surveys, walk lists, turf management, voter data, canvass forms.",
-             "JWT (POST /api/auth/login)", ["persons", "contacts", "events", "campaigns", "surveys", "walk-lists", "turf", "voter-data", "canvass", "analytics"]),
-            ("cbproject", "Project Management", "https://project.nominate.ai",
-             "Project management and task tracking. Timeline views, kanban boards, resource allocation, milestones.",
-             "None (PIN gate via cbauth)", ["projects", "tasks", "milestones", "kanban", "timeline"]),
-            ("cbradio", "Rural AM/FM Rate Ingestion", "https://radio.nominate.ai",
-             "Radio station political advertising rates for AI-powered media buying. 2,000+ stations, rate cards with OCR extraction, proposals, FCC data, Nielsen ratings.",
-             "JWT (POST /api/auth/token)", ["stations", "rate-cards", "rates", "proposals", "radio-buys", "fcc-data", "nielsen-ratings", "geo-coverage", "ocr", "mcp-tools"]),
-            ("cbmobile", "Mobile Canvassing", "https://mobile.nominate.ai",
-             "Progressive Web App for door-knocking and canvassing. Offline-first with RxDB sync, DuckDB analytics, offline maps.",
-             "None (PIN gate via cbauth)", ["contacts", "canvassing", "offline-sync", "mobile-pwa", "maps", "websocket", "mcp-tools"]),
-            ("cbworkflow", "Workflow Engine", "https://workflow.nominate.ai",
-             "Lightweight JSON-backed CRM workflow automation. Contacts, templates, instances, multi-tenant, SMS/email routing.",
-             "None", ["contacts", "workflow-templates", "workflow-instances", "tenants", "sms-routing", "email-routing"]),
-            ("cbpayments", "Donation Processing", "https://payments.nominate.ai",
-             "Campaign donation processing (Transaxt migration). Authorize.Net CIM, 4 portals, 595K donations.",
-             "Mixed (API key / JWT / public)", ["donations", "campaigns", "donors", "reporting", "merchant-accounts"]),
-            ("cbpulse", "Hospitality BI (VIP)", "https://pulse.nominate.ai",
-             "Virgin Islands Pulse — hospitality portfolio BI. Clover POS, Homebase, Cloudbeds, WebRezPro integration.",
-             "JWT Bearer", ["auth", "businesses", "alerts", "financials", "occupancy", "daily-summaries"]),
-            ("cbissues", "Issue Tracking", "https://issues.nominate.ai",
-             "Unified GitHub issue management across CB repositories. Full CRUD, comments, project boards.",
-             "X-API-Key", ["issues-crud", "comments", "labels", "project-boards", "multi-repo"]),
-        ],
-    },
-}
-
-
-def count_endpoints(base_url: str) -> int | None:
-    """Try to fetch endpoint count from OpenAPI spec."""
+def fetch_json(url: str, data: bytes | None = None, headers: dict | None = None):
+    """GET or POST JSON. Returns (payload, error_string)."""
+    req = urllib.request.Request(url, data=data, headers=headers or {})
     try:
-        url = f"{base_url}/openapi.json"
-        req = urllib.request.Request(url, headers={"Accept": "application/json"})
-        with urllib.request.urlopen(req, timeout=5) as resp:
-            spec = json.loads(resp.read())
-            paths = spec.get("paths", {})
-            count = sum(len(methods) for methods in paths.values())
-            log(f"  {base_url}: {count} endpoints from OpenAPI")
-            return count
+        with urllib.request.urlopen(req, timeout=TIMEOUT) as r:
+            body = r.read().decode("utf-8", "replace")
+    except urllib.error.HTTPError as e:
+        # An HTTP error still carries a body, and for a JSON-RPC endpoint that
+        # body is the actual answer (e.g. an auth refusal). Read it.
+        try:
+            body = e.read().decode("utf-8", "replace")
+        except Exception:
+            return None, f"HTTP {e.code}"
+        try:
+            return json.loads(body), f"HTTP {e.code}"
+        except json.JSONDecodeError:
+            return None, f"HTTP {e.code}"
     except Exception as e:
-        log(f"  {base_url}: OpenAPI fetch failed ({e})")
-        return None
+        return None, str(e).split("\n")[0][:120]
+
+    # An SSE endpoint answers a JSON-RPC POST with `data: {...}` frames.
+    if body.lstrip().startswith("event:") or body.lstrip().startswith("data:"):
+        for line in body.splitlines():
+            if line.startswith("data:"):
+                try:
+                    return json.loads(line[5:].strip()), None
+                except json.JSONDecodeError:
+                    continue
+        return None, "SSE frame carried no JSON"
+    try:
+        return json.loads(body), None
+    except json.JSONDecodeError:
+        return None, "response was not JSON"
 
 
-def main():
-    print("Generating MCP catalog...")
-
-    total_endpoints = 0
-    total_services = 0
-    categories_out = []
-
-    for cat_id, cat_def in SERVICES.items():
-        services_out = []
-        for sid, name, url, desc, auth, caps in cat_def["services"]:
-            # Try to get live endpoint count, fall back to capabilities length
-            live_count = count_endpoints(url)
-            endpoint_count = live_count if live_count is not None else len(caps)
-
-            services_out.append({
-                "id": sid,
-                "name": name,
-                "url": url,
-                "description": desc,
-                "auth": auth,
-                "capabilities": caps,
-                "endpointCount": endpoint_count,
-            })
-            total_endpoints += endpoint_count
-            total_services += 1
-            log(f"Added {sid} ({name})")
-
-        categories_out.append({
-            "id": cat_id,
-            "name": cat_def["name"],
-            "services": services_out,
-        })
-
-    catalog = {
-        "generated": datetime.now(timezone.utc).isoformat(),
-        "stats": {
-            "totalServices": total_services,
-            "totalEndpoints": total_endpoints,
-            "totalCategories": len(SERVICES),
+def probe_mcp(server: dict) -> dict:
+    """Ask an MCP server for its tool list."""
+    payload = json.dumps(
+        {"jsonrpc": "2.0", "id": 1, "method": "tools/list", "params": {}}
+    ).encode()
+    doc, err = fetch_json(
+        server["url"],
+        data=payload,
+        headers={
+            "Content-Type": "application/json",
+            "Accept": "application/json, text/event-stream",
         },
-        "categories": categories_out,
+    )
+
+    out = {k: v for k, v in server.items() if k != "auth_expected"}
+    out["tools"] = []
+
+    if doc is None:
+        # A gate in front of the app (nginx auth_request, say) answers 401/403
+        # with HTML, so there is no JSON to parse. Something is listening and it
+        # refused us, which for an auth-gated server is the correct behaviour.
+        gated = err and ("401" in err or "403" in err) and server.get("auth_expected")
+        out["reachable"] = bool(gated)
+        out["note"] = (
+            "gated at the edge; tool list not enumerated" if gated else (err or "no response")
+        )
+        log(f"  {server['id']}: {'gated' if gated else 'unreachable'} ({out['note']})")
+        return out
+
+    if "error" in doc:
+        # JSON-RPC says `error` is an object with a `message`, but not every
+        # server obeys: cbmcp answers with a bare string. Accept both rather
+        # than crashing the nightly pipeline on someone else's shape.
+        err_obj = doc["error"]
+        msg = str(
+            err_obj.get("message", err_obj) if isinstance(err_obj, dict) else err_obj
+        )[:120]
+        # It answered. For a server that is meant to require a token, that is
+        # the healthy outcome and the tool list is simply not ours to see.
+        out["reachable"] = True
+        out["note"] = (
+            "requires a token; tool list not enumerated"
+            if server.get("auth_expected")
+            else f"responded with an error: {msg}"
+        )
+        log(f"  {server['id']}: responded, {out['note']}")
+        return out
+
+    tools = doc.get("result", {}).get("tools", []) or []
+    out["reachable"] = True
+    out["tools"] = [
+        {"name": t.get("name", ""), "description": (t.get("description") or "").strip()}
+        for t in tools
+    ]
+    log(f"  {server['id']}: {len(out['tools'])} tools")
+    return out
+
+
+def endpoint_counts() -> tuple[Counter, str | None]:
+    """Operations per service id, from the unified spec."""
+    log(f"fetching {UNIFIED_SPEC}")
+    doc, err = fetch_json(UNIFIED_SPEC)
+    if doc is None:
+        return Counter(), err or "unreachable"
+    counts: Counter = Counter()
+    for path, ops in (doc.get("paths") or {}).items():
+        service = path.strip("/").split("/")[0]
+        if service:
+            # Count only real HTTP operations; a path item also carries keys
+            # like "parameters" and "summary" that are not endpoints.
+            counts[service] += sum(
+                1
+                for k in ops
+                if k.lower()
+                in ("get", "post", "put", "patch", "delete", "head", "options")
+            )
+    log(f"  {len(counts)} services, {sum(counts.values())} operations")
+    return counts, None
+
+
+def main() -> int:
+    meta = json.loads(META_FILE.read_text())
+    cat_names: dict = meta["categories"]
+    by_id = {s["id"]: s for s in meta["services"]}
+
+    counts, spec_err = endpoint_counts()
+    if spec_err:
+        # Refuse rather than write a catalog whose numbers are all zero: that
+        # would look exactly like a fleet that shrank overnight.
+        print(f"✗ could not read the unified spec ({spec_err}). Refusing to write.")
+        return 1
+
+    log("probing MCP servers")
+    servers = [probe_mcp(s) for s in MCP_SERVERS]
+
+    categories = []
+    for cid, cname in cat_names.items():
+        services = []
+        for s in meta["services"]:
+            if s["category"] != cid:
+                continue
+            services.append(
+                {
+                    "id": s["id"],
+                    "name": s["name"],
+                    "url": s["url"],
+                    "description": s["description"],
+                    "auth": s["auth"],
+                    "capabilities": s["capabilities"],
+                    # 0 means the spec has no paths under this prefix, which is
+                    # normal for a service that is a UI or is proxied elsewhere.
+                    "endpointCount": counts.get(s["id"], 0),
+                }
+            )
+        services.sort(key=lambda x: (-x["endpointCount"], x["name"]))
+        categories.append({"id": cid, "name": cname, "services": services})
+
+    # Present in the fleet, absent from the metadata. Named, not just counted,
+    # so the gap is actionable: each one is a line to add to the meta file.
+    uncatalogued = sorted(
+        ({"id": sid, "endpointCount": n} for sid, n in counts.items() if sid not in by_id),
+        key=lambda x: -x["endpointCount"],
+    )
+
+    catalogued_endpoints = sum(counts.get(s["id"], 0) for s in meta["services"])
+
+    doc = {
+        "generated": datetime.now(timezone.utc).isoformat(),
+        "sources": {
+            "unifiedSpec": UNIFIED_SPEC,
+            "metadata": f"scripts/{META_FILE.name} (pulled {meta.get('_pulled', 'unknown')})",
+        },
+        "stats": {
+            "totalServices": len(by_id),
+            "totalEndpoints": catalogued_endpoints,
+            "totalCategories": len(categories),
+            "mcpServers": len(servers),
+            "mcpServersReachable": sum(1 for s in servers if s.get("reachable")),
+            # The honest denominators.
+            "fleetServices": len(counts),
+            "fleetEndpoints": sum(counts.values()),
+            "uncataloguedServices": len(uncatalogued),
+        },
+        "mcpServers": servers,
+        "categories": categories,
+        "uncatalogued": uncatalogued,
     }
 
-    OUTPUT_FILE.parent.mkdir(parents=True, exist_ok=True)
-    OUTPUT_FILE.write_text(json.dumps(catalog, indent=2))
-    print(f"Wrote {OUTPUT_FILE}")
-    print(f"  {total_services} services, {total_endpoints} endpoints, {len(SERVICES)} categories")
+    OUTPUT_FILE.write_text(json.dumps(doc, indent=2) + "\n")
+
+    st = doc["stats"]
+    print(f"✓ {OUTPUT_FILE.relative_to(PROJECT_ROOT)}")
+    print(
+        f"  MCP servers:  {st['mcpServersReachable']}/{st['mcpServers']} reachable, "
+        f"{sum(len(s['tools']) for s in servers)} tools enumerated"
+    )
+    print(
+        f"  Catalog:      {st['totalServices']} services, "
+        f"{st['totalEndpoints']} endpoints, {st['totalCategories']} categories"
+    )
+    print(
+        f"  Whole fleet:  {st['fleetServices']} services, {st['fleetEndpoints']} endpoints"
+    )
+    if uncatalogued:
+        names = ", ".join(u["id"] for u in uncatalogued[:8])
+        more = f" (+{len(uncatalogued) - 8} more)" if len(uncatalogued) > 8 else ""
+        print(f"  Uncatalogued: {len(uncatalogued)} in the spec with no metadata: {names}{more}")
+        print(f"                add them to scripts/{META_FILE.name} to surface them")
+    return 0
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

@@ -1,20 +1,144 @@
 {
-  "generated": "2026-08-29T00:01:40.005511+00:00",
-  "stats": {
-    "totalServices": 44,
-    "totalEndpoints": 275,
-    "totalCategories": 5
+  "generated": "2026-08-29T02:30:28.353317+00:00",
+  "sources": {
+    "unifiedSpec": "https://mcp.campaignbrain.dev/openapi.json",
+    "metadata": "scripts/mcp-catalog-meta.json (pulled 2026-08-29)"
   },
+  "stats": {
+    "totalServices": 55,
+    "totalEndpoints": 2939,
+    "totalCategories": 5,
+    "mcpServers": 4,
+    "mcpServersReachable": 4,
+    "fleetServices": 84,
+    "fleetEndpoints": 3891,
+    "uncataloguedServices": 42
+  },
+  "mcpServers": [
+    {
+      "id": "tinymachines",
+      "name": "tinymachines",
+      "url": "https://tinymachines.ai/api/mcp",
+      "transport": "streamable HTTP",
+      "auth": "None",
+      "what": "The six pieces of the 6502 work, what each one is, and the licence position.",
+      "tools": [
+        {
+          "name": "overview",
+          "description": "The six pieces of the tinymachines 6502 work, each with what it is, where its source is, how it ships and its licence, together with a live reachability measurement of the ones that have a public surface. Read this first: it answers the whole 'what is this and what is running' question in one call. Reachability is probed at call time, subject to a short cache, and every measurement carries the time it was taken."
+        },
+        {
+          "name": "piece",
+          "description": "One of the six pieces by key, with its live reachability. Keys are halfphi, explorer, chip-api, halfwave, console and registry. Call overview if you do not know which key you want; an unknown key is refused with the list of valid ones rather than guessed at."
+        },
+        {
+          "name": "licensing",
+          "description": "The licence position, which is not one licence. Our code is MIT. The visual6502 die data is CC BY-NC-SA 3.0, and NonCommercial and ShareAlike travel with everything derived from it, which includes the netlist, the measured tables, the API's responses and every cartridge. halfphi is the clean piece because it embeds no die data. Read this before suggesting anything that would publish, relicense or charge for any of it."
+        }
+      ],
+      "reachable": true
+    },
+    {
+      "id": "6502",
+      "name": "6502",
+      "url": "https://6502.tinymachines.ai/api/mcp",
+      "transport": "streamable HTTP",
+      "auth": "None",
+      "what": "Assemble, run and mint ROMs against a transistor-level 6502, and ask the die about any of its 1,725 nodes.",
+      "tools": [
+        {
+          "name": "console_spec",
+          "description": "What a ROM has to agree with to be playable on this chip: the tick handshake, the controller byte, where the screen is, the memory map, the 8x8 two-bit tile format, the four-colour palette, and a worked example ROM. There is no video hardware on this die and no interrupt in use, so a frame is an agreement rather than something the silicon knows about. Read this before writing a cartridge."
+        },
+        {
+          "name": "assemble",
+          "description": "Assemble 6502 assembly to bytes. Returns the bytes as hex, the size, every label with its address, and a listing line by line. An error carries the line number. This is the site's own assembler, which inverts its disassembler's table, so anything that assembles disassembles back to the same instruction."
+        },
+        {
+          "name": "run",
+          "description": "Assemble a program, power-cycle the chip through its real reset sequence, run it, and report what happened. Give exactly one of `half_cycles` (the fundamental unit: the chip does work on both clock edges), `until_pc` (a breakpoint at an opcode fetch), or `frames` (run the console's tick handshake N times and read the screen back). `read` pulls memory out afterwards; `screen` renders the display as two hex characters a cell, row major, so you can see what your ROM actually drew."
+        },
+        {
+          "name": "mint_cartridge",
+          "description": "Assemble a ROM, check its layout can work, run it on the chip, and pack the ROM, its tiles and the contract it was written to into one gzipped file. Returns the verification report and the file as base64. Tiles are eight strings of eight '0'..'3' per tile, one character a pixel. A layout that cannot work is refused with the reason: a ROM that reaches its own screen assembles perfectly and then draws over itself."
+        },
+        {
+          "name": "chip_atlas",
+          "description": "Ask the die about one of its 1725 nodes: which derived container owns it (the ALU's bit 3 slice, the clock generator, the decimal correction), every overlapping container that also claims it, and what it reaches. 132 groups cover every node exactly once. Give a node name or number; with no argument you get the list of kinds."
+        }
+      ],
+      "reachable": true
+    },
+    {
+      "id": "junior",
+      "name": "junior",
+      "url": "https://junior.bradley.io/mcp",
+      "transport": "streamable HTTP",
+      "auth": "Bearer token",
+      "what": "Home network management: the OpenWrt router, its dual WAN, and the fleet behind it.",
+      "tools": [],
+      "reachable": true,
+      "note": "requires a token; tool list not enumerated"
+    },
+    {
+      "id": "cbmcp",
+      "name": "Campaign Brain catalog",
+      "url": "https://mcp.campaignbrain.dev/sse",
+      "transport": "SSE",
+      "auth": "cbauth",
+      "what": "Service discovery over the whole Campaign Brain fleet: search services, read endpoints, fetch OpenAPI specs.",
+      "tools": [],
+      "reachable": true,
+      "note": "gated at the edge; tool list not enumerated"
+    }
+  ],
   "categories": [
     {
       "id": "ai",
       "name": "AI & Intelligence",
       "services": [
         {
+          "id": "cbintel",
+          "name": "Intelligence API",
+          "url": "https://intel.campaignbrain.dev",
+          "description": "Web crawling, screenshots, transcripts, document processing, workspaces. Scheduler for recurring jobs, planner for multi-step research. Embedded MCP at /mcp.",
+          "auth": "X-API-Key",
+          "capabilities": [
+            "crawl",
+            "screenshot",
+            "transcript",
+            "documents",
+            "workspaces",
+            "scheduler",
+            "planner",
+            "jobs",
+            "mcp-tools"
+          ],
+          "endpointCount": 177
+        },
+        {
+          "id": "cbindex",
+          "name": "Document Index",
+          "url": "https://index.campaignbrain.dev",
+          "description": "Vectorless RAG document indexing using PageIndex. PDF/markdown indexing, OCR, YouTube transcripts, workspace-scoped conversations. Embedded MCP at /mcp.",
+          "auth": "X-API-Key",
+          "capabilities": [
+            "index-pdf",
+            "index-markdown",
+            "ocr",
+            "youtube-transcript",
+            "rag-chat",
+            "workspaces",
+            "conversations",
+            "mcp-tools"
+          ],
+          "endpointCount": 27
+        },
+        {
           "id": "cbai",
           "name": "AI API",
-          "url": "https://ai.nominate.ai",
-          "description": "Unified AI provider \u2014 Claude, Ollama, Mistral. Chat completions, embeddings, OCR, summarization, topic extraction.",
+          "url": "https://ai.campaignbrain.dev",
+          "description": "Unified AI provider: Claude, Ollama, Mistral. Chat completions, embeddings, OCR, summarization, topic extraction, usage tracking. Embedded MCP at /mcp.",
           "auth": "Optional API key",
           "capabilities": [
             "chat",
@@ -23,89 +147,61 @@
             "summarization",
             "topics",
             "tool-use",
-            "streaming"
+            "streaming",
+            "mcp-tools"
           ],
-          "endpointCount": 7
-        },
-        {
-          "id": "cbintel",
-          "name": "Intelligence API",
-          "url": "https://intel.nominate.ai",
-          "description": "Web crawling, screenshot capture, transcript generation, and intelligence gathering with vector search.",
-          "auth": "X-API-Key",
-          "capabilities": [
-            "crawl",
-            "screenshot",
-            "transcript",
-            "vector-search",
-            "jobs"
-          ],
-          "endpointCount": 5
+          "endpointCount": 24
         },
         {
           "id": "cbscout",
           "name": "Agent Memory",
-          "url": "https://scout.nominate.ai",
-          "description": "Hierarchical memory for AI agents. Three layers: Resources (raw) \u2192 Items (facts) \u2192 Categories (summaries). Temporal awareness with decay.",
-          "auth": "X-Campaign-ID header",
+          "url": "https://scout.campaignbrain.dev",
+          "description": "Hierarchical memory for AI agents. Three layers: Resources (raw), Items (facts), Categories (summaries). Temporal awareness with decay. Embedded MCP at /mcp.",
+          "auth": "cbauth JWT",
           "capabilities": [
             "memory-store",
             "memory-retrieve",
             "entity-profiles",
             "temporal-decay",
-            "consolidation"
+            "consolidation",
+            "mcp-tools"
           ],
-          "endpointCount": 5
-        },
-        {
-          "id": "cbindex",
-          "name": "Document Index",
-          "url": "https://index.nominate.ai",
-          "description": "Vectorless RAG document indexing using PageIndex. PDF/markdown indexing, YouTube transcripts, LLM-powered document chat.",
-          "auth": "X-API-Key",
-          "capabilities": [
-            "index-pdf",
-            "index-markdown",
-            "ocr",
-            "youtube-transcript",
-            "rag-chat",
-            "workspaces"
-          ],
-          "endpointCount": 6
+          "endpointCount": 0
         },
         {
           "id": "cbunstruct",
           "name": "Document Partitioning",
-          "url": "https://unstruct.nominate.ai",
-          "description": "Document parsing and element extraction via Unstructured library. PDF, DOCX, images, email, markdown.",
+          "url": "https://unstruct.campaignbrain.dev",
+          "description": "Document parsing and element extraction via Unstructured library. PDF, DOCX, images, email, markdown. Embedded MCP at /mcp.",
           "auth": "None",
           "capabilities": [
             "partition",
             "pdf",
             "docx",
             "images",
-            "email"
+            "email",
+            "mcp-tools"
           ],
-          "endpointCount": 5
+          "endpointCount": 0
         },
         {
           "id": "cbcomfy",
           "name": "Generative AI Proxy",
-          "url": "https://comfy.nominate.ai",
+          "url": "https://comfy.campaignbrain.dev",
           "description": "Thin FastAPI proxy for ComfyUI generative AI backend. Health checks, GPU status, sprite generation, output management.",
-          "auth": "None (PIN gate via cbauth)",
+          "auth": "None",
           "capabilities": [
             "image-generation",
             "comfyui",
             "gpu",
             "sprites"
           ],
-          "endpointCount": 10
+          "endpointCount": 0
         },
         {
           "id": "cbtts",
           "name": "Text-to-Speech",
-          "url": "https://tts.nominate.ai",
+          "url": "https://tts.campaignbrain.dev",
           "description": "Real-time neural text-to-speech powered by VibeVoice. Multiple voice presets, streaming PCM16, complete WAV generation.",
           "auth": "None",
           "capabilities": [
@@ -115,7 +211,7 @@
             "streaming",
             "wav"
           ],
-          "endpointCount": 5
+          "endpointCount": 0
         }
       ]
     },
@@ -124,26 +220,45 @@
       "name": "Data & Analytics",
       "services": [
         {
-          "id": "cbetl",
-          "name": "Contact Data ETL",
-          "url": "https://etl.nominate.ai",
-          "description": "Contact data processing ETL. Address normalization and parsing via libpostal, batch processing, deduplication hashes.",
-          "auth": "None (PIN gate via cbauth)",
+          "id": "cbmodels",
+          "name": "Voter Analysis",
+          "url": "https://models.campaignbrain.dev",
+          "description": "AI-powered voter segment analysis, behavioral enrichment, campaign data, voter search, and address hygiene. Embedded MCP at /mcp.",
+          "auth": "cbauth JWT",
           "capabilities": [
-            "etl",
-            "address-normalization",
-            "address-parsing",
-            "batch-processing",
-            "deduplication",
+            "segment-analysis",
+            "behavioral-enrichment",
+            "affinity-scoring",
+            "voter-search",
+            "campaign-data",
+            "address-hygiene",
             "mcp-tools"
           ],
-          "endpointCount": 6
+          "endpointCount": 149
+        },
+        {
+          "id": "cbfiles",
+          "name": "File Storage & CDN",
+          "url": "https://files.campaignbrain.dev",
+          "description": "S3-compatible object storage via MinIO. Buckets, upload/download, presigned URLs, Google Drive sync, semantic search, auto-indexing. Embedded MCP at /mcp.",
+          "auth": "X-API-Key",
+          "capabilities": [
+            "buckets",
+            "upload",
+            "download",
+            "presigned-urls",
+            "gdrive",
+            "search",
+            "indexing",
+            "mcp-tools"
+          ],
+          "endpointCount": 77
         },
         {
           "id": "cbdistricts",
           "name": "Congressional Districts",
-          "url": "https://districts.nominate.ai",
-          "description": "119th Congress, 441 districts. Demographics, GeoJSON boundaries, radio coverage, state data.",
+          "url": "https://districts.campaignbrain.dev",
+          "description": "119th Congress, 441 districts. Demographics, GeoJSON boundaries, radio coverage, geographic layers, state data. Embedded MCP at /mcp.",
           "auth": "None (public)",
           "capabilities": [
             "districts",
@@ -151,60 +266,91 @@
             "geojson",
             "states",
             "radio-coverage",
-            "intersections"
+            "intersections",
+            "layers",
+            "mcp-tools"
           ],
-          "endpointCount": 6
+          "endpointCount": 54
         },
         {
-          "id": "cbmodels",
-          "name": "Voter Analysis",
-          "url": "https://models.nominate.ai",
-          "description": "AI-powered voter segment analysis. Demographics vs baseline, behavioral enrichment, affinity scoring, donor propensity.",
-          "auth": "X-API-Key",
+          "id": "cbiterable",
+          "name": "Iterable API Wrapper",
+          "url": "https://iterable.campaignbrain.dev",
+          "description": "Multi-tenant Iterable API wrapper with local DuckDB sync. Manages email marketing projects, syncs contacts/campaigns/lists for fast local querying.",
+          "auth": "cbauth (login required)",
           "capabilities": [
-            "segment-analysis",
-            "behavioral-enrichment",
-            "affinity-scoring",
-            "donor-propensity",
-            "baseline-stats"
+            "iterable",
+            "email-marketing",
+            "contacts",
+            "campaigns",
+            "lists",
+            "templates",
+            "sync",
+            "duckdb",
+            "multi-tenant",
+            "sql-query"
           ],
-          "endpointCount": 5
+          "endpointCount": 40
         },
         {
           "id": "cbsurveys",
           "name": "Survey Platform (YASP)",
-          "url": "https://surveys.nominate.ai",
-          "description": "Create surveys, manage questions, collect and analyze responses.",
+          "url": "https://surveys.campaignbrain.dev",
+          "description": "Create surveys, manage questions, collect and analyze responses. User management with API keys. Embedded MCP at /mcp.",
           "auth": "X-API-Key",
           "capabilities": [
             "surveys",
             "questions",
             "responses",
-            "publish"
+            "publish",
+            "users",
+            "mcp-tools"
           ],
-          "endpointCount": 4
+          "endpointCount": 40
         },
         {
-          "id": "cbfiles",
-          "name": "File Storage & CDN",
-          "url": "https://files.nominate.ai",
-          "description": "S3-compatible object storage via MinIO. Buckets, upload/download, presigned URLs, public CDN.",
-          "auth": "X-API-Key",
+          "id": "cbairtable",
+          "name": "Airtable API Wrapper",
+          "url": "https://airtable.campaignbrain.dev",
+          "description": "Multi-tenant Airtable API wrapper with local DuckDB sync. Stores encrypted PATs, proxies CRUD, syncs bases/tables into DuckDB for fast SQL querying.",
+          "auth": "cbauth (login required)",
           "capabilities": [
-            "buckets",
-            "upload",
-            "download",
-            "presigned-urls",
-            "cdn"
+            "airtable",
+            "bases",
+            "tables",
+            "records",
+            "sync",
+            "duckdb",
+            "multi-tenant",
+            "sql-query",
+            "credential-management",
+            "ndjson-streaming"
           ],
-          "endpointCount": 5
+          "endpointCount": 34
+        },
+        {
+          "id": "cbuserguide",
+          "name": "User Guide Generator",
+          "url": "https://userguide.campaignbrain.dev",
+          "description": "Automated documentation generation for CB apps. Playwright-based crawling, screenshot capture, markdown generation, state machine workflow. Embedded MCP at /mcp.",
+          "auth": "cbauth (login required)",
+          "capabilities": [
+            "documentation",
+            "screenshots",
+            "playwright",
+            "crawling",
+            "markdown",
+            "user-guide",
+            "mcp-tools"
+          ],
+          "endpointCount": 25
         },
         {
           "id": "cbmaps",
           "name": "City Map Posters",
-          "url": "https://maps.nominate.ai",
-          "description": "Minimalist city map poster generation from OpenStreetMap. Vector, raster, and district render modes, 17 themes, 300 DPI PNG output.",
-          "auth": "None (PIN gate via cbauth)",
+          "url": "https://maps.campaignbrain.dev",
+          "description": "Minimalist city map poster generation from OpenStreetMap. Vector, raster, and district render modes, 17 themes, 300 DPI PNG output. Embedded MCP at /mcp.",
+          "auth": "cbauth JWT",
           "capabilities": [
             "map-generation",
             "poster",
@@ -214,14 +360,63 @@
             "themes",
             "mcp-tools"
           ],
+          "endpointCount": 14
+        },
+        {
+          "id": "cbingest",
+          "name": "Document Ingestion Pipeline",
+          "url": "https://ingest.campaignbrain.dev",
+          "description": "Centralized document processing and data extraction. Accepts PDFs, images, Office docs, and text, returns structured data. Sync extraction, batch processing, async jobs.",
+          "auth": "cbauth (login required)",
+          "capabilities": [
+            "document-processing",
+            "text-extraction",
+            "pdf",
+            "ocr",
+            "structured-data",
+            "batch-processing",
+            "async-jobs"
+          ],
+          "endpointCount": 14
+        },
+        {
+          "id": "cbetl",
+          "name": "Contact Data ETL",
+          "url": "https://etl.campaignbrain.dev",
+          "description": "Contact data processing ETL. Address normalization and parsing via libpostal, batch processing, deduplication hashes. Embedded MCP at /mcp.",
+          "auth": "cbauth (login required)",
+          "capabilities": [
+            "etl",
+            "address-normalization",
+            "address-parsing",
+            "batch-processing",
+            "deduplication",
+            "mcp-tools"
+          ],
+          "endpointCount": 7
+        },
+        {
+          "id": "cbgeo",
+          "name": "Geocoding Service",
+          "url": "https://geo.campaignbrain.dev",
+          "description": "Geocoding via Nominatim with OpenStreetMap data. Forward geocoding, reverse geocoding, and OSM object lookup. Embedded MCP at /mcp.",
+          "auth": "cbauth (login required)",
+          "capabilities": [
+            "geocoding",
+            "reverse-geocoding",
+            "address-lookup",
+            "coordinates",
+            "osm",
+            "mcp-tools"
+          ],
           "endpointCount": 7
         },
         {
           "id": "cbtiles",
           "name": "Map Tile Cache",
-          "url": "https://tiles.nominate.ai",
-          "description": "CartoDB tile caching proxy with look-ahead prefetching. 9 basemap styles for CB mapping apps.",
-          "auth": "None (PIN gate via cbauth)",
+          "url": "https://tiles.campaignbrain.dev",
+          "description": "CartoDB tile caching proxy with look-ahead prefetching. 9 basemap styles for CB mapping apps. Embedded MCP at /mcp.",
+          "auth": "cbauth (login required)",
           "capabilities": [
             "tiles",
             "map-tiles",
@@ -234,72 +429,22 @@
           "endpointCount": 7
         },
         {
-          "id": "cbuserguide",
-          "name": "User Guide Generator",
-          "url": "https://userguide.nominate.ai",
-          "description": "Automated documentation generation for CB apps. Playwright-based crawling, screenshot capture, markdown generation.",
-          "auth": "None (PIN gate via cbauth)",
+          "id": "sdr",
+          "name": "SDR Scanner Control Plane",
+          "url": "https://sdr.tinymachines.ai",
+          "description": "REST control plane for the SDR scanner stack on bali.lan. Band configuration, job orchestration, on-disk hit retrieval, post-capture analyses, named report bundles with HTML export.",
+          "auth": "None",
           "capabilities": [
-            "documentation",
-            "screenshots",
-            "playwright",
-            "crawling",
-            "markdown",
-            "user-guide",
-            "mcp-tools"
+            "sdr",
+            "rf-scanning",
+            "vhf",
+            "zigbee",
+            "spectrum-analysis",
+            "frame-decode",
+            "heatmap",
+            "reports"
           ],
-          "endpointCount": 7
-        },
-        {
-          "id": "cbgeo",
-          "name": "Geocoding Service",
-          "url": "https://geo.nominate.ai",
-          "description": "Geocoding service using Nominatim with OpenStreetMap data. Forward geocoding, reverse geocoding, and OSM object lookup.",
-          "auth": "None (PIN gate via cbauth)",
-          "capabilities": [
-            "geocoding",
-            "reverse-geocoding",
-            "address-lookup",
-            "coordinates",
-            "osm",
-            "mcp-tools"
-          ],
-          "endpointCount": 6
-        },
-        {
-          "id": "cbiterable",
-          "name": "Iterable API Wrapper",
-          "url": "https://iterable.nominate.ai",
-          "description": "Multi-tenant Iterable API wrapper with local DuckDB sync. Email marketing projects, contacts, campaigns, lists.",
-          "auth": "None (PIN gate via cbauth)",
-          "capabilities": [
-            "iterable",
-            "email-marketing",
-            "contacts",
-            "campaigns",
-            "lists",
-            "templates",
-            "sync",
-            "duckdb"
-          ],
-          "endpointCount": 8
-        },
-        {
-          "id": "cbairtable",
-          "name": "Airtable API Wrapper",
-          "url": "https://airtable.nominate.ai",
-          "description": "Multi-tenant Airtable API wrapper with local DuckDB sync. Proxies CRUD operations, syncs bases/tables for fast SQL querying.",
-          "auth": "None (PIN gate via cbauth)",
-          "capabilities": [
-            "airtable",
-            "bases",
-            "tables",
-            "records",
-            "sync",
-            "duckdb",
-            "sql-query"
-          ],
-          "endpointCount": 7
+          "endpointCount": 0
         }
       ]
     },
@@ -308,53 +453,25 @@
       "name": "Communication",
       "services": [
         {
-          "id": "cbsms",
-          "name": "SMS/MMS Gateway",
-          "url": "https://sms.nominate.ai",
-          "description": "Unified SMS/MMS gateway for Ejoin devices. Single send, bulk send, device management.",
-          "auth": "Webhook secret",
-          "capabilities": [
-            "sms-send",
-            "mms-send",
-            "bulk-sms",
-            "device-control",
-            "delivery-reports"
-          ],
-          "endpointCount": 5
-        },
-        {
           "id": "cbsocial",
           "name": "WhatsApp Ingestion",
-          "url": "https://social.nominate.ai",
-          "description": "WhatsApp message ingestion via Node.js relay. Message processing pipeline, AI gist generation.",
-          "auth": "None",
+          "url": "https://social.campaignbrain.dev",
+          "description": "WhatsApp message ingestion via Node.js relay. Message processing pipeline, AI gist generation. Embedded MCP at /mcp.",
+          "auth": "cbauth JWT",
           "capabilities": [
             "whatsapp-messages",
             "message-processing",
-            "ai-gists"
+            "ai-gists",
+            "mcp-tools"
           ],
-          "endpointCount": 3
-        },
-        {
-          "id": "cbwebhook",
-          "name": "Webhook Router",
-          "url": "https://webhook.nominate.ai",
-          "description": "Centralized webhook ingestion (Typeform, GitHub, Stripe). HMAC verification, async persistence, consumer-scoped access.",
-          "auth": "X-API-Key / X-Admin-Key",
-          "capabilities": [
-            "typeform-webhooks",
-            "event-storage",
-            "form-responses",
-            "consumer-management"
-          ],
-          "endpointCount": 15
+          "endpointCount": 45
         },
         {
           "id": "cbfront",
           "name": "Front Email Proxy",
-          "url": "https://front.nominate.ai",
-          "description": "Front App email integration \u2014 inboxes, conversations, messages, drafts, contacts, tags, canned responses, teammates, analytics.",
-          "auth": "X-API-Key",
+          "url": "https://front.campaignbrain.dev",
+          "description": "Front App email integration: inboxes, conversations, messages, drafts, contacts, tags, canned responses, teammates, comments, analytics exports. Embedded MCP at /mcp.",
+          "auth": "cbauth JWT",
           "capabilities": [
             "email",
             "conversations",
@@ -363,30 +480,35 @@
             "contacts",
             "tags",
             "templates",
+            "teammates",
+            "comments",
             "analytics",
+            "channels",
             "mcp-tools"
           ],
-          "endpointCount": 9
+          "endpointCount": 31
         },
         {
           "id": "cblinks",
           "name": "URL Shortener",
-          "url": "https://links.nominate.ai",
-          "description": "Short links with privacy-preserving click analytics. Custom/auto slugs, expiry, enable/disable.",
+          "url": "https://links.campaignbrain.dev",
+          "description": "Short links with privacy-preserving click analytics. Custom/auto slugs, expiry, user management with API keys, link ownership.",
           "auth": "X-API-Key",
           "capabilities": [
             "short-links",
             "click-analytics",
             "custom-slugs",
-            "link-expiry"
+            "link-expiry",
+            "user-management",
+            "api-keys"
           ],
-          "endpointCount": 4
+          "endpointCount": 24
         },
         {
           "id": "cbemail",
           "name": "Headless Email Client",
-          "url": "https://email.nominate.ai",
-          "description": "Headless email client API for IMAP/SMTP mailbox management. Session-based access, folder management, message CRUD, send/batch-send.",
+          "url": "https://email.campaignbrain.dev",
+          "description": "Headless email client API for IMAP/SMTP mailbox management. Session-based access, folder management, message CRUD, send/batch-send. Built for automation and AI agents. Embedded MCP at /mcp.",
           "auth": "X-API-Key",
           "capabilities": [
             "imap",
@@ -397,7 +519,38 @@
             "batch-send",
             "mcp-tools"
           ],
-          "endpointCount": 7
+          "endpointCount": 22
+        },
+        {
+          "id": "cbsms",
+          "name": "SMS/MMS Gateway",
+          "url": "https://sms.campaignbrain.dev",
+          "description": "Unified SMS/MMS gateway for Ejoin devices. Single send, bulk send, device management, webhook responses. Embedded MCP at /mcp.",
+          "auth": "Webhook secret",
+          "capabilities": [
+            "sms-send",
+            "mms-send",
+            "bulk-sms",
+            "device-control",
+            "webhooks",
+            "mcp-tools"
+          ],
+          "endpointCount": 21
+        },
+        {
+          "id": "cbwebhook",
+          "name": "Webhook Router",
+          "url": "https://webhook.campaignbrain.dev",
+          "description": "Centralized webhook ingestion (Typeform, GitHub, Stripe). HMAC verification, async persistence, consumer-scoped access. Embedded MCP at /mcp.",
+          "auth": "X-API-Key / X-Admin-Key",
+          "capabilities": [
+            "typeform-webhooks",
+            "event-storage",
+            "form-responses",
+            "consumer-management",
+            "mcp-tools"
+          ],
+          "endpointCount": 15
         }
       ]
     },
@@ -408,9 +561,9 @@
         {
           "id": "cbinfra",
           "name": "Infrastructure Manager",
-          "url": "https://infra.nominate.ai",
-          "description": "Infrastructure inventory, GitHub issues, project bootstrap, config management (nginx, systemd, DNS, certs), AI orchestration, deployment.",
-          "auth": "None (PIN gate via cbauth)",
+          "url": "https://infra.campaignbrain.dev",
+          "description": "Infrastructure inventory, GitHub issues, project bootstrap, config management (nginx, systemd, DNS, certs), AI orchestration, deployment. Embedded MCP at /mcp.",
+          "auth": "cbauth JWT",
           "capabilities": [
             "inventory",
             "github-issues",
@@ -419,167 +572,72 @@
             "nginx",
             "systemd",
             "dns",
+            "certs",
+            "orchestrate",
             "deploy",
             "mcp-tools"
           ],
-          "endpointCount": 9
-        },
-        {
-          "id": "cbvpn",
-          "name": "Network Inventory",
-          "url": "https://network.nominate.ai",
-          "description": "Fleet management for OpenWRT router/VPN/Tor network. Inventory, topology, fleet status, device snapshots.",
-          "auth": "None (internal)",
-          "capabilities": [
-            "fleet-status",
-            "inventory",
-            "topology",
-            "device-snapshots"
-          ],
-          "endpointCount": 4
-        },
-        {
-          "id": "cbtor",
-          "name": "TOR Cluster",
-          "url": "https://tor.nominate.ai",
-          "description": "Anonymous web fetching through Tor worker pool. Load balancing: round_robin, sticky, random, least_connections.",
-          "auth": "X-API-Key",
-          "capabilities": [
-            "anonymous-fetch",
-            "tor-workers",
-            "load-balancing"
-          ],
-          "endpointCount": 3
+          "endpointCount": 91
         },
         {
           "id": "cbauth",
           "name": "Authentication Platform",
-          "url": "https://auth.nominate.ai",
-          "description": "Domain-wide PIN authentication gateway for nominate.ai subdomains. HMAC-SHA256, 7-day sessions.",
-          "auth": "Session cookie",
+          "url": "https://auth.campaignbrain.dev",
+          "description": "OAuth 2.1 authorization server. PKCE, Dynamic Client Registration (RFC 7591), token revocation (RFC 7009). Group-based permissions, JWT with embedded permission claims, API key management, portal dashboard. Embedded MCP at /mcp.",
+          "auth": "Session cookie / JWT",
           "capabilities": [
-            "pin-auth",
+            "oauth2.1",
+            "pkce",
+            "dynamic-client-registration",
+            "token-revocation",
             "session-management",
-            "nginx-auth-request"
+            "nginx-auth-request",
+            "users",
+            "groups",
+            "permissions",
+            "api-keys",
+            "portal",
+            "cli-api-keys",
+            "mcp-tools"
           ],
-          "endpointCount": 3
+          "endpointCount": 71
         },
         {
-          "id": "cboverseer",
-          "name": "System Monitor",
-          "url": "https://overseer.nominate.ai",
-          "description": "Central monitoring, 8 agents, incident management, SMS alerts, AI diagnosis, self-healing.",
+          "id": "cbvpn",
+          "name": "Network Inventory",
+          "url": "https://vpn.campaignbrain.dev",
+          "description": "Network device inventory and topology. Fleet status, device inventory with snapshots, network topology visualization. Embedded MCP at /mcp.",
           "auth": "X-API-Key",
           "capabilities": [
-            "telemetry",
-            "real-time-metrics",
-            "incidents",
-            "monitoring-agents",
-            "sms-alerts",
-            "dependency-map"
-          ],
-          "endpointCount": 6
-        },
-        {
-          "id": "cblogs",
-          "name": "Log Query & Analysis",
-          "url": "https://logs.nominate.ai",
-          "description": "Read-only log querying and analysis across DC0. 8 log groups, syslog analysis, nginx access/error logs, CB service journals.",
-          "auth": "None (PIN gate via cbauth)",
-          "capabilities": [
-            "log-query",
-            "log-analysis",
-            "system-logs",
-            "service-logs",
-            "nginx-logs",
-            "syslog-analysis",
+            "fleet-status",
+            "device-inventory",
+            "topology",
+            "snapshots",
             "mcp-tools"
           ],
-          "endpointCount": 7
+          "endpointCount": 68
         },
         {
-          "id": "cbmcp",
-          "name": "MCP Service Catalog",
-          "url": "https://mcp.nominate.ai",
-          "description": "MCP server exposing the CB service catalog to LLM agents. SSE transport for remote clients, Inspector UI for humans.",
-          "auth": "None (PIN gate via cbauth)",
+          "id": "cbtenant",
+          "name": "Tenant Manager",
+          "url": "https://tenant.campaignbrain.dev",
+          "description": "Multi-tenant deployment manager. Each tenant is a complete Campaign Brain deployment with its own domain, database, and configuration.",
+          "auth": "cbauth (login required)",
           "capabilities": [
-            "service-discovery",
-            "endpoint-search",
-            "openapi-specs",
-            "mcp-tools",
-            "mcp-resources"
+            "multi-tenant",
+            "deployment-management",
+            "tenant-provisioning",
+            "domain-management",
+            "database-isolation"
           ],
-          "endpointCount": 5
-        },
-        {
-          "id": "cbcron",
-          "name": "Scheduled Task Engine",
-          "url": "https://cron.nominate.ai",
-          "description": "Configurable scheduled task engine. Cron-based HTTP dispatch with retry logic, overlap protection, run history, timezone support.",
-          "auth": "X-API-Key",
-          "capabilities": [
-            "cron-scheduling",
-            "http-dispatch",
-            "job-management",
-            "retry-logic",
-            "run-history",
-            "mcp-tools"
-          ],
-          "endpointCount": 6
-        },
-        {
-          "id": "cbdocs",
-          "name": "Documentation Site",
-          "url": "https://docs.nominate.ai",
-          "description": "MkDocs Material documentation hub for the Campaign Brain platform. Architecture guides, service docs, API catalog.",
-          "auth": "None (PIN gate via cbauth)",
-          "capabilities": [
-            "documentation",
-            "architecture",
-            "api-reference",
-            "guides",
-            "changelog"
-          ],
-          "endpointCount": 5
-        },
-        {
-          "id": "cbmesh",
-          "name": "API Mesh Gateway",
-          "url": "https://mesh.nominate.ai",
-          "description": "WebSocket gateway for the API Mesh network. Service discovery, cluster health, request proxying across all registered CB services.",
-          "auth": "None",
-          "capabilities": [
-            "service-mesh",
-            "service-discovery",
-            "request-proxy",
-            "websocket",
-            "cluster-health"
-          ],
-          "endpointCount": 5
-        },
-        {
-          "id": "cbos",
-          "name": "Claude Code Session Manager",
-          "url": "https://os.nominate.ai",
-          "description": "Claude Code operating system \u2014 manage interactive Claude sessions, stash/apply context, AI-powered task routing and prioritization.",
-          "auth": "None (PIN gate via cbauth)",
-          "capabilities": [
-            "claude-sessions",
-            "session-management",
-            "stash",
-            "task-routing",
-            "intelligence",
-            "mcp-tools"
-          ],
-          "endpointCount": 6
+          "endpointCount": 60
         },
         {
           "id": "cbrouter",
           "name": "OpenWRT Router Manager",
-          "url": "https://router.nominate.ai",
-          "description": "MCP/API frontend for OpenWRT router management. UCI config CRUD with rollback, network/firewall/wireless monitoring, VPN rotation.",
-          "auth": "None (PIN gate via cbauth)",
+          "url": "https://router.campaignbrain.dev",
+          "description": "MCP/API frontend for OpenWRT router management. UCI config CRUD with rollback, network/firewall/wireless monitoring, package management, VPN rotation, file access. Embedded MCP at /mcp.",
+          "auth": "cbauth (login required)",
           "capabilities": [
             "openwrt",
             "uci-config",
@@ -590,7 +648,164 @@
             "packages",
             "mcp-tools"
           ],
-          "endpointCount": 8
+          "endpointCount": 48
+        },
+        {
+          "id": "cboverseer",
+          "name": "System Monitor",
+          "url": "https://overseer.campaignbrain.dev",
+          "description": "Central monitoring, 14 agents, incident management with AI diagnosis, SMS alerts, self-healing remediation, agent reports. Embedded MCP at /mcp.",
+          "auth": "cbauth JWT",
+          "capabilities": [
+            "telemetry",
+            "real-time-metrics",
+            "incidents",
+            "monitoring-agents",
+            "sms-alerts",
+            "dependency-map",
+            "remediation",
+            "reports",
+            "mcp-tools"
+          ],
+          "endpointCount": 48
+        },
+        {
+          "id": "cblogs",
+          "name": "Log Query & Analysis",
+          "url": "https://logs.campaignbrain.dev",
+          "description": "Read-only log querying and analysis across DC0 (impera). 8 log groups, syslog analysis (crash loops, OOM, segfaults), nginx access/error logs, CB service journals. Embedded MCP at /mcp.",
+          "auth": "cbauth (login required)",
+          "capabilities": [
+            "log-query",
+            "log-analysis",
+            "system-logs",
+            "service-logs",
+            "nginx-logs",
+            "syslog-analysis",
+            "crash-loop-detection",
+            "mcp-tools"
+          ],
+          "endpointCount": 20
+        },
+        {
+          "id": "cbcron",
+          "name": "Scheduled Task Engine",
+          "url": "https://cron.campaignbrain.dev",
+          "description": "Configurable scheduled task engine. Cron-based HTTP dispatch with retry logic, overlap protection, run history, and timezone support. Embedded MCP at /mcp.",
+          "auth": "cbauth JWT",
+          "capabilities": [
+            "cron-scheduling",
+            "http-dispatch",
+            "job-management",
+            "retry-logic",
+            "run-history",
+            "mcp-tools"
+          ],
+          "endpointCount": 20
+        },
+        {
+          "id": "cbtor",
+          "name": "TOR Cluster",
+          "url": "https://tor.campaignbrain.dev",
+          "description": "Anonymous web fetching through Tor worker pool. Worker management, mode switching, endpoint discovery. Embedded MCP at /mcp.",
+          "auth": "X-API-Key",
+          "capabilities": [
+            "anonymous-fetch",
+            "tor-workers",
+            "load-balancing",
+            "mcp-tools"
+          ],
+          "endpointCount": 18
+        },
+        {
+          "id": "cbnetwork",
+          "name": "Network Fleet Manager",
+          "url": "https://network.campaignbrain.dev",
+          "description": "Fleet management for OpenWRT router/VPN/Tor network. Inventory, topology, fleet status, device snapshots. CLI and API for orchestrating upgrades, health probes, and traffic captures.",
+          "auth": "cbauth (login required)",
+          "capabilities": [
+            "fleet-status",
+            "inventory",
+            "topology",
+            "device-snapshots"
+          ],
+          "endpointCount": 12
+        },
+        {
+          "id": "cbmesh",
+          "name": "API Mesh Gateway",
+          "url": "https://mesh.campaignbrain.dev",
+          "description": "WebSocket gateway for the API Mesh network. Service discovery, cluster health, request proxying across all registered CB services.",
+          "auth": "None",
+          "capabilities": [
+            "service-mesh",
+            "service-discovery",
+            "request-proxy",
+            "websocket",
+            "cluster-health"
+          ],
+          "endpointCount": 0
+        },
+        {
+          "id": "cbauth-admin",
+          "name": "Auth Admin UI",
+          "url": "https://auth-admin.campaignbrain.dev",
+          "description": "Administration interface for cbauth. Manage users, API keys, PIN gates, and access control policies. Starlette-based web UI.",
+          "auth": "Session (cookie)",
+          "capabilities": [
+            "user-management",
+            "api-key-management",
+            "pin-gates",
+            "access-control"
+          ],
+          "endpointCount": 0
+        },
+        {
+          "id": "cbos",
+          "name": "Claude Code Session Manager",
+          "url": "https://os.campaignbrain.dev",
+          "description": "Claude Code operating system: manage interactive Claude sessions, stash/apply context, JSON sessions for programmatic access, AI-powered task routing and prioritization. Embedded MCP at /mcp.",
+          "auth": "cbauth (login required)",
+          "capabilities": [
+            "claude-sessions",
+            "session-management",
+            "stash",
+            "task-routing",
+            "intelligence",
+            "json-sessions",
+            "mcp-tools"
+          ],
+          "endpointCount": 0
+        },
+        {
+          "id": "cbdocs",
+          "name": "Documentation Site",
+          "url": "https://docs.campaignbrain.dev",
+          "description": "MkDocs Material documentation hub for the Campaign Brain platform. Architecture guides, service docs, API catalog, development guides, style guide.",
+          "auth": "None",
+          "capabilities": [
+            "documentation",
+            "architecture",
+            "api-reference",
+            "guides",
+            "changelog"
+          ],
+          "endpointCount": 0
+        },
+        {
+          "id": "cbmcp",
+          "name": "MCP Service Catalog",
+          "url": "https://mcp.campaignbrain.dev",
+          "description": "MCP server exposing the CB service catalog to LLM agents. SSE transport for remote clients, Inspector UI for humans.",
+          "auth": "None",
+          "capabilities": [
+            "service-discovery",
+            "endpoint-search",
+            "openapi-specs",
+            "mcp-tools",
+            "mcp-resources"
+          ],
+          "endpointCount": 0
         }
       ]
     },
@@ -599,10 +814,80 @@
       "name": "Business",
       "services": [
         {
+          "id": "cbpulse",
+          "name": "Hospitality BI (VIP)",
+          "url": "https://pulse.campaignbrain.dev",
+          "description": "Virgin Islands Pulse: hospitality portfolio BI. Clover POS, Homebase, Cloudbeds, WebRezPro, QuickBooks. Finance, HR, guests, inbox. Embedded MCP at /mcp.",
+          "auth": "JWT Bearer",
+          "capabilities": [
+            "auth",
+            "businesses",
+            "alerts",
+            "financials",
+            "occupancy",
+            "employees",
+            "guests",
+            "inbox",
+            "mcp-tools"
+          ],
+          "endpointCount": 424
+        },
+        {
+          "id": "cbradio",
+          "name": "Rural AM/FM Rate Ingestion",
+          "url": "https://ruralamfm.campaignbrain.dev",
+          "description": "Radio station political advertising rates for AI-powered media buying. 2,000+ stations, rate cards with OCR extraction, proposals, radio buys, order packets, FCC data, Nielsen ratings, coverage contours. Embedded MCP at /mcp.",
+          "auth": "cbauth JWT",
+          "capabilities": [
+            "stations",
+            "rate-cards",
+            "rates",
+            "proposals",
+            "radio-buys",
+            "order-packets",
+            "fcc-data",
+            "nielsen-ratings",
+            "geo-coverage",
+            "ocr",
+            "documents",
+            "srm",
+            "agreements",
+            "voter-data",
+            "mcp-tools"
+          ],
+          "endpointCount": 365
+        },
+        {
+          "id": "cbradio-qa",
+          "name": "Rural AM/FM Rate Ingestion (QA)",
+          "url": "https://qaradio.campaignbrain.dev",
+          "description": "QA instance of cbradio. Mirrors production data for testing. Embedded MCP at /mcp.",
+          "auth": "cbauth JWT",
+          "capabilities": [
+            "stations",
+            "rate-cards",
+            "rates",
+            "proposals",
+            "radio-buys",
+            "order-packets",
+            "fcc-data",
+            "nielsen-ratings",
+            "geo-coverage",
+            "ocr",
+            "documents",
+            "srm",
+            "agreements",
+            "voter-data",
+            "mcp-tools",
+            "qa"
+          ],
+          "endpointCount": 365
+        },
+        {
           "id": "cbapp",
           "name": "Campaign Management Platform",
-          "url": "https://app.nominate.ai",
-          "description": "Core campaign management platform. Person/contact CRM, events, campaigns, surveys, walk lists, turf management, voter data, canvass forms.",
+          "url": "https://app.campaignbrain.dev",
+          "description": "Core campaign management platform. Person/contact CRM, events, campaigns, surveys, walk lists, turf management, voter data, canvass forms, analytics dashboard.",
           "auth": "JWT (POST /api/auth/login)",
           "capabilities": [
             "persons",
@@ -616,49 +901,97 @@
             "canvass",
             "analytics"
           ],
-          "endpointCount": 10
+          "endpointCount": 274
         },
         {
-          "id": "cbproject",
-          "name": "Project Management",
-          "url": "https://project.nominate.ai",
-          "description": "Project management and task tracking. Timeline views, kanban boards, resource allocation, milestones.",
-          "auth": "None (PIN gate via cbauth)",
+          "id": "cbworkflow",
+          "name": "Workflow Engine",
+          "url": "https://workflow.campaignbrain.dev",
+          "description": "CRM workflow automation. Contacts, templates, instances, connectors (SMS/email), multi-tenant, guides. Embedded MCP at /mcp.",
+          "auth": "None",
           "capabilities": [
-            "projects",
-            "tasks",
-            "milestones",
-            "kanban",
-            "timeline"
-          ],
-          "endpointCount": 5
-        },
-        {
-          "id": "cbradio",
-          "name": "Rural AM/FM Rate Ingestion",
-          "url": "https://radio.nominate.ai",
-          "description": "Radio station political advertising rates for AI-powered media buying. 2,000+ stations, rate cards with OCR extraction, proposals, FCC data, Nielsen ratings.",
-          "auth": "JWT (POST /api/auth/token)",
-          "capabilities": [
-            "stations",
-            "rate-cards",
-            "rates",
-            "proposals",
-            "radio-buys",
-            "fcc-data",
-            "nielsen-ratings",
-            "geo-coverage",
-            "ocr",
+            "contacts",
+            "workflow-templates",
+            "workflow-instances",
+            "tenants",
+            "connectors",
+            "sms-routing",
+            "email-routing",
             "mcp-tools"
           ],
-          "endpointCount": 10
+          "endpointCount": 113
+        },
+        {
+          "id": "cbpayments",
+          "name": "Donation Processing",
+          "url": "https://payments.campaignbrain.dev",
+          "description": "Campaign donation processing (Transaxt migration). Authorize.Net CIM, 4 portals. JWT auth, campaign/account history. Embedded MCP at /mcp.",
+          "auth": "Mixed (API key / JWT / public)",
+          "capabilities": [
+            "donations",
+            "campaigns",
+            "donors",
+            "reporting",
+            "merchant-accounts",
+            "mcp-tools"
+          ],
+          "endpointCount": 22
+        },
+        {
+          "id": "cbbanking",
+          "name": "Banking Integration",
+          "url": "https://banking.campaignbrain.dev",
+          "description": "Banking-partner SFTP/BAI2 pipeline. Pulls BAI2 prior-day reports from Huntington via OpenText hosted SFTP, parses and persists to DuckDB, exposes normalized export feeds for reconciliation.",
+          "auth": "cbauth (login required)",
+          "capabilities": [
+            "sftp",
+            "bai2",
+            "huntington",
+            "transactions",
+            "balances",
+            "reconciliation",
+            "export",
+            "duckdb"
+          ],
+          "endpointCount": 19
+        },
+        {
+          "id": "cbesig",
+          "name": "E-Signature Service",
+          "url": "https://esig.campaignbrain.dev",
+          "description": "E-signature service backed by BoldSign. Send documents from templates, track signature status, manage signed document lifecycle.",
+          "auth": "cbauth (login required)",
+          "capabilities": [
+            "e-signature",
+            "boldsign",
+            "document-signing",
+            "templates",
+            "signature-tracking"
+          ],
+          "endpointCount": 17
+        },
+        {
+          "id": "cbissues",
+          "name": "Issue Tracking",
+          "url": "https://issues.campaignbrain.dev",
+          "description": "Unified GitHub issue management across CB repositories. Full CRUD, comments, project boards. Embedded MCP at /mcp.",
+          "auth": "X-API-Key",
+          "capabilities": [
+            "issues-crud",
+            "comments",
+            "labels",
+            "project-boards",
+            "multi-repo",
+            "mcp-tools"
+          ],
+          "endpointCount": 17
         },
         {
           "id": "cbmobile",
           "name": "Mobile Canvassing",
-          "url": "https://mobile.nominate.ai",
-          "description": "Progressive Web App for door-knocking and canvassing. Offline-first with RxDB sync, DuckDB analytics, offline maps.",
-          "auth": "None (PIN gate via cbauth)",
+          "url": "https://mobile.campaignbrain.dev",
+          "description": "Progressive Web App for door-knocking and canvassing. Offline-first with RxDB sync, DuckDB analytics, offline maps. iOS Safari optimized. Embedded MCP at /mcp.",
+          "auth": "None",
           "capabilities": [
             "contacts",
             "canvassing",
@@ -668,71 +1001,234 @@
             "websocket",
             "mcp-tools"
           ],
-          "endpointCount": 7
+          "endpointCount": 8
         },
         {
-          "id": "cbworkflow",
-          "name": "Workflow Engine",
-          "url": "https://workflow.nominate.ai",
-          "description": "Lightweight JSON-backed CRM workflow automation. Contacts, templates, instances, multi-tenant, SMS/email routing.",
+          "id": "cbloom",
+          "name": "Loom Workspace Builder",
+          "url": "https://loom.campaignbrain.dev",
+          "description": "Campaign Brain workspace builder for composable data dashboards: content and narrative engine.",
+          "auth": "cbauth (login required)",
+          "capabilities": [
+            "workspaces",
+            "dashboards",
+            "content-engine",
+            "narrative",
+            "composable-ui"
+          ],
+          "endpointCount": 5
+        },
+        {
+          "id": "cbproject",
+          "name": "Project Management",
+          "url": "https://project.campaignbrain.dev",
+          "description": "Project management and task tracking. Timeline views, kanban boards, resource allocation, milestones. Node.js/React application.",
           "auth": "None",
           "capabilities": [
-            "contacts",
-            "workflow-templates",
-            "workflow-instances",
-            "tenants",
-            "sms-routing",
-            "email-routing"
+            "projects",
+            "tasks",
+            "milestones",
+            "kanban",
+            "timeline"
           ],
-          "endpointCount": 6
+          "endpointCount": 0
         },
         {
-          "id": "cbpayments",
-          "name": "Donation Processing",
-          "url": "https://payments.nominate.ai",
-          "description": "Campaign donation processing (Transaxt migration). Authorize.Net CIM, 4 portals, 595K donations.",
-          "auth": "Mixed (API key / JWT / public)",
+          "id": "cbpublic",
+          "name": "Public Marketing Website",
+          "url": "https://public.campaignbrain.dev",
+          "description": "Campaign Brain public marketing website. Landing pages, feature overview, contact forms. Jinja2 templates served via FastAPI.",
+          "auth": "None (public)",
           "capabilities": [
-            "donations",
-            "campaigns",
-            "donors",
-            "reporting",
-            "merchant-accounts"
+            "marketing",
+            "landing-pages",
+            "contact-form"
           ],
-          "endpointCount": 5
+          "endpointCount": 0
         },
         {
-          "id": "cbpulse",
-          "name": "Hospitality BI (VIP)",
-          "url": "https://pulse.nominate.ai",
-          "description": "Virgin Islands Pulse \u2014 hospitality portfolio BI. Clover POS, Homebase, Cloudbeds, WebRezPro integration.",
-          "auth": "JWT Bearer",
+          "id": "cbtest",
+          "name": "Test Bootstrap API",
+          "url": "https://test.campaignbrain.dev",
+          "description": "Test project for CBApp bootstrap template validation. Minimal API used to verify project scaffolding and deployment pipeline.",
+          "auth": "cbauth (login required)",
           "capabilities": [
-            "auth",
-            "businesses",
-            "alerts",
-            "financials",
-            "occupancy",
-            "daily-summaries"
+            "testing",
+            "bootstrap"
           ],
-          "endpointCount": 6
-        },
-        {
-          "id": "cbissues",
-          "name": "Issue Tracking",
-          "url": "https://issues.nominate.ai",
-          "description": "Unified GitHub issue management across CB repositories. Full CRUD, comments, project boards.",
-          "auth": "X-API-Key",
-          "capabilities": [
-            "issues-crud",
-            "comments",
-            "labels",
-            "project-boards",
-            "multi-repo"
-          ],
-          "endpointCount": 5
+          "endpointCount": 0
         }
       ]
+    }
+  ],
+  "uncatalogued": [
+    {
+      "id": "cbgreenroom",
+      "endpointCount": 90
+    },
+    {
+      "id": "cbradio2",
+      "endpointCount": 80
+    },
+    {
+      "id": "cbcast",
+      "endpointCount": 79
+    },
+    {
+      "id": "cbelections",
+      "endpointCount": 58
+    },
+    {
+      "id": "cbstitch",
+      "endpointCount": 51
+    },
+    {
+      "id": "cbhive",
+      "endpointCount": 45
+    },
+    {
+      "id": "cbsearch",
+      "endpointCount": 44
+    },
+    {
+      "id": "cblist",
+      "endpointCount": 34
+    },
+    {
+      "id": "cbcalendar",
+      "endpointCount": 27
+    },
+    {
+      "id": "cbship",
+      "endpointCount": 25
+    },
+    {
+      "id": "cbea",
+      "endpointCount": 23
+    },
+    {
+      "id": "cbpublish",
+      "endpointCount": 20
+    },
+    {
+      "id": "cbbilling",
+      "endpointCount": 18
+    },
+    {
+      "id": "cbonboard",
+      "endpointCount": 18
+    },
+    {
+      "id": "cbpersonnel",
+      "endpointCount": 18
+    },
+    {
+      "id": "cbdatabase",
+      "endpointCount": 17
+    },
+    {
+      "id": "cbkb",
+      "endpointCount": 17
+    },
+    {
+      "id": "cbmarketing",
+      "endpointCount": 17
+    },
+    {
+      "id": "cbcrm",
+      "endpointCount": 16
+    },
+    {
+      "id": "cbunifi",
+      "endpointCount": 16
+    },
+    {
+      "id": "cbweave",
+      "endpointCount": 16
+    },
+    {
+      "id": "cbcaptive",
+      "endpointCount": 15
+    },
+    {
+      "id": "cbconvo",
+      "endpointCount": 15
+    },
+    {
+      "id": "cbtags",
+      "endpointCount": 15
+    },
+    {
+      "id": "cbnominate",
+      "endpointCount": 14
+    },
+    {
+      "id": "cbprint",
+      "endpointCount": 14
+    },
+    {
+      "id": "cbgroundgame",
+      "endpointCount": 13
+    },
+    {
+      "id": "cbquickbooks",
+      "endpointCount": 13
+    },
+    {
+      "id": "cbstt",
+      "endpointCount": 13
+    },
+    {
+      "id": "cbforge",
+      "endpointCount": 12
+    },
+    {
+      "id": "cbinbox",
+      "endpointCount": 12
+    },
+    {
+      "id": "cbnotify",
+      "endpointCount": 11
+    },
+    {
+      "id": "cbsnailmail",
+      "endpointCount": 11
+    },
+    {
+      "id": "cbsme",
+      "endpointCount": 10
+    },
+    {
+      "id": "cbmanim",
+      "endpointCount": 9
+    },
+    {
+      "id": "cbsquare",
+      "endpointCount": 9
+    },
+    {
+      "id": "cbharvest",
+      "endpointCount": 7
+    },
+    {
+      "id": "cbkrnl",
+      "endpointCount": 7
+    },
+    {
+      "id": "cbtapwatch",
+      "endpointCount": 7
+    },
+    {
+      "id": "cbvoice",
+      "endpointCount": 6
+    },
+    {
+      "id": "cbcampaign",
+      "endpointCount": 5
+    },
+    {
+      "id": "cbworkspaces",
+      "endpointCount": 5
     }
   ]
 }

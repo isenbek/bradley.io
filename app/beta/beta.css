@@ -286,3 +286,98 @@ body:has(.beta-root) {
   aspect-ratio: 1;
   border-radius: var(--radius-hair);
 }
+
+/* ---------------------------------------------------------------------------
+   MCP TOOL LIST
+
+   A tool and the one line of what it does. Same shape as the kit's .menu-item
+   (bold name over a description) because it is the same job: a list of things
+   you pick from, where the names alone do not tell you which one you want.
+   On panel, because these were read off the running server.
+   --------------------------------------------------------------------------- */
+.beta-tools {
+  display: grid;
+  gap: calc(var(--u) * 2);
+  margin-top: calc(var(--u) * 4);
+  padding-top: calc(var(--u) * 3);
+  border-top: 1px solid var(--color-rule-panel);
+}
+.beta-tool b {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--text-data);
+  color: var(--color-accent);
+  font-weight: 500;
+}
+.beta-tool span {
+  display: block;
+  font-size: var(--text-fine);
+  line-height: 1.5;
+  color: var(--color-glass-muted);
+  max-width: 68ch;
+}
+
+/* ---------------------------------------------------------------------------
+   PAPER CARDS
+
+   A figure, a title, its status, and what it found. The figure leads because
+   these are visual results and a wall of titles hides that.
+   --------------------------------------------------------------------------- */
+.beta-papers {
+  display: grid;
+  /* min() clamp on the floor. Without it the 22rem stays 22rem when auto-fit
+     drops to one column and the card pushes the page sideways at 320px. */
+  grid-template-columns: repeat(auto-fit, minmax(min(22rem, 100%), 1fr));
+  gap: calc(var(--u) * 4);
+  margin: calc(var(--u) * 6) 0;
+}
+
+.beta-paper { display: flex; flex-direction: column; }
+.beta-paper h3 { font-size: var(--text-h3); margin-bottom: calc(var(--u) * 2); }
+.beta-paper > p { margin: 0 0 calc(var(--u) * 3); }
+
+/* The figure sits in a fixed-ratio well so a grid of cards keeps its rhythm
+   whatever each PNG's own proportions are. Contain, not cover: these are plots,
+   and cropping one cuts an axis off. */
+.beta-paper__fig {
+  display: block;
+  aspect-ratio: 16 / 10;
+  margin-bottom: calc(var(--u) * 3);
+  background: var(--color-paper-sunk);
+  border: 1px solid var(--color-rule);
+  overflow: hidden;
+}
+.beta-paper__fig img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.beta-paper__meta { display: flex; flex-wrap: wrap; gap: calc(var(--u) * 2); margin: 0 0 calc(var(--u) * 3); }
+
+/* Pushed to the card's floor so a row of cards lines its buttons up regardless
+   of how long each abstract runs. */
+.beta-paper__links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: calc(var(--u) * 3);
+  margin: auto 0 0;
+  padding-top: calc(var(--u) * 3);
+}
+
+/* A URL in a readout cell.
+
+   A table's width floor is its min-content width, and a URL is a single token
+   with no break opportunity, so `6502.tinymachines.ai/api/mcp` set a ~250px
+   floor on the cell. That floor propagates through the table, the panel and the
+   grid all the way to .page, and the whole page scrolls sideways at 320px while
+   no individual element reports overflowing. Same failure the visitors table
+   had. Let the token break instead. */
+.panel-face .readout .beta-url {
+  word-break: break-all;
+  white-space: normal;
+  text-align: right;
+  font-variant-numeric: normal;
+}
