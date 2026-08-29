@@ -415,3 +415,28 @@ body:has(.beta-root) {
   display: block;
   overflow: visible;
 }
+
+/* ---------------------------------------------------------------------------
+   A V3 ISLAND INSIDE KIT CHROME
+
+   Some instruments are bespoke visualisations: the MapLibre airspace map, the
+   GPS skyplot, the worldevent decoders. Their styling is ~1,000 lines of
+   .v3-air-* / .v3-gps-* / .v3-we-* that has no kit equivalent, because the kit
+   has no opinion about a polar skyplot. Rewriting it would be work for no
+   visible gain: those blocks are dark instrument wells already, which is what
+   the kit's panel ground means anyway.
+
+   So the page wears kit chrome and the instrument keeps its own. `.v3` has to
+   stay on the wrapper because it is what declares the --v3-* tokens every one
+   of those rules reads; dropping it would leave the markup styled by nothing.
+
+   What is neutralised here is only the 7 declarations bare `.v3` paints with.
+   Two of them matter: `background: var(--v3-cloud)` would drop a cream slab on
+   the paper ground, and `min-height: 100dvh` would add a screen of dead space
+   below every embedded instrument.
+   --------------------------------------------------------------------------- */
+.beta-root .v3.kit-island {
+  min-height: 0;
+  background: transparent;
+  position: relative;
+}

@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import Link from "next/link"
 import { PreferencesClient } from "@/components/preferences/PreferencesClient"
 
 export const metadata: Metadata = {
@@ -10,17 +11,35 @@ export const metadata: Metadata = {
 
 export default function PreferencesPage() {
   return (
-    <div className="container-page v3-prefs">
-      <header className="v3-prefs__head">
-        <p className="v3-prefs__eyebrow">/preferences · local userspace</p>
-        <h1 className="v3-prefs__title">Device capabilities</h1>
-        <p className="v3-prefs__lede">
-          A first-principles scan of every sensor, radio, and platform hook this browser exposes. Probe live readings,
-          then save a snapshot: it persists to this device&apos;s IndexedDB, never a server.{" "}
-          <a className="v3-prefs__link" href="/preferences/standalone.html">open the standalone module ↗</a>
+    <div className="page">
+      <div className="page-head">
+        <nav className="crumb" aria-label="Breadcrumb">
+          <Link href="/">bradley.io</Link>
+          <span>
+            {" / "}
+            <span aria-current="page">Preferences</span>
+          </span>
+        </nav>
+        <h1>Device capabilities</h1>
+      </div>
+
+      <p className="lede">
+        A first-principles scan of every sensor, radio and platform hook this browser exposes.
+        Probe the live readings, then save a snapshot: it persists to this device&apos;s IndexedDB
+        and never reaches a server.
+      </p>
+
+      <div className="prose beta-sec">
+        <p>
+          There is also a <a href="/preferences/standalone.html">standalone module</a>, which is
+          the same scan in one file with no framework behind it.
         </p>
-      </header>
-      <PreferencesClient />
+      </div>
+
+      {/* The scanner draws its own result tables. See .kit-island in app/kit.css. */}
+      <div className="v3 kit-island">
+        <PreferencesClient />
+      </div>
     </div>
   )
 }

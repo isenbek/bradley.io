@@ -1,55 +1,33 @@
 import Link from "next/link"
-import { Radio, ArrowLeft } from "lucide-react"
-import { V3Reveal } from "@/components/v3/V3Reveal"
 import { WorldEventBus } from "@/components/dragonfli/worldevent/WorldEventBus"
 
-export default function WorldEventPage() {
+export default function Page() {
   return (
-    <>
-      {/* HEADER ========================================================= */}
-      <header className="v3-page-head" style={{ paddingBottom: 20 }}>
-        <div className="v3-blob v3-blob--1" aria-hidden style={{ right: "-80px", top: "-40px" }} />
+    <div className="page">
+      <div className="page-head">
+        <nav className="crumb" aria-label="Breadcrumb">
+          <Link href="/">bradley.io</Link>
+          <span>
+            {" / "}
+            <Link href="/dragonfli">Dragonfli</Link>
+          </span>
+          <span>
+            {" / "}
+            <span aria-current="page">Perception bus</span>
+          </span>
+        </nav>
+        <h1>The perception bus</h1>
+      </div>
 
-        <div className="v3-wrap">
-          <div className="v3-page-head__lockup">
-            <V3Reveal>
-              <Link href="/dragonfli" className="v3-air-back">
-                <ArrowLeft size={14} strokeWidth={2.4} /> back to the Dragonfli dashboard
-              </Link>
-            </V3Reveal>
-            <V3Reveal>
-              <span
-                className="v3-pill v3-pill--blue"
-                style={{ padding: "8px 16px", fontSize: 13, display: "inline-flex", gap: 8, alignItems: "center" }}
-              >
-                <Radio size={14} strokeWidth={2.25} />
-                worldevent · live
-              </span>
-            </V3Reveal>
-            <V3Reveal eager>
-              <h1>
-                Every sense, <span className="v3-accent">one firehose.</span>
-              </h1>
-            </V3Reveal>
-            <V3Reveal eager>
-              <p className="v3-page-head__lede">
-                Not a feed. A <strong>nervous system</strong>. Every sensor in the garage
-                broadcasts a schema-tagged <code>worldevent/1</code> envelope onto one UDP wire,
-                and this is the live, type-agnostic view of it: which event types are firing,
-                from which hosts, how fast, and a rolling tail of everything happening in the
-                world right now. Plug in a new sense and it just appears here.
-              </p>
-            </V3Reveal>
-          </div>
-        </div>
-      </header>
+      <p className="lede">
+        A schema-tagged UDP firehose from every sensor on the network: mesh radios, clocks, GPS, Bluetooth census, ADS-B. Six decoders render what they recognise; anything else falls back to a generic view rather than being dropped.
+      </p>
 
-      {/* BOARD ========================================================= */}
-      <section className="v3-section" style={{ paddingTop: 8, paddingBottom: 16 }}>
-        <div className="v3-wrap">
-          <WorldEventBus />
-        </div>
-      </section>
-    </>
+      {/* The instrument keeps its own styling. See .kit-island in app/kit.css
+          for why .v3 stays on this wrapper. */}
+      <div className="v3 kit-island">
+        <WorldEventBus />
+      </div>
+    </div>
   )
 }

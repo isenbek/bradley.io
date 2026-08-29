@@ -1,57 +1,42 @@
 import Link from "next/link"
-import { Eye, ArrowLeft } from "lucide-react"
-import { V3Reveal } from "@/components/v3/V3Reveal"
+import type { Metadata } from "next"
 import { EyesLive } from "@/components/eyes/EyesLive"
+
+export const metadata: Metadata = {
+  title: "Eyes",
+  description: "A live still from the camera on the bradley.io box, refreshed once a minute.",
+  robots: { index: false, follow: false },
+}
 
 export default function EyesPage() {
   return (
-    <>
-      {/* HEADER ========================================================= */}
-      <header className="v3-page-head" style={{ paddingBottom: 20 }}>
-        <div className="v3-blob v3-blob--1" aria-hidden style={{ right: "-80px", top: "-40px" }} />
+    <div className="page">
+      <div className="page-head">
+        <nav className="crumb" aria-label="Breadcrumb">
+          <Link href="/">bradley.io</Link>
+          <span>
+            {" / "}
+            <span aria-current="page">Eyes</span>
+          </span>
+        </nav>
+        <h1>A frame, once a minute</h1>
+      </div>
 
-        <div className="v3-wrap">
-          <div className="v3-page-head__lockup">
-            <V3Reveal>
-              <Link href="/" className="v3-air-back">
-                <ArrowLeft size={14} strokeWidth={2.4} /> back home
-              </Link>
-            </V3Reveal>
-            <V3Reveal>
-              <span
-                className="v3-pill v3-pill--blue"
-                style={{ padding: "8px 16px", fontSize: 13, display: "inline-flex", gap: 8, alignItems: "center" }}
-              >
-                <Eye size={14} strokeWidth={2.25} />
-                live · eyes
-              </span>
-            </V3Reveal>
-            <V3Reveal eager>
-              <h1>
-                A frame, <span className="v3-accent">once a minute.</span>
-              </h1>
-            </V3Reveal>
-            <V3Reveal eager>
-              <p className="v3-page-head__lede">
-                A live still from the camera attached to the bradley.io box, grabbed with{" "}
-                <code>ffmpeg</code> straight off <code>/dev/video0</code> once a minute, cached on
-                the metal, and served same-origin. No stream, no cloud, no third party in the
-                middle. Just the most recent frame, also at{" "}
-                <Link href="/eyes.png" className="v3-accent">/eyes.png</Link>.
-              </p>
-            </V3Reveal>
-          </div>
-        </div>
-      </header>
+      <p className="lede">
+        A live still from the camera attached to the bradley.io box, grabbed with ffmpeg straight
+        off /dev/video0 once a minute, cached on the metal and served same-origin.
+      </p>
 
-      {/* FRAME ========================================================= */}
-      <section className="v3-section" style={{ paddingTop: 8, paddingBottom: 16 }}>
-        <div className="v3-wrap">
-          <article className="v3-panel v3-cam-panel">
-            <EyesLive />
-          </article>
-        </div>
-      </section>
-    </>
+      <div className="prose beta-sec">
+        <p>
+          No stream, no cloud, no third party in the middle: just the most recent frame, also at{" "}
+          <Link href="/eyes.png">/eyes.png</Link>.
+        </p>
+      </div>
+
+      <div className="v3 kit-island">
+        <EyesLive />
+      </div>
+    </div>
   )
 }

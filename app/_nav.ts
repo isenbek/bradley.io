@@ -63,10 +63,10 @@ export const NAV: NavGroup[] = [
       { href: "/trng", label: "Hotbits", blurb: "true random numbers from radioactive decay" },
       { href: "/sdr", label: "SDR", blurb: "the scanner stack and what it is hearing" },
       { href: "/fleet", label: "Fleet", blurb: "node health across the cluster" },
-      { href: "/dragonfli", label: "Dragonfli", blurb: "airspace, GPS, and the perception bus", legacy: true },
+      { href: "/dragonfli", label: "Dragonfli", blurb: "airspace, GPS, and the perception bus" },
       { href: "/visitors", label: "Knock knock", blurb: "who has been trying the doors, across every site here" },
       { href: "/6502", label: "6502", blurb: "the transistor-level chip and its archive", legacy: true },
-      { href: "/meatball", label: "Meatball", blurb: "the sensory robot: sight, sound, memory", legacy: true },
+      { href: "/meatball", label: "Meatball", blurb: "the sensory robot: sight, sound, memory" },
       { href: "/projects", label: "Projects", blurb: "the full dossier archive", legacy: true },
       { href: "/lab", label: "Lab", blurb: "the experiment catalog", legacy: true },
     ],
@@ -82,9 +82,30 @@ export const NAV_LINKS: NavLink[] = NAV.flatMap((g) => g.links)
  * components/SiteChrome.tsx reads this to decide which shell to render. Anything
  * not in here, including every route with no nav entry at all, gets v3.
  */
-export const KIT_ROUTES: ReadonlySet<string> = new Set(
-  NAV_LINKS.filter((l) => !l.legacy).map((l) => l.href)
-)
+/**
+ * Kit routes that do not earn a menu entry.
+ *
+ * Sub-pages of something already in the nav: putting them in NAV would list
+ * four Dragonfli entries where one belongs, and leaving them out of KIT_ROUTES
+ * would give a child page v3 chrome under a kit parent, which is worse than
+ * either. So they are named here, deliberately and visibly.
+ */
+const KIT_EXTRA = [
+  "/dragonfli/airspace",
+  "/dragonfli/gps",
+  "/dragonfli/worldevent",
+  "/trng/space",
+  "/meatball/log",
+  "/meatball/memory",
+  "/terminal",
+  "/preferences",
+  "/eyes",
+] as const
+
+export const KIT_ROUTES: ReadonlySet<string> = new Set([
+  ...NAV_LINKS.filter((l) => !l.legacy).map((l) => l.href),
+  ...KIT_EXTRA,
+])
 
 /** The label for a path, for breadcrumbs. Null for the home page itself. */
 export function navLabel(pathname: string): string | null {
