@@ -181,22 +181,19 @@ server {
 
 
 server {
-    if ($host = junior.bradley.io) {
-        return 301 https://$host$request_uri;
-    } # managed by Certbot
-
-
-    if ($host = junior.isenbek.io) {
-        return 301 https://$host$request_uri;
-    } # managed by Certbot
-
-
     listen 80;
     listen [::]:80;
     server_name junior.tinymachines.ai junior.isenbek.io junior.lan junior.local;
-    return 404; # managed by Certbot
 
-
-
-
+    # Rewritten from certbot's generated form, which was a pair of per-host
+    # "if ($host = ...)" guards followed by "return 404". Two problems here:
+    #
+    #  - A server-level "return" runs in the rewrite phase and short-circuits
+    #    before any location is chosen, so the ACME challenge for a NEW name
+    #    would have 404'd and certbot --webroot could never have issued for
+    #    junior.tinymachines.ai.
+    #  - The guards named hosts one at a time, so every name added later had to
+    #    be remembered here as well. $host covers them all.
+    location /.well-known/acme-challenge/ { root /var/www/html; }
+    location / { return 301 https://$host$request_uri; }
 }

@@ -1,145 +1,116 @@
-# junior moves to junior.tinymachines.ai
+# junior moved to junior.tinymachines.ai
 
-Option B, decided 2026-08-29. The app keeps its domain root, so **nothing inside
-junior changes**: no `root_path`, no template pass, no new failure modes. The
-whole move is a DNS record, a `server_name`, and a certificate.
+**Done 2026-08-29.** Option B: the app keeps its domain root, so nothing inside
+junior changed except the name it calls itself. DNS is served by BIND on this
+box, so the whole move happened here.
 
-The config is written and **parse-tested**, at
-`docs/junior/junior.conf.candidate`. It is **not installed**: PUBLIC's working
-agreement says an nginx change is a proposal, and this one cannot go in before
-the DNS exists anyway.
-
----
-
-## Two corrections to the first draft
-
-Both were wrong in the direction of more work, and both are worth recording.
-
-1. **The `$connection_upgrade` map already exists**, at `nginx.conf` line 14.
-   The draft said to add it. `junior.conf` simply never used it and hardcoded
-   `Connection "upgrade"` in two places; the candidate now uses the map. A
-   hardcoded upgrade declares every request an upgrade, including the ones that
-   are not, and those stall rather than fail.
-2. **No new vhost is needed.** junior's existing block already does the auth
-   gate, the PTY and the websocket. Option B adds one name to two
-   `server_name` lines.
+| | |
+|---|---|
+| `https://junior.tinymachines.ai/` | 200, the app |
+| `https://junior.isenbek.io/` | 200, unchanged |
+| `https://junior.bradley.io/` | 301, path preserved |
+| `junior.lan`, `junior.local` | unchanged, LAN only |
 
 ---
 
-## What the candidate changes
+## What was changed, in order
+
+**1. DNS — both views.** `tinymachines.ai` is split-horizon here: three BIND
+views (`localhost`, `internal`, `external`), with `internal` and `external`
+loading different zone files. A record added to only one would resolve for half
+the house.
 
 ```
-server_name junior.bradley.io junior.isenbek.io junior.lan junior.local;
-         -> junior.tinymachines.ai junior.isenbek.io junior.lan junior.local;
+/etc/bind/zones/tinymachines.ai.zone            junior IN A 104.11.127.142
+/etc/bind/zones/internal/tinymachines.ai.zone   junior IN A 13.0.0.252
 ```
 
-on both the `:443` and the `:80` block, plus:
+Serial `2026082002` to `2026082901` in both. `named-checkzone` before install,
+`rndc reload` after. **No AAAA**: the apex has none, and publishing one for a
+subdomain when the apex has none fails only for the users whose resolver prefers
+v6, intermittently.
 
-- a **new pair of blocks for `junior.bradley.io`** that serve nothing and 301 to
-  `https://junior.tinymachines.ai$request_uri`. They sit ahead of the app blocks,
-  and the old name is removed from those, so the app answers to exactly one
-  public identity.
-- the two hardcoded upgrade headers, fixed.
+Note `/etc/bind/named.conf.local` also declares this zone and **is not included
+by `named.conf`**. It is dead config. Editing it would have done nothing, which
+is the kind of thing that costs an afternoon.
 
-`junior.isenbek.io`, `junior.lan` and `junior.local` are untouched. Armando
-keeps reaching it on the LAN whether or not the public site is up, which is the
-point of them.
+**2. nginx.** `junior.bradley.io` swapped for `junior.tinymachines.ai` on the
+app's `:80` and `:443` blocks, and the old name given its own pair of blocks
+that serve nothing and 301. Two other fixes went in the same change:
+
+- **The hardcoded `Connection "upgrade"`**, twice, replaced with
+  `$connection_upgrade`. The map was already defined at `nginx.conf:14`; this
+  file simply never used it. A hardcoded upgrade declares every request an
+  upgrade, including the ones that are not, and those stall rather than fail.
+- **The `:80` block was certbot's generated form**: per-host `if` guards and a
+  final `return 404`. A server-level `return` runs in the rewrite phase and
+  short-circuits before any location is chosen, so the ACME challenge for a NEW
+  name would have 404'd and the certificate could never have been issued. It is
+  now a normal `location /.well-known/acme-challenge/` plus a `$host` redirect,
+  which also stops needing a new `if` per name.
+
+The webroot was proved before running certbot, by fetching a file placed in it.
+
+**3. Certificate.** One cert over all three names, so the old name's redirect no
+longer throws a mismatch on the way through:
+
+```bash
+certbot certonly --webroot -w /var/www/html --cert-name junior.isenbek.io \
+  -d junior.isenbek.io -d junior.tinymachines.ai -d junior.bradley.io --expand
+```
+
+`subjectAltName` now reads `junior.bradley.io, junior.isenbek.io,
+junior.tinymachines.ai`, and all three answer over TLS without `-k`.
+
+**4. The app's own name.** `JUNIOR_SITE` in `/etc/junior.env` pointed at the old
+host, so every page titled itself `junior.bradley.io` while living somewhere
+else. Now `junior.tinymachines.ai`; `junior-web` restarted.
 
 ---
 
-## Run it in this order
+## Backups
 
-The order matters: certbot has to answer an HTTP challenge on a name that
-resolves, and nginx will not start with a certificate path that does not exist.
+| | |
+|---|---|
+| `/etc/bind/backups/zones-tinymachines.ai.zone.bak-20260829-223203` | external zone |
+| `/etc/bind/backups/internal-tinymachines.ai.zone.bak-20260829-223203` | internal zone |
+| `/etc/nginx/backups/junior.conf.bak-20260829-223445` | vhost |
+| `/etc/junior.env.bak-*` | app env |
 
-**1. DNS — yours to do.** One record:
-
-| Type | Name | Value | TTL |
-|---|---|---|---|
-| A | `junior.tinymachines.ai` | `104.11.127.142` | 300 while you watch it |
-
-**No AAAA.** `tinymachines.ai` has no IPv6 address today, and publishing one for
-a subdomain when the apex has none is the trap that fails only for the users
-whose resolver prefers v6, intermittently, and looks like something else
-entirely. Match the apex or omit it.
-
-```bash
-dig +short junior.tinymachines.ai @8.8.8.8    # wait for 104.11.127.142
-```
-
-**2. Install the config, HTTP only.** The `:443` block references a certificate
-that does not exist yet, so bring the name up on port 80 first:
-
-```bash
-sudo cp /etc/nginx/sites-enabled/junior.conf \
-        /etc/nginx/backups/junior.conf.bak-$(date +%Y%m%d-%H%M%S)
-sudo cp docs/junior/junior.conf.candidate /etc/nginx/sites-enabled/junior.conf
-# Temporarily drop junior.tinymachines.ai from the :443 server_name, leaving it
-# on :80, so nginx starts without the cert.
-sudo nginx -t && sudo systemctl reload nginx
-```
-
-**3. Extend the certificate.** One cert covering every name junior answers to,
-including the old one so its redirect stops throwing a name mismatch:
-
-```bash
-sudo certbot certonly --webroot -w /var/www/html \
-  --cert-name junior.isenbek.io \
-  -d junior.isenbek.io -d junior.tinymachines.ai -d junior.bradley.io
-```
-
-**4. Put the name back on `:443`** and reload:
-
-```bash
-sudo nginx -t && sudo systemctl reload nginx
-```
+Rolling back is a `cp` and a reload in each case. The DNS record can stay
+either way: a name resolving to a host with no vhost falls through to the
+default server.
 
 ---
 
-## Then check the part curl cannot
+## Not verified, and it needs a human
 
-```bash
-curl -sI https://junior.tinymachines.ai/  | head -3   # 200
-curl -sI https://junior.bradley.io/       | head -3   # 301 to the new name
-curl -sI http://junior.bradley.io/        | head -3   # 301 as well
-```
+**The terminal.** `/ws` and `/pty` sit behind the auth gate, so an
+unauthenticated probe gets the gate's 302 rather than an upgrade. That confirms
+the gate still fires under the new name, and nothing more. A websocket that
+fails to upgrade returns a perfectly healthy 200 on the page hosting it: the
+console will look right and simply never produce a prompt.
 
-Then **open the console and confirm the terminal attaches.** The PTY is a
-websocket, and a websocket that fails to upgrade returns a perfectly healthy
-200 on the page hosting it. The page will look right and the terminal will
-simply never produce a prompt. That is the whole reason the upgrade header was
-worth fixing in the same change.
+**Open the console and confirm it attaches.** That is the one check curl cannot
+stand in for, and it is exactly what the upgrade-header fix above was for.
 
 ---
 
-## Rolling back
+## Still saying the old name
 
-```bash
-sudo cp /etc/nginx/backups/junior.conf.bak-<stamp> /etc/nginx/sites-enabled/junior.conf
-sudo nginx -t && sudo systemctl reload nginx
-```
-
-The DNS record can stay: a name that resolves to a host with no vhost for it
-falls through to the default server, which is not an outage for anything else.
+Ten files in `~/projects/junior` mention `junior.bradley.io` in prose:
+`README.md`, `START-HERE.md`, `CLAUDE.md`, `server/mcp.py` (an example
+`claude mcp add` command), `terminal/README.md`, and five docs under `docs/`.
+None of them affect what runs. `server/mcp.py` is the one worth fixing soon,
+because it is an instruction someone will copy.
 
 ---
 
-## Already done, and needing nothing from you
+## Also done, elsewhere
 
 - **The 3D entropy views** are live at `tinymachines.ai/hotbits/space`, reading
-  `/random/archive` and `/metrics` on `hotbits.tinymachines.ai`. Both are open
-  and neither draws on the fresh pool.
+  `/random/archive` and `/metrics` on `hotbits.tinymachines.ai`. Neither draws
+  on the fresh pool.
 - **`bradley.io/trng/space`** 308s there; its components are deleted.
 - **`/lab` is retired**, the Meatball field notes moved to `/meatball/notes/*`,
   and `/projects` is down to three with 296 dossier redirects.
-
-None of those needed an nginx change.
-
-## Why this was the better option
-
-`tinymachines.ai/junior` would have meant a `root_path` argument, a pass over 16
-root-absolute template paths, and a new class of bug where a junior asset
-resolves against the tinymachines site. PUBLIC's own CLAUDE.md notes that the
-subdomains **stay for now and move under the apex later**, with a redirect map at
-the move. junior joins that queue and moves once, with everything else, instead
-of twice.
