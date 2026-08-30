@@ -10,7 +10,7 @@ import { readFileSync } from 'node:fs'
  */
 function retiredDossierRedirects() {
   const KEPT = new Set([
-    'turfy', 'prime-orchestra', 'prime-zoo', 'prime-atlas',
+    'prime-orchestra', 'prime-zoo', 'prime-atlas',
     'zeta-forge', 'storm-plates', 'critical-collapse',
     // Already redirected to /work above; listing them here would duplicate.
     'isenbek', 'tinymachines', 'nominate-ai', 'sysforge-ai',
@@ -103,6 +103,10 @@ const nextConfig = {
       { source: '/projects/tinymachines', destination: '/work', permanent: true },
       { source: '/projects/nominate-ai', destination: '/work', permanent: true },
       { source: '/projects/sysforge-ai', destination: '/work', permanent: true },
+
+      // Turfy was retired from the site on 2026-08-30. The irrigation sidecar
+      // still exists; the write-up about it does not.
+      { source: '/projects/turfy', destination: '/projects', permanent: true },
 
       // The 236 retired per-repository dossiers, named one by one.
       //

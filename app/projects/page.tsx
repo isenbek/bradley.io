@@ -92,9 +92,8 @@ export default function ProjectsPage() {
           <Link href="/projects/prime-zoo">Prime Zoo</Link>,{" "}
           <Link href="/projects/prime-atlas">Prime Atlas</Link>,{" "}
           <Link href="/projects/critical-collapse">Critical Collapse</Link>,{" "}
-          <Link href="/projects/zeta-forge">Zeta Forge</Link>,{" "}
-          <Link href="/projects/storm-plates">Storm Plates</Link> and{" "}
-          <Link href="/projects/turfy">Turfy</Link> are all still where they were.
+          <Link href="/projects/zeta-forge">Zeta Forge</Link> and{" "}
+          <Link href="/projects/storm-plates">Storm Plates</Link> are all still where they were.
         </p>
       </div>
     </div>

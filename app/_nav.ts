@@ -99,7 +99,6 @@ const KIT_EXTRA = [
   "/meatball/notes/senses",
   "/meatball/notes/listening",
   "/meatball/notes/motion",
-  "/projects/turfy",
   "/projects/prime-orchestra",
   "/projects/prime-zoo",
   "/projects/prime-atlas",
