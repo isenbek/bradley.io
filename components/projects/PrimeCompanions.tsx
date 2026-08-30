@@ -1,6 +1,5 @@
 import Link from "next/link"
 import { ArrowRight, Hammer, Map, Microscope, Sigma, Waves } from "lucide-react"
-import { V3Reveal } from "@/components/v3/V3Reveal"
 
 /**
  * The PRIMALITY instruments cross-link to each other. Each page renders this
@@ -48,26 +47,22 @@ export function PrimeCompanions({ current }: { current: string }) {
   const others = INSTRUMENTS.filter((i) => i.slug !== current)
 
   return (
-    <section className="v3-section" style={{ paddingTop: 8, paddingBottom: 48 }}>
-      <div className="v3-wrap">
-        {others.map(({ slug, Icon, title, blurb }, i) => (
-          <V3Reveal key={slug} delay={i * 60}>
-            <Link
-              href={`/projects/${slug}`}
-              className="v3-air-promo"
-              style={i ? { marginTop: 14 } : undefined}
-            >
-              <span className="v3-air-promo__ico"><Icon size={20} strokeWidth={2.2} /></span>
-              <span className="v3-air-promo__body">
-                <span className="v3-air-promo__eyebrow">companion instrument</span>
-                <span className="v3-air-promo__title">{title}</span>
-                <span className="v3-air-promo__blurb">{blurb}</span>
-              </span>
-              <span className="v3-air-promo__right">
-                <ArrowRight className="v3-air-promo__arrow" size={18} strokeWidth={2.4} />
-              </span>
-            </Link>
-          </V3Reveal>
+    <section className="beta-note-sec" style={{ paddingTop: 8, paddingBottom: 48 }}>
+      <div className="beta-promo-stack">
+        {others.map(({ slug, Icon, title, blurb }) => (
+          <Link key={slug} href={`/projects/${slug}`} className="beta-promo">
+            <span className="beta-promo__ico">
+              <Icon size={20} strokeWidth={2.2} />
+            </span>
+            <span className="beta-promo__body">
+              <span className="beta-promo__eyebrow">companion instrument</span>
+              <span className="beta-promo__title">{title}</span>
+              <span className="beta-promo__blurb">{blurb}</span>
+            </span>
+            <span className="beta-promo__right">
+              <ArrowRight className="beta-promo__arrow" size={18} strokeWidth={2.4} />
+            </span>
+          </Link>
         ))}
       </div>
     </section>

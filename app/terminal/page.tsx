@@ -20,12 +20,13 @@ export default function TerminalPage() {
       </p>
 
       {/* PERMANENT ISLAND, decided 2026-08-30.
-          Every other instrument was ported off v3; this one is not going to be.
-          A terminal that adopts the page's serif prose and paper ground stops
-          reading as a terminal, and reading as a terminal is the entire job of
-          this component. The seam here is the design, not unfinished work.
-          See .kit-island in app/kit.css. */}
-      <div className="v3 kit-island">
+          Every other instrument was ported to the kit; this one is not going to
+          be. A terminal that adopts the page's serif prose and paper ground
+          stops reading as a terminal, and reading as a terminal is the entire
+          job of this component. The seam here is the design, not unfinished
+          work. Its styles live in app/terminal.css, loaded by this route's
+          layout and nowhere else. */}
+      <div className="term-island">
         <V3Terminal />
       </div>
     </div>

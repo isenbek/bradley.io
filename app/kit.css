@@ -1663,3 +1663,93 @@ body:has(.beta-root) {
 .beta-gps-lg--gps { background: var(--color-glass); box-shadow: 0 0 0 2px var(--color-ocean); }
 .beta-gps-lg--me { background: var(--color-mustard); box-shadow: 0 0 0 2px var(--color-burnt); margin-left: calc(var(--u) * 1.5); }
 .beta-gps-lg__gap { margin-left: var(--u); padding-left: calc(var(--u) * 2); border-left: 1px solid var(--color-rule-panel); color: var(--color-glass-muted); }
+
+/* ==========================================================================
+   COMPANION LINK CARDS + INSTRUMENT EMBEDS
+
+   The last two families off v3.css. Both were carried by top-level .v3-* rules
+   that happened to keep working after their pages moved to the kit, which is
+   exactly the kind of thing that only shows up when the old stylesheet is
+   finally deleted.
+   ========================================================================== */
+
+/* A link to a sibling instrument. On paper, because it is a piece of the
+   document pointing elsewhere, not a readout. The old version was a blue
+   gradient card with four colour variants; only the base was still in use, and
+   the accent now comes from the one --color-accent knob a section already
+   turns rather than from a variant class per colour. */
+.beta-promo {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--u) * 4);
+  padding: calc(var(--u) * 4) calc(var(--u) * 5);
+  border-radius: var(--radius-mod);
+  background: var(--color-paper);
+  border: 1px solid var(--color-rule);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.2s, transform 0.2s;
+}
+.beta-promo:hover { border-color: var(--color-accent, var(--color-ocean)); transform: translateY(-1px); }
+@media (prefers-reduced-motion: reduce) { .beta-promo:hover { transform: none; } }
+.beta-promo__ico {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; flex-shrink: 0;
+  border-radius: var(--radius-mod);
+  background: var(--color-panel);
+  color: var(--color-accent, var(--color-ocean));
+}
+.beta-promo__body { display: flex; flex-direction: column; gap: 2px; min-width: 0; flex: 1; }
+.beta-promo__eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro); font-weight: 600;
+  letter-spacing: var(--tracking-caps); text-transform: uppercase;
+  color: var(--color-accent-ink, var(--color-ink-muted));
+}
+.beta-promo__title { font-weight: 700; font-size: var(--text-prose); color: var(--color-ink); line-height: 1.2; }
+.beta-promo__blurb { font-size: var(--text-body); color: var(--color-ink-muted); line-height: 1.45; }
+.beta-promo__right { display: flex; align-items: center; gap: calc(var(--u) * 3.5); flex-shrink: 0; }
+.beta-promo__arrow { color: var(--color-ink-muted); }
+.beta-promo:hover .beta-promo__arrow { color: var(--color-accent, var(--color-ocean)); }
+
+/* A self-contained single-file instrument in a self-sizing iframe. Panel
+   ground: what is inside is a running machine, not a document. */
+.beta-po-embed {
+  border: 1px solid var(--color-rule-panel);
+  border-radius: var(--radius-mod);
+  overflow: hidden;
+  background: var(--color-panel-sunk);
+  line-height: 0;
+}
+.beta-po-embed iframe { display: block; width: 100%; border: 0; background: var(--color-panel-sunk); }
+/* Full-viewport instruments (the atlas) size themselves to the frame rather
+   than reporting a document height, so the height is viewport-relative here. */
+.beta-po-embed--fixed iframe { height: min(80vh, 800px); min-height: 500px; }
+@media (max-width: 720px) { .beta-po-embed--fixed iframe { height: min(70vh, 560px); min-height: 420px; } }
+/* The promos used to space themselves with an inline marginTop on every card
+   after the first. A gap does the same thing without a style prop per item. */
+.beta-promo-stack { display: grid; gap: calc(var(--u) * 3.5); }
+
+/* The light/dark switch, moved out of the retired v3 masthead into the kit's.
+   40px square because that is the tap-target floor, and it sits next to the
+   menu button rather than inside the menu: a theme switch you have to open a
+   menu to reach is a theme switch nobody finds. */
+.beta-theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-hair);
+  color: var(--color-ink-muted);
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.beta-theme-toggle:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent-ink);
+}
+/* Placeholder until mounted, so the SSR and client markup match. */
+.beta-theme-toggle__ph { width: 16px; height: 16px; display: block; }

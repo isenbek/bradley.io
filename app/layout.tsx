@@ -1,7 +1,5 @@
 import type { Metadata } from "next"
-import localFont from "next/font/local"
 import "./globals.css"
-import "./v3.css"
 // bradley.io's own rules for the kit routes. Loaded here because the layout that
 // used to import it (app/beta/layout.tsx) went away at the cutover: the kit
 // routes no longer share a path prefix, so there is no nested layout to hang it
@@ -11,71 +9,14 @@ import "./kit.css"
 import { SiteChrome } from "@/components/SiteChrome"
 import { RegisterSW } from "@/components/pwa/RegisterSW"
 
-// ─── FONTS ARE VENDORED LOCALLY ────────────────────────────────────────────
-// These were next/font/google until 2026-08-15, when Turbopack's Google-font
-// resolution started failing intermittently — three build failures in an hour,
-// each only clearable with `rm -rf .next/cache`, and one of them took the live
-// stylesheet down. A build that reaches out to Google every time is a build
-// that fails whenever Google, DNS, or a cache feels like it. Anti-Cloud, Host
-// Local: the font files now live in app/fonts/ and the build touches nothing
-// off this machine.
+// Fonts come from the vendored style kit (app/beta/kit/fonts.css): Archivo
+// plus IBM Plex Sans/Mono/Serif, self-hosted, @imported via globals.css.
 //
-// All four are VARIABLE fonts, so one file per family covers every weight —
-// hence the `weight: "min max"` ranges rather than a list.
-//
-// To refresh a family: scripts/vendor-fonts.sh
-
-// Bricolage (display) — h1, hero text, big numbers. Brand-critical.
-// `swap` so the webfont always wins.
-const display = localFont({
-  src: "./fonts/bricolage.woff2",
-  weight: "200 800",
-  variable: "--font-v3-display",
-  display: "swap",
-  adjustFontFallback: "Arial",
-})
-
-// Hanken (body) — used for paragraphs, lede, prose. The LCP element on
-// most pages is a body-font <p>. Using `optional` so Lighthouse measures
-// LCP at fallback render (instant after FCP) rather than waiting for the
-// webfont swap. With `adjustFontFallback: true` (default), next/font writes
-// a size-adjust'd fallback @font-face so the layout doesn't shift if the
-// webfont does arrive. Slow-network users keep the fallback for the page
-// session — a 5% identity cost in exchange for ~Good LCP for everyone.
-const body = localFont({
-  src: "./fonts/hanken.woff2",
-  weight: "100 900",
-  variable: "--font-v3-body",
-  display: "optional",
-  // With a local font next/font can't read Google's metric metadata, so the
-  // fallback is metric-matched against Arial instead of the real face. Close
-  // enough for a grotesk of this proportion; the alternative is layout shift.
-  adjustFontFallback: "Arial",
-})
-
-// Baloo (logo) — only used on the bio·bradley.io wordmark; small surface
-// area, fine to keep on `optional`.
-const logo = localFont({
-  src: "./fonts/baloo2.woff2",
-  weight: "400 800",
-  variable: "--font-v3-logo",
-  display: "optional",
-  adjustFontFallback: "Arial",
-})
-
-// JetBrains Mono — used on monospace labels / numerals throughout the UI.
-// Visual character matters less than body / display, `optional` keeps it
-// off the LCP critical path.
-const mono = localFont({
-  src: "./fonts/jetbrains.woff2",
-  weight: "100 800",
-  variable: "--font-v3-mono",
-  display: "optional",
-  // Arial-based metric adjustment would be wrong for a monospace face — let
-  // the real monospace stack carry the fallback instead.
-  adjustFontFallback: false,
-  fallback: ["ui-monospace", "SFMono-Regular", "Menlo", "Consolas", "monospace"],
-})
+// Four next/font/local faces used to be declared here for the v3 design
+// (Bricolage, Hanken, Baloo, JetBrains Mono). v3.css is gone and nothing reads
+// --font-v3-* any more, so they were four fonts fetched on every page load for
+// no rendered glyph. The files are still in app/fonts/ if any of them is ever
+// wanted back; scripts/vendor-fonts.sh still refreshes them.
 
 export const metadata: Metadata = {
   title: {
@@ -157,7 +98,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable} ${logo.variable} ${mono.variable}`}>
+    <html lang="en">
       <head>
         {/* Set the theme before first paint — no flash. Reads the saved choice,
             else falls back to the OS preference. */}

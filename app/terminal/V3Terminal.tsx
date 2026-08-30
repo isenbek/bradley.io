@@ -28,12 +28,12 @@ const SUGGESTED = ["about", "skills", "projects", "repos", "experience", "contac
 function Help() {
   return (
     <div>
-      <div className="v3-term__accent">Available commands:</div>
+      <div className="term__accent">Available commands:</div>
       <div style={{ marginTop: 6 }}>
         {HELP_LINES.map(([cmd, desc]) => (
           <div key={cmd}>
-            <span className="v3-term__warn">{cmd.padEnd(12)}</span>
-            <span className="v3-term__mute">· {desc}</span>
+            <span className="term__warn">{cmd.padEnd(12)}</span>
+            <span className="term__mute">· {desc}</span>
           </div>
         ))}
       </div>
@@ -45,13 +45,13 @@ function About({ data }: { data: SiteData | null }) {
   const bio = data?.about?.bio
   return (
     <div>
-      <div className="v3-term__accent">bradley.io: frontier technologist</div>
-      <div className="v3-term__mute" style={{ marginTop: 6 }}>
+      <div className="term__accent">bradley.io: frontier technologist</div>
+      <div className="term__mute" style={{ marginTop: 6 }}>
         {bio || "loading bio…"}
       </div>
-      <div className="v3-term__mute" style={{ marginTop: 8, fontSize: "0.92em" }}>
-        Type <span className="v3-term__warn">skills</span> or{" "}
-        <span className="v3-term__warn">projects</span> for more.
+      <div className="term__mute" style={{ marginTop: 8, fontSize: "0.92em" }}>
+        Type <span className="term__warn">skills</span> or{" "}
+        <span className="term__warn">projects</span> for more.
       </div>
     </div>
   )
@@ -64,17 +64,17 @@ function Skills({ data }: { data: SiteData | null }) {
   for (let i = 0; i < skills.length; i += chunk) rows.push(skills.slice(i, i + chunk))
   return (
     <div>
-      <div className="v3-term__accent">Technical skills matrix:</div>
+      <div className="term__accent">Technical skills matrix:</div>
       <div style={{ marginLeft: 14, marginTop: 6 }}>
         {rows.map((row, i) => (
           <div key={i}>
-            <span className="v3-term__bullet">▸ </span>
-            <span className="v3-term__mute">{row.join(", ")}</span>
+            <span className="term__bullet">▸ </span>
+            <span className="term__mute">{row.join(", ")}</span>
           </div>
         ))}
       </div>
       {skills.length > 0 ? (
-        <div className="v3-term__mute" style={{ marginTop: 8 }}>
+        <div className="term__mute" style={{ marginTop: 8 }}>
           {skills.length} technologies · {data?.stats?.totalProjects ?? 0} projects
         </div>
       ) : null}
@@ -88,31 +88,31 @@ function Projects({ data }: { data: SiteData | null }) {
     .slice(0, 5)
 
   if (list.length === 0) {
-    return <div className="v3-term__mute">No featured projects loaded.</div>
+    return <div className="term__mute">No featured projects loaded.</div>
   }
 
   return (
     <div>
-      <div className="v3-term__accent">Featured projects:</div>
+      <div className="term__accent">Featured projects:</div>
       <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 10 }}>
         {list.map((p, i) => (
           <div key={p.slug} style={{ borderLeft: "2px solid rgba(255,255,255,0.18)", paddingLeft: 12 }}>
-            <div className="v3-term__warn">
+            <div className="term__warn">
               {i + 1}. {p.name}
             </div>
-            <div className="v3-term__mute" style={{ fontSize: "0.92em" }}>
+            <div className="term__mute" style={{ fontSize: "0.92em" }}>
               {p.description || p.tagline || "no description"}
             </div>
             {p.sources?.github ? (
-              <div className="v3-term__mute" style={{ fontSize: "0.88em" }}>
+              <div className="term__mute" style={{ fontSize: "0.88em" }}>
                 ▸ {p.sources.github.repo} ({p.sources.github.language})
               </div>
             ) : null}
           </div>
         ))}
       </div>
-      <div className="v3-term__mute" style={{ marginTop: 8 }}>
-        Try <span className="v3-term__warn">github</span> to open the profile.
+      <div className="term__mute" style={{ marginTop: 8 }}>
+        Try <span className="term__warn">github</span> to open the profile.
       </div>
     </div>
   )
@@ -120,25 +120,25 @@ function Projects({ data }: { data: SiteData | null }) {
 
 function Repos({ data }: { data: SiteData | null }) {
   const list = (data?.projects ?? []).filter((p) => p.sources?.github)
-  if (list.length === 0) return <div className="v3-term__mute">No GitHub repos loaded.</div>
+  if (list.length === 0) return <div className="term__mute">No GitHub repos loaded.</div>
   return (
     <div>
-      <div className="v3-term__accent">GitHub repositories:</div>
-      <div className="v3-term__bullet" style={{ marginTop: 6 }}>
+      <div className="term__accent">GitHub repositories:</div>
+      <div className="term__bullet" style={{ marginTop: 6 }}>
         ▸ tinymachines & isenbek
       </div>
       <div style={{ marginLeft: 14, marginTop: 6, display: "flex", flexDirection: "column", gap: 8 }}>
         {list.slice(0, 6).map((p) => (
           <div key={p.slug} style={{ borderLeft: "2px solid rgba(255,255,255,0.14)", paddingLeft: 12 }}>
-            <div className="v3-term__accent">{p.sources.github!.repo}</div>
-            <div className="v3-term__mute" style={{ fontSize: "0.88em" }}>
+            <div className="term__accent">{p.sources.github!.repo}</div>
+            <div className="term__mute" style={{ fontSize: "0.88em" }}>
               {p.sources.github!.language} · ★ {p.sources.github!.stars} · pushed{" "}
               {p.sources.github!.lastPush}
             </div>
           </div>
         ))}
         {list.length > 6 ? (
-          <div className="v3-term__mute" style={{ fontSize: "0.9em" }}>
+          <div className="term__mute" style={{ fontSize: "0.9em" }}>
             +{list.length - 6} more repositories…
           </div>
         ) : null}
@@ -149,19 +149,19 @@ function Repos({ data }: { data: SiteData | null }) {
 
 function Experience({ data }: { data: SiteData | null }) {
   const tl = data?.about?.timeline ?? []
-  if (tl.length === 0) return <div className="v3-term__mute">No timeline loaded.</div>
+  if (tl.length === 0) return <div className="term__mute">No timeline loaded.</div>
   return (
     <div>
-      <div className="v3-term__accent">Professional experience timeline:</div>
+      <div className="term__accent">Professional experience timeline:</div>
       <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 10 }}>
         {tl.map((e) => (
-          <div key={e.year} className="v3-term__tl-row">
-            <div className="v3-term__accent" style={{ fontSize: "0.9em" }}>
+          <div key={e.year} className="term__tl-row">
+            <div className="term__accent" style={{ fontSize: "0.9em" }}>
               {e.year}
             </div>
             <div>
-              <div className="v3-term__warn">{e.title}</div>
-              <div className="v3-term__mute" style={{ fontSize: "0.9em" }}>
+              <div className="term__warn">{e.title}</div>
+              <div className="term__mute" style={{ fontSize: "0.9em" }}>
                 {e.description}
               </div>
             </div>
@@ -175,15 +175,15 @@ function Experience({ data }: { data: SiteData | null }) {
 function Contact() {
   return (
     <div>
-      <div className="v3-term__accent">Contact:</div>
+      <div className="term__accent">Contact:</div>
       <div style={{ marginLeft: 14, marginTop: 6 }}>
-        <div>email   <span className="v3-term__warn">brad@bradley.io</span></div>
-        <div>github  <span className="v3-term__warn">github.com/isenbek</span></div>
-        <div>lab     <span className="v3-term__warn">github.com/tinymachines</span></div>
-        <div>where   <span className="v3-term__warn">Grand Rapids, MI</span></div>
-        <div>book    <span className="v3-term__warn">bradley.io/v3/contact</span></div>
+        <div>email   <span className="term__warn">brad@bradley.io</span></div>
+        <div>github  <span className="term__warn">github.com/isenbek</span></div>
+        <div>lab     <span className="term__warn">github.com/tinymachines</span></div>
+        <div>where   <span className="term__warn">Grand Rapids, MI</span></div>
+        <div>book    <span className="term__warn">bradley.io/v3/contact</span></div>
       </div>
-      <div className="v3-term__mute" style={{ marginTop: 8 }}>
+      <div className="term__mute" style={{ marginTop: 8 }}>
         Reply window: about 24h on weekdays.
       </div>
     </div>
@@ -192,31 +192,31 @@ function Contact() {
 
 function Ls() {
   return (
-    <div className="v3-term__mute">
-      <span className="v3-term__accent">drwxr-xr-x</span>  experience/
+    <div className="term__mute">
+      <span className="term__accent">drwxr-xr-x</span>  experience/
       {"\n"}
-      <span className="v3-term__accent">drwxr-xr-x</span>  projects/
+      <span className="term__accent">drwxr-xr-x</span>  projects/
       {"\n"}
-      <span className="v3-term__accent">drwxr-xr-x</span>  skills/
+      <span className="term__accent">drwxr-xr-x</span>  skills/
       {"\n"}
-      <span className="v3-term__accent">drwxr-xr-x</span>  lab/
+      <span className="term__accent">drwxr-xr-x</span>  lab/
       {"\n"}
-      <span className="v3-term__accent">-rw-r--r--</span>  resume.pdf
+      <span className="term__accent">-rw-r--r--</span>  resume.pdf
       {"\n"}
-      <span className="v3-term__accent">-rw-r--r--</span>  contact.txt
+      <span className="term__accent">-rw-r--r--</span>  contact.txt
       {"\n"}
-      <span className="v3-term__accent">-rw-r--r--</span>  README.md
+      <span className="term__accent">-rw-r--r--</span>  README.md
     </div>
   )
 }
 
 function Whoami() {
   return (
-    <div className="v3-term__mute">
-      <span className="v3-term__prompt">$</span> whoami
+    <div className="term__mute">
+      <span className="term__prompt">$</span> whoami
       {"\n"}bradley
       {"\n\n"}
-      <span className="v3-term__prompt">$</span> groups
+      <span className="term__prompt">$</span> groups
       {"\n"}data-engineers ai-pilots edge-hackers iot-builders frontier-technologists
     </div>
   )
@@ -245,9 +245,9 @@ export function V3Terminal() {
         input: "",
         output: (
           <div>
-            <div className="v3-term__accent">bradley.io · interactive terminal</div>
-            <div className="v3-term__mute" style={{ marginTop: 4 }}>
-              Type <span className="v3-term__warn">help</span> for a list of commands, or use the
+            <div className="term__accent">bradley.io · interactive terminal</div>
+            <div className="term__mute" style={{ marginTop: 4 }}>
+              Type <span className="term__warn">help</span> for a list of commands, or use the
               chips below.
             </div>
           </div>
@@ -303,18 +303,18 @@ export function V3Terminal() {
         setEntries([])
         return
       case "resume":
-        out = <div className="v3-term__mute">opening resume.pdf…</div>
+        out = <div className="term__mute">opening resume.pdf…</div>
         setTimeout(() => window.open("/resume.pdf", "_blank"), 400)
         break
       case "github":
-        out = <div className="v3-term__mute">opening github.com/isenbek…</div>
+        out = <div className="term__mute">opening github.com/isenbek…</div>
         setTimeout(() => window.open("https://github.com/isenbek", "_blank"), 400)
         break
       case "linkedin":
         out = (
-          <div className="v3-term__mute">
-            I&apos;m not on LinkedIn. Try <span className="v3-term__warn">github</span> or{" "}
-            <span className="v3-term__warn">contact</span>.
+          <div className="term__mute">
+            I&apos;m not on LinkedIn. Try <span className="term__warn">github</span> or{" "}
+            <span className="term__warn">contact</span>.
           </div>
         )
         break
@@ -323,23 +323,23 @@ export function V3Terminal() {
         else if (parts[1] === "readme.md") out = <Help />
         else if (parts[1] === "resume.pdf")
           out = (
-            <div className="v3-term__mute">
-              binary file. Try <span className="v3-term__warn">resume</span> instead.
+            <div className="term__mute">
+              binary file. Try <span className="term__warn">resume</span> instead.
             </div>
           )
         else
           out = (
-            <div className="v3-term__mute">
+            <div className="term__mute">
               cat: {parts[1] || "missing filename"}: no such file or directory
             </div>
           )
         break
       default:
         out = (
-          <div className="v3-term__mute">
+          <div className="term__mute">
             command not found:{" "}
-            <span className="v3-term__warn">{base}</span>. type{" "}
-            <span className="v3-term__warn">help</span>.
+            <span className="term__warn">{base}</span>. type{" "}
+            <span className="term__warn">help</span>.
           </div>
         )
     }
@@ -382,36 +382,36 @@ export function V3Terminal() {
   }
 
   return (
-    <div className="v3-term" onClick={() => inputRef.current?.focus()}>
-      <div className="v3-term__chrome">
-        <div className="v3-term__dots">
-          <span className="v3-term__dot v3-term__dot--r" />
-          <span className="v3-term__dot v3-term__dot--y" />
-          <span className="v3-term__dot v3-term__dot--g" />
+    <div className="term" onClick={() => inputRef.current?.focus()}>
+      <div className="term__chrome">
+        <div className="term__dots">
+          <span className="term__dot term__dot--r" />
+          <span className="term__dot term__dot--y" />
+          <span className="term__dot term__dot--g" />
         </div>
-        <div className="v3-term__title">bradley@io ─ ~/portfolio</div>
-        <div className="v3-term__live">
+        <div className="term__title">bradley@io ─ ~/portfolio</div>
+        <div className="term__live">
           <span aria-hidden /> live
         </div>
       </div>
 
-      <div ref={scrollRef} className="v3-term__screen">
+      <div ref={scrollRef} className="term__screen">
         {entries.map((entry, i) => (
-          <div key={i} className="v3-term__entry">
+          <div key={i} className="term__entry">
             {entry.input ? (
-              <div className="v3-term__line">
-                <span className="v3-term__prompt">bradley@io:~$</span>
-                <span className="v3-term__user">{entry.input}</span>
+              <div className="term__line">
+                <span className="term__prompt">bradley@io:~$</span>
+                <span className="term__user">{entry.input}</span>
               </div>
             ) : null}
-            <div className="v3-term__line">{entry.output}</div>
+            <div className="term__line">{entry.output}</div>
           </div>
         ))}
 
-        <div className="v3-term__line">
-          <span className="v3-term__prompt">bradley@io:~$</span>
-          <span className="v3-term__user">{input}</span>
-          <span className="v3-term__cursor" aria-hidden />
+        <div className="term__line">
+          <span className="term__prompt">bradley@io:~$</span>
+          <span className="term__user">{input}</span>
+          <span className="term__cursor" aria-hidden />
         </div>
 
         {/* Hidden real input — captures focus and keystrokes */}
@@ -436,15 +436,15 @@ export function V3Terminal() {
         />
       </div>
 
-      <div className="v3-term__hint">
+      <div className="term__hint">
         <div>
           Try:
-          <span className="v3-term__suggest" style={{ marginLeft: 8, display: "inline-flex" }}>
+          <span className="term__suggest" style={{ marginLeft: 8, display: "inline-flex" }}>
             {SUGGESTED.map((c) => (
               <button
                 key={c}
                 type="button"
-                className="v3-term__chip"
+                className="term__chip"
                 onClick={() => {
                   run(c)
                   inputRef.current?.focus()

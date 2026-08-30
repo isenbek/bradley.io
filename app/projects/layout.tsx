@@ -42,7 +42,7 @@ export default function V3ProjectsLayout({ children }: { children: React.ReactNo
           }),
         }}
       />
-      <div className="v3-projects">{children}</div>
+      {children}
     </>
   )
 }

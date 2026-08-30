@@ -217,9 +217,12 @@
   --color-sf-error: var(--brand-error);
   --color-sf-info: var(--brand-info);
 
-  /* Fonts */
-  --font-display: var(--font-family-display, 'Outfit', system-ui, sans-serif);
-  --font-mono: var(--font-family-mono, 'JetBrains Mono', monospace);
+  /* Fonts: DELIBERATELY NOT SET HERE.
+     These used to declare Outfit and JetBrains Mono. Because CSS hoists
+     @import, they landed after the kit's tokens and overrode --font-display and
+     --font-mono on every page. Outfit was never actually loaded, so the kit's
+     headings had been silently falling back to system-ui rather than rendering
+     in Archivo. The kit owns both tokens now; see app/beta/kit/tokens.css. */
 
   /* Custom font size */
   --font-size-stat: 2.5rem;

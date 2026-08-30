@@ -37,7 +37,7 @@ export function ProjectEmbed({
   }, [fixed])
 
   return (
-    <div className={fixed ? "v3-po-embed v3-po-embed--fixed" : "v3-po-embed"}>
+    <div className={fixed ? "beta-po-embed beta-po-embed--fixed" : "beta-po-embed"}>
       <iframe
         src={src}
         title={title}

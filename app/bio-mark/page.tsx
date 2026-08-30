@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { BioMarkFrame } from "@/components/v3/BioMarkFrame"
+import { BioMarkFrame } from "@/components/kit/BioMarkFrame"
 
 // The bio·mark vector x-ray is a fully self-contained interactive HTML doc
 // (embedded geometry, vanilla JS + inline SVG) served from public/bio-mark.html.
