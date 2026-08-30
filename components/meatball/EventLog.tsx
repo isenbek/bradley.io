@@ -13,10 +13,10 @@ interface Ev {
 
 function Thumb({ img, label }: { img: string; label: string }) {
   const [ok, setOk] = useState(true)
-  if (!img || !ok) return <div className="v3-log__thumb v3-log__thumb--missing">no preview</div>
+  if (!img || !ok) return <div className="beta-log__thumb beta-log__thumb--missing">no preview</div>
   return (
     <img
-      className="v3-log__thumb"
+      className="beta-log__thumb"
       src={`/event-thumb.jpg?f=${encodeURIComponent(img)}`}
       alt={label}
       loading="lazy"
@@ -64,7 +64,7 @@ export function EventLog() {
 
   if (loaded && events.length === 0) {
     return (
-      <div className="v3-log__empty">
+      <div className="beta-log__empty">
         Nothing logged yet. The cameras have been still. Walk past one and Meatball will note what
         it saw, right here.
       </div>
@@ -73,17 +73,17 @@ export function EventLog() {
 
   return (
     <>
-      <ol className="v3-log">
+      <ol className="beta-log">
         {pager.slice.map((e, i) => (
-          <li key={`${e.ts}-${i}`} className="v3-log__row">
+          <li key={`${e.ts}-${i}`} className="beta-log__row">
             <Thumb img={e.img} label={e.label} />
-            <div className="v3-log__body">
-              <div className="v3-log__label">👁 {e.label}</div>
-              <div className="v3-log__meta">
+            <div className="beta-log__body">
+              <div className="beta-log__label">👁 {e.label}</div>
+              <div className="beta-log__meta">
                 {e.cam} · Δ {Number(e.delta).toFixed(1)} · {ago(e.ts)}
               </div>
             </div>
-            <time className="v3-log__time" dateTime={e.ts}>
+            <time className="beta-log__time" dateTime={e.ts}>
               {new Date(e.ts).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
             </time>
           </li>

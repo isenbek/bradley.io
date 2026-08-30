@@ -42,20 +42,20 @@ export function Pager({
   const from = page * perPage + 1
   const to = Math.min(total, page * perPage + perPage)
   return (
-    <div className="v3-pager">
+    <div className="beta-pager">
       <button
-        className="v3-pager__btn"
+        className="beta-pager__btn"
         onClick={() => onPage(page - 1)}
         disabled={page <= 0}
         aria-label="previous page"
       >
         ‹ prev
       </button>
-      <span className="v3-pager__count">
+      <span className="beta-pager__count">
         {from}–{to} of {total} {unit} · page {page + 1}/{pageCount}
       </span>
       <button
-        className="v3-pager__btn"
+        className="beta-pager__btn"
         onClick={() => onPage(page + 1)}
         disabled={page >= pageCount - 1}
         aria-label="next page"

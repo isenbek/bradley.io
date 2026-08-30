@@ -77,51 +77,51 @@ export function Greeter() {
   const phase = status ? PHASE[status.state] : ""
 
   return (
-    <div className="v3-greet">
-      <div className="v3-greet__row">
-        <button className="v3-greet__btn" onClick={sayHi} disabled={busy || live}>
-          <span className="v3-greet__wave" aria-hidden>
+    <div className="beta-greet">
+      <div className="beta-greet__row">
+        <button className="beta-greet__btn" onClick={sayHi} disabled={busy || live}>
+          <span className="beta-greet__wave" aria-hidden>
             👋
           </span>
           {live ? "introducing…" : "Introduce yourself"}
         </button>
         {live ? (
-          <span className="v3-greet__live">
-            <span className="v3-greet__pulse" aria-hidden />
+          <span className="beta-greet__live">
+            <span className="beta-greet__pulse" aria-hidden />
             {phase}
           </span>
         ) : null}
       </div>
 
       {result && !live ? (
-        <div className={`v3-greet__verdict${result.present ? " is-person" : " is-empty"}`}>
-          <span className="v3-greet__face" aria-hidden>
+        <div className={`beta-greet__verdict${result.present ? " is-person" : " is-empty"}`}>
+          <span className="beta-greet__face" aria-hidden>
             {result.present ? "🙂" : "🦗"}
           </span>
-          <div className="v3-greet__verdict-body">
+          <div className="beta-greet__verdict-body">
             <strong>
               {result.present ? "Probably a person" : "Probably nobody"}
               {result.trigger === "motion" ? (
-                <span className="v3-greet__trig">👁 saw movement, asked on its own</span>
+                <span className="beta-greet__trig">👁 saw movement, asked on its own</span>
               ) : null}
             </strong>
             {result.present && result.name ? (
-              <span className="v3-greet__name">
+              <span className="beta-greet__name">
                 nice to meet you, {result.name}
               </span>
             ) : null}
             {result.heard ? (
-              <span className="v3-greet__heard">
+              <span className="beta-greet__heard">
                 heard {result.mic ? `(${result.mic} mic)` : ""}: &ldquo;{result.heard}&rdquo;
               </span>
             ) : (
-              <span className="v3-greet__heard v3-greet__heard--quiet">no reply in the room</span>
+              <span className="beta-greet__heard beta-greet__heard--quiet">no reply in the room</span>
             )}
           </div>
         </div>
       ) : null}
 
-      <p className="v3-greet__note">
+      <p className="beta-greet__note">
         Meatball says hi through the Altec Lansings, then listens on the always-on mics. A reply →
         probably a person. Silence → probably not. It also does this on its own when the cameras
         catch someone, the simplest sensor there is.

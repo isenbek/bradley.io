@@ -37,11 +37,11 @@ function ago(ts: string): string {
 
 function Frame({ img, tag, variant }: { img?: string | null; tag: string; variant?: string }) {
   return (
-    <figure className={`v3-mem__frame${variant ? ` v3-mem__frame--${variant}` : ""}`}>
+    <figure className={`beta-mem__frame${variant ? ` beta-mem__frame--${variant}` : ""}`}>
       {img ? (
         <img src={`/moment-img.jpg?f=${encodeURIComponent(img)}`} alt={tag} loading="lazy" />
       ) : (
-        <div className="v3-mem__frame-missing">—</div>
+        <div className="beta-mem__frame-missing">—</div>
       )}
       <figcaption>{tag}</figcaption>
     </figure>
@@ -52,25 +52,25 @@ function MomentCard({ m }: { m: Moment }) {
   const isMotion = m.type === "motion"
   const title = isMotion ? m.label || "movement" : m.text || ""
   return (
-    <div className="v3-mem-card">
-      <div className="v3-mem-card__head">
-        <span className="v3-mem-card__icon">{isMotion ? "👁" : "🗣"}</span>
-        <span className="v3-mem-card__title">{isMotion ? title : `“${title}”`}</span>
-        <span className="v3-mem-card__meta">
+    <div className="beta-memcard">
+      <div className="beta-memcard__head">
+        <span className="beta-memcard__icon">{isMotion ? "👁" : "🗣"}</span>
+        <span className="beta-memcard__title">{isMotion ? title : `“${title}”`}</span>
+        <span className="beta-memcard__meta">
           {isMotion ? `${m.cam} · Δ${Number(m.delta ?? 0).toFixed(0)}` : `${m.mic} mic`} · {ago(m.ts)}
         </span>
       </div>
-      <div className={`v3-mem-card__strip${isMotion && m.diff_img ? " v3-mem-card__strip--4" : ""}`}>
+      <div className={`beta-memcard__strip${isMotion && m.diff_img ? " beta-memcard__strip--4" : ""}`}>
         <Frame img={m.before_img} tag="before" />
         <Frame img={m.during_img} tag={isMotion ? "motion" : "scene"} />
         {isMotion && m.diff_img ? <Frame img={m.diff_img} tag="subtracted" variant="diff" /> : null}
         <Frame img={m.after_img} tag="after" />
       </div>
       {m.correlated?.length ? (
-        <div className="v3-mem-card__corr">
-          <span className="v3-mem-card__corr-lead">↳ around it:</span>
+        <div className="beta-memcard__corr">
+          <span className="beta-memcard__corr-lead">↳ around it:</span>
           {m.correlated.map((c, i) => (
-            <span key={i} className="v3-mem-card__corr-item">
+            <span key={i} className="beta-memcard__corr-item">
               {c.type === "speech" ? `🗣 “${c.text}”` : `👁 ${c.label}`}
             </span>
           ))}
@@ -111,7 +111,7 @@ export function MemoryTimeline() {
 
   if (loaded && moments.length === 0) {
     return (
-      <div className="v3-log__empty">
+      <div className="beta-log__empty">
         No moments yet. Once motion or speech happens, the scene before &amp; after each event lands
         here, with anything heard or seen nearby lined up alongside it.
       </div>
@@ -120,7 +120,7 @@ export function MemoryTimeline() {
 
   return (
     <>
-      <div className="v3-mem">
+      <div className="beta-mem">
         {pager.slice.map((m) => (
           <MomentCard key={m.id} m={m} />
         ))}

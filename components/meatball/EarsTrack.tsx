@@ -37,36 +37,36 @@ function MicCard({ m }: { m: Mic }) {
   const mx = Math.max(...spec, mn + 1)
 
   return (
-    <div className="v3-ears-mic">
-      <div className="v3-ears-mic__head">
-        <span className="v3-ears-mic__name">{m.name}</span>
-        <span className={`v3-ears-mic__state${listening ? " is-on" : ""}`}>
-          <span className="v3-ears-mic__dot" aria-hidden />
+    <div className="beta-mic">
+      <div className="beta-mic__head">
+        <span className="beta-mic__name">{m.name}</span>
+        <span className={`beta-mic__state${listening ? " is-on" : ""}`}>
+          <span className="beta-mic__dot" aria-hidden />
           {listening ? "listening" : "idle"}
         </span>
       </div>
-      <div className="v3-ears-mic__meta">
+      <div className="beta-mic__meta">
         floor {m.baseline.toFixed(0)} · now {m.level.toFixed(0)} dBFS
       </div>
-      <div className="v3-ears-meter" title="level vs floor; mark = trigger threshold">
+      <div className="beta-meter" title="level vs floor; mark = trigger threshold">
         <div
-          className="v3-ears-meter__fill"
-          style={{ width: `${pct(m.level)}%`, background: listening ? "var(--v3-coral, #EE766C)" : "var(--v3-gold)" }}
+          className="beta-meter__fill"
+          style={{ width: `${pct(m.level)}%`, background: listening ? "var(--color-orange)" : "var(--color-mustard)" }}
         />
-        <div className="v3-ears-meter__thr" style={{ left: `${pct(m.baseline + 10)}%` }} />
+        <div className="beta-meter__thr" style={{ left: `${pct(m.baseline + 10)}%` }} />
       </div>
-      <div className="v3-ears-fft" aria-hidden>
+      <div className="beta-fft" aria-hidden>
         {spec.map((v, i) => (
           <span
             key={i}
-            className="v3-ears-fft__bar"
+            className="beta-fft__bar"
             style={{ height: `${Math.max(3, ((v - mn) / (mx - mn)) * 100)}%` }}
           />
         ))}
       </div>
       {m.last?.text ? (
-        <div className="v3-ears-mic__heard">
-          🗣 &ldquo;{m.last.text}&rdquo; <span className="v3-ears-mic__heard-ago">· {ago(m.last.ts)}</span>
+        <div className="beta-mic__heard">
+          🗣 &ldquo;{m.last.text}&rdquo; <span className="beta-mic__heard-ago">· {ago(m.last.ts)}</span>
         </div>
       ) : null}
     </div>
@@ -103,29 +103,29 @@ export function EarsTrack() {
 
   const feed = usePager(events, 10)
 
-  if (dead) return <div className="v3-motion__dead-box">mic listener offline</div>
+  if (dead) return <div className="beta-motion__dead-box">mic listener offline</div>
 
   return (
-    <div className="v3-ears">
-      <div className="v3-ears-grid">
+    <div className="beta-ears">
+      <div className="beta-ears-grid">
         {mics.map((m) => (
           <MicCard key={m.name} m={m} />
         ))}
       </div>
       {events.length ? (
-        <div className="v3-ears-feed">
-          <div className="v3-ears-feed__head">recent transcriptions</div>
+        <div className="beta-feed">
+          <div className="beta-feed__head">recent transcriptions</div>
           {feed.slice.map((e, i) => (
-            <div key={`${e.ts}-${i}`} className="v3-ears-feed__row">
-              <span className="v3-ears-feed__mic">{e.mic}</span>
-              <span className="v3-ears-feed__text">&ldquo;{e.text}&rdquo;</span>
-              <span className="v3-ears-feed__ago">{ago(e.ts)}</span>
+            <div key={`${e.ts}-${i}`} className="beta-feed__row">
+              <span className="beta-feed__mic">{e.mic}</span>
+              <span className="beta-feed__text">&ldquo;{e.text}&rdquo;</span>
+              <span className="beta-feed__ago">{ago(e.ts)}</span>
             </div>
           ))}
           <Pager {...feed} onPage={feed.setPage} unit="lines" />
         </div>
       ) : (
-        <p className="v3-motion-note">
+        <p className="beta-motion-note">
           no transcriptions yet. Speak near a mic and it&apos;ll trip the floor and land here
         </p>
       )}

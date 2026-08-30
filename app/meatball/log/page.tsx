@@ -23,9 +23,7 @@ export default function Page() {
         Every motion event, transcription and greeting the machine logged, newest first. Written as it happened, not summarised after.
       </p>
 
-      <div className="v3 kit-island">
         <EventLog />
-      </div>
     </div>
   )
 }

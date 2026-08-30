@@ -85,35 +85,25 @@ export default function MeatballPage() {
         cloud.
       </p>
 
-      {/* The live senses draw their own camera wells and meters. See
-          .kit-island in app/kit.css for why .v3 stays on these wrappers. */}
       <div className="prose beta-sec">
         <h2>What it can see right now</h2>
       </div>
-      <div className="v3 kit-island">
         <LiveEye />
-      </div>
 
       <div className="prose beta-sec">
         <h2>It can just ask</h2>
       </div>
-      <div className="v3 kit-island">
         <Greeter />
-      </div>
 
       <div className="prose beta-sec">
         <h2>It tracks its own motion</h2>
       </div>
-      <div className="v3 kit-island">
         <MotionTrack />
-      </div>
 
       <div className="prose beta-sec">
         <h2>Always-on ears</h2>
       </div>
-      <div className="v3 kit-island">
         <EarsTrack />
-      </div>
 
       <div className="prose beta-sec">
         <h2>Four cast-off parts, four working senses</h2>

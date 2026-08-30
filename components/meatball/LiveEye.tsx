@@ -21,10 +21,10 @@ export function LiveEye() {
   }, [])
 
   return (
-    <figure className="v3-meatball-eye">
-      <div className="v3-meatball-eye__frame">
+    <figure className="beta-eye">
+      <div className="beta-eye__frame">
         {dead ? (
-          <div className="v3-meatball-eye__dead">camera frame unavailable</div>
+          <div className="beta-eye__dead">camera frame unavailable</div>
         ) : (
           // eslint: project config doesn't enable @next/next/no-img-element; a
           // live, cache-busted endpoint is exactly what <img> is for here.
@@ -35,8 +35,8 @@ export function LiveEye() {
             onLoad={() => setDead(false)}
           />
         )}
-        <span className="v3-meatball-eye__live" aria-hidden>
-          <span className="v3-meatball-eye__dot" /> LIVE
+        <span className="beta-eye__live" aria-hidden>
+          <span className="beta-eye__dot" /> LIVE
         </span>
       </div>
       <figcaption>

@@ -24,9 +24,7 @@ export default function Page() {
         memory is a file on a salvaged drive, not a service.
       </p>
 
-      <div className="v3 kit-island">
         <MemoryTimeline />
-      </div>
     </div>
   )
 }

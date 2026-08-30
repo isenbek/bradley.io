@@ -71,31 +71,31 @@ function CamPanel({ cam, nonce }: { cam: Cam; nonce: number }) {
   const moving = cur > FLOOR
 
   return (
-    <div className="v3-motion-cam">
-      <div className="v3-motion-cam__head">
-        <span className="v3-motion-cam__name">{name}</span>
-        <span className="v3-motion-cam__peak">peak {max.toFixed(1)} · {deltas.length} samples</span>
+    <div className="beta-motioncam">
+      <div className="beta-motioncam__head">
+        <span className="beta-motioncam__name">{name}</span>
+        <span className="beta-motioncam__peak">peak {max.toFixed(1)} · {deltas.length} samples</span>
       </div>
-      <div className="v3-motion-cam__imgs">
-        <div className="v3-motion__frame">
+      <div className="beta-motioncam__imgs">
+        <div className="beta-motion__frame">
           <img src={`/delta-frame.jpg?cam=${name}&t=${nonce}`} alt={`${name} camera frame with motion heatmap`} />
-          <canvas ref={canvasRef} className="v3-motion__heat" />
-          <span className={`v3-motion__badge${moving ? " is-moving" : ""}`}>
-            <span className="v3-motion__dot" aria-hidden />Δ {cur.toFixed(1)} · {moving ? "motion" : "still"}
+          <canvas ref={canvasRef} className="beta-motion__heat" />
+          <span className={`beta-motion__badge${moving ? " is-moving" : ""}`}>
+            <span className="beta-motion__dot" aria-hidden />Δ {cur.toFixed(1)} · {moving ? "motion" : "still"}
           </span>
           {cam.label?.label ? (
-            <span className="v3-motion__seen">
-              👁 {cam.label.label} <span className="v3-motion__seen-ago">· {ago(cam.label.ts)}</span>
+            <span className="beta-motion__seen">
+              👁 {cam.label.label} <span className="beta-motion__seen-ago">· {ago(cam.label.ts)}</span>
             </span>
           ) : null}
         </div>
-        <div className="v3-motion__frame">
+        <div className="beta-motion__frame">
           <img src={`/delta-diff.jpg?cam=${name}&t=${nonce}`} alt={`${name} subtracted difference image`} />
-          <span className="v3-motion__sublabel">subtracted</span>
+          <span className="beta-motion__sublabel">subtracted</span>
         </div>
       </div>
       {pts ? (
-        <svg className="v3-motion__curve" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden>
+        <svg className="beta-motion__curve" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden>
           <polyline points={pts} fill="none" />
         </svg>
       ) : null}
@@ -133,14 +133,14 @@ export function MotionTrack() {
     }
   }, [])
 
-  if (dead) return <div className="v3-motion__dead-box">motion tracker offline</div>
+  if (dead) return <div className="beta-motion__dead-box">motion tracker offline</div>
 
   return (
-    <div className="v3-motion-grid">
+    <div className="beta-motion-grid">
       {cams.map((c) => (
         <CamPanel key={c.name} cam={c} nonce={nonce} />
       ))}
-      <p className="v3-motion-note">
+      <p className="beta-motion-note">
         each camera, every ~10s · left = frame + heatmap (where it changed) · right = the raw
         subtraction · line = motion over time
       </p>
