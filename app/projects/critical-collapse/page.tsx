@@ -1,13 +1,5 @@
 import Link from "next/link"
-import {
-  ArrowLeft,
-  Orbit,
-  Sigma,
-  Activity,
-  MousePointerClick,
-  Telescope,
-} from "lucide-react"
-import { V3Reveal } from "@/components/v3/V3Reveal"
+import { Sigma, Activity, MousePointerClick, Telescope } from "lucide-react"
 import { ProjectEmbed } from "@/components/projects/ProjectEmbed"
 
 const NUMBERS = [
@@ -71,63 +63,28 @@ export default function CriticalCollapsePage() {
             <span aria-current="page">Critical Collapse</span>
           </span>
         </nav>
+        <h1>A black hole, forged on the knife edge</h1>
       </div>
 
-      {/* Long-form v3 body, kept as-is. See .kit-island in app/kit.css: the
-          chrome is the kit's, the content still carries its own styling. */}
-      <div className="v3 kit-island">
-<div className="v3-po">
+      <p className="lede">
+          Choptuik's 1993 result, running live on your device. A pulse of scalar field falls
+          together under its own gravity. Tuned just right, it hovers on the exact boundary
+          between dispersing back to flat space and collapsing to a black hole, and on that
+          boundary Einstein's equations do something nobody expected: they echo, and the mass
+          obeys a power law with a universal exponent. Nothing below is pre-rendered. Your
+          phone is integrating the field equations.
+      </p>
       {/* HEADER ========================================================= */}
-      <header className="v3-page-head" style={{ paddingBottom: 16 }}>
-        <div className="v3-blob v3-blob--2" aria-hidden style={{ right: "-70px", top: "-30px" }} />
-        <div className="v3-blob v3-blob--3" aria-hidden style={{ right: "180px", top: "220px" }} />
-
-        <div className="v3-wrap">
-          <div className="v3-page-head__lockup">
-            <V3Reveal>
-              <Link href="/projects" className="v3-air-back">
-                <ArrowLeft size={14} strokeWidth={2.4} /> back to projects
-              </Link>
-            </V3Reveal>
-            <V3Reveal>
-              <span
-                className="v3-pill v3-pill--coral"
-                style={{ padding: "8px 16px", fontSize: 13, display: "inline-flex", gap: 8, alignItems: "center" }}
-              >
-                <Orbit size={14} strokeWidth={2.25} />
-                numerical relativity · live GR
-              </span>
-            </V3Reveal>
-            <V3Reveal eager>
-              <h1>
-                A black hole, forged on the <span className="v3-accent">knife edge.</span>
-              </h1>
-            </V3Reveal>
-            <V3Reveal eager>
-              <p className="v3-page-head__lede">
-                Choptuik's 1993 result, running live on your device. A pulse of scalar field falls
-                together under its own gravity. Tuned just right, it hovers on the exact boundary
-                between dispersing back to flat space and collapsing to a black hole, and on that
-                boundary Einstein's equations do something nobody expected: they echo, and the mass
-                obeys a power law with a universal exponent. Nothing below is pre-rendered. Your
-                phone is integrating the field equations.
-              </p>
-            </V3Reveal>
-          </div>
-        </div>
-      </header>
 
       {/* THE INSTRUMENT ================================================= */}
-      <section className="v3-section" style={{ paddingTop: 6, paddingBottom: 10 }}>
-        <div className="v3-wrap">
-          <V3Reveal>
-            <ProjectEmbed
+      <section className="beta-note-sec" style={{ paddingTop: 6, paddingBottom: 10 }}>
+        <div >
+          <ProjectEmbed
               src="/critical-collapse.html"
               title="Choptuik Critical Collapse Lab: a live 1+1D numerical relativity solver"
               initialHeight={3200}
             />
-          </V3Reveal>
-          <p className="v3-po-cap">
+          <p className="quiet">
             One HTML file. An 800-point radial grid in the polar-areal gauge, SSP-RK3 in time, the
             two constraint ODEs re-solved fresh on every slice with Kreiss–Oliger dissipation for
             stability. Every line in the lab log is a genuine solve of Einstein's equations coupled
@@ -138,77 +95,63 @@ export default function CriticalCollapsePage() {
       </section>
 
       {/* THE TWO NUMBERS =============================================== */}
-      <section className="v3-section" style={{ paddingTop: 24 }}>
-        <div className="v3-wrap">
-          <V3Reveal>
-            <div className="v3-cardhead">
+      <section className="beta-note-sec" style={{ paddingTop: 24 }}>
+        <div >
+          <div className="beta-sechead">
               <Sigma size={18} strokeWidth={2.2} />
               <h2>Two numbers fall out of the edge</h2>
             </div>
-          </V3Reveal>
-          <div className="v3-po-grid">
-            {NUMBERS.map((c, i) => (
-              <V3Reveal key={c.k} delay={100 + i * 55}>
-                <div className="v3-po-card">
-                  <span className="v3-po-card__k">{c.k}</span>
+          <div className="piece-grid">
+            {NUMBERS.map((c) => (
+              <div className="rail" key={c.k}>
+                  <span className="beta-proj-k">{c.k}</span>
                   <h3>{c.title}</h3>
-                  <p className="v3-po-card__q">{c.q}</p>
+                  <p className="beta-proj-q">{c.q}</p>
                   <p>{c.body}</p>
                 </div>
-              </V3Reveal>
             ))}
           </div>
         </div>
       </section>
 
       {/* WHAT THE MACHINE DOES ========================================= */}
-      <section className="v3-section" style={{ paddingTop: 24 }}>
-        <div className="v3-wrap">
-          <V3Reveal>
-            <div className="v3-cardhead">
+      <section className="beta-note-sec" style={{ paddingTop: 24 }}>
+        <div >
+          <div className="beta-sechead">
               <Activity size={18} strokeWidth={2.2} />
               <h2>Three instruments on one solver</h2>
             </div>
-          </V3Reveal>
-          <V3Reveal delay={80}>
-            <p className="v3-po-lede">
+          <p className="lede">
               The same field solver drives all three panels. First you watch a single collapse by
               hand, then you let the machine bisect its way to the threshold, then you make it
               measure the exponent that lives there. Each step only needs the one before it.
             </p>
-          </V3Reveal>
-          <div className="v3-po-grid">
-            {STAGES.map((m, i) => (
-              <V3Reveal key={m.n} delay={100 + i * 55}>
-                <div className="v3-po-card">
-                  <span className="v3-po-card__k">{m.n}</span>
+          <div className="piece-grid">
+            {STAGES.map((m) => (
+              <div className="rail" key={m.n}>
+                  <span className="beta-proj-k">{m.n}</span>
                   <h3>{m.title}</h3>
                   <p>{m.body}</p>
                 </div>
-              </V3Reveal>
             ))}
           </div>
         </div>
       </section>
 
       {/* RUN IT ======================================================== */}
-      <section className="v3-section" style={{ paddingTop: 24 }}>
-        <div className="v3-wrap">
-          <V3Reveal>
-            <div className="v3-cardhead">
+      <section className="beta-note-sec" style={{ paddingTop: 24 }}>
+        <div >
+          <div className="beta-sechead">
               <MousePointerClick size={18} strokeWidth={2.2} />
               <h2>Run it yourself</h2>
             </div>
-          </V3Reveal>
-          <div className="v3-po-try">
+          <div className="beta-steps">
             <ol>
               {TRY.map((t, i) => (
-                <V3Reveal key={i} delay={80 + i * 55}>
-                  <li>
-                    <span className="v3-po-try__n">{i + 1}</span>
+                <li key={i}>
+                    <span className="beta-steps__n">{i + 1}</span>
                     <span>{t}</span>
                   </li>
-                </V3Reveal>
               ))}
             </ol>
           </div>
@@ -216,16 +159,13 @@ export default function CriticalCollapsePage() {
       </section>
 
       {/* WHY IT MATTERS ================================================ */}
-      <section className="v3-section" style={{ paddingTop: 24, paddingBottom: 40 }}>
-        <div className="v3-wrap">
-          <V3Reveal>
-            <div className="v3-cardhead">
+      <section className="beta-note-sec" style={{ paddingTop: 24, paddingBottom: 40 }}>
+        <div >
+          <div className="beta-sechead">
               <Telescope size={18} strokeWidth={2.2} />
               <h2>Why a knife edge matters</h2>
             </div>
-          </V3Reveal>
-          <V3Reveal delay={80}>
-            <div className="v3-po-math">
+          <div className="prose beta-sec">
               <p>
                 The critical solution is a naked, self-similar region of spacetime where curvature
                 climbs without bound. Classically it cascades through every scale on the ruler, from
@@ -247,11 +187,8 @@ export default function CriticalCollapsePage() {
                 instruments live back on the <Link href="/projects">projects index</Link>.
               </p>
             </div>
-          </V3Reveal>
         </div>
       </section>
-    </div>
-      </div>
     </div>
   )
 }

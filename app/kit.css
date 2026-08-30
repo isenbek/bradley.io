@@ -475,3 +475,100 @@ body:has(.beta-root) {
   color: var(--color-glass-muted);
 }
 .beta-code-cap + pre { padding-top: calc(var(--u) * 2); }
+
+/* ---------------------------------------------------------------------------
+   PROJECT WRITE-UPS
+
+   The six instrument pages: an embedded single-file tool, then prose about how
+   it works. What the v3 versions needed that the kit has no name for is small:
+   a section heading that carries an icon, a numbered step list, an embed frame,
+   and the atlas legend. Everything else mapped onto .rail, .piece-grid, .lede,
+   .code and .quiet.
+   --------------------------------------------------------------------------- */
+
+/* A section heading with an icon beside it. The kit's own headings carry no
+   icons, so this is the one place these pages keep a habit of their own: the
+   icon is the only thing distinguishing six pages that are otherwise the same
+   shape. */
+.beta-sechead {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--u) * 3);
+  margin: calc(var(--u) * 10) 0 calc(var(--u) * 4);
+  padding-top: calc(var(--u) * 4);
+  border-top: 1px solid var(--color-rule);
+}
+.beta-sechead h2 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-h2);
+  font-weight: 700;
+  letter-spacing: var(--tracking-tight);
+}
+.beta-sechead svg { flex: 0 0 auto; color: var(--color-accent-ink); }
+
+/* The embedded tool. A dark well, because what is inside it is the machine
+   running rather than a picture of it. */
+.beta-embed {
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-mod);
+  overflow: hidden;
+  background: var(--color-panel-sunk);
+}
+.beta-embed iframe { display: block; width: 100%; border: 0; }
+
+/* "Try this" steps. An ordered list that numbers itself would do, but these
+   numbers are a control the reader follows while the tool is open, so they get
+   the mono treatment the rest of the machine-facing text has. */
+.beta-steps ol { list-style: none; margin: 0; padding: 0; display: grid; gap: calc(var(--u) * 3); }
+.beta-steps li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: calc(var(--u) * 3);
+  align-items: baseline;
+  max-width: 68ch;
+  line-height: 1.55;
+}
+.beta-steps__n {
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+  color: var(--color-paper);
+  background: var(--color-ink);
+  border-radius: var(--radius-hair);
+  padding: 1px calc(var(--u) * 2);
+}
+
+/* The key on a channel card, and the quoted line some of them carry. */
+.beta-proj-k {
+  display: inline-block;
+  margin-bottom: calc(var(--u) * 2);
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-accent-ink);
+}
+.beta-proj-q {
+  display: block;
+  margin-top: calc(var(--u) * 3);
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--color-ink-muted);
+}
+
+/* The atlas legend: a swatch, a term, and what it means. */
+.beta-legend { display: grid; gap: calc(var(--u) * 2.5); max-width: 68ch; margin-top: calc(var(--u) * 2); }
+.beta-legend__row {
+  display: grid;
+  grid-template-columns: calc(var(--u) * 4) minmax(0, 8rem) minmax(0, 1fr);
+  align-items: baseline;
+  gap: calc(var(--u) * 3);
+  font-size: var(--text-body);
+  line-height: 1.5;
+}
+@media (max-width: 30rem) {
+  /* Three columns in 320px leaves the description about 90px. Stack instead. */
+  .beta-legend__row { grid-template-columns: calc(var(--u) * 4) minmax(0, 1fr); }
+  .beta-legend__row > :last-child { grid-column: 2 / -1; }
+}
+.beta-legend__sw { width: calc(var(--u) * 3); height: calc(var(--u) * 3); border-radius: var(--radius-hair); }

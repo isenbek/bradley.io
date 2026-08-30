@@ -1,6 +1,5 @@
 import Link from "next/link"
-import { ArrowLeft, Map, Compass, Layers, MousePointerClick } from "lucide-react"
-import { V3Reveal } from "@/components/v3/V3Reveal"
+import { Compass, Layers, MousePointerClick } from "lucide-react"
 import { ProjectEmbed } from "@/components/projects/ProjectEmbed"
 import { PrimeCompanions } from "@/components/projects/PrimeCompanions"
 
@@ -62,64 +61,29 @@ export default function PrimeAtlasPage() {
             <span aria-current="page">Prime Atlas</span>
           </span>
         </nav>
+        <h1>A terrain map of the territory around the primes</h1>
       </div>
 
-      {/* Long-form v3 body, kept as-is. See .kit-island in app/kit.css: the
-          chrome is the kit's, the content still carries its own styling. */}
-      <div className="v3 kit-island">
-<div className="v3-po">
+      <p className="lede">
+          Twenty-nine landmarks across seven kinds of ground, from the Euler spring to the
+          parity cliff. It draws what is proven, what is merely believed, what nobody knows,
+          and, most usefully, what has been proven <strong>impossible</strong> by the methods
+          we have. The{" "}
+          <Link href="/projects/prime-orchestra">orchestra</Link> and the{" "}
+          <Link href="/projects/prime-zoo">zoo</Link> are both marked on it, because the map
+          came first and the instruments were built where it pointed.
+      </p>
       {/* HEADER ========================================================= */}
-      <header className="v3-page-head" style={{ paddingBottom: 16 }}>
-        <div className="v3-blob v3-blob--1" aria-hidden style={{ right: "-70px", top: "-30px" }} />
-        <div className="v3-blob v3-blob--3" aria-hidden style={{ right: "180px", top: "220px" }} />
-
-        <div className="v3-wrap">
-          <div className="v3-page-head__lockup">
-            <V3Reveal>
-              <Link href="/projects" className="v3-air-back">
-                <ArrowLeft size={14} strokeWidth={2.4} /> back to projects
-              </Link>
-            </V3Reveal>
-            <V3Reveal>
-              <span
-                className="v3-pill v3-pill--blue"
-                style={{ padding: "8px 16px", fontSize: 13, display: "inline-flex", gap: 8, alignItems: "center" }}
-              >
-                <Map size={14} strokeWidth={2.25} />
-                primality atlas · frontier math
-              </span>
-            </V3Reveal>
-            <V3Reveal eager>
-              <h1>
-                A terrain map of the <span className="v3-accent">territory around the primes.</span>
-              </h1>
-            </V3Reveal>
-            <V3Reveal eager>
-              <p className="v3-page-head__lede">
-                Twenty-nine landmarks across seven kinds of ground, from the Euler spring to the
-                parity cliff. It draws what is proven, what is merely believed, what nobody knows,
-                and, most usefully, what has been proven <strong>impossible</strong> by the methods
-                we have. The{" "}
-                <Link href="/projects/prime-orchestra">orchestra</Link> and the{" "}
-                <Link href="/projects/prime-zoo">zoo</Link> are both marked on it, because the map
-                came first and the instruments were built where it pointed.
-              </p>
-            </V3Reveal>
-          </div>
-        </div>
-      </header>
 
       {/* THE MAP ======================================================== */}
-      <section className="v3-section" style={{ paddingTop: 6, paddingBottom: 10 }}>
-        <div className="v3-wrap">
-          <V3Reveal>
-            <ProjectEmbed
+      <section className="beta-note-sec" style={{ paddingTop: 6, paddingBottom: 10 }}>
+        <div >
+          <ProjectEmbed
               src="/prime-atlas.html"
               title="Primality Atlas: an interactive terrain map of prime-number theory"
               fixed
             />
-          </V3Reveal>
-          <p className="v3-po-cap">
+          <p className="quiet">
             Drag to pan, wheel or pinch to zoom, tap any landmark for its dossier. Hand-drawn SVG,
             no map library, no tiles.{" "}
             <a href="/prime-atlas.html" target="_blank" rel="noreferrer">
@@ -131,82 +95,66 @@ export default function PrimeAtlasPage() {
       </section>
 
       {/* THE REGIONS =================================================== */}
-      <section className="v3-section" style={{ paddingTop: 24 }}>
-        <div className="v3-wrap">
-          <V3Reveal>
-            <div className="v3-cardhead">
+      <section className="beta-note-sec" style={{ paddingTop: 24 }}>
+        <div >
+          <div className="beta-sechead">
               <Compass size={18} strokeWidth={2.2} />
               <h2>Read the terrain</h2>
             </div>
-          </V3Reveal>
-          <V3Reveal delay={80}>
-            <p className="v3-po-lede">
+          <p className="lede">
               The geography is not decorative. Water runs downhill from the Euler spring, and where
               a channel stops is exactly where a method stops.
             </p>
-          </V3Reveal>
-          <div className="v3-po-grid">
-            {REGIONS.map((r, i) => (
-              <V3Reveal key={r.k} delay={100 + i * 55}>
-                <div className="v3-po-card">
-                  <span className="v3-po-card__k">{r.k}</span>
+          <div className="piece-grid">
+            {REGIONS.map((r) => (
+              <div className="rail" key={r.k}>
+                  <span className="beta-proj-k">{r.k}</span>
                   <h3>{r.title}</h3>
                   <p>{r.body}</p>
                 </div>
-              </V3Reveal>
             ))}
           </div>
         </div>
       </section>
 
       {/* THE LEGEND ==================================================== */}
-      <section className="v3-section" style={{ paddingTop: 24 }}>
-        <div className="v3-wrap">
-          <V3Reveal>
-            <div className="v3-cardhead">
+      <section className="beta-note-sec" style={{ paddingTop: 24 }}>
+        <div >
+          <div className="beta-sechead">
               <Layers size={18} strokeWidth={2.2} />
               <h2>Seven kinds of ground</h2>
             </div>
-          </V3Reveal>
-          <V3Reveal delay={80}>
-            <p className="v3-po-lede">
+          <p className="lede">
               Most maps of a field draw only the results. This one gives equal weight to the dark
               rooms and the no-go cliffs, because in number theory the barriers are theorems too,
               and they are the part that tells you where not to spend a decade.
             </p>
-          </V3Reveal>
-          <div className="v3-atlas-legend">
-            {GROUND.map((g, i) => (
-              <V3Reveal key={g.label} delay={90 + i * 40}>
-                <div className="v3-atlas-legend__row">
-                  <span className="v3-atlas-legend__sw" style={{ background: g.c }} aria-hidden />
-                  <span className="v3-atlas-legend__lbl">{g.label}</span>
-                  <span className="v3-atlas-legend__body">{g.body}</span>
+          <div className="beta-legend">
+            {GROUND.map((g) => (
+              <div className="beta-legend__row" key={g.label}>
+                  <span className="beta-legend__sw" style={{ background: g.c }} aria-hidden />
+                  <span className="beta-legend__lbl">{g.label}</span>
+                  <span className="beta-legend__body">{g.body}</span>
                 </div>
-              </V3Reveal>
             ))}
           </div>
         </div>
       </section>
 
       {/* TRY THIS ====================================================== */}
-      <section className="v3-section" style={{ paddingTop: 24 }}>
-        <div className="v3-wrap">
-          <V3Reveal>
-            <div className="v3-cardhead">
+      <section className="beta-note-sec" style={{ paddingTop: 24 }}>
+        <div >
+          <div className="beta-sechead">
               <MousePointerClick size={18} strokeWidth={2.2} />
               <h2>Three walks worth taking</h2>
             </div>
-          </V3Reveal>
-          <div className="v3-po-try">
+          <div className="beta-steps">
             <ol>
               {TRY.map((t, i) => (
-                <V3Reveal key={i} delay={80 + i * 55}>
-                  <li>
-                    <span className="v3-po-try__n">{i + 1}</span>
+                <li key={i}>
+                    <span className="beta-steps__n">{i + 1}</span>
                     <span>{t}</span>
                   </li>
-                </V3Reveal>
               ))}
             </ol>
           </div>
@@ -214,8 +162,6 @@ export default function PrimeAtlasPage() {
       </section>
 
       <PrimeCompanions current="prime-atlas" />
-    </div>
-      </div>
     </div>
   )
 }

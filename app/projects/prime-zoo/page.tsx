@@ -1,13 +1,5 @@
 import Link from "next/link"
-import {
-  ArrowLeft,
-  Activity,
-  Microscope,
-  MousePointerClick,
-  ShieldCheck,
-  Sigma,
-} from "lucide-react"
-import { V3Reveal } from "@/components/v3/V3Reveal"
+import { Activity, MousePointerClick, ShieldCheck, Sigma } from "lucide-react"
 import { ProjectEmbed } from "@/components/projects/ProjectEmbed"
 import { PrimeCompanions } from "@/components/projects/PrimeCompanions"
 
@@ -77,62 +69,27 @@ export default function PrimeZooPage() {
             <span aria-current="page">Prime Zoo</span>
           </span>
         </nav>
+        <h1>Three instruments for the structure hiding in the primes</h1>
       </div>
 
-      {/* Long-form v3 body, kept as-is. See .kit-island in app/kit.css: the
-          chrome is the kit's, the content still carries its own styling. */}
-      <div className="v3 kit-island">
-<div className="v3-po">
+      <p className="lede">
+          The <Link href="/projects/prime-orchestra">Prime Orchestra</Link> plays the primes
+          back out of the zeros of zeta. The zoo runs the other direction: it sieves two
+          million integers in your browser and interrogates the raw sequence. Which
+          constellations of primes are even allowed to exist, which residue class is ahead in
+          a two-century-old race, and whether one prime remembers the last one.
+      </p>
       {/* HEADER ========================================================= */}
-      <header className="v3-page-head" style={{ paddingBottom: 16 }}>
-        <div className="v3-blob v3-blob--1" aria-hidden style={{ right: "-70px", top: "-30px" }} />
-        <div className="v3-blob v3-blob--3" aria-hidden style={{ right: "180px", top: "220px" }} />
-
-        <div className="v3-wrap">
-          <div className="v3-page-head__lockup">
-            <V3Reveal>
-              <Link href="/projects" className="v3-air-back">
-                <ArrowLeft size={14} strokeWidth={2.4} /> back to projects
-              </Link>
-            </V3Reveal>
-            <V3Reveal>
-              <span
-                className="v3-pill v3-pill--blue"
-                style={{ padding: "8px 16px", fontSize: 13, display: "inline-flex", gap: 8, alignItems: "center" }}
-              >
-                <Microscope size={14} strokeWidth={2.25} />
-                primality zoo · frontier math
-              </span>
-            </V3Reveal>
-            <V3Reveal eager>
-              <h1>
-                Three instruments for the <span className="v3-accent">structure hiding in the primes.</span>
-              </h1>
-            </V3Reveal>
-            <V3Reveal eager>
-              <p className="v3-page-head__lede">
-                The <Link href="/projects/prime-orchestra">Prime Orchestra</Link> plays the primes
-                back out of the zeros of zeta. The zoo runs the other direction: it sieves two
-                million integers in your browser and interrogates the raw sequence. Which
-                constellations of primes are even allowed to exist, which residue class is ahead in
-                a two-century-old race, and whether one prime remembers the last one.
-              </p>
-            </V3Reveal>
-          </div>
-        </div>
-      </header>
 
       {/* THE INSTRUMENT ================================================= */}
-      <section className="v3-section" style={{ paddingTop: 6, paddingBottom: 10 }}>
-        <div className="v3-wrap">
-          <V3Reveal>
-            <ProjectEmbed
+      <section className="beta-note-sec" style={{ paddingTop: 6, paddingBottom: 10 }}>
+        <div >
+          <ProjectEmbed
               src="/prime-zoo.html"
               title="Primality Zoo: three field instruments for prime structure"
               initialHeight={1600}
             />
-          </V3Reveal>
-          <p className="v3-po-cap">
+          <p className="quiet">
             One HTML file, no build step, no network. The sieve to 2,000,000 runs on load, so the
             first paint takes a beat and everything after it is instant.
           </p>
@@ -140,84 +97,68 @@ export default function PrimeZooPage() {
       </section>
 
       {/* THE CHANNELS ================================================== */}
-      <section className="v3-section" style={{ paddingTop: 24 }}>
-        <div className="v3-wrap">
-          <V3Reveal>
-            <div className="v3-cardhead">
+      <section className="beta-note-sec" style={{ paddingTop: 24 }}>
+        <div >
+          <div className="beta-sechead">
               <Activity size={18} strokeWidth={2.2} />
               <h2>Three channels, three questions</h2>
             </div>
-          </V3Reveal>
-          <V3Reveal delay={80}>
-            <p className="v3-po-lede">
+          <p className="lede">
               Wing A asks what patterns the primes permit. Wing B asks how they distribute
               themselves once permitted. Both wings run off the same sieve, live, with no
               precomputed answers.
             </p>
-          </V3Reveal>
-          <div className="v3-po-grid">
-            {CHANNELS.map((c, i) => (
-              <V3Reveal key={c.k} delay={100 + i * 55}>
-                <div className="v3-po-card">
-                  <span className="v3-po-card__k">{c.k}</span>
+          <div className="piece-grid">
+            {CHANNELS.map((c) => (
+              <div className="rail" key={c.k}>
+                  <span className="beta-proj-k">{c.k}</span>
                   <h3>{c.title}</h3>
-                  <p className="v3-po-card__q">{c.q}</p>
+                  <p className="beta-proj-q">{c.q}</p>
                   <p>{c.body}</p>
                 </div>
-              </V3Reveal>
             ))}
           </div>
         </div>
       </section>
 
       {/* THE GUARDS ==================================================== */}
-      <section className="v3-section" style={{ paddingTop: 24 }}>
-        <div className="v3-wrap">
-          <V3Reveal>
-            <div className="v3-cardhead">
+      <section className="beta-note-sec" style={{ paddingTop: 24 }}>
+        <div >
+          <div className="beta-sechead">
               <ShieldCheck size={18} strokeWidth={2.2} />
               <h2>Every channel carries a guard</h2>
             </div>
-          </V3Reveal>
-          <V3Reveal delay={80}>
-            <p className="v3-po-lede">
+          <p className="lede">
               Prime data is unusually good at looking meaningful. So each scope plots an
               independent prediction next to the measurement: the boring answer, drawn in the same
               units. If the data does not separate from its guard, there is nothing to report.
             </p>
-          </V3Reveal>
-          <div className="v3-po-grid">
-            {GUARDS.map((g, i) => (
-              <V3Reveal key={g.k} delay={100 + i * 55}>
-                <div className="v3-po-card">
-                  <span className="v3-po-card__k">{g.k}</span>
+          <div className="piece-grid">
+            {GUARDS.map((g) => (
+              <div className="rail" key={g.k}>
+                  <span className="beta-proj-k">{g.k}</span>
                   <h3>{g.title}</h3>
                   <p>{g.body}</p>
                 </div>
-              </V3Reveal>
             ))}
           </div>
         </div>
       </section>
 
       {/* TRY THIS ====================================================== */}
-      <section className="v3-section" style={{ paddingTop: 24 }}>
-        <div className="v3-wrap">
-          <V3Reveal>
-            <div className="v3-cardhead">
+      <section className="beta-note-sec" style={{ paddingTop: 24 }}>
+        <div >
+          <div className="beta-sechead">
               <MousePointerClick size={18} strokeWidth={2.2} />
               <h2>Play it</h2>
             </div>
-          </V3Reveal>
-          <div className="v3-po-try">
+          <div className="beta-steps">
             <ol>
               {TRY.map((t, i) => (
-                <V3Reveal key={i} delay={80 + i * 55}>
-                  <li>
-                    <span className="v3-po-try__n">{i + 1}</span>
+                <li key={i}>
+                    <span className="beta-steps__n">{i + 1}</span>
                     <span>{t}</span>
                   </li>
-                </V3Reveal>
               ))}
             </ol>
           </div>
@@ -225,21 +166,18 @@ export default function PrimeZooPage() {
       </section>
 
       {/* THE MATH ====================================================== */}
-      <section className="v3-section" style={{ paddingTop: 24 }}>
-        <div className="v3-wrap">
-          <V3Reveal>
-            <div className="v3-cardhead">
+      <section className="beta-note-sec" style={{ paddingTop: 24 }}>
+        <div >
+          <div className="beta-sechead">
               <Sigma size={18} strokeWidth={2.2} />
               <h2>What the lamp is actually testing</h2>
             </div>
-          </V3Reveal>
-          <V3Reveal delay={80}>
-            <div className="v3-po-math">
+          <div className="prose beta-sec">
               <p>
                 A pattern is <strong>admissible</strong> when it never covers a full residue class.
                 For every prime p, count the distinct residues the offsets land on:
               </p>
-              <code className="v3-po-eq">ν(p) = |&#123; oᵢ mod p &#125;| &lt; p, for every prime p</code>
+              <div className="code"><pre>ν(p) = |&#123; oᵢ mod p &#125;| &lt; p, for every prime p</pre></div>
               <p>
                 One p with ν(p) = p and the pattern is finished: every candidate position is
                 divisible by p, so at most one occurrence survives, and only when p itself sits in
@@ -249,22 +187,19 @@ export default function PrimeZooPage() {
                 Clear the test and Hardy–Littlewood gives the density, with the singular series S
                 collecting a correction from every prime at once:
               </p>
-              <code className="v3-po-eq">
+              <div className="code"><pre>
                 S = Π_p (1 − ν(p)/p) / (1 − 1/p)ᵏ &nbsp;·&nbsp; count(x) ≈ S · ∫₂ˣ dt/(ln t)ᵏ
-              </code>
+              </pre></div>
               <p>
                 Admissibility is decidable in a millisecond. Whether an admissible pattern actually
                 recurs forever is open for every k ≥ 2, twin primes included. The instrument can
                 tell you a constellation is dead. It cannot tell you one is alive.
               </p>
             </div>
-          </V3Reveal>
         </div>
       </section>
 
       <PrimeCompanions current="prime-zoo" />
-    </div>
-      </div>
     </div>
   )
 }

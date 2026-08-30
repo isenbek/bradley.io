@@ -1,6 +1,5 @@
 import Link from "next/link"
-import { ArrowLeft, Waves, Compass, MousePointerClick, Sigma } from "lucide-react"
-import { V3Reveal } from "@/components/v3/V3Reveal"
+import { Waves, Compass, MousePointerClick, Sigma } from "lucide-react"
 import { ProjectEmbed } from "@/components/projects/ProjectEmbed"
 import { PrimeCompanions } from "@/components/projects/PrimeCompanions"
 
@@ -65,61 +64,26 @@ export default function StormPlatesPage() {
             <span aria-current="page">Storm Plates</span>
           </span>
         </nav>
+        <h1>The sieve, drawn as weather</h1>
       </div>
 
-      {/* Long-form v3 body, kept as-is. See .kit-island in app/kit.css: the
-          chrome is the kit's, the content still carries its own styling. */}
-      <div className="v3 kit-island">
-<div className="v3-po">
+      <p className="lede">
+          Lay the integers out as a plank bridge and let one wave per prime roll under it.
+          Each crest breaks the plank it lands on, and the planks that survive are the primes.
+          Six cartoon plates take that one picture and push it until record gaps, twin primes
+          and the zeta zeros all fall out of it.
+      </p>
       {/* HEADER ========================================================= */}
-      <header className="v3-page-head" style={{ paddingBottom: 16 }}>
-        <div className="v3-blob v3-blob--1" aria-hidden style={{ right: "-70px", top: "-30px" }} />
-        <div className="v3-blob v3-blob--3" aria-hidden style={{ right: "180px", top: "220px" }} />
-
-        <div className="v3-wrap">
-          <div className="v3-page-head__lockup">
-            <V3Reveal>
-              <Link href="/projects" className="v3-air-back">
-                <ArrowLeft size={14} strokeWidth={2.4} /> back to projects
-              </Link>
-            </V3Reveal>
-            <V3Reveal>
-              <span
-                className="v3-pill v3-pill--blue"
-                style={{ padding: "8px 16px", fontSize: 13, display: "inline-flex", gap: 8, alignItems: "center" }}
-              >
-                <Waves size={14} strokeWidth={2.25} />
-                storm plates · frontier math
-              </span>
-            </V3Reveal>
-            <V3Reveal eager>
-              <h1>
-                The sieve, drawn as <span className="v3-accent">weather.</span>
-              </h1>
-            </V3Reveal>
-            <V3Reveal eager>
-              <p className="v3-page-head__lede">
-                Lay the integers out as a plank bridge and let one wave per prime roll under it.
-                Each crest breaks the plank it lands on, and the planks that survive are the primes.
-                Six cartoon plates take that one picture and push it until record gaps, twin primes
-                and the zeta zeros all fall out of it.
-              </p>
-            </V3Reveal>
-          </div>
-        </div>
-      </header>
 
       {/* THE INSTRUMENT ================================================= */}
-      <section className="v3-section" style={{ paddingTop: 6, paddingBottom: 10 }}>
-        <div className="v3-wrap">
-          <V3Reveal>
-            <ProjectEmbed
+      <section className="beta-note-sec" style={{ paddingTop: 6, paddingBottom: 10 }}>
+        <div >
+          <ProjectEmbed
               src="/storm-plates.html"
               title="Storm Plates: wave presentations of the sieve"
               initialHeight={2300}
             />
-          </V3Reveal>
-          <p className="v3-po-cap">
+          <p className="quiet">
             One HTML file, no build step, no network. Every broken plank is re-derived by trial
             division against a live sieve rather than painted in, and each plate carries its own
             guard: Mertens density, the record gap at 113, the π(√x) staircase, the first three
@@ -129,77 +93,63 @@ export default function StormPlatesPage() {
       </section>
 
       {/* THE CHANNELS ================================================== */}
-      <section className="v3-section" style={{ paddingTop: 24 }}>
-        <div className="v3-wrap">
-          <V3Reveal>
-            <div className="v3-cardhead">
+      <section className="beta-note-sec" style={{ paddingTop: 24 }}>
+        <div >
+          <div className="beta-sechead">
               <Compass size={18} strokeWidth={2.2} />
               <h2>The whole idea, twice</h2>
             </div>
-          </V3Reveal>
-          <div className="v3-po-grid">
-            {CHANNELS.map((c, i) => (
-              <V3Reveal key={c.k} delay={100 + i * 55}>
-                <div className="v3-po-card">
-                  <span className="v3-po-card__k">{c.k}</span>
+          <div className="piece-grid">
+            {CHANNELS.map((c) => (
+              <div className="rail" key={c.k}>
+                  <span className="beta-proj-k">{c.k}</span>
                   <h3>{c.title}</h3>
-                  <p className="v3-po-card__q">{c.q}</p>
+                  <p className="beta-proj-q">{c.q}</p>
                   <p>{c.body}</p>
                 </div>
-              </V3Reveal>
             ))}
           </div>
         </div>
       </section>
 
       {/* SIX PLATES ==================================================== */}
-      <section className="v3-section" style={{ paddingTop: 24 }}>
-        <div className="v3-wrap">
-          <V3Reveal>
-            <div className="v3-cardhead">
+      <section className="beta-note-sec" style={{ paddingTop: 24 }}>
+        <div >
+          <div className="beta-sechead">
               <Waves size={18} strokeWidth={2.2} />
               <h2>Six plates, one storm</h2>
             </div>
-          </V3Reveal>
-          <V3Reveal delay={80}>
-            <p className="v3-po-lede">
+          <p className="lede">
               The plates are ordered so each one only needs the one before it. Nothing here requires
               complex analysis until the very last panel, and by then the analysis is just a second
               way of drawing what you have already watched happen.
             </p>
-          </V3Reveal>
-          <div className="v3-po-grid">
-            {PLATES.map((m, i) => (
-              <V3Reveal key={m.n} delay={100 + i * 55}>
-                <div className="v3-po-card">
-                  <span className="v3-po-card__k">{m.n}</span>
+          <div className="piece-grid">
+            {PLATES.map((m) => (
+              <div className="rail" key={m.n}>
+                  <span className="beta-proj-k">{m.n}</span>
                   <h3>{m.title}</h3>
                   <p>{m.body}</p>
                 </div>
-              </V3Reveal>
             ))}
           </div>
         </div>
       </section>
 
       {/* PLAY IT ======================================================= */}
-      <section className="v3-section" style={{ paddingTop: 24 }}>
-        <div className="v3-wrap">
-          <V3Reveal>
-            <div className="v3-cardhead">
+      <section className="beta-note-sec" style={{ paddingTop: 24 }}>
+        <div >
+          <div className="beta-sechead">
               <MousePointerClick size={18} strokeWidth={2.2} />
               <h2>Watch the water</h2>
             </div>
-          </V3Reveal>
-          <div className="v3-po-try">
+          <div className="beta-steps">
             <ol>
               {TRY.map((t, i) => (
-                <V3Reveal key={i} delay={80 + i * 55}>
-                  <li>
-                    <span className="v3-po-try__n">{i + 1}</span>
+                <li key={i}>
+                    <span className="beta-steps__n">{i + 1}</span>
                     <span>{t}</span>
                   </li>
-                </V3Reveal>
               ))}
             </ol>
           </div>
@@ -207,23 +157,20 @@ export default function StormPlatesPage() {
       </section>
 
       {/* THE BRIDGE TO THE OTHERS ====================================== */}
-      <section className="v3-section" style={{ paddingTop: 24 }}>
-        <div className="v3-wrap">
-          <V3Reveal>
-            <div className="v3-cardhead">
+      <section className="beta-note-sec" style={{ paddingTop: 24 }}>
+        <div >
+          <div className="beta-sechead">
               <Sigma size={18} strokeWidth={2.2} />
               <h2>Two transcriptions of the same water</h2>
             </div>
-          </V3Reveal>
-          <V3Reveal delay={80}>
-            <div className="v3-po-math">
+          <div className="prose beta-sec">
               <p>
                 Plate VI is where this page hands off. The sieve can be written as one square wave
                 per prime, periodic in n, or as one tone per zeta zero, periodic in log x:
               </p>
-              <code className="v3-po-eq">
+              <div className="code"><pre>
                 Euler side · ∏ₚ (1 − p⁻ˢ)⁻¹ ⟷ explicit formula · Σ_ρ cos(γ·log x)
-              </code>
+              </pre></div>
               <p>
                 Neither side is the storm; both are exact transcriptions of it. The{" "}
                 <Link href="/projects/prime-orchestra">orchestra</Link> plays the right-hand side
@@ -239,13 +186,10 @@ export default function StormPlatesPage() {
                 what is actually proven is the <Link href="/projects/prime-atlas">atlas</Link>.
               </p>
             </div>
-          </V3Reveal>
         </div>
       </section>
 
       <PrimeCompanions current="storm-plates" />
-    </div>
-      </div>
     </div>
   )
 }
