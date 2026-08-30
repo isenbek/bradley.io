@@ -1,82 +1,102 @@
-import { loadSiteDataStatic } from "@/lib/site-data"
-import { V3Reveal } from "@/components/v3/V3Reveal"
-import { V3ProjectGrid } from "./V3ProjectGrid"
-import { buildSparklines } from "./_sparklines"
+import Link from "next/link"
+import type { Metadata } from "next"
 
-export const revalidate = 3600
+export const metadata: Metadata = {
+  title: "Projects",
+  description:
+    "Three things worth looking at: a transistor-level 6502, a random number generator fed by radioactive decay, and a log of who has been knocking.",
+  alternates: { canonical: "/projects" },
+}
 
-export default async function V3ProjectsPage() {
-  const data = await loadSiteDataStatic()
-  const projects = [...data.projects].sort((a, b) => {
-    // featured first, then by lastActivity desc
-    if (a.isFeatured !== b.isFeatured) return a.isFeatured ? -1 : 1
-    return (b.lastActivity ?? "").localeCompare(a.lastActivity ?? "")
-  })
+/**
+ * Projects, cut to three.
+ *
+ * This page used to be an index over 236 generated dossiers, one per repository
+ * across four GitHub orgs. That inventory answered "what repos exist", which
+ * `/work` now answers better and in one screen, so the dossiers are gone.
+ *
+ * What is left is the short list of things that are actually worth opening: each
+ * one is running, each one has something to look at, and each one is a page
+ * rather than a directory entry.
+ */
 
-  const stats = data.stats
+const PROJECTS = [
+  {
+    href: "/6502",
+    title: "The 6502",
+    what: "A transistor-level simulation of the chip that made home computing affordable.",
+    detail:
+      "One 6502 was decapped, photographed and traced by hand. This runs those 3,510 transistors, solved to a fixed point twice per clock cycle, and checks itself against the original simulator bit for bit. Plus a link-checked archive of everything the visual6502 team left behind.",
+  },
+  {
+    href: "/trng",
+    title: "Hotbits",
+    what: "Random numbers from radioactive decay, tested continuously.",
+    detail:
+      "A Geiger counter, a Raspberry Pi, and a comparison of one gap between decay events with the next. Nothing generates a number. The bias cancels by symmetry rather than by correction, and NIST SP 800-90B runs on every sample as it arrives.",
+  },
+  {
+    href: "/visitors",
+    title: "Knock knock",
+    what: "Everything that has tried the doors on this host, across every site it serves.",
+    detail:
+      "Three tiers fused into one view: dropped at the edge by the router, trapped at the door by the scanner trap, and served. Almost all of it is automated. Visitors are coarsened to a /24 on purpose; the scanners are not.",
+  },
+]
 
-  // Precompute sparklines server-side and pass to the client grid as a plain
-  // object (Map can't cross the RSC boundary).
-  const sparkMap = buildSparklines(projects.map((p) => p.slug))
-  const sparklines: Record<string, { buckets: number[]; max: number }> = {}
-  sparkMap.forEach((v, k) => {
-    sparklines[k] = v
-  })
-
+export default function ProjectsPage() {
   return (
-    <>
-      {/* HEADER ========================================================= */}
-      <header className="v3-page-head">
-        <div className="v3-blob v3-blob--1" aria-hidden style={{ right: "-80px", top: "-40px" }} />
-        <div className="v3-blob v3-blob--2" aria-hidden style={{ right: "200px", top: "200px" }} />
-        <div className="v3-blob v3-blob--3" aria-hidden style={{ right: "60px", top: "300px" }} />
+    <div className="page">
+      <div className="page-head">
+        <nav className="crumb" aria-label="Breadcrumb">
+          <Link href="/">bradley.io</Link>
+          <span>
+            {" / "}
+            <span aria-current="page">Projects</span>
+          </span>
+        </nav>
+        <h1>Projects</h1>
+      </div>
 
-        <div className="v3-wrap">
-          <div className="v3-page-head__lockup">
-            <V3Reveal eager>
-              <span className="v3-eyebrow">Projects · what's on the bench</span>
-            </V3Reveal>
-            <V3Reveal eager>
-              <h1>
-                {stats.totalProjects}+ things <span className="v3-accent">on the bench.</span>
-              </h1>
-            </V3Reveal>
-            <V3Reveal eager>
-              <p className="v3-page-head__lede">
-                Hardware, AI, data pipelines, distributed systems, frontier research. Most shipped
-                with Claude as co-pilot, all self-hosted.
-              </p>
-            </V3Reveal>
+      <p className="lede">
+        Three things worth opening. All three are running right now, and all three show their own
+        working rather than describing it.
+      </p>
 
-            <V3Reveal delay={200}>
-              <div
-                style={{
-                  display: "flex",
-                  gap: 12,
-                  justifyContent: "flex-start",
-                  marginTop: 28,
-                  flexWrap: "wrap",
-                }}
-              >
-                <span className="v3-pill v3-pill--blue">
-                  {stats.totalSessions} AI sessions
-                </span>
-                <span className="v3-pill v3-pill--green">
-                  {stats.totalMessages.toLocaleString()} messages
-                </span>
-                <span className="v3-pill v3-pill--gold">{stats.activeDays} active days</span>
-              </div>
-            </V3Reveal>
+      <div className="piece-grid">
+        {PROJECTS.map((p) => (
+          <div className="rail" key={p.href}>
+            <h3>{p.title}</h3>
+            <p>{p.what}</p>
+            <p className="quiet">{p.detail}</p>
+            <p>
+              <Link className="btn btn-primary" href={p.href}>
+                Open it
+              </Link>
+            </p>
           </div>
-        </div>
-      </header>
+        ))}
+      </div>
 
-      {/* GRID =========================================================== */}
-      <section className="v3-section" style={{ paddingTop: 16 }}>
-        <div className="v3-wrap">
-          <V3ProjectGrid projects={projects} sparklines={sparklines} />
-        </div>
-      </section>
-    </>
+      <div className="prose beta-sec">
+        <h2>What used to be here</h2>
+        <p>
+          An index over 236 generated dossiers, one per repository. That answered which repositories
+          exist, which is a question <Link href="/work">the work page</Link> now answers in one
+          screen and from the same commit data. Keeping both meant maintaining an inventory nobody
+          reads in order to say something already said better elsewhere.
+        </p>
+        <p>
+          The hand-built instrument pages did not go anywhere:{" "}
+          <Link href="/projects/prime-orchestra">Prime Orchestra</Link>,{" "}
+          <Link href="/projects/prime-zoo">Prime Zoo</Link>,{" "}
+          <Link href="/projects/prime-atlas">Prime Atlas</Link>,{" "}
+          <Link href="/projects/critical-collapse">Critical Collapse</Link>,{" "}
+          <Link href="/projects/zeta-forge">Zeta Forge</Link>,{" "}
+          <Link href="/projects/storm-plates">Storm Plates</Link> and{" "}
+          <Link href="/projects/turfy">Turfy</Link> are all still where they were.
+        </p>
+      </div>
+    </div>
   )
 }

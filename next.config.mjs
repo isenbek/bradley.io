@@ -1,5 +1,57 @@
 /* global process */
 import createMDX from '@next/mdx'
+import { readFileSync } from 'node:fs'
+
+/**
+ * One redirect per retired project dossier, pointing at /projects.
+ *
+ * The seven hand-built instrument pages under /projects/<name> are excluded:
+ * they still exist as real routes and a redirect would shadow them.
+ */
+function retiredDossierRedirects() {
+  const KEPT = new Set([
+    'turfy', 'prime-orchestra', 'prime-zoo', 'prime-atlas',
+    'zeta-forge', 'storm-plates', 'critical-collapse',
+    // Already redirected to /work above; listing them here would duplicate.
+    'isenbek', 'tinymachines', 'nominate-ai', 'sysforge-ai',
+  ])
+  // BOTH sources, because the dossiers had two. site-data.json carried 85
+  // curated projects; the other ~150 came from the four mission timelines,
+  // which is what the deleted allTimelineRepoSlugs() walked. Reading only the
+  // first left /projects/cbship and /projects/junior falling through to the
+  // home page.
+  const slugs = new Set()
+  const files = [
+    'site-data.json',
+    'isenbek-timeline.json',
+    'tinymachines-timeline.json',
+    'nominate-ai-timeline.json',
+    'sysforge-ai-timeline.json',
+  ]
+  try {
+    for (const f of files) {
+      let data
+      try {
+        data = JSON.parse(readFileSync(`./public/data/${f}`, 'utf-8'))
+      } catch {
+        continue // one missing timeline is not a build failure
+      }
+      for (const p of data.projects || []) if (p?.slug) slugs.add(p.slug)
+      for (const r of data.repos || []) if (r?.name) slugs.add(r.name)
+    }
+    return [...slugs]
+      .filter((slug) => !KEPT.has(slug))
+      .map((slug) => ({
+        source: `/projects/${slug}`,
+        destination: '/projects',
+        permanent: true,
+      }))
+  } catch {
+    // No data file is not a build failure: the pages are gone either way, and
+    // not-found.tsx still catches them.
+    return []
+  }
+}
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -22,6 +74,42 @@ const nextConfig = {
       // against another rule that could match the same path, and none can.
       { source: '/beta', destination: '/', permanent: true },
       { source: '/beta/:path*', destination: '/:path*', permanent: true },
+
+      // ---- The v3 retirement, 2026-08-29 -------------------------------
+      // /lab is gone. Its three field notes were the Meatball write-ups and
+      // moved under the project they belong to; the index itself described a
+      // catalog that no longer exists.
+      { source: '/lab/senses', destination: '/meatball/notes/senses', permanent: true },
+      { source: '/lab/listening', destination: '/meatball/notes/listening', permanent: true },
+      { source: '/lab/motion', destination: '/meatball/notes/motion', permanent: true },
+      { source: '/lab/bio-mark', destination: '/bio-mark', permanent: true },
+      { source: '/lab', destination: '/meatball', permanent: true },
+      // Anything else under /lab was the catalog.
+      { source: '/lab/:path*', destination: '/projects', permanent: true },
+
+      // The four org dossier pages are superseded by /work, which answers the
+      // same question from the same commit data in one screen.
+      { source: '/projects/isenbek', destination: '/work', permanent: true },
+      { source: '/projects/tinymachines', destination: '/work', permanent: true },
+      { source: '/projects/nominate-ai', destination: '/work', permanent: true },
+      { source: '/projects/sysforge-ai', destination: '/work', permanent: true },
+
+      // The 236 retired per-repository dossiers, named one by one.
+      //
+      // A `/projects/:slug` catch-all is NOT usable here: Next matches redirects
+      // BEFORE filesystem routes, so it would swallow the seven hand-built
+      // instrument pages that still live at /projects/<name>.
+      //
+      // Without an explicit rule these would still not 404: app/not-found.tsx
+      // calls permanentRedirect("/"), so every unknown path lands on the home
+      // page. That is a poor destination for 236 URLs a crawler already knows,
+      // and search engines read a mass redirect to the root as a soft 404.
+      // /projects is the topical answer, and it says in as many words what
+      // happened to them.
+      //
+      // Generated from the same site-data.json that generated the pages, so the
+      // list cannot drift from what actually existed.
+      ...retiredDossierRedirects(),
     ]
   },
   async headers() {

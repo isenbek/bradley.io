@@ -40,6 +40,7 @@ export const NAV: NavGroup[] = [
       { href: "/about", label: "About", blurb: "the bio, the timeline, the numbers" },
       { href: "/services", label: "Services", blurb: "five practices, three ways to engage" },
       { href: "/contact", label: "Contact", blurb: "the inbox, and what helps a first email" },
+      { href: "/projects", label: "Projects", blurb: "the three worth opening" },
     ],
   },
   {
@@ -55,9 +56,6 @@ export const NAV: NavGroup[] = [
     ],
   },
   {
-    // Not ported to the kit. Still live, still linked, still indexed: they are
-    // the running instruments and the archive, and dropping them to tidy up the
-    // design would trade real content for consistency.
     title: "Running instruments",
     links: [
       { href: "/trng", label: "Hotbits", blurb: "true random numbers from radioactive decay" },
@@ -67,8 +65,6 @@ export const NAV: NavGroup[] = [
       { href: "/visitors", label: "Knock knock", blurb: "who has been trying the doors, across every site here" },
       { href: "/6502", label: "6502", blurb: "the transistor-level chip and its archive" },
       { href: "/meatball", label: "Meatball", blurb: "the sensory robot: sight, sound, memory" },
-      { href: "/projects", label: "Projects", blurb: "the full dossier archive", legacy: true },
-      { href: "/lab", label: "Lab", blurb: "the experiment catalog", legacy: true },
     ],
   },
 ]
@@ -100,6 +96,17 @@ const KIT_EXTRA = [
   "/terminal",
   "/preferences",
   "/eyes",
+  "/bio-mark",
+  "/meatball/notes/senses",
+  "/meatball/notes/listening",
+  "/meatball/notes/motion",
+  "/projects/turfy",
+  "/projects/prime-orchestra",
+  "/projects/prime-zoo",
+  "/projects/prime-atlas",
+  "/projects/zeta-forge",
+  "/projects/storm-plates",
+  "/projects/critical-collapse",
 ] as const
 
 export const KIT_ROUTES: ReadonlySet<string> = new Set([

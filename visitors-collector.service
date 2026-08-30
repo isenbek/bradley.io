@@ -1,0 +1,26 @@
+[Unit]
+Description=bradley.io visitors aggregator (nginx logs + spydr banIP -> visitors.json)
+Documentation=https://bradley.io/visitors
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=bisenbek
+Group=bisenbek
+# adm  -> read /var/log/nginx/*.log (640 www-data:adm)
+SupplementaryGroups=adm
+StateDirectory=bradley-cam
+# ssh needs HOME to find ~/.ssh — systemd does NOT set it for User= units,
+# and without it the spydr edge read fails with 'Permission denied (publickey)'.
+Environment=HOME=/home/bisenbek
+Environment=CAM_CACHE_DIR=/var/lib/bradley-cam
+Environment=VISITORS_WINDOW_DAYS=30
+# maxminddb lives in the pyenv env, not system python.
+ExecStart=/home/bisenbek/.pyenv/versions/nominates/bin/python3 /home/bisenbek/projects/bradleyio/scripts/visitors_collector.py
+Nice=10
+IOSchedulingClass=idle
+TimeoutStartSec=300
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  bradley.io — bio mark  (final, drop-in replacement)
+  Visible geometry is UNCHANGED from the original (the deliberate "a little off").
+  Same segmentation: body = 27 cubic Béziers, bowl = 2 cubics + 2 lines, dot = circle.
+  Embedded below is a non-rendering construction map (display:none) — the implied ∞.
+  Local coords are pre-transform (inside translate(137.58337,-3.17499)).
+
+  Construction reference (local units):
+    ∞ heart / figure-8 crossing .... (142.5, 186.6)   [180° point-symmetry centre, median 3px;
+                                                          medial-axis crossing agrees to ~5px]
+    spine axis x .................... ~142  (bbox-mid 141.3 · dot 141.9 · i-crest 142.6 · ∞-centre 142.5)
+    i-tittle plumb .................. dot is 0.70px off the crest, ~12.7px gap
+    ∞ axis .......................... seg3-ctr (-110.8,3.2) → heart → seg16-ctr (242.1,232.0)
+    service road (construction only)  centre-of-16 (242.1,232.0) → heart → end-of-3 (-86.6,12.0)
+                                      12.8° dogleg at the heart; not rendered, by design.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -10 557.60217 302.12289" role="img" aria-label="bradley.io bio mark">
+  <title>bradley.io — bio</title>
+  <desc>Lowercase bio ligature with an implied infinity at its heart.</desc>
+
+  <!-- ============ VISIBLE MARK (unchanged original geometry) ============ -->
+  <g transform="translate(137.58337,-3.17499)">
+    <path data-piece="body" fill="var(--v3-blue-500, #2563eb)" d="m -18.49986,295.07131 c -53.010601,1.92193 -105.00869,-36.42208 -116.32212,-88.69337 -5.01948,-24.15266 -1.62045,-49.03623 -2.64749,-73.51835 0.16465,-43.109162 -0.48192,-86.670146 0.19004,-129.49675 16.92341,0.6910175 36.70349,-3.92133767 50.641286,8.67787 12.48872,9.980359 13.742508,26.641416 12.703536,41.375607 0.279557,45.852623 -0.181487,91.788973 0.557706,137.589633 4.629833,30.51831 38.955961,51.85181 68.2397997,41.7312 C 18.2786,226.33952 29.162799,202.70739 44.238102,185.94487 70.001715,154.24143 94.659844,121.52943 121.10773,90.453591 137.793,74.720966 170.6164,82.947275 174.34523,106.7294 c 0.63096,25.08616 -0.38895,51.35541 0.72833,75.77273 16.55436,-23.6145 30.39421,-49.31345 49.34851,-71.12693 33.55246,-36.985485 92.26532,-46.387708 136.04295,-22.726253 43.96708,21.672813 69.33247,75.299913 56.33532,122.857593 -11.61137,47.43803 -57.51945,82.58342 -106.03052,83.55997 -32.08634,1.13319 -65.4219,-12.05524 -86.65475,-35.98592 12.00821,-18.01692 23.8595,-36.14907 35.91574,-54.12711 10.90472,24.99274 42.70609,37.29656 67.55564,25.98291 25.41687,-9.85237 38.80746,-42.13344 26.22699,-66.69767 -12.42005,-27.11844 -49.74902,-37.34001 -74.41937,-20.78363 -17.39673,11.10057 -24.81803,31.55332 -36.84312,47.49879 -19.47353,29.09588 -37.81729,59.04713 -58.08167,87.55253 -16.28351,19.45867 -49.76113,17.93477 -64.36668,-2.73927 -12.28095,-14.64903 -6.87001,-34.46297 -8.11245,-51.86289 -0.31701,-8.00977 0.52185,-16.50047 -0.49542,-24.21886 -18.198124,21.81104 -34.281073,45.51501 -54.19908,65.79788 -20.729789,18.43365 -47.9877252,29.42122 -75.79551,29.58804 z"/>
+    <path data-piece="bowl" fill="var(--v3-blue-500, #2563eb)" d="M 29.153885,168.47921 C -1.4718093,132.66123 -52.112078,142.01078 -52.112078,142.01078 l 0.13438,-64.910486 c 0,0 77.910315,-12.885584 121.891743,40.869846 z"/>
+    <circle data-piece="dot" fill="var(--v3-blue-300, #93c5fd)" cx="141.94557" cy="37.143867" r="32.5"/>
+  </g>
+
+  <!-- ============ CONSTRUCTION MAP — on the blueprint, never rendered ============ -->
+  <g id="bio-construction" transform="translate(137.58337,-3.17499)" display="none"
+     fill="none" stroke="#ffd166" stroke-width="1" vector-effect="non-scaling-stroke"
+     data-note="implied infinity geometry; toggle display to inspect">
+    <!-- spine axis -->
+    <line class="spine" x1="142.5" y1="-10" x2="142.5" y2="300" stroke="#ffd166" stroke-dasharray="5 4" opacity="0.8"/>
+    <!-- infinity heart / figure-8 crossing -->
+    <circle class="heart" cx="142.5" cy="186.6" r="7" stroke="#ffffff"/>
+    <circle class="heart-dot" cx="142.5" cy="186.6" r="2" fill="#ffffff" stroke="none"/>
+    <!-- ∞ axis: seg3 centre → heart → seg16 centre -->
+    <polyline class="inf-axis" points="-110.8,3.2 142.5,186.6 242.1,232.0" stroke="#5fd98a" stroke-width="1.2"/>
+    <!-- service road: centre-of-16 → heart → end-of-3 (construction only) -->
+    <polyline class="service-road" points="242.1,232.0 142.5,186.6 -86.6,12.0" stroke="#caa86b" stroke-width="1.4" stroke-linejoin="round"/>
+  </g>
+</svg>

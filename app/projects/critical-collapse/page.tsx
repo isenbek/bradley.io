@@ -58,7 +58,25 @@ const TRY = [
 
 export default function CriticalCollapsePage() {
   return (
-    <div className="v3-po">
+    <div className="page">
+      <div className="page-head">
+        <nav className="crumb" aria-label="Breadcrumb">
+          <Link href="/">bradley.io</Link>
+          <span>
+            {" / "}
+            <Link href="/projects">Projects</Link>
+          </span>
+          <span>
+            {" / "}
+            <span aria-current="page">Critical Collapse</span>
+          </span>
+        </nav>
+      </div>
+
+      {/* Long-form v3 body, kept as-is. See .kit-island in app/kit.css: the
+          chrome is the kit's, the content still carries its own styling. */}
+      <div className="v3 kit-island">
+<div className="v3-po">
       {/* HEADER ========================================================= */}
       <header className="v3-page-head" style={{ paddingBottom: 16 }}>
         <div className="v3-blob v3-blob--2" aria-hidden style={{ right: "-70px", top: "-30px" }} />
@@ -232,6 +250,8 @@ export default function CriticalCollapsePage() {
           </V3Reveal>
         </div>
       </section>
+    </div>
+      </div>
     </div>
   )
 }

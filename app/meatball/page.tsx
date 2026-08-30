@@ -42,21 +42,21 @@ const SENSES = [
 
 const ENTRIES = [
   {
-    href: "/lab/senses",
+    href: "/meatball/notes/senses",
     kicker: "field note 01",
     title: "I gave a junk-pile eyes, ears, and a voice",
     blurb:
       "The whole saga: the salvaged bill of materials, the debugging traps that cost an hour each, the calibration insight, and finally talking to the WOPR out loud.",
   },
   {
-    href: "/lab/listening",
+    href: "/meatball/notes/listening",
     kicker: "field note 02",
     title: "The math of listening",
     blurb:
       "Low-level DSP from raw samples to a working voice gate: the real FFT, windowing (200x less leakage), spectral-subtraction denoise and its U-curve. Every number from a live run.",
   },
   {
-    href: "/lab/motion",
+    href: "/meatball/notes/motion",
     kicker: "field note 03",
     title: "Teaching the eyes to ignore a box fan",
     blurb:

@@ -1,16 +1,4 @@
 import type { MetadataRoute } from "next"
-import { readFileSync } from "fs"
-import { join } from "path"
-
-function loadSiteData(): { projects: { slug: string }[] } | null {
-  try {
-    return JSON.parse(
-      readFileSync(join(process.cwd(), "public/data/site-data.json"), "utf-8")
-    )
-  } catch {
-    return null
-  }
-}
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = "https://bradley.io"
@@ -36,7 +24,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // carries their weight rather than /projects' 0.9.
     { url: `${base}/work`, changeFrequency: "weekly", priority: 0.8, lastModified: now },
     { url: `${base}/pilot-analytics`, changeFrequency: "daily", priority: 0.6, lastModified: now },
-    { url: `${base}/lab`, changeFrequency: "weekly", priority: 0.6, lastModified: now },
     { url: `${base}/mcp`, changeFrequency: "weekly", priority: 0.7, lastModified: now },
     { url: `${base}/papers`, changeFrequency: "weekly", priority: 0.8, lastModified: now },
     { url: `${base}/cost-analysis`, changeFrequency: "weekly", priority: 0.8, lastModified: now },
@@ -50,42 +37,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/dragonfli/worldevent`, changeFrequency: "daily", priority: 0.5, lastModified: now },
     { url: `${base}/sdr`, changeFrequency: "daily", priority: 0.6, lastModified: now },
     { url: `${base}/meatball`, changeFrequency: "daily", priority: 0.6, lastModified: now },
-    { url: `${base}/lab/senses`, changeFrequency: "monthly", priority: 0.5, lastModified: now },
-    { url: `${base}/lab/listening`, changeFrequency: "monthly", priority: 0.5, lastModified: now },
-    { url: `${base}/lab/motion`, changeFrequency: "monthly", priority: 0.5, lastModified: now },
-    { url: `${base}/lab/bio-mark`, changeFrequency: "monthly", priority: 0.5, lastModified: now },
     // /style-guide was retired with the v3 swap — archived under app/_legacy.
     // /eyes and /meatball/{log,memory} stay out — noindex by design.
   ]
 
-  // Timeline pages
-  const timelineOrgs = ["nominate-ai", "tinymachines", "sysforge-ai", "isenbek"]
-  const timelinePages: MetadataRoute.Sitemap = timelineOrgs.map((org) => {
-    let lastModified = now
-    try {
-      const data = JSON.parse(
-        readFileSync(join(process.cwd(), `public/data/${org}-timeline.json`), "utf-8")
-      )
-      if (data.generated) lastModified = new Date(data.generated)
-    } catch { /* use now */ }
-    return {
-      url: `${base}/projects/${org}`,
-      changeFrequency: "weekly" as const,
-      priority: 0.8,
-      lastModified,
-    }
-  })
-
-  // Dynamic project detail pages from site-data.json
-  const siteData = loadSiteData()
-  const projectPages: MetadataRoute.Sitemap = (siteData?.projects || [])
-    .filter((p) => !timelineOrgs.includes(p.slug))
-    .map((p) => ({
-      url: `${base}/projects/${p.slug}`,
-      changeFrequency: "weekly" as const,
-      priority: 0.6,
-      lastModified: now,
-    }))
-
-  return [...staticPages, ...timelinePages, ...projectPages]
+  // The timeline org pages and the 236 per-repository dossiers were generated
+  // here until 2026-08-29. Both are gone: /work replaced the org pages, and the
+  // dossiers were retired with the rest of the v3 layer. A sitemap that keeps
+  // advertising them is worse than one that omits them, because it invites a
+  // crawler to a 404 and then tells it the page changes weekly.
+  return staticPages
 }
