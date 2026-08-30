@@ -31,11 +31,20 @@ body:has(.beta-root) {
   -webkit-font-smoothing: antialiased;
 }
 
-/* v3 sets a dark ground under [data-theme="dark"] on the root element. beta is a
-   single design in one ground and does not participate: paper and panel are a
-   semantic distinction here, not a light/dark theme, and honouring the toggle
-   would turn documentation into machine output. The no-FOUC script still stamps
-   the attribute, so it has to be answered rather than ignored. */
+/* This site is a SINGLE-GROUND design and does not do light/dark. Paper and
+   panel are a semantic distinction here, not a theme, and honouring a dark
+   toggle would turn documentation into machine output.
+
+   The no-FOUC script in app/layout.tsx still stamps [data-theme] on <html> from
+   localStorage or the OS preference, so the attribute has to be answered rather
+   than ignored, which is what this rule does.
+
+   There is deliberately NO theme switch in the masthead. v3 had one; by the time
+   v3.css was deleted every route was on the kit, so it had already been flipping
+   an attribute nothing rendered. The one thing that still reads the attribute is
+   the bio-mark x-ray iframe (components/kit/BioMarkFrame.tsx), which follows the
+   OS preference. Put a control next to that tool if it ever wants one, rather
+   than a sitewide button that changes one embedded page. */
 :root[data-theme="dark"] body:has(.beta-root) {
   background: var(--color-paper);
   color: var(--color-ink);
@@ -1730,26 +1739,3 @@ body:has(.beta-root) {
    after the first. A gap does the same thing without a style prop per item. */
 .beta-promo-stack { display: grid; gap: calc(var(--u) * 3.5); }
 
-/* The light/dark switch, moved out of the retired v3 masthead into the kit's.
-   40px square because that is the tap-target floor, and it sits next to the
-   menu button rather than inside the menu: a theme switch you have to open a
-   menu to reach is a theme switch nobody finds. */
-.beta-theme-toggle {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  background: transparent;
-  border: 1px solid var(--color-rule);
-  border-radius: var(--radius-hair);
-  color: var(--color-ink-muted);
-  cursor: pointer;
-  transition: background 0.15s, border-color 0.15s, color 0.15s;
-}
-.beta-theme-toggle:hover {
-  border-color: var(--color-accent);
-  color: var(--color-accent-ink);
-}
-/* Placeholder until mounted, so the SSR and client markup match. */
-.beta-theme-toggle__ph { width: 16px; height: 16px; display: block; }

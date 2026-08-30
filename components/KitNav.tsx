@@ -5,7 +5,6 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { NAV } from "@/app/_nav"
 import { BioLogo } from "@/components/kit/BioLogo"
-import { ThemeToggle } from "@/components/kit/ThemeToggle"
 
 /**
  * The site masthead and its menu.
@@ -103,7 +102,6 @@ export function KitNav() {
         </Link>
 
         <div className="menu-wrap">
-          <ThemeToggle />
           <button
             type="button"
             className="menu-btn"
