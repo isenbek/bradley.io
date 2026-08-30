@@ -3,6 +3,7 @@
 // Edges are colored + weighted by signal strength; nodes colored by cluster.
 
 import { TrendSpark } from "./TrendSpark"
+import { rampColor, categoricalColor } from "./palette"
 
 type Node = { id: string; x: number; y: number; cluster?: string }
 type Link = { a: string; b: string; rssi: number }
@@ -17,24 +18,25 @@ function strength(rssi: number): number {
   const s = (rssi - -90) / (-25 - -90)
   return Math.max(0, Math.min(1, s))
 }
-// strength → red→amber→green
-function edgeColor(s: number): string {
-  return `hsl(${Math.round(s * 130)} 72% 55%)`
-}
+const edgeColor = (s: number) => rampColor(s)
 
-const CLUSTER_HUE: Record<string, number> = { A: 205, B: 268 }
-function clusterHue(c?: string): number {
-  if (c && c in CLUSTER_HUE) return CLUSTER_HUE[c]
-  // stable hue for any other cluster label
-  let h = 0
-  for (let i = 0; i < (c ?? "").length; i++) h = (h * 31 + (c ?? "").charCodeAt(i)) % 360
-  return h
+/**
+ * Cluster colour: identity, so the categorical order, assigned and never cycled.
+ *
+ * The old version hashed unknown labels into an arbitrary hue 0-359, which could
+ * land on red (reserved for a failed assertion), on the blue that means ACTIVE,
+ * or a half-step off a colour already in use. Four hues, in order, and a fifth
+ * cluster is deliberately grey rather than a fifth invented colour: the legend
+ * below names every cluster, so an unassigned one is still readable.
+ */
+function clusterHue(c?: string, all: string[] = []): string {
+  return categoricalColor(all.indexOf(c ?? ""))
 }
 
 export function MeshRssiMap({ data, series }: { data: Mesh; series?: number[] }) {
   const nodes = data.nodes ?? []
   const links = data.links ?? []
-  if (nodes.length === 0) return <div className="v3-we-mesh__empty">no nodes</div>
+  if (nodes.length === 0) return <div className="beta-we-mesh__empty">no nodes</div>
 
   const xs = nodes.map((n) => n.x)
   const ys = nodes.map((n) => n.y)
@@ -58,8 +60,8 @@ export function MeshRssiMap({ data, series }: { data: Mesh; series?: number[] })
   const ordered = [...links].sort((a, b) => a.rssi - b.rssi)
 
   return (
-    <div className="v3-we-mesh">
-      <svg className="v3-we-mesh__svg" viewBox={`0 0 ${W} ${H}`} role="img" aria-label="mesh RSSI graph">
+    <div className="beta-we-mesh">
+      <svg className="beta-we-mesh__svg" viewBox={`0 0 ${W} ${H}`} role="img" aria-label="mesh RSSI graph">
         {ordered.map((l, i) => {
           const pa = pos[l.a], pb = pos[l.b]
           if (!pa || !pb) return null
@@ -76,30 +78,30 @@ export function MeshRssiMap({ data, series }: { data: Mesh; series?: number[] })
         })}
         {nodes.map((n) => {
           const p = pos[n.id]
-          const hue = clusterHue(n.cluster)
+          const hue = clusterHue(n.cluster, clusters)
           return (
             <g key={n.id}>
-              <circle cx={p.x} cy={p.y} r={5.5} fill={`hsl(${hue} 75% 58%)`} stroke="#0a0f15" strokeWidth={1.5} />
-              <text x={p.x} y={p.y - 9} className="v3-we-mesh__lbl" textAnchor="middle">{n.id}</text>
+              <circle cx={p.x} cy={p.y} r={5.5} fill={hue} stroke="var(--color-panel)" strokeWidth={1.5} />
+              <text x={p.x} y={p.y - 9} className="beta-we-mesh__lbl" textAnchor="middle">{n.id}</text>
             </g>
           )
         })}
       </svg>
-      <div className="v3-we-mesh__meta">
+      <div className="beta-we-mesh__meta">
         <span><b>{data.units ?? nodes.length}</b> nodes</span>
         <span><b>{links.length}</b> links</span>
         <span>mean <b>{mean.toFixed(0)}</b></span>
         <span>best <b>{best.toFixed(0)}</b></span>
         <span>worst <b>{worst.toFixed(0)}</b> dBm</span>
         {clusters.map((c) => (
-          <span key={c} className="v3-we-mesh__cl">
-            <i style={{ background: `hsl(${clusterHue(c)} 75% 58%)` }} aria-hidden /> {c}
+          <span key={c} className="beta-we-mesh__cl">
+            <i style={{ background: clusterHue(c, clusters) }} aria-hidden /> {c}
           </span>
         ))}
       </div>
       {series && series.length > 1 ? (
-        // RSSI sits around -60 dBm, so center on the running mean; green when the
-        // latest sample is above the mean (signal improving), red below.
+        // RSSI sits around -60 dBm, so center on the running mean: ocean when the
+        // latest sample is above it (signal improving), burnt below.
         <TrendSpark series={series} label={`mean rssi, last ${series.length}`} floor={2} />
       ) : null}
     </div>

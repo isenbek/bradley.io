@@ -30,20 +30,20 @@ export function GpsPosition({ data, series }: { data: Tpv; series?: number[] }) 
   const has3d = mode >= 3
 
   return (
-    <div className="v3-we-vitals">
-      <div className="v3-we-vitals__hero">
-        <span className={`v3-we-vitals__lamp ${has3d ? "is-ok" : "is-warn"}`} aria-hidden />
+    <div className="beta-we-vitals">
+      <div className="beta-we-vitals__hero">
+        <span className={`beta-we-vitals__lamp ${has3d ? "is-ok" : "is-warn"}`} aria-hidden />
         <div>
-          <span className="v3-we-vitals__big">{m(data.altMSL)}</span>
-          <span className="v3-we-vitals__k">altitude MSL</span>
+          <span className="beta-we-vitals__big">{m(data.altMSL)}</span>
+          <span className="beta-we-vitals__k">altitude MSL</span>
         </div>
-        <span className="v3-we-vitals__tag">{fix} fix</span>
+        <span className="beta-we-vitals__tag">{fix} fix</span>
       </div>
       {series && series.length > 1 ? (
         // altitude jitters around a stationary mean — center on it, floor at 1 m
         <TrendSpark series={series} label={`altitude, last ${series.length}`} floor={1} />
       ) : null}
-      <dl className="v3-we-kv">
+      <dl className="beta-we-kv">
         <div><dt>lat</dt><dd>{deg(data.lat)}</dd></div>
         <div><dt>lon</dt><dd>{deg(data.lon)}</dd></div>
         <div><dt>speed</dt><dd>{data.speed == null ? "—" : `${data.speed.toFixed(2)} m/s`}</dd></div>

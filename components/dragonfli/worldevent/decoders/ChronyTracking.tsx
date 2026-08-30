@@ -28,9 +28,9 @@ function OffsetSpark({ series }: { series: number[] }) {
   const y = (v: number) => h / 2 - (v / amp) * (h / 2 - 2)
   const pts = us.map((v, i) => `${(i * step).toFixed(1)},${y(v).toFixed(1)}`).join(" ")
   return (
-    <svg className="v3-we-chrony__spark" viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="none" aria-hidden>
-      <line x1={0} y1={h / 2} x2={w} y2={h / 2} className="v3-we-chrony__zero" />
-      <polyline points={pts} fill="none" stroke="#38bdf8" strokeWidth={1.5} strokeLinejoin="round" strokeLinecap="round" />
+    <svg className="beta-we-chrony__spark" viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="none" aria-hidden>
+      <line x1={0} y1={h / 2} x2={w} y2={h / 2} className="beta-we-chrony__zero" />
+      <polyline points={pts} fill="none" stroke="var(--color-ocean)" strokeWidth={1.5} strokeLinejoin="round" strokeLinecap="round" />
     </svg>
   )
 }
@@ -53,22 +53,22 @@ export function ChronyTracking({ data, series }: { data: Chrony; series?: number
   const synced = Math.abs(off) < 1e-3 && (data.leap_status ?? "Normal") === "Normal"
 
   return (
-    <div className="v3-we-chrony">
-      <div className="v3-we-chrony__hero">
-        <span className={`v3-we-chrony__lamp ${synced ? "is-ok" : "is-warn"}`} aria-hidden />
+    <div className="beta-we-chrony">
+      <div className="beta-we-chrony__hero">
+        <span className={`beta-we-chrony__lamp ${synced ? "is-ok" : "is-warn"}`} aria-hidden />
         <div>
-          <span className="v3-we-chrony__off">{us(off)}</span>
-          <span className="v3-we-chrony__offk">system clock offset</span>
+          <span className="beta-we-chrony__off">{us(off)}</span>
+          <span className="beta-we-chrony__offk">system clock offset</span>
         </div>
-        <span className="v3-we-chrony__stratum">S{data.stratum ?? "?"}</span>
+        <span className="beta-we-chrony__stratum">S{data.stratum ?? "?"}</span>
       </div>
       {series && series.length > 1 ? (
-        <div className="v3-we-chrony__trend">
+        <div className="beta-we-chrony__trend">
           <OffsetSpark series={series} />
-          <span className="v3-we-chrony__trendk">offset, last {series.length}</span>
+          <span className="beta-we-chrony__trendk">offset, last {series.length}</span>
         </div>
       ) : null}
-      <dl className="v3-we-kv">
+      <dl className="beta-we-kv">
         <div><dt>ref</dt><dd>{data.ref_address ?? data.ref_id_hex ?? "—"}</dd></div>
         <div><dt>rms offset</dt><dd>{us(data.rms_offset)}</dd></div>
         <div><dt>root dist</dt><dd>{ms(rootDist)}</dd></div>

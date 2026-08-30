@@ -1,7 +1,9 @@
 // Shared offset-trend sparkline for decoder cards: a signed polyline plotted as
 // deviation from a baseline (the series mean, or a fixed zero), with a dashed
 // baseline line. Used by the mesh + gps cards; chrony keeps its own µs-scaled
-// variant. Color "sign" → green above / red below the baseline.
+// variant. Color "sign" diverges about the baseline: ocean above, burnt below.
+// It was green/red, which read as good/bad and spent the palette's reserved
+// failure colour on a node that was merely below its own average.
 
 export function TrendSpark({
   series,
@@ -26,14 +28,15 @@ export function TrendSpark({
   const y = (v: number) => h / 2 - (v / amp) * (h / 2 - 2)
   const pts = dev.map((v, i) => `${(i * step).toFixed(1)},${y(v).toFixed(1)}`).join(" ")
   const latest = dev[dev.length - 1] ?? 0
-  const stroke = color === "sign" ? `hsl(${latest >= 0 ? 130 : 0} 72% 55%)` : color
+  const stroke =
+    color === "sign" ? `var(--color-${latest >= 0 ? "ocean" : "burnt"})` : color
   return (
-    <div className="v3-we-trend">
-      <svg className="v3-we-trend__spark" viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="none" aria-hidden>
-        <line x1={0} y1={h / 2} x2={w} y2={h / 2} className="v3-we-trend__zero" />
+    <div className="beta-we-trend">
+      <svg className="beta-we-trend__spark" viewBox={`0 0 ${w} ${h}`} preserveAspectRatio="none" aria-hidden>
+        <line x1={0} y1={h / 2} x2={w} y2={h / 2} className="beta-we-trend__zero" />
         <polyline points={pts} fill="none" stroke={stroke} strokeWidth={1.5} strokeLinejoin="round" strokeLinecap="round" />
       </svg>
-      <span className="v3-we-trend__k">{label}</span>
+      <span className="beta-we-trend__k">{label}</span>
     </div>
   )
 }

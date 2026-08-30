@@ -3,6 +3,7 @@
 // sats-used trend sparkline, and a grid of dilution-of-precision vitals.
 // Trend metric mirrors the collector's series (uSat).
 import { TrendSpark } from "./TrendSpark"
+import { rampColor } from "./palette"
 
 type Sat = { PRN?: number; az?: number; el?: number; ss?: number; used?: boolean }
 type Sky = {
@@ -23,9 +24,7 @@ function dop(v?: number): string {
 function ssStrength(ss: number): number {
   return Math.max(0, Math.min(1, (ss - 10) / 35)) // ~10..45 dB
 }
-function ssColor(s: number): string {
-  return `hsl(${Math.round(s * 130)} 72% 55%)`
-}
+const ssColor = (s: number) => rampColor(s)
 
 // Polar skyplot: zenith at center, horizon at the rim. Azimuth 0°=N at top,
 // clockwise. Each satellite is a dot sized + colored by SNR; unused sats are
@@ -55,27 +54,27 @@ function SkyPlot({ sats }: { sats: Sat[] }) {
   )
 
   return (
-    <svg className="v3-we-sky" viewBox={`0 0 ${S} ${S}`} role="img" aria-label="GPS skyplot">
+    <svg className="beta-we-sky" viewBox={`0 0 ${S} ${S}`} role="img" aria-label="GPS skyplot">
       {rings.map((el) => (
-        <circle key={el} cx={c} cy={c} r={rFor(el)} className="v3-we-sky__ring" />
+        <circle key={el} cx={c} cy={c} r={rFor(el)} className="beta-we-sky__ring" />
       ))}
-      <line x1={c} y1={c - R} x2={c} y2={c + R} className="v3-we-sky__spoke" />
-      <line x1={c - R} y1={c} x2={c + R} y2={c} className="v3-we-sky__spoke" />
-      <text x={c} y={c - R - 5} textAnchor="middle" className="v3-we-sky__lbl">N</text>
-      <text x={c + R + 6} y={c + 3} textAnchor="middle" className="v3-we-sky__lbl">E</text>
-      <text x={c} y={c + R + 11} textAnchor="middle" className="v3-we-sky__lbl">S</text>
-      <text x={c - R - 7} y={c + 3} textAnchor="middle" className="v3-we-sky__lbl">W</text>
+      <line x1={c} y1={c - R} x2={c} y2={c + R} className="beta-we-sky__spoke" />
+      <line x1={c - R} y1={c} x2={c + R} y2={c} className="beta-we-sky__spoke" />
+      <text x={c} y={c - R - 5} textAnchor="middle" className="beta-we-sky__lbl">N</text>
+      <text x={c + R + 6} y={c + 3} textAnchor="middle" className="beta-we-sky__lbl">E</text>
+      <text x={c} y={c + R + 11} textAnchor="middle" className="beta-we-sky__lbl">S</text>
+      <text x={c - R - 7} y={c + 3} textAnchor="middle" className="beta-we-sky__lbl">W</text>
       {ordered.map((s, i) => {
         const p = pos(s.az as number, s.el as number)
         const str = ssStrength(s.ss ?? 0)
         if (!s.used) {
-          return <circle key={s.PRN ?? i} cx={p.x} cy={p.y} r={2.6} className="v3-we-sky__sat--off" />
+          return <circle key={s.PRN ?? i} cx={p.x} cy={p.y} r={2.6} className="beta-we-sky__sat--off" />
         }
         return (
           <g key={s.PRN ?? i}>
-            <circle cx={p.x} cy={p.y} r={3 + str * 2.6} fill={ssColor(str)} stroke="#0a0f15" strokeWidth={1} />
+            <circle cx={p.x} cy={p.y} r={3 + str * 2.6} fill={ssColor(str)} stroke="var(--color-panel)" strokeWidth={1} />
             {labelled.has(s.PRN) ? (
-              <text x={p.x} y={p.y - 6} textAnchor="middle" className="v3-we-sky__prn">{s.PRN}</text>
+              <text x={p.x} y={p.y - 6} textAnchor="middle" className="beta-we-sky__prn">{s.PRN}</text>
             ) : null}
           </g>
         )
@@ -93,21 +92,21 @@ export function GpsSatellites({ data, series }: { data: Sky; series?: number[] }
   const ok = u >= 4
 
   return (
-    <div className="v3-we-vitals">
-      <div className="v3-we-vitals__hero">
-        <span className={`v3-we-vitals__lamp ${ok ? "is-ok" : "is-warn"}`} aria-hidden />
+    <div className="beta-we-vitals">
+      <div className="beta-we-vitals__hero">
+        <span className={`beta-we-vitals__lamp ${ok ? "is-ok" : "is-warn"}`} aria-hidden />
         <div>
-          <span className="v3-we-vitals__big">{u}<small>/{n}</small></span>
-          <span className="v3-we-vitals__k">satellites used</span>
+          <span className="beta-we-vitals__big">{u}<small>/{n}</small></span>
+          <span className="beta-we-vitals__k">satellites used</span>
         </div>
-        <span className="v3-we-vitals__tag">pdop {dop(data.pdop)}</span>
+        <span className="beta-we-vitals__tag">pdop {dop(data.pdop)}</span>
       </div>
       {sats.length ? <SkyPlot sats={sats} /> : null}
       {series && series.length > 1 ? (
         // sats-used count drifts around a mean — center on it, floor at 1 sat
         <TrendSpark series={series} label={`sats used, last ${series.length}`} floor={1} />
       ) : null}
-      <dl className="v3-we-kv">
+      <dl className="beta-we-kv">
         <div><dt>hdop</dt><dd>{dop(data.hdop)}</dd></div>
         <div><dt>vdop</dt><dd>{dop(data.vdop)}</dd></div>
         <div><dt>gdop</dt><dd>{dop(data.gdop)}</dd></div>

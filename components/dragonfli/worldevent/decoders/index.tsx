@@ -35,7 +35,7 @@ export function decoderFor(type: string): Decoder | null {
 export function GenericSample({ sample }: { sample: Sample }) {
   const entries = Object.entries(sample).slice(0, 6)
   return (
-    <dl className="v3-we-card__sample">
+    <dl className="beta-we-card__sample">
       {entries.map(([k, v]) => (
         <div key={k}>
           <dt>{k}</dt>

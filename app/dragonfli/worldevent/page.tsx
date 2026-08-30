@@ -23,11 +23,7 @@ export default function Page() {
         A schema-tagged UDP firehose from every sensor on the network: mesh radios, clocks, GPS, Bluetooth census, ADS-B. Six decoders render what they recognise; anything else falls back to a generic view rather than being dropped.
       </p>
 
-      {/* The instrument keeps its own styling. See .kit-island in app/kit.css
-          for why .v3 stays on this wrapper. */}
-      <div className="v3 kit-island">
-        <WorldEventBus />
-      </div>
+      <WorldEventBus />
     </div>
   )
 }

@@ -1,3 +1,5 @@
+
+import { rampColor } from "./palette"
 // Decoder for `ble.device_census` — the Bluetooth-LE environment as seen by the
 // sensor fleet over a rolling window. Hero = resolved devices; a vitals grid
 // carries the census aggregates (rotating private addresses, coverage,
@@ -21,9 +23,7 @@ type Census = {
 function strength(rssi: number): number {
   return Math.max(0, Math.min(1, (rssi - -90) / (-30 - -90)))
 }
-function rssiColor(rssi: number): string {
-  return `hsl(${Math.round(strength(rssi) * 130)} 72% 58%)`
-}
+const rssiColor = (rssi: number) => rampColor(strength(rssi))
 
 function fmtWindow(s?: number): string {
   if (!s) return "—"
@@ -45,19 +45,19 @@ export function BleDeviceCensus({ data }: { data: Census }) {
   const mnPct = data.multi_node_frac != null ? Math.round(data.multi_node_frac * 100) : null
 
   return (
-    <div className="v3-we-vitals">
-      <div className="v3-we-vitals__hero">
-        <span className="v3-we-vitals__lamp is-ok" aria-hidden />
+    <div className="beta-we-vitals">
+      <div className="beta-we-vitals__hero">
+        <span className="beta-we-vitals__lamp is-ok" aria-hidden />
         <div>
-          <span className="v3-we-vitals__big">{fmtInt(data.devices)}</span>
-          <span className="v3-we-vitals__k">resolved devices</span>
+          <span className="beta-we-vitals__big">{fmtInt(data.devices)}</span>
+          <span className="beta-we-vitals__k">resolved devices</span>
         </div>
-        <span className="v3-we-vitals__tag">
+        <span className="beta-we-vitals__tag">
           {nodes} node{nodes === 1 ? "" : "s"}
         </span>
       </div>
 
-      <dl className="v3-we-kv">
+      <dl className="beta-we-kv">
         <div><dt>addresses</dt><dd>{fmtInt(data.rpas)}</dd></div>
         <div><dt>multi-node</dt><dd>{mnPct != null ? `${mnPct}%` : "—"}</dd></div>
         <div><dt>collapse</dt><dd>{data.collapse != null ? `${data.collapse.toFixed(2)}×` : "—"}</dd></div>
@@ -67,18 +67,18 @@ export function BleDeviceCensus({ data }: { data: Census }) {
       </dl>
 
       {anchors.length ? (
-        <ul className="v3-we-ble__anchors">
+        <ul className="beta-we-ble__anchors">
           {anchors.map((a, i) => (
-            <li key={a.addr ?? i} className="v3-we-ble__row">
-              <span className="v3-we-ble__addr">{a.addr ?? "—"}</span>
-              <span className="v3-we-ble__nodes">{a.nodes ?? 0}× nodes</span>
-              <span className="v3-we-ble__rssi" style={{ color: a.rssi != null ? rssiColor(a.rssi) : undefined }}>
+            <li key={a.addr ?? i} className="beta-we-ble__row">
+              <span className="beta-we-ble__addr">{a.addr ?? "—"}</span>
+              <span className="beta-we-ble__nodes">{a.nodes ?? 0}× nodes</span>
+              <span className="beta-we-ble__rssi" style={{ color: a.rssi != null ? rssiColor(a.rssi) : undefined }}>
                 {a.rssi != null ? `${a.rssi.toFixed(0)} dBm` : "—"}
               </span>
-              <span className="v3-we-ble__bar" aria-hidden>
+              <span className="beta-we-ble__bar" aria-hidden>
                 <span style={{ width: `${Math.round(((a.obs ?? 0) / maxObs) * 100)}%` }} />
               </span>
-              <span className="v3-we-ble__obs">{fmtInt(a.obs)}</span>
+              <span className="beta-we-ble__obs">{fmtInt(a.obs)}</span>
             </li>
           ))}
         </ul>

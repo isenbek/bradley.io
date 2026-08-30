@@ -1107,3 +1107,267 @@ body:has(.beta-root) {
   stroke-width: 1.5;
   vector-effect: non-scaling-stroke;
 }
+
+/* ===========================================================================
+   THE WORLDEVENT PERCEPTION BUS
+
+   Six decoders over a schema-tagged UDP firehose: mesh RSSI, GPS position and
+   satellites, chrony tracking, a BLE census, ADS-B. All panel, which it already
+   was: this was a dark-well design before the port, so the work here was
+   retokenising rather than moving grounds.
+
+   --we-hue is set per card by hueFor() in WorldEventBus.tsx and is now a COLOUR
+   (var(--color-ocean) and friends), not an hsl angle. See the note there for
+   why the old generated hue had to go.
+   ======================================================================== */
+
+.beta-we { display: flex; flex-direction: column; gap: calc(var(--u) * 4); }
+
+/* ---- The status bar ----------------------------------------------------- */
+.beta-we-hud {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: calc(var(--u) * 2.5) calc(var(--u) * 4);
+  padding: calc(var(--u) * 3) calc(var(--u) * 4);
+  border-radius: var(--radius-mod);
+  background: var(--color-panel);
+  border: 1px solid var(--color-rule-panel);
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+  color: var(--color-glass-muted);
+}
+.beta-we-hud__status {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--u) * 2);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-caps);
+  color: var(--color-glass);
+}
+.beta-we-hud__dot { width: calc(var(--u) * 2); height: calc(var(--u) * 2); border-radius: 50%; background: var(--color-drive-float); flex: none; }
+/* The three states, each on the colour the kit reserves for it: ACTIVE while
+   the stream is live, ATTENTION while it is reconnecting, and red only when the
+   bus is actually down, which is the assertion this page exists to make. */
+.beta-we-hud__status.is-live .beta-we-hud__dot { background: var(--color-blue); }
+.beta-we-hud__status.is-connecting .beta-we-hud__dot { background: var(--color-orange); }
+.beta-we-hud__status.is-offline .beta-we-hud__dot { background: var(--color-red); }
+.beta-we-hud__meta { display: inline-flex; flex-wrap: wrap; align-items: center; gap: calc(var(--u) * 2) calc(var(--u) * 3.5); margin-left: auto; }
+.beta-we-hud__port, .beta-we-hud__up { color: var(--color-glass-muted); }
+.beta-we-schema {
+  background: color-mix(in srgb, var(--color-ocean) 16%, transparent);
+  color: var(--color-ocean);
+  padding: 2px calc(var(--u) * 2);
+  border-radius: var(--radius-hair);
+  font-size: var(--text-micro);
+}
+
+/* ---- The stat strip ----------------------------------------------------- */
+.beta-we-top { display: grid; gap: calc(var(--u) * 3); grid-template-columns: repeat(auto-fit, minmax(min(150px, 100%), 1fr)); }
+.beta-we-stat {
+  background: var(--color-panel-sunk);
+  border: 1px solid var(--color-rule-panel);
+  border-radius: var(--radius-mod);
+  padding: calc(var(--u) * 3.5) calc(var(--u) * 4);
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.beta-we-stat__k {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-caps);
+  color: var(--color-glass-muted);
+}
+.beta-we-stat__v { font-family: var(--font-display); font-size: var(--text-h2); font-weight: 800; color: var(--color-glass); line-height: 1.05; font-variant-numeric: tabular-nums; }
+.beta-we-stat__v small { font-size: var(--text-data); font-weight: 600; color: var(--color-glass-muted); }
+.beta-we-stat__sub { font-family: var(--font-mono); font-size: var(--text-micro); color: var(--color-glass-muted); }
+.beta-we-stat--spark { justify-content: space-between; }
+.beta-we-topspark { width: 100%; height: calc(var(--u) * 11); }
+.beta-we-topspark rect { fill: var(--color-ocean); opacity: 0.85; }
+
+/* ---- One card per schema ------------------------------------------------ */
+.beta-we-types { display: grid; gap: calc(var(--u) * 3.5); grid-template-columns: repeat(auto-fill, minmax(min(248px, 100%), 1fr)); }
+.beta-we-card {
+  background: var(--color-panel);
+  border: 1px solid var(--color-rule-panel);
+  border-left: 3px solid var(--we-hue, var(--color-ocean));
+  border-radius: var(--radius-mod);
+  padding: calc(var(--u) * 3.5) calc(var(--u) * 4) calc(var(--u) * 4);
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--u) * 2.25);
+}
+.beta-we-card--wide { grid-column: 1 / -1; }
+.beta-we-card__dot { width: calc(var(--u) * 2.25); height: calc(var(--u) * 2.25); border-radius: 50%; background: var(--we-hue, var(--color-ocean)); flex: none; }
+.beta-we-card__sharebar { height: calc(var(--u) * 1.5); border-radius: var(--radius-hair); background: var(--color-panel-sunk); overflow: hidden; }
+.beta-we-card__sharebar > span { display: block; height: 100%; border-radius: var(--radius-hair); background: var(--we-hue, var(--color-ocean)); }
+
+/* ---- The tail: the last N events ---------------------------------------- */
+.beta-we-tail { list-style: none; margin: 0; padding: 0; display: grid; gap: calc(var(--u) * 1.5); font-family: var(--font-mono); font-size: var(--text-micro); }
+.beta-we-tail li { display: flex; gap: calc(var(--u) * 2.5); align-items: baseline; min-width: 0; }
+.beta-we-tail__type { color: var(--we-hue, var(--color-ocean)); white-space: nowrap; }
+.beta-we-tail--none { color: var(--color-glass-muted); }
+
+/* ---- Hosts, key/value rows, and the empty state ------------------------- */
+.beta-we-hosts { display: flex; flex-wrap: wrap; gap: calc(var(--u) * 2); }
+  padding: 2px calc(var(--u) * 2);
+  border-radius: var(--radius-hair);
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-caps);
+  color: var(--we-hue, var(--color-ocean));
+  background: color-mix(in srgb, var(--we-hue, var(--color-ocean)) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--we-hue, var(--color-ocean)) 30%, transparent);
+}
+.beta-we-host--none { color: var(--color-glass-muted); background: transparent; border-color: var(--color-rule-panel); }
+
+.beta-we-kv { display: grid; grid-template-columns: minmax(0, auto) minmax(0, 1fr); gap: calc(var(--u) * 1.5) calc(var(--u) * 3); font-family: var(--font-mono); font-size: var(--text-micro); }
+.beta-we-kv dt { color: var(--color-glass-muted); }
+.beta-we-kv dd { margin: 0; color: var(--color-glass); font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+
+.beta-we-empty { color: var(--color-glass-muted); font-family: var(--font-mono); font-size: var(--text-fine); }
+.beta-we-grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(14rem, 100%), 1fr)); gap: calc(var(--u) * 3); }
+.beta-we-panel { background: var(--color-panel); border: 1px solid var(--color-rule-panel); border-radius: var(--radius-mod); padding: calc(var(--u) * 3.5); }
+
+/* ---- Decoder internals -------------------------------------------------- */
+.beta-we-vitals { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(7rem, 100%), 1fr)); gap: calc(var(--u) * 2.5); }
+.beta-we-vitals__k { font-family: var(--font-mono); font-size: var(--text-micro); text-transform: uppercase; letter-spacing: var(--tracking-caps); color: var(--color-glass-muted); }
+
+/* The satellite skyplot. Square by ratio so it stays circular on a phone. */
+.beta-we-sky { position: relative; aspect-ratio: 1; max-width: 20rem; margin: 0 auto; }
+.beta-we-sky svg { display: block; width: 100%; height: 100%; }
+.beta-we-sky circle.ring, .beta-we-sky line.spoke { fill: none; stroke: var(--color-rule-panel); }
+.beta-we-sky text { fill: var(--color-glass-muted); font-family: var(--font-mono); font-size: 7px; }
+/* Signal strength is a magnitude, so it reads off the sequential ramp rather
+   than a categorical hue. */
+.beta-we-sky .sat { stroke: var(--color-panel); stroke-width: 0.5; }
+.beta-we-sky .sat--used { fill: var(--color-ocean); }
+.beta-we-sky .sat--unused { fill: var(--color-drive-float); }
+
+.beta-we-mesh { display: grid; gap: calc(var(--u) * 2); }
+
+.beta-we-ble__row { display: flex; justify-content: space-between; gap: calc(var(--u) * 3); color: var(--color-glass-muted); }
+.beta-we-ble__row b { color: var(--color-glass); font-weight: 500; }
+
+.beta-we-chrony { display: grid; gap: calc(var(--u) * 2); font-family: var(--font-mono); font-size: var(--text-micro); }
+
+.beta-we-spark rect { fill: var(--color-ocean); opacity: 0.8; }
+
+/* ---- Decoder internals -------------------------------------------------
+   Ported from the v3 rules one for one, retokenised. Three substitutions are
+   deliberate rather than mechanical:
+
+   - The ok/warn lamps were #22c55e and #f59e0b. Green/amber reads as a traffic
+     light, and this palette already assigns those meanings: ACTIVE and
+     ATTENTION. They are now --color-blue and --color-orange, which is the same
+     distinction drawn with the colours that carry it here.
+   - The BLE strength bar was a two-hue gradient (#2b6d8f to #38bdf8). Strength
+     is magnitude, so it is now one hue, light to dark, off the same ramp the
+     decoders use.
+   - SVG grounds and hairlines take --color-panel-sunk and --color-rule-panel
+     rather than the rgba(255,255,255,...) washes, so they track the theme
+     instead of assuming a dark one.
+   ------------------------------------------------------------------------ */
+
+/* Cards */
+.beta-we-card__head { display: flex; align-items: center; gap: calc(var(--u) * 2); }
+.beta-we-card__type { font-family: var(--font-mono); font-size: var(--text-data); font-weight: 700; color: var(--color-glass); word-break: break-all; }
+.beta-we-card__age { margin-left: auto; font-family: var(--font-mono); font-size: var(--text-micro); color: var(--color-glass-muted); flex: none; }
+.beta-we-card__nums { display: flex; align-items: baseline; justify-content: space-between; gap: calc(var(--u) * 2); }
+.beta-we-card__count { font-size: var(--text-h3); font-weight: 700; color: var(--color-glass); line-height: 1; }
+.beta-we-card__rate { font-family: var(--font-mono); font-size: var(--text-micro); color: var(--color-glass-muted); text-align: right; }
+.beta-we-card__share { font-family: var(--font-mono); font-size: var(--text-micro); color: var(--color-glass-muted); text-transform: uppercase; letter-spacing: var(--tracking-caps); }
+.beta-we-card--decoded { border-left-width: 3px; }
+.beta-we-card__badge {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-caps);
+  color: var(--color-glass-muted);
+  border: 1px solid var(--color-rule-panel);
+  border-radius: var(--radius-hair);
+  padding: 1px calc(var(--u) * 1.5);
+  flex: none;
+}
+.beta-we-card__sample { margin: 2px 0 0; display: flex; flex-direction: column; gap: 3px; border-top: 1px solid var(--color-rule-panel); padding-top: calc(var(--u) * 2); }
+.beta-we-card__sample > div { display: flex; gap: calc(var(--u) * 2); justify-content: space-between; font-family: var(--font-mono); font-size: var(--text-micro); }
+.beta-we-card__sample dt { color: var(--color-glass-muted); }
+.beta-we-card__sample dd { margin: 0; color: var(--color-glass); text-align: right; word-break: break-all; }
+
+/* Panel headings, host list, tail rows */
+.beta-we-panel__h { margin: 0 0 calc(var(--u) * 2.5); font-family: var(--font-mono); font-size: var(--text-fine); font-weight: 700; text-transform: uppercase; letter-spacing: var(--tracking-caps); color: var(--color-glass); }
+.beta-we-host__name { color: var(--color-glass); font-weight: 700; }
+.beta-we-host__count { margin-left: auto; color: var(--color-glass-muted); }
+.beta-we-host__age { color: var(--color-glass-muted); min-width: calc(var(--u) * 8.5); text-align: right; }
+.beta-we-tail__t { color: var(--color-glass-muted); }
+.beta-we-tail__sum { color: var(--color-glass); word-break: break-word; }
+
+/* Signed trend sparkline (mesh + gps). The polyline carries its own stroke
+   inline, because the colour is the datum: ocean above the baseline, burnt
+   below. No stroke rule here, or CSS would win over that attribute. */
+.beta-we-trend { display: flex; flex-direction: column; gap: 2px; margin-top: calc(var(--u) * 2); }
+.beta-we-trend__spark { width: 100%; height: calc(var(--u) * 8.5); display: block; }
+.beta-we-trend__zero { stroke: var(--color-rule-panel); stroke-width: 1; stroke-dasharray: 3 3; }
+.beta-we-trend__k { font-family: var(--font-mono); font-size: var(--text-micro); text-transform: uppercase; letter-spacing: var(--tracking-caps); color: var(--color-glass-muted); }
+
+/* chrony */
+.beta-we-chrony__hero { display: flex; align-items: center; gap: calc(var(--u) * 2.5); }
+.beta-we-chrony__lamp { width: calc(var(--u) * 2.5); height: calc(var(--u) * 2.5); border-radius: 50%; flex: none; }
+.beta-we-chrony__lamp.is-ok { background: var(--color-blue); }
+.beta-we-chrony__lamp.is-warn { background: var(--color-orange); }
+.beta-we-chrony__off { display: block; font-size: var(--text-lead); font-weight: 700; color: var(--color-glass); line-height: 1; font-variant-numeric: tabular-nums; }
+.beta-we-chrony__offk { display: block; font-family: var(--font-mono); font-size: var(--text-micro); text-transform: uppercase; letter-spacing: var(--tracking-caps); color: var(--color-glass-muted); margin-top: 2px; }
+.beta-we-chrony__stratum { margin-left: auto; font-family: var(--font-mono); font-size: var(--text-data); font-weight: 700; color: var(--color-glass-muted); }
+.beta-we-chrony__trend { display: flex; flex-direction: column; gap: 2px; }
+.beta-we-chrony__spark { width: 100%; height: calc(var(--u) * 8.5); display: block; }
+.beta-we-chrony__zero { stroke: var(--color-rule-panel); stroke-width: 1; stroke-dasharray: 3 3; }
+.beta-we-chrony__trendk { font-family: var(--font-mono); font-size: var(--text-micro); text-transform: uppercase; letter-spacing: var(--tracking-caps); color: var(--color-glass-muted); }
+
+/* mesh graph */
+.beta-we-mesh__svg { width: 100%; height: auto; display: block; background: var(--color-panel-sunk); border-radius: var(--radius-mod); border: 1px solid var(--color-rule-panel); }
+.beta-we-mesh__lbl { fill: var(--color-glass-muted); font-family: var(--font-mono); font-size: 8px; }
+.beta-we-mesh__empty { color: var(--color-glass-muted); font-family: var(--font-mono); font-size: var(--text-fine); padding: calc(var(--u) * 3) 0; }
+.beta-we-mesh__meta { display: flex; flex-wrap: wrap; gap: calc(var(--u) * 1.5) calc(var(--u) * 4); font-family: var(--font-mono); font-size: var(--text-micro); color: var(--color-glass-muted); }
+.beta-we-mesh__meta b { color: var(--color-glass); }
+.beta-we-mesh__cl { display: inline-flex; align-items: center; gap: 5px; }
+.beta-we-mesh__cl i { width: 9px; height: 9px; border-radius: 50%; display: inline-block; flex: none; }
+
+/* vitals (adsb) */
+.beta-we-vitals__hero { display: flex; align-items: center; gap: calc(var(--u) * 2.5); }
+.beta-we-vitals__lamp { width: calc(var(--u) * 2.5); height: calc(var(--u) * 2.5); border-radius: 50%; flex: none; }
+.beta-we-vitals__lamp.is-ok { background: var(--color-blue); }
+.beta-we-vitals__lamp.is-warn { background: var(--color-orange); }
+.beta-we-vitals__big { display: block; font-size: var(--text-lead); font-weight: 700; color: var(--color-glass); line-height: 1; font-variant-numeric: tabular-nums; }
+.beta-we-vitals__big small { font-size: var(--text-body); font-weight: 600; color: var(--color-glass-muted); }
+.beta-we-vitals__k { display: block; font-family: var(--font-mono); font-size: var(--text-micro); text-transform: uppercase; letter-spacing: var(--tracking-caps); color: var(--color-glass-muted); margin-top: 2px; }
+.beta-we-vitals__tag { margin-left: auto; font-family: var(--font-mono); font-size: var(--text-data); font-weight: 700; color: var(--color-glass-muted); }
+
+/* gps skyplot */
+.beta-we-sky { width: 100%; max-width: 220px; margin: 2px auto 0; display: block; }
+.beta-we-sky__ring { fill: none; stroke: var(--color-rule-panel); stroke-width: 1; }
+.beta-we-sky__spoke { stroke: var(--color-rule-panel); stroke-width: 1; }
+.beta-we-sky__lbl { fill: var(--color-glass-muted); font-family: var(--font-mono); font-size: 9px; }
+.beta-we-sky__prn { fill: var(--color-glass-muted); font-family: var(--font-mono); font-size: 7px; }
+.beta-we-sky__sat--off { fill: none; stroke: var(--color-drive-float); stroke-width: 1; }
+
+/* ble census */
+.beta-we-ble__anchors { list-style: none; margin: 2px 0 0; padding: 0; display: flex; flex-direction: column; gap: 5px; }
+.beta-we-ble__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  grid-template-areas: "addr nodes rssi" "bar bar obs";
+  align-items: center;
+  gap: 2px calc(var(--u) * 2);
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+}
+.beta-we-ble__addr { grid-area: addr; color: var(--color-glass); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.beta-we-ble__nodes { grid-area: nodes; color: var(--color-glass-muted); }
+.beta-we-ble__rssi { grid-area: rssi; font-variant-numeric: tabular-nums; }
+.beta-we-ble__bar { grid-area: bar; height: 4px; border-radius: var(--radius-hair); background: var(--color-panel-sunk); overflow: hidden; min-width: 0; }
+.beta-we-ble__bar > span { display: block; height: 100%; border-radius: var(--radius-hair); background: linear-gradient(90deg, color-mix(in oklab, var(--color-ocean) 35%, var(--color-panel)), var(--color-ocean)); }
+.beta-we-ble__obs { grid-area: obs; color: var(--color-glass-muted); font-variant-numeric: tabular-nums; text-align: right; }
