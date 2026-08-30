@@ -1,6 +1,6 @@
 import Link from "next/link"
 import buildInfo from "@/lib/build-info.json"
-import { timeAgo } from "@/lib/time-ago"
+import { DeployedAgo } from "@/components/kit/DeployedAgo"
 import { KitNav } from "./KitNav"
 
 /**
@@ -14,7 +14,6 @@ import { KitNav } from "./KitNav"
  */
 export function KitShell({ children }: { children: React.ReactNode }) {
   const shortHash = buildInfo.commitHash?.slice(0, 7) ?? ""
-  const deployedAgo = buildInfo.buildTime ? timeAgo(buildInfo.buildTime) : ""
 
   return (
     <div className="beta-root">
@@ -45,7 +44,12 @@ export function KitShell({ children }: { children: React.ReactNode }) {
                 >
                   {buildInfo.version}
                 </a>
-                {deployedAgo ? ` · deployed ${deployedAgo}` : ""}
+                {buildInfo.buildTime ? (
+                  <>
+                    {" · deployed "}
+                    <DeployedAgo iso={buildInfo.buildTime} />
+                  </>
+                ) : null}
               </span>
             </footer>
           </div>
