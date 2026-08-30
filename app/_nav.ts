@@ -90,7 +90,6 @@ const KIT_EXTRA = [
   "/dragonfli/airspace",
   "/dragonfli/gps",
   "/dragonfli/worldevent",
-  "/trng/space",
   "/meatball/log",
   "/meatball/memory",
   "/terminal",

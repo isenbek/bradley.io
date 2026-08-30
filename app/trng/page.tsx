@@ -28,8 +28,9 @@ export default function TrngPage() {
           measurement, taken continuously and not smoothed.
         </p>
         <p>
-          <Link href="/trng/space">See the entropy in 3D</Link>: rotatable point clouds built from
-          the same bits.
+          The same bits, drawn:{" "}
+          <a href="https://tinymachines.ai/hotbits/space">the entropy views</a> live on
+          tinymachines.ai, beside the instrument itself.
         </p>
       </div>
 

@@ -75,6 +75,16 @@ const nextConfig = {
       { source: '/beta', destination: '/', permanent: true },
       { source: '/beta/:path*', destination: '/:path*', permanent: true },
 
+      // The entropy views moved to tinymachines.ai/hotbits/space on
+      // 2026-08-29. They belong beside the instrument they plot, which answers
+      // at hotbits.tinymachines.ai either way, and this site keeps /trng as the
+      // instrument's summary.
+      {
+        source: '/trng/space',
+        destination: 'https://tinymachines.ai/hotbits/space',
+        permanent: true,
+      },
+
       // ---- The v3 retirement, 2026-08-29 -------------------------------
       // /lab is gone. Its three field notes were the Meatball write-ups and
       // moved under the project they belong to; the index itself described a
