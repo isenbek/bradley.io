@@ -46,23 +46,23 @@ export function DieStack() {
   const [open, setOpen] = useState(false)
 
   return (
-    <figure className="v3-mos-stack">
-      <div className="v3-mos-stack__tabs" role="group" aria-label="Die layer">
+    <figure className="beta-stack">
+      <div className="beta-stack__tabs" role="group" aria-label="Die layer">
         {LAYERS.map((l, n) => (
           <button
             key={l.key}
             type="button"
-            className={`v3-mos-stack__tab${n === i ? " is-on" : ""}`}
+            className={`beta-stack__tab${n === i ? " is-on" : ""}`}
             aria-pressed={n === i}
             onClick={() => setI(n)}
           >
-            <span className="v3-mos-stack__tab-n">{n + 1}</span>
+            <span className="beta-stack__tab-n">{n + 1}</span>
             {l.label}
           </button>
         ))}
       </div>
 
-      <div className="v3-mos-stack__frame">
+      <div className="beta-stack__frame">
         {LAYERS.map((l, n) => (
           <img
             key={l.key}
@@ -72,13 +72,13 @@ export function DieStack() {
             width={1100}
             height={882}
             decoding="async"
-            className={`v3-mos-stack__img${n === i ? " is-on" : ""}`}
+            className={`beta-stack__img${n === i ? " is-on" : ""}`}
           />
         ))}
-        <span className="v3-mos-stack__badge">register &amp; ALU section</span>
+        <span className="beta-stack__badge">register &amp; ALU section</span>
         <button
           type="button"
-          className="v3-mos-stack__zoom"
+          className="beta-stack__zoom"
           onClick={() => setOpen(true)}
           aria-label={`Open the ${LAYERS[i].label.toLowerCase()} layer full screen`}
         >
@@ -86,7 +86,7 @@ export function DieStack() {
         </button>
       </div>
 
-      <figcaption className="v3-mos-stack__cap">{LAYERS[i].cap}</figcaption>
+      <figcaption className="beta-stack__cap">{LAYERS[i].cap}</figcaption>
 
       {open ? (
         <Lightbox

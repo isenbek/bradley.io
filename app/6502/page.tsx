@@ -9,8 +9,8 @@ const TOTAL = GROUPS.reduce((n, g) => n + g.items.length, 0)
  * The 6502, on the style kit.
  *
  * Content lives in ./_content.ts so the port could not quietly retype a link or
- * a transistor count. The die visualisations stay as a v3 island: they are
- * canvas, and the kit has no opinion about a die plate.
+ * a transistor count. The die plates are <img> in a panel well, not canvas, so
+ * they retokenised onto the kit like everything else here.
  */
 export default function Page() {
   return (
@@ -39,11 +39,8 @@ export default function Page() {
         </p>
       </div>
 
-      {/* Canvas die plates. See .kit-island in app/kit.css. */}
-      <div className="v3 kit-island">
-        <DiePlates />
-        <DieStack />
-      </div>
+      <DiePlates />
+      <DieStack />
 
       <div className="prose beta-sec">
         <h2>3,510 transistors that moved the industry</h2>

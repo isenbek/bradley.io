@@ -31,5 +31,5 @@ export function PreferencesClient() {
     return () => s.removeEventListener("load", run)
   }, [])
 
-  return <div ref={ref} className="v3-prefs__mount" />
+  return <div ref={ref} className="beta-scanner" />
 }

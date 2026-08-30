@@ -19,9 +19,12 @@ export default function TerminalPage() {
         Everything on this site, reachable by typing. Start with <code>help</code>.
       </p>
 
-      {/* The terminal keeps its own look deliberately: a CLI that took the
-          surrounding page's typography would stop reading as a terminal, which
-          is the one thing this component is for. See .kit-island in app/kit.css. */}
+      {/* PERMANENT ISLAND, decided 2026-08-30.
+          Every other instrument was ported off v3; this one is not going to be.
+          A terminal that adopts the page's serif prose and paper ground stops
+          reading as a terminal, and reading as a terminal is the entire job of
+          this component. The seam here is the design, not unfinished work.
+          See .kit-island in app/kit.css. */}
       <div className="v3 kit-island">
         <V3Terminal />
       </div>

@@ -42,18 +42,18 @@ export function DiePlates() {
 
   return (
     <>
-      <div className="v3-mos-dies">
+      <div className="beta-dies">
         {PLATES.map((p, n) => (
-          <figure key={p.key} className="v3-mos-die">
+          <figure key={p.key} className="beta-die">
             <button
               type="button"
-              className="v3-mos-die__frame v3-mos-die__frame--btn"
+              className="beta-die__frame beta-die__frame--btn"
               onClick={() => setOpen(n)}
               aria-label={`Open the ${p.tag} plate full screen`}
             >
               <img src={p.src} alt={p.alt} width={1300} height={1417} decoding="async" />
-              <span className="v3-mos-die__tag">{p.tag}</span>
-              <span className="v3-mos-die__zoom">
+              <span className="beta-die__tag">{p.tag}</span>
+              <span className="beta-die__zoom">
                 <Maximize2 size={14} strokeWidth={2.4} /> zoom
               </span>
             </button>

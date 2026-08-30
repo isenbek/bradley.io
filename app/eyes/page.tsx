@@ -34,9 +34,7 @@ export default function EyesPage() {
         </p>
       </div>
 
-      <div className="v3 kit-island">
         <EyesLive />
-      </div>
     </div>
   )
 }

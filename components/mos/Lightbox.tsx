@@ -130,7 +130,7 @@ export function Lightbox({ src, alt, caption, onClose }: LightboxProps) {
 
   const body = (
     <div
-      className="v3-lbx"
+      className="beta-lbx"
       role="dialog"
       aria-modal="true"
       aria-label={alt}
@@ -138,9 +138,9 @@ export function Lightbox({ src, alt, caption, onClose }: LightboxProps) {
         if (e.target === e.currentTarget) onClose()
       }}
     >
-      <div className="v3-lbx__bar">
-        <span className="v3-lbx__zoom">{s.toFixed(1)}×</span>
-        <div className="v3-lbx__tools">
+      <div className="beta-lbx__bar">
+        <span className="beta-lbx__zoom">{s.toFixed(1)}×</span>
+        <div className="beta-lbx__tools">
           <button type="button" onClick={() => setS((v) => Math.max(MIN, v / 1.5))} aria-label="Zoom out">
             <Minus size={16} strokeWidth={2.4} />
           </button>
@@ -150,7 +150,7 @@ export function Lightbox({ src, alt, caption, onClose }: LightboxProps) {
           <button type="button" onClick={() => setS((v) => Math.min(MAX, v * 1.5))} aria-label="Zoom in">
             <Plus size={16} strokeWidth={2.4} />
           </button>
-          <button type="button" onClick={onClose} aria-label="Close" className="v3-lbx__x">
+          <button type="button" onClick={onClose} aria-label="Close" className="beta-lbx__x">
             <X size={17} strokeWidth={2.4} />
           </button>
         </div>
@@ -158,7 +158,7 @@ export function Lightbox({ src, alt, caption, onClose }: LightboxProps) {
 
       <div
         ref={stage}
-        className={`v3-lbx__stage${s > MIN ? " is-zoomed" : ""}`}
+        className={`beta-lbx__stage${s > MIN ? " is-zoomed" : ""}`}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={endPointer}
@@ -173,15 +173,15 @@ export function Lightbox({ src, alt, caption, onClose }: LightboxProps) {
           alt={alt}
           draggable={false}
           onLoad={() => setLoaded(true)}
-          className="v3-lbx__img"
+          className="beta-lbx__img"
           style={{ transform: `translate(${t.x}px, ${t.y}px) scale(${s})` }}
         />
-        {loaded ? null : <span className="v3-lbx__loading">loading full plate…</span>}
+        {loaded ? null : <span className="beta-lbx__loading">loading full plate…</span>}
       </div>
 
-      <div className="v3-lbx__foot">
-        {caption ? <span className="v3-lbx__cap">{caption}</span> : <span />}
-        <span className="v3-lbx__hint">scroll or pinch to zoom · drag to pan · esc to close</span>
+      <div className="beta-lbx__foot">
+        {caption ? <span className="beta-lbx__cap">{caption}</span> : <span />}
+        <span className="beta-lbx__hint">scroll or pinch to zoom · drag to pan · esc to close</span>
       </div>
     </div>
   )

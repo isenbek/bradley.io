@@ -572,3 +572,200 @@ body:has(.beta-root) {
   .beta-legend__row > :last-child { grid-column: 2 / -1; }
 }
 .beta-legend__sw { width: calc(var(--u) * 3); height: calc(var(--u) * 3); border-radius: var(--radius-hair); }
+
+/* ===========================================================================
+   INSTRUMENT INTERNALS
+
+   Ported off v3, retokenised. These are the parts the kit has no component
+   for: a camera well, a die plate, a lightbox, a capability scanner. The
+   structure is unchanged from what worked; every colour, radius and duration
+   now comes from tokens.css instead of a hex literal.
+
+   All of them sit on PANEL. That is not a style choice here: a camera frame
+   and a die photograph are the machine showing you what it sees, which is
+   exactly what the kit reserves the dark ground for.
+   ======================================================================== */
+
+/* ---- The camera well ---------------------------------------------------- */
+.beta-cam {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: var(--color-panel-sunk);
+  border-radius: var(--radius-mod);
+  overflow: hidden;
+}
+.beta-cam__frame { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+/* Shown while the first frame is still being fetched. Amber, because this is
+   ATTENTION (something is pending), not a failure and not a live signal. */
+.beta-cam__warm {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--u) * 2);
+  color: var(--color-glass-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+}
+.beta-cam__warm-dot {
+  width: calc(var(--u) * 2);
+  height: calc(var(--u) * 2);
+  border-radius: 50%;
+  background: var(--color-orange);
+}
+
+/* The overlay readouts. Mono, because the machine wrote them. */
+.beta-cam__hud {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: calc(var(--u) * 2.5);
+  padding: calc(var(--u) * 1.5) calc(var(--u) * 2.5);
+  background: color-mix(in srgb, var(--color-panel) 72%, transparent);
+  border-radius: var(--radius-hair);
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: var(--tracking-caps);
+}
+.beta-cam__hud--tl { top: calc(var(--u) * 3); left: calc(var(--u) * 3); }
+.beta-cam__hud--tr { top: calc(var(--u) * 3); right: calc(var(--u) * 3); }
+.beta-cam__hud--b  { bottom: calc(var(--u) * 3); left: calc(var(--u) * 3); }
+
+.beta-cam__live { display: inline-flex; align-items: center; gap: calc(var(--u) * 1.5); color: var(--color-glass); }
+/* Blue is ACTIVE in this palette, and a live feed is exactly that. Green would
+   read as a passed test, which is a different claim. */
+.beta-cam__dot { width: calc(var(--u) * 2); height: calc(var(--u) * 2); border-radius: 50%; background: var(--color-blue); }
+.beta-cam__meta, .beta-cam__cap { color: var(--color-glass); }
+.beta-cam__meta--dim, .beta-cam__cap--dim { color: var(--color-glass-muted); }
+
+/* ---- Die plates and the layer stack ------------------------------------- */
+.beta-dies {
+  display: grid;
+  /* min() clamp: a bare 1fr 1fr keeps two columns at 320px and each plate
+     becomes unreadable. One column below 40rem. */
+  grid-template-columns: repeat(auto-fit, minmax(min(20rem, 100%), 1fr));
+  gap: calc(var(--u) * 5);
+  align-items: start;
+  margin: calc(var(--u) * 4) 0;
+}
+.beta-die { margin: 0; }
+.beta-die__frame {
+  position: relative;
+  border-radius: var(--radius-mod);
+  overflow: hidden;
+  background: var(--color-panel-sunk);
+  border: 1px solid var(--color-rule);
+  line-height: 0;
+}
+.beta-die__frame--btn { display: block; width: 100%; padding: 0; border: 1px solid var(--color-rule); cursor: zoom-in; }
+.beta-die__frame img, .beta-stack__img { display: block; width: 100%; height: auto; }
+.beta-die__tag, .beta-stack__badge {
+  position: absolute;
+  top: calc(var(--u) * 2);
+  left: calc(var(--u) * 2);
+  padding: 2px calc(var(--u) * 2);
+  background: color-mix(in srgb, var(--color-panel) 78%, transparent);
+  color: var(--color-mustard);
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  border-radius: var(--radius-hair);
+}
+.beta-die__zoom, .beta-stack__zoom {
+  position: absolute;
+  bottom: calc(var(--u) * 2);
+  right: calc(var(--u) * 2);
+  padding: 2px calc(var(--u) * 2);
+  background: color-mix(in srgb, var(--color-panel) 78%, transparent);
+  color: var(--color-glass-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  border: 0;
+  border-radius: var(--radius-hair);
+  cursor: zoom-in;
+}
+
+.beta-stack { margin: calc(var(--u) * 6) 0 0; }
+.beta-stack__tabs { display: flex; flex-wrap: wrap; gap: calc(var(--u) * 2); margin-bottom: calc(var(--u) * 3); }
+/* The kit's chip, with the same pressed state, so a layer selector behaves
+   like every other toggle on the site. */
+.beta-stack__tab {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--u) * 2);
+  padding: calc(var(--u) * 1.5) calc(var(--u) * 3);
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+  background: var(--color-paper-sunk);
+  border: 1px solid var(--color-ink-faint);
+  border-radius: var(--radius-hair);
+  color: var(--color-ink);
+  cursor: pointer;
+  transition: all var(--t-snap) var(--ease-snap);
+}
+.beta-stack__tab:hover:not(.is-on) { border-color: var(--color-ink); }
+.beta-stack__tab.is-on { background: var(--color-ink); border-color: var(--color-ink); color: var(--color-paper); }
+.beta-stack__tab-n { opacity: 0.6; }
+.beta-stack__frame { position: relative; border-radius: var(--radius-mod); overflow: hidden; background: var(--color-panel-sunk); border: 1px solid var(--color-rule); }
+.beta-stack__img { display: none; }
+.beta-stack__img.is-on { display: block; }
+.beta-stack__cap, .beta-die figcaption {
+  margin-top: calc(var(--u) * 2);
+  font-size: var(--text-fine);
+  line-height: 1.5;
+  color: var(--color-ink-muted);
+  max-width: 68ch;
+}
+
+/* ---- The plate lightbox ------------------------------------------------- */
+.beta-lbx {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  background: color-mix(in srgb, var(--color-panel-sunk) 94%, transparent);
+}
+.beta-lbx__bar, .beta-lbx__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(var(--u) * 3);
+  padding: calc(var(--u) * 3) calc(var(--u) * 4);
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+  color: var(--color-glass-muted);
+}
+.beta-lbx__zoom { color: var(--color-glass); }
+.beta-lbx__tools { display: flex; gap: calc(var(--u) * 2); }
+.beta-lbx__tools button, .beta-lbx__x {
+  padding: calc(var(--u) * 1.5) calc(var(--u) * 3);
+  background: transparent;
+  border: 1px solid var(--color-rule-panel);
+  border-radius: var(--radius-hair);
+  color: var(--color-glass);
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+  cursor: pointer;
+}
+.beta-lbx__stage { flex: 1; overflow: hidden; display: grid; place-items: center; cursor: grab; }
+.beta-lbx__stage.is-zoomed { cursor: grab; }
+.beta-lbx__img { max-width: 100%; max-height: 100%; }
+.beta-lbx__loading { color: var(--color-glass-muted); font-family: var(--font-mono); font-size: var(--text-fine); }
+.beta-lbx__cap { color: var(--color-glass); }
+.beta-lbx__hint { color: var(--color-glass-muted); }
+
+/* ---- The capability scanner --------------------------------------------- */
+/* Dark by design: it is a readout of what the device exposes, and the tool
+   inside draws its own tables. */
+.beta-scanner__mount {
+  margin-top: calc(var(--u) * 2);
+  border: 1px solid var(--color-rule-panel);
+  border-radius: var(--radius-mod);
+  background: var(--color-panel-sunk);
+  padding: calc(var(--u) * 4);
+}

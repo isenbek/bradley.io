@@ -63,34 +63,34 @@ export function EyesLive() {
   }, [meta])
 
   return (
-    <div className="v3-cam">
+    <div className="beta-cam">
       {src && !err ? (
-        <img className="v3-cam__frame" src={src} alt="Live camera frame from the bradley.io box" />
+        <img className="beta-cam__frame" src={src} alt="Live camera frame from the bradley.io box" />
       ) : (
-        <div className="v3-cam__warm">
-          <span className="v3-cam__warm-dot" aria-hidden />
+        <div className="beta-cam__warm">
+          <span className="beta-cam__warm-dot" aria-hidden />
           {err ? "sensor offline, frame unavailable" : "warming up the sensor…"}
         </div>
       )}
 
-      <div className="v3-cam__hud v3-cam__hud--tl">
-        <span className="v3-cam__live">
-          <span className="v3-cam__dot" aria-hidden />
+      <div className="beta-cam__hud beta-cam__hud--tl">
+        <span className="beta-cam__live">
+          <span className="beta-cam__dot" aria-hidden />
           live
         </span>
       </div>
 
       {meta && (
-        <div className="v3-cam__hud v3-cam__hud--tr">
-          <span className="v3-cam__meta">{meta.device}</span>
-          <span className="v3-cam__meta v3-cam__meta--dim">{meta.size}</span>
+        <div className="beta-cam__hud beta-cam__hud--tr">
+          <span className="beta-cam__meta">{meta.device}</span>
+          <span className="beta-cam__meta beta-cam__meta--dim">{meta.size}</span>
         </div>
       )}
 
       {meta && !err && (
-        <div className="v3-cam__hud v3-cam__hud--b">
-          <span className="v3-cam__cap">captured {ago}</span>
-          <span className="v3-cam__cap v3-cam__cap--dim">· new frame every ~60s</span>
+        <div className="beta-cam__hud beta-cam__hud--b">
+          <span className="beta-cam__cap">captured {ago}</span>
+          <span className="beta-cam__cap beta-cam__cap--dim">· new frame every ~60s</span>
         </div>
       )}
     </div>

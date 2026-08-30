@@ -35,11 +35,7 @@ export default function PreferencesPage() {
           the same scan in one file with no framework behind it.
         </p>
       </div>
-
-      {/* The scanner draws its own result tables. See .kit-island in app/kit.css. */}
-      <div className="v3 kit-island">
         <PreferencesClient />
-      </div>
     </div>
   )
 }
