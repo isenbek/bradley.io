@@ -96,13 +96,29 @@ stand in for, and it is exactly what the upgrade-header fix above was for.
 
 ---
 
-## Still saying the old name
+## The repo caught up too (junior @ 94bb8cb)
 
-Ten files in `~/projects/junior` mention `junior.bradley.io` in prose:
-`README.md`, `START-HERE.md`, `CLAUDE.md`, `server/mcp.py` (an example
-`claude mcp add` command), `terminal/README.md`, and five docs under `docs/`.
-None of them affect what runs. `server/mcp.py` is the one worth fixing soon,
-because it is an instruction someone will copy.
+13 files still said the old name. Three would have actively undone or
+misreported the move on a fresh install:
+
+| | |
+|---|---|
+| `deploy/junior-nginx.conf` | the vhost `setup.sh` installs: a fresh install would have come up on the retired name |
+| `deploy/setup.sh` | its verify step sent `Host: junior.bradley.io`, which now reaches the redirect rather than the app and would report 301 for a healthy site. Its `JUNIOR_SITE` default also titled every page with the old host |
+| `deploy/enable-tls.sh` | `DOMAIN` defaulted to the retired name, so it would have requested a certificate for the wrong host |
+
+Two more were instructions someone copies: `server/mcp.py` and `bin/jrcli` both
+carry a `claude mcp add` example, and `.claude/skills/doc/SKILL.md` told the doc
+skill to print the old URL into **every document written from here on**.
+
+The template also moved to `$connection_upgrade`. That variable comes from a map
+nginx does not ship by default, so `setup.sh` now installs one as a `conf.d`
+snippet, **only when nothing already defines it**: nginx refuses a duplicate map
+for the same variable, and this host declares it in `nginx.conf`.
+
+`enable-tls.sh` keeps `junior.bradley.io` **on** the certificate on purpose. It
+still answers on `:443` in order to 301, and a redirect that throws a name
+mismatch on the way through is not much of a redirect.
 
 ---
 
