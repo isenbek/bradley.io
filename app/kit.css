@@ -1211,18 +1211,11 @@ body:has(.beta-root) {
 .beta-we-tail--none { color: var(--color-glass-muted); }
 
 /* ---- Hosts, key/value rows, and the empty state ------------------------- */
-.beta-we-hosts { display: flex; flex-wrap: wrap; gap: calc(var(--u) * 2); }
-  padding: 2px calc(var(--u) * 2);
-  border-radius: var(--radius-hair);
-  font-family: var(--font-mono);
-  font-size: var(--text-micro);
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-caps);
-  color: var(--we-hue, var(--color-ocean));
-  background: color-mix(in srgb, var(--we-hue, var(--color-ocean)) 14%, transparent);
-  border: 1px solid color-mix(in srgb, var(--we-hue, var(--color-ocean)) 30%, transparent);
-}
-.beta-we-host--none { color: var(--color-glass-muted); background: transparent; border-color: var(--color-rule-panel); }
+/* Producers: a row list, not a chip rail. Each li is name / count pushed to
+   the right / age, which is the shape the markup actually has. */
+.beta-we-hosts { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: calc(var(--u) * 1.5); }
+.beta-we-hosts li { display: flex; align-items: center; gap: calc(var(--u) * 2.5); min-width: 0; font-family: var(--font-mono); font-size: var(--text-fine); }
+.beta-we-host--none { color: var(--color-glass-muted); font-family: var(--font-mono); font-size: var(--text-fine); }
 
 .beta-we-kv { display: grid; grid-template-columns: minmax(0, auto) minmax(0, 1fr); gap: calc(var(--u) * 1.5) calc(var(--u) * 3); font-family: var(--font-mono); font-size: var(--text-micro); }
 .beta-we-kv dt { color: var(--color-glass-muted); }
