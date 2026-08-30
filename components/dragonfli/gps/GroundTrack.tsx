@@ -7,6 +7,7 @@ import { airspaceStyle, GR_CENTER } from "@/components/dragonfli/airspace/style"
 import { snrT, type Sat, type Tpv } from "./stream"
 import { useGeolocation } from "@/lib/useGeolocation"
 import { circlePolygon, destPoint, distanceM, fmtDistance } from "@/lib/geo"
+import { MAP_INK, SEQUENTIAL_HEX } from "@/lib/beta/chart-theme"
 
 const EMPTY: GeoJSON.FeatureCollection = { type: "FeatureCollection", features: [] }
 
@@ -146,7 +147,7 @@ export default function GroundTrack({ history, tpv, sats }: { history: Tpv[]; tp
         source: "sat-spokes",
         layout: { "line-cap": "round" },
         paint: {
-          "line-color": ["case", ["==", ["get", "used"], 1], "#3fd0ff", "#6b8a99"],
+          "line-color": ["case", ["==", ["get", "used"], 1], MAP_INK.ocean, MAP_INK.glassMuted],
           "line-width": ["get", "width"],
           "line-opacity": ["get", "opacity"],
         },
@@ -157,7 +158,7 @@ export default function GroundTrack({ history, tpv, sats }: { history: Tpv[]; tp
         source: "sat-dots",
         paint: {
           "circle-radius": 3,
-          "circle-color": ["case", ["==", ["get", "used"], 1], "#bdecff", "#9fc0ce"],
+          "circle-color": ["case", ["==", ["get", "used"], 1], MAP_INK.glass, MAP_INK.glassMuted],
           "circle-opacity": ["+", 0.3, ["*", 0.6, ["get", "t"]]],
         },
       })
@@ -165,13 +166,13 @@ export default function GroundTrack({ history, tpv, sats }: { history: Tpv[]; tp
         id: "track",
         type: "line",
         source: "track",
-        paint: { "line-color": "#13B8F3", "line-width": 2.5, "line-opacity": 0.85 },
+        paint: { "line-color": MAP_INK.ocean, "line-width": 2.5, "line-opacity": 0.85 },
       })
       map.addLayer({
         id: "pos-glow",
         type: "circle",
         source: "pos",
-        paint: { "circle-radius": 13, "circle-color": "#13B8F3", "circle-opacity": 0.22, "circle-blur": 0.6 },
+        paint: { "circle-radius": 13, "circle-color": MAP_INK.ocean, "circle-opacity": 0.22, "circle-blur": 0.6 },
       })
       map.addLayer({
         id: "pos",
@@ -179,8 +180,8 @@ export default function GroundTrack({ history, tpv, sats }: { history: Tpv[]; tp
         source: "pos",
         paint: {
           "circle-radius": 5,
-          "circle-color": "#bdecff",
-          "circle-stroke-color": "#13B8F3",
+          "circle-color": MAP_INK.glass,
+          "circle-stroke-color": MAP_INK.ocean,
           "circle-stroke-width": 2,
         },
       })
@@ -190,7 +191,7 @@ export default function GroundTrack({ history, tpv, sats }: { history: Tpv[]; tp
         id: "ping",
         type: "line",
         source: "ping",
-        paint: { "line-color": "#5eead4", "line-width": 2, "line-opacity": ["get", "opacity"] },
+        paint: { "line-color": SEQUENTIAL_HEX[3], "line-width": 2, "line-opacity": ["get", "opacity"] },
       })
       map.addLayer({
         id: "rx",
@@ -198,7 +199,7 @@ export default function GroundTrack({ history, tpv, sats }: { history: Tpv[]; tp
         source: "rx",
         paint: {
           "circle-radius": ["+", 1.5, ["*", 2.5, ["get", "t"]]],
-          "circle-color": "#7dffe6",
+          "circle-color": MAP_INK.ocean,
           "circle-opacity": ["get", "opacity"],
           "circle-blur": 0.2,
         },
@@ -209,19 +210,19 @@ export default function GroundTrack({ history, tpv, sats }: { history: Tpv[]; tp
         id: "me-acc",
         type: "fill",
         source: "me-acc",
-        paint: { "fill-color": "#ffb020", "fill-opacity": 0.08 },
+        paint: { "fill-color": MAP_INK.burnt, "fill-opacity": 0.08 },
       })
       map.addLayer({
         id: "link",
         type: "line",
         source: "link",
-        paint: { "line-color": "#ffb020", "line-width": 1, "line-opacity": 0.5, "line-dasharray": [2, 2] },
+        paint: { "line-color": MAP_INK.burnt, "line-width": 1, "line-opacity": 0.5, "line-dasharray": [2, 2] },
       })
       map.addLayer({
         id: "me-glow",
         type: "circle",
         source: "me",
-        paint: { "circle-radius": 12, "circle-color": "#ffb020", "circle-opacity": 0.22, "circle-blur": 0.6 },
+        paint: { "circle-radius": 12, "circle-color": MAP_INK.burnt, "circle-opacity": 0.22, "circle-blur": 0.6 },
       })
       map.addLayer({
         id: "me",
@@ -229,8 +230,8 @@ export default function GroundTrack({ history, tpv, sats }: { history: Tpv[]; tp
         source: "me",
         paint: {
           "circle-radius": 5,
-          "circle-color": "#ffd98a",
-          "circle-stroke-color": "#ffb020",
+          "circle-color": MAP_INK.mustard,
+          "circle-stroke-color": MAP_INK.burnt,
           "circle-stroke-width": 2,
         },
       })
@@ -323,18 +324,18 @@ export default function GroundTrack({ history, tpv, sats }: { history: Tpv[]; tp
   }, [history, tpv, sats, me])
 
   return (
-    <div className="v3-gps-map-wrap">
-      <div ref={ref} className="v3-gps__map" />
-      <div className="v3-gps-map-legend">
-        <span className="v3-gps-lg v3-gps-lg--gps" aria-hidden /> GPS fix
-        <span className="v3-gps-lg v3-gps-lg--me" aria-hidden /> you
-        {gap != null ? <span className="v3-gps-lg__gap">{fmtDistance(gap)} apart</span> : null}
-        {me.status === "denied" ? <span className="v3-gps-lg__gap">location blocked</span> : null}
-        {me.status === "locating" ? <span className="v3-gps-lg__gap">locating you…</span> : null}
+    <div className="beta-gps-map-wrap">
+      <div ref={ref} className="beta-gps__map" />
+      <div className="beta-gps-map-legend">
+        <span className="beta-gps-lg beta-gps-lg--gps" aria-hidden /> GPS fix
+        <span className="beta-gps-lg beta-gps-lg--me" aria-hidden /> you
+        {gap != null ? <span className="beta-gps-lg__gap">{fmtDistance(gap)} apart</span> : null}
+        {me.status === "denied" ? <span className="beta-gps-lg__gap">location blocked</span> : null}
+        {me.status === "locating" ? <span className="beta-gps-lg__gap">locating you…</span> : null}
       </div>
       {!tpv && (
-        <div className="v3-gps-map-note">
-          <span className="v3-gps-empty__dot" aria-hidden />
+        <div className="beta-gps-map-note">
+          <span className="beta-gps-empty__dot" aria-hidden />
           awaiting GPS fix, basemap centred on the receiver
         </div>
       )}

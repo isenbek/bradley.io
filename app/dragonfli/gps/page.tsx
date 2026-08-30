@@ -23,11 +23,7 @@ export default function Page() {
         Where the antenna thinks it is, and which satellites it is using to decide. A skyplot of the constellation overhead.
       </p>
 
-      {/* The instrument keeps its own styling. See .kit-island in app/kit.css
-          for why .v3 stays on this wrapper. */}
-      <div className="v3 kit-island">
-        <V3Gps />
-      </div>
+      <V3Gps />
     </div>
   )
 }

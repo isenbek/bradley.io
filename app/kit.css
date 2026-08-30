@@ -1364,3 +1364,302 @@ body:has(.beta-root) {
 .beta-we-ble__bar { grid-area: bar; height: 4px; border-radius: var(--radius-hair); background: var(--color-panel-sunk); overflow: hidden; min-width: 0; }
 .beta-we-ble__bar > span { display: block; height: 100%; border-radius: var(--radius-hair); background: linear-gradient(90deg, color-mix(in oklab, var(--color-ocean) 35%, var(--color-panel)), var(--color-ocean)); }
 .beta-we-ble__obs { grid-area: obs; color: var(--color-glass-muted); font-variant-numeric: tabular-nums; text-align: right; }
+
+/* ==========================================================================
+   DRAGONFLI: THE AIRSPACE MAP (/dragonfli/airspace) AND THE GPS BOARD
+   (/dragonfli/gps)
+
+   Ported off .v3. Both pages wrap a MapLibre canvas, which is why they were the
+   last two islands: the map itself is GL-rendered and cannot read a CSS
+   variable. Its colours live in lib/beta/chart-theme.ts as literal hex instead.
+   Everything here is the DOM chrome around that canvas, and it retokenises like
+   any other page.
+
+   The overlay pills sit ON the map, so they take a translucent panel ground
+   rather than a flat one: the map has to read through them.
+   ========================================================================== */
+
+/* ---- The map well ------------------------------------------------------- */
+.beta-air {
+  position: relative;
+  width: 100%;
+  height: clamp(480px, 70vh, 720px);
+  border-radius: var(--radius-mod);
+  overflow: hidden;
+  background: var(--color-panel-sunk);
+}
+
+/* Out-specify maplibre-gl.css's `.maplibregl-map { position: relative }`, which
+   otherwise collapses this container to height 0 and leaves a 300px canvas. */
+.beta-air .beta-air__map { position: absolute; inset: 0; width: 100%; height: 100%; }
+.beta-air__map .maplibregl-canvas { outline: none; }
+
+.beta-air__loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--u) * 2.5);
+  height: clamp(480px, 70vh, 720px);
+  background: var(--color-panel-sunk);
+  color: var(--color-glass-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-data);
+  border-radius: var(--radius-mod);
+}
+.beta-air__loading-dot { width: calc(var(--u) * 2); height: calc(var(--u) * 2); border-radius: 50%; background: var(--color-orange); flex: none; }
+
+/* Opaque init cover: hides the map and its half-drawn layers while the GL
+   context comes up and the first poll resolves, so nothing flashes in
+   piecemeal. Sits above the HUD. */
+.beta-air__init {
+  position: absolute; inset: 0; z-index: 6;
+  display: flex; align-items: center; justify-content: center; gap: calc(var(--u) * 2.5);
+  background: var(--color-panel-sunk);
+  color: var(--color-glass-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-data);
+}
+
+.beta-air__hud { position: absolute; z-index: 2; pointer-events: none; }
+.beta-air__hud--top { top: calc(var(--u) * 3); left: calc(var(--u) * 3); }
+.beta-air__live {
+  display: inline-flex; align-items: center; gap: calc(var(--u) * 2);
+  font-family: var(--font-mono);
+  font-size: var(--text-fine); font-weight: 600;
+  padding: calc(var(--u) * 1.5) calc(var(--u) * 3);
+  border-radius: var(--radius-mod);
+  background: color-mix(in srgb, var(--color-panel) 84%, transparent);
+  border: 1px solid var(--color-rule-panel);
+  color: var(--color-glass);
+  backdrop-filter: blur(6px);
+}
+.beta-air__live-dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; flex: none; }
+/* The three states on the colours the kit reserves for them. */
+.beta-air__live--live { color: var(--color-blue); }
+.beta-air__live--loading { color: var(--color-orange); }
+.beta-air__live--offline { color: var(--color-red); }
+
+/* ---- Layer switches ----------------------------------------------------- */
+.beta-air__panel {
+  position: absolute; z-index: 2; right: calc(var(--u) * 3); top: calc(var(--u) * 3);
+  display: flex; flex-direction: column; gap: var(--u);
+  padding: calc(var(--u) * 2.25); border-radius: var(--radius-mod);
+  background: color-mix(in srgb, var(--color-panel) 86%, transparent);
+  border: 1px solid var(--color-rule-panel);
+  backdrop-filter: blur(8px);
+  max-width: min(200px, 46%);
+}
+/* Small phones: drop the layer panel below the live pill's row so the two
+   absolute overlays cannot collide across a 360px map. */
+@media (max-width: 480px) {
+  .beta-air__panel { top: calc(var(--u) * 13); max-width: min(172px, 52%); }
+}
+.beta-air__lyr {
+  display: flex; align-items: center; gap: calc(var(--u) * 2);
+  font-family: var(--font-mono);
+  font-size: var(--text-fine); font-weight: 600;
+  color: var(--color-glass-muted); background: transparent;
+  border: 1px solid transparent; cursor: pointer;
+  padding: calc(var(--u) * 1.25) calc(var(--u) * 2);
+  border-radius: var(--radius-hair); text-align: left;
+  transition: color 0.15s, background 0.15s, border-color 0.15s, opacity 0.15s;
+}
+/* Hollow ring = off, filled = on, and both wear the layer's own colour. Each
+   swatch sits beside its own text label, which is what makes four categorical
+   hues legal here: identity is never carried by colour alone. */
+.beta-air__lyr i {
+  width: 11px; height: 11px; border-radius: var(--radius-hair); flex-shrink: 0;
+  background: transparent; border: 1.5px solid var(--lc, var(--color-glass-muted));
+  transition: background 0.15s, border-color 0.15s;
+}
+.beta-air__lyr[data-on="true"] {
+  color: var(--color-glass);
+  background: color-mix(in srgb, var(--lc) 14%, transparent);
+  border-color: color-mix(in srgb, var(--lc) 32%, transparent);
+}
+.beta-air__lyr[data-on="true"] i { background: var(--lc); border-color: var(--lc); }
+.beta-air__lyr[data-on="false"] { opacity: 0.6; }
+.beta-air__lyr[data-on="false"] i { border-color: var(--color-glass-muted); }
+.beta-air__lyr:hover { color: var(--color-glass); }
+
+/* Still fetching this layer's first data: lock the toggle and blink its LED in
+   the layer's own colour, so you can see which layers are still landing. This
+   is the one animation kept, because it carries information. */
+.beta-air__lyr[data-loading="true"] { cursor: progress; color: var(--color-glass-muted); background: transparent; border-color: transparent; }
+.beta-air__lyr[data-loading="true"] i { background: var(--lc); border-color: var(--lc); animation: beta-air-led 0.9s ease-in-out infinite; }
+@keyframes beta-air-led { 0%, 100% { opacity: 1; } 50% { opacity: 0.18; } }
+.beta-air__mode:disabled { opacity: 0.4; cursor: progress; }
+@media (prefers-reduced-motion: reduce) {
+  .beta-air__lyr[data-loading="true"] i { animation: none; opacity: 0.6; }
+}
+
+.beta-air__panel-head {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro); font-weight: 700;
+  letter-spacing: var(--tracking-caps); text-transform: uppercase;
+  color: var(--color-glass-muted); padding: 1px calc(var(--u) * 1.75) var(--u);
+}
+
+/* Density sub-modes: sit under their parent toggle and wrap rather than
+   overflow the panel. */
+.beta-air__modes { display: flex; flex-wrap: wrap; gap: var(--u); padding: 1px 2px var(--u) calc(var(--u) * 6.75); }
+.beta-air__mode {
+  flex: 1 1 auto; min-width: 0; text-align: center;
+  font-family: var(--font-mono);
+  font-size: var(--text-micro); font-weight: 600;
+  color: var(--color-glass-muted);
+  background: var(--color-panel-raised); border: 1px solid transparent;
+  padding: 3px calc(var(--u) * 1.5); border-radius: var(--radius-hair);
+  cursor: pointer; text-transform: capitalize;
+}
+.beta-air__mode[data-on="true"] { color: var(--color-panel); background: var(--color-ocean); }
+
+/* ---- Altitude legend ---------------------------------------------------- */
+.beta-air__legend {
+  position: absolute; z-index: 2; left: 50%; transform: translateX(-50%);
+  bottom: calc(var(--u) * 3.5);
+  display: flex; align-items: center; gap: calc(var(--u) * 2);
+  font-family: var(--font-mono);
+  font-size: var(--text-micro); letter-spacing: 0.04em; color: var(--color-glass-muted);
+  padding: calc(var(--u) * 1.5) calc(var(--u) * 2.5); border-radius: var(--radius-mod);
+  background: color-mix(in srgb, var(--color-panel) 86%, transparent);
+  border: 1px solid var(--color-rule-panel);
+  backdrop-filter: blur(8px);
+}
+.beta-air__ramp { width: 80px; height: 7px; border-radius: var(--radius-hair); }
+/* The altitude ramp, matching SEQUENTIAL_HEX in lib/beta/chart-theme.ts. It was
+   amber to cyan to violet to pink: a rainbow, which cannot encode a magnitude. */
+.beta-air__ramp--alt {
+  background: linear-gradient(90deg,
+    color-mix(in oklab, var(--color-ocean) 20%, var(--color-panel)),
+    color-mix(in oklab, var(--color-ocean) 60%, var(--color-panel)),
+    var(--color-ocean));
+}
+.beta-air__legend-lo, .beta-air__legend-hi { color: var(--color-glass-muted); }
+
+/* ---- Aircraft popup ----------------------------------------------------- */
+.beta-air .maplibregl-popup-content {
+  background: var(--color-panel); color: var(--color-glass);
+  border: 1px solid var(--color-rule-panel); border-radius: var(--radius-mod);
+  padding: calc(var(--u) * 2.5) calc(var(--u) * 3);
+  font-family: var(--font-mono);
+  box-shadow: 0 10px 30px -12px rgb(0 0 0 / 0.7);
+}
+.beta-air .maplibregl-popup-tip { border-top-color: var(--color-panel) !important; border-bottom-color: var(--color-panel) !important; }
+.beta-air-pop strong { font-size: var(--text-body); color: var(--color-glass); }
+.beta-air-pop span { color: var(--color-ocean); font-size: var(--text-micro); margin-left: calc(var(--u) * 1.5); }
+.beta-air-pop__rows { margin-top: 5px; font-size: var(--text-micro); color: var(--color-glass-muted); display: flex; flex-direction: column; gap: 2px; }
+.beta-air-pop__owner { color: var(--color-glass-muted); }
+
+@media (max-width: 600px) {
+  .beta-air, .beta-air__loading { height: clamp(420px, 64vh, 560px); }
+  .beta-air__legend { display: none; }
+}
+
+/* Self-contained interactive HTML tool in an iframe (the bio mark x-ray).
+   Full-width, tall, and it scrolls internally rather than growing the page. */
+.beta-embed-stage__frame { display: block; width: 100%; border: 0; height: clamp(640px, 86vh, 1100px); }
+
+/* ==========================================================================
+   THE GPS BOARD (/dragonfli/gps)
+   ========================================================================== */
+
+.beta-gps { display: flex; flex-direction: column; gap: calc(var(--u) * 4); }
+
+.beta-gps-hud {
+  display: flex; flex-wrap: wrap; align-items: center;
+  gap: calc(var(--u) * 2.5) calc(var(--u) * 4.5);
+  padding: calc(var(--u) * 3) calc(var(--u) * 4.5); border-radius: var(--radius-mod);
+  background: var(--color-panel); border: 1px solid var(--color-rule-panel);
+  font-family: var(--font-mono); font-size: var(--text-fine); color: var(--color-glass-muted);
+}
+.beta-gps-hud__status {
+  display: inline-flex; align-items: center; gap: calc(var(--u) * 2); font-weight: 700;
+  text-transform: uppercase; letter-spacing: var(--tracking-caps); color: var(--color-glass);
+}
+.beta-gps-hud__dot { width: calc(var(--u) * 2); height: calc(var(--u) * 2); border-radius: 50%; background: var(--color-drive-float); flex: none; }
+/* A four-state ladder, not a traffic light: connecting has nothing to report
+   yet and stays neutral, searching is the one that wants attention, and red is
+   kept for the receiver actually being gone. */
+.beta-gps-hud__status.is-connecting .beta-gps-hud__dot { background: var(--color-drive-float); }
+.beta-gps-hud__status.is-searching .beta-gps-hud__dot { background: var(--color-orange); }
+.beta-gps-hud__status.is-live .beta-gps-hud__dot { background: var(--color-blue); }
+.beta-gps-hud__status.is-offline .beta-gps-hud__dot { background: var(--color-red); }
+.beta-gps-hud__stat b { color: var(--color-glass); font-weight: 700; }
+.beta-gps-hud__stat--wide { margin-left: auto; }
+
+.beta-gps-grid { display: grid; gap: calc(var(--u) * 4); grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); }
+
+.beta-gps-panel {
+  background: var(--color-panel); border: 1px solid var(--color-rule-panel);
+  border-radius: var(--radius-mod); padding: calc(var(--u) * 4) calc(var(--u) * 4.5);
+  display: flex; flex-direction: column; gap: calc(var(--u) * 3);
+}
+.beta-gps-panel__head { display: flex; align-items: baseline; justify-content: space-between; gap: calc(var(--u) * 2); }
+.beta-gps-panel__title { font-family: var(--font-mono); font-size: var(--text-data); font-weight: 700; text-transform: uppercase; letter-spacing: var(--tracking-caps); color: var(--color-glass); }
+.beta-gps-panel__sub { font-family: var(--font-mono); font-size: var(--text-micro); color: var(--color-glass-muted); }
+
+.beta-gps-empty {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  gap: calc(var(--u) * 2); text-align: center; padding: 0 calc(var(--u) * 4.5);
+  font-family: var(--font-mono); font-size: var(--text-fine); color: var(--color-glass-muted);
+}
+.beta-gps-empty__dot { width: calc(var(--u) * 2); height: calc(var(--u) * 2); border-radius: 50%; background: var(--color-orange); flex-shrink: 0; }
+
+/* Skyplot */
+.beta-gps-sky { position: relative; width: 100%; }
+.beta-gps-sky__svg { width: 100%; height: auto; display: block; }
+.beta-gps-sky__ring { fill: none; stroke: var(--color-rule-panel); stroke-width: 1; }
+.beta-gps-sky__cross { stroke: var(--color-rule-panel); stroke-width: 1; }
+.beta-gps-sky__card { fill: var(--color-glass-muted); font-family: var(--font-mono); font-size: var(--text-fine); font-weight: 700; }
+/* The PRN sits ON the satellite dot, so it takes the panel ground as ink. */
+.beta-gps-sky__prn { fill: var(--color-panel); font-family: var(--font-mono); font-size: 8px; font-weight: 700; }
+.beta-gps-sky__used { fill: none; stroke: var(--color-glass); stroke-width: 1.5; }
+
+/* SNR bars */
+.beta-gps-snr { position: relative; width: 100%; min-height: 150px; display: flex; }
+.beta-gps-snr__bars { display: flex; align-items: flex-end; gap: var(--u); width: 100%; height: 160px; }
+.beta-gps-snr__col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 5px; min-width: 0; height: 100%; }
+.beta-gps-snr__track { width: 100%; max-width: 18px; flex: 1 1 auto; min-height: 0; display: flex; align-items: flex-end; background: var(--color-panel-sunk); border-radius: var(--radius-hair); }
+/* Used in the fix vs merely visible: two states, so the fix hue and a recessive
+   one, never two competing colours. */
+.beta-gps-snr__fill { width: 100%; background: var(--color-drive-float); border-radius: var(--radius-hair); }
+.beta-gps-snr__fill.is-used { background: var(--color-ocean); }
+.beta-gps-snr__prn { font-family: var(--font-mono); font-size: var(--text-micro); color: var(--color-glass-muted); }
+
+/* Fix jitter */
+.beta-gps-jitter { position: relative; width: 100%; }
+.beta-gps-jitter__svg { width: 100%; height: auto; display: block; }
+.beta-gps-jitter__cep { fill: color-mix(in srgb, var(--color-ocean) 7%, transparent); stroke: color-mix(in srgb, var(--color-ocean) 50%, transparent); stroke-width: 1; stroke-dasharray: 3 3; }
+.beta-gps-jitter__pt { fill: var(--color-ocean); }
+.beta-gps-jitter__mean { fill: var(--color-glass); }
+
+/* Ground track map */
+.beta-gps-map-panel { padding: 0; overflow: hidden; background: var(--color-panel-sunk); border: 1px solid var(--color-rule-panel); border-radius: var(--radius-mod); }
+.beta-gps-map-wrap { position: relative; width: 100%; height: 420px; }
+.beta-gps .beta-gps__map { position: absolute; inset: 0; width: 100%; height: 100%; }
+.beta-gps-map-note {
+  position: absolute; left: calc(var(--u) * 3.5); bottom: calc(var(--u) * 3.5); z-index: 1;
+  display: inline-flex; align-items: center; gap: calc(var(--u) * 2);
+  padding: calc(var(--u) * 2) calc(var(--u) * 3.5); border-radius: var(--radius-mod);
+  background: color-mix(in srgb, var(--color-panel) 84%, transparent);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--color-rule-panel);
+  font-family: var(--font-mono); font-size: var(--text-micro); color: var(--color-glass-muted);
+}
+/* Legend: the receiver's fix vs the viewer's own position. Two entities, and
+   these two swatches are the reason the map uses ocean and burnt: measured at
+   normal dE 24.2 / deutan 16.3, clear of both floors. */
+.beta-gps-map-legend {
+  position: absolute; right: calc(var(--u) * 3.5); bottom: calc(var(--u) * 3.5); z-index: 1;
+  display: inline-flex; align-items: center; gap: calc(var(--u) * 2);
+  padding: calc(var(--u) * 1.75) calc(var(--u) * 3); border-radius: var(--radius-mod);
+  background: color-mix(in srgb, var(--color-panel) 84%, transparent);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--color-rule-panel);
+  font-family: var(--font-mono); font-size: var(--text-micro); color: var(--color-glass-muted);
+}
+.beta-gps-lg { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+.beta-gps-lg--gps { background: var(--color-glass); box-shadow: 0 0 0 2px var(--color-ocean); }
+.beta-gps-lg--me { background: var(--color-mustard); box-shadow: 0 0 0 2px var(--color-burnt); margin-left: calc(var(--u) * 1.5); }
+.beta-gps-lg__gap { margin-left: var(--u); padding-left: calc(var(--u) * 2); border-left: 1px solid var(--color-rule-panel); color: var(--color-glass-muted); }

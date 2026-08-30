@@ -28,32 +28,32 @@ export function FixJitter({ history }: { history: Tpv[] }) {
   }, [history])
 
   return (
-    <div className="v3-gps-panel">
-      <div className="v3-gps-panel__head">
-        <span className="v3-gps-panel__title">Fix jitter</span>
-        <span className="v3-gps-panel__sub">{model ? `CEP ≈ ${model.cep.toFixed(1)} m` : "precision"}</span>
+    <div className="beta-gps-panel">
+      <div className="beta-gps-panel__head">
+        <span className="beta-gps-panel__title">Fix jitter</span>
+        <span className="beta-gps-panel__sub">{model ? `CEP ≈ ${model.cep.toFixed(1)} m` : "precision"}</span>
       </div>
-      <div className="v3-gps-jitter">
+      <div className="beta-gps-jitter">
         {model ? (
-          <svg viewBox={`0 0 ${SIZE} ${SIZE}`} className="v3-gps-jitter__svg">
-            <line x1={C} y1={PAD} x2={C} y2={SIZE - PAD} className="v3-gps-sky__cross" />
-            <line x1={PAD} y1={C} x2={SIZE - PAD} y2={C} className="v3-gps-sky__cross" />
-            <circle cx={C} cy={C} r={model.cep * model.scale} className="v3-gps-jitter__cep" />
+          <svg viewBox={`0 0 ${SIZE} ${SIZE}`} className="beta-gps-jitter__svg">
+            <line x1={C} y1={PAD} x2={C} y2={SIZE - PAD} className="beta-gps-sky__cross" />
+            <line x1={PAD} y1={C} x2={SIZE - PAD} y2={C} className="beta-gps-sky__cross" />
+            <circle cx={C} cy={C} r={model.cep * model.scale} className="beta-gps-jitter__cep" />
             {model.pts.map((p, i) => (
               <circle
                 key={i}
                 cx={C + p.x * model.scale}
                 cy={C - p.y * model.scale}
                 r={1.7}
-                className="v3-gps-jitter__pt"
+                className="beta-gps-jitter__pt"
                 style={{ opacity: 0.25 + (i / model.pts.length) * 0.75 }}
               />
             ))}
-            <circle cx={C} cy={C} r={2.6} className="v3-gps-jitter__mean" />
+            <circle cx={C} cy={C} r={2.6} className="beta-gps-jitter__mean" />
           </svg>
         ) : (
-          <div className="v3-gps-empty">
-            <span className="v3-gps-empty__dot" aria-hidden />
+          <div className="beta-gps-empty">
+            <span className="beta-gps-empty__dot" aria-hidden />
             awaiting GPS fix
           </div>
         )}

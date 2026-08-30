@@ -10,9 +10,9 @@ import { FixJitter } from "@/components/dragonfli/gps/FixJitter"
 const GroundTrack = dynamic(() => import("@/components/dragonfli/gps/GroundTrack"), {
   ssr: false,
   loading: () => (
-    <div className="v3-gps-map-wrap">
-      <div className="v3-gps-map-note">
-        <span className="v3-gps-empty__dot" aria-hidden />
+    <div className="beta-gps-map-wrap">
+      <div className="beta-gps-map-note">
+        <span className="beta-gps-empty__dot" aria-hidden />
         bringing up the map…
       </div>
     </div>
@@ -31,35 +31,35 @@ export function V3Gps() {
   const { status, tpv, history, sats, agg } = gps
 
   return (
-    <div className="v3-gps">
+    <div className="beta-gps">
       {/* HUD strip */}
-      <div className="v3-gps-hud">
-        <span className={`v3-gps-hud__status is-${status}`}>
-          <span className="v3-gps-hud__dot" aria-hidden />
+      <div className="beta-gps-hud">
+        <span className={`beta-gps-hud__status is-${status}`}>
+          <span className="beta-gps-hud__dot" aria-hidden />
           {STATUS_LABEL[status] ?? status}
         </span>
-        <span className="v3-gps-hud__stat">
+        <span className="beta-gps-hud__stat">
           <b>{agg?.n_used ?? 0}</b>/{agg?.n_visible ?? 0} sats
         </span>
-        <span className="v3-gps-hud__stat">
+        <span className="beta-gps-hud__stat">
           mode <b>{tpv ? (tpv.mode === 3 ? "3D" : "2D") : "-"}</b>
         </span>
-        <span className="v3-gps-hud__stat">
+        <span className="beta-gps-hud__stat">
           HDOP <b>{agg?.hdop != null ? agg.hdop.toFixed(1) : "-"}</b>
         </span>
-        <span className="v3-gps-hud__stat v3-gps-hud__stat--wide">
+        <span className="beta-gps-hud__stat beta-gps-hud__stat--wide">
           {tpv ? `${tpv.lat.toFixed(5)}, ${tpv.lon.toFixed(5)}` : "no position"}
         </span>
       </div>
 
       {/* Panels */}
-      <div className="v3-gps-grid">
+      <div className="beta-gps-grid">
         <Skyplot sats={sats} agg={agg} />
         <SnrBars sats={sats} agg={agg} />
         <FixJitter history={history} />
       </div>
 
-      <article className="v3-panel v3-gps-map-panel">
+      <article className="beta-gps-map-panel">
         <GroundTrack history={history} tpv={tpv} sats={sats} />
       </article>
     </div>

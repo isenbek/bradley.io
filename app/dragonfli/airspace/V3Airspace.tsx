@@ -7,8 +7,8 @@ import dynamic from "next/dynamic"
 const AirspaceMap = dynamic(() => import("@/components/dragonfli/airspace/AirspaceMap"), {
   ssr: false,
   loading: () => (
-    <div className="v3-air__loading">
-      <span className="v3-air__loading-dot" aria-hidden />
+    <div className="beta-air__loading">
+      <span className="beta-air__loading-dot" aria-hidden />
       bringing up the map…
     </div>
   ),

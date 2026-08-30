@@ -23,11 +23,7 @@ export default function Page() {
         Live tracks over a local basemap, with a density layer built from what this receiver has heard rather than from a feed.
       </p>
 
-      {/* The instrument keeps its own styling. See .kit-island in app/kit.css
-          for why .v3 stays on this wrapper. */}
-      <div className="v3 kit-island">
-        <V3Airspace />
-      </div>
+      <V3Airspace />
     </div>
   )
 }

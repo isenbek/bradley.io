@@ -14,6 +14,7 @@ import {
 import { airspaceStyle, GR_CENTER } from "./style"
 import { useGeolocation } from "@/lib/useGeolocation"
 import { circlePolygon } from "@/lib/geo"
+import { mapRamp, MAP_INK, SEQUENTIAL_HEX } from "@/lib/beta/chart-theme"
 
 type LayerKey = "aircraft" | "density" | "tracks" | "rssi"
 type DensityMode = "predicted" | "current" | "historical"
@@ -24,17 +25,21 @@ const MODE_PROP: Record<DensityMode, string> = {
   historical: "historical_avg_hour",
 }
 
-// altitude → color ramp (ft): low amber → mid cyan → high violet → very-high pink
+// Altitude (ft) is magnitude, so: one hue, light to dark. It used to run amber
+// to cyan to violet to pink, which is a rainbow, and a rainbow has no order.
 const ALT_COLOR: maplibregl.ExpressionSpecification = [
   "interpolate", ["linear"], ["coalesce", ["get", "alt"], 0],
-  0, "#fbbf24", 12000, "#3fd0ff", 25000, "#8b5cf6", 40000, "#ff5c8a",
-]
+  ...mapRamp([0, 12000, 25000, 34000, 40000]),
+] as maplibregl.ExpressionSpecification
 
+// Contacts per cell: also magnitude, also one hue. The old ramp ran navy to
+// indigo to violet to RED to amber, which put the colour this palette reserves
+// for a failed assertion in the middle of an ordinary aircraft count.
 function densityColor(prop: string): maplibregl.ExpressionSpecification {
   return [
     "interpolate", ["linear"], ["coalesce", ["get", prop], 0],
-    0, "#1e3a8a", 1, "#4338ca", 3, "#7c3aed", 5, "#dc2626", 9, "#fbbf24",
-  ]
+    ...mapRamp([0, 1, 3, 5, 9]),
+  ] as maplibregl.ExpressionSpecification
 }
 
 // A crisp arrowhead "dart", added as an SDF so icon-color can tint per-aircraft.
@@ -42,6 +47,8 @@ function makeDart(size = 24): ImageData {
   const c = document.createElement("canvas")
   c.width = c.height = size
   const ctx = c.getContext("2d")!
+  // White on purpose: this is an SDF mask, and `icon-color` tints it per
+  // aircraft. Changing it here would break the tinting, not restyle it.
   ctx.fillStyle = "#fff"
   ctx.beginPath()
   ctx.moveTo(size / 2, 2)
@@ -226,7 +233,7 @@ export default function AirspaceMap() {
         id: "density-line",
         type: "line",
         source: "density",
-        paint: { "line-color": "#3fd0ff", "line-opacity": 0.4, "line-width": 0.6 },
+        paint: { "line-color": MAP_INK.ocean, "line-opacity": 0.4, "line-width": 0.6 },
       })
       map.addLayer({
         id: "rssi",
@@ -239,7 +246,7 @@ export default function AirspaceMap() {
           "heatmap-radius": ["interpolate", ["linear"], ["zoom"], 6, 16, 11, 42],
           "heatmap-color": [
             "interpolate", ["linear"], ["heatmap-density"],
-            0, "rgba(0,0,0,0)", 0.2, "#13384f", 0.5, "#1f7a9c", 0.8, "#3fd0ff", 1, "#eafaff",
+            0, "rgba(0,0,0,0)", 0.2, SEQUENTIAL_HEX[1], 0.5, SEQUENTIAL_HEX[2], 0.8, SEQUENTIAL_HEX[4], 1, MAP_INK.glass,
           ],
           "heatmap-opacity": 0.75,
         },
@@ -250,7 +257,7 @@ export default function AirspaceMap() {
         source: "tracks",
         layout: { visibility: "none", "line-cap": "round" },
         paint: {
-          "line-color": "#ff8a3d",
+          "line-color": MAP_INK.burnt,
           "line-width": ["interpolate", ["linear"], ["zoom"], 6, 1, 11, 2.2],
           "line-opacity": 0.75,
           "line-dasharray": [1, 1.4],
@@ -281,11 +288,11 @@ export default function AirspaceMap() {
         new maplibregl.Popup({ offset: 12, closeButton: false, maxWidth: "260px" })
           .setLngLat(coords)
           .setHTML(
-            `<div class="v3-air-pop"><strong>${p.callsign}</strong><span>${p.icao.toUpperCase()}</span>` +
-              `<div class="v3-air-pop__rows">` +
+            `<div class="beta-air-pop"><strong>${p.callsign}</strong><span>${p.icao.toUpperCase()}</span>` +
+              `<div class="beta-air-pop__rows">` +
               `<div>${alt} ft · ${spd} kt</div>` +
               (p.model ? `<div>${p.model}</div>` : "") +
-              (p.owner ? `<div class="v3-air-pop__owner">${p.owner}</div>` : "") +
+              (p.owner ? `<div class="beta-air-pop__owner">${p.owner}</div>` : "") +
               `</div></div>`
           )
           .addTo(map)
@@ -304,31 +311,31 @@ export default function AirspaceMap() {
         id: "me-acc",
         type: "fill",
         source: "me-acc",
-        paint: { "fill-color": "#ffb020", "fill-opacity": 0.08 },
+        paint: { "fill-color": MAP_INK.burnt, "fill-opacity": 0.08 },
       })
       map.addLayer({
         id: "rcv-glow",
         type: "circle",
         source: "rcv",
-        paint: { "circle-radius": 11, "circle-color": "#13B8F3", "circle-opacity": 0.22, "circle-blur": 0.6 },
+        paint: { "circle-radius": 11, "circle-color": MAP_INK.ocean, "circle-opacity": 0.22, "circle-blur": 0.6 },
       })
       map.addLayer({
         id: "rcv",
         type: "circle",
         source: "rcv",
-        paint: { "circle-radius": 5, "circle-color": "#bdecff", "circle-stroke-color": "#13B8F3", "circle-stroke-width": 2 },
+        paint: { "circle-radius": 5, "circle-color": MAP_INK.glass, "circle-stroke-color": MAP_INK.ocean, "circle-stroke-width": 2 },
       })
       map.addLayer({
         id: "me-glow",
         type: "circle",
         source: "me",
-        paint: { "circle-radius": 11, "circle-color": "#ffb020", "circle-opacity": 0.22, "circle-blur": 0.6 },
+        paint: { "circle-radius": 11, "circle-color": MAP_INK.burnt, "circle-opacity": 0.22, "circle-blur": 0.6 },
       })
       map.addLayer({
         id: "me",
         type: "circle",
         source: "me",
-        paint: { "circle-radius": 5, "circle-color": "#ffd98a", "circle-stroke-color": "#ffb020", "circle-stroke-width": 2 },
+        paint: { "circle-radius": 5, "circle-color": MAP_INK.mustard, "circle-stroke-color": MAP_INK.burnt, "circle-stroke-width": 2 },
       })
 
       // center on the receiver if it has a fix
@@ -405,53 +412,53 @@ export default function AirspaceMap() {
   const initializing = !ready || status === "loading"
 
   return (
-    <div className="v3-air">
-      <div ref={containerRef} className="v3-air__map" />
+    <div className="beta-air">
+      <div ref={containerRef} className="beta-air__map" />
 
       {initializing ? (
-        <div className="v3-air__init" role="status" aria-live="polite">
-          <span className="v3-air__loading-dot" aria-hidden />
+        <div className="beta-air__init" role="status" aria-live="polite">
+          <span className="beta-air__loading-dot" aria-hidden />
           <span>bringing up the airspace…</span>
         </div>
       ) : null}
 
-      <div className="v3-air__hud v3-air__hud--top">
-        <span className={`v3-air__live v3-air__live--${status}`}>
-          <span className="v3-air__live-dot" aria-hidden />
+      <div className="beta-air__hud beta-air__hud--top">
+        <span className={`beta-air__live beta-air__live--${status}`}>
+          <span className="beta-air__live-dot" aria-hidden />
           {status === "offline" ? "receiver offline" : `${count} aircraft`}
         </span>
       </div>
 
-      <div className="v3-air__panel">
-        <span className="v3-air__panel-head">Layers</span>
-        <button type="button" className="v3-air__lyr" style={{ ["--lc" as string]: "#3fd0ff" }} data-on={layers.aircraft} data-loading={!loaded.aircraft} disabled={!loaded.aircraft} aria-busy={!loaded.aircraft} aria-pressed={layers.aircraft} onClick={() => toggle("aircraft")}>
+      <div className="beta-air__panel">
+        <span className="beta-air__panel-head">Layers</span>
+        <button type="button" className="beta-air__lyr" style={{ ["--lc" as string]: MAP_INK.ocean }} data-on={layers.aircraft} data-loading={!loaded.aircraft} disabled={!loaded.aircraft} aria-busy={!loaded.aircraft} aria-pressed={layers.aircraft} onClick={() => toggle("aircraft")}>
           <i /> Aircraft
         </button>
-        <button type="button" className="v3-air__lyr" style={{ ["--lc" as string]: "#7c3aed" }} data-on={layers.density} data-loading={!loaded.density} disabled={!loaded.density} aria-busy={!loaded.density} aria-pressed={layers.density} onClick={() => toggle("density")}>
+        <button type="button" className="beta-air__lyr" style={{ ["--lc" as string]: MAP_INK.burnt }} data-on={layers.density} data-loading={!loaded.density} disabled={!loaded.density} aria-busy={!loaded.density} aria-pressed={layers.density} onClick={() => toggle("density")}>
           <i /> Density
         </button>
         {layers.density ? (
-          <div className="v3-air__modes">
+          <div className="beta-air__modes">
             {(["predicted", "current", "historical"] as DensityMode[]).map((m) => (
-              <button key={m} type="button" className="v3-air__mode" data-on={mode === m} disabled={!loaded.density} onClick={() => setMode(m)}>
+              <button key={m} type="button" className="beta-air__mode" data-on={mode === m} disabled={!loaded.density} onClick={() => setMode(m)}>
                 {m === "historical" ? "hist" : m === "predicted" ? "pred" : "now"}
               </button>
             ))}
           </div>
         ) : null}
-        <button type="button" className="v3-air__lyr" style={{ ["--lc" as string]: "#ff8a3d" }} data-on={layers.tracks} data-loading={!loaded.tracks} disabled={!loaded.tracks} aria-busy={!loaded.tracks} aria-pressed={layers.tracks} onClick={() => toggle("tracks")}>
+        <button type="button" className="beta-air__lyr" style={{ ["--lc" as string]: MAP_INK.mustard }} data-on={layers.tracks} data-loading={!loaded.tracks} disabled={!loaded.tracks} aria-busy={!loaded.tracks} aria-pressed={layers.tracks} onClick={() => toggle("tracks")}>
           <i /> Trajectories
         </button>
-        <button type="button" className="v3-air__lyr" style={{ ["--lc" as string]: "#eafaff" }} data-on={layers.rssi} data-loading={!loaded.rssi} disabled={!loaded.rssi} aria-busy={!loaded.rssi} aria-pressed={layers.rssi} onClick={() => toggle("rssi")}>
+        <button type="button" className="beta-air__lyr" style={{ ["--lc" as string]: MAP_INK.forest }} data-on={layers.rssi} data-loading={!loaded.rssi} disabled={!loaded.rssi} aria-busy={!loaded.rssi} aria-pressed={layers.rssi} onClick={() => toggle("rssi")}>
           <i /> RSSI bloom
         </button>
       </div>
 
-      <div className="v3-air__legend">
+      <div className="beta-air__legend">
         <span>alt</span>
-        <span className="v3-air__ramp v3-air__ramp--alt" />
-        <span className="v3-air__legend-lo">0</span>
-        <span className="v3-air__legend-hi">40k ft</span>
+        <span className="beta-air__ramp beta-air__ramp--alt" />
+        <span className="beta-air__legend-lo">0</span>
+        <span className="beta-air__legend-hi">40k ft</span>
       </div>
     </div>
   )

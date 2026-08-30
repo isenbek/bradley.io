@@ -107,3 +107,57 @@ export function rampStep(t: number): string {
   const i = Math.min(SEQUENTIAL.length - 1, Math.floor(t * SEQUENTIAL.length))
   return SEQUENTIAL[i]
 }
+
+/**
+ * ---------------------------------------------------------------------------
+ * THE MAP PALETTE, AS LITERAL HEX
+ *
+ * MapLibre paint properties are evaluated by the GL renderer, not by CSS, so a
+ * `var(--color-ocean)` in a paint spec resolves to nothing and the layer draws
+ * black. The map layers therefore need real hex, which means these values are a
+ * SECOND copy of the tokens and can drift from them.
+ *
+ * They are written down here, once, rather than inline at each of the ~25 paint
+ * sites, and every value is either a token verbatim or an OKLab step between two
+ * tokens. Regenerate SEQUENTIAL_HEX after any change to --color-ocean or
+ * --color-panel; the steps are the same mix percentages as SEQUENTIAL above, so
+ * the maps and the charts show the same ramp.
+ * ---------------------------------------------------------------------------
+ */
+
+/** SEQUENTIAL, resolved. OKLab L 0.295 / 0.404 / 0.513 / 0.622 / 0.731: an
+ *  ordered scale, because lightness rises monotonically across the five. */
+export const SEQUENTIAL_HEX = ["#232F2F", "#324F50", "#417073", "#509399", "#5FB8C0"] as const
+
+/** Tokens the map layers need as hex. Keep in sync with app/beta/kit/tokens.css. */
+export const MAP_INK = {
+  ocean: "#5FB8C0",
+  oceanDeep: "#1A5A61",
+  burnt: "#D06B40",
+  burntDeep: "#8E3D1C",
+  mustard: "#D2B771",
+  forest: "#5FA772",
+  glass: "#E9E6DE",
+  glassMuted: "#8C8A85",
+  panel: "#131311",
+  panelSunk: "#0B0B0A",
+  rulePanel: "#34322C",
+  float: "#4A4842",
+} as const
+
+/**
+ * Magnitude on a map (altitude, contact density, signal strength).
+ *
+ * Returns a MapLibre `interpolate` colour ramp across SEQUENTIAL_HEX for the
+ * given data breakpoints. Both callers used to hand-roll a rainbow here:
+ * altitude ran amber to cyan to violet to pink, and density ran navy to indigo
+ * to violet to RED to amber. Hue has no natural order, so neither read as a
+ * scale, and the density ramp put the palette's reserved failure colour in the
+ * middle of a perfectly ordinary aircraft count.
+ */
+export function mapRamp(stops: readonly number[]): (string | number)[] {
+  const n = Math.min(stops.length, SEQUENTIAL_HEX.length)
+  const out: (string | number)[] = []
+  for (let i = 0; i < n; i++) out.push(stops[i], SEQUENTIAL_HEX[i])
+  return out
+}
