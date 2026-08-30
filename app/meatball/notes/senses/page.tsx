@@ -1,6 +1,5 @@
 import Link from "next/link"
-import { ArrowLeft, FlaskConical, Eye } from "lucide-react"
-import { V3Reveal } from "@/components/v3/V3Reveal"
+import { FlaskConical, Eye } from "lucide-react"
 
 // The salvaged rig — junk on the left, the sense it became on the right.
 const RIG: { junk: string; role: string }[] = [
@@ -16,18 +15,15 @@ const RIG: { junk: string; role: string }[] = [
   { junk: "Scrounged Logitech webcams", role: "the eyes. And, it turned out, the best ears too" },
 ]
 
-function Sec({ n, title, children }: { n: string; title: string; children: React.ReactNode }) {
+function Sec({ title, children }: { title: string; children: React.ReactNode }) {
+  // The kit rules off every h2 (.prose > h2), so the numbered eyebrow the v3
+  // version carried is redundant: the sequence is the order of the page.
   return (
-    <section className="v3-section" style={{ paddingTop: 8, paddingBottom: 8 }}>
-      <div className="v3-wrap">
-        <V3Reveal>
-          <div className="v3-sec-head" style={{ marginBottom: 18 }}>
-            <div className="v3-sec-head__num">{n}</div>
-            <h2 style={{ marginBottom: 0 }}>{title}</h2>
-          </div>
-        </V3Reveal>
-        <V3Reveal>{children}</V3Reveal>
+    <section>
+      <div className="prose beta-sec">
+        <h2>{title}</h2>
       </div>
+      <div className="prose beta-sec">{children}</div>
     </section>
   )
 }
@@ -47,67 +43,49 @@ export default function SensesPage() {
             <span aria-current="page">Field note 01</span>
           </span>
         </nav>
+        <h1>I gave a junk-pile eyes, ears, and a voice</h1>
       </div>
 
-      {/* Long-form v3 body, kept as-is. See .kit-island in app/kit.css: the
-          chrome is the kit's, the content still carries its own styling. */}
-      <div className="v3 kit-island">
-<div className="v3-longform">
+      <p className="lede">
+          The machine these words were written on has no case. Two old GPUs, a wall of
+          second-hand drives, a factory button for a power switch. Over a few nights it
+          learned to see, hear, think, and talk back, every model running on the metal,
+          nothing in the cloud. This is how the frankenstein got its senses.
+      </p>
+
       {/* HEADER ========================================================= */}
-      <header className="v3-page-head" style={{ paddingBottom: 16 }}>
-        <div className="v3-blob v3-blob--2" aria-hidden style={{ right: "-40px", top: "-20px", width: 360, height: 360 }} />
-        <div className="v3-wrap">
-          <div className="v3-page-head__lockup">
-            <V3Reveal>
-              <Link href="/meatball" className="v3-air-back">
-                <ArrowLeft size={14} strokeWidth={2.4} /> back to Meatball
-              </Link>
-            </V3Reveal>
-            <V3Reveal>
-              <span className="v3-pill v3-pill--gold" style={{ padding: "8px 16px", fontSize: 13, display: "inline-flex", gap: 8, alignItems: "center" }}>
-                <FlaskConical size={14} strokeWidth={2.25} />
-                Lab · field notes
-              </span>
-            </V3Reveal>
-            <V3Reveal eager>
-              <h1>
-                I gave a junk-pile <span className="v3-accent">eyes, ears, and a voice.</span>
-              </h1>
-            </V3Reveal>
-            <V3Reveal eager>
-              <p className="v3-page-head__lede">
-                The machine these words were written on has no case. Two old GPUs, a wall of
-                second-hand drives, a factory button for a power switch. Over a few nights it
-                learned to see, hear, think, and talk back, every model running on the metal,
-                nothing in the cloud. This is how the frankenstein got its senses.
-              </p>
-            </V3Reveal>
-          </div>
-        </div>
-      </header>
 
       {/* THE RIG (kicker) =============================================== */}
-      <section className="v3-section" style={{ paddingTop: 8, paddingBottom: 16 }}>
-        <div className="v3-wrap">
-          <V3Reveal>
-            <div className="v3-senses-rig">
-              <div className="v3-senses-rig__head">The bill of materials</div>
-              <ul className="v3-senses-rig__list">
-                {RIG.map((r) => (
-                  <li key={r.junk} className="v3-senses-rig__row">
-                    <span className="v3-senses-rig__junk">{r.junk}</span>
-                    <span className="v3-senses-rig__arrow" aria-hidden>→</span>
-                    <span className="v3-senses-rig__role">{r.role}</span>
-                  </li>
-                ))}
-              </ul>
+      <section className="beta-note-sec" style={{ paddingTop: 8, paddingBottom: 16 }}>
+        <div >
+          <div className="ledger">
+              <div className="scroller" tabIndex={0} role="region" aria-label="Bill of materials">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>The junk</th>
+                      <th>What it became</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {RIG.map((r) => (
+                      <tr key={r.junk}>
+                        <td className="name">{r.junk}</td>
+                        <td>{r.role}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <div className="tbl-foot">
+                  <span>{RIG.length} salvaged parts</span>
+                </div>
+              </div>
             </div>
-          </V3Reveal>
         </div>
       </section>
 
-      <Sec n="01" title="The premise">
-        <p className="v3-prose v3-longform__lead">
+      <Sec title="The premise">
+        <p className="lede">
           The house rule here is <strong>Anti-Cloud. Host Local, Think Global.</strong> No Vercel,
           no API keys, no someone-else&apos;s-computer. If the box is going to have senses, the
           speech recognition, the voice, and the brain all have to live on the same open-air
@@ -116,19 +94,19 @@ export default function SensesPage() {
         </p>
       </Sec>
 
-      <Sec n="02" title="Eyes">
-        <p className="v3-prose">
+      <Sec title="Eyes">
+        <p className="beta-note-p">
           First the eyes. A scrounged Logitech BRIO grabs a frame once a minute via a systemd
           timer, atomically caches it, and serves it same-origin, the same pipeline behind{" "}
-          <Link href="/eyes" className="v3-accent">/eyes</Link> and the baked
-          {" "}<Link href="/eyes.png" className="v3-accent">/eyes.png</Link>. A second webcam joined
+          <Link href="/eyes">/eyes</Link> and the baked
+          {" "}<Link href="/eyes.png">/eyes.png</Link>. A second webcam joined
           on a cron, the two trading off every minute. The box could see. It could not yet say
           anything about it.
         </p>
       </Sec>
 
-      <Sec n="03" title="A mouth and an ear">
-        <p className="v3-prose">
+      <Sec title="A mouth and an ear">
+        <p className="beta-note-p">
           The voice came from two local services: faster-whisper for speech-to-text, and Microsoft&apos;s
           VibeVoice for a neural mouth: a WebSocket that streams PCM straight onto the speaker so
           the first word lands in about a third of a second. The brain is a small Ollama model. A
@@ -138,15 +116,15 @@ export default function SensesPage() {
         </p>
       </Sec>
 
-      <Sec n="04" title="The saga">
-        <p className="v3-prose">
+      <Sec title="The saga">
+        <p className="beta-note-p">
           On paper. In the room, the speaker was silent and the mic was deaf, and it took an
           embarrassing while to learn why. Cheap USB audio dongles lie. Their analog-to-digital
           chip carries a constant DC offset that reads as a healthy <code>-35 dBFS</code> signal.
           I spent an hour convinced a microphone was &quot;live&quot; when I was staring at a flat
           electrical bias, not a sound.
         </p>
-        <p className="v3-prose">
+        <p className="beta-note-p">
           The thing that cracked it was a radio. Switched it on, recorded; switched it off,
           recorded. The two were <em>identical</em>. A radio playing in the room moved the meter
           not at all. The mic wasn&apos;t quiet; it was stone deaf. Then the speaker: I&apos;d
@@ -159,16 +137,16 @@ export default function SensesPage() {
         </p>
       </Sec>
 
-      <Sec n="05" title="The two traps">
-        <p className="v3-prose">
+      <Sec title="The two traps">
+        <p className="beta-note-p">
           The breakthrough was hijacking the webcam microphones. The BRIO&apos;s array mic
           (already in the room as an eye) turned out to be the best ear in the building, picking up
           the room <code>40 dB</code> louder than the dead dongles and transcribing the box&apos;s
           own voice near-perfectly. The grandfather&apos;s garage mic and the thrift-store condenser
           are wired in beside it.
         </p>
-        <div className="v3-callout" style={{ marginTop: 18 }}>
-          <p className="v3-prose" style={{ margin: 0 }}>
+        <div className="notice" style={{ marginTop: 18 }}>
+          <p className="beta-note-p" style={{ margin: 0 }}>
             And the second trap, the mirror of the first:{" "}
             <strong>a dead mic reads the <em>quietest</em> floor</strong>, because it&apos;s
             capturing nothing. Rank microphones by &quot;lowest noise&quot; and you will
@@ -178,8 +156,8 @@ export default function SensesPage() {
         </div>
       </Sec>
 
-      <Sec n="06" title="Calibration, the whole story in 30 seconds">
-        <p className="v3-prose">
+      <Sec title="Calibration, the whole story in 30 seconds">
+        <p className="beta-note-p">
           Both traps now live in one script. <code>calibrate.sh</code> uses the sensitive camera
           mic as a zero-touch reference: it plays a tone out of each output and listens for which
           one comes back (the speaker), then plays a tone out of <em>that</em> and ranks every
@@ -191,8 +169,8 @@ export default function SensesPage() {
         </p>
       </Sec>
 
-      <Sec n="07" title="What it does now">
-        <p className="v3-prose">
+      <Sec title="What it does now">
+        <p className="beta-note-p">
           It sees, hears, thinks, and answers. Speak and the BRIO catches it, Whisper transcribes,
           the local model thinks, and the Altec Lansings (older than most of the software stack)
           say something back in about a second. Ask it what it sees and it narrates the room
@@ -200,7 +178,7 @@ export default function SensesPage() {
           a mic to see if anyone&apos;s there. A frontier-AI loop running entirely on a caseless
           pile of other people&apos;s cast-offs.
         </p>
-        <p className="v3-prose" style={{ marginTop: 14 }}>
+        <p className="beta-note-p" style={{ marginTop: 14 }}>
           That&apos;s the whole point. The cloud would have made this trivial and forgettable. Doing
           it on a grandfather&apos;s microphone and a Salvation Army monitor with no base makes it
           <em> mine</em>, and proves the interesting part of this era isn&apos;t the data center.
@@ -209,14 +187,12 @@ export default function SensesPage() {
       </Sec>
 
       {/* FOOT ========================================================== */}
-      <section className="v3-section" style={{ paddingTop: 18, paddingBottom: 28 }}>
-        <div className="v3-wrap" style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
-          <Link href="/eyes" className="v3-espace-cta"><Eye size={15} strokeWidth={2.4} /> See through its eyes <span aria-hidden>→</span></Link>
-          <Link href="/meatball" className="v3-espace-cta"><FlaskConical size={15} strokeWidth={2.4} /> More field notes <span aria-hidden>→</span></Link>
+      <section className="beta-note-sec" style={{ paddingTop: 18, paddingBottom: 28 }}>
+        <div  style={{ display: "flex", gap: 14, flexWrap: "wrap" }}>
+          <Link href="/eyes" className="btn"><Eye size={15} strokeWidth={2.4} /> See through its eyes <span aria-hidden>→</span></Link>
+          <Link href="/meatball" className="btn"><FlaskConical size={15} strokeWidth={2.4} /> More field notes <span aria-hidden>→</span></Link>
         </div>
       </section>
-    </div>
-      </div>
     </div>
   )
 }

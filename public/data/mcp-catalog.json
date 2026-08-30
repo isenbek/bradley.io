@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-30T00:01:12.346230+00:00",
+  "generated": "2026-08-30T12:00:51.845515+00:00",
   "sources": {
     "unifiedSpec": "https://mcp.campaignbrain.dev/openapi.json",
     "metadata": "scripts/mcp-catalog-meta.json (pulled 2026-08-29)"
@@ -9,9 +9,9 @@
     "totalEndpoints": 2959,
     "totalCategories": 5,
     "mcpServers": 4,
-    "mcpServersReachable": 4,
+    "mcpServersReachable": 3,
     "fleetServices": 85,
-    "fleetEndpoints": 3931,
+    "fleetEndpoints": 3943,
     "uncataloguedServices": 42
   },
   "mcpServers": [
@@ -77,8 +77,8 @@
       "auth": "Bearer token",
       "what": "Home network management: the OpenWrt router, its dual WAN, and the fleet behind it.",
       "tools": [],
-      "reachable": true,
-      "note": "requires a token; tool list not enumerated"
+      "reachable": false,
+      "note": "HTTP 405"
     },
     {
       "id": "cbmcp",
@@ -1064,7 +1064,7 @@
   "uncatalogued": [
     {
       "id": "cbradio2",
-      "endpointCount": 100
+      "endpointCount": 112
     },
     {
       "id": "cbgreenroom",

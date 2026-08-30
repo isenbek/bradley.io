@@ -440,3 +440,38 @@ body:has(.beta-root) {
   background: transparent;
   position: relative;
 }
+
+/* ---------------------------------------------------------------------------
+   LONG-FORM NOTES
+
+   The Meatball field notes and the project write-ups: pages that are mostly
+   prose with a figure or a code block every few paragraphs. They came off v3
+   with their own page-head, section and wrap containers; those are gone, and
+   what is left needs only vertical rhythm, because the kit's .page already
+   supplies the measure and the padding.
+   --------------------------------------------------------------------------- */
+.beta-note-head { margin-bottom: calc(var(--u) * 6); }
+.beta-note-sec { margin: 0 0 calc(var(--u) * 4); }
+
+/* A paragraph inside a long-form note. .prose sets the serif voice and the
+   68ch measure on the wrapper; this is for the paragraphs that sit outside one,
+   so they still read at the same width instead of running the full page. */
+.beta-note-p {
+  max-width: 68ch;
+  margin: 0 0 calc(var(--u) * 5);
+  font-family: var(--font-serif);
+  font-size: var(--text-prose);
+  line-height: 1.62;
+}
+
+/* A caption on a code block. Sits inside .code, so it is on the panel ground
+   and takes the panel's muted ink rather than paper's. */
+.beta-code-cap {
+  padding: calc(var(--u) * 2) calc(var(--u) * 3) 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-glass-muted);
+}
+.beta-code-cap + pre { padding-top: calc(var(--u) * 2); }
