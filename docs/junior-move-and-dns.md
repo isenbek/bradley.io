@@ -1,202 +1,145 @@
-# junior.bradley.io to tinymachines.ai/junior: the draft
+# junior moves to junior.tinymachines.ai
 
-Drafted 2026-08-29. **Nothing here has been applied.** PUBLIC's own working
-agreement says it plainly, and it is the right rule: *"The three live sites must
-keep working. Anything that would change their nginx, their units or their ports
-is a proposal, not an action."*
+Option B, decided 2026-08-29. The app keeps its domain root, so **nothing inside
+junior changes**: no `root_path`, no template pass, no new failure modes. The
+whole move is a DNS record, a `server_name`, and a certificate.
 
----
-
-## The blocker, before anything else
-
-**junior cannot be mounted at `/junior` by nginx alone.** It is a FastAPI app
-built to live at a domain root, and it says so in three places:
-
-| Where | What it emits |
-|---|---|
-| `server/app.py:61` | `app.mount("/static", ...)` |
-| `server/app.py:414` | `app.mount("/term", ...)` |
-| `server/templates/*.html` | `/static/tokens.static.css`, `/static/components.css`, `/static/junior.css`, `/doc/{slug}.md`, `/term/`, and `/` |
-
-`FastAPI(...)` is constructed with no `root_path`. Proxy it under `/junior` and
-the browser is told to fetch `https://tinymachines.ai/static/junior.css`, which
-is not junior's stylesheet: it is a path on the tinymachines site, and it will
-either 404 or, worse, hit something real. The page renders unstyled and the
-terminal never connects.
-
-So there are two honest routes, and the choice is yours.
+The config is written and **parse-tested**, at
+`docs/junior/junior.conf.candidate`. It is **not installed**: PUBLIC's working
+agreement says an nginx change is a proposal, and this one cannot go in before
+the DNS exists anyway.
 
 ---
 
-## Option A: teach junior its prefix, then proxy (recommended)
+## Two corrections to the first draft
 
-The app change is small and belongs in the app, because the app is the thing
-that knows where it lives.
+Both were wrong in the direction of more work, and both are worth recording.
 
-**1. `server/app.py`** — one argument, plus the mounts follow it automatically:
-
-```python
-# Behind nginx at tinymachines.ai/junior. root_path makes FastAPI emit
-# prefixed URLs without every template having to know the prefix.
-ROOT_PATH = os.environ.get("JUNIOR_ROOT_PATH", "")
-app = FastAPI(
-    title="junior",
-    docs_url=None, redoc_url=None, openapi_url=None,
-    lifespan=lifespan,
-    root_path=ROOT_PATH,
-)
-```
-
-**2. The templates** — 16 root-absolute references become prefix-aware. In
-Jinja that is `{{ request.scope.root_path }}` prepended, or a `url_for`. Either
-way it is a mechanical pass over `base.html`, `doc.html` and `console.html`.
-
-**3. The unit** — `JUNIOR_ROOT_PATH=/junior` in the systemd environment. With it
-empty, junior still serves correctly at a bare domain, so `junior.lan` and
-`junior.local` keep working for Armando on the LAN.
-
-**4. nginx**, added to the `tinymachines.ai` server block:
-
-```nginx
-# junior, proxied under a prefix. The app is told its own root_path so it
-# emits /junior/... URLs; nginx passes the prefix through untouched rather
-# than stripping it, which is why proxy_pass has no trailing path.
-location /junior/ {
-    auth_request /_junior_authcheck;
-    error_page 401 = @junior_gate;
-    proxy_pass         http://junior_app;
-    proxy_set_header   Host $host;
-    proxy_set_header   X-Real-IP $remote_addr;
-    proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header   X-Forwarded-Proto $scheme;
-    proxy_set_header   X-Forwarded-Prefix /junior;
-    client_max_body_size 64m;
-}
-
-# The PTY and the websocket. Both need the upgrade headers; neither works
-# with the buffering on.
-location /junior/pty {
-    auth_request /_junior_authcheck;
-    error_page 401 = @junior_gate;
-    proxy_pass         http://junior_pty;
-    proxy_http_version 1.1;
-    proxy_set_header   Upgrade $http_upgrade;
-    proxy_set_header   Connection $connection_upgrade;
-    proxy_set_header   Host $host;
-    proxy_read_timeout 86400;
-    proxy_send_timeout 86400;
-    proxy_buffering    off;
-}
-
-location = /junior/ws {
-    auth_request /_junior_authcheck;
-    error_page 401 = @junior_gate;
-    proxy_pass         http://junior_app;
-    proxy_http_version 1.1;
-    proxy_set_header   Upgrade $http_upgrade;
-    proxy_set_header   Connection $connection_upgrade;
-    proxy_set_header   Host $host;
-    proxy_read_timeout 86400;
-    proxy_buffering    off;
-}
-
-location = /_junior_authcheck {
-    internal;
-    proxy_pass              http://junior_app/auth/check;
-    proxy_pass_request_body off;
-    proxy_set_header        Content-Length "";
-    proxy_set_header        Host $host;
-    proxy_set_header        X-Original-URI $request_uri;
-}
-location @junior_gate { return 302 /junior/; }
-```
-
-**Note `$connection_upgrade`, not the literal `"upgrade"`.** The existing junior
-vhost hardcodes it. That works until a client sends no `Upgrade` header, at which
-point the connection is still declared an upgrade and the proxy stalls. The map
-belongs in `nginx.conf`:
-
-```nginx
-map $http_upgrade $connection_upgrade {
-    default upgrade;
-    ''      close;
-}
-```
-
-**5. Retire the old vhost** by redirecting rather than deleting, so anything
-bookmarked survives:
-
-```nginx
-server {
-    listen 443 ssl;
-    server_name junior.bradley.io;
-    # certs as now
-    return 301 https://tinymachines.ai/junior$request_uri;
-}
-```
-
-Keep `junior.isenbek.io`, `junior.lan` and `junior.local` pointing at the app
-directly, unprefixed. Armando reaches it on the LAN and should not depend on the
-public site being up.
+1. **The `$connection_upgrade` map already exists**, at `nginx.conf` line 14.
+   The draft said to add it. `junior.conf` simply never used it and hardcoded
+   `Connection "upgrade"` in two places; the candidate now uses the map. A
+   hardcoded upgrade declares every request an upgrade, including the ones that
+   are not, and those stall rather than fail.
+2. **No new vhost is needed.** junior's existing block already does the auth
+   gate, the PTY and the websocket. Option B adds one name to two
+   `server_name` lines.
 
 ---
 
-## Option B: leave it on a subdomain, move the name
+## What the candidate changes
 
-No app change at all. `junior.tinymachines.ai` instead of
-`tinymachines.ai/junior`: the app keeps its root, every absolute path stays
-correct, and the work is a DNS record plus a `server_name` edit.
+```
+server_name junior.bradley.io junior.isenbek.io junior.lan junior.local;
+         -> junior.tinymachines.ai junior.isenbek.io junior.lan junior.local;
+```
 
-This is not what was asked for, and it is worth saying why it might be the
-better answer anyway: PUBLIC's CLAUDE.md notes that *"the subdomains stay for
-now and move under the apex later"*, with a redirect map at the move. junior
-would simply join that queue and move when the others do, once rather than
-twice.
+on both the `:443` and the `:80` block, plus:
+
+- a **new pair of blocks for `junior.bradley.io`** that serve nothing and 301 to
+  `https://junior.tinymachines.ai$request_uri`. They sit ahead of the app blocks,
+  and the old name is removed from those, so the app answers to exactly one
+  public identity.
+- the two hardcoded upgrade headers, fixed.
+
+`junior.isenbek.io`, `junior.lan` and `junior.local` are untouched. Armando
+keeps reaching it on the LAN whether or not the public site is up, which is the
+point of them.
 
 ---
 
-## DNS
+## Run it in this order
 
-For **Option A**, no new record is needed: `tinymachines.ai` already resolves and
-already terminates TLS. Only the `junior.bradley.io` retirement record matters,
-and only if you want the old name to stop resolving eventually.
+The order matters: certbot has to answer an HTTP challenge on a name that
+resolves, and nginx will not start with a certificate path that does not exist.
 
-For **Option B**:
+**1. DNS — yours to do.** One record:
 
-| Type | Name | Value | Note |
+| Type | Name | Value | TTL |
 |---|---|---|---|
-| A | `junior.tinymachines.ai` | `104.11.127.142` | same host as the apex |
-| AAAA | `junior.tinymachines.ai` | *(only if the apex has one)* | match the apex or omit |
+| A | `junior.tinymachines.ai` | `104.11.127.142` | 300 while you watch it |
 
-Then a cert: `certbot certonly --webroot -w /var/www/html -d junior.tinymachines.ai`.
-
-**The IPv4/IPv6 trap applies here.** A record published on only one family, with
-the vhost listening on the other, fails for exactly the users whose resolver
-prefers the missing one, and it fails intermittently enough to look like
-something else. Publish both or neither.
-
----
-
-## Verify, in this order
+**No AAAA.** `tinymachines.ai` has no IPv6 address today, and publishing one for
+a subdomain when the apex has none is the trap that fails only for the users
+whose resolver prefers v6, intermittently, and looks like something else
+entirely. Match the apex or omit it.
 
 ```bash
-sudo nginx -t                       # never reload on a config that has not parsed
-sudo systemctl reload nginx
-curl -sI https://tinymachines.ai/junior/ | head -3
-curl -sI https://junior.bradley.io/     | head -3   # expect 301 to the new home
+dig +short junior.tinymachines.ai @8.8.8.8    # wait for 104.11.127.142
 ```
 
-Then the part a curl cannot check: open the console and confirm the terminal
-attaches. The PTY is a websocket, and a websocket that fails to upgrade returns
-a perfectly healthy-looking 200 on the page that hosts it.
+**2. Install the config, HTTP only.** The `:443` block references a certificate
+that does not exist yet, so bring the name up on port 80 first:
+
+```bash
+sudo cp /etc/nginx/sites-enabled/junior.conf \
+        /etc/nginx/backups/junior.conf.bak-$(date +%Y%m%d-%H%M%S)
+sudo cp docs/junior/junior.conf.candidate /etc/nginx/sites-enabled/junior.conf
+# Temporarily drop junior.tinymachines.ai from the :443 server_name, leaving it
+# on :80, so nginx starts without the cert.
+sudo nginx -t && sudo systemctl reload nginx
+```
+
+**3. Extend the certificate.** One cert covering every name junior answers to,
+including the old one so its redirect stops throwing a name mismatch:
+
+```bash
+sudo certbot certonly --webroot -w /var/www/html \
+  --cert-name junior.isenbek.io \
+  -d junior.isenbek.io -d junior.tinymachines.ai -d junior.bradley.io
+```
+
+**4. Put the name back on `:443`** and reload:
+
+```bash
+sudo nginx -t && sudo systemctl reload nginx
+```
 
 ---
 
-## Already done, for the record
+## Then check the part curl cannot
+
+```bash
+curl -sI https://junior.tinymachines.ai/  | head -3   # 200
+curl -sI https://junior.bradley.io/       | head -3   # 301 to the new name
+curl -sI http://junior.bradley.io/        | head -3   # 301 as well
+```
+
+Then **open the console and confirm the terminal attaches.** The PTY is a
+websocket, and a websocket that fails to upgrade returns a perfectly healthy
+200 on the page hosting it. The page will look right and the terminal will
+simply never produce a prompt. That is the whole reason the upgrade header was
+worth fixing in the same change.
+
+---
+
+## Rolling back
+
+```bash
+sudo cp /etc/nginx/backups/junior.conf.bak-<stamp> /etc/nginx/sites-enabled/junior.conf
+sudo nginx -t && sudo systemctl reload nginx
+```
+
+The DNS record can stay: a name that resolves to a host with no vhost for it
+falls through to the default server, which is not an outage for anything else.
+
+---
+
+## Already done, and needing nothing from you
 
 - **The 3D entropy views** are live at `tinymachines.ai/hotbits/space`, reading
   `/random/archive` and `/metrics` on `hotbits.tinymachines.ai`. Both are open
   and neither draws on the fresh pool.
-- **`bradley.io/trng/space`** 308s to the new home. `bradley.io/trng` stays as
-  the instrument's summary.
-- Neither of those needed an nginx change.
+- **`bradley.io/trng/space`** 308s there; its components are deleted.
+- **`/lab` is retired**, the Meatball field notes moved to `/meatball/notes/*`,
+  and `/projects` is down to three with 296 dossier redirects.
+
+None of those needed an nginx change.
+
+## Why this was the better option
+
+`tinymachines.ai/junior` would have meant a `root_path` argument, a pass over 16
+root-absolute template paths, and a new class of bug where a junior asset
+resolves against the tinymachines site. PUBLIC's own CLAUDE.md notes that the
+subdomains **stay for now and move under the apex later**, with a redirect map at
+the move. junior joins that queue and moves once, with everything else, instead
+of twice.

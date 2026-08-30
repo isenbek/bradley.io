@@ -1,0 +1,202 @@
+# junior.isenbek.io — nginx vhost.
+#
+# Installed by deploy/setup.sh as /etc/nginx/sites-available/junior.conf.
+# TLS via certbot (--nginx) once DNS points here; until then the :80 block
+# serves the site so a LAN-only install works with no certificate.
+#
+# THE SECURITY MODEL IN ONE LINE: ttyd (127.0.0.1:7683) has NO authentication.
+# Every request to /pty/ must first pass the `auth_request` subrequest against
+# the app, which validates the HMAC-signed PIN cookie. Remove that line and
+# the shell is open to whoever can reach this port.
+
+# junior.bradley.io was the public name until 2026-08-29. It now redirects to
+# junior.tinymachines.ai and serves nothing, so anything bookmarked survives the
+# move. Its own server block, and the old name is gone from the app blocks
+# below: leaving it on both would have the app answering to two identities and
+# nginx picking by match order rather than by intent.
+server {
+    listen 80;
+    listen [::]:80;
+    server_name junior.bradley.io;
+    location /.well-known/acme-challenge/ { root /var/www/html; }
+    location / { return 301 https://junior.tinymachines.ai$request_uri; }
+}
+server {
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    server_name junior.bradley.io;
+    # The existing junior.isenbek.io pair. It does not cover junior.bradley.io
+    # either, and did not before this change: a client reaching the old name
+    # over TLS gets a name-mismatch warning and then the redirect. Fold both
+    # names into one certificate when you expand it for the new host.
+    ssl_certificate     /etc/letsencrypt/live/junior.isenbek.io/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/junior.isenbek.io/privkey.pem;
+    include /etc/letsencrypt/options-ssl-nginx.conf;
+    return 301 https://junior.tinymachines.ai$request_uri;
+}
+
+upstream junior_app { server 127.0.0.1:6520; }
+upstream junior_pty { server 127.0.0.1:7683; }
+
+server {
+    server_name junior.tinymachines.ai junior.isenbek.io junior.lan junior.local;
+
+    access_log /var/log/nginx/junior.access.log;
+    client_max_body_size 64m;
+
+    # Internal only — asks the app "is this cookie valid?". 204 = yes, 401 = no.
+    location = /_authcheck {
+        internal;
+        proxy_pass              http://junior_app/auth/check;
+        proxy_pass_request_body off;
+        proxy_set_header        Content-Length "";
+        proxy_set_header        Host $host;
+        proxy_set_header        X-Original-URI $request_uri;
+    }
+
+    # The PTY bridge. ttyd serves its own index, token endpoint and websocket
+    # under this base path (-b /pty).
+    location /pty {
+        auth_request /_authcheck;
+        error_page 401 = @gate;
+
+        proxy_pass         http://junior_pty;
+        proxy_http_version 1.1;
+        proxy_set_header   Upgrade $http_upgrade;
+        proxy_set_header   Connection $connection_upgrade;
+        proxy_set_header   Host $host;
+        proxy_set_header   X-Real-IP $remote_addr;
+        proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header   X-Forwarded-Proto $scheme;
+        # A terminal sits idle for long stretches; don't cut it at 60s.
+        proxy_read_timeout 86400;
+        proxy_send_timeout 86400;
+        proxy_buffering    off;
+    }
+    location @gate { return 302 /; }
+
+    # AGENTTERM's relay. Same auth_request as /pty -- but unlike ttyd, the app
+    # re-checks the cookie itself in @app.websocket("/ws"), so a direct hit on
+    # 127.0.0.1:6520 that never passes through nginx is refused as well.
+    # This carries messages, not keystrokes: there is no shell behind it.
+    location = /ws {
+        auth_request /_authcheck;
+        error_page 401 = @gate;
+
+        proxy_pass         http://junior_app;
+        proxy_http_version 1.1;
+        proxy_set_header   Upgrade $http_upgrade;
+        proxy_set_header   Connection $connection_upgrade;
+        proxy_set_header   Host $host;
+        proxy_set_header   X-Real-IP $remote_addr;
+        proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header   X-Forwarded-Proto $scheme;
+        # The relay is idle between messages; do not cut it at 60s.
+        proxy_read_timeout 86400;
+        proxy_send_timeout 86400;
+        proxy_buffering    off;
+    }
+
+    # The transcript as server-sent events. Read-only; same gate. Long-lived
+    # and unbuffered, or the events sit in nginx until the buffer fills.
+    location = /events {
+        auth_request /_authcheck;
+        error_page 401 = @gate;
+
+        proxy_pass         http://junior_app;
+        proxy_http_version 1.1;
+        proxy_set_header   Connection "";
+        proxy_set_header   Host $host;
+        proxy_set_header   X-Real-IP $remote_addr;
+        proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header   X-Forwarded-Proto $scheme;
+        proxy_read_timeout 86400;
+        proxy_buffering    off;
+        proxy_cache        off;
+    }
+
+    # MCP for other agents. NO auth_request here, on purpose: clients send a
+    # bearer token, not the cookie, and the cookie check would bounce every one
+    # of them to the PIN page. The app is the gate -- it refuses without a
+    # valid token before reading the body. See server/mcp.py.
+    location = /mcp {
+        proxy_pass         http://junior_app;
+        proxy_http_version 1.1;
+        proxy_set_header   Host $host;
+        proxy_set_header   X-Real-IP $remote_addr;
+        proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header   X-Forwarded-Proto $scheme;
+        # router_updates runs opkg update on the box: several seconds.
+        proxy_read_timeout 120;
+    }
+
+    # The AGENTTERM wasm bundle. Client code with no secrets in it, but gated
+    # anyway so a stranger gets the PIN page rather than a console that cannot
+    # connect to anything.
+    location /term/ {
+        auth_request /_authcheck;
+        error_page 401 = @gate;
+
+        proxy_pass http://junior_app;
+        # index.html names the hashed assets. Cache it and a browser keeps
+        # asking for a bundle that a deploy has since replaced.
+        add_header Cache-Control "no-store";
+    }
+    location /term/assets/ {
+        auth_request /_authcheck;
+        error_page 401 = @gate;
+
+        proxy_pass http://junior_app;
+        # Content-hashed filenames: a changed file is a new name.
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+
+    location /static/ {
+        proxy_pass http://junior_app;
+        expires 1h;
+    }
+
+    location / {
+        proxy_pass         http://junior_app;
+        proxy_http_version 1.1;
+        proxy_set_header   Host $host;
+        proxy_set_header   X-Real-IP $remote_addr;
+        proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header   X-Forwarded-Proto $scheme;
+        # recovery images are tens of MB
+        proxy_read_timeout 600;
+    }
+
+    listen [::]:443 ssl; # managed by Certbot
+    listen 443 ssl; # managed by Certbot
+    ssl_certificate /etc/letsencrypt/live/junior.isenbek.io/fullchain.pem; # managed by Certbot
+    ssl_certificate_key /etc/letsencrypt/live/junior.isenbek.io/privkey.pem; # managed by Certbot
+    include /etc/letsencrypt/options-ssl-nginx.conf; # managed by Certbot
+    ssl_dhparam /etc/letsencrypt/ssl-dhparams.pem; # managed by Certbot
+
+
+
+}
+
+
+server {
+    if ($host = junior.bradley.io) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    if ($host = junior.isenbek.io) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    listen 80;
+    listen [::]:80;
+    server_name junior.tinymachines.ai junior.isenbek.io junior.lan junior.local;
+    return 404; # managed by Certbot
+
+
+
+
+}
