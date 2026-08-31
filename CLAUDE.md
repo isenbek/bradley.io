@@ -61,8 +61,7 @@ bradleyio/
 │   ├── trng/ visitors/     # Hotbits board; Knock-knock board
 │   ├── eyes/ fleet/ sdr/   # live instrument boards
 │   ├── projects/           # instrument embeds + companion cards
-│   ├── preferences/ pwa/   # capability scanner; service worker
-│   └── ambient/            # ORPHANED (not rendered by the shell)
+│   └── preferences/ pwa/   # capability scanner; service worker
 ├── lib/                    # bio-logo-path, time-ago, build-info, og-cards,
 │   └── beta/chart-theme.ts # THE chart/map colour source
 ├── scripts/                # data pipelines (activity, pilot, mcp-catalog,
