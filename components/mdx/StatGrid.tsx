@@ -1,7 +1,3 @@
-"use client"
-
-import { motion, useInView } from "framer-motion"
-import { useRef } from "react"
 import * as LucideIcons from "lucide-react"
 
 type IconName = keyof typeof LucideIcons
@@ -16,33 +12,18 @@ interface StatGridProps {
   stats: Stat[]
 }
 
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.2,
-    },
-  },
-}
-
-const itemVariants = {
-  hidden: { y: 20 },
-  visible: { y: 0 },
-}
-
+/**
+ * A row of stat tiles for MDX content.
+ *
+ * This used to stagger the tiles in with framer-motion on scroll. The animation
+ * was the component's only reason to be a client component and framer-motion's
+ * only importer that the build could reach, so it went with the dependency: a
+ * scroll-triggered fade is not worth a runtime animation library, and the tiles
+ * read the same on arrival either way. Now a plain server component.
+ */
 export function StatGrid({ stats }: StatGridProps) {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: "0px 0px 100px 0px" })
-
   return (
-    <motion.div
-      ref={ref}
-      initial="hidden"
-      animate={isInView ? "visible" : "hidden"}
-      variants={containerVariants}
-      className="container-page py-8"
-    >
+    <div className="container-page py-8">
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
         {stats.map((stat, index) => {
           const IconComponent = stat.icon
@@ -50,22 +31,19 @@ export function StatGrid({ stats }: StatGridProps) {
             : null
 
           return (
-            <motion.div
+            <div
               key={index}
-              variants={itemVariants}
               className="bg-sf-dark-alt rounded-xl p-6 shadow-sm border border-sf-steel/15 text-center"
             >
               {IconComponent && (
                 <IconComponent className="w-6 h-6 text-sf-orange mx-auto mb-2" />
               )}
               <div className="text-stat text-sf-orange">{stat.value}</div>
-              <div className="text-sm font-medium text-sf-muted mt-1">
-                {stat.label}
-              </div>
-            </motion.div>
+              <div className="text-sm font-medium text-sf-muted mt-1">{stat.label}</div>
+            </div>
           )
         })}
       </div>
-    </motion.div>
+    </div>
   )
 }

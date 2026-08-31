@@ -1,27 +1,24 @@
-"use client"
-
-import { motion, useInView } from "framer-motion"
-import { useRef, ReactNode } from "react"
+import type { ReactNode } from "react"
 
 interface AnimatedSectionProps {
   children: ReactNode
+  /** Kept for API compatibility with the callers; no longer does anything. */
   delay?: number
   className?: string
 }
 
-export function AnimatedSection({ children, delay = 0, className }: AnimatedSectionProps) {
-  const ref = useRef(null)
-  const isInView = useInView(ref, { once: true, margin: "0px 0px 100px 0px" })
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ y: 20 }}
-      animate={isInView ? { y: 0 } : { y: 20 }}
-      transition={{ duration: 0.5, delay, ease: "easeOut" }}
-      className={className}
-    >
-      {children}
-    </motion.div>
-  )
+/**
+ * A section wrapper for the MDX components.
+ *
+ * It used to slide its children up 20px on scroll via framer-motion, and it was
+ * the only thing in the built tree importing that library. A 20px translate on
+ * arrival is not worth a runtime animation dependency, so the animation went and
+ * the library went with it. The `delay` prop stays in the signature because six
+ * callers pass it; it is inert.
+ *
+ * No longer a client component either, since the effect was its only reason to
+ * be one.
+ */
+export function AnimatedSection({ children, className }: AnimatedSectionProps) {
+  return <div className={className}>{children}</div>
 }
