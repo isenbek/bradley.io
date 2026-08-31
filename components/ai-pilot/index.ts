@@ -1,4 +1,3 @@
-export { LicenseCard } from "./LicenseCard";
 export { StreakBanner } from "./StreakBanner";
 export { ActivityHeatmap } from "./ActivityHeatmap";
 export { HourlyDistribution } from "./HourlyDistribution";
