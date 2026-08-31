@@ -37,12 +37,18 @@ bash scripts/gen-card-images.sh || true
 # 3. Commit (if there are changes)
 step "Checking for changes..."
 if [[ -n "$(git status --porcelain)" ]]; then
-    git add app/ components/ lib/ public/ scripts/ tests/ \
-           package.json bun.lock next.config.mjs playwright.config.ts \
-           tsconfig.json postcss.config.mjs mdx-components.tsx \
-           eslint.config.mjs .gitignore CLAUDE.md deploy.sh \
-           bradley-io.service bradley-cam.service bradley-cam.timer ecosystem.config.js \
-           wargames-server.js .env 2>/dev/null || true
+    # One nonexistent pathspec makes `git add` abort the ENTIRE add, and the
+    # `|| true` hides it — the commit then fails on an empty index and set -e
+    # kills the deploy (this happened when mdx-components.tsx was deleted).
+    # Adding per-path means a future deletion skips one file, not all of them.
+    for p in app/ components/ lib/ public/ scripts/ tests/ \
+             package.json bun.lock next.config.mjs playwright.config.ts \
+             tsconfig.json postcss.config.mjs \
+             eslint.config.mjs .gitignore CLAUDE.md deploy.sh \
+             bradley-io.service bradley-cam.service bradley-cam.timer ecosystem.config.js \
+             wargames-server.js .env; do
+        git add "$p" 2>/dev/null || true
+    done
     git commit -m "deploy: $(date '+%Y-%m-%d %H:%M:%S')"
     ok "Committed"
 else
