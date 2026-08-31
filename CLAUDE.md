@@ -23,7 +23,7 @@ Charts and MapLibre colour come from `lib/beta/chart-theme.ts` — one source. M
 
 **One deliberate exception:** `/terminal`'s CRT is styled by route-scoped `app/terminal.css` (classes `term*`) with literal phosphor colours — a monitor is not part of a palette. The page's chrome is still the kit.
 
-**History:** two earlier design systems are gone. The v1 multi-theme system (`sf-*` utilities, `--brand-*` vars, Deep Sea/Analog-Future/Horizon) survives only in `app/globals.css` legacy token blocks and `app/_legacy/`. The v3 "Bio Blue" design (`app/v3.css`, `--v3-*` tokens, `components/v3/`) was **deleted 2026-08-30** — reaching for a `--v3-*` token renders unstyled without erroring.
+**History:** two earlier design systems are gone. The v1 multi-theme system (`sf-*` utilities, `--brand-*` vars, Deep Sea/Analog-Future/Horizon) survives only in `app/globals.css` legacy token blocks; the archived v1 source (`app/_legacy/`) was deleted 2026-08-31 — it is in git history. The v3 "Bio Blue" design (`app/v3.css`, `--v3-*` tokens, `components/v3/`) was **deleted 2026-08-30** — reaching for a `--v3-*` token renders unstyled without erroring.
 
 ### Tech Stack
 - **Framework**: Next.js 16, App Router, Turbopack
@@ -48,9 +48,7 @@ bradleyio/
 │   ├── beta/kit/           #   the VENDORED style kit — never edit, resync
 │   ├── _nav.ts             #   NAV + KIT_ROUTES; every new route registers here
 │   ├── kit.css             #   bradley.io's own beta-* rules on top of the kit
-│   ├── terminal.css        #   the CRT
-│   └── _legacy/            #   v1 site, excluded from tsconfig/eslint/routing;
-│                           #   contains dangling imports — never un-exclude
+│   └── terminal.css        #   the CRT
 ├── components/
 │   ├── KitShell.tsx        # the one shell: skip link, KitNav, footer w/ version
 │   ├── KitNav.tsx          # masthead + menu (sets html.menu-open, --app-head-h)

@@ -35,7 +35,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/dragonfli/worldevent`, changeFrequency: "daily", priority: 0.5, lastModified: now },
     { url: `${base}/sdr`, changeFrequency: "daily", priority: 0.6, lastModified: now },
     { url: `${base}/meatball`, changeFrequency: "daily", priority: 0.6, lastModified: now },
-    // /style-guide was retired with the v3 swap — archived under app/_legacy.
+    // /style-guide was retired with the v3 swap; its source is in git history.
     // /eyes and /meatball/{log,memory} stay out — noindex by design.
   ]
 
