@@ -1,5 +1,4 @@
 /* global process */
-import createMDX from '@next/mdx'
 import { readFileSync } from 'node:fs'
 
 /**
@@ -55,7 +54,10 @@ function retiredDossierRedirects() {
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
+  // 'md' and 'mdx' were here for @next/mdx. There has never been a page.md or
+  // page.mdx in this app, and the MDX pipeline is gone, so they created no
+  // routes and would now fail to compile if one appeared.
+  pageExtensions: ['js', 'jsx', 'ts', 'tsx'],
   turbopack: {
     root: process.cwd(),
   },
@@ -155,12 +157,4 @@ const nextConfig = {
   trailingSlash: false,
 }
 
-const withMDX = createMDX({
-  extension: /\.mdx?$/,
-  options: {
-    remarkPlugins: ['remark-gfm'],
-    rehypePlugins: [],
-  },
-})
-
-export default withMDX(nextConfig)
+export default nextConfig
