@@ -41,10 +41,15 @@ bradley-io/
 │   ├── wargames/           # WOPR Wargames client
 │   └── wargames-test/      # Wargames test page
 ├── components/
-│   ├── ai-pilot/           # AI Pilot dashboard components
+│   ├── kit/                # Style-kit chrome: BioLogo, BioMarkFrame, DeployedAgo
 │   ├── ambient/            # Ambient animations (shimmer, leaves)
-│   ├── home/               # Homepage components
-│   ├── layout/             # Navigation, RootLayoutWrapper, VersionFooter
+│   ├── dragonfli/          # Airspace map, GPS board, perception bus
+│   ├── meatball/           # The sensory robot's boards
+│   ├── mos/                # 6502 die plates + stack
+│   ├── projects/           # Instrument embeds + companion cards
+│   ├── trng/ visitors/     # Hotbits board, Knock knock board
+│   ├── eyes/ fleet/ sdr/   # Live instrument boards
+│   ├── preferences/ pwa/   # Capability scanner, service worker
 │   ├── mdx/                # MDX rendering components
 │   └── ui/                 # Shared UI primitives
 ├── lib/                    # Utilities, data helpers
