@@ -142,7 +142,7 @@ export default function PlainEnglishPage() {
             you "you do not need us" is a promise we put in writing.
           </p>
 
-          <h2>About "the cloud", since it comes up</h2>
+          <h2>About "the cloud," since it comes up</h2>
           <p>
             The cloud just means renting computers by the month from a very large company instead
             of owning your own. Renting is right for some things and wasteful for others, the
