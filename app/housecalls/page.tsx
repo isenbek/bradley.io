@@ -92,6 +92,12 @@ export default function HouseCallsPage() {
         human reading it and signing it.
       </p>
 
+      <p className="hero-ctas">
+        <Link className="btn" href="/housecalls/plain">
+          New to all of this? Read the plain-English version
+        </Link>
+      </p>
+
       <div className="prose beta-sec">
         <h2>The deal</h2>
         <p>
