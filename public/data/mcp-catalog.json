@@ -1,17 +1,17 @@
 {
-  "generated": "2026-08-31T16:03:13.673570+00:00",
+  "generated": "2026-09-05T20:01:06.423829+00:00",
   "sources": {
     "unifiedSpec": "https://mcp.campaignbrain.dev/openapi.json",
     "metadata": "scripts/mcp-catalog-meta.json (pulled 2026-08-29)"
   },
   "stats": {
     "totalServices": 55,
-    "totalEndpoints": 2905,
+    "totalEndpoints": 2966,
     "totalCategories": 5,
     "mcpServers": 4,
     "mcpServersReachable": 3,
-    "fleetServices": 85,
-    "fleetEndpoints": 3909,
+    "fleetServices": 86,
+    "fleetEndpoints": 3984,
     "uncataloguedServices": 43
   },
   "mcpServers": [
@@ -234,7 +234,7 @@
             "address-hygiene",
             "mcp-tools"
           ],
-          "endpointCount": 149
+          "endpointCount": 155
         },
         {
           "id": "cbfiles",
@@ -253,6 +253,24 @@
             "mcp-tools"
           ],
           "endpointCount": 77
+        },
+        {
+          "id": "cbdistricts",
+          "name": "Congressional Districts",
+          "url": "https://districts.campaignbrain.dev",
+          "description": "119th Congress, 441 districts. Demographics, GeoJSON boundaries, radio coverage, geographic layers, state data. Embedded MCP at /mcp.",
+          "auth": "None (public)",
+          "capabilities": [
+            "districts",
+            "demographics",
+            "geojson",
+            "states",
+            "radio-coverage",
+            "intersections",
+            "layers",
+            "mcp-tools"
+          ],
+          "endpointCount": 54
         },
         {
           "id": "cbiterable",
@@ -325,7 +343,7 @@
             "user-guide",
             "mcp-tools"
           ],
-          "endpointCount": 25
+          "endpointCount": 26
         },
         {
           "id": "cbmaps",
@@ -409,24 +427,6 @@
             "mcp-tools"
           ],
           "endpointCount": 7
-        },
-        {
-          "id": "cbdistricts",
-          "name": "Congressional Districts",
-          "url": "https://districts.campaignbrain.dev",
-          "description": "119th Congress, 441 districts. Demographics, GeoJSON boundaries, radio coverage, geographic layers, state data. Embedded MCP at /mcp.",
-          "auth": "None (public)",
-          "capabilities": [
-            "districts",
-            "demographics",
-            "geojson",
-            "states",
-            "radio-coverage",
-            "intersections",
-            "layers",
-            "mcp-tools"
-          ],
-          "endpointCount": 0
         },
         {
           "id": "sdr",
@@ -1064,7 +1064,7 @@
   "uncatalogued": [
     {
       "id": "cbradio2",
-      "endpointCount": 120
+      "endpointCount": 122
     },
     {
       "id": "cbgreenroom",
@@ -1076,7 +1076,7 @@
     },
     {
       "id": "cbelections",
-      "endpointCount": 58
+      "endpointCount": 59
     },
     {
       "id": "cbstitch",
@@ -1092,7 +1092,7 @@
     },
     {
       "id": "cblist",
-      "endpointCount": 34
+      "endpointCount": 35
     },
     {
       "id": "cbcalendar",
@@ -1103,8 +1103,12 @@
       "endpointCount": 25
     },
     {
+      "id": "cbconvo",
+      "endpointCount": 24
+    },
+    {
       "id": "cbea",
-      "endpointCount": 23
+      "endpointCount": 24
     },
     {
       "id": "cbpublish",
@@ -1133,10 +1137,6 @@
     {
       "id": "cbmarketing",
       "endpointCount": 17
-    },
-    {
-      "id": "cbconvo",
-      "endpointCount": 16
     },
     {
       "id": "cbcrm",
@@ -1179,16 +1179,16 @@
       "endpointCount": 13
     },
     {
+      "id": "cbenrichment",
+      "endpointCount": 12
+    },
+    {
       "id": "cbforge",
       "endpointCount": 12
     },
     {
       "id": "cbinbox",
       "endpointCount": 12
-    },
-    {
-      "id": "cbenrichment",
-      "endpointCount": 11
     },
     {
       "id": "cbnotify",

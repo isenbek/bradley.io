@@ -75,9 +75,9 @@ for (const path of CORE_PATHS) {
       // Wait for web fonts to actually finish loading. Without this the
       // first run after a deploy frequently catches a fallback-font render
       // and produces a spurious diff against the baseline.
-      await page.evaluate(() =>
-        document.fonts ? document.fonts.ready : Promise.resolve()
-      )
+      await page.evaluate(async () => {
+        await (document.fonts?.ready ?? Promise.resolve())
+      })
       await page.waitForTimeout(600)
 
       // Scroll once to trigger any lazy-loaded images / IntersectionObservers
