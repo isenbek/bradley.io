@@ -41,6 +41,7 @@ export const NAV: NavGroup[] = [
       { href: "/services", label: "Services", blurb: "five practices, three ways to engage" },
       { href: "/contact", label: "Contact", blurb: "the inbox, and what helps a first email" },
       { href: "/projects", label: "Projects", blurb: "the three worth opening" },
+      { href: "/housecalls", label: "House Calls", blurb: "an AI hunting for work, logged in the open" },
     ],
   },
   {
@@ -105,7 +106,6 @@ const KIT_EXTRA = [
   "/projects/zeta-forge",
   "/projects/storm-plates",
   "/projects/critical-collapse",
-  "/housecalls",
 ] as const
 
 export const KIT_ROUTES: ReadonlySet<string> = new Set([
