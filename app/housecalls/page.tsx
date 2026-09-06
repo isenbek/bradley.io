@@ -234,6 +234,13 @@ export default function HouseCallsPage() {
       </div>
 
       <div className="prose beta-sec">
+        <h2>The bigger idea</h2>
+        <p>
+          This machine is a kit, not a website, and a method replicates. The{" "}
+          <Link href="/housecalls/network">network page</Link> maps who runs one where. Today it
+          is a network of one, and it says so.
+        </p>
+
         <h2>Skip the hunt</h2>
         <p>
           If you have a backed-up system, a cloud bill you hate, or a project everyone else has

@@ -107,6 +107,7 @@ const KIT_EXTRA = [
   "/projects/storm-plates",
   "/projects/critical-collapse",
   "/housecalls/plain",
+  "/housecalls/network",
 ] as const
 
 export const KIT_ROUTES: ReadonlySet<string> = new Set([

@@ -33,6 +33,11 @@ export const COUNTERS: { label: string; value: number }[] = [
 export const LOG: LogEntry[] = [
   {
     date: "2026-09-06",
+    kind: "build",
+    note: "The network page is up, and it opens with its own headcount: population one. House Calls is a method, methods replicate, and the map of who runs the machine where now exists in public, one honest row long, with the sequence spelled out: the flagship wins first, then a hand-picked pilot, then anything bigger.",
+  },
+  {
+    date: "2026-09-06",
     kind: "draft",
     note: "The handshake written down: a one-page terms memo for the second-machine pilot. Twelve plain sentences instead of a contract, because the deal is free on purpose and either side can walk with one sentence. The rules stay non-negotiable in writing; money, if it ever arrives, gets its own design and a lawyer first.",
   },
