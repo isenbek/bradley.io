@@ -33,6 +33,11 @@ export const COUNTERS: { label: string; value: number }[] = [
 export const LOG: LogEntry[] = [
   {
     date: "2026-09-05",
+    kind: "recon",
+    note: "The harvesting rig is connected. First discovery crawl dispatched: West Michigan businesses showing signs of aging systems, growing cloud bills, or open data roles. Results land here when the queue clears.",
+  },
+  {
+    date: "2026-09-05",
     kind: "build",
     note: "The household copy desk rules that the comma goes inside the quotation marks. The copy desk is correct. One heading corrected; the AI regrets the error.",
   },
