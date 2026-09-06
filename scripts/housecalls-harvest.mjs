@@ -135,6 +135,89 @@ function extractProspects(job) {
   return rows
 }
 
+// ---------- auto-qualification (docs/housecalls/qualification-rubric.md) ----------
+
+const RUBRIC_VERSION = 1
+const LETTER_BY_CATEGORY = {
+  cloud: "pitch-cloud-exit",
+  legacy: "pitch-legacy-rescue",
+  hiring: "pitch-hiring-signal",
+  ai: "pitch-honest-ai",
+}
+// The GR consulting field + platform relationships (rubric: conflicts).
+const CONFLICTS = [/augusto/i, /opinosis/i, /licens\.io/i, /senna automation/i, /nominate/i, /campaign\s*brain/i]
+// Public bodies buy through procurement; cold email can disqualify a bid.
+const GOV_RE = /\b(county|city of|township|state of|school district|village of|public schools|dept\.? of|department of)\b/i
+// West Michigan geoids for the +2 local score: Kent and the ring around it.
+const WEST_MI = new Set(["26081", "26139", "26121", "26005", "26015", "26067", "26117", "26123", "26077"])
+
+const daysBetween = (a, b) => Math.abs(new Date(a) - new Date(b)) / 86400000
+
+/**
+ * Apply rubric v1 to one prospect. Pure function: returns the rubric record;
+ * the caller decides what to write. Only ever proposes identified -> qualified;
+ * drafted and contacted remain human gates (doctrine).
+ */
+function evaluateRubric(p, today = new Date().toISOString()) {
+  const rec = {
+    version: RUBRIC_VERSION,
+    evaluated_at: today.slice(0, 10),
+    gates: {},
+    disqualified: null,
+    lane: "email",
+    score: 0,
+    letter: null,
+    pass: false,
+  }
+
+  const name = p.name ?? ""
+  if (CONFLICTS.some((re) => re.test(name))) {
+    rec.disqualified = "conflict"
+    return rec
+  }
+  if (p.gov === true || GOV_RE.test(name)) {
+    rec.lane = "rfp" // rerouted, never cold-emailed; not a rubric qualification
+    return rec
+  }
+
+  const cat = p.signal_category ?? null
+  const fresh = p.signal_seen_at ? daysBetween(p.signal_seen_at, today) : Infinity
+  rec.gates.g1_signal = Boolean(p.signal && p.signal_url && cat in LETTER_BY_CATEGORY && fresh <= 90)
+  rec.gates.g2_letter = cat in LETTER_BY_CATEGORY
+  rec.gates.g3_contact = Boolean(p.contact?.name && p.contact?.email)
+  rec.gates.g4_fit = p.fit_floor !== false
+
+  rec.letter = rec.gates.g2_letter ? LETTER_BY_CATEGORY[cat] : null
+  rec.score =
+    (cat === "legacy" || p.challenging === true ? 3 : 0) +
+    (cat === "cloud" ? 2 : 0) +
+    (WEST_MI.has(p.county ?? "") ? 2 : 0) +
+    (cat === "hiring" ? 1 : 0) +
+    (fresh <= 30 ? 1 : 0) +
+    (p.warm === true ? 1 : 0)
+  rec.pass = Object.values(rec.gates).every(Boolean)
+  return rec
+}
+
+/** Evaluate every identified prospect; flip passers to qualified with the
+ *  audit trail on the row. Never touches any stage past identified. */
+function autoQualify(prospects, today = new Date().toISOString()) {
+  let flipped = 0
+  for (const p of Object.values(prospects)) {
+    if (p.stage !== "identified" || p.disqualified) continue
+    const rec = evaluateRubric(p, today)
+    p.rubric = rec
+    if (rec.disqualified) p.disqualified = rec.disqualified
+    if (rec.lane === "rfp") p.lane = "rfp"
+    if (rec.pass) {
+      p.stage = "qualified"
+      p.stage_since = today.slice(0, 10)
+      flipped++
+    }
+  }
+  return flipped
+}
+
 // ---------- P2 pin writer (docs/housecalls/p2-pin-schema.md) ----------
 
 /** Area-weighted centroid of a county's largest outer ring, verified to sit
@@ -351,6 +434,46 @@ function selftest() {
     console.log(`${pass ? "PASS" : "FAIL"} pins: ${name}`)
     ok &&= pass
   }
+
+  // auto-qualification (rubric v1)
+  const TODAY = "2026-09-06T12:00:00Z"
+  const Q = (id, extra) => ({
+    id,
+    stage: "identified",
+    name: `Widget Co ${id}`,
+    county: "26081",
+    signal: "hiring a data engineer",
+    signal_url: "https://example.com/posting",
+    signal_category: "hiring",
+    signal_seen_at: "2026-09-01",
+    contact: { name: "Pat Doe", email: "pat@example.com" },
+    ...extra,
+  })
+  const qp = {
+    pass: Q("q1"),
+    noContact: Q("q2", { contact: null }),
+    stale: Q("q3", { signal_seen_at: "2026-05-01" }),
+    gov: Q("q4", { name: "City of Wyoming water dept" }),
+    conflict: Q("q5", { name: "Augusto Digital" }),
+    legacy: Q("q6", { signal_category: "legacy", county: "26163" }),
+    alreadyDrafted: Q("q7", { stage: "drafted" }),
+  }
+  const flips = autoQualify(qp, TODAY)
+  const qc = [
+    ["all-gates prospect qualifies", qp.pass.stage === "qualified" && qp.pass.stage_since === "2026-09-06"],
+    ["exactly the passers flip", flips === 2],
+    ["missing contact stays identified (g3)", qp.noContact.stage === "identified" && qp.noContact.rubric.gates.g3_contact === false],
+    ["stale signal fails g1", qp.stale.stage === "identified" && qp.stale.rubric.gates.g1_signal === false],
+    ["gov rerouted to rfp lane, not qualified", qp.gov.stage === "identified" && qp.gov.lane === "rfp"],
+    ["conflict disqualified", qp.conflict.stage === "identified" && qp.conflict.disqualified === "conflict"],
+    ["legacy scores 3+1fresh=4, hiring+local 2+1+1=4", qp.legacy.rubric.score === 4 && qp.pass.rubric.score === 4],
+    ["letter bound from category", qp.pass.rubric.letter === "pitch-hiring-signal" && qp.legacy.rubric.letter === "pitch-legacy-rescue"],
+    ["human stages untouched", qp.alreadyDrafted.stage === "drafted" && !qp.alreadyDrafted.rubric],
+  ]
+  for (const [name, pass] of qc) {
+    console.log(`${pass ? "PASS" : "FAIL"} rubric: ${name}`)
+    ok &&= pass
+  }
   process.exit(ok ? 0 : 1)
 }
 
@@ -394,6 +517,8 @@ function main() {
     }
   }
 
+  const qualified = autoQualify(prospects)
+
   writeJson(path.join(PRIV, "prospects.json"), prospects)
   writeJson(path.join(PRIV, "geocache.json"), geocache)
   const map = rollup(prospects, pending)
@@ -419,7 +544,8 @@ function main() {
 
   console.log(
     `jobs: ${jobIds.length} (${completed} completed, ${pending} pending) | ` +
-      `new prospects: ${extracted} | total on file: ${Object.keys(prospects).length} | ` +
+      `new prospects: ${extracted} | auto-qualified: ${qualified} | ` +
+      `total on file: ${Object.keys(prospects).length} | ` +
       `mapped: ${map.total} | wrote ${path.relative(ROOT, MAP_OUT)}`
   )
 }
