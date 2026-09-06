@@ -22,7 +22,7 @@
  */
 
 import { existsSync, readFileSync, writeFileSync } from "node:fs"
-import { execFileSync } from "node:child_process"
+import { makeProviders } from "./housecalls-providers.mjs"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
 
@@ -101,17 +101,13 @@ function huntOnce(state) {
     console.error("no platform.json; cannot dispatch the hunt crawl")
     return state
   }
+  const OP = JSON.parse(readFileSync(path.join(ROOT, "lib", "housecalls", "operator.json"), "utf8"))
   const query =
-    "Currently open RFPs, RFQs, and bid solicitations from Michigan state agencies, " +
+    `Currently open RFPs, RFQs, and bid solicitations from ${OP.territory.state} state agencies, ` +
     "counties, cities, and school districts for data engineering, data warehouse, " +
     "IT modernization, system integration, or GIS work. Only solicitations that are " +
     "open for bids right now, with their due dates and issuing agency."
-  const OP = JSON.parse(readFileSync(path.join(ROOT, "lib", "housecalls", "operator.json"), "utf8"))
-  const out = execFileSync(platform.cbcli, [
-    "cbintel", "jobs", "crawl", "--params",
-    JSON.stringify({ workspace_id: platform.workspace_id, query, prompt_type: "investigative", max_urls: 15 }),
-  ], { encoding: "utf8" })
-  const res = JSON.parse(out)
+  const res = makeProviders(platform).crawl.dispatch(query, { max_urls: 15 })
   console.log(`rfp hunt crawl dispatched: ${res.job_id} (results are curated by hand into rfps.json, per ${OP.operator.hunt_host}/housecalls rules)`)
   return { ...state, hunts: [...(state.hunts ?? []), { job_id: res.job_id, at: new Date().toISOString() }] }
 }

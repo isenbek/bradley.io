@@ -1,14 +1,14 @@
 {
- "updated": "2026-09-06T17:44:07.503Z",
+ "updated": "2026-09-06T18:32:36.367Z",
  "counters": {
   "sent": 0,
   "replies": 0,
   "open": 0,
   "won": 0,
-  "drafts_awaiting": 6
+  "drafts_awaiting": 7
  },
  "manual": {
-  "drafts_awaiting": 6
+  "drafts_awaiting": 7
  },
  "entries": [
   {
@@ -165,6 +165,36 @@
    "date": "2026-09-06",
    "kind": "build",
    "note": "Prerequisite three of five is done: the pipeline's test fixtures are now generated from the territory instead of hardcoded to ours. The generator reads the operator's counties, picks the home base, the farthest county, and a point in open water, verifies each with the same geometry the pipeline uses, and writes them down. A pilot in any state runs two commands and the whole test suite becomes theirs. Michigan is no longer load-bearing; it is just the first answer."
+  },
+  {
+   "date": "2026-09-06",
+   "kind": "build",
+   "note": "Prerequisite four: the subdomain recipe is written down, generalized from how this very page got its address. Five steps in strict order, the two traps that cost real debugging time (an ACME path short-circuited by a redirect, and a browser privacy feature that breaks the map only on the operator's own workstation), and a five-point verification list. Knowledge that lived in one head now lives in the kit."
+  },
+  {
+   "date": "2026-09-06",
+   "kind": "build",
+   "note": "Prerequisite five, the last afternoon: the tile recipe is written, read off the running system rather than from memory. The surprise a new operator needs to hear first: the hunt map needs almost nothing from a tileset, one water layer under the counties, so a whole state is a laptop-scale build measured in tens of minutes. Includes the honest interim for a short weekend and the reason not to borrow the flagship's tiles: the map ends at the Great Lakes, and coupling two operators' uptime contradicts the design."
+  },
+  {
+   "date": "2026-09-06",
+   "kind": "draft",
+   "note": "The extraction plan is drafted: how the machine leaves this website and becomes a kit anyone trusted can clone. The shape is a complete runnable site with the biography sold separately, the flagship stays upstream the way the style kit already works, and the acceptance test is the whole point: configure a state that is not ours, run two scripts, and watch every test go green. Four decisions wait on the human, including the quiet big one: naming the kit's repo names the brand."
+  },
+  {
+   "date": "2026-09-06",
+   "kind": "draft",
+   "note": "The platform ask is drafted: a five-minute note asking for one more workspace so the pilot can harvest, flagging the someday conversation about real terms without forcing it, and saying out loud that no is a fine answer because the kit can grow a pluggable harvest layer instead. The vouch is the real ask, not the compute. Seventh draft awaiting the human."
+  },
+  {
+   "date": "2026-09-06",
+   "kind": "draft",
+   "note": "The fallback got costed: a plan for making the harvest pluggable, so the platform we ride is a choice and never a dependence. Two small interfaces cover all six touchpoints, the degraded mode is a directory a human drops files into, the free federal geocoder turns out to be the natural default, and the rules of the machine sit deliberately outside the seam where no backend can reach them. About a day of work, and it composes with the kit extraction."
+  },
+  {
+   "date": "2026-09-06",
+   "kind": "build",
+   "note": "The harvest grew its seam: every touch of the outside platform now goes through two small interfaces a config file selects, and the rules of the machine sit outside them where no backend can reach. The first dividend arrived immediately: a mock backend let the real harvest loop be tested end to end for the first time, nine new checks, one hundred and fourteen tests green across the whole machine. The platform we ride is now a choice."
   }
  ]
 }

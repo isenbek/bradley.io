@@ -21,7 +21,7 @@
  * inspection either way.
  */
 
-import { execFileSync } from "node:child_process"
+import { makeProviders, mockProviders } from "./housecalls-providers.mjs"
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs"
 import { createHash } from "node:crypto"
 import path from "node:path"
@@ -54,11 +54,6 @@ const PIN_STAGES = ["identified", "qualified", "drafted", "contacted", "replied"
 const MAP_STAGES = new Set(["identified", "qualified", "drafted", "contacted", "replied"])
 
 // ---------- small utils ----------
-
-const cb = (args) => {
-  const out = execFileSync(CBCLI, args, { encoding: "utf8", maxBuffer: 256 * 1024 * 1024 })
-  return JSON.parse(out)
-}
 
 const readJson = (p, fallback) => (existsSync(p) ? JSON.parse(readFileSync(p, "utf8")) : fallback)
 const writeJson = (p, obj) => writeFileSync(p, JSON.stringify(obj, null, 1) + "\n")
@@ -95,20 +90,13 @@ function countyFor(lon, lat) {
 
 // ---------- geocoding (cbgeo, cached forever) ----------
 
-function geocode(query, cache) {
+function geocode(P, query, cache) {
   if (query in cache) return cache[query]
   let hit = null
   try {
-    const res = cb(["cbgeo", "search", "list", "--params", JSON.stringify({ q: query, limit: 1 })])
-    const row = Array.isArray(res) ? res[0] : (res.results ?? res.features ?? [])[0]
-    if (row) {
-      const lon = Number(row.lon ?? row.longitude ?? row.geometry?.coordinates?.[0])
-      const lat = Number(row.lat ?? row.latitude ?? row.geometry?.coordinates?.[1])
-      if (Number.isFinite(lon) && Number.isFinite(lat)) hit = { lon, lat }
-    }
-  } catch {
-    /* geocode failures leave the prospect unmapped, never crash the harvest */
-  }
+    hit = P.geocode(query)
+    /* provider failures leave the prospect unmapped, never crash the harvest */
+  } catch {}
   // Cache successes only: a transient failure cached forever poisons every
   // future run (it silently unmapped Grand Rapids itself on day one).
   if (hit) cache[query] = hit
@@ -268,12 +256,12 @@ function deriveContactQueue(prospects) {
 }
 
 /**
- * Dispatch cbintel discovery crawls for the top of the queue. EXPLICITLY
- * GATED behind --discover N (shared workers; we do not spray jobs by default).
+ * Dispatch discovery crawls for the top of the queue. EXPLICITLY GATED
+ * behind --discover N (shared workers; we do not spray jobs by default).
  * The job id lands on the prospect row so the main loop routes its result to
  * raw/discovery-*.json instead of the prospect extractor.
  */
-function dispatchDiscovery(prospects, queue, n) {
+function dispatchDiscovery(P, prospects, queue, n) {
   let sent = 0
   for (const q of queue) {
     if (sent >= n) break
@@ -284,18 +272,62 @@ function dispatchDiscovery(prospects, queue, n) {
       (p.city ? ` in ${p.city}, ${STATE}` : ` in ${STATE}`) +
       `: names, titles, and contact paths. Team page, leadership page, LinkedIn, ` +
       `and the contact on their job posting if any.`
-    const res = cb([
-      "cbintel",
-      "jobs",
-      "crawl",
-      "--params",
-      JSON.stringify({ workspace_id: WORKSPACE, query, prompt_type: "investigative", max_urls: 10 }),
-    ])
+    const res = P.crawl.dispatch(query, { max_urls: 10 })
     p.discovery_job = { job_id: res.job_id, submitted_at: new Date().toISOString() }
     console.log(`discovery dispatched: ${res.job_id} for ${p.name}`)
     sent++
   }
   return sent
+}
+
+// ---------- the harvest loop (extracted so the mock provider can test it) ----------
+
+/**
+ * Walk every job the crawl provider knows, route completed results (owned
+ * discovery/signal jobs to raw only; unowned through the conservative
+ * extractor), and geocode new rows. Pure over its inputs except through
+ * saveRaw, so the selftest can run the REAL loop on mock providers.
+ */
+function collectJobs(P, prospects, geocache, saveRaw) {
+  const jobIds = P.crawl.listJobs()
+  const stats = { total: jobIds.length, pending: 0, completed: 0, extracted: 0, byStatus: {}, lastCompleted: null }
+  for (const jobId of jobIds) {
+    const job = P.crawl.getJob(jobId)
+    stats.byStatus[job.status] = (stats.byStatus[job.status] ?? 0) + 1
+    if (job.status !== "completed") {
+      stats.pending++
+      continue
+    }
+    stats.completed++
+    if (job.completed_at && (!stats.lastCompleted || job.completed_at > stats.lastCompleted)) stats.lastCompleted = job.completed_at
+    // Discovery jobs answer "who do we talk to", not "who exists": raw only,
+    // never through the prospect extractor.
+    const owner = Object.values(prospects).find((p) => p.discovery_job?.job_id === jobId)
+    if (owner) {
+      saveRaw(`discovery-${jobId}`, job)
+      owner.discovery_job.completed_at = job.completed_at ?? new Date().toISOString()
+      continue
+    }
+    // Signal jobs are per-company evidence hunts: raw only, curated by hand
+    // (an evidence page about company A must never mint a row for company B).
+    const sigOwner = Object.values(prospects).find((p) => p.signal_job?.job_id === jobId)
+    if (sigOwner) {
+      saveRaw(`signal-${jobId}`, job)
+      sigOwner.signal_job.completed_at = job.completed_at ?? new Date().toISOString()
+      continue
+    }
+    saveRaw(jobId, job)
+    for (const row of extractProspects(job)) {
+      if (row.id in prospects) continue // never clobber human-touched rows
+      if (row.location) {
+        const geo = geocode(P, `${row.location}, ${STATE}`, geocache)
+        if (geo) row.county = countyFor(geo.lon, geo.lat)
+      }
+      prospects[row.id] = row
+      stats.extracted++
+    }
+  }
+  return stats
 }
 
 // ---------- RFP lane tracker (rubric: gov buys through procurement) ----------
@@ -533,6 +565,48 @@ function selftest() {
   ok &&= rollupOk
   console.log(`${rollupOk ? "PASS" : "FAIL"} rollup: total=${r.total} counties=${JSON.stringify(r.counties)}`)
 
+  // The REAL harvest loop on mock providers: the seam's first dividend is
+  // that the main loop is testable at all (harvest-seam-plan.md step 2).
+  const MP = mockProviders({
+    jobs: {
+      j_generic: {
+        job_id: "j_generic", status: "completed", completed_at: "2026-09-06T02:00:00Z",
+        result: { companies: [{ name: "Loop Test Co", location: "Home City" }, { name: "Existing Row Co" }] },
+      },
+      j_disc: { job_id: "j_disc", status: "completed", completed_at: "2026-09-06T03:00:00Z", result: {} },
+      j_sig: { job_id: "j_sig", status: "completed", completed_at: "2026-09-06T04:00:00Z", result: {} },
+      j_wait: { job_id: "j_wait", status: "queued" },
+    },
+    geocodes: { [`Home City, ${STATE}`]: { lon: FX.home.lon, lat: FX.home.lat } },
+  })
+  const keepId = idFor("Existing Row Co")
+  const loopProspects = {
+    [keepId]: { id: keepId, name: "KEEP ME", stage: "qualified" },
+    own1: { id: "own1", name: "Discovery Owner", stage: "identified", discovery_job: { job_id: "j_disc" } },
+    own2: { id: "own2", name: "Signal Owner", stage: "identified", signal_job: { job_id: "j_sig" } },
+    q1: { id: "q1", name: "Dispatch Co", city: "Home City" },
+  }
+  const rawSaved = {}
+  const loopCache = {}
+  const st = collectJobs(MP, loopProspects, loopCache, (name, job) => (rawSaved[name] = job.job_id))
+  const newRow = loopProspects[idFor("Loop Test Co")]
+  dispatchDiscovery(MP, loopProspects, [{ id: "q1" }], 1)
+  const loopChecks = [
+    ["loop counts every status", st.total === 4 && st.completed === 3 && st.pending === 1 && st.byStatus.queued === 1],
+    ["discovery result routes raw-only + stamps owner", rawSaved["discovery-j_disc"] === "j_disc" && Boolean(loopProspects.own1.discovery_job.completed_at)],
+    ["signal result routes raw-only + stamps owner", rawSaved["signal-j_sig"] === "j_sig" && Boolean(loopProspects.own2.signal_job.completed_at)],
+    ["generic result saved raw under its own id", rawSaved["j_generic"] === "j_generic"],
+    ["extractor minted exactly the new row", st.extracted === 1 && newRow?.stage === "identified" && newRow?.needs_review === true],
+    ["existing row never clobbered", loopProspects[keepId].name === "KEEP ME"],
+    ["geocode wired through the provider + cached", newRow?.county === H && `Home City, ${STATE}` in loopCache],
+    ["last completed tracked", st.lastCompleted === "2026-09-06T04:00:00Z"],
+    ["dispatch rides the provider + stamps the row", MP.dispatched.length === 1 && loopProspects.q1.discovery_job?.job_id === "job_mock_1"],
+  ]
+  for (const [name, pass] of loopChecks) {
+    console.log(`${pass ? "PASS" : "FAIL"} loop: ${name}`)
+    ok &&= pass
+  }
+
   // every county must yield a centroid inside itself
   countyFeatures ??= readJson(COUNTIES, { features: [] }).features
   const bad = countyFeatures.filter((f) => !countyCentroid(f.properties.geoid))
@@ -681,61 +755,20 @@ function main() {
   if (process.argv.includes("--selftest")) return selftest()
 
   mkdirSync(RAW, { recursive: true })
+  const P = makeProviders(PLATFORM)
   const prospects = readJson(path.join(PRIV, "prospects.json"), {})
   const geocache = readJson(path.join(PRIV, "geocache.json"), {})
 
-  const listing = cb(["cbintel", "workspaces", "jobs", "--params", JSON.stringify({ workspace_id: WORKSPACE })])
-  const jobIds = Array.isArray(listing)
-    ? listing
-    : (listing.jobs ?? listing.job_ids ?? []).map((j) => (typeof j === "string" ? j : j.job_id))
-
-  let pending = 0
-  let completed = 0
-  let extracted = 0
-  const byStatus = {}
-  let lastCompleted = null
-  for (const jobId of jobIds) {
-    const job = cb(["cbintel", "jobs", "get-get", "--params", JSON.stringify({ job_id: jobId })])
-    byStatus[job.status] = (byStatus[job.status] ?? 0) + 1
-    if (job.status !== "completed") {
-      pending++
-      continue
-    }
-    completed++
-    if (job.completed_at && (!lastCompleted || job.completed_at > lastCompleted)) lastCompleted = job.completed_at
-    // Discovery jobs answer "who do we talk to", not "who exists": raw only,
-    // never through the prospect extractor.
-    const owner = Object.values(prospects).find((p) => p.discovery_job?.job_id === jobId)
-    if (owner) {
-      writeJson(path.join(RAW, `discovery-${jobId}.json`), job)
-      owner.discovery_job.completed_at = job.completed_at ?? new Date().toISOString()
-      continue
-    }
-    // Signal jobs are per-company evidence hunts: raw only, curated by hand
-    // (an evidence page about company A must never mint a row for company B).
-    const sigOwner = Object.values(prospects).find((p) => p.signal_job?.job_id === jobId)
-    if (sigOwner) {
-      writeJson(path.join(RAW, `signal-${jobId}.json`), job)
-      sigOwner.signal_job.completed_at = job.completed_at ?? new Date().toISOString()
-      continue
-    }
-    writeJson(path.join(RAW, `${jobId}.json`), job)
-    for (const row of extractProspects(job)) {
-      if (row.id in prospects) continue // never clobber human-touched rows
-      if (row.location) {
-        const geo = geocode(`${row.location}, ${STATE}`, geocache)
-        if (geo) row.county = countyFor(geo.lon, geo.lat)
-      }
-      prospects[row.id] = row
-      extracted++
-    }
-  }
+  const saveRaw = (name, job) => writeJson(path.join(RAW, `${name}.json`), job)
+  const stats = collectJobs(P, prospects, geocache, saveRaw)
+  const { pending, completed, extracted, byStatus, lastCompleted } = stats
+  const jobIds = { length: stats.total }
 
   // County backfill: curated/imported rows arrive with a city and no county;
   // resolve through the same geocode cache so they reach the choropleth.
   for (const p of Object.values(prospects)) {
     if (!p.county && p.city) {
-      const geo = geocode(`${p.city}, ${STATE}`, geocache)
+      const geo = geocode(P, `${p.city}, ${STATE}`, geocache)
       if (geo) p.county = countyFor(geo.lon, geo.lat)
     }
   }
@@ -746,7 +779,7 @@ function main() {
   const discoverArg = process.argv.indexOf("--discover")
   if (discoverArg !== -1) {
     const n = Math.max(1, Math.min(10, Number(process.argv[discoverArg + 1]) || 3))
-    dispatchDiscovery(prospects, queue, n)
+    dispatchDiscovery(P, prospects, queue, n)
   }
   writeJson(path.join(PRIV, "contact-queue.json"), {
     generated: new Date().toISOString(),
@@ -768,7 +801,7 @@ function main() {
 
   // P2 pins: city centroids resolve through the same cbgeo cache.
   const resolveCity = (city) => {
-    const g = geocode(`${city}, ${STATE}`, geocache)
+    const g = geocode(P, `${city}, ${STATE}`, geocache)
     return g ? [g.lon, g.lat] : null
   }
   const pins = emitPins(prospects, resolveCity)

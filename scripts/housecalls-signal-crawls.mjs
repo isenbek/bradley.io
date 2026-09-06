@@ -7,16 +7,13 @@
 // Skips rows that already carry a signal or a pending signal_job, so re-runs
 // are safe and never double-spend the shared crawl queue.
 import { readFileSync, writeFileSync } from "node:fs"
-import { execFileSync } from "node:child_process"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
+import { makeProviders } from "./housecalls-providers.mjs"
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..")
 const F = path.join(ROOT, "data", "housecalls", "prospects.json")
 const OP = JSON.parse(readFileSync(path.join(ROOT, "lib", "housecalls", "operator.json"), "utf8"))
-const { cbcli: CBCLI, workspace_id: WORKSPACE } = JSON.parse(
-  readFileSync(path.join(ROOT, "data", "housecalls", "platform.json"), "utf8")
-)
-const cb = (args) => JSON.parse(execFileSync(CBCLI, args, { encoding: "utf8", maxBuffer: 64 * 1024 * 1024 }))
+const P = makeProviders(JSON.parse(readFileSync(path.join(ROOT, "data", "housecalls", "platform.json"), "utf8")))
 
 const prospects = JSON.parse(readFileSync(F, "utf8"))
 let sent = 0
@@ -31,10 +28,7 @@ for (const p of Object.values(prospects)) {
     `leadership changes); and their official website. Only pages about this ` +
     `specific company.`
   try {
-    const res = cb([
-      "cbintel", "jobs", "crawl", "--params",
-      JSON.stringify({ workspace_id: WORKSPACE, query, prompt_type: "investigative", max_urls: 12 }),
-    ])
+    const res = P.crawl.dispatch(query, { max_urls: 12 })
     p.signal_job = { job_id: res.job_id, submitted_at: new Date().toISOString() }
     console.log(`signal crawl dispatched: ${res.job_id} for ${p.name}`)
     sent++
