@@ -23,9 +23,12 @@ weekend for phases 1 through 6, if phase 0 was really done first.
       disk works. Host local is the product; no cloud instances.
 - [ ] **Your Claude.** Your own relationship with your own AI. The kit
       hands it doctrine files; it does not include AI access.
-- [ ] **Harvest platform access.** Your own workspace id. [UNRESOLVED FOR
-      PILOTS: this is the Campaign Brain conversation the pitch letter's
-      checklist flags. Do not start the weekend without an answer.]
+- [ ] **Choose your harvest providers.** With a Campaign Brain workspace:
+      `cbintel` + `cbgeo`, the native fit (the workspace conversation is
+      the pitch letter's flagged item). Without one, the kit still runs:
+      `manual` (a request directory a human fulfills; it documents itself)
+      and `census` (geocoding from vendored federal data, no network at
+      harvest time). Slower, fully yours, and the method is identical.
 - [ ] **A physical mailing address** you are willing to put in email
       footers. CAN-SPAM requires it; no address, no outbound, ever.
 

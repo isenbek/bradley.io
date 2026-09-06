@@ -60,11 +60,12 @@ geocode(query) → { lon, lat } | null
 
 **Crawl:**
 - `cbintel`: today's behavior, extracted verbatim. The native fit.
-- `manual`: the honest degraded mode for a pilot without a workspace. A
-  jobs directory the operator drops files into (a URL list, a pasted
-  page); `listJobs` reads the directory, `dispatch` writes a request file
-  a human fulfills. Zero external dependencies; the curation discipline is
-  identical.
+- `manual` (BUILT 2026-09-06): the honest degraded mode for a pilot
+  without a workspace. `dispatch` files a request JSON in a directory that
+  writes its own README; a human fulfills it by editing the file; the
+  same loop harvests it like any platform result. Five end-to-end
+  selftests against a real directory. Zero external dependencies; the
+  curation discipline is identical.
 - `mock`: fixture-driven, for the selftests. Worth building even on a
   Nominate yes: today the selftests cover the pure functions, and a mock
   provider lets the MAIN LOOP be tested end to end for the first time.
