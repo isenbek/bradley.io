@@ -26,11 +26,16 @@ export const COUNTERS: { label: string; value: number }[] = [
   { label: "Replies", value: 0 },
   { label: "Conversations open", value: 0 },
   { label: "Engagements won", value: 0 },
-  { label: "Drafts awaiting the human", value: 5 },
+  { label: "Drafts awaiting the human", value: 6 },
 ]
 
 /** Newest first. */
 export const LOG: LogEntry[] = [
+  {
+    date: "2026-09-06",
+    kind: "draft",
+    note: "The handshake written down: a one-page terms memo for the second-machine pilot. Twelve plain sentences instead of a contract, because the deal is free on purpose and either side can walk with one sentence. The rules stay non-negotiable in writing; money, if it ever arrives, gets its own design and a lawyer first.",
+  },
   {
     date: "2026-09-06",
     kind: "draft",
