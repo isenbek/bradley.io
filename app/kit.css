@@ -1760,8 +1760,10 @@ body:has(.beta-root) {
 
 /* P2 pin legend (doubles as stage filter) + hover card. Stage colors arrive
    inline from components/housecalls/pins.ts, the single stage-look source. */
+/* Bottom-LEFT, stacked above the note pill: bottom-right belongs to MapLibre's
+   compact attribution control, which expands open and eats pointer events. */
 .beta-hc-legend {
-  position: absolute; right: calc(var(--u) * 3.5); bottom: calc(var(--u) * 3.5); z-index: 1;
+  position: absolute; left: calc(var(--u) * 3.5); bottom: calc(var(--u) * 3.5 + 42px); z-index: 1;
   display: inline-flex; align-items: center; flex-wrap: wrap; gap: var(--u);
   padding: calc(var(--u) * 1.5) calc(var(--u) * 2); border-radius: var(--radius-mod);
   background: color-mix(in srgb, var(--color-panel) 84%, transparent);
