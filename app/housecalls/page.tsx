@@ -183,7 +183,9 @@ export default function HouseCallsPage() {
         <p>
           This machine is a kit, not a website, and a method replicates. The{" "}
           <Link href="/housecalls/network">network page</Link> maps who runs one where. Today it
-          is a network of one, and it says so.
+          is a network of one, and it says so. And because the open part is not a slogan,{" "}
+          <Link href="/housecalls/docs">the paperwork</Link> is readable here too: every plan,
+          rule, letter template, and recipe, rendered from the same files the repo carries.
         </p>
 
         <h2>Skip the hunt</h2>
