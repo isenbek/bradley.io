@@ -1,0 +1,9 @@
+[Unit]
+Description=Daily House Calls RFP deadline check (a deadline cannot slide because nobody harvested)
+
+[Timer]
+OnCalendar=*-*-* 08:00:00
+Persistent=true
+
+[Install]
+WantedBy=timers.target

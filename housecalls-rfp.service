@@ -1,0 +1,11 @@
+[Unit]
+Description=House Calls RFP deadline watcher (one check; the timer owns the schedule)
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=bisenbek
+WorkingDirectory=/home/bisenbek/projects/bradleyio
+ExecStart=/home/bisenbek/.nvm/versions/node/v24.0.1/bin/node scripts/housecalls-rfp-watch.mjs
+# Exit 1 (due soon) and 2 (overdue) are alerts, not crashes; the journal is the record.
+SuccessExitStatus=1 2

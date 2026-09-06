@@ -46,6 +46,7 @@ if [[ -n "$(git status --porcelain)" ]]; then
              tsconfig.json postcss.config.mjs \
              eslint.config.mjs .gitignore CLAUDE.md deploy.sh \
              bradley-io.service bradley-cam.service bradley-cam.timer ecosystem.config.js \
+             housecalls-rfp.service housecalls-rfp.timer \
              wargames-server.js .env; do
         git add "$p" 2>/dev/null || true
     done
