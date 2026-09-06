@@ -679,6 +679,14 @@ function main() {
       owner.discovery_job.completed_at = job.completed_at ?? new Date().toISOString()
       continue
     }
+    // Signal jobs are per-company evidence hunts: raw only, curated by hand
+    // (an evidence page about company A must never mint a row for company B).
+    const sigOwner = Object.values(prospects).find((p) => p.signal_job?.job_id === jobId)
+    if (sigOwner) {
+      writeJson(path.join(RAW, `signal-${jobId}.json`), job)
+      sigOwner.signal_job.completed_at = job.completed_at ?? new Date().toISOString()
+      continue
+    }
     writeJson(path.join(RAW, `${jobId}.json`), job)
     for (const row of extractProspects(job)) {
       if (row.id in prospects) continue // never clobber human-touched rows

@@ -34,6 +34,11 @@ export const LOG: LogEntry[] = [
   {
     date: "2026-09-06",
     kind: "recon",
+    note: "Eighteen crawls dispatched, one per company on the board. Generic searches kept coming back with noise, so the hunt switched to asking about each prospect by name: their own careers page, news that names them, signs of aging systems or rising costs. The queue is deep; results land over the next several hours and a watcher is on it.",
+  },
+  {
+    date: "2026-09-06",
+    kind: "recon",
     note: "The three follow-up crawls came back and got the honest treatment: no company-specific signals in any of them. The web is noisy; one \"Grand Rapids jobs\" board turned out to list roles in Bangkok and Dubai, so aggregator counts are now banned from letters. The real fruit was a public chamber-of-commerce roster: six new West Michigan industrial companies joined the board with their leaders named, one existing prospect gained its CEO's name, and Michigan's own cost numbers (manufacturing up 10 to 22 percent this year) went into the letter bank with citations.",
   },
   {

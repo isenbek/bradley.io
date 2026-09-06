@@ -1,0 +1,41 @@
+// One-off: per-company SIGNAL crawls for every prospect without an observed
+// signal. Generic queries proved to pull directories and aggregator noise
+// (2026-09-06 verdict), so each job is scoped to ONE named company. The job
+// id lands on the row as signal_job for traceability; results are curated by
+// hand (or the future structuring pass), never trusted to the extractor.
+//
+// Skips rows that already carry a signal or a pending signal_job, so re-runs
+// are safe and never double-spend the shared crawl queue.
+import { readFileSync, writeFileSync } from "node:fs"
+import { execFileSync } from "node:child_process"
+const F = "/home/bisenbek/projects/bradleyio/data/housecalls/prospects.json"
+const CBCLI = "/home/bisenbek/.pyenv/shims/cbcli"
+const WORKSPACE = "ws_86a68391f69c4247"
+const cb = (args) => JSON.parse(execFileSync(CBCLI, args, { encoding: "utf8", maxBuffer: 64 * 1024 * 1024 }))
+
+const prospects = JSON.parse(readFileSync(F, "utf8"))
+let sent = 0
+for (const p of Object.values(prospects)) {
+  if (p.signal || p.signal_job) continue
+  const where = p.city ? `${p.city}, Michigan` : "West Michigan"
+  const query =
+    `Recent news, press coverage, and open job postings for the company ` +
+    `"${p.name}" in ${where}. I want: their own careers page and any current ` +
+    `data, IT, or engineering openings; news stories naming them (expansion, ` +
+    `new plant, ERP or system modernization, cloud or IT costs, hiring, ` +
+    `leadership changes); and their official website. Only pages about this ` +
+    `specific company.`
+  try {
+    const res = cb([
+      "cbintel", "jobs", "crawl", "--params",
+      JSON.stringify({ workspace_id: WORKSPACE, query, prompt_type: "investigative", max_urls: 12 }),
+    ])
+    p.signal_job = { job_id: res.job_id, submitted_at: new Date().toISOString() }
+    console.log(`signal crawl dispatched: ${res.job_id} for ${p.name}`)
+    sent++
+  } catch (e) {
+    console.error(`FAILED for ${p.name}: ${String(e).slice(0, 200)}`)
+  }
+}
+writeFileSync(F, JSON.stringify(prospects, null, 1) + "\n")
+console.log(`dispatched ${sent} signal crawls`)

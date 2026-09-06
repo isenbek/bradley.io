@@ -1,10 +1,10 @@
 {
-  "generated": "2026-09-06T12:01:01.697276+00:00",
+  "generated": "2026-09-06T16:01:01.585501+00:00",
   "stats": {
     "totalProjects": 84,
-    "totalSessions": 126,
-    "totalMessages": 388971,
-    "activeDays": 37,
+    "totalSessions": 122,
+    "totalMessages": 351970,
+    "activeDays": 36,
     "streak": 3
   },
   "activityFeed": [
@@ -152,14 +152,14 @@
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (9240 messages)",
-      "description": "4 sessions, 3017 tool calls",
+      "title": "Claude Code session (5629 messages)",
+      "description": "3 sessions, 1807 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-08-26T23:59:00Z",
       "metadata": {
-        "messages": 9240,
-        "sessions": 4
+        "messages": 5629,
+        "sessions": 3
       }
     },
     {
@@ -212,14 +212,14 @@
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (21819 messages)",
-      "description": "3 sessions, 6890 tool calls",
+      "title": "Claude Code session (15288 messages)",
+      "description": "2 sessions, 4734 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-08-20T23:59:00Z",
       "metadata": {
-        "messages": 21819,
-        "sessions": 3
+        "messages": 15288,
+        "sessions": 2
       }
     },
     {
@@ -368,18 +368,6 @@
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (11764 messages)",
-      "description": "1 sessions, 3541 tool calls",
-      "projectSlug": null,
-      "category": null,
-      "date": "2026-07-31T23:59:00Z",
-      "metadata": {
-        "messages": 11764,
-        "sessions": 1
-      }
-    },
-    {
-      "type": "claude-code",
       "title": "Claude Code session (3002 messages)",
       "description": "1 sessions, 966 tool calls",
       "projectSlug": null,
@@ -416,14 +404,14 @@
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (43381 messages)",
-      "description": "2 sessions, 13504 tool calls",
+      "title": "Claude Code session (28194 messages)",
+      "description": "1 sessions, 8807 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-07-23T23:59:00Z",
       "metadata": {
-        "messages": 43381,
-        "sessions": 2
+        "messages": 28194,
+        "sessions": 1
       }
     },
     {
@@ -464,13 +452,13 @@
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (22476 messages)",
-      "description": "1 sessions, 7300 tool calls",
+      "title": "Claude Code session (22568 messages)",
+      "description": "1 sessions, 7322 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-03-08T23:59:00Z",
       "metadata": {
-        "messages": 22476,
+        "messages": 22568,
         "sessions": 1
       }
     },
@@ -594,6 +582,17 @@
       "metadata": {
         "messages": 6
       }
+    },
+    {
+      "type": "claude-web",
+      "title": "Using Rust on ESP32 microcontroller",
+      "description": "The user, a Rust newcomer, sought guidance on setting up ESP32-C6 development on a Raspberry Pi 5. They wanted to understand whether the Pi 5 could serve as a development machine for building and flashing ESP32-C6 firmware with Rust. Claude confirmed",
+      "projectSlug": "esp32",
+      "category": "hardware",
+      "date": "2026-02-09T15:36:51.797116Z",
+      "metadata": {
+        "messages": 49
+      }
     }
   ],
   "projects": [
@@ -713,31 +712,11 @@
         "TypeScript"
       ],
       "lastActivity": "2026-09-06",
-      "totalMessages": 26888,
+      "totalMessages": 26980,
       "sources": {
         "claudeCode": {
           "totalSessions": 3,
-          "totalMessages": 26888,
-          "lastSession": "2026-09-06"
-        }
-      }
-    },
-    {
-      "slug": "cbmodels",
-      "name": "cbmodels",
-      "tagline": "",
-      "description": "",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-09-06",
-      "totalMessages": 16361,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 4,
-          "totalMessages": 16361,
+          "totalMessages": 26980,
           "lastSession": "2026-09-06"
         }
       }
@@ -783,26 +762,6 @@
       }
     },
     {
-      "slug": "cbsvi",
-      "name": "cbsvi",
-      "tagline": "",
-      "description": "",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-09-05",
-      "totalMessages": 7570,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 2,
-          "totalMessages": 7570,
-          "lastSession": "2026-09-05"
-        }
-      }
-    },
-    {
       "slug": "cbradio2",
       "name": "cbradio2",
       "tagline": "",
@@ -843,6 +802,26 @@
       }
     },
     {
+      "slug": "cbsvi",
+      "name": "cbsvi",
+      "tagline": "",
+      "description": "",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-09-05",
+      "totalMessages": 3959,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 1,
+          "totalMessages": 3959,
+          "lastSession": "2026-09-05"
+        }
+      }
+    },
+    {
       "slug": "cbvipulse",
       "name": "cbvipulse",
       "tagline": "",
@@ -858,6 +837,26 @@
         "claudeCode": {
           "totalSessions": 2,
           "totalMessages": 3747,
+          "lastSession": "2026-09-05"
+        }
+      }
+    },
+    {
+      "slug": "cbea",
+      "name": "cbea",
+      "tagline": "",
+      "description": "",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-09-05",
+      "totalMessages": 2597,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 2,
+          "totalMessages": 2597,
           "lastSession": "2026-09-05"
         }
       }
@@ -923,8 +922,8 @@
       }
     },
     {
-      "slug": "cbvmod",
-      "name": "cbvmod",
+      "slug": "cbbanking",
+      "name": "cbbanking",
       "tagline": "",
       "description": "",
       "category": "systems",
@@ -933,32 +932,12 @@
       "status": "active",
       "technologies": [],
       "lastActivity": "2026-09-02",
-      "totalMessages": 6531,
+      "totalMessages": 3002,
       "sources": {
         "claudeCode": {
           "totalSessions": 1,
-          "totalMessages": 6531,
+          "totalMessages": 3002,
           "lastSession": "2026-09-02"
-        }
-      }
-    },
-    {
-      "slug": "cbinfra",
-      "name": "cbinfra",
-      "tagline": "",
-      "description": "",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-08-31",
-      "totalMessages": 11838,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 2,
-          "totalMessages": 11838,
-          "lastSession": "2026-08-31"
         }
       }
     },
@@ -979,6 +958,26 @@
           "totalSessions": 2,
           "totalMessages": 3510,
           "lastSession": "2026-08-29"
+        }
+      }
+    },
+    {
+      "slug": "cbhive",
+      "name": "cbhive",
+      "tagline": "",
+      "description": "",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "recent",
+      "technologies": [],
+      "lastActivity": "2026-08-24",
+      "totalMessages": 2739,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 2,
+          "totalMessages": 2739,
+          "lastSession": "2026-08-24"
         }
       }
     },
@@ -2019,27 +2018,27 @@
       "CSS",
       "SQLite",
       "SPI",
-      "DuckDB",
-      "Python",
       "Bash",
+      "Python",
       "systemd",
+      "DuckDB",
       "SSH",
       "AWS",
-      "CSV",
-      "Snowflake",
-      "Redis",
-      "FastAPI",
       "TLS",
+      "Redis",
       "React",
+      "FastAPI",
       "YAML",
+      "CSV",
       "Ollama",
       "Pytest",
       "Docker",
       "Markdown",
-      "JWT",
       "WireGuard",
-      "Anthropic",
-      "WebSocket"
+      "Snowflake",
+      "Next.js",
+      "JWT",
+      "TOML"
     ],
     "timeline": [
       {
