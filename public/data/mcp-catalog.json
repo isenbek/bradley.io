@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-06T00:01:36.453875+00:00",
+  "generated": "2026-09-06T04:01:20.978129+00:00",
   "sources": {
     "unifiedSpec": "https://mcp.campaignbrain.dev/openapi.json",
     "metadata": "scripts/mcp-catalog-meta.json (pulled 2026-08-29)"
@@ -9,7 +9,7 @@
     "totalEndpoints": 2966,
     "totalCategories": 5,
     "mcpServers": 4,
-    "mcpServersReachable": 2,
+    "mcpServersReachable": 3,
     "fleetServices": 86,
     "fleetEndpoints": 3984,
     "uncataloguedServices": 43
@@ -45,9 +45,29 @@
       "transport": "streamable HTTP",
       "auth": "None",
       "what": "Assemble, run and mint ROMs against a transistor-level 6502, and ask the die about any of its 1,725 nodes.",
-      "tools": [],
-      "reachable": false,
-      "note": "HTTP 502"
+      "tools": [
+        {
+          "name": "console_spec",
+          "description": "What a ROM has to agree with to be playable on this chip: the tick handshake, the controller byte, where the screen is, the memory map, the 8x8 two-bit tile format, the four-colour palette, and a worked example ROM. There is no video hardware on this die and no interrupt in use, so a frame is an agreement rather than something the silicon knows about. Read this before writing a cartridge."
+        },
+        {
+          "name": "assemble",
+          "description": "Assemble 6502 assembly to bytes. Returns the bytes as hex, the size, every label with its address, and a listing line by line. An error carries the line number. This is the site's own assembler, which inverts its disassembler's table, so anything that assembles disassembles back to the same instruction."
+        },
+        {
+          "name": "run",
+          "description": "Assemble a program, power-cycle the chip through its real reset sequence, run it, and report what happened. Give exactly one of `half_cycles` (the fundamental unit: the chip does work on both clock edges), `until_pc` (a breakpoint at an opcode fetch), or `frames` (run the console's tick handshake N times and read the screen back). `read` pulls memory out afterwards; `screen` renders the display as two hex characters a cell, row major, so you can see what your ROM actually drew."
+        },
+        {
+          "name": "mint_cartridge",
+          "description": "Assemble a ROM, check its layout can work, run it on the chip, and pack the ROM, its tiles and the contract it was written to into one gzipped file. Returns the verification report and the file as base64. Tiles are eight strings of eight '0'..'3' per tile, one character a pixel. A layout that cannot work is refused with the reason: a ROM that reaches its own screen assembles perfectly and then draws over itself."
+        },
+        {
+          "name": "chip_atlas",
+          "description": "Ask the die about one of its 1725 nodes: which derived container owns it (the ALU's bit 3 slice, the clock generator, the decimal correction), every overlapping container that also claims it, and what it reaches. 132 groups cover every node exactly once. Give a node name or number; with no argument you get the list of kinds."
+        }
+      ],
+      "reachable": true
     },
     {
       "id": "junior",

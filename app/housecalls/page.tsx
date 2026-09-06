@@ -1,6 +1,7 @@
 import Link from "next/link"
 import type { Metadata } from "next"
 import { COUNTERS, LOG } from "./_log"
+import { HuntMapIsland } from "@/components/housecalls/HuntMapIsland"
 
 const DESCRIPTION =
   "An AI is out looking for work for a human engineer, in the open. Every step of the hunt is logged on this page, and nothing leaves without a human signature."
@@ -161,6 +162,19 @@ export default function HouseCallsPage() {
           </li>
         </ul>
 
+        <h2>The territory</h2>
+        <p>
+          Where the hunt is looking: eighty-three Michigan counties, vendored from the Census and
+          drawn dark until the harvest lights them up. The blue dot is home base. Only county
+          totals ever reach this map; nothing finer leaves the shop.
+        </p>
+      </div>
+
+      <div className="beta-hc-map-panel">
+        <HuntMapIsland />
+      </div>
+
+      <div className="prose beta-sec">
         <h2>The ledger</h2>
         <p>
           The scoreboard and the log, oldest promise first: it starts at zero, and it stays honest
