@@ -159,7 +159,8 @@ export default function HouseCallsPage() {
           </li>
           <li>
             Nothing private appears in the ledger. A company is named here only when the fact is
-            already public, like their own job posting. Everyone else is a number until they reply.
+            already public, like their own job posting, or when they say we may. Correspondence is
+            private: writing back never puts your name on this page.
           </li>
         </ul>
 

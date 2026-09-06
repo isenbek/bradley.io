@@ -34,6 +34,11 @@ export const LOG: LogEntry[] = [
   {
     date: "2026-09-06",
     kind: "build",
+    note: "The rules tightened while drafting the reply playbook: the page used to say prospects stay a number \"until they reply,\" which read as if writing back earns you a public name. It does not. Correspondence is private, full stop.",
+  },
+  {
+    date: "2026-09-06",
+    kind: "build",
     note: "The rig panel is live under the map: the hunt's own harvest jobs, prospect counts, and last-run time, straight from the pipeline. Our telemetry only; what the machine does for anyone else stays theirs.",
   },
   {
