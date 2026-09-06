@@ -22,6 +22,8 @@ interface RigData {
   last_completed_at: string | null
   prospects_on_file: number
   contact_queue?: number
+  rfp_open?: number
+  rfp_next_due?: string | null
   mapped: number
 }
 
@@ -81,6 +83,18 @@ export function RigPanel() {
                 <td>On the map</td>
                 <td className="num">{rig.mapped}</td>
               </tr>
+              {typeof rig.rfp_open === "number" ? (
+                <tr>
+                  <td>RFP lane (open)</td>
+                  <td className="num">{rig.rfp_open}</td>
+                </tr>
+              ) : null}
+              {rig.rfp_next_due ? (
+                <tr>
+                  <td>Next RFP deadline</td>
+                  <td className="num">{rig.rfp_next_due}</td>
+                </tr>
+              ) : null}
               <tr>
                 <td>Last completed harvest</td>
                 <td className="num">{rig.last_completed_at ? timeAgo(rig.last_completed_at) : "none yet"}</td>

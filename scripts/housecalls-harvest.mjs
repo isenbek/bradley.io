@@ -286,6 +286,60 @@ function dispatchDiscovery(prospects, queue, n) {
   return sent
 }
 
+// ---------- RFP lane tracker (rubric: gov buys through procurement) ----------
+
+/**
+ * Solicitations are not prospects: they are public documents with deadlines
+ * and their own lifecycle. data/housecalls/rfps.json is the register, HAND
+ * EDITED for now (SIGMA VSS / BidNet need Brad-side registration and the state
+ * portal 403s bots). The pipeline validates it, derives aggregates, and
+ * refuses to let a deadline pass silently.
+ *
+ * Status lifecycle: watching -> preparing -> submitted -> won | lost | no_bid.
+ * Public disclosure: AGGREGATES ONLY by default (bid strategy in sealed
+ * procurement is competitive information; the open-hunt brand does not require
+ * tipping rivals mid-bid). Naming entries publicly is Brad's call, per entry,
+ * after award.
+ */
+const RFP_STATUSES = ["watching", "preparing", "submitted", "won", "lost", "no_bid"]
+const RFP_OPEN = new Set(["watching", "preparing", "submitted"])
+
+function rfpSeed() {
+  return {
+    updated: new Date().toISOString().slice(0, 10),
+    note: "Hand-edited register. BLOCKED on Brad: vendor registration at SIGMA VSS (state) and BidNet/MITN (local govs).",
+    rfps: [],
+  }
+}
+
+function analyzeRfps(reg, today = new Date().toISOString().slice(0, 10)) {
+  const valid = []
+  const problems = []
+  for (const r of reg.rfps ?? []) {
+    if (!RFP_STATUSES.includes(r.status)) {
+      problems.push(`rfp ${r.id ?? r.title ?? "?"}: unknown status "${r.status}" (skipped)`)
+      continue
+    }
+    valid.push(r)
+    if ((r.status === "watching" || r.status === "preparing") && r.due && r.due < today) {
+      problems.push(`rfp OVERDUE: "${r.title}" was due ${r.due} and is still ${r.status}`)
+    }
+  }
+  const open = valid.filter((r) => RFP_OPEN.has(r.status))
+  const dueSoon = open
+    .filter((r) => r.due && r.due >= today && r.status !== "submitted")
+    .sort((a, b) => a.due.localeCompare(b.due))
+  const byStatus = {}
+  for (const r of valid) byStatus[r.status] = (byStatus[r.status] ?? 0) + 1
+  return {
+    open: open.length,
+    by_status: byStatus,
+    next_due: dueSoon[0]?.due ?? null,
+    next_due_title: dueSoon[0]?.title ?? null,
+    problems,
+  }
+}
+
 // ---------- P2 pin writer (docs/housecalls/p2-pin-schema.md) ----------
 
 /** Area-weighted centroid of a county's largest outer ring, verified to sit
@@ -558,6 +612,32 @@ function selftest() {
     console.log(`${pass ? "PASS" : "FAIL"} queue: ${name}`)
     ok &&= pass
   }
+
+  // RFP lane analysis
+  const rfp = analyzeRfps(
+    {
+      rfps: [
+        { id: "r1", title: "County data warehouse", status: "watching", due: "2026-09-20" },
+        { id: "r2", title: "City GIS modernization", status: "preparing", due: "2026-09-10" },
+        { id: "r3", title: "State portal rebuild", status: "submitted", due: "2026-09-02" },
+        { id: "r4", title: "Slipped one", status: "watching", due: "2026-09-01" },
+        { id: "r5", title: "Old win", status: "won", due: "2026-06-01" },
+        { id: "r6", title: "Bad row", status: "someday" },
+      ],
+    },
+    "2026-09-06"
+  )
+  const rc = [
+    ["open counts watching+preparing+submitted", rfp.open === 4],
+    ["next due is earliest FUTURE non-submitted", rfp.next_due === "2026-09-10" && rfp.next_due_title === "City GIS modernization"],
+    ["overdue watching flagged", rfp.problems.some((p) => p.includes("OVERDUE") && p.includes("Slipped one"))],
+    ["unknown status rejected", rfp.problems.some((p) => p.includes("unknown status")) && !rfp.by_status.someday],
+    ["won tallied but not open", rfp.by_status.won === 1],
+  ]
+  for (const [name, pass] of rc) {
+    console.log(`${pass ? "PASS" : "FAIL"} rfp: ${name}`)
+    ok &&= pass
+  }
   process.exit(ok ? 0 : 1)
 }
 
@@ -623,6 +703,13 @@ function main() {
     queue,
   })
 
+  // RFP lane: validate the hand-edited register, never let a deadline slide.
+  const rfpPath = path.join(PRIV, "rfps.json")
+  const rfpReg = readJson(rfpPath, null) ?? rfpSeed()
+  if (!existsSync(rfpPath)) writeJson(rfpPath, rfpReg)
+  const rfp = analyzeRfps(rfpReg)
+  for (const w of rfp.problems) console.error(w)
+
   writeJson(path.join(PRIV, "prospects.json"), prospects)
   writeJson(path.join(PRIV, "geocache.json"), geocache)
   const map = rollup(prospects, pending)
@@ -644,6 +731,8 @@ function main() {
     last_completed_at: lastCompleted,
     prospects_on_file: Object.keys(prospects).length,
     contact_queue: queue.length,
+    rfp_open: rfp.open,
+    rfp_next_due: rfp.next_due,
     mapped: map.total,
   })
 
