@@ -487,10 +487,20 @@ function rollup(prospects, pendingJobs) {
 // ---------- selftest ----------
 
 function selftest() {
+  // County fixtures are territory-specific and GENERATED, never hardcoded:
+  // scripts/housecalls-fixtures.mjs derives them from the operator config +
+  // vendored counties, so a new territory regenerates instead of editing.
+  const FX = readJson(path.join(ROOT, "lib", "housecalls", "fixtures.json"), null)
+  if (!FX) {
+    console.error("FAIL fixtures: lib/housecalls/fixtures.json missing; run node scripts/housecalls-fixtures.mjs")
+    process.exit(1)
+  }
+  const H = FX.home.geoid // in the home set (local-score bonus applies)
+  const O = FX.other_geoid // far away, no local bonus
   // Operator config integrity: the franchise seam only works if every knob
-  // the method reads is actually present. (County fixtures below are keyed to
-  // the flagship's Michigan boundaries; a new territory regenerates them.)
+  // the method reads is actually present.
   const cfg = [
+    ["fixtures match this territory", FX.state_fips === OP.territory.state_fips],
     ["operator.name", typeof OP.operator?.name === "string" && OP.operator.name.length > 0],
     ["territory state + fips", typeof OP.territory?.state === "string" && /^\d{2}$/.test(OP.territory?.state_fips ?? "")],
     ["counties_file matches fips", OP.territory.counties_file.includes("counties") && existsSync(COUNTIES)],
@@ -505,27 +515,21 @@ function selftest() {
     console.log(`${pass ? "PASS" : "FAIL"} config: ${name}`)
     ok &&= pass
   }
-  const cases = [
-    { name: "Grand Rapids", lon: -85.6681, lat: 42.9634, want: "26081" }, // Kent
-    { name: "Detroit", lon: -83.0458, lat: 42.3314, want: "26163" }, // Wayne
-    { name: "Traverse City", lon: -85.6206, lat: 44.7631, want: "26055" }, // Grand Traverse
-    { name: "Lake Michigan (open water)", lon: -86.8, lat: 43.5, want: null },
-  ]
-  for (const c of cases) {
+  for (const c of FX.cases) {
     const got = countyFor(c.lon, c.lat)
     const pass = got === c.want
     ok &&= pass
     console.log(`${pass ? "PASS" : "FAIL"} ${c.name}: ${got} (want ${c.want})`)
   }
   const fixture = {
-    a: { stage: "identified", county: "26081" },
-    b: { stage: "qualified", county: "26081" },
-    c: { stage: "won", county: "26081" }, // leaves the map
-    d: { stage: "closed", county: "26163" }, // leaves the map
-    e: { stage: "contacted", county: "26163" },
+    a: { stage: "identified", county: H },
+    b: { stage: "qualified", county: H },
+    c: { stage: "won", county: H }, // leaves the map
+    d: { stage: "closed", county: O }, // leaves the map
+    e: { stage: "contacted", county: O },
   }
   const r = rollup(fixture, 0)
-  const rollupOk = r.total === 3 && r.counties["26081"] === 2 && r.counties["26163"] === 1
+  const rollupOk = r.total === 3 && r.counties[H] === 2 && r.counties[O] === 1
   ok &&= rollupOk
   console.log(`${rollupOk ? "PASS" : "FAIL"} rollup: total=${r.total} counties=${JSON.stringify(r.counties)}`)
 
@@ -543,15 +547,16 @@ function selftest() {
   console.log(`${jitterOk ? "PASS" : "FAIL"} jitter: deterministic, ${meters.toFixed(0)}m`)
   ok &&= jitterOk
 
-  // pin writer invariants
-  const gr = [-85.6681, 42.9634]
-  const resolveCity = (city) => (city === "Grand Rapids" ? gr : null)
+  // pin writer invariants ("Home City" is an opaque token; only resolveCity
+  // gives it meaning, at the fixture home-base coordinates)
+  const gr = [FX.home.lon, FX.home.lat]
+  const resolveCity = (city) => (city === "Home City" ? gr : null)
   const P = (id, extra) => ({
     id,
     stage: "identified",
     name: `Co ${id}`,
-    city: "Grand Rapids",
-    county: "26081",
+    city: "Home City",
+    county: H,
     sector: "manufacturing",
     source: { harvested_at: "2026-09-06T01:00:00Z" },
     ...extra,
@@ -561,7 +566,7 @@ function selftest() {
       a: P("pa"),
       b: P("pb"),
       c: P("pc"),
-      d: P("pd", { sector: "retail" }), // lone (retail, grand rapids) cell
+      d: P("pd", { sector: "retail" }), // lone (retail, home city) cell
       e: P("pe", { stage: "won" }), // leaves the map
       f: P("pf", { city: null, county: null }), // unmappable: dropped
       g: P("pg", { public: true, fact: "their own posting", stage: "drafted" }),
@@ -572,13 +577,13 @@ function selftest() {
   const byId = Object.fromEntries(pins.map((p) => [p.id, p]))
   const checks = [
     ["count (won + unmappable excluded)", pins.length === 6],
-    ["k-anon met: 3x (manufacturing, grand rapids) publish sector", byId.pa?.sector === "manufacturing"],
+    ["k-anon met: 3x (manufacturing, home city) publish sector", byId.pa?.sector === "manufacturing"],
     ["k-anon not met: lone retail cell hides sector", byId.pd?.sector === null],
     ["anonymous pin has no label/fact", byId.pa?.label === null && byId.pa?.fact === null],
     ["public pin carries label+fact", byId.pg?.label === "Co pg" && byId.pg?.fact === "their own posting"],
     ["since is a date", byId.pa?.since === "2026-09-06"],
-    ["jittered pin stays in Kent", byId.pa && countyFor(byId.pa.pos[0], byId.pa.pos[1]) === "26081"],
-    ["county-fallback pin lands in Kent", byId.ph && countyFor(byId.ph.pos[0], byId.ph.pos[1]) === "26081"],
+    ["jittered pin stays in the home county", byId.pa && countyFor(byId.pa.pos[0], byId.pa.pos[1]) === H],
+    ["county-fallback pin lands in the home county", byId.ph && countyFor(byId.ph.pos[0], byId.ph.pos[1]) === H],
     ["no two pins share a position", new Set(pins.map((p) => p.pos.join(","))).size === pins.length],
   ]
   for (const [name, pass] of checks) {
@@ -592,7 +597,7 @@ function selftest() {
     id,
     stage: "identified",
     name: `Widget Co ${id}`,
-    county: "26081",
+    county: H,
     signal: "hiring a data engineer",
     signal_url: "https://example.com/posting",
     signal_category: "hiring",
@@ -606,7 +611,7 @@ function selftest() {
     stale: Q("q3", { signal_seen_at: "2026-05-01" }),
     gov: Q("q4", { name: "City of Wyoming water dept" }),
     conflict: Q("q5", { name: "Augusto Digital" }),
-    legacy: Q("q6", { signal_category: "legacy", county: "26163" }),
+    legacy: Q("q6", { signal_category: "legacy", county: O }),
     alreadyDrafted: Q("q7", { stage: "drafted" }),
   }
   const flips = autoQualify(qp, TODAY)
