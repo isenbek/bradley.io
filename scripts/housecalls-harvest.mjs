@@ -34,6 +34,7 @@ const PRIV = path.join(ROOT, "data", "housecalls")
 const RAW = path.join(PRIV, "raw")
 const COUNTIES = path.join(ROOT, "public", "data", "mi-counties.json")
 const MAP_OUT = path.join(ROOT, "public", "data", "housecalls-map.json")
+const RIG_OUT = path.join(ROOT, "public", "data", "housecalls-rig.json")
 
 const MAP_STAGES = new Set(["identified", "qualified", "drafted", "contacted", "replied"])
 
@@ -198,13 +199,17 @@ function main() {
   let pending = 0
   let completed = 0
   let extracted = 0
+  const byStatus = {}
+  let lastCompleted = null
   for (const jobId of jobIds) {
     const job = cb(["cbintel", "jobs", "get-get", "--params", JSON.stringify({ job_id: jobId })])
+    byStatus[job.status] = (byStatus[job.status] ?? 0) + 1
     if (job.status !== "completed") {
       pending++
       continue
     }
     completed++
+    if (job.completed_at && (!lastCompleted || job.completed_at > lastCompleted)) lastCompleted = job.completed_at
     writeJson(path.join(RAW, `${jobId}.json`), job)
     for (const row of extractProspects(job)) {
       if (row.id in prospects) continue // never clobber human-touched rows
@@ -221,6 +226,15 @@ function main() {
   writeJson(path.join(PRIV, "geocache.json"), geocache)
   const map = rollup(prospects, pending)
   writeJson(MAP_OUT, map)
+
+  // Rig telemetry: OUR workspace only, aggregates only (maps-plan.md P3).
+  writeJson(RIG_OUT, {
+    generated: new Date().toISOString(),
+    jobs: { total: jobIds.length, ...byStatus },
+    last_completed_at: lastCompleted,
+    prospects_on_file: Object.keys(prospects).length,
+    mapped: map.total,
+  })
 
   console.log(
     `jobs: ${jobIds.length} (${completed} completed, ${pending} pending) | ` +

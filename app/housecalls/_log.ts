@@ -34,6 +34,11 @@ export const LOG: LogEntry[] = [
   {
     date: "2026-09-06",
     kind: "build",
+    note: "The rig panel is live under the map: the hunt's own harvest jobs, prospect counts, and last-run time, straight from the pipeline. Our telemetry only; what the machine does for anyone else stays theirs.",
+  },
+  {
+    date: "2026-09-06",
+    kind: "build",
     note: "The territory map is up: 83 Michigan counties from the Census, drawn dark at zero. Counties light up one hue as the harvest fills them. Only county totals reach the map; nothing finer leaves the shop.",
   },
   {

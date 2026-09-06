@@ -2,6 +2,7 @@ import Link from "next/link"
 import type { Metadata } from "next"
 import { COUNTERS, LOG } from "./_log"
 import { HuntMapIsland } from "@/components/housecalls/HuntMapIsland"
+import { RigPanel } from "@/components/housecalls/RigPanel"
 
 const DESCRIPTION =
   "An AI is out looking for work for a human engineer, in the open. Every step of the hunt is logged on this page, and nothing leaves without a human signature."
@@ -173,6 +174,8 @@ export default function HouseCallsPage() {
       <div className="beta-hc-map-panel">
         <HuntMapIsland />
       </div>
+
+      <RigPanel />
 
       <div className="prose beta-sec">
         <h2>The ledger</h2>
