@@ -1757,3 +1757,30 @@ body:has(.beta-root) {
   font-family: var(--font-mono); font-size: var(--text-micro); color: var(--color-glass-muted);
 }
 .beta-hc-map-note__gap { padding-left: calc(var(--u) * 2); border-left: 1px solid var(--color-rule-panel); }
+
+/* P2 pin legend (doubles as stage filter) + hover card. Stage colors arrive
+   inline from components/housecalls/pins.ts, the single stage-look source. */
+.beta-hc-legend {
+  position: absolute; right: calc(var(--u) * 3.5); bottom: calc(var(--u) * 3.5); z-index: 1;
+  display: inline-flex; align-items: center; flex-wrap: wrap; gap: var(--u);
+  padding: calc(var(--u) * 1.5) calc(var(--u) * 2); border-radius: var(--radius-mod);
+  background: color-mix(in srgb, var(--color-panel) 84%, transparent);
+  backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--color-rule-panel);
+}
+.beta-hc-lg {
+  display: inline-flex; align-items: center; gap: calc(var(--u) * 1.25);
+  padding: calc(var(--u) * 0.75) calc(var(--u) * 1.75); border-radius: var(--radius-mod);
+  background: none; border: 1px solid transparent; cursor: pointer;
+  font-family: var(--font-mono); font-size: var(--text-micro); color: var(--color-glass-muted);
+}
+.beta-hc-lg[aria-pressed="true"] { border-color: var(--color-rule-panel); color: var(--color-glass); }
+.beta-hc-lg[aria-pressed="false"] { opacity: 0.45; }
+.beta-hc-lg__dot { border-radius: 50%; flex: none; box-shadow: 0 0 0 1px var(--color-panel-sunk); }
+.beta-hc-pop { font-family: var(--font-mono); font-size: var(--text-micro); line-height: 1.5; }
+.beta-hc-map-wrap .maplibregl-popup-content {
+  background: var(--color-panel); color: var(--color-glass);
+  border: 1px solid var(--color-rule-panel); border-radius: var(--radius-mod);
+  padding: calc(var(--u) * 2) calc(var(--u) * 2.5);
+}
+.beta-hc-map-wrap .maplibregl-popup-tip { border-top-color: var(--color-rule-panel); border-bottom-color: var(--color-rule-panel); }
