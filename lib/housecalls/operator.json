@@ -1,0 +1,33 @@
+{
+  "operator": {
+    "name": "Bradley Isenbek",
+    "site": "https://bradley.io",
+    "hunt_host": "housecalls.bradley.io",
+    "flagship": true
+  },
+  "territory": {
+    "state": "Michigan",
+    "state_fips": "26",
+    "counties_file": "/data/mi-counties.json",
+    "tilejson": "https://dragonfli.tinymachines.ai/tiles/services/great-lakes",
+    "home": { "label": "Grand Rapids", "lon": -85.67, "lat": 42.96 },
+    "map_zoom": 6.2,
+    "home_county_geoids": [
+      "26081", "26139", "26121", "26005", "26015",
+      "26067", "26117", "26123", "26077"
+    ]
+  },
+  "rubric": {
+    "conflicts": [
+      "augusto", "opinosis", "licens\\.io",
+      "senna automation", "nominate", "campaign\\s*brain"
+    ],
+    "letter_by_category": {
+      "cloud": "pitch-cloud-exit",
+      "legacy": "pitch-legacy-rescue",
+      "hiring": "pitch-hiring-signal",
+      "ai": "pitch-honest-ai"
+    }
+  },
+  "privacy": { "k_anon": 3 }
+}

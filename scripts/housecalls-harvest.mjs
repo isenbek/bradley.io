@@ -28,11 +28,24 @@ import path from "node:path"
 import { fileURLToPath } from "node:url"
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..")
-const CBCLI = "/home/bisenbek/.pyenv/shims/cbcli"
-const WORKSPACE = "ws_86a68391f69c4247"
 const PRIV = path.join(ROOT, "data", "housecalls")
 const RAW = path.join(PRIV, "raw")
-const COUNTIES = path.join(ROOT, "public", "data", "mi-counties.json")
+
+// Operator config (committed, public-safe): who runs this machine and where.
+// Platform config (private dir, per-box): how this box reaches the harvest
+// platform. The split is the franchise seam: a new operator edits these two
+// files and the site copy; the method below stays identical.
+const OP = JSON.parse(readFileSync(path.join(ROOT, "lib", "housecalls", "operator.json"), "utf8"))
+const PLATFORM_PATH = path.join(PRIV, "platform.json")
+if (!existsSync(PLATFORM_PATH)) {
+  console.error(`missing ${PLATFORM_PATH}: create it with {"cbcli": "<path>", "workspace_id": "<ws_...>"}`)
+  process.exit(1)
+}
+const PLATFORM = JSON.parse(readFileSync(PLATFORM_PATH, "utf8"))
+const CBCLI = PLATFORM.cbcli
+const WORKSPACE = PLATFORM.workspace_id
+const STATE = OP.territory.state
+const COUNTIES = path.join(ROOT, "public", OP.territory.counties_file)
 const MAP_OUT = path.join(ROOT, "public", "data", "housecalls-map.json")
 const RIG_OUT = path.join(ROOT, "public", "data", "housecalls-rig.json")
 const PINS_OUT = path.join(ROOT, "public", "data", "housecalls-pins.json")
@@ -140,18 +153,15 @@ function extractProspects(job) {
 // ---------- auto-qualification (docs/housecalls/qualification-rubric.md) ----------
 
 const RUBRIC_VERSION = 1
-const LETTER_BY_CATEGORY = {
-  cloud: "pitch-cloud-exit",
-  legacy: "pitch-legacy-rescue",
-  hiring: "pitch-hiring-signal",
-  ai: "pitch-honest-ai",
-}
-// The GR consulting field + platform relationships (rubric: conflicts).
-const CONFLICTS = [/augusto/i, /opinosis/i, /licens\.io/i, /senna automation/i, /nominate/i, /campaign\s*brain/i]
+// Letter bindings and the conflicts list are per-operator (lib/housecalls/
+// operator.json): the flagship's conflicts are the GR consulting field +
+// platform relationships.
+const LETTER_BY_CATEGORY = OP.rubric.letter_by_category
+const CONFLICTS = OP.rubric.conflicts.map((s) => new RegExp(s, "i"))
 // Public bodies buy through procurement; cold email can disqualify a bid.
 const GOV_RE = /\b(county|city of|township|state of|school district|village of|public schools|dept\.? of|department of)\b/i
-// West Michigan geoids for the +2 local score: Kent and the ring around it.
-const WEST_MI = new Set(["26081", "26139", "26121", "26005", "26015", "26067", "26117", "26123", "26077"])
+// Home-turf geoids for the +2 local score (flagship: Kent and the ring around it).
+const WEST_MI = new Set(OP.territory.home_county_geoids)
 
 const daysBetween = (a, b) => Math.abs(new Date(a) - new Date(b)) / 86400000
 
@@ -271,7 +281,7 @@ function dispatchDiscovery(prospects, queue, n) {
     const p = prospects[q.id]
     const query =
       `Who leads engineering, data, or IT at "${p.name}"` +
-      (p.city ? ` in ${p.city}, Michigan` : " in Michigan") +
+      (p.city ? ` in ${p.city}, ${STATE}` : ` in ${STATE}`) +
       `: names, titles, and contact paths. Team page, leadership page, LinkedIn, ` +
       `and the contact on their job posting if any.`
     const res = cb([
@@ -402,7 +412,7 @@ function jitterFor(id, lat) {
  *     verifying the fact is the company's own public statement.
  *   - sector on anonymous pins only when >= K share the (sector, city) cell.
  */
-const K_ANON = 3
+const K_ANON = OP.privacy.k_anon
 function emitPins(prospects, resolveCity) {
   const candidates = []
   let dropped = 0
@@ -477,13 +487,30 @@ function rollup(prospects, pendingJobs) {
 // ---------- selftest ----------
 
 function selftest() {
+  // Operator config integrity: the franchise seam only works if every knob
+  // the method reads is actually present. (County fixtures below are keyed to
+  // the flagship's Michigan boundaries; a new territory regenerates them.)
+  const cfg = [
+    ["operator.name", typeof OP.operator?.name === "string" && OP.operator.name.length > 0],
+    ["territory state + fips", typeof OP.territory?.state === "string" && /^\d{2}$/.test(OP.territory?.state_fips ?? "")],
+    ["counties_file matches fips", OP.territory.counties_file.includes("counties") && existsSync(COUNTIES)],
+    ["home base in a home county", OP.territory.home_county_geoids.includes(countyFor(OP.territory.home.lon, OP.territory.home.lat))],
+    ["every letter binding is a slug", Object.values(OP.rubric.letter_by_category).every((s) => /^pitch-[a-z-]+$/.test(s))],
+    ["conflicts compile as regexes", CONFLICTS.length === OP.rubric.conflicts.length],
+    ["k_anon sane", Number.isInteger(K_ANON) && K_ANON >= 2],
+    ["platform config loaded", typeof CBCLI === "string" && /^ws_/.test(WORKSPACE)],
+  ]
+  let ok = true
+  for (const [name, pass] of cfg) {
+    console.log(`${pass ? "PASS" : "FAIL"} config: ${name}`)
+    ok &&= pass
+  }
   const cases = [
     { name: "Grand Rapids", lon: -85.6681, lat: 42.9634, want: "26081" }, // Kent
     { name: "Detroit", lon: -83.0458, lat: 42.3314, want: "26163" }, // Wayne
     { name: "Traverse City", lon: -85.6206, lat: 44.7631, want: "26055" }, // Grand Traverse
     { name: "Lake Michigan (open water)", lon: -86.8, lat: 43.5, want: null },
   ]
-  let ok = true
   for (const c of cases) {
     const got = countyFor(c.lon, c.lat)
     const pass = got === c.want
@@ -691,7 +718,7 @@ function main() {
     for (const row of extractProspects(job)) {
       if (row.id in prospects) continue // never clobber human-touched rows
       if (row.location) {
-        const geo = geocode(`${row.location}, Michigan`, geocache)
+        const geo = geocode(`${row.location}, ${STATE}`, geocache)
         if (geo) row.county = countyFor(geo.lon, geo.lat)
       }
       prospects[row.id] = row
@@ -703,7 +730,7 @@ function main() {
   // resolve through the same geocode cache so they reach the choropleth.
   for (const p of Object.values(prospects)) {
     if (!p.county && p.city) {
-      const geo = geocode(`${p.city}, Michigan`, geocache)
+      const geo = geocode(`${p.city}, ${STATE}`, geocache)
       if (geo) p.county = countyFor(geo.lon, geo.lat)
     }
   }
@@ -736,7 +763,7 @@ function main() {
 
   // P2 pins: city centroids resolve through the same cbgeo cache.
   const resolveCity = (city) => {
-    const g = geocode(`${city}, Michigan`, geocache)
+    const g = geocode(`${city}, ${STATE}`, geocache)
     return g ? [g.lon, g.lat] : null
   }
   const pins = emitPins(prospects, resolveCity)

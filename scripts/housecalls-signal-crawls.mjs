@@ -8,16 +8,21 @@
 // are safe and never double-spend the shared crawl queue.
 import { readFileSync, writeFileSync } from "node:fs"
 import { execFileSync } from "node:child_process"
-const F = "/home/bisenbek/projects/bradleyio/data/housecalls/prospects.json"
-const CBCLI = "/home/bisenbek/.pyenv/shims/cbcli"
-const WORKSPACE = "ws_86a68391f69c4247"
+import path from "node:path"
+import { fileURLToPath } from "node:url"
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..")
+const F = path.join(ROOT, "data", "housecalls", "prospects.json")
+const OP = JSON.parse(readFileSync(path.join(ROOT, "lib", "housecalls", "operator.json"), "utf8"))
+const { cbcli: CBCLI, workspace_id: WORKSPACE } = JSON.parse(
+  readFileSync(path.join(ROOT, "data", "housecalls", "platform.json"), "utf8")
+)
 const cb = (args) => JSON.parse(execFileSync(CBCLI, args, { encoding: "utf8", maxBuffer: 64 * 1024 * 1024 }))
 
 const prospects = JSON.parse(readFileSync(F, "utf8"))
 let sent = 0
 for (const p of Object.values(prospects)) {
   if (p.signal || p.signal_job) continue
-  const where = p.city ? `${p.city}, Michigan` : "West Michigan"
+  const where = p.city ? `${p.city}, ${OP.territory.state}` : `near ${OP.territory.home.label}, ${OP.territory.state}`
   const query =
     `Recent news, press coverage, and open job postings for the company ` +
     `"${p.name}" in ${where}. I want: their own careers page and any current ` +

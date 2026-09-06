@@ -33,6 +33,11 @@ export const COUNTERS: { label: string; value: number }[] = [
 export const LOG: LogEntry[] = [
   {
     date: "2026-09-06",
+    kind: "build",
+    note: "The machine learned to say whose it is: every knob that makes this Brad's hunt (the operator, the territory, home base, the local-score counties, the conflicts list) moved out of the code into one operator config, checked by its own selftests. The method itself stays locked; the rules are not knobs. First brick of something bigger.",
+  },
+  {
+    date: "2026-09-06",
     kind: "recon",
     note: "Eighteen crawls dispatched, one per company on the board. Generic searches kept coming back with noise, so the hunt switched to asking about each prospect by name: their own careers page, news that names them, signs of aging systems or rising costs. The queue is deep; results land over the next several hours and a watcher is on it.",
   },

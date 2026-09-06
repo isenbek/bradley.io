@@ -4,21 +4,25 @@ import { useEffect, useRef, useState } from "react"
 import maplibregl from "maplibre-gl"
 import type { ExpressionSpecification, StyleSpecification } from "maplibre-gl"
 import "maplibre-gl/dist/maplibre-gl.css"
-import { TILEJSON, GR_CENTER } from "@/components/dragonfli/airspace/style"
 import { MAP_INK, mapRamp } from "@/lib/beta/chart-theme"
 import { PIN_STAGES, STAGE_COLOR, STAGE_RADIUS, type PinFile, type PinStage } from "./pins"
+import OP from "@/lib/housecalls/operator.json"
 
 /**
- * The territory: prospect density over Michigan counties.
+ * The territory: prospect density over the operator's counties.
  *
- * County polygons are vendored Census boundaries (public/data/mi-counties.json,
- * refresh via scripts/vendor-census-counties.sh); counts come from
+ * Everything operator-specific (tile source, home base, state, counties file)
+ * comes from lib/housecalls/operator.json, the franchise seam. County
+ * polygons are vendored Census boundaries (refresh via
+ * scripts/vendor-census-counties.sh); counts come from
  * public/data/housecalls-map.json, written by the harvest pipeline. Until the
  * first harvest lands the counties sit dark at zero, which is the honest state.
  *
  * PII rule (docs/housecalls/maps-plan.md): this layer only ever renders
  * aggregates. Nothing below the county rollup reaches the browser.
  */
+
+const HOME: [number, number] = [OP.territory.home.lon, OP.territory.home.lat]
 
 interface MapData {
   generated: string
@@ -35,7 +39,7 @@ const SRC = "greatlakes"
 const huntStyle: StyleSpecification = {
   version: 8,
   sources: {
-    [SRC]: { type: "vector", url: TILEJSON },
+    [SRC]: { type: "vector", url: OP.territory.tilejson },
   },
   layers: [
     { id: "bg", type: "background", paint: { "background-color": MAP_INK.panelSunk } },
@@ -98,8 +102,8 @@ export default function HuntMap() {
     const map = new maplibregl.Map({
       container,
       style: huntStyle,
-      center: GR_CENTER,
-      zoom: 6.2,
+      center: HOME,
+      zoom: OP.territory.map_zoom,
       minZoom: 4.5,
       maxZoom: 11,
       attributionControl: false,
@@ -121,7 +125,7 @@ export default function HuntMap() {
     map.on("load", async () => {
       try {
         const [countiesRes, dataRes, pinsRes] = await Promise.all([
-          fetch("/data/mi-counties.json"),
+          fetch(OP.territory.counties_file),
           fetch("/data/housecalls-map.json"),
           fetch("/data/housecalls-pins.json"),
         ])
@@ -193,7 +197,7 @@ export default function HuntMap() {
         // Home base: the one deliberate spot of ACTIVE blue on the board.
         map.addSource("home", {
           type: "geojson",
-          data: { type: "Feature", properties: {}, geometry: { type: "Point", coordinates: GR_CENTER } },
+          data: { type: "Feature", properties: {}, geometry: { type: "Point", coordinates: HOME } },
         })
         map.addLayer({
           id: "home",
@@ -237,7 +241,7 @@ export default function HuntMap() {
 
   return (
     <div className="beta-hc-map-wrap">
-      <div ref={containerRef} className="beta-hc-map" aria-label="Prospect density by Michigan county" />
+      <div ref={containerRef} className="beta-hc-map" aria-label={`Prospect density by ${OP.territory.state} county`} />
       <div className="beta-hc-map-note">
         <span>prospects mapped: {total ?? "…"}</span>
         {note ? <span className="beta-hc-map-note__gap">{note}</span> : null}
