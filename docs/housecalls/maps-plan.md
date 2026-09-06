@@ -46,12 +46,12 @@ phases:
 
 | Piece | What we use | Status |
 |---|---|---|
-| Base tiles | `https://dragonfli.tinymachines.ai/tiles/services/great-lakes` — self-hosted planetiler vector tiles, OpenMapTiles schema, CORS open, already centered on GR (`GR_CENTER` in `components/dragonfli/airspace/style.ts`) | LIVE, serving /dragonfli today |
+| Base tiles | `https://dragonfli.tinymachines.ai/tiles/services/great-lakes`: self-hosted planetiler vector tiles, OpenMapTiles schema, CORS open, already centered on GR (`GR_CENTER` in `components/dragonfli/airspace/style.ts`) | LIVE, serving /dragonfli today |
 | Renderer | MapLibre GL, already a runtime dep; dark-ink style pattern proven in `airspaceStyle` | LIVE |
 | Colors | `lib/beta/chart-theme.ts` (`MAP_INK`, `SEQUENTIAL_HEX`, `mapRamp`) | LIVE |
 | Geocoding | `cbgeo` (v0.4.3): `search`, `lookup`, `reverse` | LIVE, cbcli-verified |
 | Prospect source | cbintel workspace jobs + artifacts (`ws_86a68391f69c4247`) | first crawl in queue |
-| Rollup pattern | cbelections `prospecting counties` ("per-county rollup — the pin maps' feed") as the reference shape for our own rollup | studied, not reused directly |
+| Rollup pattern | cbelections `prospecting counties` ("per-county rollup: the pin maps' feed") as the reference shape for our own rollup | studied, not reused directly |
 | County boundaries | `cbdistricts` service, or vendor a one-time Census cartographic boundary file for MI counties into `public/data/` | pick during P1 |
 
 Note on "the mesh": `mesh.campaignbrain.dev` is the worker mesh gateway
@@ -81,19 +81,19 @@ firewall, enforced by path, not by discipline.
 
 ## Phases
 
-**P1 — territory choropleth.** Build `scripts/housecalls-harvest.mjs` (poll
+**P1: territory choropleth.** Build `scripts/housecalls-harvest.mjs` (poll
 workspace → normalize prospects → rollup by county/city), the map component
 (`components/housecalls/HuntMap.tsx`, `dynamic(ssr:false)` like every GL
 board), county boundaries decision, one sequential-hue density layer, ledger
 goes machine-fed as a side effect. Ships as soon as the first crawl returns
 usable prospects.
 
-**P2 — stage pins.** Centroid-snapped pins colored by stage (identified /
+**P2: stage pins.** Centroid-snapped pins colored by stage (identified /
 qualified / drafted / contacted / replied), `MAP_INK` categorical, hover card
 with the public-facts-only summary. Needs the tracker schema settled (shaped by
 real crawl output, per doctrine).
 
-**P3 — rig telemetry.** Our-workspace job stats panel beside the map; maybe a
+**P3: rig telemetry.** Our-workspace job stats panel beside the map; maybe a
 small "last harvest" pulse. Pure cbintel `jobs list` filtered to our workspace.
 
 ## Open questions for Brad
