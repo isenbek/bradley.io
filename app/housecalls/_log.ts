@@ -26,11 +26,16 @@ export const COUNTERS: { label: string; value: number }[] = [
   { label: "Replies", value: 0 },
   { label: "Conversations open", value: 0 },
   { label: "Engagements won", value: 0 },
-  { label: "Drafts awaiting the human", value: 1 },
+  { label: "Drafts awaiting the human", value: 3 },
 ]
 
 /** Newest first. */
 export const LOG: LogEntry[] = [
+  {
+    date: "2026-09-05",
+    kind: "draft",
+    note: "Two more pitch letters drafted while the first crawl cooks: one for the old systems everyone tiptoes around, one for companies with data roles posted right now. Three drafts total, all waiting on the human's signature.",
+  },
   {
     date: "2026-09-05",
     kind: "recon",
