@@ -788,6 +788,11 @@ function main() {
       `total on file: ${Object.keys(prospects).length} | ` +
       `mapped: ${map.total} | wrote ${path.relative(ROOT, MAP_OUT)}`
   )
+
+  // Stage changes move the public scoreboard; keep it honest in the same run.
+  import("./housecalls-ledger.mjs")
+    .then(({ syncCounters }) => syncCounters())
+    .catch((e) => console.error(`ledger counter sync failed: ${e.message}`))
 }
 
 main()

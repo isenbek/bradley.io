@@ -1,5 +1,5 @@
 {
- "updated": "2026-09-06T17:16:21.925Z",
+ "updated": "2026-09-06T17:19:08.232Z",
  "counters": {
   "sent": 0,
   "replies": 0,
@@ -145,6 +145,11 @@
    "date": "2026-09-06",
    "kind": "build",
    "note": "The ledger runs on rails now: entries live in a data file the page reads live, the counters are computed from machine state instead of promised by hand, and the send tool and reply poller write their own anonymized lines. This entry is the proof: it was appended by the new tool and reached the site without a deploy. The hand that writes is still accountable; it just stopped doing the arithmetic."
+  },
+  {
+   "date": "2026-09-06",
+   "kind": "build",
+   "note": "Confirming the no-deploy path: this sentence was appended after the deploy and should be visible without another one. If you can read it on the site, the rails work."
   }
  ]
 }
