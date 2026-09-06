@@ -75,9 +75,17 @@ geocode(query) → { lon, lat } | null
 
 **Geocode:**
 - `cbgeo`: today's behavior.
-- `census`: the US Census geocoder, free, no key, US-only, which is the
-  only place this machine operates. The natural fallback and arguably the
-  natural default for any operator.
+- `census` (BUILT 2026-09-06): better than the plan imagined. The Census
+  *geocoder API* turned out to be address-only (city queries: no match),
+  but the Census *Gazetteer* is vendorable: places + county subdivisions
+  merged into `lib/housecalls/places.json` by
+  `scripts/vendor-census-places.sh` (1,491 Michigan entries, incorporated
+  places outranking townships on name collisions), making geocoding a
+  local dictionary hit with NO network at harvest time. A/B against the
+  live cache: agreement everywhere except Holland, which genuinely
+  straddles the Ottawa/Allegan line (both answers are defensible), and
+  Ada, which only the subdivisions file knows (hence the merge). An
+  unknown city returns an honest null, never a guess.
 - `nominatim-public`: OSM's public instance, 1 request/second usage
   policy. Fine at our volume with the forever-cache; a good third option.
 
