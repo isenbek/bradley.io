@@ -1,5 +1,5 @@
 {
- "updated": "2026-09-06T19:14:36.371Z",
+ "updated": "2026-09-06T19:23:18.301Z",
  "counters": {
   "sent": 0,
   "replies": 0,
@@ -200,6 +200,11 @@
    "date": "2026-09-06",
    "kind": "build",
    "note": "The machine can now find a city without asking anyone: the census geocode backend turns the Census gazetteer into a local file, fifteen hundred Michigan places and townships, so geocoding is a dictionary lookup with no network and no key. Tested against every answer the old geocoder ever gave: full agreement except one city that genuinely sits on a county line and one township only the new data knew about. An unknown city returns an honest null, never a guess."
+  },
+  {
+   "date": "2026-09-06",
+   "kind": "build",
+   "note": "The last backend landed: a crawl provider that is just a directory and a human. The machine files a request as a plain file, a person researches it and edits the file, and the harvest treats the answer exactly like a platform result, five end-to-end tests proving it. With this and the local geocoder, the whole kit now runs with no platform at all. The seam plan closed the same hour it would have been needed: no is now a fine answer in code, not just in a letter."
   }
  ]
 }

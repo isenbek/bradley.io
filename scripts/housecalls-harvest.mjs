@@ -22,7 +22,8 @@
  */
 
 import { makeProviders, mockProviders } from "./housecalls-providers.mjs"
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs"
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from "node:fs"
+import os from "node:os"
 import { createHash } from "node:crypto"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
@@ -613,6 +614,39 @@ function selftest() {
   ]
   for (const [name, pass] of loopChecks) {
     console.log(`${pass ? "PASS" : "FAIL"} loop: ${name}`)
+    ok &&= pass
+  }
+
+  // The manual crawl backend, end to end with a REAL directory: dispatch
+  // files a request, a "human" fulfills it by editing the file, and the
+  // same loop harvests it like any platform result.
+  const mdir = mkdtempSync(path.join(os.tmpdir(), "hc-manual-"))
+  const censusAvail = existsSync(path.join(ROOT, "lib", "housecalls", "places.json"))
+  const MPm = makeProviders({
+    cbcli: "/bin/false", workspace_id: "ws_selftest", manual_dir: mdir,
+    providers: { crawl: "manual", geocode: censusAvail ? "census" : "cbgeo" },
+  })
+  const req = MPm.crawl.dispatch("find one company by hand", { max_urls: 1 })
+  const mProspects = {}
+  const st1 = collectJobs(MPm, mProspects, {}, () => {})
+  const reqFile = path.join(mdir, `${req.job_id}.json`)
+  const reqJob = JSON.parse(readFileSync(reqFile, "utf8"))
+  reqJob.status = "completed"
+  reqJob.completed_at = "2026-09-06T05:00:00Z"
+  reqJob.result = { companies: [{ name: "Manual Co", location: OP.territory.home.label }] }
+  writeFileSync(reqFile, JSON.stringify(reqJob))
+  const mSaved = {}
+  const st2 = collectJobs(MPm, mProspects, {}, (n, j) => (mSaved[n] = j.job_id))
+  const mRow = Object.values(mProspects).find((p) => p.name === "Manual Co")
+  const manualChecks = [
+    ["dispatch files a pending request", st1.total === 1 && st1.pending === 1 && st1.byStatus.queued === 1],
+    ["the directory carries its own README", existsSync(path.join(mdir, "README.md"))],
+    ["a fulfilled file harvests like a platform result", st2.completed === 1 && st2.extracted === 1 && mRow?.stage === "identified"],
+    ["raw saved under the manual job id", mSaved[req.job_id] === req.job_id],
+    ["home-label row lands in a home county", censusAvail ? mRow?.county === H : mRow != null],
+  ]
+  for (const [name, pass] of manualChecks) {
+    console.log(`${pass ? "PASS" : "FAIL"} manual: ${name}`)
     ok &&= pass
   }
 

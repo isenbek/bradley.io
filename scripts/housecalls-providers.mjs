@@ -17,11 +17,66 @@
  */
 
 import { execFileSync } from "node:child_process"
-import { writeFileSync, mkdirSync, readFileSync } from "node:fs"
+import { writeFileSync, mkdirSync, readFileSync, readdirSync, existsSync } from "node:fs"
+import { createHash } from "node:crypto"
 import path from "node:path"
 import { fileURLToPath } from "node:url"
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..")
+
+const MANUAL_README = `# Manual crawl jobs
+
+This directory IS the crawl backend when providers.crawl = "manual": the
+honest degraded mode for an operator without a harvest platform. The
+pipeline dispatches a request here as a JSON file; a human fulfills it by
+editing that same file. Nothing else changes: the extractor, the rubric,
+and every rule downstream treat a fulfilled file exactly like a platform
+result.
+
+To fulfill a request file:
+
+1. Do the research the "query" field asks for (searching, reading, asking
+   around; the method does not care how).
+2. Set "status" to "completed" and add "completed_at" (ISO timestamp).
+3. Put findings in "result". For prospect rows the extractor can read:
+   { "companies": [ { "name": "...", "location": "City", "url": "...",
+   "signal": "what you observed" } ] }
+   For evidence to curate by hand, any shape works; raw is always saved.
+
+A file left at "queued" is simply a pending job. Delete nothing; the
+directory is the job history.
+`
+
+/** The manual crawl backend: a directory of request files a human fulfills. */
+function manualCrawl(dir) {
+  const ensure = () => {
+    mkdirSync(dir, { recursive: true })
+    const readme = path.join(dir, "README.md")
+    if (!existsSync(readme)) writeFileSync(readme, MANUAL_README)
+  }
+  return {
+    listJobs() {
+      if (!existsSync(dir)) return []
+      return readdirSync(dir)
+        .filter((f) => f.startsWith("job_manual_") && f.endsWith(".json"))
+        .map((f) => f.replace(/\.json$/, ""))
+    },
+    getJob(jobId) {
+      return JSON.parse(readFileSync(path.join(dir, `${jobId}.json`), "utf8"))
+    },
+    dispatch(query, opts = {}) {
+      ensure()
+      const job_id = `job_manual_${createHash("sha256").update(query + Date.now()).digest("hex").slice(0, 12)}`
+      writeFileSync(
+        path.join(dir, `${job_id}.json`),
+        JSON.stringify({ job_id, status: "queued", requested_at: new Date().toISOString(), query, opts, result: null }, null, 1) + "\n"
+      )
+      console.log(`manual job filed: ${dir}/${job_id}.json (a human fulfills it; see the README there)`)
+      return { job_id }
+    },
+    fetchArtifacts: async () => null,
+  }
+}
 
 export function makeProviders(platform) {
   const exec = (args) => JSON.parse(execFileSync(platform.cbcli, args, { encoding: "utf8", maxBuffer: 256 * 1024 * 1024 }))
@@ -96,6 +151,8 @@ export function makeProviders(platform) {
       },
     },
   }
+
+  crawls.manual = manualCrawl(platform.manual_dir ?? path.join(ROOT, "data", "housecalls", "manual-jobs"))
 
   const crawlName = platform.providers?.crawl ?? "cbintel"
   const geoName = platform.providers?.geocode ?? "cbgeo"
