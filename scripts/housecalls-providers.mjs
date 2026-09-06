@@ -17,8 +17,11 @@
  */
 
 import { execFileSync } from "node:child_process"
-import { writeFileSync, mkdirSync } from "node:fs"
+import { writeFileSync, mkdirSync, readFileSync } from "node:fs"
 import path from "node:path"
+import { fileURLToPath } from "node:url"
+
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..")
 
 export function makeProviders(platform) {
   const exec = (args) => JSON.parse(execFileSync(platform.cbcli, args, { encoding: "utf8", maxBuffer: 256 * 1024 * 1024 }))
@@ -78,6 +81,18 @@ export function makeProviders(platform) {
         const lon = Number(row.lon ?? row.longitude ?? row.geometry?.coordinates?.[0])
         const lat = Number(row.lat ?? row.latitude ?? row.geometry?.coordinates?.[1])
         return Number.isFinite(lon) && Number.isFinite(lat) ? { lon, lat } : null
+      },
+    },
+    // The vendored Census Gazetteer: geocoding as a local dictionary hit, no
+    // network at harvest time. Vendor with scripts/vendor-census-places.sh;
+    // the pipeline only ever asks for "City, State" so that is all this
+    // answers, and an unknown city is an honest null, never a guess.
+    census: {
+      geocode(query) {
+        this._places ??= JSON.parse(readFileSync(path.join(ROOT, "lib", "housecalls", "places.json"), "utf8")).places
+        const base = query.split(",")[0].trim().toLowerCase()
+        const hit = this._places[base]
+        return hit ? { lon: hit.lon, lat: hit.lat } : null
       },
     },
   }

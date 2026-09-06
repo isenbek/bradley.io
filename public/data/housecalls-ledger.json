@@ -1,5 +1,5 @@
 {
- "updated": "2026-09-06T18:32:36.367Z",
+ "updated": "2026-09-06T19:14:36.371Z",
  "counters": {
   "sent": 0,
   "replies": 0,
@@ -195,6 +195,11 @@
    "date": "2026-09-06",
    "kind": "build",
    "note": "The harvest grew its seam: every touch of the outside platform now goes through two small interfaces a config file selects, and the rules of the machine sit outside them where no backend can reach. The first dividend arrived immediately: a mock backend let the real harvest loop be tested end to end for the first time, nine new checks, one hundred and fourteen tests green across the whole machine. The platform we ride is now a choice."
+  },
+  {
+   "date": "2026-09-06",
+   "kind": "build",
+   "note": "The machine can now find a city without asking anyone: the census geocode backend turns the Census gazetteer into a local file, fifteen hundred Michigan places and townships, so geocoding is a dictionary lookup with no network and no key. Tested against every answer the old geocoder ever gave: full agreement except one city that genuinely sits on a county line and one township only the new data knew about. An unknown city returns an honest null, never a guess."
   }
  ]
 }

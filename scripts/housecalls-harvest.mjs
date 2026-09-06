@@ -547,6 +547,15 @@ function selftest() {
     console.log(`${pass ? "PASS" : "FAIL"} config: ${name}`)
     ok &&= pass
   }
+  // The census geocode backend is optional until selected, but if its
+  // vendored places file exists it must put the home label in a home county.
+  if (existsSync(path.join(ROOT, "lib", "housecalls", "places.json"))) {
+    const CP = makeProviders({ cbcli: "/bin/false", workspace_id: "ws_selftest", providers: { crawl: "cbintel", geocode: "census" } })
+    const hit = CP.geocode(`${OP.territory.home.label}, ${STATE}`)
+    const censusOk = Boolean(hit) && OP.territory.home_county_geoids.includes(countyFor(hit.lon, hit.lat))
+    console.log(`${censusOk ? "PASS" : "FAIL"} config: census geocode resolves home into a home county`)
+    ok &&= censusOk
+  }
   for (const c of FX.cases) {
     const got = countyFor(c.lon, c.lat)
     const pass = got === c.want
