@@ -52,7 +52,7 @@ phases:
 | Geocoding | `cbgeo` (v0.4.3): `search`, `lookup`, `reverse` | LIVE, cbcli-verified |
 | Prospect source | cbintel workspace jobs + artifacts (`ws_86a68391f69c4247`) | first crawl in queue |
 | Rollup pattern | cbelections `prospecting counties` ("per-county rollup: the pin maps' feed") as the reference shape for our own rollup | studied, not reused directly |
-| County boundaries | `cbdistricts` service, or vendor a one-time Census cartographic boundary file for MI counties into `public/data/` | pick during P1 |
+| County boundaries | **VENDORED** (Brad's call, 2026-09-06): `public/data/mi-counties.json`, 83 MI counties from Census cartographic boundaries 2023 1:500k (public domain), properties {geoid, name}, 5-decimal coords, ~407KB. Refresh: `scripts/vendor-census-counties.sh` | DONE |
 
 Note on "the mesh": `mesh.campaignbrain.dev` is the worker mesh gateway
 (WebSocket, no OpenAPI). We do not talk to it directly; cbintel jobs ARE the
@@ -96,12 +96,28 @@ real crawl output, per doctrine).
 **P3: rig telemetry.** Our-workspace job stats panel beside the map; maybe a
 small "last harvest" pulse. Pure cbintel `jobs list` filtered to our workspace.
 
-## Open questions for Brad
+## Decisions
 
-1. County choropleth from `cbdistricts`, or vendor Census boundaries into the
-   repo (fully self-contained, anti-cloud-est option)?
-2. Does the harvest script run on cron (fresh map daily) or only at deploy?
-   Cron means committing `public/data` changes outside deploy.sh's flow, same
-   pattern question as the /eyes timer.
-3. P2 stage vocabulary: adopt the ledger's kinds, or a dedicated pipeline
-   enum? (Recommend dedicated: ledger kinds are narrative, stages are state.)
+1. **County boundaries: VENDORED** (Brad, 2026-09-06). Census files in the
+   repo, zero runtime dependence on census.gov. See the table above.
+2. **OPEN: harvest cadence.** Cron (fresh map daily) vs deploy-time only. Cron
+   means committing `public/data` changes outside deploy.sh's flow, same
+   pattern question as the /eyes timer. Decide when the pipeline script lands.
+3. **Stage vocabulary: DEDICATED ENUM** (Brad adopted the recommendation,
+   2026-09-06). Ledger kinds stay narrative; pipeline stages are state:
+
+   ```
+   identified   harvested, nothing verified yet
+   qualified    a human-checkable signal exists (the OBSERVED_SIGNAL test)
+   drafted      a letter exists, awaiting Brad's signature
+   contacted    Brad sent it (date logged)
+   replied      they answered, any polarity
+   won          signed engagement
+   closed       out, forever: a no, a bounce, or our one-email promise expired
+   ```
+
+   One-way ratchet except closed, which is reachable from anywhere. `closed`
+   is terminal and honored permanently (the no-means-no-forever rule is a
+   stage, not a note). Map pins render stages in `MAP_INK` categorical order;
+   `won` and `closed` leave the map (won goes to the ledger as narrative,
+   closed is nobody's business).
