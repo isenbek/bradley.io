@@ -89,9 +89,12 @@ goes machine-fed as a side effect. Ships as soon as the first crawl returns
 usable prospects.
 
 **P2: stage pins.** Centroid-snapped pins colored by stage (identified /
-qualified / drafted / contacted / replied), `MAP_INK` categorical, hover card
-with the public-facts-only summary. Needs the tracker schema settled (shaped by
-real crawl output, per doctrine).
+qualified / drafted / contacted / replied). Schema and PII mechanics are
+settled in `p2-pin-schema.md`, including a correction to this plan: five
+stages are an ordered progression, so pins take the SEQUENTIAL_HEX ramp with
+radius as secondary encoding, NOT MAP_INK categorical (four hues cannot carry
+five stages, and stages are not categories anyway). Extraction seam still
+needs real crawl output before the writer side lands.
 
 **P3: rig telemetry.** Our-workspace job stats panel beside the map; maybe a
 small "last harvest" pulse. Pure cbintel `jobs list` filtered to our workspace.
@@ -118,6 +121,7 @@ small "last harvest" pulse. Pure cbintel `jobs list` filtered to our workspace.
 
    One-way ratchet except closed, which is reachable from anywhere. `closed`
    is terminal and honored permanently (the no-means-no-forever rule is a
-   stage, not a note). Map pins render stages in `MAP_INK` categorical order;
+   stage, not a note). Map pins render stages on the SEQUENTIAL_HEX ramp with
+   radius as secondary encoding (see p2-pin-schema.md for the correction);
    `won` and `closed` leave the map (won goes to the ledger as narrative,
    closed is nobody's business).
