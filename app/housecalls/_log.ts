@@ -34,6 +34,11 @@ export const LOG: LogEntry[] = [
   {
     date: "2026-09-06",
     kind: "recon",
+    note: "The three follow-up crawls came back and got the honest treatment: no company-specific signals in any of them. The web is noisy; one \"Grand Rapids jobs\" board turned out to list roles in Bangkok and Dubai, so aggregator counts are now banned from letters. The real fruit was a public chamber-of-commerce roster: six new West Michigan industrial companies joined the board with their leaders named, one existing prospect gained its CEO's name, and Michigan's own cost numbers (manufacturing up 10 to 22 percent this year) went into the letter bank with citations.",
+  },
+  {
+    date: "2026-09-06",
+    kind: "recon",
     note: "The first harvest landed: 21 pages crawled in 7 minutes, one directory yielded the first 12 West Michigan manufacturers, and the map lit its first three counties. Lessons logged too: generic queries pull directories, and a transient geocoder failure got cached forever and unmapped Grand Rapids itself for one run. Both fixed. Three sharper crawls are already back in the queue.",
   },
   {
