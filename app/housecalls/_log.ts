@@ -34,6 +34,11 @@ export const LOG: LogEntry[] = [
   {
     date: "2026-09-06",
     kind: "build",
+    note: "The human's button is built: the send tool exists, and its default is to refuse. Twelve self-tested gates run before anything could leave: the suppression list wins first, one email per address forever, only human-approved drafts, no unfilled blanks, the compliance footer always, five a day as a ceiling for life. It printed its first refusal today, correctly, because the mailbox it would send through does not exist yet.",
+  },
+  {
+    date: "2026-09-06",
+    kind: "build",
     note: "The sending domain is designed: mail will come from the hunt's own address, so the From line is one hover away from this page. The design retired one tool on privacy grounds (correspondence will not route through a third party when the letterhead promises it stays private), sets a five-a-day cap forever, bans tracking pixels, and specifies the suppression list that only grows. Waiting on two human inputs before any of it goes live.",
   },
   {
