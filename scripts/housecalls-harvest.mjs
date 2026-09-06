@@ -218,6 +218,74 @@ function autoQualify(prospects, today = new Date().toISOString()) {
   return flipped
 }
 
+// ---------- contact-discovery queue (rubric G3) ----------
+
+/**
+ * The rubric's G3 parking lot: prospects that pass every gate EXCEPT the named
+ * human. Derived, never authored; written PRIVATE (it is a list of companies
+ * we are researching, which is nobody's business until a letter exists).
+ * Ordered by score desc, then oldest signal first (first found, first served).
+ */
+function deriveContactQueue(prospects) {
+  return Object.values(prospects)
+    .filter(
+      (p) =>
+        p.stage === "identified" &&
+        !p.disqualified &&
+        p.lane !== "rfp" &&
+        p.rubric?.gates?.g1_signal &&
+        p.rubric?.gates?.g2_letter &&
+        p.rubric?.gates?.g4_fit &&
+        !p.rubric?.gates?.g3_contact
+    )
+    .sort(
+      (a, b) =>
+        (b.rubric.score ?? 0) - (a.rubric.score ?? 0) ||
+        String(a.signal_seen_at ?? "9999").localeCompare(String(b.signal_seen_at ?? "9999"))
+    )
+    .map((p) => ({
+      id: p.id,
+      name: p.name,
+      score: p.rubric.score,
+      letter: p.rubric.letter,
+      signal: p.signal,
+      signal_url: p.signal_url,
+      county: p.county ?? null,
+      discovery_job: p.discovery_job?.job_id ?? null,
+    }))
+}
+
+/**
+ * Dispatch cbintel discovery crawls for the top of the queue. EXPLICITLY
+ * GATED behind --discover N (shared workers; we do not spray jobs by default).
+ * The job id lands on the prospect row so the main loop routes its result to
+ * raw/discovery-*.json instead of the prospect extractor.
+ */
+function dispatchDiscovery(prospects, queue, n) {
+  let sent = 0
+  for (const q of queue) {
+    if (sent >= n) break
+    if (q.discovery_job) continue
+    const p = prospects[q.id]
+    const query =
+      `Who leads engineering, data, or IT at "${p.name}"` +
+      (p.city ? ` in ${p.city}, Michigan` : " in Michigan") +
+      `: names, titles, and contact paths. Team page, leadership page, LinkedIn, ` +
+      `and the contact on their job posting if any.`
+    const res = cb([
+      "cbintel",
+      "jobs",
+      "crawl",
+      "--params",
+      JSON.stringify({ workspace_id: WORKSPACE, query, prompt_type: "investigative", max_urls: 10 }),
+    ])
+    p.discovery_job = { job_id: res.job_id, submitted_at: new Date().toISOString() }
+    console.log(`discovery dispatched: ${res.job_id} for ${p.name}`)
+    sent++
+  }
+  return sent
+}
+
 // ---------- P2 pin writer (docs/housecalls/p2-pin-schema.md) ----------
 
 /** Area-weighted centroid of a county's largest outer ring, verified to sit
@@ -474,6 +542,22 @@ function selftest() {
     console.log(`${pass ? "PASS" : "FAIL"} rubric: ${name}`)
     ok &&= pass
   }
+
+  // contact-discovery queue: derived from the post-qualification rows above.
+  // qp.noContact is the only g3-only failure; stale/gov/conflict/qualified all
+  // stay out. Add a second g3 case to prove score ordering.
+  qp.noContact2 = Q("q8", { contact: null, signal_category: "legacy" })
+  autoQualify({ noContact2: qp.noContact2 }, TODAY)
+  const queue = deriveContactQueue(qp)
+  const cqc = [
+    ["only g3-blocked rows queue", queue.length === 2 && queue.every((r) => ["q2", "q8"].includes(r.id))],
+    ["ordered by score desc", queue[0]?.id === "q8" && queue[0]?.score === 6 && queue[1]?.id === "q2"],
+    ["row carries the work context", queue[0]?.letter === "pitch-legacy-rescue" && Boolean(queue[0]?.signal_url)],
+  ]
+  for (const [name, pass] of cqc) {
+    console.log(`${pass ? "PASS" : "FAIL"} queue: ${name}`)
+    ok &&= pass
+  }
   process.exit(ok ? 0 : 1)
 }
 
@@ -505,6 +589,14 @@ function main() {
     }
     completed++
     if (job.completed_at && (!lastCompleted || job.completed_at > lastCompleted)) lastCompleted = job.completed_at
+    // Discovery jobs answer "who do we talk to", not "who exists": raw only,
+    // never through the prospect extractor.
+    const owner = Object.values(prospects).find((p) => p.discovery_job?.job_id === jobId)
+    if (owner) {
+      writeJson(path.join(RAW, `discovery-${jobId}.json`), job)
+      owner.discovery_job.completed_at = job.completed_at ?? new Date().toISOString()
+      continue
+    }
     writeJson(path.join(RAW, `${jobId}.json`), job)
     for (const row of extractProspects(job)) {
       if (row.id in prospects) continue // never clobber human-touched rows
@@ -518,6 +610,18 @@ function main() {
   }
 
   const qualified = autoQualify(prospects)
+
+  const queue = deriveContactQueue(prospects)
+  const discoverArg = process.argv.indexOf("--discover")
+  if (discoverArg !== -1) {
+    const n = Math.max(1, Math.min(10, Number(process.argv[discoverArg + 1]) || 3))
+    dispatchDiscovery(prospects, queue, n)
+  }
+  writeJson(path.join(PRIV, "contact-queue.json"), {
+    generated: new Date().toISOString(),
+    count: queue.length,
+    queue,
+  })
 
   writeJson(path.join(PRIV, "prospects.json"), prospects)
   writeJson(path.join(PRIV, "geocache.json"), geocache)
@@ -539,6 +643,7 @@ function main() {
     jobs: { total: jobIds.length, ...byStatus },
     last_completed_at: lastCompleted,
     prospects_on_file: Object.keys(prospects).length,
+    contact_queue: queue.length,
     mapped: map.total,
   })
 

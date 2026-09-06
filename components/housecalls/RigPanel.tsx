@@ -21,6 +21,7 @@ interface RigData {
   jobs: { total: number } & Record<string, number>
   last_completed_at: string | null
   prospects_on_file: number
+  contact_queue?: number
   mapped: number
 }
 
@@ -70,6 +71,12 @@ export function RigPanel() {
                 <td>Prospects on file</td>
                 <td className="num">{rig.prospects_on_file}</td>
               </tr>
+              {typeof rig.contact_queue === "number" ? (
+                <tr>
+                  <td>Awaiting contact discovery</td>
+                  <td className="num">{rig.contact_queue}</td>
+                </tr>
+              ) : null}
               <tr>
                 <td>On the map</td>
                 <td className="num">{rig.mapped}</td>
