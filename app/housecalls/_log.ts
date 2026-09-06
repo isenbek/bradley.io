@@ -33,6 +33,11 @@ export const COUNTERS: { label: string; value: number }[] = [
 export const LOG: LogEntry[] = [
   {
     date: "2026-09-06",
+    kind: "recon",
+    note: "The first harvest landed: 21 pages crawled in 7 minutes, one directory yielded the first 12 West Michigan manufacturers, and the map lit its first three counties. Lessons logged too: generic queries pull directories, and a transient geocoder failure got cached forever and unmapped Grand Rapids itself for one run. Both fixed. Three sharper crawls are already back in the queue.",
+  },
+  {
+    date: "2026-09-06",
     kind: "build",
     note: "The rules tightened while drafting the reply playbook: the page used to say prospects stay a number \"until they reply,\" which read as if writing back earns you a public name. It does not. Correspondence is private, full stop.",
   },

@@ -1,10 +1,10 @@
 {
-  "generated": "2026-09-05T09:01:20.765763+00:00",
+  "generated": "2026-09-06T09:07:02.986934+00:00",
   "org": "Nominate-AI",
   "totalRepos": 169,
   "firstCommit": "2022-12-09T19:55:42Z",
-  "latestCommit": "2026-09-04T08:49:54Z",
-  "totalCommits": 30845,
+  "latestCommit": "2026-09-06T08:49:37Z",
+  "totalCommits": 31175,
   "languages": {
     "Python": 114,
     "TypeScript": 26,
@@ -7880,8 +7880,20 @@
     },
     {
       "date": "2026-09-04",
-      "commits": 94,
-      "repos": 17,
+      "commits": 203,
+      "repos": 23,
+      "intensity": 2
+    },
+    {
+      "date": "2026-09-05",
+      "commits": 205,
+      "repos": 44,
+      "intensity": 2
+    },
+    {
+      "date": "2026-09-06",
+      "commits": 16,
+      "repos": 9,
       "intensity": 1
     }
   ],
@@ -8518,9 +8530,9 @@
       "name": "cbworkflow",
       "description": "Lightweight JSON-backed workflow engine for CRM contact management with event timelines (FastAPI, :8234)",
       "language": "Python",
-      "commits": 108,
+      "commits": 115,
       "firstCommit": "2025-12-02T21:07:30Z",
-      "lastCommit": "2026-08-31T06:29:05Z",
+      "lastCommit": "2026-09-05T14:17:06Z",
       "phase": "Phase 4"
     },
     {
@@ -8545,9 +8557,9 @@
       "name": "cbdistricts",
       "description": "Congressional district data + geospatial platform for all 441 US districts; Census/ACS in DuckDB (FastHTML+MapLibre, :32406)",
       "language": "Python",
-      "commits": 176,
+      "commits": 180,
       "firstCommit": "2025-12-13T21:24:17Z",
-      "lastCommit": "2026-08-31T06:27:55Z",
+      "lastCommit": "2026-09-05T15:07:39Z",
       "phase": "Phase 4"
     },
     {
@@ -8572,18 +8584,18 @@
       "name": "cbai",
       "description": "Unified AI provider access behind one REST API (FastAPI/CBApp, :32281) with MCP, mesh registration, prompt-caching",
       "language": "Python",
-      "commits": 255,
+      "commits": 263,
       "firstCommit": "2025-12-15T23:30:50Z",
-      "lastCommit": "2026-09-02T21:56:59Z",
+      "lastCommit": "2026-09-05T13:52:01Z",
       "phase": "Phase 4"
     },
     {
       "name": "cbmodels",
       "description": "Political data & insights engine \u2014 voter segments, i360, election results, audience builder (FastAPI/DuckDB+Snowflake, :32411)",
       "language": "Python",
-      "commits": 1228,
+      "commits": 1231,
       "firstCommit": "2025-12-17T05:45:49Z",
-      "lastCommit": "2026-09-03T19:14:51Z",
+      "lastCommit": "2026-09-06T06:13:07Z",
       "phase": "Phase 5"
     },
     {
@@ -8608,18 +8620,18 @@
       "name": "cbsurveys",
       "description": "YASP \u2014 API-only survey platform for creating surveys and collecting responses (FastAPI/Pydantic/DuckDB, :32340)",
       "language": "Python",
-      "commits": 112,
+      "commits": 117,
       "firstCommit": "2025-12-21T06:06:49Z",
-      "lastCommit": "2026-09-01T13:47:35Z",
+      "lastCommit": "2026-09-05T14:21:40Z",
       "phase": "Phase 5"
     },
     {
       "name": "cbinfra",
       "description": "Infrastructure API: NGINX/DNS/SSL, bootstrap, deploy, SOPS secrets + shared-memory CRUD backend (FastAPI, :32206)",
       "language": "Python",
-      "commits": 368,
+      "commits": 369,
       "firstCommit": "2025-12-21T21:41:51Z",
-      "lastCommit": "2026-08-31T15:43:33Z",
+      "lastCommit": "2026-09-05T14:59:25Z",
       "phase": "Phase 5"
     },
     {
@@ -8635,9 +8647,9 @@
       "name": "cbdocs",
       "description": "Central documentation hub for the Campaign Brain platform \u2014 46 projects, 22 APIs, 200+ endpoints",
       "language": "Shell",
-      "commits": 308,
+      "commits": 310,
       "firstCommit": "2025-12-24T20:06:09Z",
-      "lastCommit": "2026-09-04T08:49:54Z",
+      "lastCommit": "2026-09-06T08:49:37Z",
       "phase": "Phase 5"
     },
     {
@@ -8662,9 +8674,9 @@
       "name": "cbauth",
       "description": "Auth/authz service: JWT + group dot-notation perms, NGINX auth_request gate, SQLite+Redis (FastAPI, :32202)",
       "language": "Python",
-      "commits": 235,
+      "commits": 240,
       "firstCommit": "2026-01-02T03:19:11Z",
-      "lastCommit": "2026-08-31T06:27:32Z",
+      "lastCommit": "2026-09-05T15:19:52Z",
       "phase": "Phase 6"
     },
     {
@@ -8680,9 +8692,9 @@
       "name": "cbmaintain",
       "description": "Claude Code plugins for CB project maintenance, code hygiene, and UI audit workflows",
       "language": "Mermaid",
-      "commits": 52,
+      "commits": 60,
       "firstCommit": "2026-01-14T21:39:09Z",
-      "lastCommit": "2026-08-31T10:09:22Z",
+      "lastCommit": "2026-09-05T14:07:55Z",
       "phase": "Phase 6"
     },
     {
@@ -8707,9 +8719,9 @@
       "name": "cbtor",
       "description": "WireGuard-to-TOR tunnel infrastructure for distributed TOR routing",
       "language": "Python",
-      "commits": 60,
+      "commits": 61,
       "firstCommit": "2026-01-18T01:04:19Z",
-      "lastCommit": "2026-08-31T06:29:16Z",
+      "lastCommit": "2026-09-06T05:42:03Z",
       "phase": "Phase 7"
     },
     {
@@ -8779,9 +8791,9 @@
       "name": "cbcli",
       "description": "Unified CLI for Nominate AI services (AWS CLI style)",
       "language": "Python",
-      "commits": 162,
+      "commits": 168,
       "firstCommit": "2026-01-26T17:26:41Z",
-      "lastCommit": "2026-09-02T21:37:45Z",
+      "lastCommit": "2026-09-06T00:10:06Z",
       "phase": "Phase 8"
     },
     {
@@ -8824,9 +8836,9 @@
       "name": "cboverseer",
       "description": "Campaign Brain System Manager - Distributed monitoring and self-healing infrastructure",
       "language": "Python",
-      "commits": 208,
+      "commits": 217,
       "firstCommit": "2026-02-02T00:35:45Z",
-      "lastCommit": "2026-09-03T12:23:11Z",
+      "lastCommit": "2026-09-06T05:57:56Z",
       "phase": "Phase 9"
     },
     {
@@ -8842,9 +8854,9 @@
       "name": "cbwebhook",
       "description": "Webhook ingestion service",
       "language": "Python",
-      "commits": 83,
+      "commits": 86,
       "firstCommit": "2026-02-06T00:40:11Z",
-      "lastCommit": "2026-08-31T06:29:04Z",
+      "lastCommit": "2026-09-05T14:58:17Z",
       "phase": "Phase 9"
     },
     {
@@ -8860,9 +8872,9 @@
       "name": "cbpulse",
       "description": "Campaign Brain Pulse - Real-time system health and activity monitoring dashboard",
       "language": "Python",
-      "commits": 904,
+      "commits": 906,
       "firstCommit": "2026-02-06T17:48:36Z",
-      "lastCommit": "2026-08-31T06:28:37Z",
+      "lastCommit": "2026-09-05T20:15:40Z",
       "phase": "Phase 9"
     },
     {
@@ -8887,18 +8899,18 @@
       "name": "cbsocial",
       "description": "API access layer for social media accounts",
       "language": "Python",
-      "commits": 63,
+      "commits": 68,
       "firstCommit": "2026-02-10T18:14:28Z",
-      "lastCommit": "2026-08-31T06:28:48Z",
+      "lastCommit": "2026-09-05T14:58:55Z",
       "phase": "Phase 9"
     },
     {
       "name": "cbmcp",
       "description": "MCP server \u2014 Campaign Brain service catalog for LLM agents",
       "language": "Python",
-      "commits": 176,
+      "commits": 183,
       "firstCommit": "2026-02-15T03:31:21Z",
-      "lastCommit": "2026-08-31T06:28:26Z",
+      "lastCommit": "2026-09-05T15:02:06Z",
       "phase": "Phase 10"
     },
     {
@@ -8914,9 +8926,9 @@
       "name": "cbexecutive",
       "description": "CB Executive Summaries",
       "language": "Unknown",
-      "commits": 198,
+      "commits": 200,
       "firstCommit": "2026-02-20T15:15:58Z",
-      "lastCommit": "2026-09-03T09:54:14Z",
+      "lastCommit": "2026-09-05T09:54:40Z",
       "phase": "Phase 10"
     },
     {
@@ -8941,9 +8953,9 @@
       "name": "cbpulse-ui",
       "description": "CBPulse UI \u2014 VIP business intelligence and system monitoring dashboard",
       "language": "TypeScript",
-      "commits": 85,
+      "commits": 90,
       "firstCommit": "2026-02-22T05:09:51Z",
-      "lastCommit": "2026-08-28T02:01:12Z",
+      "lastCommit": "2026-09-05T14:09:30Z",
       "phase": "Phase 10"
     },
     {
@@ -8959,27 +8971,27 @@
       "name": "cbradio-web",
       "description": "Campaign Brain website tools \u2013 site copier, refactoring, and creation",
       "language": "TypeScript",
-      "commits": 152,
+      "commits": 154,
       "firstCommit": "2026-02-23T03:34:14Z",
-      "lastCommit": "2026-09-03T20:33:45Z",
+      "lastCommit": "2026-09-04T16:31:45Z",
       "phase": "Phase 11"
     },
     {
       "name": "cbtemplates",
       "description": "Starter project templates for Campaign Brain services",
       "language": "TypeScript",
-      "commits": 194,
+      "commits": 195,
       "firstCommit": "2026-02-23T15:19:26Z",
-      "lastCommit": "2026-09-02T14:54:07Z",
+      "lastCommit": "2026-09-06T05:55:33Z",
       "phase": "Phase 11"
     },
     {
       "name": "cbcron",
       "description": "Configurable Scheduled Task Engine",
       "language": "Python",
-      "commits": 296,
+      "commits": 298,
       "firstCommit": "2026-02-26T16:28:21Z",
-      "lastCommit": "2026-09-03T11:45:16Z",
+      "lastCommit": "2026-09-05T11:45:43Z",
       "phase": "Phase 11"
     },
     {
@@ -9004,9 +9016,9 @@
       "name": "cbdc",
       "description": "Campaign Brain data center infrastructure \u2014 systemd units, SOPS scripts, health daemon, certbot hooks",
       "language": "Shell",
-      "commits": 589,
+      "commits": 593,
       "firstCommit": "2026-03-01T15:16:40Z",
-      "lastCommit": "2026-09-03T20:08:31Z",
+      "lastCommit": "2026-09-06T06:18:27Z",
       "phase": "Phase 12"
     },
     {
@@ -9049,9 +9061,9 @@
       "name": "infrastructure",
       "description": "Campaign Brain infrastructure monorepo \u2014 consolidates infra services as submodules",
       "language": "Python",
-      "commits": 1453,
+      "commits": 1485,
       "firstCommit": "2026-03-12T22:38:20Z",
-      "lastCommit": "2026-09-04T04:30:46Z",
+      "lastCommit": "2026-09-06T06:29:24Z",
       "phase": "Phase 12"
     },
     {
@@ -9067,9 +9079,9 @@
       "name": "cbea",
       "description": "Executive Assistant \u2014 AI-powered task management and scheduling for Campaign Brain",
       "language": "Python",
-      "commits": 192,
+      "commits": 196,
       "firstCommit": "2026-03-17T05:22:49Z",
-      "lastCommit": "2026-08-31T16:48:57Z",
+      "lastCommit": "2026-09-05T14:59:59Z",
       "phase": "Phase 13"
     },
     {
@@ -9094,18 +9106,18 @@
       "name": "cbesig",
       "description": "E-Signature Service (BoldSign integration)",
       "language": "Python",
-      "commits": 70,
+      "commits": 74,
       "firstCommit": "2026-03-26T03:50:55Z",
-      "lastCommit": "2026-08-31T06:28:01Z",
+      "lastCommit": "2026-09-05T15:10:53Z",
       "phase": "Phase 13"
     },
     {
       "name": "cbloom",
       "description": "Loom - Campaign Content & Narrative Engine",
       "language": "HTML",
-      "commits": 3247,
+      "commits": 3248,
       "firstCommit": "2026-03-27T14:52:52Z",
-      "lastCommit": "2026-08-31T18:50:07Z",
+      "lastCommit": "2026-09-05T21:34:34Z",
       "phase": "Phase 13"
     },
     {
@@ -9121,9 +9133,9 @@
       "name": "cbingest",
       "description": "Data Ingestion Pipeline Service",
       "language": "Python",
-      "commits": 67,
+      "commits": 68,
       "firstCommit": "2026-03-28T18:25:40Z",
-      "lastCommit": "2026-08-31T06:28:12Z",
+      "lastCommit": "2026-09-05T14:11:49Z",
       "phase": "Phase 13"
     },
     {
@@ -9193,18 +9205,18 @@
       "name": "cbvoice",
       "description": "Campaign Brain Voice Transport - iOS Shortcuts / Siri / CarPlay / future duplex audio. Port 32290 @ voice.campaignbrain.dev.",
       "language": "Python",
-      "commits": 30,
+      "commits": 32,
       "firstCommit": "2026-04-24T16:39:27Z",
-      "lastCommit": "2026-08-31T06:29:01Z",
+      "lastCommit": "2026-09-05T14:16:36Z",
       "phase": "Phase 15"
     },
     {
       "name": "cbonboard",
       "description": "Campaign Brain Onboarding - QR-driven progressive trust flow. Port 32291 @ onboard.campaignbrain.dev.",
       "language": "Python",
-      "commits": 109,
+      "commits": 111,
       "firstCommit": "2026-04-24T22:26:21Z",
-      "lastCommit": "2026-08-31T06:28:33Z",
+      "lastCommit": "2026-09-05T14:18:38Z",
       "phase": "Phase 15"
     },
     {
@@ -9229,9 +9241,9 @@
       "name": "cbgreenroom",
       "description": "CB Greenroom \u2014 pre-flight staging service. Port 32238 @ greenroom.campaignbrain.dev.",
       "language": "Python",
-      "commits": 69,
+      "commits": 73,
       "firstCommit": "2026-04-28T19:09:55Z",
-      "lastCommit": "2026-08-31T06:28:07Z",
+      "lastCommit": "2026-09-05T15:08:15Z",
       "phase": "Phase 15"
     },
     {
@@ -9418,9 +9430,9 @@
       "name": "cbsearch",
       "description": "",
       "language": "Python",
-      "commits": 90,
+      "commits": 91,
       "firstCommit": "2026-07-02T17:43:25Z",
-      "lastCommit": "2026-08-31T22:02:17Z",
+      "lastCommit": "2026-09-05T13:51:40Z",
       "phase": "Phase 18"
     },
     {
@@ -9535,9 +9547,9 @@
       "name": "cbelections",
       "description": "",
       "language": "Python",
-      "commits": 688,
+      "commits": 695,
       "firstCommit": "2026-07-20T18:07:13Z",
-      "lastCommit": "2026-09-04T03:19:28Z",
+      "lastCommit": "2026-09-05T15:22:46Z",
       "phase": "Phase 20"
     },
     {
@@ -9616,9 +9628,9 @@
       "name": "cbkrnl",
       "description": "A state kernel for agents, and a lint for graphs that go without one",
       "language": "Python",
-      "commits": 178,
+      "commits": 189,
       "firstCommit": "2026-08-06T21:49:29Z",
-      "lastCommit": "2026-09-02T19:43:03Z",
+      "lastCommit": "2026-09-05T14:11:50Z",
       "phase": "Phase 21"
     },
     {
@@ -9652,45 +9664,45 @@
       "name": "cbprospect",
       "description": "Prospect \u2014 harvest, score and present prospects for the sales group. First cbapex app.",
       "language": "TypeScript",
-      "commits": 299,
+      "commits": 307,
       "firstCommit": "2026-08-15T17:21:15Z",
-      "lastCommit": "2026-09-04T02:50:23Z",
+      "lastCommit": "2026-09-05T23:35:47Z",
       "phase": "Phase 22"
     },
     {
       "name": "cbpublic",
       "description": "Marketing website for Campaign Brain \u2014 the CRM that grass-roots campaigns actually use",
       "language": "TypeScript",
-      "commits": 184,
+      "commits": 192,
       "firstCommit": "2026-08-17T00:35:15Z",
-      "lastCommit": "2026-09-04T02:50:26Z",
+      "lastCommit": "2026-09-05T23:35:50Z",
       "phase": "Phase 22"
     },
     {
       "name": "cbnight",
       "description": "Election Night \u2014 the Loom elections bundle ported to cbapex: topline, race tracker, boss mode, kiosk.",
       "language": "TypeScript",
-      "commits": 242,
+      "commits": 250,
       "firstCommit": "2026-08-17T00:35:29Z",
-      "lastCommit": "2026-09-04T02:50:16Z",
+      "lastCommit": "2026-09-05T23:35:41Z",
       "phase": "Phase 22"
     },
     {
       "name": "cbapex",
       "description": "The cbapex app family container \u2014 cross-app charter and shared-layer ownership. The apps (cbprospect, cbnight, cbpublic) are their own repos.",
       "language": "TypeScript",
-      "commits": 414,
+      "commits": 429,
       "firstCommit": "2026-08-18T17:07:19Z",
-      "lastCommit": "2026-09-04T02:46:58Z",
+      "lastCommit": "2026-09-06T05:38:06Z",
       "phase": "Phase 22"
     },
     {
       "name": "cbradio2",
       "description": "Rural AM/FM rate + media-buying backend v2 \u2014 business logic layer (FastAPI, :32556). Becomes cbradio at cutover.",
       "language": "Python",
-      "commits": 148,
+      "commits": 152,
       "firstCommit": "2026-08-19T18:39:25Z",
-      "lastCommit": "2026-09-03T19:02:08Z",
+      "lastCommit": "2026-09-04T14:10:40Z",
       "phase": "Phase 22"
     },
     {
@@ -9706,36 +9718,36 @@
       "name": "cbrural",
       "description": "Rural AM.FM. on the Apex frame. Port 32295 @ rural.campaignbrain.dev.",
       "language": "TypeScript",
-      "commits": 414,
+      "commits": 451,
       "firstCommit": "2026-08-19T19:48:12Z",
-      "lastCommit": "2026-09-04T02:50:29Z",
+      "lastCommit": "2026-09-05T23:35:53Z",
       "phase": "Phase 23"
     },
     {
       "name": "cbconnector",
       "description": "",
       "language": "TypeScript",
-      "commits": 211,
+      "commits": 219,
       "firstCommit": "2026-08-20T12:55:03Z",
-      "lastCommit": "2026-09-04T02:50:11Z",
+      "lastCommit": "2026-09-05T23:35:35Z",
       "phase": "Phase 23"
     },
     {
       "name": "cbvmod",
       "description": "Victory Modeling \u2014 Campaign Brain Apex app (vmod.campaignbrain.dev)",
       "language": "TypeScript",
-      "commits": 176,
+      "commits": 184,
       "firstCommit": "2026-08-20T16:06:55Z",
-      "lastCommit": "2026-09-04T02:50:42Z",
+      "lastCommit": "2026-09-05T23:36:20Z",
       "phase": "Phase 23"
     },
     {
       "name": "cbpartners",
       "description": "Partners \u2014 the owners' view of Campaign Brain (partners.campaignbrain.dev)",
       "language": "TypeScript",
-      "commits": 133,
+      "commits": 141,
       "firstCommit": "2026-08-20T18:02:26Z",
-      "lastCommit": "2026-09-04T02:50:21Z",
+      "lastCommit": "2026-09-05T23:35:44Z",
       "phase": "Phase 23"
     },
     {
@@ -9760,36 +9772,36 @@
       "name": "cbadmin",
       "description": "HR and accounting for the house",
       "language": "TypeScript",
-      "commits": 114,
+      "commits": 122,
       "firstCommit": "2026-08-22T05:55:08Z",
-      "lastCommit": "2026-09-04T02:50:05Z",
+      "lastCommit": "2026-09-05T23:35:29Z",
       "phase": "Phase 24"
     },
     {
       "name": "cbbakery",
       "description": "Where the house starts and stops things",
       "language": "TypeScript",
-      "commits": 267,
+      "commits": 277,
       "firstCommit": "2026-08-22T05:55:08Z",
-      "lastCommit": "2026-09-04T02:50:08Z",
+      "lastCommit": "2026-09-05T23:35:32Z",
       "phase": "Phase 24"
     },
     {
       "name": "cbvipulse",
       "description": "VI Pulse \u2014 the client surface over cbpulse (cbapex app)",
       "language": "TypeScript",
-      "commits": 141,
+      "commits": 161,
       "firstCommit": "2026-08-24T22:34:04Z",
-      "lastCommit": "2026-09-04T03:18:58Z",
+      "lastCommit": "2026-09-05T23:36:16Z",
       "phase": "Phase 24"
     },
     {
       "name": "cbsvi",
       "description": "",
       "language": "TypeScript",
-      "commits": 167,
+      "commits": 177,
       "firstCommit": "2026-08-26T19:19:03Z",
-      "lastCommit": "2026-09-04T02:50:34Z",
+      "lastCommit": "2026-09-05T23:36:12Z",
       "phase": "Phase 24"
     },
     {
@@ -9814,18 +9826,18 @@
       "name": "cbconvoops",
       "description": "Commits: approvals: the queue refreshes itself \u2014 5s poll on a fingerprint, guarded three ways; docs: QA scenario for CJ + Dave \u2014 seven parts, the refusals and holds are passes, Dave's hallucination concerns made into explicit probes; auth: the engine sees the OPERATOR, not the fleet key \u2014 fixes the login loop; vendor kit \u2014 perms matrix truth-up: the convo card lives only in cbconvoops now; cbconvoops: born \u2014 Convo Ops, the cbconvo operator surface, promoted out of cbbakery",
       "language": "TypeScript",
-      "commits": 23,
+      "commits": 31,
       "firstCommit": "2026-09-01T16:54:06Z",
-      "lastCommit": "2026-09-04T02:50:14Z",
+      "lastCommit": "2026-09-05T23:35:38Z",
       "phase": "Phase 24"
     },
     {
       "name": "cbsitrep",
       "description": "",
       "language": "TypeScript",
-      "commits": 36,
+      "commits": 45,
       "firstCommit": "2026-09-03T12:12:45Z",
-      "lastCommit": "2026-09-04T02:50:32Z",
+      "lastCommit": "2026-09-05T23:35:56Z",
       "phase": "Phase 25"
     }
   ]

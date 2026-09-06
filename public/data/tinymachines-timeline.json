@@ -1,17 +1,17 @@
 {
-  "generated": "2026-09-05T09:01:50.991413+00:00",
+  "generated": "2026-09-06T09:08:52.463326+00:00",
   "org": "tinymachines",
-  "totalRepos": 69,
+  "totalRepos": 70,
   "firstCommit": "2016-02-27T16:07:26Z",
-  "latestCommit": "2026-09-04T03:43:48Z",
-  "totalCommits": 5832,
+  "latestCommit": "2026-09-06T07:49:57Z",
+  "totalCommits": 5908,
   "languages": {
     "Python": 26,
     "C": 7,
+    "Rust": 7,
     "HTML": 6,
     "TypeScript": 6,
     "Shell": 6,
-    "Rust": 6,
     "JavaScript": 2,
     "C++": 1,
     "Common Lisp": 1
@@ -6871,9 +6871,21 @@
     },
     {
       "date": "2026-09-04",
-      "commits": 7,
-      "repos": 3,
-      "intensity": 1
+      "commits": 22,
+      "repos": 7,
+      "intensity": 2
+    },
+    {
+      "date": "2026-09-05",
+      "commits": 38,
+      "repos": 7,
+      "intensity": 3
+    },
+    {
+      "date": "2026-09-06",
+      "commits": 23,
+      "repos": 7,
+      "intensity": 2
     }
   ],
   "phases": [
@@ -7033,15 +7045,16 @@
     {
       "name": "Phase 10",
       "startDate": "2026-08-17",
-      "endDate": "2026-09-03",
-      "description": "Development of halfphi, public, ntsc-crt and 3 more repos.",
+      "endDate": "2026-09-05",
+      "description": "Development of halfphi, public, ntsc-crt and 4 more repos.",
       "repos": [
         "halfphi",
         "public",
         "ntsc-crt",
         "2c02",
         "nes-bus",
-        "2a03"
+        "2a03",
+        "nes"
       ],
       "milestones": [],
       "category": "systems"
@@ -7556,9 +7569,9 @@
       "name": "geiger",
       "description": "Daily Reporting Engine",
       "language": "HTML",
-      "commits": 274,
+      "commits": 276,
       "firstCommit": "2026-05-04T03:01:06Z",
-      "lastCommit": "2026-09-04T03:01:39Z",
+      "lastCommit": "2026-09-06T03:00:50Z",
       "phase": "Phase 9"
     },
     {
@@ -7610,63 +7623,72 @@
       "name": "6502",
       "description": "Commits: Add 6502 Processor Expert Agent with RAG system",
       "language": "JavaScript",
-      "commits": 307,
+      "commits": 326,
       "firstCommit": "2026-08-12T16:38:57Z",
-      "lastCommit": "2026-09-03T20:39:10Z",
+      "lastCommit": "2026-09-06T05:01:33Z",
       "phase": "Phase 7"
     },
     {
       "name": "halfphi",
       "description": "Switch-level simulation and analysis of transistor-level chip netlists traced from die photographs",
       "language": "Rust",
-      "commits": 17,
+      "commits": 19,
       "firstCommit": "2026-08-17T03:33:36Z",
-      "lastCommit": "2026-09-03T15:44:12Z",
+      "lastCommit": "2026-09-04T17:23:16Z",
       "phase": "Phase 10"
     },
     {
       "name": "public",
       "description": "tinymachines.ai: the site, the API and the docs for the 6502 work",
       "language": "TypeScript",
-      "commits": 318,
+      "commits": 328,
       "firstCommit": "2026-08-22T15:44:09Z",
-      "lastCommit": "2026-09-03T19:55:32Z",
+      "lastCommit": "2026-09-06T07:49:57Z",
       "phase": "Phase 10"
     },
     {
       "name": "ntsc-crt",
       "description": "Signal-level NTSC encode, decode and CRT simulation in Rust: exact-rational grid, NES and SMPTE 170M sources, comb rungs, capture recovery. Companion to tinymachines/6502.",
       "language": "Rust",
-      "commits": 15,
+      "commits": 19,
       "firstCommit": "2026-09-02T01:11:55Z",
-      "lastCommit": "2026-09-03T02:15:20Z",
+      "lastCommit": "2026-09-06T07:26:04Z",
       "phase": "Phase 10"
     },
     {
       "name": "2c02",
       "description": "Switch-level Ricoh 2C02 (NES PPU) via halfphi: the netlist in, the behaviour out. Companion to tinymachines/6502 and tinymachines/ntsc-crt.",
       "language": "Rust",
-      "commits": 10,
+      "commits": 23,
       "firstCommit": "2026-09-02T19:15:40Z",
-      "lastCommit": "2026-09-04T03:43:48Z",
+      "lastCommit": "2026-09-06T07:07:56Z",
       "phase": "Phase 10"
     },
     {
       "name": "nes-bus",
       "description": "Commits: The ratified console sketch v0.2 gets its committed home; The N0 report: both dependents hold their goldens through the contract; Analog pins are Option: None means not sampled, and cannot be defaulted; N0: the console's contracts in one dependency-free crate",
       "language": "Rust",
-      "commits": 4,
+      "commits": 5,
       "firstCommit": "2026-09-02T21:40:26Z",
-      "lastCommit": "2026-09-02T22:03:15Z",
+      "lastCommit": "2026-09-05T16:30:07Z",
       "phase": "Phase 10"
     },
     {
       "name": "2a03",
       "description": "",
       "language": "Rust",
-      "commits": 6,
+      "commits": 21,
       "firstCommit": "2026-09-03T00:11:39Z",
-      "lastCommit": "2026-09-04T02:20:15Z",
+      "lastCommit": "2026-09-06T05:48:46Z",
+      "phase": "Phase 10"
+    },
+    {
+      "name": "nes",
+      "description": "The NES console: where the family's switch-level chips meet. The authored glue, the scheduler, the shell, and the end-to-end goldens.",
+      "language": "Rust",
+      "commits": 10,
+      "firstCommit": "2026-09-05T16:29:39Z",
+      "lastCommit": "2026-09-06T07:30:43Z",
       "phase": "Phase 10"
     }
   ]

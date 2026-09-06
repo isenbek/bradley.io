@@ -96,7 +96,9 @@ function geocode(query, cache) {
   } catch {
     /* geocode failures leave the prospect unmapped, never crash the harvest */
   }
-  cache[query] = hit
+  // Cache successes only: a transient failure cached forever poisons every
+  // future run (it silently unmapped Grand Rapids itself on day one).
+  if (hit) cache[query] = hit
   return hit
 }
 
@@ -686,6 +688,15 @@ function main() {
       }
       prospects[row.id] = row
       extracted++
+    }
+  }
+
+  // County backfill: curated/imported rows arrive with a city and no county;
+  // resolve through the same geocode cache so they reach the choropleth.
+  for (const p of Object.values(prospects)) {
+    if (!p.county && p.city) {
+      const geo = geocode(`${p.city}, Michigan`, geocache)
+      if (geo) p.county = countyFor(geo.lon, geo.lat)
     }
   }
 
