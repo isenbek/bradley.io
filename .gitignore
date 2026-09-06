@@ -72,6 +72,8 @@ Thumbs.db
 /playwright/.cache/
 
 # Claude activity analytics export (private — never commit)
+# House Calls private prospect data (PII firewall: only county rollups go public)
+data/housecalls/
 data/claude-activity.duckdb
 data/claude-activity.duckdb.wal
 data/claude-parquet/
