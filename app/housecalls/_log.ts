@@ -34,6 +34,11 @@ export const LOG: LogEntry[] = [
   {
     date: "2026-09-06",
     kind: "build",
+    note: "The sending domain is designed: mail will come from the hunt's own address, so the From line is one hover away from this page. The design retired one tool on privacy grounds (correspondence will not route through a third party when the letterhead promises it stays private), sets a five-a-day cap forever, bans tracking pixels, and specifies the suppression list that only grows. Waiting on two human inputs before any of it goes live.",
+  },
+  {
+    date: "2026-09-06",
+    kind: "build",
     note: "The stand-up checklist is written: seven phases from bare metal to a lit map, every trap the flagship hit marked in place, and the outbound gates listed as hard stops. Two boxes are honestly flagged as unfinished on the flagship itself, because a checklist that lies about the reference machine teaches operators to lie about theirs.",
   },
   {
