@@ -231,14 +231,30 @@ async function main() {
   writeJson(OUTBOX, outbox)
 
   if (!isTest && prospectId && prospects[prospectId]) {
-    prospects[prospectId].stage = "contacted"
-    prospects[prospectId].stage_since = new Date().toISOString().slice(0, 10)
-    prospects[prospectId].contacted_at = new Date().toISOString()
+    const p = prospects[prospectId]
+    p.stage = "contacted"
+    p.stage_since = new Date().toISOString().slice(0, 10)
+    p.contacted_at = new Date().toISOString()
     writeJson(PROSPECTS, prospects)
     console.log(`prospect ${prospectId} → contacted`)
+    // The ledger entry writes itself, anonymized to what the pins already
+    // publish (sector + county), never a name. Failure never unsends.
+    try {
+      const { appendEntry } = await import("./housecalls-ledger.mjs")
+      const counties = readJson(path.join(ROOT, "public", OP.territory.counties_file), { features: [] })
+      const countyName = counties.features.find((f) => f.properties.geoid === p.county)?.properties.name
+      const where = countyName ? `in ${countyName} county` : "in the territory"
+      appendEntry(
+        "outreach",
+        `A letter left the shop: one ${p.sector ?? "local"} company ${where}, signed by the human, every gate green. The clock on honesty starts now.`
+      )
+      console.log("ledger entry written, live now")
+    } catch (e) {
+      console.error(`ledger append failed (${e.message}); WRITE THE LEDGER ENTRY BY HAND TODAY`)
+    }
   }
   console.log(`SENT ${info.messageId ?? ""}`)
-  console.error("Now: run the harvest to refresh the map, and write the ledger entry TODAY.")
+  console.error("Now: run the harvest to refresh the map.")
 }
 
 main()

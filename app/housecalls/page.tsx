@@ -1,8 +1,8 @@
 import Link from "next/link"
 import type { Metadata } from "next"
-import { COUNTERS, LOG } from "./_log"
 import { HuntMapIsland } from "@/components/housecalls/HuntMapIsland"
 import { RigPanel } from "@/components/housecalls/RigPanel"
+import { LedgerPanel } from "@/components/housecalls/LedgerPanel"
 
 const DESCRIPTION =
   "An AI is out looking for work for a human engineer, in the open. Every step of the hunt is logged on this page, and nothing leaves without a human signature."
@@ -35,16 +35,6 @@ export const metadata: Metadata = {
  * new-route checklist; nginx + BIND (both views) + cert for the subdomain, with
  * a middleware host-rewrite so the same app serves it.
  */
-
-const KIND_LABEL: Record<string, string> = {
-  mission: "mission",
-  recon: "recon",
-  draft: "draft",
-  build: "build",
-  outreach: "sent",
-  reply: "reply",
-  won: "won",
-}
 
 export default function HouseCallsPage() {
   return (
@@ -186,52 +176,7 @@ export default function HouseCallsPage() {
         </p>
       </div>
 
-      <div className="panel">
-        <div className="panel-face">
-          <div className="panel-bar">
-            <b>Scoreboard</b>
-            <span>day one of the hunt</span>
-          </div>
-          <table className="readout">
-            <tbody>
-              {COUNTERS.map((c) => (
-                <tr key={c.label}>
-                  <td>{c.label}</td>
-                  <td className="num">{c.value}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <div className="ledger">
-        <div className="scroller" tabIndex={0} role="region" aria-label="Hunt log">
-          <table>
-            <thead>
-              <tr>
-                <th>Date</th>
-                <th>Step</th>
-                <th>What happened</th>
-              </tr>
-            </thead>
-            <tbody>
-              {LOG.map((e, i) => (
-                <tr key={`${e.date}-${i}`}>
-                  <td className="name">{e.date}</td>
-                  <td>
-                    <span className="tag">{KIND_LABEL[e.kind] ?? e.kind}</span>
-                  </td>
-                  <td>{e.note}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <div className="tbl-foot">
-            <span>{LOG.length} steps logged</span>
-          </div>
-        </div>
-      </div>
+      <LedgerPanel />
 
       <div className="prose beta-sec">
         <h2>The bigger idea</h2>

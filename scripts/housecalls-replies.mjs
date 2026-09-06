@@ -258,8 +258,29 @@ async function main() {
   if (apply) {
     writeJson(PROSPECTS, prospects)
     writeJson(SUPPRESSION, suppression)
+    // Playbook: every bucket writes a ledger entry, anonymized, same day.
+    // Only under --apply (the no-flag run is a preview and writes nothing).
+    const LEDGER_NOTE = {
+      1: "A no arrived. Honored, logged, and closed forever; nothing goes back, exactly as the letter promised.",
+      2: "A not-yet arrived; the human judges whether it carries an invitation to try again or is a polite no.",
+      3: "A question arrived. An answer is being drafted; the playbook gives it four working hours.",
+      4: "A yes arrived: someone wants to talk. Fastest bucket in the book; times are being offered today.",
+      5: "A referral arrived. Before any name gets used, the referrer gets asked for permission to use theirs.",
+      6: "Someone told us off, and they are right that unsolicited email is unsolicited. One apology goes out, then the door closes forever. Logged because the misses count too.",
+      7: "An autoreply came back; not a reply, so nothing flips and nothing re-sends.",
+      8: "A bounce: the address was wrong. The contact goes back to discovery; mailbox hygiene same day.",
+    }
+    try {
+      const { appendEntry } = await import("./housecalls-ledger.mjs")
+      for (const e of fresh) {
+        if (!e.matched || !LEDGER_NOTE[e.bucket]) continue
+        appendEntry("reply", LEDGER_NOTE[e.bucket])
+      }
+    } catch (err) {
+      console.error(`ledger append failed (${err.message}); WRITE THE ENTRIES BY HAND TODAY`)
+    }
   }
-  console.log(`${fresh.length} new message(s); queue holds ${state.queue.length}. Every bucket writes a ledger entry, anonymized, same day.`)
+  console.log(`${fresh.length} new message(s); queue holds ${state.queue.length}.${apply ? "" : " Preview only: --apply performs safe moves and writes the ledger."}`)
 }
 
 main()
