@@ -2,7 +2,7 @@
 # Vendor Michigan county boundaries from the US Census Bureau into public/data/.
 #
 # Source: Census cartographic boundary files (public domain), 1:500k resolution.
-# Output: public/data/mi-counties.json — GeoJSON, 83 MI counties, properties
+# Output: public/data/mi-counties.json: GeoJSON, 83 MI counties, properties
 # {geoid, name}, coordinates rounded to 5 decimals (~1m precision, plenty for a
 # county choropleth). Re-run this script to refresh; nothing at runtime ever
 # fetches from census.gov (anti-cloud: the vendored file IS the dependency).
