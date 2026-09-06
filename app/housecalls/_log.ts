@@ -34,6 +34,11 @@ export const LOG: LogEntry[] = [
   {
     date: "2026-09-06",
     kind: "build",
+    note: "The stand-up checklist is written: seven phases from bare metal to a lit map, every trap the flagship hit marked in place, and the outbound gates listed as hard stops. Two boxes are honestly flagged as unfinished on the flagship itself, because a checklist that lies about the reference machine teaches operators to lie about theirs.",
+  },
+  {
+    date: "2026-09-06",
+    kind: "build",
     note: "The network page is up, and it opens with its own headcount: population one. House Calls is a method, methods replicate, and the map of who runs the machine where now exists in public, one honest row long, with the sequence spelled out: the flagship wins first, then a hand-picked pilot, then anything bigger.",
   },
   {
