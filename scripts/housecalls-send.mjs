@@ -74,7 +74,7 @@ export function letterProblems(body) {
   const problems = []
   const slots = body.match(/\{[A-Z_]+\}/g)
   if (slots) problems.push(`unfilled slots: ${[...new Set(slots)].join(" ")}`)
-  if (body.includes("—")) problems.push("em dash in shipped text")
+  if (body.includes("\u2014")) problems.push("em dash in shipped text")
   if (/<[a-z][\s\S]*>/i.test(body) && /<\/(p|div|a|html|body)>/i.test(body)) problems.push("looks like HTML; letters are plain text")
   if (!body.trim()) problems.push("empty body")
   return problems
@@ -123,7 +123,7 @@ function selftest() {
     ["clean address passes suppression", suppressionHit("ok@fine.com", sup) === null],
     ["one-email-ever refuses a second", priorSend("ONCE@corp.com", outbox) !== null],
     ["unfilled slot refuses", letterProblems("Dear {FIRST_NAME}, hi").length === 1],
-    ["em dash refuses", letterProblems("well — no").length === 1],
+    ["em dash refuses", letterProblems("well \u2014 no").length === 1],
     ["clean plain text passes", letterProblems("A fine letter.\nSigned.").length === 0],
     ["footer carries address + binding no + hunt host",
       footer.includes("123 Main St") && footer.includes("binding") && footer.includes(OP.operator.hunt_host)],
