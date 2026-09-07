@@ -78,7 +78,7 @@ async function build(step: (msg: string) => void): Promise<Harness> {
   await engine.default("/harness/hc_engine_bg.wasm")
 
   step("Loading the database (about an 8MB download, once; it stays on your device)")
-  const duckdb = await importUrl("/harness/duckdb/duckdb-browser.mjs")
+  const duckdb = await importUrl("/harness/duckdb/duckdb-bundled.mjs")
   const worker = new Worker("/harness/duckdb/duckdb-browser-eh.worker.js")
   const logger = new duckdb.ConsoleLogger(duckdb.LogLevel.WARNING)
   const db = new duckdb.AsyncDuckDB(logger, worker)
