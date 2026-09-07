@@ -87,7 +87,7 @@ async function build(step: (msg: string) => void): Promise<Harness> {
   step("Opening your local store")
   const saved = await idbGet(DB_FILE).catch(() => null)
   if (saved) await db.registerFileBuffer(DB_FILE, saved)
-  await db.open({ path: DB_FILE })
+  await db.open({ path: DB_FILE, accessMode: duckdb.DuckDBAccessMode.READ_WRITE })
   let conn = await db.connect()
 
   const exec = async (rawSql: string) => {
@@ -128,7 +128,7 @@ async function build(step: (msg: string) => void): Promise<Harness> {
   const restoreFromBytes = async (bytes: Uint8Array) => {
     await conn.close()
     await db.registerFileBuffer(DB_FILE, bytes)
-    await db.open({ path: DB_FILE })
+    await db.open({ path: DB_FILE, accessMode: duckdb.DuckDBAccessMode.READ_WRITE })
     conn = await db.connect()
     await idbSet(DB_FILE, bytes)
   }
