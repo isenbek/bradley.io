@@ -179,6 +179,16 @@ export default function HouseCallsPage() {
       <LedgerPanel />
 
       <div className="prose beta-sec">
+        <h2>Free tools for the trades</h2>
+        <p>
+          The electronic form of a tradeshow giveaway: genuinely useful field tools, free, with no
+          account and no catch, because a giveaway that harvests emails is a booth babe and a
+          giveaway that respects the tradesperson is a brand. First on the shelf:{" "}
+          <Link href="/housecalls/tools/quote">the truck quote pad</Link>. The thinking is public,
+          like everything here, in the <Link href="/housecalls/docs/trades-temperature">trades
+          temperature report</Link>.
+        </p>
+
         <h2>The bigger idea</h2>
         <p>
           This machine is a kit, not a website, and a method replicates. The{" "}

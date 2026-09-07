@@ -1786,3 +1786,70 @@ body:has(.beta-root) {
   padding: calc(var(--u) * 2) calc(var(--u) * 2.5);
 }
 .beta-hc-map-wrap .maplibregl-popup-tip { border-top-color: var(--color-rule-panel); border-bottom-color: var(--color-rule-panel); }
+
+/* ---- the truck quote pad (components/housecalls/QuotePad.tsx) ----------
+   A field tool: big touch targets (44px floor, gloves exist), inputs on
+   panel ground, and a print sheet that is the ONLY thing a printer sees.
+   The sheet prints in plain black-on-white on purpose: it comes out of the
+   customer's hands, not ours, and toner is money. */
+.beta-qp { display: grid; gap: calc(var(--u) * 3); }
+.beta-qp .panel + .panel { margin-top: 0; }
+.beta-qp-grid {
+  display: grid; gap: calc(var(--u) * 2);
+  grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
+  padding: calc(var(--u) * 2) 0;
+}
+.beta-qp-field { display: grid; gap: calc(var(--u) * 0.75); }
+.beta-qp-field--wide { grid-column: 1 / -1; }
+.beta-qp-field span {
+  font-family: var(--font-mono); font-size: var(--text-micro);
+  color: var(--color-glass-muted);
+}
+.beta-qp input {
+  min-height: 44px; padding: calc(var(--u) * 1.25) calc(var(--u) * 1.5);
+  background: var(--color-panel-sunk); color: var(--color-glass);
+  border: 1px solid var(--color-rule-panel); border-radius: var(--radius-mod);
+  font: inherit; font-size: var(--text-body); width: 100%;
+}
+.beta-qp input:focus-visible { outline: 2px solid var(--color-ocean); outline-offset: 1px; }
+.beta-qp-shopline { color: var(--color-glass-muted); padding: calc(var(--u) * 1.5) 0 0; }
+.beta-qp-items { display: grid; gap: calc(var(--u) * 1.5); padding: calc(var(--u) * 2) 0; }
+.beta-qp-item {
+  display: grid; gap: calc(var(--u) * 1);
+  grid-template-columns: minmax(0, 1fr) minmax(56px, 12%) minmax(84px, 18%) minmax(72px, auto) 44px;
+  align-items: center;
+}
+.beta-qp-item__ext { font-family: var(--font-mono); text-align: right; white-space: nowrap; }
+.beta-qp-item__x {
+  min-height: 44px; min-width: 44px; border-radius: var(--radius-mod);
+  background: none; border: 1px solid var(--color-rule-panel);
+  color: var(--color-glass-muted); font-size: var(--text-body); cursor: pointer;
+}
+.beta-qp-actions { margin-top: calc(var(--u) * 2); }
+@media (max-width: 480px) {
+  .beta-qp-item { grid-template-columns: minmax(0, 1fr) 60px 44px; }
+  .beta-qp-item__desc { grid-column: 1 / -1; }
+  .beta-qp-item__ext { grid-column: 1; text-align: left; }
+}
+
+/* The printable sheet: hidden on screen, the only visible thing in print. */
+.beta-qp-sheet { display: none; }
+@media print {
+  body * { visibility: hidden; }
+  .beta-qp-sheet, .beta-qp-sheet * { visibility: visible; }
+  .beta-qp-sheet {
+    display: block; position: absolute; inset: 0; padding: 0.5in;
+    background: #fff; color: #000; font-family: Georgia, "Times New Roman", serif;
+  }
+  .beta-qp-sheet__head { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 2px solid #000; padding-bottom: 8px; }
+  .beta-qp-sheet__head h1 { font-size: 20pt; margin: 0; }
+  .beta-qp-sheet__head p { text-align: right; font-size: 9pt; margin: 0; }
+  .beta-qp-sheet__meta { margin: 12pt 0; font-size: 10pt; }
+  .beta-qp-sheet__meta td:first-child { font-weight: bold; padding-right: 12pt; vertical-align: top; }
+  .beta-qp-sheet__items { width: 100%; border-collapse: collapse; font-size: 10pt; }
+  .beta-qp-sheet__items th, .beta-qp-sheet__items td { border-bottom: 1px solid #999; text-align: left; padding: 4pt 6pt; }
+  .beta-qp-sheet__items td:nth-child(n+2), .beta-qp-sheet__items th:nth-child(n+2) { text-align: right; }
+  .beta-qp-sheet__total td { font-weight: bold; border-top: 2px solid #000; }
+  .beta-qp-sheet__foot { margin-top: 14pt; font-size: 9pt; }
+  .beta-qp-sheet__sig { margin-top: 28pt; }
+}
