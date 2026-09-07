@@ -63,6 +63,10 @@ const nextConfig = {
   },
   async redirects() {
     return [
+      // The counter cards print "housecalls.bradley.io/tools"; short on
+      // purpose, a QR and a thumb both prefer it.
+      { source: '/tools', destination: '/housecalls/tools', permanent: false },
+
       // v3 was the preview prefix; after the swap the canonical URL is the
       // bare path. Permanent redirects preserve any bookmarks / shared links.
       { source: '/v3', destination: '/', permanent: true },
