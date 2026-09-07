@@ -4,7 +4,9 @@
  * hands a customer must never say $0.30000000000000004; cents-internal
  * math is the guarantee and these are its proof.
  *
- * quote-math.ts is TypeScript; node 24 strips types natively.
+ * Run with BUN (the house runtime): it resolves the extensionless TS
+ * imports these modules use for Next. node --experimental-strip-types
+ * cannot (ERR_MODULE_NOT_FOUND on ./quote-math).
  */
 import { toCents, parseQty, money, lineTotal, quoteTotal, depositCents, validUntil, quoteAsText } from "../components/housecalls/quote-math.ts"
 
@@ -42,6 +44,28 @@ cases.push(
 let ok = true
 for (const [name, pass] of cases) {
   console.log(`${pass ? "PASS" : "FAIL"} quote: ${name}`)
+  ok &&= pass
+}
+// ---- change-order pad (co-math.ts) ----
+const { signedCents, signedMoney, coNumber, changeAsText } = await import("../components/housecalls/co-math.ts")
+const co = {
+  co_number: "CO-20260906-01", customer: "Pat", address: "123 Main St", job_ref: "Q-114",
+  description: "Knob-and-tube found behind kitchen wall; replace run to panel",
+  reason: "Opened wall for the new circuit", amount: "450", mode: "add", days: "1",
+  signed_name: "Pat Customer", signed_date: "2026-09-06",
+}
+const coText = changeAsText({ name: "Sparks & Co", phone: "616-555-0100", email: "", license: "E-12345", city: "", insured: "", terms: "" }, co)
+const coCases = [
+  ["add is positive cents", signedCents("450", "add") === 45000],
+  ["deduct is negative cents", signedCents("450", "deduct") === -45000],
+  ["signed money reads like the trade says it", signedMoney(45000) === "$450.00 add" && signedMoney(-45000) === "($450.00) deduct"],
+  ["co number is speakable", coNumber(new Date("2026-09-06T15:00:00Z"), 3) === "CO-20260906-03"],
+  ["text carries the binding line", coText.includes("part of the original agreement when signed")],
+  ["text carries price, schedule, approval", coText.includes("Price change: $450.00 add") && coText.includes("+1 day") && coText.includes("Approved by Pat Customer on 2026-09-06")],
+  ["text has no em dash", !coText.includes("\u2014")],
+]
+for (const [name, pass] of coCases) {
+  console.log(`${pass ? "PASS" : "FAIL"} co: ${name}`)
   ok &&= pass
 }
 process.exit(ok ? 0 : 1)
