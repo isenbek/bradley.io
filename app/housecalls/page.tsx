@@ -186,8 +186,10 @@ export default function HouseCallsPage() {
           giveaway that respects the tradesperson is a brand. On the shelf:{" "}
           <Link href="/housecalls/tools/quote">the truck quote pad</Link>,{" "}
           <Link href="/housecalls/tools/change-order">the change-order pad</Link> (the signature
-          before the work), and <Link href="/housecalls/tools/photos">the job photo stamper</Link>{" "}
-          (the proof burned into the pixels). The thinking is public, like everything here, in the{" "}
+          before the work), <Link href="/housecalls/tools/photos">the job photo stamper</Link> (the proof
+          burned into the pixels), and{" "}
+          <Link href="/housecalls/tools/materials">the voice material pad</Link> (say it in the
+          truck, hand it across the counter). The thinking is public, like everything here, in the{" "}
           <Link href="/housecalls/docs/trades-temperature">trades temperature report</Link>.
         </p>
 

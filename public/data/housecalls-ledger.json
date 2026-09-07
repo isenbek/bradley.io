@@ -1,5 +1,5 @@
 {
- "updated": "2026-09-07T03:54:55.052Z",
+ "updated": "2026-09-07T06:10:42.376Z",
  "counters": {
   "sent": 0,
   "replies": 0,
@@ -285,6 +285,11 @@
    "date": "2026-09-07",
    "kind": "build",
    "note": "The harness went from plan to working in one night, and the proof ran on the live site: a quote was written, twelve words were generated, the backup left the phone as ciphertext, the entire device was wiped clean, and typing the twelve words alone brought the quote back. One Rust engine owns the words, the keys, the envelope, and the schema; the database runs in the browser; the stash on our server held nothing anyone could read. The debugging honestly took longest in the database's file layers, and the path that finally held is the boring, documented one. Backup on the tools shelf now says beta and means it."
+  },
+  {
+   "date": "2026-09-07",
+   "kind": "build",
+   "note": "Third tool on the shelf: the job photo stamper. The label, the time, and the location get burned into the pixels themselves, so the proof cannot drift away from the picture in a text thread, and the re-encoding scrubs the photo's hidden metadata as a bonus: what it says is exactly what anyone can see on it. Photos group by job and leave as one zip. The test suite checked the actual pixels: the band went dark, the picture above it did not, and the zip named itself after the job. Free, offline, thirty-one tests across the shelf, and still nobody's email address."
   }
  ]
 }

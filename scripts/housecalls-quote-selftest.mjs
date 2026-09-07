@@ -86,4 +86,27 @@ for (const [name, pass] of psCases) {
   ok &&= pass
 }
 
+// ---- material pad parser (material-parse.ts) ----
+const { parseChunk, parseTranscript, itemLine, listAsText } = await import("../components/housecalls/material-parse.ts")
+const spoken = "uh I need three boxes of romex twelve two and um twenty feet of half inch EMT and a roll of electrical tape then two GFCI outlets"
+const items = parseTranscript(spoken)
+const lines = items.map(itemLine)
+const mpCases = [
+  ["four items out of one ramble", items.length === 4],
+  ["boxes of romex with wire pair joined", lines[0] === "3 box romex 12-2"],
+  ["feet + fraction-inch size formatted", lines[1] === "20 ft 1/2\" EMT"],
+  ["a roll means qty 1 roll", lines[2] === "1 roll electrical tape"],
+  ["acronyms come back uppercase", lines[3] === "2x GFCI outlets"],
+  ["three quarters becomes 3/4 inch mark", itemLine(parseChunk("ten sticks of three quarter inch PVC")) === "10 stick 3/4\" PVC"],
+  ["tens plus units compose", parseChunk("twenty five wire nuts").qty === 25],
+  ["a dozen is twelve", parseChunk("a dozen wedge anchors").qty === 12],
+  ["plain typed lines parse too", itemLine(parseChunk("4 sheets 5/8 drywall")) === "4 sheet 5/8 drywall"],
+  ["noise parses to nothing", parseTranscript("um uh okay so like").length === 0],
+  ["list text carries the job and the credit line", (() => { const t = listAsText("Smith job", items); return t.startsWith("MATERIAL LIST · Smith job") && t.includes("housecalls.bradley.io") })()],
+]
+for (const [name, pass] of mpCases) {
+  console.log(`${pass ? "PASS" : "FAIL"} materials: ${name}`)
+  ok &&= pass
+}
+
 process.exit(ok ? 0 : 1)
