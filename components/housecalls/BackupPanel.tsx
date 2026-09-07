@@ -161,7 +161,7 @@ export function BackupPanel() {
                   {quotes.slice(0, 8).map((q, i) => (
                     <tr key={i}>
                       <td>{String(q.created_at).slice(0, 10)} · {String(q.customer || "(no name)")}</td>
-                      <td className="num">${(Number(q.total_cents) / 100).toFixed(2)}</td>
+                      <td className="num">{(Number(q.total_cents) / 100).toLocaleString("en-US", { style: "currency", currency: "USD" })}</td>
                     </tr>
                   ))}
                 </tbody>

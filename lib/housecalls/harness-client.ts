@@ -260,7 +260,7 @@ export async function stashPut(h: Harness, vault: any): Promise<{ version: numbe
     const j = await res.json()
     throw new Error(`A newer backup exists (version ${j.stored_version}). Restore first, then back up.`)
   }
-  if (!res.ok) throw new Error(`backup failed: ${(await res.json()).error ?? res.status}`)
+  if (!res.ok) throw new Error(`backup failed: ${(await res.json().catch(() => ({}))).error ?? res.status}`)
   localStorage.setItem("hc-stash-version", String(localVersion))
   return { version: localVersion }
 }
