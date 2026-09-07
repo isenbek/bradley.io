@@ -183,7 +183,10 @@ export default function HouseCallsPage() {
         <p>
           The electronic form of a tradeshow giveaway: genuinely useful field tools, free, with no
           account and no catch, because a giveaway that harvests emails is a booth babe and a
-          giveaway that respects the tradesperson is a brand. On the shelf:{" "}
+          giveaway that respects the tradesperson is a brand. One more line, learned from the
+          boards and now doctrine: these tools work for the person holding the phone and report to
+          no one, which is not a privacy nicety but the difference between a tool and a
+          supervisor. On the shelf:{" "}
           <Link href="/housecalls/tools/quote">the truck quote pad</Link>,{" "}
           <Link href="/housecalls/tools/change-order">the change-order pad</Link> (the signature
           before the work), <Link href="/housecalls/tools/photos">the job photo stamper</Link> (the proof
