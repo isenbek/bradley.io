@@ -113,6 +113,8 @@ const KIT_EXTRA = [
   "/housecalls/tools/change-order",
   "/housecalls/tools/photos",
   "/housecalls/tools/materials",
+  "/housecalls/tools",
+  "/housecalls/tools/cards",
 ] as const
 
 export const KIT_ROUTES: ReadonlySet<string> = new Set([
