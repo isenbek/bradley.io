@@ -1,6 +1,7 @@
 import Link from "next/link"
 import type { Metadata } from "next"
 import { ChangeOrderPad } from "@/components/housecalls/ChangeOrderPad"
+import { BackupPanel } from "@/components/housecalls/BackupPanel"
 
 const DESCRIPTION =
   "A free change-order pad for trade workers: describe the change, snap a photo, get it signed on the spot, print or text it. No account, no signup, nothing leaves your phone."
@@ -68,6 +69,8 @@ export default function ChangeOrderPage() {
         </p>
 
         <ChangeOrderPad />
+
+        <BackupPanel />
 
         <div className="prose beta-sec">
           <h2>The fine print, still short</h2>

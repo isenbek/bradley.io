@@ -1,6 +1,7 @@
 import Link from "next/link"
 import type { Metadata } from "next"
 import { QuotePad } from "@/components/housecalls/QuotePad"
+import { BackupPanel } from "@/components/housecalls/BackupPanel"
 
 const DESCRIPTION =
   "A free quote pad for trade workers: line items in, a professional quote out, printable or textable from the truck. No account, no signup, and nothing leaves your phone."
@@ -68,6 +69,8 @@ export default function QuotePadPage() {
         </p>
 
         <QuotePad />
+
+        <BackupPanel />
 
         <div className="prose beta-sec">
           <h2>The fine print, which is short</h2>

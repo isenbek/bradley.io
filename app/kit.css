@@ -1883,3 +1883,17 @@ body:has(.beta-root) {
   .beta-qp-sheet__sigrow { display: flex; align-items: flex-end; gap: 18pt; margin-top: 20pt; }
   .beta-qp-sheet__sigrow img { max-height: 0.9in; border-bottom: 1px solid #000; }
 }
+
+/* ---- backup panel (BackupPanel.tsx) ---- */
+.beta-co-words {
+  font-family: var(--font-mono); font-size: var(--text-body); line-height: 2;
+  border: 1px dashed var(--color-rule-panel); border-radius: var(--radius-mod);
+  padding: calc(var(--u) * 2); background: var(--color-panel-sunk);
+  user-select: all;
+}
+.beta-co-restore { display: flex; gap: calc(var(--u) * 1.5); }
+.beta-co-restore input {
+  flex: 1; min-height: 44px; padding: calc(var(--u) * 1.25) calc(var(--u) * 1.5);
+  background: var(--color-panel-sunk); color: var(--color-glass);
+  border: 1px solid var(--color-rule-panel); border-radius: var(--radius-mod); font: inherit;
+}
