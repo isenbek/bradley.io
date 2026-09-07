@@ -1,7 +1,7 @@
 ---
 title: "Trades temperature report v1"
 project: housecalls
-status: RESEARCH v1 (2026-09-06 dig); app shortlist awaits Brad's pick
+status: RESEARCH v2 (digs 2026-09-06 + 2026-09-07, verbatim voices added)
 created: 2026-09-06
 ---
 
@@ -115,6 +115,61 @@ account (the differentiator is that there is none).
    online community, loudest shortage spotlight).
 3. The name on the tin: House Calls branding makes it a network asset per
    the franchise sketch.
+
+## The voices (dig two, 2026-09-07: the boards verbatim)
+
+Read with a real browser across r/electricians, r/HVAC, r/Plumbing, and
+r/Construction (top of the month plus targeted thread dives). What the
+first dig inferred, the second heard said out loud.
+
+**The villain has a name, and it is not AI; it is AI pointed AT them.**
+The incumbent field-service platform is rolling out AI that records
+technicians' customer conversations, scores them, and schedules "film
+review" of their own calls. The trade's verdict, verbatim and upvoted:
+"Ivy League grads and MBAs making products for the trades is the biggest
+problem here." "It's literally a product designed by your least favorite
+customer." "I would actually quit on the spot." "Coach you to sell...
+time to put away the gauges and get a job at a car dealership."
+"ServiceTitan is the product. To your boss." A robot patrol dog on a
+jobsite drew the same fury: "the wealthy want to keep tabs on the labor,"
+and a crew that "almost walked off the job for being asked to use their
+phones for risk assessment."
+
+**Implication, now doctrine for the shelf:** the meaningful line is not
+free versus paid; it is FOR the person holding the phone versus REPORTING
+ON them. Our tools never phone home, and that is not a privacy nicety, it
+is the difference between a tool and a supervisor. Say it plainly
+wherever the tools are described.
+
+**The quote pad's market, in their words.** Solo plumbers asked exactly
+our question ("Solo guys, how are you sending quotes to customers?") and
+the honest answers were Word templates, free invoice apps, and this
+warning about the incumbents: "jobber and housecall pro are overkill for
+what you described and you'll resent paying." Churn threads ("Good Bye
+Service Titan": invoices losing line items, "everyone is sick and tired
+of it") confirm the money mood from dig one at street level.
+
+**Distribution, settled by what we saw.** Those same ask-for-an-app
+threads are visibly polluted with astroturf: founders posting as casual
+users, "I know the owners," a comment already removed by moderators. A
+House Calls self-post would read as more of the same and deserve the
+same. So the shelf does not market itself on the boards, period: supply
+house counter cards, word of mouth, and the open-hunt page carry it, and
+if it ever appears on a board it is a real person recommending it
+unprompted, which pollution makes MORE valuable, not less.
+
+**Kinship worth knowing.** The trades police their own upsellers: in a
+thread about a 50-year-old water heater, a self-described sales-shop
+plumber wrote "keep this unit until it no longer works. New will just
+create issues sooner for the only sake of having new." That is the
+legacy-rescue letter's ethic in their voice, and it extends to hardware:
+HVAC techs raging at a manufacturer offering buyback credits instead of
+stocking parts for six-year-old units. Repair-over-replace is a shared
+value, not a pitch we are importing.
+
+**Candidate noted, not promised:** parts-wait misery (three-month parts,
+techs driving nine hours) came up unprompted; a parts-chase tracker may
+be a future shelf tool if a giveaway-shaped version exists.
 
 ## Sources
 
