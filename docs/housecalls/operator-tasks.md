@@ -57,6 +57,13 @@ five-minute decision instead of an hour of archaeology.
 
 ## Small but real
 
+- [ ] **One coffee at the MiBusiness Registry** (Michigan's entity
+      database; it is LARA, not the SOS): five lookups that fill the
+      named-contact gap for JR Automation, Behler-Young, and Feyen
+      Zylstra, plus legal-name checks before the first letters. The
+      errand list and why it is human-only:
+      → [mi-business-registry.md](mi-business-registry.md)
+
 - [ ] **Rubric review**: any industries we never pitch, any names to add
       to the conflicts list (they live in
       `lib/housecalls/operator.json`).
