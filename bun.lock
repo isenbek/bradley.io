@@ -18,7 +18,7 @@
       },
       "devDependencies": {
         "@axe-core/playwright": "^4.11.3",
-        "@duckdb/duckdb-wasm": "^1.33.1-dev57.0",
+        "@duckdb/duckdb-wasm": "1.29.0",
         "@eslint/js": "^9.39.2",
         "@playwright/test": "^1.60.0",
         "@types/node": "^25.2.1",
@@ -79,7 +79,7 @@
 
     "@babel/types": ["@babel/types@7.29.7", "", { "dependencies": { "@babel/helper-string-parser": "^7.29.7", "@babel/helper-validator-identifier": "^7.29.7" } }, "sha512-4zBIxpPzowiZpusoFkyGVwakdRJUyuH5PxQ/PrqghfdFWWasvnCdPfQXHrenDai+gyLARulZjZowCOj6fjT4pA=="],
 
-    "@duckdb/duckdb-wasm": ["@duckdb/duckdb-wasm@1.33.1-dev57.0", "", { "dependencies": { "apache-arrow": "^17.0.0", "qs": "^6.14.1" } }, "sha512-ndn5l2EHq1PEMvCg8G6lRV0vjhSUcbqdM/niNBTTqH4/PyyUUVKbge0uUyCnj27b9SF/CiqBwDsgKLTqBvaxdw=="],
+    "@duckdb/duckdb-wasm": ["@duckdb/duckdb-wasm@1.29.0", "", { "dependencies": { "apache-arrow": "^17.0.0" } }, "sha512-8Zq7vafQuIz9gklC/9375KE38UlkaS2n8+yvG+/JK7irm3DjwYNJHL4xfplIj0bSHFIg6we5XhWYFqtE/vO3+Q=="],
 
     "@emnapi/runtime": ["@emnapi/runtime@1.11.0", "", { "dependencies": { "tslib": "^2.4.0" } }, "sha512-55coeOFKHv1ywEcUXJtWU5f+Jr/W5tZDvZig8DLKSwUN1JpROQ4rk/SNOQiFWmaR/VKF4zuFyW1B8JduOSv6Pg=="],
 
@@ -1002,8 +1002,6 @@
     "punycode.js": ["punycode.js@2.3.1", "", {}, "sha512-uxFIHU0YlHYhDQtV4R9J6a52SLx28BCjT+4ieh7IGbgwVJWO+km431c4yRlREUAsAmt/uMjQUyQHNEPf0M39CA=="],
 
     "puppeteer-core": ["puppeteer-core@25.1.0", "", { "dependencies": { "@puppeteer/browsers": "3.0.4", "chromium-bidi": "16.0.1", "devtools-protocol": "0.0.1624250", "typed-query-selector": "^2.12.2", "webdriver-bidi-protocol": "0.4.2", "ws": "^8.21.0" } }, "sha512-jKzy5y4WG6uNuFbTWgW1D7mqoT9o0nllc/6a1DGF775T1mPmgw3scdFEtEq67yVFikavQmbYq6NLfbTfxHSlqQ=="],
-
-    "qs": ["qs@6.16.0", "", { "dependencies": { "es-define-property": "^1.0.1", "side-channel": "^1.1.1" } }, "sha512-h6fhOIaRrID2CbEY2fqs+7t+UXZo+MLAnU5gRIq85uFtdiUPCdsApMlHhXogKVM4HM2DVbIjGNTTYH2OcmP1vA=="],
 
     "quick-format-unescaped": ["quick-format-unescaped@4.0.4", "", {}, "sha512-tYC1Q1hgyRuHgloV/YXs2w15unPVh8qfu/qCTfhTYamaw7fyhumKa2yGpdSo87vY32rIclj+4fWYQXUMs9EHvg=="],
 

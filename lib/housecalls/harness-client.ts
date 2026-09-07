@@ -85,10 +85,61 @@ async function build(step: (msg: string) => void): Promise<Harness> {
   await db.instantiate("/harness/duckdb/duckdb-eh.wasm")
 
   step("Opening your local store")
-  const saved = await idbGet(DB_FILE).catch(() => null)
-  if (saved) await db.registerFileBuffer(DB_FILE, saved)
-  await db.open({ path: DB_FILE, accessMode: duckdb.DuckDBAccessMode.READ_WRITE })
+  // In-memory main database; durability comes from the pack (an EXPORT
+  // DATABASE parquet set packed into one byte blob) saved to IndexedDB and
+  // optionally stashed encrypted. The battle-tested stable-duckdb-wasm
+  // flow: COPY-created pseudo-files are what copyFileToBuffer supports.
+  await db.open({})
   let conn = await db.connect()
+
+  const packSnapshot = async (): Promise<Uint8Array> => {
+    const dir = `snap_${Date.now().toString(36)}`
+    await conn.query(`EXPORT DATABASE '${dir}' (FORMAT PARQUET)`)
+    const names = (await db.globFiles(`${dir}/*`)).map((f: any) => f.fileName)
+    const enc = new TextEncoder()
+    const parts: { name: Uint8Array; bytes: Uint8Array }[] = []
+    for (const n of names) parts.push({ name: enc.encode(n), bytes: await db.copyFileToBuffer(n) })
+    await db.dropFiles(names).catch(() => {})
+    let size = 8
+    for (const p of parts) size += 2 + p.name.length + 4 + p.bytes.length
+    const out = new Uint8Array(size)
+    const dv = new DataView(out.buffer)
+    out.set(enc.encode("HCPK"), 0)
+    dv.setUint32(4, parts.length)
+    let o = 8
+    for (const p of parts) {
+      dv.setUint16(o, p.name.length); o += 2
+      out.set(p.name, o); o += p.name.length
+      dv.setUint32(o, p.bytes.length); o += 4
+      out.set(p.bytes, o); o += p.bytes.length
+    }
+    return out
+  }
+  const unpack = (pack: Uint8Array): { name: string; bytes: Uint8Array }[] => {
+    const dv = new DataView(pack.buffer, pack.byteOffset, pack.byteLength)
+    if (new TextDecoder().decode(pack.subarray(0, 4)) !== "HCPK") throw new Error("not a backup pack")
+    const n = dv.getUint32(4)
+    const dec = new TextDecoder()
+    let o = 8
+    const files = []
+    for (let i = 0; i < n; i++) {
+      const nl = dv.getUint16(o); o += 2
+      const name = dec.decode(pack.subarray(o, o + nl)); o += nl
+      const bl = dv.getUint32(o); o += 4
+      files.push({ name, bytes: pack.subarray(o, o + bl) }); o += bl
+    }
+    return files
+  }
+  const importPack = async (pack: Uint8Array) => {
+    const files = unpack(pack)
+    for (const f of files) await db.registerFileBuffer(f.name, new Uint8Array(f.bytes))
+    const dir = files[0].name.split("/")[0]
+    await conn.query(`IMPORT DATABASE '${dir}'`)
+    await db.dropFiles(files.map((f) => f.name)).catch(() => {})
+  }
+
+  const saved = await idbGet(DB_FILE).catch(() => null)
+  if (saved) await importPack(saved)
 
   const exec = async (rawSql: string) => {
     await conn.query(rawSql)
@@ -118,18 +169,20 @@ async function build(step: (msg: string) => void): Promise<Harness> {
   }
   for (const sql of engine.migrations_from(from)) await exec(sql)
 
-  const snapshot = async () => {
-    await conn.query("CHECKPOINT")
-    return (await db.copyFileToBuffer(DB_FILE)) as Uint8Array
-  }
+  const snapshot = async () => packSnapshot()
   const persistLocal = async () => {
     await idbSet(DB_FILE, await snapshot())
   }
   const restoreFromBytes = async (bytes: Uint8Array) => {
+    // A restore replaces the world: fresh in-memory db, import the pack,
+    // then run any migrations newer than the backup.
     await conn.close()
-    await db.registerFileBuffer(DB_FILE, bytes)
-    await db.open({ path: DB_FILE, accessMode: duckdb.DuckDBAccessMode.READ_WRITE })
+    await db.open({})
     conn = await db.connect()
+    await importPack(bytes)
+    const rows = await query("read_version").catch(() => [])
+    const v = rows.length ? Number((rows[0] as any).value) : 0
+    for (const sql of engine.migrations_from(v)) await exec(sql)
     await idbSet(DB_FILE, bytes)
   }
   const counts = async () => {
