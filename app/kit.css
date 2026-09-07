@@ -1897,3 +1897,20 @@ body:has(.beta-root) {
   background: var(--color-panel-sunk); color: var(--color-glass);
   border: 1px solid var(--color-rule-panel); border-radius: var(--radius-mod); font: inherit;
 }
+
+/* ---- photo stamper gallery (PhotoStamper.tsx) ---- */
+.beta-ps-gallery {
+  display: grid; gap: calc(var(--u) * 1.5);
+  grid-template-columns: repeat(auto-fill, minmax(min(140px, 100%), 1fr));
+  padding: calc(var(--u) * 2) 0;
+}
+.beta-ps-shot { position: relative; margin: 0; }
+.beta-ps-shot img {
+  width: 100%; aspect-ratio: 1; object-fit: cover; display: block;
+  border-radius: var(--radius-mod); border: 1px solid var(--color-rule-panel);
+}
+.beta-ps-shot button {
+  position: absolute; top: -8px; right: -8px; min-height: 28px; min-width: 28px;
+  border-radius: 50%; border: 1px solid var(--color-rule-panel);
+  background: var(--color-panel); color: var(--color-glass); cursor: pointer;
+}

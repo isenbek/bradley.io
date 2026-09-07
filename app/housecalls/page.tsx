@@ -184,9 +184,10 @@ export default function HouseCallsPage() {
           The electronic form of a tradeshow giveaway: genuinely useful field tools, free, with no
           account and no catch, because a giveaway that harvests emails is a booth babe and a
           giveaway that respects the tradesperson is a brand. On the shelf:{" "}
-          <Link href="/housecalls/tools/quote">the truck quote pad</Link> and{" "}
-          <Link href="/housecalls/tools/change-order">the change-order pad</Link>, which gets the
-          signature before the work. The thinking is public, like everything here, in the{" "}
+          <Link href="/housecalls/tools/quote">the truck quote pad</Link>,{" "}
+          <Link href="/housecalls/tools/change-order">the change-order pad</Link> (the signature
+          before the work), and <Link href="/housecalls/tools/photos">the job photo stamper</Link>{" "}
+          (the proof burned into the pixels). The thinking is public, like everything here, in the{" "}
           <Link href="/housecalls/docs/trades-temperature">trades temperature report</Link>.
         </p>
 

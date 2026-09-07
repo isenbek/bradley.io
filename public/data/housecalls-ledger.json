@@ -1,5 +1,5 @@
 {
- "updated": "2026-09-07T03:16:55.628Z",
+ "updated": "2026-09-07T03:54:55.052Z",
  "counters": {
   "sent": 0,
   "replies": 0,
@@ -280,6 +280,11 @@
    "date": "2026-09-07",
    "kind": "draft",
    "note": "The harness is planned: one Rust engine owning the store, the crypto, and the backup, compiled three ways so today's web tools and tomorrow's native apps share a spine. The database lives on the phone; backup is a twelve-word code sequence deriving a key we never see, and the stash on our server is ciphertext we could not read if we wanted to. The honest wrinkles are written down: two megabytes must lazy-load so the giveaway stays light, iPhones need the fallback path, boring cryptography only, and outside eyes before real users trust it. About a week of build, awaiting the go."
+  },
+  {
+   "date": "2026-09-07",
+   "kind": "build",
+   "note": "The harness went from plan to working in one night, and the proof ran on the live site: a quote was written, twelve words were generated, the backup left the phone as ciphertext, the entire device was wiped clean, and typing the twelve words alone brought the quote back. One Rust engine owns the words, the keys, the envelope, and the schema; the database runs in the browser; the stash on our server held nothing anyone could read. The debugging honestly took longest in the database's file layers, and the path that finally held is the boring, documented one. Backup on the tools shelf now says beta and means it."
   }
  ]
 }

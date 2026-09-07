@@ -68,4 +68,22 @@ for (const [name, pass] of coCases) {
   console.log(`${pass ? "PASS" : "FAIL"} co: ${name}`)
   ok &&= pass
 }
+
+// ---- photo stamper (photo-stamp.ts) ----
+const { stampLines, fmtCoord, jobSlug, photoFilename, zipFilename } = await import("../components/housecalls/photo-stamp.ts")
+const when = new Date(2026, 8, 7, 14, 5) // local time, Sep 7 14:05
+const psCases = [
+  ["stamp carries job, local time, coords", JSON.stringify(stampLines("Smith - 123 Main St", when, { lat: 42.96116, lon: -85.65557 })) === JSON.stringify(["Smith - 123 Main St", "2026-09-07 14:05", "42.96116, -85.65557"])],
+  ["no gps means no coord line, still stamped", stampLines("Job", when, { lat: null, lon: null }).length === 2],
+  ["no job label still stamps the time", stampLines("  ", when, { lat: null, lon: null }).length === 1],
+  ["coords are 5 decimals", fmtCoord(42.9611600001, -85.65557) === "42.96116, -85.65557"],
+  ["job slug is filesystem-safe", jobSlug("Smith / 123 Main St. #2") === "smith-123-main-st-2" && jobSlug("!!!") === "job"],
+  ["filenames sort by time and sequence", photoFilename("Smith Job", "2026-09-07T14:05:33.000Z", 3) === "smith-job-202609071405-03.jpg"],
+  ["zip named for the job", zipFilename("Smith / Main") === "smith-main-photos.zip"],
+]
+for (const [name, pass] of psCases) {
+  console.log(`${pass ? "PASS" : "FAIL"} photos: ${name}`)
+  ok &&= pass
+}
+
 process.exit(ok ? 0 : 1)
