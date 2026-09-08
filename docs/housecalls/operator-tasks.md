@@ -44,6 +44,17 @@ five-minute decision instead of an hour of archaeology.
       one-week exclusive window, ledger logs it.
       → [pitch-story.md](pitch-story.md)
 
+## Unblocks the farm vertical (month one, step 1)
+
+- [ ] **Deere account errand, ~10 minutes**: create the John Deere
+      account (email code lands in your inbox), accept the API
+      Development License Agreement (summary in the doc; read it
+      first), create the application with the answers already written
+      out, and hand the AI the Application Id + Secret. Our side is
+      built and tested: callback live, CLI ready, one command then
+      proves the API path. Everything to paste is in the recipe.
+      → [deere-sandbox.md](deere-sandbox.md)
+
 ## Unblocks the pilot / franchise track
 
 - [ ] **Send the Nominate note** (or say skip): one more workspace for the
