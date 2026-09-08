@@ -12,6 +12,14 @@ runs business development in the open, a human signs everything, and every
 plan, letter, rule, and recipe lands here as a file. Twenty-three of them
 now, so this page is the map. Pick yourself below.
 
+## You want the whole thing at a glance
+
+Three synthesis docs, written on day three:
+[summary.md](summary.md) (what got built),
+[elevator-pitch.md](elevator-pitch.md) (the words, four listeners),
+[opportunities.md](opportunities.md) (seven levers, ranked by nearness of
+money).
+
 ## You are Brad, deciding what to do next
 
 Read exactly one file: **[operator-tasks.md](operator-tasks.md)**. It is
