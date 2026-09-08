@@ -36,6 +36,14 @@ five-minute decision instead of an hour of archaeology.
       deadline watcher, and the hunt crawl are all armed and idle without
       these accounts.
 
+## Unblocks the story (opportunity 4, the cheapest big lever)
+
+- [ ] **Pick the first outlet and send the story pitch** (recommendation:
+      local business press first; the map is their readers' backyard).
+      Fill three slots, sign, send from your own address. One at a time,
+      one-week exclusive window, ledger logs it.
+      → [pitch-story.md](pitch-story.md)
+
 ## Unblocks the pilot / franchise track
 
 - [ ] **Send the Nominate note** (or say skip): one more workspace for the
