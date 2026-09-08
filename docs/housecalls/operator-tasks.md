@@ -46,6 +46,17 @@ five-minute decision instead of an hour of archaeology.
 
 ## Unblocks the farm vertical (month one, step 1)
 
+- [ ] **Approve (or edit) the farm letter template**: the farm
+      vertical's letter 5, written for MDARD grant awardees whose
+      funded buildouts are trades-shaped. 30 farm prospects entered
+      the base 2026-09-08 and park behind this approval plus contact
+      research. → [pitch-farm-grant.md](pitch-farm-grant.md) ·
+      [farm-harvest-notes.md](farm-harvest-notes.md)
+- [ ] **Two one-word calls** from the harvest skips: sawmills in or
+      out (Devereaux, S&L Lumber: forestry, serious automation
+      signals)? First Catch (private fish processor on tribal land)
+      in or out? → [farm-harvest-notes.md](farm-harvest-notes.md)
+
 - [ ] **Deere account errand, ~10 minutes**: create the John Deere
       account (email code lands in your inbox), accept the API
       Development License Agreement (summary in the doc; read it

@@ -1,17 +1,17 @@
 {
-  "generated": "2026-09-08T12:01:05.213513+00:00",
+  "generated": "2026-09-08T20:01:20.023592+00:00",
   "sources": {
     "unifiedSpec": "https://mcp.campaignbrain.dev/openapi.json",
     "metadata": "scripts/mcp-catalog-meta.json (pulled 2026-08-29)"
   },
   "stats": {
     "totalServices": 55,
-    "totalEndpoints": 2977,
+    "totalEndpoints": 2923,
     "totalCategories": 5,
     "mcpServers": 4,
     "mcpServersReachable": 3,
-    "fleetServices": 85,
-    "fleetEndpoints": 3995,
+    "fleetServices": 84,
+    "fleetEndpoints": 3941,
     "uncataloguedServices": 43
   },
   "mcpServers": [
@@ -255,24 +255,6 @@
           "endpointCount": 77
         },
         {
-          "id": "cbdistricts",
-          "name": "Congressional Districts",
-          "url": "https://districts.campaignbrain.dev",
-          "description": "119th Congress, 441 districts. Demographics, GeoJSON boundaries, radio coverage, geographic layers, state data. Embedded MCP at /mcp.",
-          "auth": "None (public)",
-          "capabilities": [
-            "districts",
-            "demographics",
-            "geojson",
-            "states",
-            "radio-coverage",
-            "intersections",
-            "layers",
-            "mcp-tools"
-          ],
-          "endpointCount": 54
-        },
-        {
           "id": "cbiterable",
           "name": "Iterable API Wrapper",
           "url": "https://iterable.campaignbrain.dev",
@@ -427,6 +409,24 @@
             "mcp-tools"
           ],
           "endpointCount": 7
+        },
+        {
+          "id": "cbdistricts",
+          "name": "Congressional Districts",
+          "url": "https://districts.campaignbrain.dev",
+          "description": "119th Congress, 441 districts. Demographics, GeoJSON boundaries, radio coverage, geographic layers, state data. Embedded MCP at /mcp.",
+          "auth": "None (public)",
+          "capabilities": [
+            "districts",
+            "demographics",
+            "geojson",
+            "states",
+            "radio-coverage",
+            "intersections",
+            "layers",
+            "mcp-tools"
+          ],
+          "endpointCount": 0
         },
         {
           "id": "sdr",
