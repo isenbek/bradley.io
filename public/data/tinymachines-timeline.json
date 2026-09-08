@@ -1,12 +1,12 @@
 {
-  "generated": "2026-09-07T09:01:51.569439+00:00",
+  "generated": "2026-09-08T09:09:44.338221+00:00",
   "org": "tinymachines",
-  "totalRepos": 70,
+  "totalRepos": 71,
   "firstCommit": "2016-02-27T16:07:26Z",
-  "latestCommit": "2026-09-06T07:49:57Z",
-  "totalCommits": 5908,
+  "latestCommit": "2026-09-08T04:58:59Z",
+  "totalCommits": 5988,
   "languages": {
-    "Python": 26,
+    "Python": 27,
     "C": 7,
     "Rust": 7,
     "HTML": 6,
@@ -6883,9 +6883,21 @@
     },
     {
       "date": "2026-09-06",
-      "commits": 23,
+      "commits": 54,
       "repos": 7,
-      "intensity": 2
+      "intensity": 4
+    },
+    {
+      "date": "2026-09-07",
+      "commits": 40,
+      "repos": 7,
+      "intensity": 3
+    },
+    {
+      "date": "2026-09-08",
+      "commits": 9,
+      "repos": 5,
+      "intensity": 1
     }
   ],
   "phases": [
@@ -7055,6 +7067,17 @@
         "nes-bus",
         "2a03",
         "nes"
+      ],
+      "milestones": [],
+      "category": "systems"
+    },
+    {
+      "name": "Phase 11",
+      "startDate": "2026-09-07",
+      "endDate": "2026-09-07",
+      "description": "Development of nes-bench.",
+      "repos": [
+        "nes-bench"
       ],
       "milestones": [],
       "category": "systems"
@@ -7569,9 +7592,9 @@
       "name": "geiger",
       "description": "Daily Reporting Engine",
       "language": "HTML",
-      "commits": 276,
+      "commits": 278,
       "firstCommit": "2026-05-04T03:01:06Z",
-      "lastCommit": "2026-09-06T03:00:50Z",
+      "lastCommit": "2026-09-08T03:00:53Z",
       "phase": "Phase 9"
     },
     {
@@ -7623,9 +7646,9 @@
       "name": "6502",
       "description": "Commits: Add 6502 Processor Expert Agent with RAG system",
       "language": "JavaScript",
-      "commits": 326,
+      "commits": 333,
       "firstCommit": "2026-08-12T16:38:57Z",
-      "lastCommit": "2026-09-06T05:01:33Z",
+      "lastCommit": "2026-09-08T04:58:59Z",
       "phase": "Phase 7"
     },
     {
@@ -7641,27 +7664,27 @@
       "name": "public",
       "description": "tinymachines.ai: the site, the API and the docs for the 6502 work",
       "language": "TypeScript",
-      "commits": 328,
+      "commits": 349,
       "firstCommit": "2026-08-22T15:44:09Z",
-      "lastCommit": "2026-09-06T07:49:57Z",
+      "lastCommit": "2026-09-08T04:27:04Z",
       "phase": "Phase 10"
     },
     {
       "name": "ntsc-crt",
       "description": "Signal-level NTSC encode, decode and CRT simulation in Rust: exact-rational grid, NES and SMPTE 170M sources, comb rungs, capture recovery. Companion to tinymachines/6502.",
       "language": "Rust",
-      "commits": 19,
+      "commits": 25,
       "firstCommit": "2026-09-02T01:11:55Z",
-      "lastCommit": "2026-09-06T07:26:04Z",
+      "lastCommit": "2026-09-08T03:56:10Z",
       "phase": "Phase 10"
     },
     {
       "name": "2c02",
       "description": "Switch-level Ricoh 2C02 (NES PPU) via halfphi: the netlist in, the behaviour out. Companion to tinymachines/6502 and tinymachines/ntsc-crt.",
       "language": "Rust",
-      "commits": 23,
+      "commits": 26,
       "firstCommit": "2026-09-02T19:15:40Z",
-      "lastCommit": "2026-09-06T07:07:56Z",
+      "lastCommit": "2026-09-07T19:57:20Z",
       "phase": "Phase 10"
     },
     {
@@ -7677,19 +7700,28 @@
       "name": "2a03",
       "description": "",
       "language": "Rust",
-      "commits": 21,
+      "commits": 27,
       "firstCommit": "2026-09-03T00:11:39Z",
-      "lastCommit": "2026-09-06T05:48:46Z",
+      "lastCommit": "2026-09-07T19:57:04Z",
       "phase": "Phase 10"
     },
     {
       "name": "nes",
       "description": "The NES console: where the family's switch-level chips meet. The authored glue, the scheduler, the shell, and the end-to-end goldens.",
       "language": "Rust",
-      "commits": 10,
+      "commits": 28,
       "firstCommit": "2026-09-05T16:29:39Z",
-      "lastCommit": "2026-09-06T07:30:43Z",
+      "lastCommit": "2026-09-07T19:57:22Z",
       "phase": "Phase 10"
+    },
+    {
+      "name": "nes-bench",
+      "description": "The NES bench made scriptable: a controller-port bridge, relays and the scope under one script, so the part and the switch-level model run identical inputs",
+      "language": "Python",
+      "commits": 17,
+      "firstCommit": "2026-09-07T01:23:48Z",
+      "lastCommit": "2026-09-08T03:43:40Z",
+      "phase": "Phase 11"
     }
   ]
 }
