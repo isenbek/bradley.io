@@ -59,11 +59,31 @@ letter binding pitch-farm-grant (template drafted, awaiting approval).
   processing facility on tribal land; held out of cold outreach
   pending a think on whether that is our letter to send.
 
+## The contact dig (2026-09-08, same day)
+
+All 30 rows worked under the published-only rule: an email counts only
+from the business's own pages (or a farm-maintained directory), a name
+only from their own site or dated coverage. **18 rows closed** with a
+named person and a published email; 12 wait, each with the reason on
+the row. Every contact's provenance (exact page, date) is in the row's
+curation note.
+
+Notable finds along the way: Sanilac Creamery is the former Zingerman's
+Creamery, rebranded fall 2025 and operating in Ann Arbor (the name is
+personal, not locational); Dairy Doo publishes a full staff directory
+with per-person emails; B&B Farms' website phone is an unreplaced
+template placeholder (logged so nobody dials it); Blue Mitten's site
+has an expired TLS certificate, verified by hand.
+
+What was seen and deliberately NOT used, per doctrine: ZoomInfo and
+RocketReach obscured executive emails (Riveridge), scraper-directory
+names (Jim Maurer via Manta, Larry Judge via OpenCorporates), a Yelp
+gmail for Z&N that their own site does not publish, and every Facebook
+or Instagram page. Two surnames from a rate-limited local paper are
+flagged UNVERIFIED on their rows.
+
 ## What happens next (the machine's normal course)
 
-The rubric parks all 30 at G3 (no named human contact yet); the
-contact queue orders them by score, and published-contact research
-works the queue top-down: a name and an email from the farm's own
-site, or the row waits. No scraping, no guessed addresses, no
-LinkedIn walls. Letters are drafted per-prospect only after Brad
-approves the farm letter template.
+The 18 with contacts auto-qualify (G1-G4 pass); the 12 without wait in
+the queue. Letters are drafted per-prospect only after Brad approves
+the farm letter template, and drafted/contacted stay human gates.
