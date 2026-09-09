@@ -46,12 +46,16 @@ five-minute decision instead of an hour of archaeology.
 
 ## Unblocks the farm vertical (month one, step 1)
 
-- [ ] **Approve (or edit) the farm letter template**: the farm
-      vertical's letter 5, written for MDARD grant awardees whose
-      funded buildouts are trades-shaped. 30 farm prospects entered
-      the base 2026-09-08 and park behind this approval plus contact
-      research. → [pitch-farm-grant.md](pitch-farm-grant.md) ·
-      [farm-harvest-notes.md](farm-harvest-notes.md)
+- [ ] **Review the eighteen farm letters** (template approved
+      2026-09-09; individual letters drafted same day from it, in
+      `data/housecalls/letters/` with the roster and per-letter
+      recipients in that directory's README). Each follows the
+      approved structure with one fresh technical observation; three
+      carry a free-fix gift line (a placeholder phone number, two
+      expired certificates). Approve per letter or "approve all
+      eighteen"; the 5/day cap spreads sends across four days
+      minimum. Sending still waits on the Proton check + address.
+      → [pitch-farm-grant.md](pitch-farm-grant.md)
 - [ ] **Two one-word calls** from the harvest skips: sawmills in or
       out (Devereaux, S&L Lumber: forestry, serious automation
       signals)? First Catch (private fish processor on tribal land)
