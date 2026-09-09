@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-09T00:01:36.006357",
+  "generated": "2026-09-09T08:01:40.489527",
   "pipelineVersion": "1.0.0",
   "license": {
     "number": "AIP-2026-0127",
@@ -7,11 +7,11 @@
     "issued": "2026-03-08",
     "expires": "NEVER",
     "totalSessions": 127,
-    "totalMessages": 373679,
+    "totalMessages": 373870,
     "totalCostUSD": 0,
-    "totalInputTokens": 3994895,
-    "totalOutputTokens": 263848981,
-    "totalCacheTokens": 87675964790,
+    "totalInputTokens": 3995129,
+    "totalOutputTokens": 263978344,
+    "totalCacheTokens": 87704199612,
     "modelCount": 8,
     "projectCount": 69
   },
@@ -19,10 +19,10 @@
     {
       "modelId": "claude-opus-5",
       "displayName": "Opus",
-      "inputTokens": 300472,
-      "outputTokens": 125420138,
-      "cacheReadTokens": 47597622668,
-      "cacheCreationTokens": 701164045,
+      "inputTokens": 300640,
+      "outputTokens": 125494555,
+      "cacheReadTokens": 47616872870,
+      "cacheCreationTokens": 702456450,
       "costUSD": 0,
       "costShare": 47.5,
       "proficiency": "Proficient",
@@ -32,10 +32,10 @@
     {
       "modelId": "claude-fable-5",
       "displayName": "Fable",
-      "inputTokens": 2707137,
-      "outputTokens": 83075601,
-      "cacheReadTokens": 22933701092,
-      "cacheCreationTokens": 430695590,
+      "inputTokens": 2707203,
+      "outputTokens": 83130547,
+      "cacheReadTokens": 22942685712,
+      "cacheCreationTokens": 433021377,
       "costUSD": 0,
       "costShare": 31.5,
       "proficiency": "Proficient",
@@ -139,9 +139,9 @@
     },
     {
       "date": "2026-07-23",
-      "count": 32742,
+      "count": 32834,
       "sessions": 1,
-      "toolCalls": 10336,
+      "toolCalls": 10370,
       "intensity": 3
     },
     {
@@ -202,9 +202,9 @@
     },
     {
       "date": "2026-08-12",
-      "count": 37257,
+      "count": 37306,
       "sessions": 2,
-      "toolCalls": 12181,
+      "toolCalls": 12195,
       "intensity": 3
     },
     {
@@ -265,9 +265,9 @@
     },
     {
       "date": "2026-08-22",
-      "count": 18362,
+      "count": 18376,
       "sessions": 2,
-      "toolCalls": 5968,
+      "toolCalls": 5972,
       "intensity": 2
     },
     {
@@ -356,9 +356,9 @@
     },
     {
       "date": "2026-09-06",
-      "count": 3653,
+      "count": 3689,
       "sessions": 8,
-      "toolCalls": 1226,
+      "toolCalls": 1237,
       "intensity": 1
     },
     {
@@ -626,12 +626,12 @@
     {
       "axis": "Tool Mastery",
       "score": 95,
-      "detail": "33 tools, 99035 calls"
+      "detail": "33 tools, 99098 calls"
     },
     {
       "axis": "Debugging",
       "score": 95,
-      "detail": "85060 debug tool calls"
+      "detail": "85119 debug tool calls"
     },
     {
       "axis": "Architecture",
@@ -641,7 +641,7 @@
     {
       "axis": "Iteration",
       "score": 76,
-      "detail": "2942 msgs/session avg"
+      "detail": "2943 msgs/session avg"
     },
     {
       "axis": "Multi-Project",
@@ -692,13 +692,13 @@
     {
       "name": "6502",
       "sessions": 1,
-      "messages": 36047,
+      "messages": 36096,
       "complexity": 10,
       "domain": "General",
       "technologies": [],
       "status": "active",
       "firstActive": "2026-08-12",
-      "lastActive": "2026-09-08"
+      "lastActive": "2026-09-09"
     },
     {
       "name": "terrapulse",
@@ -723,18 +723,18 @@
     {
       "name": "infra",
       "sessions": 3,
-      "messages": 33105,
+      "messages": 33197,
       "complexity": 10,
       "domain": "General",
       "technologies": [],
       "status": "active",
       "firstActive": "2026-07-23",
-      "lastActive": "2026-09-08"
+      "lastActive": "2026-09-09"
     },
     {
       "name": "bradleyio",
       "sessions": 4,
-      "messages": 31201,
+      "messages": 31237,
       "complexity": 10,
       "domain": "Frontend",
       "technologies": [
@@ -749,7 +749,7 @@
       ],
       "status": "active",
       "firstActive": "2026-03-07",
-      "lastActive": "2026-09-08"
+      "lastActive": "2026-09-09"
     },
     {
       "name": "cbelections",
@@ -765,13 +765,13 @@
     {
       "name": "public",
       "sessions": 1,
-      "messages": 16886,
+      "messages": 16900,
       "complexity": 10,
       "domain": "General",
       "technologies": [],
       "status": "active",
       "firstActive": "2026-08-22",
-      "lastActive": "2026-09-08"
+      "lastActive": "2026-09-09"
     },
     {
       "name": "cbrural",
@@ -916,10 +916,10 @@
     }
   ],
   "tokenEconomy": {
-    "totalInputTokens": 3994895,
-    "totalOutputTokens": 263848981,
-    "totalCacheReadTokens": 87675964790,
-    "totalCacheCreateTokens": 1413414046,
+    "totalInputTokens": 3995129,
+    "totalOutputTokens": 263978344,
+    "totalCacheReadTokens": 87704199612,
+    "totalCacheCreateTokens": 1417032238,
     "totalCostUSD": 0,
     "cacheEfficiency": 98.4,
     "costPerSession": 0.0,
@@ -951,7 +951,7 @@
       },
       {
         "date": "2026-08-12",
-        "tokens": 34284230
+        "tokens": 34315540
       },
       {
         "date": "2026-08-13",
@@ -987,7 +987,7 @@
       },
       {
         "date": "2026-08-22",
-        "tokens": 15094137
+        "tokens": 15103558
       },
       {
         "date": "2026-08-24",
@@ -1039,7 +1039,7 @@
       },
       {
         "date": "2026-09-06",
-        "tokens": 2436520
+        "tokens": 2482111
       },
       {
         "date": "2026-09-08",
@@ -1053,18 +1053,18 @@
     "peakDay": "2026-07-28",
     "peakDayCount": 54331,
     "peakWeek": "2026-08-17",
-    "peakWeekCount": 89480,
+    "peakWeekCount": 89494,
     "totalActiveDays": 37
   },
   "skillsCloud": [
     {
       "name": "Go",
-      "count": 7351,
+      "count": 7353,
       "category": "General"
     },
     {
       "name": "Git",
-      "count": 3464,
+      "count": 3465,
       "category": "General"
     },
     {
@@ -1074,7 +1074,7 @@
     },
     {
       "name": "JSON",
-      "count": 1721,
+      "count": 1723,
       "category": "General"
     },
     {
@@ -1099,7 +1099,7 @@
     },
     {
       "name": "SPI",
-      "count": 800,
+      "count": 801,
       "category": "IoT / Edge"
     },
     {
@@ -1169,7 +1169,7 @@
     },
     {
       "name": "Ollama",
-      "count": 190,
+      "count": 191,
       "category": "AI / ML"
     },
     {

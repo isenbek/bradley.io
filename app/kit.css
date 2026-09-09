@@ -1970,3 +1970,27 @@ body:has(.beta-root) {
      elsewhere (a global hide here would break quote/CO/material printing) */
   body:has(.beta-cc-sheet) .beta-qp-sheet { display: none !important; }
 }
+
+/* ---- the paperwork index (app/housecalls/docs) ----
+   Derived doc index: curated sections over the full on-disk inventory.
+   Documentation renders on paper (these are prose about the machine,
+   not the machine talking), so rows sit on the page ground with a rule
+   between them, no panel. */
+.beta-doc-sec { margin-block: calc(var(--u) * 4) calc(var(--u) * 5); }
+.beta-doc-sec .prose p { margin-block-end: calc(var(--u) * 1.5); }
+.beta-doc-list { list-style: none; margin: 0; padding: 0; }
+.beta-doc-row {
+  padding-block: calc(var(--u) * 1.5);
+  border-block-end: 1px solid color-mix(in oklab, var(--color-ink) 12%, transparent);
+}
+.beta-doc-row:last-child { border-block-end: none; }
+.beta-doc-row > a { font-weight: 600; text-decoration: none; }
+.beta-doc-row > a:hover { text-decoration: underline; }
+.beta-doc-date { font-size: var(--text-fine); color: color-mix(in oklab, var(--color-ink) 55%, transparent); }
+.beta-doc-status {
+  display: block;
+  font-size: var(--text-fine);
+  line-height: 1.45;
+  color: color-mix(in oklab, var(--color-ink) 65%, transparent);
+  max-width: 62ch;
+}

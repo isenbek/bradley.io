@@ -12,6 +12,12 @@ runs business development in the open, a human signs everything, and every
 plan, letter, rule, and recipe lands here as a file. Twenty-three of them
 now, so this page is the map. Pick yourself below.
 
+**The complete, always-current index lives at
+[housecalls.bradley.io/housecalls/docs](https://bradley.io/housecalls/docs):**
+it derives from every file's front matter at build time, so it cannot go
+stale the way a hand-written map can. This README is the narrative
+version, organized by who is reading.
+
 ## You want the whole thing at a glance
 
 Three synthesis docs, written on day three:
@@ -67,6 +73,16 @@ that is not Grand Rapids. In stand-up order:
 4. [cbcli-fleet-usage.md](cbcli-fleet-usage.md) and
    [harvest-seam-plan.md](harvest-seam-plan.md): the harvest platform as
    actually measured, and the seam that makes it optional.
+
+## You care about the farm vertical (priority one since 2026-09-08)
+
+[farm-harvest-notes.md](farm-harvest-notes.md) is the record of the
+statewide intake (30 MDARD-grant prospects, the contact dig, and what
+was refused and why); [pitch-farm-grant.md](pitch-farm-grant.md) is the
+approved letter template; [deere-sandbox.md](deere-sandbox.md) is the
+Deere API errand and recipe. The strategy doc lives in the container
+repo: [isenbek/housecalls](https://github.com/isenbek/housecalls),
+docs/FARM-VERTICAL.md and docs/DEERE.md.
 
 ## You are interested in the bigger idea
 

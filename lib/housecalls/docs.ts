@@ -76,6 +76,26 @@ export function readDoc(slug: string): HuntDoc | null {
   }
 }
 
+export interface HuntDocMeta {
+  slug: string
+  title: string
+  status: string
+  updated: string | null
+}
+
+/**
+ * Front matter for every doc, for the derived index at /housecalls/docs.
+ * Derived, not curated: a doc missing from the page's section map still
+ * renders in its catch-all, so the index is complete by construction.
+ */
+export function readAllDocsMeta(): HuntDocMeta[] {
+  return listDocSlugs().map((slug) => {
+    const raw = readFileSync(path.join(DOCS_DIR, `${slug}.md`), "utf8")
+    const fm = parseFrontMatter(raw, slug)
+    return { slug, title: fm.title, status: fm.status, updated: fm.updated }
+  })
+}
+
 /** The README is the index page's body: it IS the map of the folder. */
 export function readIndex(): HuntDoc {
   const raw = readFileSync(path.join(DOCS_DIR, "README.md"), "utf8")
