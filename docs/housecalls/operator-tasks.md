@@ -46,16 +46,12 @@ five-minute decision instead of an hour of archaeology.
 
 ## Unblocks the farm vertical (month one, step 1)
 
-- [ ] **Review the eighteen farm letters** (template approved
-      2026-09-09; individual letters drafted same day from it, in
-      `data/housecalls/letters/` with the roster and per-letter
-      recipients in that directory's README). Each follows the
-      approved structure with one fresh technical observation; three
-      carry a free-fix gift line (a placeholder phone number, two
-      expired certificates). Approve per letter or "approve all
-      eighteen"; the 5/day cap spreads sends across four days
-      minimum. Sending still waits on the Proton check + address.
-      → [pitch-farm-grant.md](pitch-farm-grant.md)
+- [x] ~~Review the eighteen farm letters~~ APPROVED all eighteen
+      2026-09-09; stages flipped to drafted, timestamped. Twenty
+      letters (18 farm + Metal Flow + Roskam) now stand behind ONE
+      gate: the Proton check + physical address at the top of this
+      board. When that lands, the 5/day cap spreads sends across
+      four days, oldest signals (the August 20 cohort) first.
 - [ ] **Two one-word calls** from the harvest skips: sawmills in or
       out (Devereaux, S&L Lumber: forestry, serious automation
       signals)? First Catch (private fish processor on tribal land)
