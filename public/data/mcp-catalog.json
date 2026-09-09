@@ -1,17 +1,17 @@
 {
-  "generated": "2026-09-09T12:01:14.235117+00:00",
+  "generated": "2026-09-09T16:01:39.588699+00:00",
   "sources": {
     "unifiedSpec": "https://mcp.campaignbrain.dev/openapi.json",
     "metadata": "scripts/mcp-catalog-meta.json (pulled 2026-08-29)"
   },
   "stats": {
     "totalServices": 55,
-    "totalEndpoints": 2977,
+    "totalEndpoints": 2800,
     "totalCategories": 5,
     "mcpServers": 4,
     "mcpServersReachable": 3,
-    "fleetServices": 85,
-    "fleetEndpoints": 3995,
+    "fleetServices": 84,
+    "fleetEndpoints": 3818,
     "uncataloguedServices": 43
   },
   "mcpServers": [
@@ -98,25 +98,6 @@
       "name": "AI & Intelligence",
       "services": [
         {
-          "id": "cbintel",
-          "name": "Intelligence API",
-          "url": "https://intel.campaignbrain.dev",
-          "description": "Web crawling, screenshots, transcripts, document processing, workspaces. Scheduler for recurring jobs, planner for multi-step research. Embedded MCP at /mcp.",
-          "auth": "X-API-Key",
-          "capabilities": [
-            "crawl",
-            "screenshot",
-            "transcript",
-            "documents",
-            "workspaces",
-            "scheduler",
-            "planner",
-            "jobs",
-            "mcp-tools"
-          ],
-          "endpointCount": 177
-        },
-        {
           "id": "cbindex",
           "name": "Document Index",
           "url": "https://index.campaignbrain.dev",
@@ -195,6 +176,25 @@
             "comfyui",
             "gpu",
             "sprites"
+          ],
+          "endpointCount": 0
+        },
+        {
+          "id": "cbintel",
+          "name": "Intelligence API",
+          "url": "https://intel.campaignbrain.dev",
+          "description": "Web crawling, screenshots, transcripts, document processing, workspaces. Scheduler for recurring jobs, planner for multi-step research. Embedded MCP at /mcp.",
+          "auth": "X-API-Key",
+          "capabilities": [
+            "crawl",
+            "screenshot",
+            "transcript",
+            "documents",
+            "workspaces",
+            "scheduler",
+            "planner",
+            "jobs",
+            "mcp-tools"
           ],
           "endpointCount": 0
         },

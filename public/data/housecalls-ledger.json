@@ -1,5 +1,5 @@
 {
- "updated": "2026-09-09T15:09:46.019Z",
+ "updated": "2026-09-09T16:09:32.792Z",
  "counters": {
   "sent": 0,
   "replies": 0,
@@ -375,6 +375,16 @@
    "date": "2026-09-09",
    "kind": "draft",
    "note": "The operator approved all eighteen farm letters; stages flipped to drafted with the approval timestamped on each row. Twenty letters now stand drafted and unsent behind the one remaining gate: the sending domain (Proton check + physical address). The 5/day cap will spread the farm sends across four days, oldest signals first."
+  },
+  {
+   "date": "2026-09-09",
+   "kind": "build",
+   "note": "The Proton check came back better than designed: a headless Proton Mail Bridge was already running on this box, so sending.json is wired and SMTP auth is verified. The entire send chain now refuses on exactly one input: the operator's physical mailing address (CAN-SPAM). Twenty drafted letters stand behind that one line; seed tests to our own inboxes fire first."
+  },
+  {
+   "date": "2026-09-09",
+   "kind": "build",
+   "note": "Sending is live. The operator supplied the mailing address; the footer now carries it with the disclosure and the binding no. Two seed tests transmitted through the local Proton Bridge to our own inboxes, the design's pre-flight before any prospect sees anything. Twenty approved letters wait on the operator's button, five per day, oldest signals first."
   }
  ]
 }

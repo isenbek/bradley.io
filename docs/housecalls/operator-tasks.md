@@ -14,13 +14,20 @@ five-minute decision instead of an hour of archaeology.
 
 ## Unblocks outbound (the scoreboard's zeros)
 
-- [ ] **ONE LINE UNBLOCKS EVERYTHING: the physical mailing address.**
-      2026-09-09 the AI found Proton Bridge already running on this box
-      (your protonapi rig), wired `data/housecalls/sending.json` to it,
-      and verified SMTP auth. The full send chain now refuses on
-      exactly one thing: the empty `physical_address`. Tell the AI the
-      line or edit the file; it appears in every letter footer
-      (CAN-SPAM). Then seed tests fire before any real letter.
+- [x] ~~The physical mailing address~~ IN, 2026-09-09. **SENDING IS
+      LIVE**: Bridge transport wired and verified, address in every
+      footer, two seed tests transmitted to your own inboxes
+      (protonmail + gmail).
+- [ ] **Glance at seed test 2 in your gmail** (subject "House Calls
+      seed test 2"): open "Show original" and confirm the
+      Authentication-Results line says spf=pass dkim=pass dmarc=pass.
+      Thirty seconds; it is the design's last pre-flight check.
+- [ ] **Press the button on day one** (5/day cap, oldest signals
+      first: the August 20 cohort). Say "send day one" and the AI runs
+      the five with you watching, or run each yourself:
+      `node scripts/housecalls-send.mjs --to <email> --subject "<subj>"
+      --letter data/housecalls/letters/<file>.txt --prospect <id> --send`
+      (recipients/ids/subjects: `data/housecalls/letters/README.md`).
 - [ ] **Identity decision (not blocking seed tests):** interim From is
       `isenbek@protonmail.com`. The design's identity is
       `brad@housecalls.bradley.io`: in Proton settings, add the
