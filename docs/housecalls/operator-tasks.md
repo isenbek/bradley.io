@@ -14,14 +14,21 @@ five-minute decision instead of an hour of archaeology.
 
 ## Unblocks outbound (the scoreboard's zeros)
 
-- [ ] **Proton plan check (5 min).** Settings: plan supports added
-      domains + Bridge? Add `housecalls.bradley.io`, create `brad@`, hand
-      over the DKIM values and MX targets. Then DNS + the send path are an
-      afternoon on the AI's side.
+- [ ] **ONE LINE UNBLOCKS EVERYTHING: the physical mailing address.**
+      2026-09-09 the AI found Proton Bridge already running on this box
+      (your protonapi rig), wired `data/housecalls/sending.json` to it,
+      and verified SMTP auth. The full send chain now refuses on
+      exactly one thing: the empty `physical_address`. Tell the AI the
+      line or edit the file; it appears in every letter footer
+      (CAN-SPAM). Then seed tests fire before any real letter.
+- [ ] **Identity decision (not blocking seed tests):** interim From is
+      `isenbek@protonmail.com`. The design's identity is
+      `brad@housecalls.bradley.io`: in Proton settings, add the
+      subdomain as a custom domain, create `brad@`, hand over the DKIM
+      values and MX targets; DNS is a one-edit afternoon (zone files
+      staged). If your plan has no free domain slot, say so and we
+      pick between an upgrade and an existing bradley.io address.
       → [sending-domain-design.md](sending-domain-design.md)
-- [ ] **Physical mailing address.** Goes in every letter footer; CAN-SPAM
-      is absolute: no address, no outbound, ever. One line in
-      `data/housecalls/sending.json`.
 - [ ] **Sign the four prospect letters** (fill `{SIGNATURE}`, review
       voice): [cloud-exit](pitch-cloud-exit.md) ·
       [legacy-rescue](pitch-legacy-rescue.md) ·

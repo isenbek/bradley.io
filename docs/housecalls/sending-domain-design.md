@@ -1,7 +1,7 @@
 ---
 title: "Sending-domain design"
 project: housecalls
-status: DESIGN for Brad's decision; DNS ready to write once transport is chosen
+status: TRANSPORT LIVE 2026-09-09 (Bridge was already on the box; sending.json wired + SMTP verified); waits on the physical address line + the subdomain identity errand
 created: 2026-09-06
 ---
 
@@ -139,6 +139,19 @@ playbook.
    signatures; then quarantine.
 6. First real send: Brad presses the button on a signed letter to a
    qualified prospect. The ledger entry writes itself the same day.
+
+## Status addendum, 2026-09-09
+
+The transport turned out to already exist: this box runs a headless
+Proton Mail Bridge as a user service (the operator's protonapi rig sits
+on its IMAP side). `sending.json` is now wired to it, credentials from
+the operator's own config, SMTP auth verified against localhost:1025.
+The send tool's full gate chain was exercised end to end and refuses on
+exactly one thing: the empty physical address. Interim From identity is
+the account's own address; the subdomain identity above remains the
+target and is a five-minute Proton-settings errand plus one staged DNS
+edit. Seed tests (step 4) run the day the address line lands, before
+any real letter.
 
 ## What this design waits on
 
