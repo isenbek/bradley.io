@@ -2,7 +2,7 @@
 title: "Operator tasks: Brad's board"
 project: housecalls
 status: LIVING document; the AI updates it, the human burns it down
-updated: 2026-09-06
+updated: 2026-09-10
 ---
 
 # The human's board
@@ -18,10 +18,13 @@ five-minute decision instead of an hour of archaeology.
       LIVE**: Bridge transport wired and verified, address in every
       footer, two seed tests transmitted to your own inboxes
       (protonmail + gmail).
-- [ ] **Glance at seed test 2 in your gmail** (subject "House Calls
-      seed test 2"): open "Show original" and confirm the
-      Authentication-Results line says spf=pass dkim=pass dmarc=pass.
-      Thirty seconds; it is the design's last pre-flight check.
+- [ ] **Get the seed-test verdict from your brother** (seed test 2
+      landed in his gmail, misenbek@gmail.com; discovered 2026-09-10,
+      the AI thought it was yours): he opens "House Calls seed test 2"
+      then "Show original" and reads back the Authentication-Results
+      line, which should say spf=pass dkim=pass dmarc=pass. The
+      verdict is identical from any gmail inbox, so his glance counts.
+      It is the design's last pre-flight check.
 - [ ] **Press the button on day one** (5/day cap, oldest signals
       first: the August 20 cohort). Say "send day one" and the AI runs
       the five with you watching, or run each yourself:
