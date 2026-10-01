@@ -84,3 +84,9 @@ data/claude-parquet/
 data/claude-activity-export.zip
 data/housecalls-stash/
 public/harness/duckdb/
+
+# Artifacts live on /mnt/ursa/bradleyio; these paths are SYMLINKS to it. The
+# trailing-slash rules above match only real directories, so name the links.
+/test-results
+/playwright-report
+data/claude-parquet

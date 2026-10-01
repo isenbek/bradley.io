@@ -1,4 +1,5 @@
 import { defineConfig, devices } from "@playwright/test"
+import { existsSync } from "node:fs"
 
 /**
  * Site audit harness — visits every URL on the running site across three
@@ -9,6 +10,17 @@ import { defineConfig, devices } from "@playwright/test"
  */
 const BASE_URL = process.env.PLAYWRIGHT_BASE_URL ?? "http://localhost:32221"
 
+/**
+ * Test artifacts (HTML report, traces, screenshots) live on the artifact
+ * disk, not in the working tree: /mnt/ursa/bradleyio/artifacts. The repo-root
+ * `playwright-report` and `test-results` entries are symlinks to it. Playwright
+ * deletes its output folders before each run, which would replace a symlink
+ * with a real directory, so the config points at the real location. Falls
+ * back to the working tree when the disk is not mounted.
+ */
+const URSA_ARTIFACTS = "/mnt/ursa/bradleyio/artifacts"
+const ARTIFACTS = process.env.PLAYWRIGHT_ARTIFACTS ?? (existsSync(URSA_ARTIFACTS) ? URSA_ARTIFACTS : ".")
+
 export default defineConfig({
   testDir: "./tests",
   fullyParallel: true,
@@ -17,9 +29,10 @@ export default defineConfig({
   workers: process.env.CI ? 2 : 4,
   reporter: [
     ["list"],
-    ["html", { outputFolder: "playwright-report", open: "never" }],
-    ["json", { outputFile: "playwright-report/results.json" }],
+    ["html", { outputFolder: `${ARTIFACTS}/playwright-report`, open: "never" }],
+    ["json", { outputFile: `${ARTIFACTS}/playwright-report/results.json` }],
   ],
+  outputDir: `${ARTIFACTS}/test-results`,
   use: {
     baseURL: BASE_URL,
     trace: "retain-on-failure",

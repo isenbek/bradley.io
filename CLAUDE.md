@@ -108,6 +108,7 @@ npm run lint           # eslint .
 6. `toLocaleDateString` defaults to local tz — pass `timeZone: "UTC"` for `"YYYY-MM-DD"` inputs, or better, slice the ISO string.
 7. React 19 / Next 16: `useRef` needs an initial value; event handlers need `"use client"`; private `_folder/` escapes routing but TS + eslint still walk it (needs explicit excludes).
 8. Data flows: pages read `public/data/*.json` written by `scripts/*` pipelines — don't hand-edit those files. Timeline lookups go through the helpers, never re-read the JSONs.
+9. **Generated assets and artifacts live on `/mnt/ursa/bradleyio/`**, not in the working tree (operator rule, 2026-10-01). `playwright-report`, `test-results`, `data/claude-activity.duckdb`, `data/claude-parquet` and `data/claude-activity-export.zip` are symlinks to it; `playwright.config.ts` writes there directly. New heavy output goes there too, with a symlink back if code expects a repo path. Exceptions that stay on root: the live build (`.next*`, the site must not depend on a USB disk), git-tracked `public/`, and private `data/housecalls/`.
 
 ## Contact & Resources
 
