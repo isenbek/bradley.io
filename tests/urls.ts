@@ -17,7 +17,9 @@ export const CORE_PATHS: string[] = [
   "/contact",
   "/services",
   "/projects",
-  "/lab",
+  "/bench",
+  "/projects/turfy",
+  "/work",
   "/ai-pilot",
   "/mcp",
   "/papers",
@@ -28,13 +30,7 @@ export const CORE_PATHS: string[] = [
   "/dragonfli",
   "/sdr",
   // Mission timelines
-  "/projects/nominate-ai",
-  "/projects/tinymachines",
-  "/projects/sysforge-ai",
-  "/projects/isenbek",
   // A couple of project dossiers
-  "/projects/bradleyio",
-  "/projects/terrapulse",
 ]
 
 function fetchSitemapPaths(): string[] {

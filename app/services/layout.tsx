@@ -30,20 +30,8 @@ const AREA_SERVED = [
   { "@type": "City", name: "Kentwood, Michigan" },
 ]
 
-const FAQ = [
-  {
-    q: "Do you provide AI and data-engineering consulting in Grand Rapids?",
-    a: "Yes. I'm based in Forest Hills, Michigan and work with teams across Grand Rapids and Kent County, on-site or remote, on AI integration, data pipelines, and production systems at scale.",
-  },
-  {
-    q: "What is edge computing, and can you build it for a West Michigan business?",
-    a: "Edge computing runs data processing on local hardware instead of a distant cloud, cutting latency and cloud bills. I design and build edge and IoT systems for businesses in Grand Rapids, Ada, Cascade, and the wider Kent County area.",
-  },
-  {
-    q: "Do you work on-site in the Grand Rapids area?",
-    a: "Yes. As a Forest Hills-based technologist I can work on-site across Kent County when it helps, and remotely for everything else.",
-  },
-]
+// The FAQPage structured data is emitted by page.tsx, from the same array its
+// accordion is drawn from, so the two cannot disagree.
 
 export default function V3ServicesLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -90,21 +78,6 @@ export default function V3ServicesLayout({ children }: { children: React.ReactNo
                 { "@type": "ListItem", position: 2, name: "Services", item: "https://bradley.io/services" },
               ],
             },
-          }),
-        }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "FAQPage",
-            "@id": "https://bradley.io/services#faq",
-            mainEntity: FAQ.map((f) => ({
-              "@type": "Question",
-              name: f.q,
-              acceptedAnswer: { "@type": "Answer", text: f.a },
-            })),
           }),
         }}
       />

@@ -6,6 +6,7 @@
     "dev": "concurrently -n \"NEXT,WARGAMES\" -c \"cyan,green\" \"npm run dev:next\" \"npm run dev:wargames\"",
     "dev:next": "node scripts/generate-build-info.js && next dev -p 32221",
     "dev:wargames": "nodemon wargames-server.js",
+    "dev:preview": "NEXT_DIST_DIR=.next-preview next dev -p 32290",
     "build": "node scripts/generate-build-info.js && next build",
     "build:info": "node scripts/generate-build-info.js",
     "start": "next start",

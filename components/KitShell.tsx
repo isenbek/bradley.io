@@ -3,8 +3,15 @@ import buildInfo from "@/lib/build-info.json"
 import { DeployedAgo } from "@/components/kit/DeployedAgo"
 import { KitNav } from "./KitNav"
 
+/** The GitHub organisations /work and /contact already link. No others. */
+const COLOPHON_ORGS = [
+  { href: "https://github.com/isenbek", label: "isenbek" },
+  { href: "https://github.com/tinymachines", label: "tinymachines" },
+  { href: "https://github.com/Nominate-AI", label: "Nominate-AI" },
+] as const
+
 /**
- * The tinymachines style kit's chrome: masthead, page, fixed footer.
+ * The tinymachines style kit's chrome: masthead, page, colophon, fixed footer.
  *
  * This was app/beta/layout.tsx until the cutover. It stopped being a layout
  * because the pages it wraps no longer share a path prefix: they are at /, and
@@ -27,6 +34,53 @@ export function KitShell({ children }: { children: React.ReactNode }) {
         <main className="app-main" id="kit-main">
           {children}
         </main>
+
+        {/* The colophon: where the site ends and says what it is. It flows with
+            the page, above the fixed line below, because the fixed line has
+            room for one fact (what is running) and this is five. A labelled
+            section rather than a third <footer>: the fixed bar is the page's
+            contentinfo, and two of those is a landmark list that lies.
+            Every address here is one the site already links from /work or
+            /contact; this is not the place a new one gets introduced. */}
+        <section className="beta-nav-colophon" aria-label="Colophon">
+          <div className="band">
+            <p className="beta-nav-colophon__motto">
+              <span>Anti-cloud.</span> <span>Host local, think global.</span>
+            </p>
+            <dl className="beta-nav-colophon__list">
+              <div>
+                <dt className="crumb">Email</dt>
+                <dd>
+                  <a href="mailto:brad@bradley.io">brad@bradley.io</a>
+                </dd>
+              </div>
+              <div>
+                <dt className="crumb">GitHub</dt>
+                <dd>
+                  {COLOPHON_ORGS.map((o) => (
+                    <a key={o.label} href={o.href} target="_blank" rel="noopener noreferrer">
+                      {o.label}
+                    </a>
+                  ))}
+                </dd>
+              </div>
+              <div>
+                <dt className="crumb">Resume</dt>
+                <dd>
+                  <a href="/resume.pdf">resume.pdf</a>
+                </dd>
+              </div>
+              <div>
+                <dt className="crumb">Terminal</dt>
+                <dd>
+                  <Link href="/terminal" prefetch={false}>
+                    /terminal
+                  </Link>
+                </dd>
+              </div>
+            </dl>
+          </div>
+        </section>
 
         {/* One line: the name, and what is running. The version is the visible
             "did this ship?" signal, so it keeps the shape it had on v3. */}

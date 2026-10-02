@@ -52,6 +52,14 @@ oldest bucket only holds the part of its hour that is still inside the 24-hour
 window. The two therefore do not sum to each other; a reader should not expect
 them to.
 
+"lastActive" is the newest entry of the minute log: the time of the last cron
+run that found a session file changed, ISO, UTC, to the second. It is null when
+the log is empty, which means no active minute in the last 24 hours (or none
+since /tmp was last cleared). A run sees changes made since the run before it,
+so the writing itself happened in the minute up to that time. The site reads it
+to decide whether a session is active right now (components/live), instead of
+inferring a lower bound from the hourly counts.
+
 Testing: --out, --state-dir and --projects-dir move every file this script
 touches, so a test run never writes public/data or the live /tmp state.
 """
@@ -181,6 +189,8 @@ def main():
         "generated": now_ts,
         "windowHours": WINDOW_HOURS,
         "totalActiveMinutes": len(log),
+        # The last active minute, or None. See the file header.
+        "lastActive": log[-1] if log else None,
         "buckets": buckets,
         # What the numbers above cover. Added 2026-10-02; see the file header.
         "scope": SCOPE,

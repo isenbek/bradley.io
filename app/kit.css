@@ -1835,7 +1835,10 @@ body:has(.beta-root) {
 /* The printable sheet: hidden on screen, the only visible thing in print. */
 .beta-qp-sheet { display: none; }
 @media print {
-  body * { visibility: hidden; }
+  /* Only on a page that has a sheet. Unscoped, this blanked every page of the
+     site in print. The :where() keeps the specificity at "body *", so the
+     show rule on the next line still wins by coming later. */
+  body:where(:has(.beta-qp-sheet)) * { visibility: hidden; }
   .beta-qp-sheet, .beta-qp-sheet * { visibility: visible; }
   .beta-qp-sheet {
     display: block; position: absolute; inset: 0; padding: 0.5in;
@@ -1958,7 +1961,8 @@ body:has(.beta-root) {
 .beta-cc-card__url { font-family: ui-monospace, Menlo, monospace; font-size: 8.5pt; font-weight: 700; padding-top: 0.03in; }
 .beta-cc-sheet { display: none; }
 @media print {
-  body * { visibility: hidden; }
+  /* Only on the cards page, for the same reason as the pads' sheet above. */
+  body:where(:has(.beta-cc-sheet)) * { visibility: hidden; }
   .beta-cc-sheet, .beta-cc-sheet * { visibility: visible; }
   .beta-cc-sheet {
     display: grid; position: absolute; inset: 0;
@@ -2154,3 +2158,4517 @@ body:has(.beta-root) {
   color: var(--color-glass-muted);
   max-width: 68ch;
 }
+
+/* ===========================================================================
+   NAV (begin block: beta-nav-*)
+   components/KitNav.tsx, components/KitShell.tsx, components/kit/BioLogo.tsx
+
+   Three things the kit's slim frame does not have and this site wants: a row
+   of primary links in the bar on a wide screen, the dot of the mark that
+   lifts when the mark is pointed at, and a colophon above the fixed footer.
+
+   The kit's bar, button, sheet and footer are used as shipped, and almost
+   everything here is a new part with its own class. The three places this
+   block reaches into the kit's own parts are each labelled where they stand:
+   the mark's width, the sheet (a second "current" value and a height that
+   stops short of the footer), and print.
+   ======================================================================== */
+
+/* ---- The mark ----------------------------------------------------------- */
+
+/* The kit's wordmark grows to fill the bar, which made the whole empty middle
+   of the masthead one invisible link to the home page. With a row of links
+   beside it that is a misfire waiting, and the mark would answer a pointer
+   five hundred pixels away from it. So the link is the size of what it shows
+   and an auto margin does the pushing instead. It may still shrink first on a
+   phone, which is the kit's rule for it. */
+.wordmark.beta-nav-mark { flex: 0 1 auto; margin-right: auto; }
+.beta-nav-mark:focus-visible { outline: 2px solid var(--color-blue-ink); outline-offset: 2px; }
+
+/* While the menu is open the kit lays a scrim over the page (z-index 29,
+   inside the header's own stacking context) so a click anywhere closes it.
+   Above a phone that scrim paints nothing, so the mark looked live and a
+   click on it only closed the menu: a dead click. One step above the scrim
+   it goes home on the first click, and KitNav closes the menu as it does.
+   Not on a phone, where the scrim is a visible wash and everything under it
+   reads as set aside; the query is the exact complement of the kit's. */
+@media not all and (max-width: 34rem) {
+  .beta-nav-mark { position: relative; z-index: 30; }
+}
+
+/* The dot of the "i" lifts two pixels while the mark is pointed at or holds
+   keyboard focus, and drops when it is not. A moving part moves: translateY
+   and nothing else, on the detent timing, with the kit's hard-stop ease, which
+   has no overshoot. --beta-nav-lift is the distance in the drawing's own
+   units, set by BioLogo from its rendered height; 34 is the masthead's value
+   and only a fallback.
+
+   Written inside the motion query rather than cancelled by a second one, so a
+   reader who asked for no motion gets no movement at all, not an instant
+   jump. The hover half also asks for a real pointer: on a touch screen :hover
+   sticks after a tap and the dot would stay up until something else was
+   touched. */
+@media (prefers-reduced-motion: no-preference) {
+  .beta-nav-mark svg[data-bob="true"] [data-piece="dot"] {
+    transition: transform var(--t-detent) var(--ease-detent);
+  }
+  .beta-nav-mark:focus-visible svg[data-bob="true"] [data-piece="dot"] {
+    transform: translateY(calc(var(--beta-nav-lift, 34) * -1px));
+  }
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .beta-nav-mark:hover svg[data-bob="true"] [data-piece="dot"] {
+    transform: translateY(calc(var(--beta-nav-lift, 34) * -1px));
+  }
+}
+
+/* ---- The primary row ---------------------------------------------------- */
+
+/* Off by default: below the breakpoint the bar is the mark and MENU, as it
+   was. display: none also takes the links out of the tab order and the
+   accessibility tree, so a phone does not tab through six things it cannot
+   see. */
+.beta-nav-primary { display: none; }
+
+/* The breakpoint is measured, not picked. The bar needs the mark (145px),
+   the row and its margin (462px), MENU (80px), two 12px gaps and the band's
+   own 64px of padding: 775px with nothing to spare, and the first thing to
+   give below that is the wordmark, which truncates. A desktop scrollbar takes
+   15px more. 52rem is 832px, so the row arrives with forty to fifty pixels of
+   slack, which is also the room a fallback mono face would need, and a 768px
+   tablet keeps the phone bar. In rem so a reader who has raised their font
+   size gets the switch later, when their larger row actually fits. */
+@media (min-width: 52rem) {
+  /* Stretched to the bar's full height, through its padding, so each link is
+     a target as tall as the bar and the marker can sit on the bar's own rule
+     instead of floating under a word. The negative margin is the band's
+     padding, cancelled; the row adds no height of its own, so --app-head-h
+     is what it was. */
+  .beta-nav-primary {
+    display: flex;
+    flex: 0 0 auto;
+    align-self: stretch;
+    margin-block: calc(var(--u) * -2);
+    margin-right: calc(var(--u) * 2);
+    /* Above the menu's scrim, for the reason given at the mark: six visible
+       links beside an open menu must each work on the first click. */
+    position: relative;
+    z-index: 30;
+  }
+
+  /* The label voice: mono caps, the same as MENU beside it and the crumb
+     under it. Muted until it is the one you are on. */
+  .beta-nav-primary a {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 0 calc(var(--u) * 3);
+    font-family: var(--font-mono);
+    font-size: var(--text-fine);
+    letter-spacing: var(--tracking-caps);
+    text-transform: uppercase;
+    text-decoration: none;
+    white-space: nowrap;
+    color: var(--color-ink-muted);
+    transition: color var(--t-snap) var(--ease-detent);
+  }
+
+  /* The marker: a 3px bar that stands on the bar's 1px rule and thickens it
+     under one word. On the rule, not over it: laid over, the hover state
+     turned a stretch of the ink rule grey and the bar looked broken there.
+     It is a shape, so the section you are in is legible in
+     greyscale; the accent is the kit's "current item" colour and the weight
+     change says it a third time. Mono, so going bold does not move the row. */
+  .beta-nav-primary a::after {
+    content: "";
+    position: absolute;
+    left: calc(var(--u) * 3);
+    right: calc(var(--u) * 3);
+    bottom: 0;
+    height: 3px;
+    background: transparent;
+    transition: background-color var(--t-snap) var(--ease-detent);
+  }
+  .beta-nav-primary a:hover { color: var(--color-ink); }
+  .beta-nav-primary a:hover::after { background: var(--color-ink-faint); }
+  .beta-nav-primary a[aria-current] { color: var(--color-ink); font-weight: 600; }
+  .beta-nav-primary a[aria-current]::after { background: var(--color-accent-ink); }
+  .beta-nav-primary a:focus-visible { outline: 2px solid var(--color-blue-ink); outline-offset: -3px; }
+}
+
+/* ---- The sheet ---------------------------------------------------------- */
+
+/* The kit marks the sheet's current item only on aria-current="page". The
+   row above marks a section as well as a page (aria-current="true" on
+   /projects/prime-zoo for Projects), and the sheet has to agree with it, or
+   the bar says you are in Projects while the open menu says you are nowhere.
+   Same two properties the kit uses, for the second value. */
+.menu-item[aria-current="true"] {
+  background: var(--color-paper-sunk);
+  border-left-color: var(--color-accent-ink);
+}
+
+/* The sheet holds four groups here and is taller than a desktop window. The
+   kit stops the card short of the fixed footer only on a phone; above that it
+   ran 7px over the version line. The same subtraction at every width, so the
+   card ends 16px above the line the owner reads. */
+.app-head .menu-panel {
+  max-height: calc(100dvh - var(--app-head-h, 4rem) - var(--app-foot-h, 3rem) - var(--u) * 6);
+}
+
+/* ---- Print -------------------------------------------------------------- */
+
+@media print {
+  /* Navigation does not print, and the colophon is navigation: four
+     addresses to click. A page that wants its email on paper says so in its
+     own text, as /resume does. */
+  .beta-nav-primary,
+  .beta-nav-colophon { display: none; }
+
+  /* The version line prints once, at the end, as the record of which build
+     was on the paper. Fixed, it printed on every sheet and sat over the last
+     line of each one. The kit already unpins the header for print; its print
+     rules were written before the footer was locked, so this is the other
+     half of the same decision. */
+  .app-foot { position: static; }
+}
+
+/* ---- The colophon ------------------------------------------------------- */
+
+/* Flowing content above the fixed version line. The kit's .app-main already
+   pads its own bottom by the footer's height plus a little, which was the
+   clearance when main was the last thing on the page; with this after it,
+   that padding is simply the space between the page and its colophon, and
+   the clearance moves here. --app-foot-h is the measured height KitNav
+   publishes, so a footer that wraps to two lines on a phone still clears. */
+.beta-nav-colophon {
+  background: var(--color-paper);
+  padding-bottom: var(--app-foot-h, 3rem);
+}
+
+/* On the chrome's measure, under a hairline, so the page is framed by the
+   same rule top and bottom. The three-class selector is deliberate: the kit
+   squeezes every .app-shell .band on a short viewport, which is right for a
+   locked bar and wrong for a block of content. */
+.app-shell .beta-nav-colophon > .band {
+  display: grid;
+  gap: calc(var(--u) * 5) calc(var(--u) * 12);
+  padding-top: 0;
+  padding-bottom: calc(var(--u) * 8);
+}
+.app-shell .beta-nav-colophon > .band::before {
+  content: "";
+  grid-column: 1 / -1;
+  border-top: 1px solid var(--color-rule);
+}
+
+/* The motto, in the display face, because it is the one line here that is a
+   statement and not an address. Two clauses, each an inline block, so when
+   the line is too short for both it breaks between them and never inside
+   "Host local": at 320px a balanced wrap put "Host" on the first line. */
+.beta-nav-colophon__motto {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: var(--text-lead);
+  letter-spacing: var(--tracking-tight);
+  line-height: 1.15;
+  color: var(--color-ink);
+}
+.beta-nav-colophon__motto span { display: inline-block; }
+
+/* Label over value, four times. Two columns on a phone, because one column
+   of four short lines is a tall thin strip next to nothing. minmax(0, 1fr)
+   for the reason every grid in this file gives: a track's floor is its
+   content, and an email address is a long word. */
+.beta-nav-colophon__list {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: calc(var(--u) * 5) calc(var(--u) * 6);
+}
+.beta-nav-colophon__list > div { min-width: 0; }
+.beta-nav-colophon__list dt { margin-bottom: calc(var(--u) * 1.5); }
+.beta-nav-colophon__list dd {
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(var(--u) * 1.5) calc(var(--u) * 4);
+  font-family: var(--font-mono);
+  font-size: var(--text-data);
+  line-height: 1.5;
+}
+.beta-nav-colophon__list a {
+  color: var(--color-ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-ink-faint);
+  overflow-wrap: anywhere;
+  transition: border-color var(--t-snap) var(--ease-detent);
+}
+.beta-nav-colophon__list a:hover { border-bottom-color: var(--color-ink); }
+.beta-nav-colophon__list a:focus-visible { outline: 2px solid var(--color-blue-ink); outline-offset: 2px; }
+
+@media (min-width: 40rem) {
+  .beta-nav-colophon__motto { font-size: var(--text-h3); }
+}
+/* Four across, each as wide as what it holds, spread over the measure. The
+   breakpoint is measured: the four cells are 117, 266, 78 and 70px with
+   three 24px gaps, 603px, and the measure is the window less 64px of band
+   padding and a 15px scrollbar. At 40rem that was 3px short and the GitHub
+   cell broke "Nominate-AI" onto a second line beside an empty gap. 46rem
+   leaves 54px, which is also the room a fallback mono face would take. */
+@media (min-width: 46rem) {
+  .beta-nav-colophon__list {
+    grid-template-columns: repeat(4, auto);
+    justify-content: space-between;
+  }
+}
+/* Motto left, addresses right, on one line of sight. The addresses take the
+   width they need and the motto takes the rest, so it is the motto that
+   gives if a face runs wide, never an address that wraps: a 5fr/8fr split
+   left the list 42px short at 1024 and only 17px clear at full width. The
+   list needs 675px with its wider gaps and the motto 267, which with the
+   band's padding, the gap between them and a scrollbar is 1069px; 70rem is
+   1120. */
+@media (min-width: 70rem) {
+  .app-shell .beta-nav-colophon > .band {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+  }
+  .beta-nav-colophon__motto span { display: block; }
+  .beta-nav-colophon__list { column-gap: calc(var(--u) * 12); }
+}
+/* NAV (end block: beta-nav-*) */
+
+/* ===========================================================================
+   CHART PRIMITIVES (app/_charts.tsx: Sparkline, BarStrip, CalendarHeat,
+   LineChart, TenureBars)                                 block: beta-charts-*
+
+   Layout only. Every data colour arrives as an inline style from
+   lib/beta/chart-theme.ts, exactly as the CHARTS block at the top of this file
+   says; the only colours named below are furniture (label ink, the panel
+   ground behind a label, the hover wash).
+
+   The shared idea: an SVG that is stretched to its box scales its text with
+   it, so none of these put a word inside a stretched SVG. A line plot is an
+   SVG, bars are HTML boxes, the labels are HTML laid over either by
+   percentage, and type stays at the kit's own sizes from 320px to 1280px.
+
+   These build on .beta-chart, .beta-chart__cap and .beta-chart__note above and
+   do not restate them.
+   ======================================================================== */
+
+/* Caption on the left, one stated value on the right ("tallest 56 min"): a
+   strip has no value axis, so the one number gives the bars their scale. */
+.beta-charts-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  column-gap: calc(var(--u) * 4);
+}
+.beta-charts-head__note {
+  margin-bottom: calc(var(--u) * 2);
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-glass);
+  white-space: nowrap;
+}
+
+/* A hover column or a bar slot: the reader's own pointer, answered in one
+   snap. Nothing else in a chart moves. */
+.beta-charts-hit { fill: transparent; transition: fill var(--t-snap) var(--ease-detent); }
+.beta-charts-slot:hover .beta-charts-hit { fill: color-mix(in oklab, var(--color-glass) 9%, transparent); }
+/* Only the hover columns answer the pointer. A line, an end dot or the gap
+   bracket drawn over them must not: the place a reader points is exactly on
+   the line, and that is where the tooltip used to drop out. */
+.beta-charts-line__plot svg > path,
+.beta-charts-line__plot svg > line { pointer-events: none; }
+
+/* Sparse labels under a plot. Each is placed by `left` and centred on its
+   point; the two edge classes anchor a label to its side instead, so the first
+   and last never hang outside the panel. */
+.beta-charts-ticks {
+  position: relative;
+  height: 1.4em;
+  margin-top: calc(var(--u) * 1.5);
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  line-height: 1.4;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-glass-muted);
+}
+.beta-charts-ticks span {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+/* Which labels fit depends on the width of the plot, which only the browser
+   knows. The server chooses an evenly spaced set for each of four width bands
+   (tickPlan in app/_charts.tsx) and stamps every label that is not always
+   shown with the bands it belongs to; each query below shows one band's set.
+   The row is its own container, so this follows the plot, not the viewport. */
+.beta-charts-ticks { container-type: inline-size; }
+.beta-charts-ticks span[data-s] { display: none; }
+@container (max-width: 239.98px) { .beta-charts-ticks span[data-s~="160"] { display: block; } }
+@container (min-width: 240px) and (max-width: 359.98px) { .beta-charts-ticks span[data-s~="240"] { display: block; } }
+@container (min-width: 360px) and (max-width: 559.98px) { .beta-charts-ticks span[data-s~="360"] { display: block; } }
+@container (min-width: 560px) { .beta-charts-ticks span[data-s~="560"] { display: block; } }
+.beta-charts-ticks span.is-start { transform: none; }
+.beta-charts-ticks span.is-end { transform: translateX(-100%); }
+/* The label that names a highlighted bar or the as-of date. Full glass and a
+   heavier weight, because it is the one that carries state without colour. */
+.beta-charts-ticks span.is-mark { color: var(--color-glass); font-weight: 600; }
+
+/* ---- Sparkline ---------------------------------------------------------- */
+/* Inline, so it sits on a table row's own baseline. It may shrink with a
+   narrow cell and never grows past the width it was given. */
+.beta-charts-spark {
+  display: inline-block;
+  vertical-align: middle;
+  width: 100%;
+  overflow: visible;
+}
+/* In a readout cell the sparkline is the cell: give it a floor so `width:100%`
+   of an auto-sized column does not collapse it to nothing. */
+td > .beta-charts-spark { min-width: calc(var(--u) * 12); }
+
+/* ---- BarStrip ----------------------------------------------------------- */
+/* One slot per bucket, all the same width, standing on a hairline. The bars
+   are HTML so the cap below can be written: an SVG bar scales with its slot. */
+.beta-charts-strip__bars {
+  display: flex;
+  align-items: stretch;
+  border-bottom: 1px solid var(--color-rule-panel);
+}
+.beta-charts-strip__bars > .beta-charts-slot {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  transition: background-color var(--t-snap) var(--ease-detent);
+}
+.beta-charts-strip__bars > .beta-charts-slot:hover { background-color: color-mix(in oklab, var(--color-glass) 9%, transparent); }
+/* 72% of the slot on a phone, where the slot is 11px; never wider than 2.5rem
+   on a desk, where the slot is 42px or more. Past that a bar stops reading as
+   a mark and starts reading as a block. The floor keeps a bucket of one
+   visible beside a bucket of eight hundred. */
+.beta-charts-strip__bars i {
+  display: block;
+  width: min(72%, calc(var(--u) * 10));
+  min-height: 2px;
+}
+
+/* ---- CalendarHeat ------------------------------------------------------- */
+.beta-charts-cal__body {
+  display: flex;
+  align-items: flex-start;
+  gap: calc(var(--u) * 1.5);
+  min-width: 0;
+}
+.beta-charts-cal__days { flex: 0 0 auto; display: block; }
+.beta-charts-cal text {
+  font-family: var(--font-mono);
+  font-size: 10px; /* SVG user units at natural size, not a type token: it must fit an 11px row */
+}
+/* Right-to-left scroller, left-to-right grid: with no script, this is what
+   opens the calendar at its newest week on a phone. When the grid fits, the
+   inner box is as wide as the scroller and the grid sits at its left. */
+.beta-charts-cal__scroll {
+  flex: 1 1 auto;
+  min-width: 0;
+  /* Without this the 742px grid inside still counts toward the min-content
+     width of every ancestor, and a panel placed in a grid or flex parent is
+     pushed to 800px on a phone. The scroller's own width comes from the flex
+     row it sits in, never from what it holds. */
+  contain: inline-size;
+  overflow-x: auto;
+  overflow-y: hidden;
+  direction: rtl;
+  padding-bottom: calc(var(--u) * 2);
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-rule-panel) transparent;
+}
+.beta-charts-cal__scroll:focus-visible {
+  outline: 2px solid var(--color-blue);
+  outline-offset: 2px;
+}
+.beta-charts-cal__inner {
+  direction: ltr;
+  width: max-content;
+  min-width: 100%;
+}
+.beta-charts-cal__inner svg { display: block; }
+.beta-charts-cal__inner rect {
+  stroke: transparent;
+  stroke-width: 1px;
+  transition: stroke var(--t-snap) var(--ease-detent);
+}
+.beta-charts-cal__inner rect:hover { stroke: var(--color-glass); }
+
+/* The key: what a cell is, the period, and the value range of every shade. */
+.beta-charts-key {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: calc(var(--u) * 1.5) calc(var(--u) * 5);
+  margin: calc(var(--u) * 2) 0 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-glass-muted);
+}
+.beta-charts-key__bins {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: calc(var(--u) * 1) calc(var(--u) * 3);
+}
+.beta-charts-key__bins > span { display: inline-flex; align-items: center; white-space: nowrap; }
+.beta-charts-key i {
+  display: inline-block;
+  width: 11px;
+  height: 11px;
+  margin-right: calc(var(--u) * 1.5);
+  border-radius: var(--radius-hair);
+}
+
+/* ---- LineChart ---------------------------------------------------------- */
+/* Two columns: the y labels size themselves, the plot takes the rest. The top
+   padding is headroom for an end label that sits above the highest point, and
+   the right padding is the radius of an end dot at the last x. */
+.beta-charts-line__frame {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: calc(var(--u) * 2);
+  padding: calc(var(--u) * 7) 6px 0 0;
+}
+/* Two end labels stacked as one block need a second line of headroom. */
+.beta-charts-line__frame.is-stacked { padding-top: calc(var(--u) * 12); }
+/* Zero-height items spread by space-between land exactly on the gridlines,
+   whatever the label's own line height. Reversed, so a lone "0" sits at the
+   bottom rather than the top. */
+.beta-charts-line__y {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-glass-muted);
+}
+.beta-charts-line__y span {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  height: 0;
+  white-space: nowrap;
+}
+/* A container, so the gap label can choose its height by the plot's own width. */
+.beta-charts-line__plot { position: relative; min-width: 0; container-type: inline-size; }
+.beta-charts-line__plot svg {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+.beta-charts-line__frame > .beta-charts-ticks { grid-column: 2; }
+
+/* The crosshair for the point under the pointer. */
+.beta-charts-line__hair { opacity: 0; pointer-events: none; }
+.beta-charts-slot:hover .beta-charts-line__hair { opacity: 1; }
+
+/* End labels. Above their endpoint, right-aligned to it, and transparent to
+   the pointer so the hover columns under them still answer. */
+.beta-charts-line__end {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  transform: translateY(calc(-100% - 9px));
+  pointer-events: none;
+}
+/* The lower end label when the gap bracket rises through its place: it steps
+   left of the bracket, so its panel ground does not cut the bracket in two. */
+.beta-charts-line__end.is-inset { margin-right: calc(var(--u) * 2.5); }
+/* Text in text ink; identity is the coloured key beside it. The panel ground
+   behind the label keeps it legible where a gridline passes under it. */
+.beta-charts-lbl {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--u) * 1.5);
+  padding: 0 3px;
+  background: var(--color-panel);
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+  line-height: 1.4;
+  white-space: nowrap;
+  color: var(--color-glass-muted);
+}
+.beta-charts-lbl b { color: var(--color-glass); font-weight: 600; font-variant-numeric: tabular-nums; }
+.beta-charts-lbl i { flex: 0 0 auto; width: 10px; height: 2px; }
+
+/* The gap annotation: beside its bracket, centred on it. */
+.beta-charts-line__gap {
+  position: absolute;
+  top: var(--gap-narrow);
+  transform: translate(calc(-100% - 10px), -50%);
+  padding: 1px 4px;
+  background: var(--color-panel);
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+  line-height: 1.4;
+  white-space: nowrap;
+  color: var(--color-glass);
+  pointer-events: none;
+}
+.beta-charts-line__gap.is-right { transform: translate(10px, -50%); }
+@container (min-width: 480px) { .beta-charts-line__gap { top: var(--gap-wide); } }
+
+/* The legend, two series only. A short line key, because the marks are lines. */
+.beta-charts-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(var(--u) * 1) calc(var(--u) * 5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+  color: var(--color-glass-muted);
+}
+.beta-charts-legend li { display: inline-flex; align-items: center; gap: calc(var(--u) * 2); }
+.beta-charts-legend i { display: block; width: 14px; height: 2px; }
+
+/* On a narrow plot (a phone, or half a row on a desk) a named end label would
+   cover a third of it. The legend already carries the names, so the end labels
+   keep the key and the value and drop the name. Asked of the plot's own width,
+   not the viewport's: the same chart in a narrow card behaves the same way. */
+@container (max-width: 26rem) {
+  .beta-charts-line--two .beta-charts-lbl > span { display: none; }
+}
+
+/* ---- TenureBars --------------------------------------------------------- */
+/* The figure is a container so the rows can stack by the room they actually
+   have, in a full-width panel or in half of one. */
+.beta-charts-tenure { container-type: inline-size; }
+
+/* One grid for every row (subgrid), so all tracks are the same width and the
+   same years: a row-by-row grid would size each track by its own label. */
+.beta-charts-tenure__rows {
+  display: grid;
+  grid-template-columns: fit-content(16rem) minmax(0, 1fr) auto;
+  gap: calc(var(--u) * 2.5) calc(var(--u) * 3);
+}
+.beta-charts-tenure__row {
+  display: grid;
+  grid-template-columns: subgrid;
+  grid-column: 1 / -1;
+  align-items: center;
+}
+.beta-charts-tenure__lbl {
+  grid-column: 1;
+  grid-row: 1;
+  min-width: 0;
+  display: grid;
+  font-size: var(--text-fine);
+  line-height: 1.35;
+  color: var(--color-glass-muted);
+  overflow-wrap: anywhere;
+}
+.beta-charts-tenure__lbl b { color: var(--color-glass); font-weight: 600; font-size: var(--text-data); }
+.beta-charts-tenure__track {
+  grid-column: 2;
+  grid-row: 1;
+  position: relative;
+  display: block;
+  height: calc(var(--u) * 4);
+  background: var(--color-panel-sunk);
+  border-radius: var(--radius-hair);
+}
+.beta-charts-tenure__track i {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+}
+.beta-charts-tenure__bar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  min-width: 3px;
+  border-radius: var(--radius-hair);
+}
+.beta-charts-tenure__when {
+  grid-column: 3;
+  grid-row: 1;
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: var(--color-glass-muted);
+}
+.beta-charts-tenure__axis > .beta-charts-ticks { grid-column: 2; margin-top: calc(var(--u) * -1); }
+
+/* Under 40rem of its own width the three columns would leave the track about
+   60px, so the row stacks: the name on its own line at full width, then the
+   sub-label with the years at its right, then the track across the whole
+   panel. The label wrapper dissolves (display: contents) so its two lines can
+   sit in the row's own grid. */
+@container (max-width: 40rem) {
+  .beta-charts-tenure__rows { grid-template-columns: minmax(0, 1fr) auto; row-gap: calc(var(--u) * 4); }
+  .beta-charts-tenure__row { row-gap: calc(var(--u) * 0.5); align-items: baseline; }
+  .beta-charts-tenure__lbl { display: contents; }
+  .beta-charts-tenure__lbl b { grid-column: 1 / -1; grid-row: 1; min-width: 0; overflow-wrap: break-word; }
+  .beta-charts-tenure__lbl span {
+    grid-column: 1;
+    grid-row: 2;
+    min-width: 0;
+    font-size: var(--text-fine);
+    line-height: 1.35;
+    color: var(--color-glass-muted);
+  }
+  .beta-charts-tenure__when { grid-column: 2; grid-row: 2; }
+  .beta-charts-tenure__track { grid-column: 1 / -1; grid-row: 3; margin-top: calc(var(--u) * 1.5); }
+  .beta-charts-tenure__axis > .beta-charts-ticks { grid-column: 1 / -1; }
+}
+
+/* end of block: beta-charts-* */
+
+/* ===========================================================================
+   LIVE: the site showing that a real machine is running
+   (components/live/*, lib/use-changed.ts; block prefix beta-live-*)
+
+   Three components draw from one poll of /api/now: NowPanel (one row per
+   instrument), ActivityPulse (the last 24 hours of Claude Code on this host)
+   and LiveDot (lit only while something is really happening).
+
+   The rule for motion here is the kit's, applied strictly: a thing moves when
+   the measurement under it changed, once, for as long as a detent takes, and
+   never because time passed. There is no loop in this block. An instrument
+   that is offline gets the kit's orange ATTENTION tag and muted ink, and
+   nothing else: it is a box that is unplugged, not an alarm.
+   ======================================================================== */
+
+/* A live panel and the provenance chip under it travel as one block. It is a
+   size container, so the table inside lays out by the width it was GIVEN, and
+   a panel put in a half-width column on a wide screen still stacks. */
+.beta-live {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: start;
+  gap: calc(var(--u) * 2.5);
+  container-type: inline-size;
+}
+.beta-live > .panel { justify-self: stretch; min-width: 0; }
+/* The chip's text is one child (a span), so it stays beside the mark and wraps
+   inside itself. The kit lets a chip's children wrap as whole items, which on
+   a phone leaves the mark alone on a line above the sentence. */
+.beta-live > .measured { flex-wrap: nowrap; }
+.beta-live > .measured > span { min-width: 0; overflow-wrap: anywhere; }
+
+/* ---- The settle ---------------------------------------------------------
+   The kit ships this animation for one selector, `.reg > b.changed`. These are
+   the same keyframes on the same clock, on a class a readout cell can wear:
+   a blue wash that is gone in --t-detent. The start colour lives in the kit's
+   keyframes, so nothing here names a colour. With reduced motion the kit's
+   global rule collapses it and the "changed" colour alone marks the value. */
+.beta-live-settle { animation: tm-settle var(--t-detent) var(--ease-detent); }
+
+/* ---- NowPanel: the table ------------------------------------------------
+   Every row is its own grid, not a table row: a reading, a status tag and a
+   sentence do not share column widths in any useful way, and a grid lets the
+   three stack on a phone without a second copy of the markup. The elements
+   are still a table to assistive tech (the roles are set in the markup). */
+.panel-face .readout.beta-live-now,
+.panel-face .readout.beta-live-now tbody { display: block; }
+
+.panel-face .readout.beta-live-now tr {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-areas:
+    "name read"
+    "say  say"
+    "tag  tag";
+  column-gap: calc(var(--u) * 3);
+  row-gap: calc(var(--u) * 1.5);
+  padding: calc(var(--u) * 3) 0;
+  border-bottom: 1px solid var(--color-rule-panel);
+}
+.panel-face .readout.beta-live-now tr:first-child { padding-top: 0; }
+.panel-face .readout.beta-live-now tr:last-child { border-bottom: 0; padding-bottom: 0; }
+.panel-face .readout.beta-live-now td { display: block; padding: 0; border: 0; min-width: 0; }
+
+.beta-live-name {
+  grid-area: name;
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--color-glass);
+}
+.beta-live-name a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--color-glass-muted);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  transition: text-decoration-color var(--t-snap) var(--ease-snap);
+}
+.beta-live-name a:hover { text-decoration-color: var(--color-blue); text-decoration-thickness: 2px; }
+.beta-live-name a:focus-visible { outline: 2px solid var(--color-blue); outline-offset: 3px; }
+
+.beta-live-say {
+  grid-area: say;
+  max-width: 68ch;
+  font-family: var(--font-sans);
+  font-size: var(--text-fine);
+  line-height: 1.5;
+  color: var(--color-glass-muted);
+  overflow-wrap: break-word;
+}
+
+/* The reading. Right-aligned against the edge so the numbers form a column
+   down the panel; it may wrap under itself on a phone rather than push out. */
+.panel-face .readout.beta-live-now td.beta-live-read {
+  grid-area: read;
+  align-self: baseline;
+  text-align: right;
+  overflow-wrap: break-word;
+}
+.beta-live-val {
+  display: inline-block;
+  margin: 0 calc(var(--u) * -1);
+  padding: 0 var(--u);
+  border-radius: var(--radius-hair);
+  font-weight: 600;
+}
+.beta-live-unit,
+.beta-live-none { color: var(--color-glass-muted); }
+
+.beta-live-tag { grid-area: tag; justify-self: start; }
+
+/* The bar's count: "7 instruments" until there is a clock, "2 of 7 live" after.
+   Both are in the cell, stacked on one grid area, one of them invisible. */
+.beta-live-count { display: inline-grid; justify-items: end; }
+.beta-live-count > span { grid-area: 1 / 1; white-space: nowrap; }
+.beta-live-count > [aria-hidden="true"] { visibility: hidden; }
+
+/* Seven status tags in one table. As the kit draws them, each is a paper chip
+   on the glass, and with most of the hardware unplugged the brightest marks
+   on the panel were the OFFLINE ones. Here only LIVE keeps the chip. Every
+   other state (offline, stale, not judged yet, the build's age) is an outline
+   on the panel's own ground: same words, same orange for ATTENTION, at the
+   weight of a caption. The word still carries the state. Orange on panel is
+   5.2:1; the neutral ones take the muted glass. */
+.beta-live-now .tag.beta-inst:not([data-state="live"]) {
+  background: transparent;
+  border-color: var(--color-rule-panel);
+  color: var(--color-glass-muted);
+}
+.beta-live-now .tag.beta-inst.warn { color: var(--color-orange); }
+
+/* Not live is calm: the name steps back to muted ink and the tag says why.
+   So does the one reading such a row can carry (a collector hearing a true
+   zero): a bold white number beside OFFLINE reads as a contradiction. */
+.beta-live-now tr:is([data-state="offline"], [data-state="checking"]) .beta-live-name { color: var(--color-glass-muted); }
+.beta-live-now tr:is([data-state="offline"], [data-state="checking"]) .beta-live-val {
+  color: var(--color-glass-muted);
+  font-weight: 400;
+}
+
+/* Room for three columns: sentence under the name, the reading beside it, the
+   tag in a column of its own wide enough for "OFFLINE · last heard" and a
+   full date on one line. */
+@container (min-width: 54rem) {
+  .panel-face .readout.beta-live-now tr {
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 21rem);
+    grid-template-areas:
+      "name read tag"
+      "say  say  tag";
+    column-gap: calc(var(--u) * 6);
+    row-gap: var(--u);
+    padding: calc(var(--u) * 2.5) 0;
+  }
+  .beta-live-tag { justify-self: end; text-align: right; }
+}
+
+/* The line under a live panel's content: when it was read, when it asks again. */
+.beta-live-foot {
+  margin: calc(var(--u) * 4) 0 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+  line-height: 1.5;
+  color: var(--color-glass-muted);
+  overflow-wrap: break-word;
+}
+.beta-live-foot b { color: var(--color-glass); font-weight: 600; }
+.beta-live-foot time { font-variant-numeric: tabular-nums; }
+/* The part of a line that only a running browser can say (an age, a promise
+   to poll). It is in the server's HTML with a placeholder for the number,
+   taking its room and wrapping where the real one will, and not shown: so the
+   line is the same height before and after hydration (components/live/Stamp). */
+.beta-live-later { visibility: hidden; }
+
+/* ---- ActivityPulse ------------------------------------------------------ */
+/* In a narrow panel the title takes the bar's first line whole and the status
+   tag sits under it. Before there is a clock the tag reads "last heard" and a
+   full date; after, "LIVE". Side by side, the first wraps and the second does
+   not, and the panel would lose a line as it hydrates. */
+@container (max-width: 36rem) {
+  .panel-bar.beta-live-pulsebar > b { flex-basis: 100%; }
+}
+.beta-live-headline {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: calc(var(--u) * 3);
+  margin: 0;
+  color: var(--color-glass);
+}
+.beta-live-big {
+  display: inline-block;
+  margin: 0 calc(var(--u) * -1.5);
+  padding: 0 calc(var(--u) * 1.5);
+  border-radius: var(--radius-hair);
+  font-family: var(--font-mono);
+  font-size: var(--text-h2);
+  font-weight: 600;
+  line-height: 1.15;
+  font-variant-numeric: tabular-nums;
+}
+/* Outside a .readout the kit's "changed" colour does not reach, so it is
+   repeated: mustard is the value colour, a changed value is a value. */
+.beta-live-big.changed { color: var(--color-mustard); }
+.beta-live-headline__unit { font-family: var(--font-sans); font-size: var(--text-body); }
+.beta-live-sub {
+  margin: var(--u) 0 0;
+  max-width: 68ch;
+  font-family: var(--font-sans);
+  font-size: var(--text-fine);
+  line-height: 1.5;
+  color: var(--color-glass-muted);
+}
+
+/* ---- LiveDot ------------------------------------------------------------
+   Unlit is a hollow ring in whatever ink surrounds it. Lit is a filled disc
+   in ACTIVE blue: the -ink step on paper, the panel step inside a panel. The
+   two differ in shape as well as colour. */
+.beta-live-dotwrap {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--u) * 2);
+  vertical-align: middle;
+}
+.beta-live-dot {
+  flex: none;
+  box-sizing: border-box;
+  /* 10px by default. A caller that needs another size sets --beta-live-dot on
+     the dot's parent; nothing else about it changes. */
+  width: var(--beta-live-dot, 0.625rem);
+  height: var(--beta-live-dot, 0.625rem);
+  border-radius: 50%;
+  border: 1.5px solid currentColor;
+  opacity: 0.55;
+}
+.beta-live-dot[data-active="true"] {
+  border-color: var(--color-blue-ink);
+  background: var(--color-blue-ink);
+  color: var(--color-blue-ink);
+  opacity: 1;
+}
+.panel .beta-live-dot[data-active="true"] {
+  border-color: var(--color-blue);
+  background: var(--color-blue);
+  color: var(--color-blue);
+}
+/* One ring, once, when a new active minute is recorded. Not a loop: the class
+   is on for 400 ms and the animation runs a single time inside it. */
+.beta-live-dot--tick { animation: beta-live-tick var(--t-slide) var(--ease-detent) 1; }
+@keyframes beta-live-tick {
+  from { box-shadow: 0 0 0 0 currentColor; }
+  to   { box-shadow: 0 0 0 0.3rem transparent; }
+}
+.beta-live-dotlabel {
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+  line-height: 1.4;
+}
+
+/* end of block: beta-live-* */
+
+/* ===========================================================================
+   THE SHIFT and COST ANALYSIS (app/the-shift, app/cost-analysis,
+   components/shift/*)                                     block: beta-shift-*
+
+   Two pages that argue from one frozen case study. What this block adds to the
+   chart primitives above is arrangement, and one distinction the primitives do
+   not draw: RECORDED against MODELLED. A modelled series is dashed and a
+   modelled panel says so in its bar, in words, so the difference never rests
+   on colour. No colour is named here that the kit does not already own.
+   ======================================================================== */
+
+/* A figure: the panel, and under it the chip that says where it came from.
+   They travel as one block, so a chip cannot drift onto the next figure. */
+.beta-shift-fig {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  justify-items: start;
+  align-content: start;
+  gap: calc(var(--u) * 2.5);
+  margin: calc(var(--u) * 5) 0 calc(var(--u) * 8);
+}
+.beta-shift-fig > .panel { justify-self: stretch; min-width: 0; }
+/* The chip's text is one child, so the mark stays beside the sentence and the
+   sentence wraps inside itself (the same fix the live block makes). */
+.beta-shift-fig > .measured { flex-wrap: nowrap; }
+.beta-shift-fig > .measured > span { min-width: 0; overflow-wrap: anywhere; }
+/* The ramp key belongs to the figure under it. */
+.page > .beta-ramp + .beta-shift-fig { margin-top: calc(var(--u) * 2); }
+
+/* Two figures side by side where each has room for a readable plot, one
+   column otherwise. Clamped, so a 320px phone is one column and never wider. */
+.beta-shift-two {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(26rem, 100%), 1fr));
+  gap: 0 calc(var(--u) * 6);
+  align-items: start;
+  margin: calc(var(--u) * 5) 0 calc(var(--u) * 8);
+}
+.beta-shift-two > .beta-shift-fig { margin: 0 0 calc(var(--u) * 6); min-width: 0; }
+.beta-shift-two > .beta-shift-fig:last-child { margin-bottom: 0; }
+/* Side by side, the two panels are one row and end on one line. */
+@media (min-width: 60rem) {
+  .beta-shift-two { align-items: stretch; }
+  .beta-shift-two > .beta-shift-fig { grid-template-rows: 1fr auto; margin-bottom: 0; }
+  .beta-shift-two > .beta-shift-fig > .panel { display: grid; }
+}
+
+/* The word in a panel bar that says which side of the comparison the panel is
+   on. The mark beside it repeats the line style used on the curve: solid for
+   recorded, dashed for modelled. */
+.beta-shift-kind {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--u) * 2);
+  white-space: nowrap;
+}
+.beta-shift-kind i {
+  display: block;
+  width: calc(var(--u) * 5);
+  height: 0;
+  border-top: 2px solid var(--color-glass-muted);
+}
+.beta-shift-kind[data-kind="modelled"] i { border-top-style: dashed; }
+
+/* The cost curve. Series two is the modelled team: dashed in the plot, in the
+   legend and in its end label, so the line that was never observed cannot be
+   read as a measurement. The chart draws the series paths before the end dots,
+   so the second path in the plot is the second series. */
+.beta-shift-curve .beta-charts-line__plot svg > path:nth-of-type(2) {
+  stroke-dasharray: 7 5;
+  stroke-linecap: butt;
+}
+.beta-shift-curve .beta-charts-legend li:nth-child(2) i,
+.beta-shift-curve .beta-charts-line__plot > div:nth-of-type(2) .beta-charts-lbl i {
+  -webkit-mask: repeating-linear-gradient(90deg, black 0 4px, transparent 4px 6px);
+  mask: repeating-linear-gradient(90deg, black 0 4px, transparent 4px 6px);
+}
+/* The curve's bar names both sides, each with its line. On a phone the pair
+   drops under the title instead of squeezing it. */
+.beta-shift-kinds { display: inline-flex; flex-wrap: wrap; justify-content: flex-end; gap: calc(var(--u) * 1) calc(var(--u) * 4); }
+.beta-shift-fig .panel-bar { flex-wrap: wrap; row-gap: calc(var(--u) * 1.5); }
+/* Two strips in one panel: the second is a second row of the same figure. */
+.beta-shift-fig .beta-charts-strip + .beta-charts-strip { margin-top: calc(var(--u) * 5); }
+
+/* The section number. Mono and in the accent ink, so the five steps of the
+   argument can be counted down the page without reading a word. */
+.beta-shift-n {
+  display: inline-block;
+  margin-right: calc(var(--u) * 3);
+  font-family: var(--font-mono);
+  font-size: 0.5em;
+  font-weight: 500;
+  letter-spacing: var(--tracking-caps);
+  vertical-align: 0.35em;
+  color: var(--color-accent-ink);
+}
+
+/* The modelled seats, as plain tags on paper: a list of names, nothing live. */
+.beta-shift-seats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(var(--u) * 2);
+  margin: 0 0 calc(var(--u) * 8);
+  padding: 0;
+  list-style: none;
+}
+
+/* The throughput readout: name, the week-by-week shape, the total. Fixed
+   layout, so the three columns are the widths written here and a long name
+   wraps inside its own column instead of pushing the total out of the panel
+   (at 320px the automatic layout put the last column 15px past the glass). */
+.beta-shift-flow { table-layout: fixed; }
+.beta-shift-flow th { font-weight: 500; text-align: left; }
+.beta-shift-flow th:nth-child(2) { width: 36%; }
+.beta-shift-flow th:nth-child(3) { width: 5.5em; text-align: right; }
+.beta-shift-flow td.num { white-space: nowrap; }
+
+/* Row charts whose names are longer than the 7rem the shared chart allows.
+   Scoped to a figure that asks for it: "mid" fits "Data Engineering", "long"
+   fits a job title. Where the wider column would squeeze the bar, the name
+   takes its own line above the bar instead of being cut to an ellipsis. */
+.beta-shift-fig[data-labels] .beta-chart__lbl { white-space: normal; overflow: visible; }
+.beta-shift-fig[data-labels="mid"] .beta-chart__row { grid-template-columns: minmax(0, 9rem) minmax(0, 1fr) auto; }
+.beta-shift-fig[data-labels="long"] .beta-chart__row { grid-template-columns: minmax(0, 14.5rem) minmax(0, 1fr) auto; }
+@media (max-width: 30rem) {
+  .beta-shift-fig[data-labels="mid"] .beta-chart__row { grid-template-columns: minmax(0, 1fr) auto; }
+  .beta-shift-fig[data-labels="mid"] .beta-chart__lbl { grid-column: 1 / -1; }
+  .beta-shift-fig[data-labels="mid"] .beta-chart__track { grid-column: 1; }
+}
+@media (max-width: 48rem) {
+  .beta-shift-fig[data-labels="long"] .beta-chart__row { grid-template-columns: minmax(0, 1fr) auto; }
+  .beta-shift-fig[data-labels="long"] .beta-chart__lbl { grid-column: 1 / -1; }
+  .beta-shift-fig[data-labels="long"] .beta-chart__track { grid-column: 1; }
+}
+
+/* The compound cycle. The kit's numbered sequence, five across where there is
+   room. The arrow between two steps is drawn, not typed, and sits in the gap;
+   the rule under the row is the return from the last step to the first. */
+.beta-shift-cycle { margin: calc(var(--u) * 5) 0 calc(var(--u) * 8); }
+.beta-shift-cycle .lesson {
+  grid-template-columns: minmax(0, 1fr);
+  gap: calc(var(--u) * 6);
+  margin-bottom: 0;
+}
+.beta-shift-cycle .step { box-shadow: none; }
+.beta-shift-cycle .step p { font-size: var(--text-fine); line-height: 1.5; }
+.beta-shift-cycle .step a { color: inherit; text-decoration: underline; text-decoration-color: var(--color-accent-ink); text-underline-offset: 0.18em; }
+.beta-shift-cycle .step a:hover { color: var(--color-accent-ink); }
+/* Stacked: the arrow points down, centred under each step but the last. */
+.beta-shift-cycle .step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: calc(var(--u) * -4.5);
+  width: calc(var(--u) * 2.5);
+  height: calc(var(--u) * 2.5);
+  border-right: 2px solid var(--color-accent-ink);
+  border-bottom: 2px solid var(--color-accent-ink);
+  transform: translateX(-50%) rotate(45deg);
+}
+.beta-shift-cycle__return {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: calc(var(--u) * 1) calc(var(--u) * 3);
+  margin: calc(var(--u) * 4) 0 0;
+  font-family: var(--font-serif);
+  font-size: var(--text-fine);
+  color: var(--color-ink-muted);
+}
+.beta-shift-cycle__return span {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-accent-ink);
+}
+@media (min-width: 64rem) {
+  .beta-shift-cycle .lesson { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .beta-shift-cycle .step { padding: calc(var(--u) * 4); }
+  /* Side by side: the arrow points right, in the gap, level with the number. */
+  .beta-shift-cycle .step:not(:last-child)::after {
+    left: auto;
+    right: calc(var(--u) * -4.25);
+    bottom: auto;
+    top: calc(var(--u) * 6);
+    transform: rotate(-45deg);
+  }
+  /* The return: down from the middle of the last step, back along the row,
+     and up into the middle of the first. The caption hangs from it. */
+  .beta-shift-cycle__return {
+    position: relative;
+    justify-content: center;
+    margin: 0 10%;
+    padding-top: calc(var(--u) * 6);
+  }
+  .beta-shift-cycle__return::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: calc(var(--u) * 4);
+    border: 2px solid var(--color-accent-ink);
+    border-top: 0;
+  }
+  .beta-shift-cycle__return::after {
+    content: "";
+    position: absolute;
+    top: 1px;
+    left: calc(var(--u) * -1 + 0px);
+    width: calc(var(--u) * 2.5);
+    height: calc(var(--u) * 2.5);
+    border-left: 2px solid var(--color-accent-ink);
+    border-top: 2px solid var(--color-accent-ink);
+    transform: rotate(45deg);
+  }
+}
+/* The thesis paragraph sits straight under the two notices and needs air. */
+.beta-shift-thesis { margin-top: calc(var(--u) * 8); }
+
+/* ShiftRows (components/shift/ShiftRows.tsx): rows on a stated scale. It
+   reuses the row chart's classes, so these rules only add what it has and the
+   row chart does not: a remainder drawn as an outline, and an axis. */
+/* The part of a whole the source does not itemise: hatched in the muted ink,
+   outlined, no ramp colour, so it cannot be read as a measured share. */
+.beta-shift-rows__open {
+  background: repeating-linear-gradient(135deg, var(--color-glass-muted) 0 1px, transparent 1px 6px);
+  box-shadow: inset 0 0 0 1px var(--color-glass-muted);
+  border-radius: 0;
+}
+/* The axis row: no track, just the tick labels under the tracks above. */
+.beta-shift-rows__axis { align-items: start; }
+.beta-shift-rows__ticks {
+  position: relative;
+  display: block;
+  height: 1.4em;
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-glass-muted);
+}
+.beta-shift-rows__ticks > span {
+  position: absolute;
+  top: 0;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+.beta-shift-rows__ticks > span:first-child { transform: none; }
+.beta-shift-rows__ticks > span:last-child { transform: translateX(-100%); }
+.beta-shift-rows__ghost { visibility: hidden; }
+/* Stacked (each name on its own line above its bar), the axis's empty name
+   cell would be a blank line: drop it, and the ticks fall under the tracks. */
+@media (max-width: 22rem) {
+  .beta-shift-rows__axis > .beta-chart__lbl { display: none; }
+}
+@media (max-width: 30rem) {
+  .beta-shift-fig[data-labels="mid"] .beta-shift-rows__axis > .beta-chart__lbl { display: none; }
+}
+@media (max-width: 48rem) {
+  .beta-shift-fig[data-labels="long"] .beta-shift-rows__axis > .beta-chart__lbl { display: none; }
+}
+
+/* The chip that closes a page: same treatment as a figure's chip, so at 320px
+   its mark stays beside the first line instead of alone above it. */
+.beta-shift-endchip { margin: calc(var(--u) * 6) 0 0; }
+.beta-shift-endchip > .measured { flex-wrap: nowrap; }
+.beta-shift-endchip > .measured > span { min-width: 0; overflow-wrap: anywhere; }
+/* end of block: beta-shift-* */
+
+/* ===========================================================================
+   ABOUT (app/about, components/about)                block: beta-about-*
+
+   The page is paper almost throughout: a person's own words, then his record.
+   Nothing here is a panel; the two panels on the page are the kit's.
+
+   The story sits in the reading measure with one picture and three facts in
+   the margin beside it. Above 60rem that margin is the 340px a 68ch column
+   leaves empty in a 1056px page; below it the aside drops under the text.
+   --------------------------------------------------------------------------- */
+.beta-about-story {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: calc(var(--u) * 8);
+  margin: 0 0 calc(var(--u) * 4);
+}
+.beta-about-story > .prose > h2:first-child { margin-top: calc(var(--u) * 6); }
+/* Below the two-column width the story is the only column, so its heading
+   rule runs to the page edge like every other section's; the paragraphs keep
+   the reading measure. (Above it the grid track is the measure already.) */
+@media (max-width: 59.99rem) {
+  .beta-about-story__text { max-width: none; }
+  .beta-about-story__text > p { max-width: 68ch; }
+}
+.beta-about-aside {
+  display: grid;
+  gap: calc(var(--u) * 5);
+  align-content: start;
+  max-width: 26rem;
+}
+/* Between a phone and a desk the aside is one band: the picture on the left,
+   the facts and the two buttons beside it. */
+@media (min-width: 40rem) and (max-width: 59.99rem) {
+  .beta-about-aside {
+    max-width: none;
+    grid-template-columns: minmax(0, 18rem) minmax(0, 1fr);
+    column-gap: calc(var(--u) * 10);
+    align-items: center;
+    padding-top: calc(var(--u) * 6);
+    border-top: 1px solid var(--color-ink-faint);
+  }
+  .beta-about-fig { grid-row: 1 / span 2; }
+  /* The band already opens on a rule; the facts do not need a second one
+     twenty pixels under it. */
+  .beta-about-aside .beta-about-facts { align-self: end; border-top: 0; padding-top: 0; }
+  .beta-about-aside__links { align-self: start; }
+}
+@media (min-width: 60rem) {
+  .beta-about-story { grid-template-columns: minmax(0, 68ch) minmax(15rem, 1fr); gap: calc(var(--u) * 12); }
+  /* The aside starts on the same rule the heading draws, so the two columns
+     read as one band. */
+  .beta-about-aside {
+    margin-top: calc(var(--u) * 6);
+    padding-top: calc(var(--u) * 4);
+    border-top: 1px solid var(--color-rule);
+    max-width: none;
+  }
+}
+
+/* The mascot is a transparent drawing, so it sits straight on the paper with
+   no frame. The link is the picture; the press is the kit's 90ms detent. */
+.beta-about-fig { margin: 0; }
+.beta-about-fig a { display: block; transition: transform var(--t-snap) var(--ease-detent); }
+.beta-about-fig a:hover { transform: translateY(-2px); }
+.beta-about-fig a:focus-visible { outline: 2px solid var(--color-blue-ink); outline-offset: 2px; }
+.beta-about-fig img { display: block; width: 100%; height: auto; }
+.beta-about-fig figcaption {
+  margin-top: calc(var(--u) * 2);
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+  line-height: 1.5;
+  color: var(--color-ink-muted);
+}
+.beta-about-facts {
+  padding: calc(var(--u) * 4) 0;
+  border-top: 1px solid var(--color-ink-faint);
+  border-bottom: 1px solid var(--color-ink-faint);
+}
+.beta-about-facts dd { font-size: var(--text-data); text-align: right; }
+.beta-about-aside__links { display: flex; flex-wrap: wrap; gap: calc(var(--u) * 3); margin: 0; }
+
+/* ---- Now: four cards, two by two ---------------------------------------- */
+/* The kit's piece-grid makes three columns of four cards and orphans the
+   fourth. Two wide columns keep them a square and the lines a readable length.
+   Below 56rem (the notes grid's own break) a column is too narrow for a status
+   row on one line, so the site card grows twice the trades card's height and
+   the pair leaves a hole; one column there, each card its own height. */
+.beta-about-now { grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 56rem) {
+  .beta-about-now { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+.beta-about-now .rail { display: flex; flex-direction: column; }
+.beta-about-now .rail > p:first-of-type { font-size: var(--text-body); max-width: 56ch; }
+/* The buttons sit on the card's bottom edge, so two cards in a row end on one
+   line whatever their text. One rule with .rail in it: the kit's
+   .piece-grid .rail p (0,2,1) sets the margins of every paragraph in a card,
+   and a rule without .rail (0,2,0) loses to it. */
+.beta-about-now .rail .piece-links {
+  margin-top: auto;
+  margin-bottom: 0;
+  padding-top: calc(var(--u) * 2);
+}
+.beta-about-credit { color: var(--color-ink-muted); }
+/* The "This site" card's status rows: a dot, the instrument as a link, and
+   its state in words. The name keeps a fixed column so the states line up;
+   on a narrow card the state drops under its name instead of squeezing. */
+.beta-about-rows {
+  list-style: none;
+  margin: 0 0 calc(var(--u) * 3);
+  padding: calc(var(--u) * 3) 0 0;
+  border-top: 1px solid var(--color-ink-faint);
+  display: grid;
+  gap: calc(var(--u) * 2);
+}
+.beta-about-rows li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  column-gap: calc(var(--u) * 2.5);
+  min-width: 0;
+  font-size: var(--text-data);
+  line-height: 1.4;
+}
+/* The same rows without a dot: a list of links with a phrase each (the four
+   trades tools), so the two lower cards are set alike. */
+.beta-about-rows--plain li { grid-template-columns: minmax(0, 1fr); }
+/* A person wrote these phrases, so they are set in the reading face; mono is
+   for the states the machine reports. Only the face differs: size, leading,
+   colour and the name column are the status rows' own, so the two lower
+   cards read as one kind of list with two kinds of voice. */
+.beta-about-rows--plain .beta-about-rows__state {
+  font-family: var(--font-sans);
+}
+/* The dot is centred on the first line of text, not on the row, so a state
+   that wraps does not drag it down. */
+.beta-about-rows .beta-live-dot { margin-top: calc((1.4em - 0.625rem) / 2); }
+.beta-about-rows__text { display: flex; flex-wrap: wrap; gap: 0 calc(var(--u) * 3); min-width: 0; }
+.beta-about-rows a {
+  flex: 0 0 9rem;
+  font-weight: 600;
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--color-ink-faint);
+  text-underline-offset: 3px;
+  transition: text-decoration-color var(--t-snap) var(--ease-detent);
+}
+.beta-about-rows a:hover { text-decoration-color: var(--color-orange); }
+.beta-about-rows a:focus-visible { outline: 2px solid var(--color-blue-ink); outline-offset: 2px; }
+.beta-about-rows__state {
+  flex: 1 1 12rem;
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+  line-height: calc(1.4 * 0.8125 / 0.75);
+  color: var(--color-ink-muted);
+}
+
+/* ---- The career, in words ------------------------------------------------ */
+/* Six roles, one ruled row each: when, who, and one line. Not the resume's
+   block (.beta-cv-*): that page tells every role in full, and this is the
+   short version, set as a list so it does not read as the same page again.
+   Every cell wraps; nothing here can run off the edge. */
+.beta-about-roles {
+  list-style: none;
+  margin: calc(var(--u) * 8) 0 calc(var(--u) * 4);
+  padding: 0;
+  border-top: 1px solid var(--color-rule);
+}
+.beta-about-roles li {
+  display: grid;
+  grid-template-columns: minmax(0, 8.5rem) minmax(0, 16rem) minmax(0, 1fr);
+  gap: calc(var(--u) * 1) calc(var(--u) * 6);
+  align-items: baseline;
+  padding: calc(var(--u) * 3) 0;
+  border-bottom: 1px solid var(--color-ink-faint);
+}
+.beta-about-roles__when {
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+  color: var(--color-ink-muted);
+  font-variant-numeric: tabular-nums;
+}
+.beta-about-roles__who { min-width: 0; }
+.beta-about-roles__who b { display: block; font-size: var(--text-body); font-weight: 600; line-height: 1.3; }
+.beta-about-roles__who span {
+  display: block;
+  margin-top: calc(var(--u) * 0.5);
+  font-size: var(--text-fine);
+  line-height: 1.4;
+  color: var(--color-ink-muted);
+}
+.beta-about-roles__what { min-width: 0; font-size: var(--text-body); line-height: 1.5; max-width: 60ch; }
+/* Tablet: the line drops under the name. Phone: one column. */
+@media (max-width: 59.99rem) {
+  .beta-about-roles li { grid-template-columns: minmax(0, 8.5rem) minmax(0, 1fr); }
+  .beta-about-roles__what { grid-column: 2; }
+}
+@media (max-width: 34rem) {
+  .beta-about-roles li { grid-template-columns: minmax(0, 1fr); }
+  .beta-about-roles__what { grid-column: 1; }
+}
+.beta-about-more {
+  margin: 0 0 calc(var(--u) * 8);
+  max-width: 68ch;
+  font-size: var(--text-body);
+  line-height: 1.55;
+  color: var(--color-ink-muted);
+}
+.beta-about-more a { color: var(--color-ink); text-decoration: underline; text-decoration-color: var(--color-orange); text-underline-offset: 2px; }
+.beta-about-more a:hover { text-decoration-thickness: 2px; }
+
+/* ---- Skills: six rows, a label and its list ------------------------------ */
+/* Set as text, not as tags: forty-six grey chips read as a wall, and none of
+   them is a link or a filter. A label and a comma list is a line each. */
+.beta-about-skills {
+  margin: calc(var(--u) * 4) 0 calc(var(--u) * 8);
+  border-top: 1px solid var(--color-rule);
+}
+.beta-about-skills > div {
+  display: grid;
+  grid-template-columns: minmax(0, 10rem) minmax(0, 1fr);
+  gap: calc(var(--u) * 2) calc(var(--u) * 6);
+  align-items: baseline;
+  padding: calc(var(--u) * 3) 0;
+  border-bottom: 1px solid var(--color-ink-faint);
+}
+.beta-about-skills dt {
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+.beta-about-skills dd { margin: 0; min-width: 0; font-size: var(--text-body); line-height: 1.5; }
+@media (max-width: 34rem) {
+  .beta-about-skills > div { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ---- Writing: three notes, each one whole link --------------------------- */
+.beta-about-notes {
+  list-style: none;
+  margin: calc(var(--u) * 6) 0 calc(var(--u) * 8);
+  padding: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: calc(var(--u) * 4);
+}
+/* Three across or one: two and an orphan is the width where it is nearly right. */
+@media (min-width: 56rem) {
+  .beta-about-notes { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+.beta-about-notes li { display: flex; min-width: 0; }
+.beta-about-notes a {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--u) * 2);
+  width: 100%;
+  padding: calc(var(--u) * 4);
+  border: 1px solid var(--color-rule);
+  background: var(--color-paper);
+  color: var(--color-ink);
+  text-decoration: none;
+  transition: transform var(--t-snap) var(--ease-detent), box-shadow var(--t-snap) var(--ease-detent);
+}
+.beta-about-notes a:hover { transform: translate(-2px, -2px); box-shadow: 3px 3px 0 var(--color-ink); }
+.beta-about-notes a:active { transform: none; box-shadow: none; }
+.beta-about-notes a:focus-visible { outline: 2px solid var(--color-blue-ink); outline-offset: 2px; }
+.beta-about-notes__kicker {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+.beta-about-notes b {
+  font-family: var(--font-display);
+  font-size: var(--text-lead);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: var(--tracking-tight);
+  text-wrap: balance;
+}
+.beta-about-notes__blurb { font-size: var(--text-data); line-height: 1.55; color: var(--color-ink-muted); }
+
+/* ---- How this site is built ---------------------------------------------- */
+/* What the two of us say, on paper, and what the machine counted, on panel,
+   side by side above 60rem: the same two columns the story uses. Below that
+   the panel follows the signatures. */
+.beta-about-built__cols {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: calc(var(--u) * 8);
+  margin: 0 0 calc(var(--u) * 4);
+}
+.beta-about-built__said,
+.beta-about-built__receipts { min-width: 0; }
+@media (min-width: 60rem) {
+  .beta-about-built__cols {
+    grid-template-columns: minmax(0, 68ch) minmax(15rem, 1fr);
+    gap: calc(var(--u) * 12);
+    align-items: start;
+  }
+}
+.beta-about-pair {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(16rem, 100%), 1fr));
+  gap: calc(var(--u) * 4);
+  margin: calc(var(--u) * 2) 0 calc(var(--u) * 6);
+}
+/* The line under each name: where he is, and whether Claude is at work right
+   now. Two lines are reserved, because the dot's words arrive after the page
+   does and are one line or two depending on the answer and the width; with
+   the room held, the label settling moves nothing below it. */
+.beta-about-pair .rail h3 { margin-bottom: calc(var(--u) * 1); }
+.beta-about-pair__sub {
+  margin: 0 0 calc(var(--u) * 3);
+  min-height: 2.8em;
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+  line-height: 1.4;
+  color: var(--color-ink-muted);
+}
+.beta-about-pair__sub .beta-live-dotwrap { align-items: baseline; }
+/* On the narrowest phones the longest thing the dot can say ("no activity
+   seen on this host in the last 5 minutes") is three lines. */
+@media (max-width: 24rem) {
+  .beta-about-pair__sub:has(.beta-live-dotwrap) { min-height: 4.2em; }
+}
+.beta-about-does a { color: var(--color-ink); text-decoration: underline; text-decoration-color: var(--color-orange); text-underline-offset: 2px; }
+.beta-about-does a:hover { text-decoration-thickness: 2px; }
+.beta-about-does {
+  list-style: square;
+  margin: 0;
+  padding-left: 1.15em;
+  display: grid;
+  gap: calc(var(--u) * 1.5);
+  font-size: var(--text-body);
+  line-height: 1.45;
+}
+.beta-about-does li::marker { color: var(--color-ink-muted); }
+/* The signature row. Rendered only once SIGNED_ON is set in
+   components/about/content.ts, which is when he has read the block. */
+.beta-about-sig {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: calc(var(--u) * 2) calc(var(--u) * 8);
+  margin: calc(var(--u) * 2) 0 0;
+  padding-top: calc(var(--u) * 4);
+  border-top: 1px solid var(--color-rule);
+}
+.beta-about-sig__label {
+  flex: 0 0 100%;
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+.beta-about-sig b {
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  font-weight: 700;
+  letter-spacing: var(--tracking-tight);
+  line-height: 1.15;
+}
+
+/* The provenance chips on this page are sentences, not stamps, and two of
+   them sit in a narrow column. The kit's chip is a flex row, which sets each
+   part on its own line there; as a block it wraps like the sentence it is. */
+.beta-about-chip { margin-top: calc(var(--u) * 2); }
+.beta-about-chip .measured { display: block; max-width: 100ch; line-height: 1.5; }
+.beta-about-chip .measured::before { margin-right: calc(var(--u) * 1.5); }
+
+.beta-about-ctas { display: flex; flex-wrap: wrap; gap: calc(var(--u) * 3); margin: calc(var(--u) * 10) 0 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .beta-about-fig a,
+  .beta-about-rows a,
+  .beta-about-notes a { transition: none; }
+  .beta-about-fig a:hover,
+  .beta-about-notes a:hover { transform: none; }
+}
+/* end of block: beta-about-* */
+
+/* ===========================================================================
+   SERVICES AND CONTACT (begin block: beta-services-*)
+   app/services/page.tsx and app/contact/page.tsx
+
+   Paper, with one panel. A person wrote every word on both pages. The one
+   exception is on /services: four of its proof links report live, and below
+   the differentiators a NowPanel (components/live) prints what each is doing.
+   That panel and the LiveDots beside those links are the only machine output.
+
+   Three kinds of box, and the difference between them is the point:
+
+     open row      a practice. Not a link, so no border and no shadow: a rule
+                   above it and nothing to press.
+     link card     anything that goes somewhere: a proof, a differentiator, a
+                   pointer on /contact. The kit's .rail plus the site's shared
+                   .beta-linkcard (home block): a faint offset shadow that
+                   turns to ink under the pointer, and the detent press.
+                   Nothing about that look is restated here.
+     plain rail    a price, the quick facts. A box of facts. No shadow,
+                   because it does nothing.
+
+   What this block adds: the row layout of a practice, a price that can be
+   read from across the room, a ledger that holds sentences, the stretched
+   link for a card whose anchor is only its last line, and the address on
+   /contact.
+
+   Everything else is the kit as shipped: .rail, .tag, .chips, .ledger, .kv,
+   .btn, .prose, .lede, .quiet.
+   =========================================================================== */
+
+/* ---- The stretched link ---------------------------------------------------
+   For a card that is an <article> with one destination. The card is not the
+   anchor: an anchor around a quotation and a paragraph is announced as all of
+   it. Here the anchor is only the words at the foot, and its ::after is
+   stretched over the card so the whole card is the hit area. A second link in
+   the same card sits above that layer and keeps its own destination.
+   .beta-linkcard gets three things from being an <a> that an <article> has to
+   be told: the ink shadow when focus is inside, the focus ring, and the
+   foot's ink. (The bench cards restate the same three; one shared rule for
+   both is the tidy end of this.) */
+.beta-services-diff { position: relative; }
+.beta-services-to { color: inherit; text-decoration: none; }
+.beta-services-to::after { content: ""; position: absolute; inset: 0; }
+.beta-services-to:focus-visible { outline: none; }
+.beta-services-diff:focus-within { box-shadow: 3px 3px 0 var(--color-ink); }
+.beta-services-diff:has(.beta-services-to:focus-visible) {
+  outline: 2px solid var(--color-blue-ink);
+  outline-offset: 2px;
+}
+.beta-services-diff:focus-within .beta-linkcard__go { color: var(--color-ink); }
+/* A press focuses the link, so :focus-within holds during it; the press is
+   restated after it. A press on the second link is that link's, not the card's. */
+.beta-services-diff:active { box-shadow: 0 0 0 var(--color-ink); }
+.beta-services-diff:has(.beta-services-also a:active) { transform: none; box-shadow: 3px 3px 0 var(--color-ink); }
+
+/* The label over a list inside a row or a card. The kit's .kv dt, as a heading. */
+.beta-services-k {
+  display: block;
+  margin: 0 0 calc(var(--u) * 2);
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  font-weight: 400;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+
+/* ---- On this page --------------------------------------------------------
+   The page is long on a phone, and the visitor who came for the prices should
+   not have to scroll five practices to find them. The kit's .crumb voice,
+   as a row that wraps. */
+.beta-services-jump {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(var(--u) * 2) calc(var(--u) * 5);
+  margin: 0 0 calc(var(--u) * 2);
+}
+.beta-services-jump a { padding: calc(var(--u) * 1) 0; }
+
+/* ---- The five practices --------------------------------------------------
+   Open rows under a rule. One column on a phone; the description across the
+   top and the two lists side by side on a tablet; three columns from 62rem. */
+.beta-services-practices { margin: calc(var(--u) * 6) 0 0; }
+.beta-services-practice {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: calc(var(--u) * 5) calc(var(--u) * 8);
+  padding: calc(var(--u) * 6) 0 calc(var(--u) * 7);
+  border-top: 1px solid var(--color-ink-faint);
+}
+.beta-services-practice:last-child { padding-bottom: calc(var(--u) * 2); }
+@media (min-width: 40rem) {
+  .beta-services-practice { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .beta-services-what { grid-column: 1 / -1; }
+}
+@media (min-width: 62rem) {
+  .beta-services-practice { grid-template-columns: minmax(0, 4fr) minmax(0, 3fr) minmax(0, 5fr); }
+  .beta-services-what { grid-column: auto; }
+}
+.beta-services-num {
+  margin: 0 0 calc(var(--u) * 2);
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.4;
+  color: var(--color-ink-muted);
+}
+/* The practice's name, in the voice of the kit's .rail h3 one step up: these
+   five are what the page is about. */
+.beta-services-what h3 {
+  margin: 0 0 calc(var(--u) * 2);
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  line-height: 1.1;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-tight);
+  text-wrap: balance;
+}
+.beta-services-what p {
+  margin: 0 0 calc(var(--u) * 3);
+  max-width: 46ch;
+  font-size: var(--text-body);
+  line-height: 1.5;
+}
+.beta-services-what .beta-services-num { margin-bottom: calc(var(--u) * 2); }
+.beta-services-what .chips { margin: 0; max-width: none; }
+
+.beta-services-ex,
+.beta-services-proofs { list-style: none; margin: 0; padding: 0; }
+.beta-services-ex li {
+  padding: calc(var(--u) * 1.5) 0;
+  border-top: 1px solid var(--color-ink-faint);
+  font-size: var(--text-body);
+  line-height: 1.4;
+}
+.beta-services-ex li:first-child { border-top-color: var(--color-rule); }
+
+/* A proof is a small link card: .rail and .beta-linkcard do the box, the
+   shadow and the press. Here only its inside: a tighter pad than a full card,
+   the name with its dot, the arrow held to the right edge, and one line. */
+.beta-services-proofs { display: grid; gap: calc(var(--u) * 3); }
+.beta-services-proof {
+  padding: calc(var(--u) * 3) calc(var(--u) * 4);
+  gap: calc(var(--u) * 1.5);
+}
+.beta-services-proof__name {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--u) * 2.5);
+  font-size: var(--text-body);
+  line-height: 1.4;
+}
+.beta-services-proof__name b { font-weight: 600; min-width: 0; }
+.beta-services-proof__arrow {
+  display: inline-flex;
+  margin-left: auto;
+  color: var(--color-ink-muted);
+  transition: transform var(--t-snap) var(--ease-detent), color var(--t-snap) var(--ease-detent);
+}
+.beta-services-proof:is(:hover, :focus-visible) .beta-services-proof__arrow { color: var(--color-ink); }
+@media (hover: hover) {
+  .beta-services-proof:hover .beta-services-proof__arrow { transform: translateX(3px); }
+}
+.beta-services-proof__line {
+  display: block;
+  font-size: var(--text-body);
+  line-height: 1.45;
+  color: var(--color-ink-muted);
+}
+
+/* ---- The dots, and the panel they stand for -------------------------------
+   The key is one line under the practices, in the kit's fine print: two
+   marks, each followed by what it means. It wraps as a row, so on a phone the
+   second pair drops under the first. The two dots are drawn with the
+   LiveDot's own class, so the key cannot drift from the thing it explains. */
+.beta-services-key {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: calc(var(--u) * 1) calc(var(--u) * 2);
+  margin: calc(var(--u) * 4) 0 0;
+  padding-top: calc(var(--u) * 3);
+  border-top: 1px solid var(--color-ink-faint);
+  font-size: var(--text-fine);
+  line-height: 1.5;
+}
+.beta-services-key > span {
+  display: flex;
+  align-items: flex-start;
+  gap: calc(var(--u) * 2);
+  margin-right: calc(var(--u) * 4);
+}
+.beta-services-key > span:last-child { flex: 1 1 16rem; min-width: 0; margin-right: 0; }
+/* One line tall, so the dot sits on the first line of its words. */
+.beta-services-keydot { display: inline-flex; flex: none; align-items: center; height: 1.5em; }
+.beta-services-key a {
+  color: var(--color-ink);
+  white-space: nowrap;
+  text-decoration: underline;
+  text-decoration-color: var(--color-ink-faint);
+  text-underline-offset: 0.2em;
+  transition: text-decoration-color var(--t-snap) var(--ease-detent);
+}
+.beta-services-key a:hover { text-decoration-color: var(--color-ink); }
+.beta-services-key a:focus-visible { outline: 2px solid var(--color-blue-ink); outline-offset: 2px; }
+.beta-services-board { margin: calc(var(--u) * 5) 0 0; }
+
+/* ---- The three shapes ----------------------------------------------------
+   Stacked on a phone, a name-and-price column beside the description on a
+   tablet, three across from 58rem. Set by breakpoint, not auto-fit, so there
+   is no width at which the third card sits alone on a row. */
+.beta-services-shapes {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: calc(var(--u) * 4);
+  margin: calc(var(--u) * 6) 0 0;
+}
+.beta-services-shape {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: calc(var(--u) * 3) calc(var(--u) * 8);
+  align-content: start;
+}
+@media (min-width: 34rem) {
+  .beta-services-shape { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); }
+}
+@media (min-width: 58rem) {
+  .beta-services-shapes { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .beta-services-shape { grid-template-columns: minmax(0, 1fr); }
+}
+.beta-services-shape h3 { margin-bottom: calc(var(--u) * 2); }
+.beta-services-shape p { margin: 0 0 calc(var(--u) * 3); font-size: var(--text-body); line-height: 1.5; }
+.beta-services-shape p:last-child { margin-bottom: 0; }
+.beta-services-shape .beta-services-price {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-h3);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  white-space: nowrap;
+}
+.beta-services-best .beta-services-k { margin-bottom: calc(var(--u) * 1); }
+
+/* ---- The four steps ------------------------------------------------------
+   The kit's ledger sets every cell in mono and never wraps, which is right
+   for a table of readings and wrong for a sentence a person wrote. */
+.beta-services-steps { margin: calc(var(--u) * 6) 0 0; }
+.beta-services-steps td { vertical-align: top; padding-top: calc(var(--u) * 3); padding-bottom: calc(var(--u) * 3); }
+.beta-services-steps td.name { width: 1%; padding-right: calc(var(--u) * 4); font-size: var(--text-body); }
+@media (min-width: 34rem) {
+  .beta-services-steps td.name { padding-right: calc(var(--u) * 8); }
+}
+.ledger td.beta-services-wrap {
+  white-space: normal;
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: 1.45;
+}
+.beta-services-n {
+  display: inline-block;
+  min-width: 1.75em;
+  font-family: var(--font-mono);
+  font-weight: 400;
+  color: var(--color-ink-muted);
+}
+/* A fact about a step, as a tag after its sentence. A wrapping row, so on a
+   phone the tag drops under the sentence and starts at its left edge. */
+.beta-services-noted {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: calc(var(--u) * 2) calc(var(--u) * 3);
+}
+.beta-services-noted .tag { flex: none; }
+
+/* ---- Cards of prose: the differentiators, and the pointers on /contact ----
+   Two across from 44rem. The set of three on /contact is three across only
+   from 62rem, where each card has room for its title on one line; between
+   44rem and there it is two across with the third card the full width under
+   them, so it is never a narrow card alone on a row. */
+.beta-services-diffs {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: calc(var(--u) * 5);
+  margin: calc(var(--u) * 6) 0 0;
+}
+@media (min-width: 44rem) {
+  .beta-services-diffs:not(.beta-services-diffs--three) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 44rem) and (max-width: 61.99rem) {
+  .beta-services-diffs--three { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .beta-services-diffs--three > :last-child { grid-column: 1 / -1; }
+}
+@media (min-width: 62rem) {
+  .beta-services-diffs--three { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: calc(var(--u) * 4); }
+}
+/* The second link in a card, above the stretched one. */
+.beta-linkcard .beta-services-also {
+  position: relative;
+  z-index: 1;
+  font-size: var(--text-fine);
+  line-height: 1.5;
+}
+.beta-services-also a {
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  font-weight: 600;
+  color: var(--color-ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-ink-faint);
+  transition: color var(--t-snap) var(--ease-detent), border-color var(--t-snap) var(--ease-detent);
+}
+.beta-services-also a:hover { color: var(--color-accent-ink); border-bottom-color: var(--color-accent-ink); }
+.beta-services-also a:focus-visible { outline: 2px solid var(--color-blue-ink); outline-offset: 2px; }
+/* An ISO date is one token. */
+.beta-services-also .quiet { white-space: nowrap; }
+
+/* A line quoted from the resume, shown as a quotation so it is plain that
+   the page is repeating a document and not paraphrasing one. */
+.beta-services-quote {
+  margin: 0;
+  padding-left: calc(var(--u) * 3);
+  border-left: 2px solid var(--color-rule);
+}
+.beta-linkcard .beta-services-quote p {
+  margin: 0 0 calc(var(--u) * 1.5);
+  font-family: var(--font-serif);
+  font-size: var(--text-body);
+  line-height: 1.5;
+}
+.beta-services-quote footer {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  line-height: 1.5;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+
+/* Buttons in a row, with or without a line of fine print beside them. The
+   kit's .hero-ctas is only a row inside .hero. */
+.beta-services-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: calc(var(--u) * 4);
+  margin: calc(var(--u) * 2) 0 0;
+}
+.beta-services-actions .btn { flex: none; }
+.beta-services-actions .quiet {
+  flex: 1 1 16rem;
+  max-width: 44ch;
+  font-size: var(--text-fine);
+  line-height: 1.5;
+}
+
+/* ---- /contact: the address -------------------------------------------------
+   The one thing the page is for, so it is the first thing under the title and
+   the largest after it: mono, because it is an address and every character
+   counts. It scales with the viewport so its fifteen characters fit a 320px
+   screen on one line. */
+.beta-services-address {
+  margin: 0 0 calc(var(--u) * 4);
+  font-family: var(--font-mono);
+  font-size: clamp(1.375rem, 7vw, 2.5rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+.beta-services-address a {
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--color-accent-ink);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 0.18em;
+  transition: color var(--t-snap) var(--ease-detent);
+}
+.beta-services-address a:hover { color: var(--color-accent-ink); }
+.beta-services-address a:focus-visible { outline: 2px solid var(--color-blue-ink); outline-offset: 4px; }
+
+/* ---- /contact: what a first email needs, beside the facts ---------------- */
+.beta-services-first {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: calc(var(--u) * 8) calc(var(--u) * 12);
+  align-items: start;
+  margin: calc(var(--u) * 4) 0 0;
+}
+@media (min-width: 58rem) {
+  .beta-services-first { grid-template-columns: minmax(0, 5fr) minmax(0, 3fr); }
+}
+.beta-services-points {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: calc(var(--u) * 5);
+  counter-reset: beta-services-pt;
+}
+.beta-services-points li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: calc(var(--u) * 4);
+  align-items: baseline;
+  max-width: 68ch;
+  counter-increment: beta-services-pt;
+  font-family: var(--font-serif);
+  font-size: var(--text-prose);
+  line-height: 1.55;
+}
+.beta-services-points li::before {
+  content: counter(beta-services-pt);
+  padding: 1px calc(var(--u) * 2);
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+  color: var(--color-paper);
+  background: var(--color-ink);
+  border-radius: var(--radius-hair);
+}
+.beta-services-points b { display: block; font-family: var(--font-sans); font-weight: 700; }
+
+/* The facts. Beside the points on a wide screen. Under them on a tablet,
+   where a full-width key and value would sit a hand apart: there the table
+   takes the left half and the three notes the right. */
+.beta-services-facts .kv { margin-bottom: calc(var(--u) * 4); }
+.beta-services-facts p { margin: calc(var(--u) * 2) 0 0; font-size: var(--text-fine); line-height: 1.5; }
+@media (min-width: 40rem) and (max-width: 57.99rem) {
+  .beta-services-facts {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: calc(var(--u) * 10);
+    align-items: start;
+  }
+  .beta-services-facts h3 { grid-column: 1 / -1; }
+  .beta-services-facts .kv { grid-column: 1; grid-row: 2 / span 3; margin-bottom: 0; }
+  .beta-services-facts p { grid-column: 2; margin-top: 0; margin-bottom: calc(var(--u) * 2); }
+}
+/* end of block: beta-services-* */
+
+/* ===========================================================================
+   PAPERS (app/papers/page.tsx, components/papers/)     block: beta-papers-*
+
+   The research notes as something to browse: three count panels, a domain
+   filter that stays in reach, one wide card for the study with a results
+   table, and every other listed study as a card with its figure.
+
+   THE FILTER IS CSS. It is a radio group whose inputs are visually hidden and
+   whose labels are kit chips. The page writes one rule per domain into a
+   <style> beside the grid (":has(#pf-<id>:checked)" hides every card of
+   another domain), so the whole index is in the HTML, the filter works with
+   scripts off, and arrow keys move through it like any radio group. Where
+   :has() is not supported the filter is removed rather than left as a control
+   that does nothing, and every card shows.
+
+   STATUS HAS NO COLOUR. See components/papers/study.ts for the reasoning: the
+   word carries the state, and the lab's end states are a solid ink tag.
+
+   The older PAPER CARDS block near the top of this file (.beta-papers,
+   .beta-paper, .beta-paper__*) is what this replaces. Nothing here depends on
+   it.
+   ======================================================================== */
+
+/* ---- The two count panels ------------------------------------------------ */
+.beta-papers-counts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(22rem, 100%), 1fr));
+  gap: calc(var(--u) * 4);
+  margin: calc(var(--u) * 3) 0 calc(var(--u) * 4);
+}
+/* A grid item's min-width is auto: without this a chart's own minimum holds
+   the track open and the panel leaves the page at 320px. */
+.beta-papers-counts > .panel { min-width: 0; display: flex; }
+/* Side by side, both faces run to the height of the taller one, so the pair
+   reads as one instrument and not as two boxes that happen to be neighbours.
+   This is only honest while the two hold about the same amount (a six-row
+   status chart beside a four-row readout, each with a two-line note), so the
+   stretch closes a gap of a line or two. If one side ever grows, rebalance the
+   content; do not let this rule paper over it. The month strip takes the whole
+   row under them. */
+.beta-papers-counts > .panel > .panel-face { flex: 1 1 auto; min-width: 0; }
+.beta-papers-counts > .beta-papers-counts__wide { grid-column: 1 / -1; }
+.panel-face .readout.beta-papers-readout .num { white-space: nowrap; }
+.panel-face .readout.beta-papers-readout tbody tr:last-child td { border-bottom: 1px solid var(--color-rule-panel); }
+/* The status names whole at every width. Between 22rem and 30rem the shared
+   row chart narrows its label column to 4.5rem, which cut "in revision" to
+   "in revis..." at 390px. Scoped here; the shared rule is not touched. Below
+   22rem the shared rule already puts the name on its own line. */
+.beta-papers-counts .beta-chart__lbl { white-space: normal; overflow: visible; }
+@media (max-width: 30rem) {
+  .beta-papers-counts .beta-chart__row { grid-template-columns: minmax(0, 6.5rem) minmax(0, 1fr) auto; }
+}
+@media (max-width: 22rem) {
+  .beta-papers-counts .beta-chart__row { grid-template-columns: minmax(0, 1fr) auto; }
+}
+/* The date in a provenance chip never breaks in the middle. */
+.beta-papers-nowrap { white-space: nowrap; }
+
+/* ---- The domain filter --------------------------------------------------- */
+/* The bar is meant to stay under the masthead while the grid scrolls: forty-
+   five cards is a long way down on a phone, and the filter is the way out of
+   it. It would stick only while the grid is on screen (its parent is the
+   browse container). On 2026-10-02 nothing on the site could stick: html and
+   body carry overflow-x: hidden in globals.css, which makes body a scroll
+   container that never scrolls (the kit's own sticky masthead is caught the
+   same way). The fix is overflow-x: clip there, sitewide. Until then the
+   reader is not stranded: .beta-papers-return below, placed by FilterHash, and
+   .beta-papers-back with scripts off. The sticky rule stays, so the bar takes
+   over by itself the day it can.
+   On a phone the chips are one row that scrolls sideways in its own box; a
+   chip cut off at the edge is the sign that there are more. */
+.beta-papers-browse { scroll-margin-top: calc(var(--app-head-h, 4rem) + var(--u) * 2); }
+.beta-papers-filter {
+  position: sticky;
+  top: var(--app-head-h, 4rem);
+  z-index: 2;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: calc(var(--u) * 2);
+  margin: calc(var(--u) * 5) 0 calc(var(--u) * 3);
+  padding: calc(var(--u) * 2.5) 0;
+  background: var(--color-paper);
+  border-bottom: 1px solid var(--color-rule);
+}
+@media (max-width: 47.99rem) {
+  .beta-papers-filter {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+    /* Bleed to the page's own gutter, so the row scrolls edge to edge and the
+       first chip still lines up with the text above it. */
+    margin-inline: calc(var(--u) * -5);
+    padding-inline: calc(var(--u) * 5);
+  }
+  .beta-papers-filter::-webkit-scrollbar { display: none; }
+  .beta-papers-filter__opt,
+  .beta-papers-filter__legend { flex: none; }
+  .beta-papers-filter .chip { white-space: nowrap; }
+}
+.beta-papers-filter__legend {
+  margin-right: calc(var(--u) * 1);
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+/* The hidden radio is positioned inside its own option, so the browser scrolls
+   to the chip, not to the top of the group, when focus lands on it. */
+.beta-papers-filter__opt { position: relative; display: inline-flex; }
+.beta-papers-filter .chip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: calc(var(--u) * 2);
+  padding: calc(var(--u) * 2) calc(var(--u) * 3);
+  user-select: none;
+}
+.beta-papers-filter__n {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-ink-muted);
+}
+/* Pressed: the kit's own pressed chip, keyed off the radio instead of
+   aria-pressed, which a label cannot carry. */
+.beta-papers-filter input:checked + .chip {
+  background: var(--color-ink);
+  border-color: var(--color-ink);
+  color: var(--color-paper);
+}
+.beta-papers-filter input:checked + .chip .beta-papers-filter__n { color: var(--color-paper-sunk); }
+.beta-papers-filter input:not(:checked) + .chip:hover { border-color: var(--color-ink); }
+.beta-papers-filter input:focus-visible + .chip {
+  outline: 2px solid var(--color-blue-ink);
+  outline-offset: 2px;
+}
+.beta-papers-filter .chip:active { transform: translate(1px, 1px); }
+@supports not selector(:has(*)) {
+  .beta-papers-filter { display: none; }
+}
+
+/* What the grid is showing, in words. One span per domain is in the HTML; the
+   rules the page writes show the one that matches the pressed chip. */
+.beta-papers-showing {
+  margin: 0 0 calc(var(--u) * 4);
+  max-width: 76ch;
+  font-size: var(--text-fine);
+  line-height: 1.55;
+  color: var(--color-ink-muted);
+}
+.beta-papers-showing [data-for] {
+  font-family: var(--font-mono);
+  color: var(--color-ink);
+}
+.beta-papers-showing [data-for]:not([data-for="all"]) { display: none; }
+.beta-papers-browse:has(.beta-papers-filter input:not(#pf-all):checked) .beta-papers-showing [data-for="all"] { display: none; }
+
+/* ---- The grid ------------------------------------------------------------ */
+/* auto-fill, not auto-fit: a filtered view of two cards keeps them card-sized
+   instead of stretching each across half the page. min() clamps the floor so
+   one column never pushes the page sideways at 320px. */
+.beta-papers-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(19rem, 100%), 1fr));
+  gap: calc(var(--u) * 4);
+  margin: 0 0 calc(var(--u) * 6);
+}
+
+/* ---- One study ----------------------------------------------------------- */
+.beta-papers-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: calc(var(--u) * 3);
+  /* Clear of the masthead and of the filter bar stuck beneath it. */
+  scroll-margin-top: calc(var(--app-head-h, 4rem) + var(--u) * 20);
+}
+/* Arrived at by a link to this card: blue is ACTIVE, and this is the one the
+   reader was sent to. */
+.beta-papers-card:target { outline: 2px solid var(--color-blue-ink); outline-offset: 2px; }
+
+/* A study's title is a sentence somebody wrote, often a question. The rail's
+   caps turn forty-five of them into a wall, so here they keep their case. */
+.beta-papers-card h3 {
+  margin: 0 0 calc(var(--u) * 2);
+  font-size: var(--text-prose);
+  font-weight: 700;
+  line-height: 1.22;
+  text-transform: none;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+
+/* The figure sits in a fixed-ratio well, so the grid keeps its rhythm whatever
+   each image's own proportions are and a lazy image arriving late moves
+   nothing. Contain, not cover: these are plots, and cropping one cuts an axis
+   off. */
+.beta-papers-figbox { margin: 0 0 calc(var(--u) * 3); }
+.beta-papers-fig {
+  position: relative;
+  display: block;
+  aspect-ratio: 16 / 10;
+  margin: 0;
+  background: var(--color-paper-sunk);
+  border: 1px solid var(--color-rule);
+  overflow: hidden;
+  transition: transform var(--t-snap) var(--ease-detent),
+              box-shadow var(--t-snap) var(--ease-detent);
+}
+.beta-papers-fig img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+/* The one exception to "contain": a figure much taller than it is wide (a
+   stack of panels) letterboxes to a sliver. The well shows its top at full
+   width instead, and a line under the well says so (over the image, it hid
+   the plot's axis). The page decides which figures these are from each
+   file's real size (StudyCard, TALL). */
+.beta-papers-fig[data-fit="top"] img { object-fit: cover; object-position: top center; }
+.beta-papers-fig__note {
+  margin: calc(var(--u) * 1.5) 0 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  line-height: 1.4;
+  color: var(--color-ink-muted);
+}
+/* The kit's detent, the same one a button has: it lifts under the pointer and
+   seats when pressed. That is how a figure says it opens. */
+a.beta-papers-fig:hover { box-shadow: 3px 3px 0 var(--color-ink); }
+a.beta-papers-fig:active { transform: translate(3px, 3px); box-shadow: 0 0 0 var(--color-ink); }
+a.beta-papers-fig:focus-visible { outline: 2px solid var(--color-blue-ink); outline-offset: 2px; }
+/* No figure: the same well, empty, and it says so. */
+.beta-papers-fig--none {
+  display: grid;
+  place-items: center;
+  border-style: dashed;
+  border-color: var(--color-ink-faint);
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+
+.beta-papers-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: calc(var(--u) * 2);
+  margin: 0 0 calc(var(--u) * 2.5);
+}
+.beta-papers-date {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-ink-muted);
+}
+/* The lab's end states: solid ink. Everything else is the plain kit tag. */
+.beta-papers-status[data-state="done"] {
+  background: var(--color-ink);
+  border-color: var(--color-ink);
+  color: var(--color-paper);
+}
+
+.beta-papers-abs {
+  margin: 0 0 calc(var(--u) * 3);
+  font-size: var(--text-body);
+  line-height: 1.5;
+}
+
+/* A hand-written note on an abstract (ABSTRACT_NOTES in study.ts): smaller
+   and muted, so it reads as a footnote to the source's words, not as them. */
+.beta-papers-absnote {
+  margin: calc(var(--u) * -1) 0 calc(var(--u) * 3);
+  padding-left: calc(var(--u) * 2.5);
+  border-left: 1px solid var(--color-rule);
+  font-size: var(--text-fine);
+  line-height: 1.5;
+  color: var(--color-ink-muted);
+}
+.beta-papers-absnote a { color: var(--color-ink); text-decoration: underline; text-underline-offset: 0.2em; text-decoration-color: var(--color-ink-faint); }
+.beta-papers-absnote a:hover { text-decoration-color: currentColor; }
+
+/* The rest of a long abstract, and the withdrawn list under a "listed" policy. */
+.beta-papers-more { margin: calc(var(--u) * -1) 0 calc(var(--u) * 3); font-size: var(--text-body); line-height: 1.5; }
+.beta-papers-more > summary {
+  display: inline-flex;
+  align-items: baseline;
+  gap: calc(var(--u) * 1.5);
+  padding: calc(var(--u) * 1) 0;
+  list-style: none;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+  transition: color var(--t-snap) var(--ease-detent);
+}
+.beta-papers-more > summary::-webkit-details-marker { display: none; }
+.beta-papers-more > summary::before { content: "+"; font-weight: 600; color: var(--color-ink); }
+.beta-papers-more[open] > summary::before { content: "\2212"; }
+.beta-papers-more > summary:hover { color: var(--color-ink); }
+.beta-papers-more > summary:focus-visible { outline: 2px solid var(--color-blue-ink); outline-offset: 2px; }
+.beta-papers-more > p { margin: calc(var(--u) * 1.5) 0 0; }
+.beta-papers-withdrawn { margin: 0 0 calc(var(--u) * 6); }
+.beta-papers-withdrawn ul { margin: calc(var(--u) * 2) 0 0; padding-left: calc(var(--u) * 5); color: var(--color-ink-muted); }
+
+/* A finding in the study's own words: a sunk well with an ink edge. Not the
+   kit notice, whose orange edge means attention. */
+.beta-papers-finding {
+  margin: 0 0 calc(var(--u) * 3);
+  padding: calc(var(--u) * 2.5) calc(var(--u) * 3);
+  background: var(--color-paper-sunk);
+  border-left: 3px solid var(--color-ink);
+}
+.beta-papers-finding b {
+  display: block;
+  margin-bottom: calc(var(--u) * 1);
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  font-weight: 600;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+}
+.beta-papers-finding p { margin: 0; font-size: var(--text-body); line-height: 1.5; }
+
+/* ---- The wide card ---------------------------------------------------- */
+/* A study with a published results table takes the whole row and leads the
+   grid. Same parts as any card, laid out by the card's OWN width (a container
+   query), because the row it spans is one, two or three columns wide depending
+   on the page:
+     under 38rem   stacked, exactly like an ordinary card
+     38rem and up  figure beside the text, results across the foot
+     58rem and up  figure, text, results side by side */
+.beta-papers-card--feature {
+  grid-column: 1 / -1;
+  container-type: inline-size;
+  padding: calc(var(--u) * 4);
+}
+.beta-papers-feature { display: flex; flex-direction: column; flex: 1 1 auto; min-width: 0; }
+.beta-papers-feature > * { min-width: 0; }
+@container (min-width: 38rem) {
+  .beta-papers-feature {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas:
+      "fig    head"
+      "result result"
+      "links  links";
+    column-gap: calc(var(--u) * 5);
+  }
+  .beta-papers-feature > .beta-papers-figbox { grid-area: fig; align-self: start; }
+  .beta-papers-feature > .beta-papers-feature__head { grid-area: head; }
+  .beta-papers-feature > .beta-papers-result { grid-area: result; }
+  .beta-papers-feature > .beta-papers-links { grid-area: links; }
+  .beta-papers-card--feature h3 { font-size: var(--text-lead); }
+}
+@container (min-width: 58rem) {
+  .beta-papers-feature {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) minmax(0, 1.1fr);
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      "fig head  result"
+      "fig links result";
+  }
+  .beta-papers-feature > .beta-papers-links { align-self: end; }
+  .beta-papers-feature > .beta-papers-result { margin-bottom: 0; }
+  .beta-papers-feature > .beta-papers-figbox { margin-bottom: 0; }
+}
+
+/* The results of the one study that publishes a table. A panel inside a
+   card, so its face is tighter than a page-level panel's. */
+.beta-papers-result { margin: 0 0 calc(var(--u) * 3); }
+.beta-papers-result > .panel-face { padding: calc(var(--u) * 3); }
+/* The CVs as a readout: name (with its event count and verdict under it) and
+   one number. Row heads are th for a screen reader, set in the readout's own
+   body face so they do not shout. */
+/* Fixed layout and a fixed number column: on auto layout the head's unit
+   held the table wider than the panel and cut the numbers off. */
+.panel-face .readout.beta-papers-result__table { width: 100%; table-layout: fixed; }
+.beta-papers-result__table thead th:last-child { width: 8em; }
+.beta-papers-result__table caption { text-align: left; caption-side: top; }
+.panel-face .readout.beta-papers-result__table tbody tr:last-child th { border-bottom: 0; }
+.beta-papers-result__table tbody th { overflow-wrap: anywhere; }
+.beta-papers-result__table th:first-child,
+.beta-papers-result__table td:first-child { padding-left: 0; }
+.beta-papers-result__table th:last-child,
+.beta-papers-result__table td:last-child { padding-right: 0; }
+.panel-face .readout.beta-papers-result__table tbody th {
+  padding: calc(var(--u) * 1.5) calc(var(--u) * 2) calc(var(--u) * 1.5) 0;
+  white-space: normal;
+  font-weight: 500;
+  text-align: left;
+  text-transform: none;
+  letter-spacing: normal;
+  font-size: var(--text-data);
+  color: var(--color-glass);
+}
+.beta-papers-result__table .num { white-space: nowrap; vertical-align: top; }
+.beta-papers-result__unit { display: block; white-space: nowrap; color: var(--color-glass-muted); text-transform: none; letter-spacing: normal; }
+.beta-papers-result__sub {
+  display: block;
+  margin-top: calc(var(--u) * 0.5);
+  font-size: var(--text-micro);
+  color: var(--color-glass-muted);
+}
+.beta-papers-result__line { margin: 0 0 calc(var(--u) * 3); font-size: var(--text-data); line-height: 1.5; color: var(--color-glass); }
+
+/* Pushed to the card's floor, so a row of cards lines its links up however
+   long each abstract runs. */
+.beta-papers-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: calc(var(--u) * 2) calc(var(--u) * 3);
+  margin-top: auto;
+  padding-top: calc(var(--u) * 2.5);
+  border-top: 1px solid var(--color-ink-faint);
+}
+/* The main way out of a card. Underlined with text-decoration, not a bottom
+   border, so the line stays under the words when the box grows to a thumb's
+   size on a touch screen (below). */
+.beta-papers-out {
+  display: inline-flex;
+  align-items: center;
+  min-height: calc(var(--u) * 7);
+  font-size: var(--text-fine);
+  font-weight: 600;
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.3em;
+  text-decoration-color: var(--color-ink-faint);
+  transition: color var(--t-snap) var(--ease-detent),
+              text-decoration-color var(--t-snap) var(--ease-detent);
+}
+.beta-papers-out::after { content: "\00a0\2197"; font-family: var(--font-mono); }
+.beta-papers-out__meta {
+  margin-left: calc(var(--u) * 1.5);
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  font-weight: 400;
+  color: var(--color-ink-muted);
+}
+.beta-papers-out:hover { color: var(--color-accent-ink); text-decoration-color: var(--color-accent-ink); }
+.beta-papers-out:focus-visible { outline: 2px solid var(--color-blue-ink); outline-offset: 2px; }
+.beta-papers-facts {
+  flex: 1 0 100%;
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  color: var(--color-ink-muted);
+}
+
+/* A finger, not a pointer: the card's link and its two "more" controls get a
+   44px box. The words do not move; the box around them grows. */
+@media (pointer: coarse) {
+  .beta-papers-out,
+  .beta-papers-more > summary { min-height: 44px; align-items: center; }
+  .beta-papers-links { align-items: center; }
+}
+
+/* ---- The way back to the filter ------------------------------------------ */
+/* Fixed above the site's fixed footer while the filter is out of sight and the
+   grid is on screen (FilterHash decides, by measuring). Solid ink like the
+   pressed chip it stands for, flat, no shadow: it must be findable, not loud.
+   It appears and leaves without animation. */
+.beta-papers-return {
+  position: fixed;
+  right: max(calc(var(--u) * 4), env(safe-area-inset-right));
+  bottom: calc(var(--app-foot-h, 3rem) + var(--u) * 3);
+  z-index: 23;
+  display: inline-flex;
+  align-items: baseline;
+  gap: calc(var(--u) * 1.5);
+  min-height: 44px;
+  max-width: calc(100vw - var(--u) * 8);
+  padding: calc(var(--u) * 2.5) calc(var(--u) * 3.5);
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+  line-height: 1.2;
+  color: var(--color-paper);
+  background: var(--color-ink);
+  border: 1px solid var(--color-ink);
+  border-radius: var(--radius-hair);
+  cursor: pointer;
+}
+.beta-papers-return > span { white-space: nowrap; }
+.beta-papers-return__k {
+  font-size: var(--text-micro);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-paper-sunk);
+}
+.beta-papers-return__n { color: var(--color-paper-sunk); font-variant-numeric: tabular-nums; }
+.beta-papers-return:active { transform: translate(1px, 1px); }
+.beta-papers-return:focus-visible { outline: 2px solid var(--color-blue-ink); outline-offset: 2px; }
+
+/* With scripts off there is no fixed control, so the foot of the grid has a
+   plain link back. With scripts on it is not shown. */
+.beta-papers-back { display: none; margin: calc(var(--u) * -2) 0 calc(var(--u) * 6); font-size: var(--text-fine); }
+@media (scripting: none) {
+  .beta-papers-back { display: block; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .beta-papers-fig,
+  .beta-papers-out,
+  .beta-papers-more > summary { transition: none; }
+  a.beta-papers-fig:active,
+  .beta-papers-return:active,
+  .beta-papers-filter .chip:active { transform: none; }
+}
+/* end of block: beta-papers-* */
+
+/* ===========================================================================
+   HOME (begin block: beta-home-*, plus the shared .beta-linkcard)
+   app/page.tsx, components/home/*
+
+   The front door. Its order is: words (hero), the machine proving it is on
+   (the live block), the work (six link cards), one photograph, the record
+   (four org panels and the session index), and two ways in.
+
+   One rule here is NOT prefixed beta-home-, on purpose: .beta-linkcard is
+   the site's link card and other pages are meant to use it. It lives in this
+   block because the home page needed it first.
+   ======================================================================== */
+
+/* ---- The link card (shared: any page may use it) ------------------------
+   A whole card that is one link. It answers the pointer with the same detent
+   as .btn-ghost: a faint hard shadow at rest says "this can be pressed", the
+   shadow turns to ink under the pointer, and a press travels the 3px the
+   shadow was offset by and lands with a hard stop. No lift, no fade, no
+   scale. Wear it WITH the kit's .rail (border, paper ground, padding, the h3
+   voice):
+     <a class="rail beta-linkcard" href="...">
+       <h3>Title</h3>
+       <p>One line.</p>
+       <span class="beta-linkcard__tags"><span class="tag">Rust</span></span>
+       <span class="beta-linkcard__go">where it goes</span>
+     </a>
+   Put a grid around the cards; this rule does not place them. With reduced
+   motion the kit's global rule removes the travel time and the states still
+   read: the shadow is the state, not the movement. */
+.beta-linkcard {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--u) * 3);
+  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+  border-radius: var(--radius-hair);
+  box-shadow: 3px 3px 0 var(--color-ink-faint);
+  transition: transform var(--t-snap) var(--ease-detent),
+              box-shadow var(--t-snap) var(--ease-detent);
+}
+.beta-linkcard:hover { box-shadow: 3px 3px 0 var(--color-ink); }
+.beta-linkcard:active { transform: translate(3px, 3px); box-shadow: 0 0 0 var(--color-ink); }
+.beta-linkcard:focus-visible { outline: 2px solid var(--color-blue-ink); outline-offset: 2px; }
+.rail.beta-linkcard h3 { margin: 0; text-wrap: balance; }
+.beta-linkcard p {
+  margin: 0;
+  font-size: var(--text-body);
+  line-height: 1.5;
+  color: var(--color-ink);
+}
+.beta-linkcard__tags { display: flex; flex-wrap: wrap; gap: calc(var(--u) * 1.5); }
+/* Where the card goes, last, pinned to the bottom so a row of cards of
+   different lengths ends on one line. Muted until the pointer arrives. */
+.beta-linkcard__go {
+  margin-top: auto;
+  padding-top: calc(var(--u) * 3);
+  border-top: 1px solid var(--color-ink-faint);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(var(--u) * 2);
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+  color: var(--color-ink-muted);
+  overflow-wrap: anywhere;
+  transition: color var(--t-snap) var(--ease-detent);
+}
+.beta-linkcard__go svg { flex: none; }
+.beta-linkcard:hover .beta-linkcard__go,
+.beta-linkcard:focus-visible .beta-linkcard__go { color: var(--color-ink); }
+
+/* ---- The hero ----------------------------------------------------------- */
+.beta-home-where { margin: calc(var(--u) * 4) 0 0; font-size: var(--text-body); }
+.beta-home-where b { color: var(--color-ink); font-weight: 600; }
+
+/* The measured chips. Below the kit's 80rem rail they are a grid, not a
+   wrapping row: two of them carry a relative time, and
+   in a wrapping row a chip that changes width can pull its neighbour up a
+   line and move the page under it. In a grid each chip has its own cell. */
+.beta-home-chips {
+  display: grid;
+  /* One column: three chips in a two-column grid left one hanging alone on
+     a tablet, and each chip is one line at that width anyway. */
+  grid-template-columns: minmax(0, 1fr);
+  gap: calc(var(--u) * 3) calc(var(--u) * 8);
+  margin: calc(var(--u) * 7) 0 0;
+}
+/* One child per chip (a span), so the text wraps as a sentence beside the
+   mark. The kit wraps a chip's children as whole items, which on a phone
+   leaves the mark alone on a line. Same fix as .beta-live > .measured. */
+.beta-home-chips > .measured { flex-wrap: nowrap; justify-self: start; align-self: start; }
+.beta-home-chips > .measured > span { min-width: 0; }
+.beta-home-chips time { font-variant-numeric: tabular-nums; }
+
+@media (min-width: 80rem) {
+  /* The kit's rail starts at row 2 and spans two rows (lede, buttons). This
+     hero has a third thing in the left column, so the rail spans it too. */
+  .hero.beta-home-hero > .beta-home-where { grid-column: 1; }
+  .hero.beta-home-hero > .hero-chips {
+    grid-row: 2 / span 3;
+    grid-template-columns: minmax(0, 1fr);
+    margin: 0;
+  }
+}
+
+/* ---- Running now -------------------------------------------------------- */
+/* Answering instruments (NowPanel) and the silent ones (one slim panel) on
+   the left, the Claude Code pulse on the right; one column on anything
+   narrower than a laptop. NowPanel and ActivityPulse are size containers, so
+   each lays itself out by the column it is given, not by the viewport. */
+.beta-home-now {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: "rows" "pulse" "quiet";
+  gap: calc(var(--u) * 6);
+  align-items: start;
+  margin: calc(var(--u) * 6) 0 0;
+}
+.beta-home-now__rows { grid-area: rows; min-width: 0; }
+.beta-home-now__pulse { grid-area: pulse; min-width: 0; }
+.beta-home-quiet { grid-area: quiet; min-width: 0; }
+/* At laptop width the answering rows and the pulse sit side by side, and the
+   silent instruments run under both: one line of names, not a column. */
+@media (min-width: 64rem) {
+  .beta-home-now {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-areas: "rows pulse" "quiet quiet";
+  }
+}
+/* The instruments that are not answering, named once instead of a row each.
+   One orange tag for the lot: ATTENTION, said once, not five times. Names and
+   last-heard dates are muted panel ink, as NowPanel draws an offline row. */
+.beta-home-quiet__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(var(--u) * 2) calc(var(--u) * 6);
+}
+.beta-home-quiet__list > li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 calc(var(--u) * 2);
+  min-width: 0;
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  color: var(--color-glass-muted);
+}
+.beta-home-quiet__when {
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+/* Drawn as NowPanel draws its own offline tags: an outline on the panel
+   ground, orange words (5.2:1 on panel), not a paper chip on the glass. */
+.beta-home-quiet .panel-bar .tag.warn {
+  background: transparent;
+  border-color: var(--color-rule-panel);
+  color: var(--color-orange);
+}
+
+/* ---- Selected work ------------------------------------------------------ */
+.beta-home-work {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(19rem, 100%), 1fr));
+  gap: calc(var(--u) * 5);
+  margin: calc(var(--u) * 6) 0 calc(var(--u) * 4);
+}
+
+/* ---- The die ------------------------------------------------------------ */
+.beta-home-silicon {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: calc(var(--u) * 6);
+  align-items: start;
+  margin: calc(var(--u) * 6) 0 0;
+}
+@media (min-width: 48rem) {
+  .beta-home-silicon {
+    grid-template-columns: minmax(0, clamp(18rem, 36vw, 24rem)) minmax(0, 1fr);
+    gap: calc(var(--u) * 10);
+  }
+}
+.beta-home-silicon__words { display: grid; gap: calc(var(--u) * 5); min-width: 0; }
+.beta-home-silicon__words .prose > p:last-child { margin-bottom: 0; }
+
+.beta-home-die { margin: 0; max-width: 24rem; }
+.beta-home-die .chips { margin-bottom: calc(var(--u) * 3); }
+/* The frame holds the photograph's own shape before a byte of it arrives, so
+   a lazy image cannot move the page. Both plates are stacked in it and one is
+   shown; they are the same crop of the same die, so the switch is a hard cut
+   between two registered photographs, made by the reader and never by a
+   timer. Hidden with `visibility`, not `display`: a lazy image that is
+   display:none is not fetched until it is shown, and the first press of
+   "substrate" would open an empty frame. */
+.beta-die__frame.beta-home-die__frame { aspect-ratio: 1300 / 1417; }
+.beta-home-die__frame img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  visibility: hidden;
+}
+.beta-home-die__frame img.is-on { visibility: visible; }
+/* The shared frame sets line-height: 0 to close the gap under an in-flow
+   image, and its two labels inherit it and collapse to a sliver (they do on
+   /6502 as well). Here they get a line back. */
+.beta-home-die__frame .beta-die__tag,
+.beta-home-die__frame .beta-die__zoom { line-height: 1.5; }
+.beta-home-die__frame .beta-die__zoom { display: inline-flex; align-items: center; gap: var(--u); }
+/* The shared labels sit on a translucent ground, which over the pale
+   substrate plate let the photograph through and washed the words out. Here
+   they get the panel ground, opaque, so they read on either plate. */
+.beta-home-die__frame .beta-die__tag,
+.beta-home-die__frame .beta-die__zoom { background: var(--color-panel); }
+.beta-home-die__frame .beta-die__zoom { color: var(--color-glass); }
+/* Two captions in one cell, one visible: the figure is as tall as the longer
+   caption whichever plate is up, so the switch moves nothing under it. */
+.beta-home-die__caps { display: grid; }
+.beta-home-die__caps > span { grid-area: 1 / 1; }
+.beta-home-die__caps > span[aria-hidden="true"] { visibility: hidden; }
+.beta-home-die__credit { display: block; margin-top: calc(var(--u) * 2); color: var(--color-ink); }
+/* Links in the credit line and in the hero chips, drawn as the kit draws a
+   link in .prose (ink, an orange hairline that thickens under the pointer):
+   preflight strips the underline from a bare <a>, and a credit link or a
+   method link that does not look like one is not doing its job. */
+.beta-home-die__credit a,
+.beta-home-chips a {
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--color-orange);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 2px;
+  transition: text-decoration-thickness var(--t-snap) var(--ease-snap);
+}
+.beta-home-die__credit a:hover,
+.beta-home-chips a:hover { text-decoration-thickness: 2px; }
+.beta-home-die__credit a:focus-visible,
+.beta-home-chips a:focus-visible { outline: 2px solid var(--color-blue-ink); outline-offset: 2px; }
+
+/* ---- The record: four org panels ---------------------------------------- */
+.beta-home-orgs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(19rem, 100%), 1fr));
+  gap: calc(var(--u) * 6);
+  margin: calc(var(--u) * 6) 0 calc(var(--u) * 3);
+}
+@media (min-width: 64rem) {
+  /* Four panels: two rows of two, never three and one. */
+  .beta-home-orgs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+.beta-home-orgs > section { min-width: 0; }
+/* A date or a count never breaks across lines. In the bar, the org's name
+   and "since <date>" each stay whole: when both do not fit on one line (a
+   phone) the date drops under the name instead of splitting. */
+.beta-home-orgs .readout td.num { white-space: nowrap; }
+.beta-home-orgs .panel-bar { flex-wrap: wrap; row-gap: var(--u); }
+.beta-home-orgs .panel-bar > * { white-space: nowrap; }
+.beta-home-orgs .panel { height: 100%; }
+.beta-home-orgs .panel-face { height: 100%; }
+.beta-home-orgs .readout { margin-bottom: calc(var(--u) * 5); }
+/* A link on the panel ground, as NowPanel draws its instrument names. */
+.beta-home-onpanel {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--color-glass-muted);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  transition: text-decoration-color var(--t-snap) var(--ease-snap);
+}
+.beta-home-onpanel:hover { text-decoration-color: var(--color-blue); text-decoration-thickness: 2px; }
+.beta-home-onpanel:focus-visible { outline: 2px solid var(--color-blue); outline-offset: 3px; }
+
+/* ---- The session index, under the org panels ---------------------------- */
+.beta-home-index { margin: calc(var(--u) * 8) 0 calc(var(--u) * 3); }
+
+/* ---- Two ways in -------------------------------------------------------- */
+.beta-home-paths {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(19rem, 100%), 1fr));
+  gap: calc(var(--u) * 5);
+  margin: calc(var(--u) * 6) 0 calc(var(--u) * 8);
+}
+
+/* ---- Small things -------------------------------------------------------- */
+/* Two buttons side by side, outside the hero (the kit's .hero-ctas is a row
+   only inside .hero). */
+.beta-home-row { display: flex; flex-wrap: wrap; gap: calc(var(--u) * 3); }
+/* A .rail-list of doors. The kit's list is one column; here the entries sit
+   side by side when there is room, so six links are two rows and not a
+   ladder. minmax(0, ...) because a track's floor is otherwise its content. */
+.rail-list.beta-home-more {
+  grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
+  gap: calc(var(--u) * 5) calc(var(--u) * 8);
+  margin-top: calc(var(--u) * 8);
+}
+.rail-list.beta-home-more > li { min-width: 0; }
+.rail-list.beta-home-more span { margin-top: var(--u); }
+/* Under its own heading the list needs only the heading's gap. */
+.prose + .rail-list.beta-home-more { margin-top: calc(var(--u) * 5); }
+/* A provenance chip that is one sentence: the mark stays beside its first
+   line and the sentence wraps inside itself (see Measured in app/page.tsx). */
+.beta-home-measured { flex-wrap: nowrap; }
+.beta-home-measured > span { min-width: 0; overflow-wrap: anywhere; }
+/* HOME (end block: beta-home-*) */
+
+/* ===========================================================================
+   /work (app/work/page.tsx)                                 block: beta-work-*
+
+   Layout for the org boards, the figures, the repository cards and two
+   readout tables. Every chart colour still arrives inline from
+   lib/beta/chart-theme.ts; the only colours named here are furniture already
+   on the page (glass and rules on panel).
+
+   Uses as shipped: .panel, .panel-bar, .readout, .prose, .beta-sec,
+   .beta-chart__note, .measured.
+   ======================================================================== */
+
+/* One org: its paper paragraph, then its board, its cards and its chip. A
+   single column whose track is minmax(0, 1fr), so nothing inside can hold the
+   page open. */
+.beta-work-orgs,
+.beta-work-org {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+.beta-work-org { gap: calc(var(--u) * 5); }
+.beta-work-org > .prose > :last-child { margin-bottom: 0; }
+/* .beta-sec holds its paragraphs to the reading measure; a list is reading too. */
+.beta-work-org > .prose > ul { max-width: 68ch; }
+.beta-work-org > .measured { justify-self: start; margin: 0; }
+
+/* ---- The board: one panel per org --------------------------------------- */
+/* The panel face is the container, so the board lays itself out by the room
+   it has, not by the viewport. */
+.beta-work-board > .panel-face { container-type: inline-size; }
+
+/* Figures, then the calendar. Side by side once the face can hold a 13rem
+   column beside the calendar at its natural width (63rem in all); stacked,
+   figures first, below that. */
+.beta-work-board__top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: calc(var(--u) * 6);
+  align-items: start;
+}
+.beta-work-board__cal { min-width: 0; }
+@container (min-width: 63rem) {
+  .beta-work-board__top { grid-template-columns: 13rem minmax(0, 1fr); }
+  .beta-work-figs { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* The calendar is drawn at natural size and scrolls under about 49rem. The
+   only sign of that inside the chart is a clipped column, so say it. */
+.beta-work-scrollhint { margin-top: calc(var(--u) * 1); }
+@container (min-width: 49rem) {
+  .beta-work-scrollhint { display: none; }
+}
+
+/* The compact board: an org whose whole history fits in a year. Its calendar
+   starts at the first commit and is narrower, so the figures go two by two
+   and the two halves share the width. */
+@container (min-width: 32rem) {
+  .beta-work-board--compact .beta-work-scrollhint { display: none; }
+}
+@container (min-width: 63rem) {
+  .beta-work-board--compact .beta-work-board__top { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .beta-work-board--compact .beta-work-figs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* The months under the calendar: a second question, not a continuation. */
+.beta-work-board__cal > .beta-chart + .beta-chart,
+.beta-work-board__cal > .beta-work-scrollhint + .beta-chart { margin-top: calc(var(--u) * 8); }
+
+/* The languages: a row of their own, under a rule, on the same two columns
+   as the row above (the number on the left, the picture on the right). */
+.beta-work-board__low {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: calc(var(--u) * 4);
+  align-items: start;
+  margin-top: calc(var(--u) * 6);
+  padding-top: calc(var(--u) * 6);
+  border-top: 1px solid var(--color-rule-panel);
+}
+.beta-work-board__low > * { min-width: 0; margin-top: 0; }
+@container (min-width: 63rem) {
+  .beta-work-board__low { grid-template-columns: 13rem minmax(0, 1fr); gap: calc(var(--u) * 6); }
+}
+
+/* ---- Figures ------------------------------------------------------------ */
+.beta-work-figs {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(9rem, 100%), 1fr));
+  gap: calc(var(--u) * 2);
+}
+.beta-work-fig {
+  min-width: 0;
+  padding: calc(var(--u) * 2.5) calc(var(--u) * 3.5);
+  background: var(--color-panel-sunk);
+  border: 1px solid var(--color-rule-panel);
+  border-radius: var(--radius-mod);
+}
+.beta-work-fig dt {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-glass-muted);
+}
+.beta-work-fig dd {
+  margin: calc(var(--u) * 1) 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.beta-work-fig__v {
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--color-glass);
+  font-variant-numeric: tabular-nums;
+}
+/* A tile narrower than about ten rem sets its value a step down, so a date
+   like "2 Oct 2026" stays on one line. */
+.beta-work-fig { container-type: inline-size; }
+@container (max-width: 10rem) {
+  .beta-work-fig__v { font-size: var(--text-lead); }
+}
+.beta-work-fig__sub {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  line-height: 1.5;
+  color: var(--color-glass-muted);
+}
+/* A year's share of the total, one line each, the number right-aligned. */
+.beta-work-fig__year {
+  display: flex;
+  justify-content: space-between;
+  gap: calc(var(--u) * 2);
+  font-variant-numeric: tabular-nums;
+}
+.beta-work-fig__year:first-of-type {
+  margin-top: calc(var(--u) * 1);
+  padding-top: calc(var(--u) * 1);
+  border-top: 1px solid var(--color-rule-panel);
+}
+
+/* ---- Repository cards --------------------------------------------------- */
+.beta-work-cards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(15rem, 100%), 1fr));
+  gap: calc(var(--u) * 3);
+}
+.beta-work-card {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--u) * 1.5);
+  padding: calc(var(--u) * 3.5) calc(var(--u) * 4);
+  background: var(--color-panel-sunk);
+  border: 1px solid var(--color-rule-panel);
+  border-radius: var(--radius-mod);
+  transition: border-color var(--t-snap) var(--ease-detent);
+}
+.beta-work-card:hover { border-color: var(--color-glass-muted); }
+.beta-work-card__name {
+  font-family: var(--font-mono);
+  font-size: var(--text-body);
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.beta-work-card__desc {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--text-fine);
+  line-height: 1.5;
+  color: var(--color-glass-muted);
+}
+/* The facts sit at the foot of the card, so a row of cards lines up whatever
+   their descriptions run to. */
+.beta-work-card__facts {
+  margin: auto 0 0;
+  padding-top: calc(var(--u) * 1);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: calc(var(--u) * 1) calc(var(--u) * 3);
+  font-family: var(--font-mono);
+  font-size: var(--text-data);
+  color: var(--color-glass);
+  font-variant-numeric: tabular-nums;
+}
+/* The span bar: track and bar, both coloured inline from chart-theme. */
+.beta-work-card__span { position: relative; height: 4px; }
+.beta-work-card__span i,
+.beta-work-card__span b { position: absolute; top: 0; bottom: 0; border-radius: 1px; }
+.beta-work-card__span i { left: 0; right: 0; }
+.beta-work-card__dates {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  color: var(--color-glass-muted);
+}
+
+/* ---- Links on a panel --------------------------------------------------- */
+/* The kit colours links for paper only. On a panel a link takes the glass
+   colour and an underline. */
+.beta-work-sum a,
+.beta-work-card__name,
+.beta-work-panel-link {
+  color: var(--color-glass);
+  text-decoration: underline;
+  text-decoration-color: var(--color-glass-muted);
+  text-underline-offset: 3px;
+  transition: text-decoration-color var(--t-snap) var(--ease-detent);
+}
+.beta-work-sum a:hover,
+.beta-work-card__name:hover,
+.beta-work-panel-link:hover { text-decoration-color: var(--color-glass); }
+.beta-work-sum a:focus-visible,
+.beta-work-card__name:focus-visible,
+.beta-work-panel-link:focus-visible { outline: 2px solid var(--color-blue); outline-offset: 2px; }
+
+/* ---- Readout tables ----------------------------------------------------- */
+.beta-work-sum td { vertical-align: middle; }
+/* Name, one number and the line are what fit a phone (rule 9 in
+   app/_charts.tsx). The other columns join when there is room. */
+@media (max-width: 44rem) {
+  .panel-face .readout .beta-work-wide { display: none; }
+}
+/* A row that is part of the row above it is set in a step. */
+.panel-face .readout td.beta-work-sub { padding-left: calc(var(--u) * 6); color: var(--color-glass-muted); }
+.panel-face .readout td.beta-work-sub2 { padding-left: calc(var(--u) * 10); }
+@media (max-width: 30rem) {
+  .panel-face .readout td.beta-work-sub { padding-left: calc(var(--u) * 4); }
+  .panel-face .readout td.beta-work-sub2 { padding-left: calc(var(--u) * 7); }
+}
+/* A total is one token: a count broken across two lines stops reading as one. */
+.beta-work-totals .num { white-space: nowrap; vertical-align: middle; }
+/* The author check is six rows of one column: it does not need the page. */
+.beta-work-audit { justify-self: start; width: min(100%, 34rem); }
+
+@media (prefers-reduced-motion: reduce) {
+  .beta-work-card,
+  .beta-work-sum a,
+  .beta-work-card__name,
+  .beta-work-panel-link { transition: none; }
+}
+/* end of block: beta-work-* */
+
+/* ===========================================================================
+   THE AI PILOT LICENCE (app/ai-pilot, components/pilot)   block: beta-pilot-*
+
+   The licence is the machine's record of the flying, so it is a panel, laid
+   out as a document: issuer, number, holder, class, dates, then the totals.
+   Layout and type only. Every colour is a kit token for its ground: glass and
+   muted glass for text, the accent for the issuer line (the kit's eyebrow
+   colour, in its panel form), the panel rule for hairlines. No data colour is
+   set here; the charts on the page bring their own from chart-theme.ts.
+
+   The licence is its own container, so its type and its columns follow the
+   width of the panel it is in and not the viewport.
+   ======================================================================== */
+.beta-pilot-lic { margin: 0; }
+.beta-pilot-lic > .panel-face { container-type: inline-size; }
+
+/* Number and holder on the left, the class in its own box on the right. */
+.beta-pilot-lic__doc {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: calc(var(--u) * 5);
+}
+.beta-pilot-lic__id { min-width: 0; }
+.beta-pilot-lic__issuer {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  font-weight: 500;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+.beta-pilot-lic__no {
+  margin: calc(var(--u) * 2) 0 0;
+  font-family: var(--font-mono);
+  font-size: clamp(var(--text-h3), 6.4cqi, var(--text-h1));
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-glass);
+  white-space: nowrap;
+}
+.beta-pilot-lic__holder {
+  margin: calc(var(--u) * 4) 0 0;
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: var(--tracking-tight);
+  text-transform: uppercase;
+  color: var(--color-glass);
+}
+.beta-pilot-lic__role {
+  margin: calc(var(--u) * 1.5) 0 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+  line-height: 1.5;
+  color: var(--color-glass-muted);
+}
+.beta-pilot-lic__class {
+  display: grid;
+  justify-items: center;
+  gap: calc(var(--u) * 1);
+  min-width: calc(var(--u) * 26);
+  padding: calc(var(--u) * 3) calc(var(--u) * 5) calc(var(--u) * 2.5);
+  background: var(--color-panel-sunk);
+  border: 1px solid var(--color-rule-panel);
+  border-radius: var(--radius-mod);
+}
+.beta-pilot-lic__class span {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-glass-muted);
+}
+.beta-pilot-lic__class b {
+  font-family: var(--font-display);
+  font-size: var(--text-h1);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-glass);
+}
+/* A narrow licence: the class box drops under the holder and lies flat, a
+   label and a value on one line, instead of squeezing the number. */
+@container (max-width: 30rem) {
+  .beta-pilot-lic__doc { grid-template-columns: minmax(0, 1fr); gap: calc(var(--u) * 4); }
+  .beta-pilot-lic__class {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: calc(var(--u) * 2) calc(var(--u) * 3);
+  }
+  .beta-pilot-lic__class b { font-size: var(--text-h2); }
+}
+
+/* Label over value, in a row of equal cells. Two sizes: the plain one for the
+   licence's dates, --big for totals. A cell is never narrower than its label
+   needs and the grid never asks for more than the panel has. */
+.beta-pilot-cells {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(6.5rem, 100%), 1fr));
+  gap: calc(var(--u) * 4) calc(var(--u) * 5);
+  margin: calc(var(--u) * 5) 0 0;
+  padding-top: calc(var(--u) * 4);
+  border-top: 1px solid var(--color-rule-panel);
+}
+.beta-pilot-cells > div { min-width: 0; }
+.beta-pilot-cells dt {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-glass-muted);
+}
+.beta-pilot-cells dd {
+  margin: calc(var(--u) * 1) 0 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-data);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--color-glass);
+}
+.beta-pilot-cells--big { grid-template-columns: repeat(auto-fit, minmax(min(8.5rem, 100%), 1fr)); }
+.beta-pilot-cells--big dd:not(.beta-pilot-cells__sub) {
+  font-size: var(--text-h3);
+  line-height: 1.15;
+  white-space: nowrap;
+}
+.beta-pilot-cells dd.beta-pilot-cells__sub {
+  margin-top: calc(var(--u) * 0.5);
+  font-family: var(--font-sans);
+  font-size: var(--text-fine);
+  font-weight: 400;
+  line-height: 1.4;
+  color: var(--color-glass-muted);
+}
+/* The first thing in a panel, straight under the bar: the bar already drew
+   the rule, so the cells do not draw a second one. */
+.beta-pilot-cells--lead { margin-top: 0; padding-top: 0; border-top: 0; }
+/* Seven digits and two commas in half of a 320px phone: two columns stay two
+   columns and the figure steps down instead of the grid dropping to one. */
+@container (max-width: 30rem) {
+  .beta-pilot-cells--big { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .beta-pilot-cells--big dd:not(.beta-pilot-cells__sub) { font-size: 1.125rem; }
+}
+/* The licence has six totals. Left to auto-fit they break four and two on a
+   tablet; six, three or two across never leaves an orphan row. */
+@container (min-width: 30.01rem) {
+  .beta-pilot-lic .beta-pilot-cells--big { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@container (min-width: 56rem) {
+  .beta-pilot-lic .beta-pilot-cells--big { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+}
+
+/* The right-hand end of the licence's panel-bar: the dot, and the tag or the
+   plain sentence. The height is held at the tag's, so going from sentence to
+   tag when a session starts does not move the rule under the bar. */
+.beta-pilot-flight {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--u) * 2);
+  min-height: 1.6rem;
+  min-width: 0;
+}
+
+/* Two strips side by side where there is room for both, stacked where not. */
+.beta-pilot-pair {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(24rem, 100%), 1fr));
+  gap: 0 calc(var(--u) * 8);
+}
+.beta-pilot-pair > * { min-width: 0; }
+
+/* SpanRows (components/pilot/SpanRows.tsx) borrows the TenureBars layout and
+   changes two things. The value column is a figure, not a date range: glass,
+   and right-aligned so the digits line up. And where the three columns sit
+   side by side, the label and value columns are a fixed width, so every span
+   chart on the page (and the three stacked in the ratings panel) has its
+   track on the same left and right edges. Under 40rem of its own width the
+   borrowed rules stack the row and these do not apply. */
+.beta-pilot-val { color: var(--color-glass); text-align: right; }
+@container (min-width: 40.01rem) {
+  .beta-pilot-rows .beta-charts-tenure__rows {
+    grid-template-columns: minmax(0, 16rem) minmax(0, 1fr) minmax(4rem, auto);
+  }
+}
+.beta-pilot-rows + .beta-pilot-rows { margin-top: calc(var(--u) * 7); }
+
+/* The provenance chip under a panel. Its text is one child, so it stays
+   beside the mark and wraps inside itself (the kit wraps a chip's children as
+   whole items, which on a phone leaves the mark alone on a line). Same fix as
+   .beta-live > .measured, and the same gap above. */
+.measured.beta-pilot-chip { flex-wrap: nowrap; margin: calc(var(--u) * 2.5) 0 0; line-height: 1.5; }
+.measured.beta-pilot-chip > span { min-width: 0; overflow-wrap: anywhere; }
+
+/* The page's fine print on paper. */
+.beta-pilot-fine { margin: calc(var(--u) * 4) 0 0; max-width: 78ch; line-height: 1.55; }
+.beta-pilot-fine + .beta-pilot-fine { margin-top: calc(var(--u) * 3); }
+
+/* Panels that follow one another directly (the logbook's four) need air
+   between them; the kit spaces a panel from prose, not from a panel. One
+   column that cannot be pushed wider than the page by what it holds. */
+.beta-pilot-stack {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: calc(var(--u) * 5);
+}
+
+/* ---- The top: the card, and the record's index beside it ----------------
+   A licence is an object of fixed proportion, not a slab as wide as the page:
+   on a wide screen the card stops at 47.5rem and the index of the record
+   takes the rest of the row. Narrower, the index follows the card. The top is
+   its own container so the split follows the page column, not the viewport. */
+.beta-pilot-top { container-type: inline-size; margin-top: calc(var(--u) * 6); }
+.beta-pilot-top__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: calc(var(--u) * 8);
+}
+.beta-pilot-top__card { min-width: 0; }
+@container (min-width: 60rem) {
+  .beta-pilot-top__grid {
+    grid-template-columns: minmax(0, 47.5rem) minmax(0, 1fr);
+    gap: calc(var(--u) * 10);
+    align-items: start;
+  }
+}
+
+/* The status gets its own line under the title on a narrow card, from the
+   server's first paint, so "checking" turning into "In flight" (or into the
+   longer idle sentence) does not wrap the bar and push the card down. */
+@container (max-width: 30rem) {
+  .beta-pilot-lic .panel-bar > .beta-pilot-flight { flex-basis: 100%; }
+}
+
+/* The machine-readable zone: two lines of 44 characters at the foot of the
+   card, sized from the card's own width so a line never wraps (IBM Plex Mono
+   advances 0.6em, so 44 characters are 26.4em; 27 leaves slack). It repeats
+   the fields above and is hidden from screen readers for that reason. */
+.beta-pilot-mrz {
+  display: grid;
+  margin: calc(var(--u) * 6) 0 0;
+  padding: calc(var(--u) * 3);
+  background: var(--color-panel-sunk);
+  border: 1px solid var(--color-rule-panel);
+  border-radius: var(--radius-mod);
+  font-family: var(--font-mono);
+  font-size: clamp(0.5rem, calc((100cqi - var(--u) * 6 - 2px) / 27), 1.125rem);
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: 0;
+  color: var(--color-glass-muted);
+  white-space: pre;
+  overflow: hidden;
+}
+.beta-pilot-mrz span { display: block; }
+
+/* The index of the record: the sections of this page, each with what it
+   holds. Paper, in rows under hairlines; one column beside the card, as many
+   as fit when it runs under it. */
+.beta-pilot-index__h {
+  margin: 0 0 calc(var(--u) * 2);
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  font-weight: 500;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+.beta-pilot-index ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(14rem, 100%), 1fr));
+  column-gap: calc(var(--u) * 6);
+  border-top: 1px solid var(--color-rule);
+}
+.beta-pilot-index li { min-width: 0; border-bottom: 1px solid var(--color-rule); }
+.beta-pilot-index a {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0 calc(var(--u) * 3);
+  padding: calc(var(--u) * 2.5) 0;
+  color: var(--color-ink);
+  text-decoration: none;
+}
+.beta-pilot-index a b { font-weight: 600; transition: color var(--t-snap) var(--ease-detent); }
+.beta-pilot-index a span {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-ink-muted);
+}
+.beta-pilot-index a:hover b { color: var(--color-blue-ink); text-decoration: underline; text-underline-offset: 3px; }
+.beta-pilot-index a:focus-visible { outline: 2px solid var(--color-blue-ink); outline-offset: 2px; }
+
+/* The streak figures over the calendar. */
+.beta-pilot-streaks { margin-bottom: calc(var(--u) * 6); }
+
+/* ---- DayCalendar (components/pilot/DayCalendar.tsx) ---------------------
+   The calendar as HTML boxes on a grid, so it fills the panel: columns are
+   weeks (at least 11px, otherwise an equal share of the width), rows are the
+   week bars, the month names, Monday to Sunday and the split brackets. On a
+   narrow panel it scrolls in its own box, opened at the newest week, as
+   CalendarHeat does (.beta-charts-cal__scroll), with the weekday names held
+   at the left edge. */
+.beta-pilot-cal__scroll {
+  contain: inline-size;
+  overflow-x: auto;
+  overflow-y: hidden;
+  direction: rtl;
+  padding-bottom: calc(var(--u) * 2);
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-rule-panel) transparent;
+}
+.beta-pilot-cal__scroll:focus-visible { outline: 2px solid var(--color-blue); outline-offset: 2px; }
+.beta-pilot-cal__grid {
+  direction: ltr;
+  display: grid;
+  /* Ten explicit rows, so the mask's 1 / -1 reaches the last of them: week
+     bars, months, Monday to Sunday, the split brackets. */
+  grid-template-rows: calc(var(--u) * 12) auto repeat(7, auto) auto;
+  gap: 3px;
+  width: max-content;
+  min-width: 100%;
+}
+.beta-pilot-cal__side {
+  grid-column: 1;
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  align-self: center;
+  padding-right: calc(var(--u) * 2);
+  background: var(--color-panel);
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  line-height: 1;
+  color: var(--color-glass-muted);
+}
+.beta-pilot-cal__side--wk { align-self: end; padding-bottom: 2px; }
+/* Behind the names, in front of the weeks: the panel's own ground, reaching
+   over the 3px column gap so no sliver of a cell shows beside a name. */
+.beta-pilot-cal__mask {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background: var(--color-panel);
+  box-shadow: 3px 0 0 var(--color-panel);
+}
+.beta-pilot-cal__side { z-index: 2; }
+/* The later bracket names itself at its right end, where the scroller opens. */
+.beta-pilot-cal__span--after { text-align: right; }
+.beta-pilot-cal__wk {
+  display: flex;
+  align-items: flex-end;
+  height: 100%;
+  border-bottom: 1px solid;
+}
+.beta-pilot-cal__wk i { display: block; width: 100%; border-radius: 1px 1px 0 0; }
+.beta-pilot-cal__mo {
+  align-self: end;
+  padding-top: calc(var(--u) * 1);
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  line-height: 1.2;
+  white-space: nowrap;
+  color: var(--color-glass-muted);
+}
+.beta-pilot-cal__day {
+  display: block;
+  aspect-ratio: 1;
+  min-height: 11px;
+  max-height: 2.25rem;
+  border-radius: var(--radius-hair);
+  outline: 1px solid transparent;
+  outline-offset: 0;
+  transition: outline-color var(--t-snap) var(--ease-detent);
+}
+.beta-pilot-cal__day:hover { outline-color: var(--color-glass); }
+/* The marked day: a ring, not a colour, so it reads in greyscale. */
+.beta-pilot-cal [data-mark] { box-shadow: 0 0 0 2px var(--color-panel), 0 0 0 3px var(--color-glass); }
+.beta-pilot-cal__span {
+  margin-top: calc(var(--u) * 1.5);
+  padding-top: calc(var(--u) * 1);
+  border-top: 2px solid;
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  line-height: 1.3;
+  color: var(--color-glass-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.beta-pilot-cal__markkey { display: inline-flex; align-items: center; white-space: nowrap; }
+.beta-pilot-cal__markkey i { margin-left: 3px; }
+
+/* ---- ShareBar (components/pilot/ShareBar.tsx) ---------------------------
+   One whole as one bar, the parts named under it with their share. */
+.beta-pilot-share__bar {
+  display: flex;
+  gap: 2px;
+  height: calc(var(--u) * 8);
+  margin-top: calc(var(--u) * 2);
+}
+.beta-pilot-share__bar i {
+  display: block;
+  flex-basis: 0;
+  min-width: 3px;
+  border-radius: var(--radius-hair);
+  outline: 1px solid transparent;
+  outline-offset: 1px;
+  transition: outline-color var(--t-snap) var(--ease-detent);
+}
+.beta-pilot-share__bar i:hover { outline-color: var(--color-glass); }
+.beta-pilot-share__key {
+  list-style: none;
+  margin: calc(var(--u) * 3) 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(11rem, 100%), 1fr));
+  gap: calc(var(--u) * 2) calc(var(--u) * 6);
+  font-family: var(--font-mono);
+  font-size: var(--text-data);
+  font-variant-numeric: tabular-nums;
+}
+.beta-pilot-share__key li { display: flex; align-items: center; gap: calc(var(--u) * 2); min-width: 0; }
+.beta-pilot-share__key i { flex: none; width: 11px; height: 11px; border-radius: var(--radius-hair); }
+.beta-pilot-share__key span { min-width: 0; overflow-wrap: anywhere; color: var(--color-glass-muted); }
+.beta-pilot-share__key b { margin-left: auto; font-weight: 600; color: var(--color-glass); }
+/* The tools under the four named in the bar, on their own scale. */
+.beta-pilot-tail { margin-top: calc(var(--u) * 7); }
+
+/* Two charts side by side in one panel need air between them when they stack. */
+.beta-pilot-pair--wide { row-gap: calc(var(--u) * 7); }
+.beta-pilot-pair--wide > * { min-width: 0; }
+
+/* Token totals: the abbreviation, and the exact figure under it, so nothing
+   is reachable only by hovering. */
+.beta-pilot-tokens .beta-pilot-exact {
+  display: block;
+  font-size: var(--text-micro);
+  font-weight: 400;
+  color: var(--color-glass-muted);
+}
+.beta-pilot-tokens td:first-child { vertical-align: top; }
+
+/* An ISO date in a sentence printed verbatim: one line, never "2026-" / "10-02". */
+.beta-pilot-nowrap { white-space: nowrap; }
+
+@media (prefers-reduced-motion: reduce) {
+  .beta-pilot-index a b,
+  .beta-pilot-cal__day,
+  .beta-pilot-share__bar i { transition: none; }
+}
+/* end of block: beta-pilot-* */
+
+/* ===========================================================================
+   BENCH: the projects page and the index of every live page
+   (app/projects/page.tsx, app/bench/page.tsx, components/projects/BenchCard.tsx
+   and BenchBoard.tsx; block prefix beta-bench-*)
+
+   Two pages. /projects is a curated bench: two feature cards under a die
+   plate, then cards in groups that fill their rows, the math ones with a
+   picture of the instrument, and a rail of small sketches at the end. Each
+   card is a link to a page that exists. /bench is the inventory:
+   every page this server serves, with the instruments on a panel wearing
+   their live status tags and everything else on paper.
+
+   The card is the site's shared link card: the kit's .rail plus .beta-linkcard
+   (home block, written to be shared), so the faint hard shadow at rest, the
+   ink shadow under the pointer and the 3px press are defined once, there.
+   This block adds only what a bench card has that a home card does not: the
+   kind line, the stretched link, the live dot's line and the "also" links.
+   ======================================================================== */
+
+/* ---- /projects: groups and the jump row ---------------------------------- */
+/* A group is reached from the jump row. It needs no scroll-margin of its own:
+   the page already sets scroll-padding-top for the sticky masthead, and a
+   margin here would be counted on top of it. */
+
+.beta-bench-jump {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(var(--u) * 2);
+  margin: calc(var(--u) * 5) 0 calc(var(--u) * 2);
+}
+/* The count rides inside the tag, one step heavier than the name. */
+.beta-bench-jump .tag b { font-weight: 700; margin-left: calc(var(--u) * 1); }
+.beta-bench-jump .tag:focus-visible { outline: 2px solid var(--color-blue-ink); outline-offset: 2px; }
+
+/* ---- The card grid ------------------------------------------------------- */
+/* Explicit column counts, not auto-fill, so the page knows how many cards a
+   row holds and can keep the last row full: one column on a phone, two on a
+   tablet, three on a desk. In two columns a group of three would leave its
+   last card alone, so that card takes the whole row instead. */
+.beta-bench-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: calc(var(--u) * 5);
+  margin: calc(var(--u) * 6) 0 calc(var(--u) * 12);
+}
+@media (min-width: 44rem) and (max-width: 63.99rem) {
+  .beta-bench-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .beta-bench-grid > :last-child:nth-child(odd) { grid-column: 1 / -1; }
+}
+@media (min-width: 64rem) {
+  .beta-bench-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+/* ---- The card ------------------------------------------------------------ */
+/* .rail + .beta-linkcard do the look and the press. The card here is an
+   <article> with one anchor in its heading (see BenchCard.tsx for why), so
+   three things .beta-linkcard gets from being an <a> are restated for it:
+   the hover shadow when focus is inside, the focus ring, and the foot's ink. */
+.beta-bench-card { position: relative; }
+.beta-bench-card:focus-within { box-shadow: 3px 3px 0 var(--color-ink); }
+.beta-bench-card:has(.beta-bench-card__link:focus-visible) {
+  outline: 2px solid var(--color-blue-ink);
+  outline-offset: 2px;
+}
+.beta-bench-card:focus-within .beta-linkcard__go { color: var(--color-ink); }
+/* A pointer press focuses the link, so :focus-within is true during it and
+   would hold the shadow out. The press is restated after it: the card travels
+   onto its shadow, as .beta-linkcard:active says. */
+.beta-bench-card:active { box-shadow: 0 0 0 var(--color-ink); }
+/* A press on one of the "also" links is that link's press, not the card's. */
+.beta-bench-card:has(.beta-bench-card__more a:active) { transform: none; box-shadow: 3px 3px 0 var(--color-ink); }
+
+.beta-bench-card__link { color: inherit; text-decoration: none; }
+/* The stretched link: one anchor in the heading, covering the whole card. */
+.beta-bench-card__link::after { content: ""; position: absolute; inset: 0; }
+.beta-bench-card__link:focus-visible { outline: none; }
+
+/* What sort of thing it is, above the title, in the label voice (.kv dt). A
+   thing that is not finished says so in a plain tag beside it. */
+.beta-linkcard .beta-bench-card__kind {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(var(--u) * 2);
+  min-height: calc(var(--u) * 5.5);
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  line-height: 1.4;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+
+/* An instrument's live dot and its words (components/live/LiveDot). One line
+   before the clock arrives ("checking") and one line after. */
+.beta-linkcard .beta-bench-card__dot { color: var(--color-ink-muted); }
+
+/* Other doors into the same thing. Above the stretched link, so they can be
+   pressed for themselves. */
+.beta-linkcard .beta-bench-card__more {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--u) calc(var(--u) * 3);
+  font-size: var(--text-fine);
+  line-height: 1.5;
+}
+.beta-bench-card__more > span {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+.beta-bench-card__more a {
+  font-weight: 600;
+  color: var(--color-ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-ink-faint);
+  transition: color var(--t-snap) var(--ease-detent), border-color var(--t-snap) var(--ease-detent);
+}
+.beta-bench-card__more a:hover { color: var(--color-accent-ink); border-bottom-color: var(--color-accent-ink); }
+.beta-bench-card__more a:focus-visible { outline: 2px solid var(--color-blue-ink); outline-offset: 2px; }
+
+/* A group of two or four, held in twos so the last row is never one card
+   alone. One column until two cards of a readable width fit. */
+@media (min-width: 44rem) {
+  .beta-bench-grid.beta-bench-grid--pairs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+/* Two grids in a row (the chips' feature pair, then the rest) are one field
+   of cards: the space between them is the grid's own gap. */
+.beta-bench-grid:has(+ .beta-bench-grid) { margin-bottom: calc(var(--u) * 5); }
+.beta-bench-grid + .beta-bench-grid { margin-top: 0; }
+
+/* The two things the page opens on: the same card, printed one step larger
+   and with more room inside. Nothing else about it changes. */
+@media (min-width: 44rem) {
+  .beta-bench-card--feature { padding: calc(var(--u) * 6); gap: calc(var(--u) * 4); }
+}
+.rail.beta-bench-card--feature h3 { font-size: var(--text-h3); line-height: 1.15; }
+.beta-linkcard.beta-bench-card--feature > p:not([class]) { font-size: var(--text-prose); line-height: 1.55; }
+
+/* A picture of the thing itself, at the top of the card, bled to its edges.
+   The frame holds the picture's shape before it loads, so a lazy image moves
+   nothing. The math instruments are dark machines, so the frame is the
+   panel's sunk ground and not paper. */
+.beta-bench-card__pic {
+  display: block;
+  margin: calc(var(--u) * -4) calc(var(--u) * -4) calc(var(--u) * 1);
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--color-panel-sunk);
+  border-bottom: 1px solid var(--color-rule);
+}
+.beta-bench-card__pic img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+/* ---- /projects: the die plate the page opens on --------------------------
+   visual6502's photograph, wide and shallow on a desk, closer to its own
+   shape on a phone. .beta-die (the 6502 block) does the frame, the tag and
+   the caption; the credit line is set in full ink so it is read, not
+   skipped. */
+.beta-bench-plate { margin: calc(var(--u) * 6) 0 calc(var(--u) * 5); }
+.beta-bench-plate .beta-die__frame { aspect-ratio: 16 / 10; }
+.beta-bench-plate .beta-die__frame img { width: 100%; height: 100%; object-fit: cover; object-position: 0 30%; }
+/* The shared frame sets line-height 0 for its image; the tag needs a line. */
+.beta-bench-plate .beta-die__tag { line-height: 1.5; }
+.beta-bench-plate figcaption { max-width: none; }
+.beta-bench-plate__credit { color: var(--color-ink); }
+.beta-bench-plate + .beta-bench-grid { margin-top: 0; }
+@media (min-width: 44rem) {
+  .beta-bench-plate .beta-die__frame { aspect-ratio: 1000 / 330; }
+}
+
+/* ---- /projects: the sketches rail ----------------------------------------
+   Small things, one line each, beside the one idea that has a page. */
+.beta-bench-sketches { display: flex; flex-direction: column; min-width: 0; }
+.beta-bench-sketches h3 {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: calc(var(--u) * 3);
+}
+.beta-bench-sketches .rail-list { gap: calc(var(--u) * 5); }
+.beta-bench-sketches__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: calc(var(--u) * 2);
+}
+.beta-bench-sketches .rail-list .beta-bench-sketches__head { display: flex; margin: 0; font-size: var(--text-body); color: var(--color-ink); }
+.beta-bench-sketches__head a { display: inline-flex; align-items: center; gap: var(--u); }
+.beta-bench-sketches__head a:focus-visible { outline: 2px solid var(--color-blue-ink); outline-offset: 2px; }
+.beta-bench-sketches__head b { font-family: var(--font-sans); font-weight: 600; }
+/* .rail-list sizes every span in it; the year is a tag and keeps the tag's. */
+.beta-bench-sketches .rail-list .tag { display: inline-block; font-size: var(--text-micro); line-height: 1.4; color: var(--color-ink-muted); }
+.beta-bench-sketches .rail-list li > span:last-child {
+  margin-top: calc(var(--u) * 1.5);
+  font-size: var(--text-body);
+  line-height: 1.5;
+  color: var(--color-ink);
+}
+
+/* The closing pointer to the other page. */
+.beta-bench-out { margin-bottom: calc(var(--u) * 10); }
+
+/* ---- /bench: the instruments panel --------------------------------------- */
+.beta-bench-board { margin: calc(var(--u) * 6) 0 calc(var(--u) * 12); }
+
+.beta-bench-inst { list-style: none; margin: 0; padding: 0; }
+.beta-bench-inst > li {
+  padding: calc(var(--u) * 5) 0;
+  border-bottom: 1px solid var(--color-rule-panel);
+}
+.beta-bench-inst > li:first-child { padding-top: calc(var(--u) * 1); }
+.beta-bench-inst > li:last-child { border-bottom: 0; padding-bottom: 0; }
+
+/* Name, reading, tag. Stacked on a phone, where a reading with its unit
+   ("probes trapped since 00:00 UTC") is as wide as the panel; name and
+   reading share a line once there is room, and all three do when the panel
+   is wide (the .beta-live wrapper is the size container). */
+.beta-bench-inst__head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "name"
+    "read"
+    "tag";
+  column-gap: calc(var(--u) * 3);
+  row-gap: calc(var(--u) * 2);
+  align-items: baseline;
+}
+.beta-bench-inst__name {
+  grid-area: name;
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--color-glass);
+}
+.beta-bench-inst__read {
+  grid-area: read;
+  min-width: 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-data);
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: break-word;
+}
+.beta-bench-inst__tag { grid-area: tag; justify-self: start; min-width: 0; }
+.beta-bench-inst .changed { color: var(--color-mustard); }
+/* .beta-live-val hangs its settle wash one unit outside the digits, which is
+   right at the end of a right-aligned column and one unit too far left at the
+   start of a left-aligned line. */
+.beta-bench-inst__read .beta-live-val { margin-left: 0; padding-left: 0; }
+
+.beta-bench-inst__say,
+.beta-bench-inst__note {
+  margin: calc(var(--u) * 2) 0 0;
+  max-width: 68ch;
+  font-family: var(--font-sans);
+  font-size: var(--text-fine);
+  line-height: 1.5;
+  color: var(--color-glass-muted);
+  overflow-wrap: break-word;
+}
+.beta-bench-inst__note { margin-top: calc(var(--u) * 3); }
+
+/* The pages that read this instrument. A page is not its instrument: these
+   keep full glass whatever the tag says, because the page is still there. */
+.beta-bench-pages {
+  list-style: none;
+  margin: calc(var(--u) * 4) 0 0;
+  padding: 0;
+  display: grid;
+  gap: calc(var(--u) * 3);
+}
+.beta-bench-pages > li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--u);
+  padding-left: calc(var(--u) * 3);
+  border-left: 2px solid var(--color-rule-panel);
+}
+.beta-bench-pages__door { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 calc(var(--u) * 3); }
+.beta-bench-pages a {
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  font-weight: 600;
+  color: var(--color-glass);
+  text-decoration: underline;
+  text-decoration-color: var(--color-glass-muted);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
+  transition: text-decoration-color var(--t-snap) var(--ease-snap);
+}
+.beta-bench-pages a:hover { text-decoration-color: var(--color-blue); text-decoration-thickness: 2px; }
+.beta-bench-pages a:focus-visible { outline: 2px solid var(--color-blue); outline-offset: 3px; }
+.beta-bench-pages__blurb {
+  font-size: var(--text-fine);
+  line-height: 1.5;
+  color: var(--color-glass-muted);
+}
+
+/* Where a page is, in the machine's own spelling. Muted on either ground. */
+.beta-bench-path {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  font-style: normal;
+  color: var(--color-ink-muted);
+  /* Whole, on the next line, when it does not fit beside the name; broken
+     only if it is longer than the line itself. */
+  display: inline-block;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+.panel .beta-bench-path { color: var(--color-glass-muted); }
+
+/* Eight status tags in one panel. Only LIVE keeps the kit's paper chip; every
+   other state is an outline on the panel's own ground, so the brightest marks
+   are the instruments that are answering and not the ones that are not. The
+   word still carries the state. (The same treatment as NowPanel's table.) */
+.beta-bench-inst .tag.beta-inst:not([data-state="live"]) {
+  background: transparent;
+  border-color: var(--color-rule-panel);
+  color: var(--color-glass-muted);
+}
+.beta-bench-inst .tag.beta-inst.warn { color: var(--color-orange); }
+/* Not answering is calm: the instrument's name steps back to muted glass. */
+.beta-bench-inst > li:is([data-state="offline"], [data-state="checking"]) .beta-bench-inst__name { color: var(--color-glass-muted); }
+.beta-bench-inst > li:is([data-state="offline"], [data-state="checking"]) .beta-live-val {
+  color: var(--color-glass-muted);
+  font-weight: 400;
+}
+
+@container (min-width: 34rem) {
+  .beta-bench-inst__head {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "name read"
+      "tag  tag";
+  }
+  .beta-bench-inst__read { text-align: right; }
+}
+@container (min-width: 54rem) {
+  .beta-bench-inst__head {
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 21rem);
+    grid-template-areas: "name read tag";
+    column-gap: calc(var(--u) * 6);
+  }
+  .beta-bench-inst__tag { justify-self: end; text-align: right; }
+  /* Door and blurb side by side, the doors in one column down the panel. */
+  .beta-bench-pages > li {
+    grid-template-columns: minmax(0, 22rem) minmax(0, 1fr);
+    column-gap: calc(var(--u) * 6);
+    align-items: baseline;
+  }
+}
+
+/* ---- /bench: the paper index --------------------------------------------- */
+/* Lists of very different lengths, so columns and not a grid: a grid row is
+   as tall as its longest list and leaves the short ones standing in a hole.
+   Each list stays whole. */
+.beta-bench-index {
+  columns: 3 19rem;
+  column-gap: calc(var(--u) * 5);
+  margin: calc(var(--u) * 6) 0 calc(var(--u) * 8);
+}
+.beta-bench-index > .rail {
+  break-inside: avoid;
+  margin: 0 0 calc(var(--u) * 5);
+}
+.beta-bench-index .rail h3 {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: calc(var(--u) * 3);
+}
+.beta-bench-count {
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+  font-weight: 400;
+  letter-spacing: 0;
+  color: var(--color-ink-muted);
+}
+.beta-bench-index .rail-list { gap: calc(var(--u) * 3); }
+.beta-bench-index .rail-list a:focus-visible { outline: 2px solid var(--color-blue-ink); outline-offset: 2px; }
+.beta-bench-index .rail-list span { margin-top: var(--u); }
+/* end of block: beta-bench-* */
+
+/* ===========================================================================
+   TURFY (begin block: beta-turfy-*)
+   app/projects/turfy/page.tsx, components/turfy/FaultBench.tsx
+
+   A design dossier: prose, tables, photographs, four schematic sheets and one
+   model. The photographs reuse .beta-die (frame, tag, caption), the threshold
+   meter reuses .beta-meter, the numbered lists reuse .beta-steps and the
+   status tags reuse .beta-inst. What is here is only what those do not cover.
+
+   Grounds: everything on this page that a person wrote or drew is on paper,
+   schematics included. The one panel is the fault bench, because its states
+   are computed.
+   ======================================================================== */
+
+/* ---- Text beside a picture ----------------------------------------------
+   One column until there is room for two, then the picture takes a fixed
+   narrow column and the text takes the rest. The markup puts the picture
+   first where a phone should show it first; on a wide screen the plain split
+   moves it to the right and --left keeps it on the left. */
+.beta-turfy-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: calc(var(--u) * 6);
+  align-items: start;
+  margin: 0 0 calc(var(--u) * 8);
+}
+.beta-turfy-split > .beta-die { max-width: 22rem; }
+/* The split supplies the space above, so the heading that opens a column
+   starts level with the picture beside it. */
+.beta-turfy-split .prose > :first-child { margin-top: 0; }
+@media (min-width: 44rem) {
+  .beta-turfy-split:not(.beta-turfy-split--aside) {
+    --beta-turfy-pic: 15rem;
+    grid-template-columns: minmax(0, 1fr) minmax(0, var(--beta-turfy-pic));
+    column-gap: calc(var(--u) * 8);
+    margin-top: calc(var(--u) * 8);
+  }
+  .beta-turfy-split--left:not(.beta-turfy-split--aside) {
+    grid-template-columns: minmax(0, var(--beta-turfy-pic)) minmax(0, 1fr);
+  }
+  .beta-turfy-split > .beta-die { max-width: none; }
+  .beta-turfy-split:not(.beta-turfy-split--left) > .beta-die { order: 2; }
+}
+@media (min-width: 56rem) {
+  .beta-turfy-split:not(.beta-turfy-split--aside) { --beta-turfy-pic: 19rem; column-gap: calc(var(--u) * 10); }
+  /* The watchdog's numbers need more room than a photograph, so this pair
+     waits for the wider screen. */
+  .beta-turfy-split--aside {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 23rem);
+    column-gap: calc(var(--u) * 10);
+    margin-top: calc(var(--u) * 10);
+  }
+}
+
+/* ---- Ledgers that hold sentences ------------------------------------------
+   The kit's ledger is for short mono values and never wraps. These rows are
+   sentences, so the cells wrap, read in the sans face and align to the top. */
+.ledger.beta-turfy-ledger { margin: 0 0 calc(var(--u) * 4); }
+.ledger.beta-turfy-ledger td {
+  white-space: normal;
+  vertical-align: top;
+  font-family: var(--font-sans);
+  line-height: 1.5;
+}
+.ledger.beta-turfy-ledger td.name { min-width: 8rem; }
+.ledger.beta-turfy-ledger .tag { white-space: nowrap; }
+.ledger.beta-turfy-ledger .beta-turfy-qty { font-family: var(--font-mono); font-weight: 400; color: var(--color-ink-muted); white-space: nowrap; }
+.ledger.beta-turfy-ledger .tbl-foot { flex-wrap: wrap; gap: calc(var(--u) * 1) calc(var(--u) * 4); }
+/* A three-column table of sentences does not fit a phone, or the narrow column
+   beside a photograph. Where the ledger ITSELF is under 30rem each row becomes
+   a block: the name, the sentence, the tag. It is a container query because
+   the same table is narrow on a wide screen (beside the picture) and wide on a
+   tablet. The column heads go, because stacked like this each line says what
+   it is. */
+.ledger.beta-turfy-ledger--stack { container-type: inline-size; }
+@container (max-width: 30rem) {
+  .ledger.beta-turfy-ledger--stack thead { display: none; }
+  .ledger.beta-turfy-ledger--stack :is(table, tbody, tr, td) { display: block; }
+  .ledger.beta-turfy-ledger--stack tr {
+    padding: calc(var(--u) * 3);
+    border-bottom: 1px solid var(--color-ink-faint);
+  }
+  .ledger.beta-turfy-ledger--stack tr:last-child { border-bottom: 0; }
+  .ledger.beta-turfy-ledger--stack td { padding: 0; border: 0; min-width: 0; }
+  .ledger.beta-turfy-ledger--stack td + td { margin-top: calc(var(--u) * 1.5); }
+}
+.ledger.beta-turfy-fail { margin-top: calc(var(--u) * 8); }
+/* The parts list and the pin map, side by side when both fit. */
+.beta-turfy-pair {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(24rem, 100%), 1fr));
+  gap: calc(var(--u) * 5);
+  align-items: start;
+  margin: calc(var(--u) * 2) 0 calc(var(--u) * 2);
+}
+.beta-turfy-pair > .ledger { min-width: 0; }
+
+/* Card rows with explicit steps, never auto-fit, so no width leaves a card
+   alone on a row. Three cards: one column, then three once each card has room
+   for its title on one line. Four cards: one, then two by two, then four. */
+.piece-grid.beta-turfy-grid {
+  grid-template-columns: minmax(0, 1fr);
+  margin: calc(var(--u) * 2) 0 calc(var(--u) * 6);
+}
+@media (min-width: 36rem) {
+  .piece-grid.beta-turfy-grid--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 56rem) {
+  .piece-grid.beta-turfy-grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (min-width: 64rem) {
+  .piece-grid.beta-turfy-grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+.beta-turfy-grid .rail .beta-proj-k { margin-bottom: calc(var(--u) * 3); }
+
+.notice.beta-turfy-rule { max-width: 68ch; margin: 0 0 calc(var(--u) * 6); }
+/* The provenance chip. Its text is one child, so it stays beside the mark and
+   wraps inside itself; the kit's chip wraps its children as whole items, which
+   leaves the mark alone on a line above a long sentence. */
+.measured.beta-turfy-src { flex-wrap: nowrap; margin: 0 0 calc(var(--u) * 2); max-width: 76ch; line-height: 1.5; }
+.measured.beta-turfy-src > span { min-width: 0; }
+/* The photograph's tag. .beta-die__frame sets line-height 0 to close the gap
+   under its image, which also flattens a tag that is not inside the 6502
+   page's button frame. Give the tag its line back, here only. */
+:is(.beta-turfy-split, .beta-turfy-shots) .beta-die__tag { line-height: 1.5; }
+/* Preflight strips list markers and .prose does not put them back. */
+.prose > ul.beta-turfy-open { list-style: square; }
+/* The formula is one statement, so it wraps as one box and not as two halves
+   of an inline chip. */
+.prose > p.beta-turfy-formula > code { display: inline-block; }
+/* A pin number under its signal name, in the ledger's first column. */
+.beta-turfy-pin {
+  display: block;
+  margin-top: calc(var(--u) * 0.5);
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  font-weight: 400;
+  color: var(--color-ink-muted);
+}
+.prose > ul.beta-turfy-open > li::marker { color: var(--color-ink-muted); }
+.beta-turfy-end { margin-top: calc(var(--u) * 10); }
+
+/* ---- The signal path, on paper ---------------------------------------------
+   Three stations in a row with the authority gate under them. It is a drawing
+   of the wiring, so it is documentation: hairline boxes on paper, no state,
+   no colour. The arrow is a generated glyph so it can turn when the row
+   stacks. */
+.beta-turfy-path {
+  margin: calc(var(--u) * 2) 0 calc(var(--u) * 6);
+  padding: calc(var(--u) * 4);
+  border: 1px solid var(--color-rule);
+  background: var(--color-paper-sunk);
+}
+.beta-turfy-path__flow {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: calc(var(--u) * 3);
+}
+.beta-turfy-path__in { display: grid; gap: calc(var(--u) * 3); }
+.beta-turfy-node {
+  display: grid;
+  gap: calc(var(--u) * 1);
+  padding: calc(var(--u) * 3);
+  border: 1px solid var(--color-rule);
+  background: var(--color-paper);
+  min-width: 0;
+}
+.beta-turfy-node b { font-family: var(--font-sans); font-size: var(--text-body); font-weight: 600; line-height: 1.3; }
+.beta-turfy-node__k {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+.beta-turfy-node__s { font-size: var(--text-fine); line-height: 1.45; color: var(--color-ink-muted); }
+.beta-turfy-node--hub { box-shadow: 3px 3px 0 var(--color-ink); }
+.beta-turfy-arrow { font-family: var(--font-mono); color: var(--color-ink); justify-self: center; }
+.beta-turfy-arrow::before { content: "\2192"; }
+.beta-turfy-path__gate {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: calc(var(--u) * 2) calc(var(--u) * 4);
+  margin-top: calc(var(--u) * 4);
+  padding-top: calc(var(--u) * 3);
+  border-top: 1px solid var(--color-ink-faint);
+}
+.beta-turfy-gate {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: calc(var(--u) * 2);
+  font-family: var(--font-mono);
+  font-size: var(--text-data);
+}
+.beta-turfy-gate b {
+  padding: calc(var(--u) * 1) calc(var(--u) * 2);
+  border: 1px solid var(--color-rule);
+  background: var(--color-paper);
+  font-weight: 600;
+}
+.beta-turfy-path__hb { font-size: var(--text-fine); color: var(--color-ink-muted); }
+@media (max-width: 48rem) {
+  .beta-turfy-path__flow { grid-template-columns: minmax(0, 1fr); }
+  .beta-turfy-arrow::before { content: "\2193"; }
+  .beta-turfy-node--hub { margin-right: 3px; }
+}
+
+/* ---- The schematic sheets ---------------------------------------------------
+   Black line on a clear ground, so they sit straight on paper inside a
+   hairline, like a drawing in a binder. The whole sheet is a link to the SVG
+   at full size, and it answers the pointer the way a kit button does: a hard
+   shadow, no fade. The img carries its width and height, so the frame holds
+   its place before the file arrives. */
+.beta-turfy-sheets { display: grid; gap: calc(var(--u) * 7); margin: calc(var(--u) * 2) 0 calc(var(--u) * 4); }
+.beta-turfy-sheet { margin: 0; min-width: 0; }
+.beta-turfy-sheet__frame {
+  display: block;
+  padding: calc(var(--u) * 4);
+  border: 1px solid var(--color-rule);
+  background: var(--color-paper);
+  cursor: zoom-in;
+  transition: box-shadow var(--t-snap) var(--ease-detent), transform var(--t-snap) var(--ease-detent);
+}
+.beta-turfy-sheet__frame:hover { box-shadow: 3px 3px 0 var(--color-ink); transform: translate(-1px, -1px); }
+.beta-turfy-sheet__frame:focus-visible { outline: 2px solid var(--color-blue-ink); outline-offset: 2px; }
+.beta-turfy-sheet__frame img { display: block; width: 100%; height: auto; margin: 0 auto; }
+/* One drawing scale for all four. The sheets are different widths at the same
+   line weight, so filling the frame would draw the narrow ones a third
+   larger than the wide one. Each img carries its width as a share of the
+   widest sheet; on a phone every sheet takes the full frame instead, because
+   there the scale that matters is the largest one that fits. */
+@media (min-width: 56rem) {
+  .beta-turfy-sheet__frame img { width: var(--beta-turfy-sheet, 100%); }
+}
+.beta-turfy-sheet figcaption {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: baseline;
+  gap: calc(var(--u) * 3);
+  max-width: 76ch;
+  margin-top: calc(var(--u) * 2.5);
+  font-size: var(--text-fine);
+  line-height: 1.55;
+  color: var(--color-ink-muted);
+}
+.beta-turfy-sheet figcaption strong { color: var(--color-ink); font-weight: 600; }
+.beta-turfy-sheet figcaption a {
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--color-orange);
+  text-underline-offset: 2px;
+  white-space: nowrap;
+}
+.beta-turfy-sheet figcaption a:hover { text-decoration-thickness: 2px; }
+@media (max-width: 30rem) {
+  .beta-turfy-sheet__frame { padding: calc(var(--u) * 2); }
+  .beta-turfy-sheet figcaption { grid-template-columns: minmax(0, 1fr); gap: calc(var(--u) * 1.5); justify-items: start; }
+}
+
+/* ---- The board photographs ---------------------------------------------------
+   One under another on a phone. On a tablet each photograph sits beside its
+   own caption, so there is no two-and-one. Three across on a desk. */
+.beta-turfy-shots {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: calc(var(--u) * 6);
+  align-items: start;
+  margin: 0 0 calc(var(--u) * 4);
+}
+@media (min-width: 36rem) and (max-width: 55.99rem) {
+  .beta-turfy-shots > .beta-die {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: calc(var(--u) * 5);
+    align-items: start;
+  }
+  .beta-turfy-shots > .beta-die figcaption { margin-top: 0; }
+}
+@media (min-width: 56rem) {
+  .beta-turfy-shots { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: calc(var(--u) * 5); }
+}
+
+/* ---- The watchdog's numbers ------------------------------------------------- */
+.beta-turfy-facts .kv { margin-bottom: calc(var(--u) * 4); }
+.beta-turfy-facts .kv > div { padding-bottom: calc(var(--u) * 2); border-bottom: 1px solid var(--color-ink-faint); }
+.beta-turfy-facts .kv dt { flex: 0 0 auto; max-width: 55%; }
+.beta-turfy-facts .kv dd { font-size: var(--text-data); text-align: right; min-width: 0; }
+
+/* ---- The fault bench (a panel: its states are computed) -------------------- */
+.beta-turfy-bench { margin: calc(var(--u) * 2) 0 calc(var(--u) * 3); }
+
+.beta-turfy-verdict {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: calc(var(--u) * 1) calc(var(--u) * 4);
+  margin: 0 0 calc(var(--u) * 4);
+}
+.beta-turfy-verdict__k {
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-glass-muted);
+}
+.beta-turfy-verdict__v {
+  font-family: var(--font-display);
+  font-size: var(--text-h2);
+  font-weight: 800;
+  letter-spacing: var(--tracking-tight);
+  line-height: 1.1;
+  text-transform: uppercase;
+  color: var(--color-glass);
+  padding: 0 calc(var(--u) * 1.5);
+  margin-left: calc(var(--u) * -1.5);
+  border-radius: var(--radius-hair);
+}
+
+/* One row per signal: a lamp and a name, then the state in words. The words
+   carry the state; the lamp repeats it for the eye and nothing depends on it. */
+.beta-turfy-chain { margin: 0; }
+.beta-turfy-chain > div {
+  display: grid;
+  grid-template-columns: minmax(0, 17rem) minmax(0, 1fr);
+  column-gap: calc(var(--u) * 4);
+  align-items: baseline;
+  padding: calc(var(--u) * 2) 0;
+  border-top: 1px solid var(--color-rule-panel);
+}
+.beta-turfy-chain dt {
+  display: flex;
+  align-items: baseline;
+  gap: calc(var(--u) * 2.5);
+  font-family: var(--font-mono);
+  font-size: var(--text-data);
+  line-height: var(--leading-data);
+  color: var(--color-glass-muted);
+}
+.beta-turfy-chain dd {
+  margin: 0;
+  min-width: 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-data);
+  line-height: var(--leading-data);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-glass);
+  overflow-wrap: break-word;
+  border-radius: var(--radius-hair);
+}
+/* The kit's "changed" colour is scoped to .readout; this is the same colour on
+   the same meaning for a row that is not a table cell. */
+.beta-turfy-chain dd.is-changed { color: var(--color-mustard); }
+/* Lit is a filled square and unlit a hollow one, so it reads without colour. */
+.beta-turfy-lamp {
+  flex: 0 0 auto;
+  align-self: center;
+  width: calc(var(--u) * 2);
+  height: calc(var(--u) * 2);
+  border: 1px solid var(--color-glass-muted);
+  border-radius: 1px;
+  background: transparent;
+}
+.beta-turfy-lamp[data-on="true"] { background: var(--color-blue); border-color: var(--color-blue); }
+.beta-turfy-chain dd { display: grid; gap: calc(var(--u) * 2); }
+.beta-turfy-meter { max-width: 30rem; }
+/* The meter moves on the model's own 100 ms tick; the kit meter's 180 ms ease
+   would smear two ticks together. */
+.beta-turfy-meter .beta-meter__fill { transition: none; }
+/* Steady text: every wording a row can take sits in one grid cell, the others
+   hidden, so the row is always as tall as its longest state and nothing under
+   it moves when the state changes. */
+.beta-turfy-steady { display: grid; }
+.beta-turfy-steady > * { grid-area: 1 / 1; }
+.beta-turfy-steady__ghost { visibility: hidden; }
+@media (max-width: 40rem) {
+  .beta-turfy-chain > div { grid-template-columns: minmax(0, 1fr); row-gap: calc(var(--u) * 1); }
+  .beta-turfy-chain dd { padding-left: calc(var(--u) * 4.5); }
+}
+
+/* The keys. The kit's .push is a fixed-size key cap with a one-word legend;
+   these carry a short phrase. Same bezel, same travel, and the kit's own
+   "armed" glow marks the fault that is in force. Two labelled sets on one
+   fixed grid, power above and the five faults below, so the keys line up in
+   columns and every key is the same height whether its legend takes one line
+   or two. */
+.beta-turfy-keys {
+  display: grid;
+  gap: calc(var(--u) * 4);
+  margin-top: calc(var(--u) * 2);
+  padding-top: calc(var(--u) * 4);
+  border-top: 1px solid var(--color-rule-panel);
+}
+.beta-turfy-keyset { display: grid; gap: calc(var(--u) * 2); }
+.beta-turfy-keyset__k {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-glass-muted);
+}
+.beta-turfy-keyrow {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: calc(var(--u) * 3);
+}
+/* Five faults on two or three columns leave a gap; the last one, the latch
+   the watchdog cannot see, takes it. */
+.beta-turfy-keyrow > :nth-child(5):last-child { grid-column: span 2; }
+@media (min-width: 36rem) {
+  .beta-turfy-keyrow { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (min-width: 56rem) {
+  .beta-turfy-keyrow { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .beta-turfy-keyrow > :nth-child(5):last-child { grid-column: auto; }
+}
+.push.beta-turfy-key {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  height: auto;
+  min-width: 0;
+  min-height: calc(var(--u) * 12);
+  padding: calc(var(--u) * 2) calc(var(--u) * 2.5);
+  font-size: var(--text-fine);
+  line-height: 1.2;
+  text-align: center;
+  color: var(--color-ink);
+}
+/* Not natively disabled, so it keeps focus: it only looks and acts at rest. */
+.push.beta-turfy-key[aria-disabled="true"],
+.push.beta-turfy-key[aria-disabled="true"]:active {
+  cursor: default;
+  opacity: 0.45;
+  box-shadow: 0 1px 0 var(--color-chrome-lo);
+  transform: translateY(2px);
+}
+
+/* The log. A fixed height with its own scroll, so a new line never moves the
+   page under the reader. Newest at the bottom. */
+.beta-turfy-log {
+  list-style: none;
+  margin: calc(var(--u) * 5) 0 0;
+  padding: calc(var(--u) * 3);
+  height: 9.5rem;
+  overflow-y: auto;
+  display: grid;
+  align-content: start;
+  gap: calc(var(--u) * 2);
+  background: var(--color-panel-sunk);
+  border: 1px solid var(--color-rule-panel);
+  border-radius: var(--radius-mod);
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+  line-height: 1.5;
+  color: var(--color-glass);
+}
+.beta-turfy-log:focus-visible { outline: 2px solid var(--color-blue); outline-offset: 2px; }
+.beta-turfy-log li {
+  display: grid;
+  grid-template-columns: 5.5rem minmax(0, 1fr);
+  column-gap: calc(var(--u) * 3);
+}
+.beta-turfy-log__t { color: var(--color-glass-muted); white-space: nowrap; }
+@media (max-width: 34rem) {
+  .beta-turfy-log li { grid-template-columns: minmax(0, 1fr); }
+}
+/* end of block: beta-turfy-* */
+
+/* ===========================================================================
+   SHELL (begin block: beta-shell-*)
+   components/KitNav.tsx
+
+   The dot of the "i" in the masthead mark is the site's live dot: the mark's
+   own mustard until a Claude Code session is known to be active on this
+   host, ACTIVE blue while one is. The colour itself is set by KitNav (it is
+   BioLogo's dotColor), so with this block missing the dot still tells the
+   truth; these rules only say how it gets from one state to the other.
+
+   Lit is not only a hue. Mustard and blue are about 1.5:1 apart in
+   luminance, which a greyscale glance or a tritan eye cannot separate, so the
+   lit dot also wears a paper rim: a blue lamp in a light bezel, against the
+   plain disc of the unlit dot. That is the LiveDot's own rule (lit and unlit
+   differ in shape, not only in colour) at the size of a full stop.
+
+   Nothing here has a layout size. The dot is the same circle in the same
+   place lit or unlit; the rim is paint, drawn under the fill (paint-order),
+   so only its outer half shows and the blue keeps its full size. Strokes are
+   in the drawing's own units, 302 to the mark's 18px: 30 is a rim about 0.9px
+   wide, inside the tile, so the masthead cannot move.
+   ======================================================================== */
+
+/* The rim is always there and invisible until lit, so lighting it is an
+   opacity change that can share the fill's detent instead of popping in. */
+.beta-shell-mark [data-piece="dot"] {
+  stroke: var(--color-paper);
+  stroke-width: 30px;
+  stroke-opacity: 0;
+  paint-order: stroke;
+}
+.beta-shell-mark[data-live="true"] [data-piece="dot"] {
+  stroke-opacity: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* The colour and the rim change on the detent, like a switch thrown,
+     instead of cutting. The selector repeats the nav block's lift rule and
+     adds to it: a second transition declaration would replace the first, and
+     the dot would stop lifting under the pointer. */
+  .beta-nav-mark svg.beta-shell-mark [data-piece="dot"] {
+    transition:
+      transform var(--t-detent) var(--ease-detent),
+      fill var(--t-detent) var(--ease-detent),
+      stroke-opacity var(--t-detent) var(--ease-detent);
+  }
+
+  /* One ring, once, when a new active minute is recorded: the class of event
+     the LiveDot rings for, at most once a minute. KitNav holds data-tick for
+     400 ms and the animation runs a single time inside it. The rim itself
+     goes out to 100 (about 3px past the dot, still inside the tile), fades,
+     and settles back to its resting width. */
+  .beta-shell-mark[data-tick="true"] [data-piece="dot"] {
+    animation: beta-shell-tick var(--t-slide) var(--ease-detent) 1;
+  }
+}
+@keyframes beta-shell-tick {
+  0%   { stroke-width: 30px;  stroke-opacity: 1; }
+  70%  { stroke-width: 100px; stroke-opacity: 0; }
+  71%  { stroke-width: 30px;  stroke-opacity: 0; }
+  100% { stroke-width: 30px;  stroke-opacity: 1; }
+}
+/* end of block: beta-shell-* */

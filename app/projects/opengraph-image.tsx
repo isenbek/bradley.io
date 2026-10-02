@@ -8,11 +8,11 @@ export const contentType = OG_V3_CONTENT_TYPE
 export default function OG() {
   return ogV3ImageResponse({
     eyebrow: "Projects",
-    title: "86+ things on the bench.",
+    title: "What is on the bench.",
     subtitle:
-      "Hardware, AI, data pipelines, distributed systems, frontier research. Most shipped with Claude as co-pilot.",
-    tags: ["Hardware", "AI/ML", "Data", "Systems", "Research"],
+      "Chips rebuilt from their own dies, data platforms, instruments reading real hardware, and math you can operate.",
+    tags: ["Chips", "Platforms", "Instruments", "Math"],
     accent: "blue",
-    cta: "Browse the lot →",
+    cta: "See the bench →",
   })
 }

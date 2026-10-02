@@ -16,6 +16,8 @@
 # staged-build scratch dirs (deploy.sh builds here, then swaps into .next)
 /.next-staging/
 /.next-previous/
+# preview dev server (npm run dev:preview) keeps its output away from the live .next
+/.next-preview/
 /out/
 
 # production

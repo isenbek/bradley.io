@@ -38,6 +38,16 @@ export interface Freshness {
  * this is the only place the site needs to hear about it.
  */
 export const FRESHNESS = {
+  // Claude Code activity pulse (the "Running now" panel, the masthead dot).
+  // Last heard is when cron last rewrote public/data/activity-pulse.json;
+  // scripts/activity-pulse.py runs every 60 s. Three missed runs is late,
+  // fifteen is a cron that has stopped. The numbers are the camera's because
+  // the cadence is the camera's; the row is its own so that changing one
+  // schedule does not quietly change the other. This judges the FILE, not
+  // whether anyone is at the keyboard: an idle host with a healthy cron is
+  // LIVE with zero active minutes.
+  activity: { staleAfterS: 180, offlineAfterS: 900 },
+
   // Camera frame (/eyes, /meatball). bradley-cam.timer grabs one frame every
   // 60 s. Three missed frames is late; fifteen is a camera that is not there.
   camera: { staleAfterS: 180, offlineAfterS: 900 },

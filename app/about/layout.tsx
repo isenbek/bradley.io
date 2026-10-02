@@ -1,26 +1,38 @@
 import type { Metadata } from "next"
 
+/**
+ * Metadata and structured data for /about. The page itself exports none, so
+ * there is one place where the title and the description are written.
+ *
+ * Every phrase here is on the page or in lib/resume.ts: the role (the resume's
+ * headline), Grand Rapids, 1997 (the first role), "garage lab" and hosting
+ * locally (the Philosophy section, his words).
+ */
+
+const DESCRIPTION =
+  "Bradley Isenbek, AI systems architect in Grand Rapids, Michigan. The story in his own words, every role since 1997 on one axis, what he is building this year, and how this site is built."
+
+const SHORT =
+  "AI systems architect in Grand Rapids, Michigan. Production systems since 1997, and a garage lab where everything is hosted locally."
+
 export const metadata: Metadata = {
-  title: "About · bio·bradley.io",
-  description:
-    "Bradley Isenbek, AI Systems Architect and Frontier Technologist in Grand Rapids, MI. 15+ years building at the seam of enterprise scale and maker culture.",
+  title: "About",
+  description: DESCRIPTION,
   alternates: { canonical: "/about" },
   openGraph: {
-    title: "About · bio·bradley.io",
-    description:
-      "Bradley Isenbek: hardware hacker, data architect, AI pilot. 15+ years, ESP32 to Fortune-500 warehouses.",
+    title: "About Bradley Isenbek",
+    description: SHORT,
     url: "https://bradley.io/about",
     type: "profile",
   },
   twitter: {
     card: "summary_large_image",
-    title: "About · bio·bradley.io",
-    description:
-      "Bradley Isenbek: hardware hacker, data architect, AI pilot. 15+ years, ESP32 to Fortune-500 warehouses.",
+    title: "About Bradley Isenbek",
+    description: SHORT,
   },
 }
 
-export default function V3AboutLayout({ children }: { children: React.ReactNode }) {
+export default function AboutLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <script

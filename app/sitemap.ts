@@ -10,6 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/resume`, changeFrequency: "monthly", priority: 0.8, lastModified: now },
     { url: `${base}/contact`, changeFrequency: "monthly", priority: 0.7, lastModified: now },
     { url: `${base}/projects`, changeFrequency: "weekly", priority: 0.9, lastModified: now },
+    { url: `${base}/bench`, changeFrequency: "daily", priority: 0.7, lastModified: now },
     { url: `${base}/6502`, changeFrequency: "monthly", priority: 0.8, lastModified: now },
     { url: `${base}/projects/prime-orchestra`, changeFrequency: "monthly", priority: 0.7, lastModified: now },
     { url: `${base}/projects/prime-zoo`, changeFrequency: "monthly", priority: 0.7, lastModified: now },
@@ -17,16 +18,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${base}/projects/zeta-forge`, changeFrequency: "monthly", priority: 0.7, lastModified: now },
     { url: `${base}/projects/storm-plates`, changeFrequency: "monthly", priority: 0.7, lastModified: now },
     { url: `${base}/projects/critical-collapse`, changeFrequency: "monthly", priority: 0.7, lastModified: now },
+    { url: `${base}/projects/turfy`, changeFrequency: "monthly", priority: 0.7, lastModified: now },
     { url: `${base}/services`, changeFrequency: "monthly", priority: 0.8, lastModified: now },
     { url: `${base}/ai-pilot`, changeFrequency: "daily", priority: 0.7, lastModified: now },
     // New at the style-kit cutover: the four GitHub orgs rolled up. It replaces
     // what the per-repository dossiers under /projects used to answer, so it
     // carries their weight rather than /projects' 0.9.
     { url: `${base}/work`, changeFrequency: "weekly", priority: 0.8, lastModified: now },
-    { url: `${base}/pilot-analytics`, changeFrequency: "daily", priority: 0.6, lastModified: now },
     { url: `${base}/mcp`, changeFrequency: "weekly", priority: 0.7, lastModified: now },
     { url: `${base}/papers`, changeFrequency: "weekly", priority: 0.8, lastModified: now },
-    { url: `${base}/cost-analysis`, changeFrequency: "weekly", priority: 0.8, lastModified: now },
+    // A frozen case study (window 2025-12-01 to 2026-03-26, frozen 2026-10-02).
+    { url: `${base}/cost-analysis`, changeFrequency: "yearly", priority: 0.8, lastModified: new Date("2026-10-02") },
     { url: `${base}/the-shift`, changeFrequency: "monthly", priority: 0.8, lastModified: now },
     { url: `${base}/terminal`, changeFrequency: "monthly", priority: 0.5, lastModified: now },
     { url: `${base}/trng`, changeFrequency: "daily", priority: 0.6, lastModified: now },

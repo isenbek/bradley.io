@@ -7,10 +7,10 @@ import {
 } from "@/lib/bio-logo-path"
 
 /**
- * BioLogo — the official bio wordmark.
+ * BioLogo: the official bio wordmark.
  *
  * Three independent SVG shapes (body / bowl / dot) so each can carry its own
- * color. Defaults: every piece rides on `currentColor` — set color via CSS or
+ * color. Defaults: every piece rides on `currentColor`. Set color via CSS or
  * the `style` prop. Pass `bodyColor` / `bowlColor` / `dotColor` to tint
  * individual pieces (the style guide uses a lighter dot for visual depth).
  *
@@ -28,7 +28,13 @@ export interface BioLogoProps extends Omit<React.SVGProps<SVGSVGElement>, "color
   bowlColor?: string
   /** Color for the i-dot. Default: matches `bodyColor` (or `currentColor`). */
   dotColor?: string
-  /** Toggle the playful hover bob on the dot (only inside a `.v3-biologo--bob` parent on the page). */
+  /**
+   * Let the dot of the "i" lift when the link around the mark is hovered or
+   * focused. This only marks the SVG (`data-bob`) and tells the stylesheet how
+   * far two screen pixels is in this drawing's own units; the motion itself is
+   * the `.beta-nav-mark` rule in app/kit.css, and the parent link has to carry
+   * that class for anything to move.
+   */
   bobOnHover?: boolean
 }
 
@@ -45,10 +51,23 @@ export function BioLogo({
   const finalBowl = bowlColor ?? bodyColor
   const finalDot = dotColor ?? bodyColor
 
-  // The v2 dot sits at viewBox y≈1.5 — that's basically touching the top edge,
+  // The v2 dot sits at viewBox y≈1.5, which is basically touching the top edge,
   // so sub-pixel rendering clips it. Add ~10 units of breathing room at top.
   const PADDED_VIEWBOX = "0 -10 557.60217 302.12289"
   void BIO_LOGO_VIEWBOX // exported for downstream consumers; intentionally not used here
+
+  // The lift is two pixels on screen. A CSS transform on a shape inside an SVG
+  // is measured in the drawing's user units, not screen pixels, and this
+  // drawing is 302 units tall however small it is rendered: at the masthead's
+  // 18px, "2px" would move the dot a ninth of a pixel. So the distance is
+  // converted here, where the rendered height is known. With no numeric height
+  // (the 1em default) the stylesheet's fallback applies.
+  const PADDED_HEIGHT = 302.12289
+  const BOB_PX = 2
+  const bobUnits =
+    bobOnHover && typeof height === "number" && height > 0
+      ? Math.round(((BOB_PX * PADDED_HEIGHT) / height) * 10) / 10
+      : undefined
 
   return (
     <svg
@@ -65,6 +84,7 @@ export function BioLogo({
         display: "inline-block",
         verticalAlign: "middle",
         overflow: "visible",
+        ...(bobUnits !== undefined ? ({ "--beta-nav-lift": bobUnits } as React.CSSProperties) : null),
         ...style,
       }}
       {...rest}

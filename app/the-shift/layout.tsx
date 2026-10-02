@@ -1,26 +1,41 @@
 import type { Metadata } from "next"
 
+/**
+ * Metadata and structured data for /the-shift.
+ *
+ * No number is quoted here. Half the page's figures come from a record that is
+ * regenerated, and a count in a description goes stale in a search result long
+ * after the page has moved on. The claim about team size is also left to the
+ * page, where it sits beside its caveats.
+ *
+ * The twitter block is written out because Next does not derive it from
+ * openGraph. The share image is ./opengraph-image.tsx.
+ */
+
+const TITLE = "The shift"
+const DESCRIPTION =
+  "How AI rewrites the economics of building software, argued in five sections: domain coverage, cadence, coordination, context and compounding, each with the figure behind it and what the figure cannot show."
+const SHORT =
+  "How AI rewrites the economics of building software. Five sections of evidence from one project, and a note wherever the evidence runs out."
+
 export const metadata: Metadata = {
-  title: "The Shift · bio·bradley.io",
-  description:
-    "How AI rewrites the economics of building software. Five sections of evidence from a year of shipping with Claude as co-pilot.",
+  title: TITLE,
+  description: DESCRIPTION,
   alternates: { canonical: "/the-shift" },
   openGraph: {
-    title: "The Shift · bio·bradley.io",
-    description:
-      "How AI rewrites the economics of building software: one person covering ground that used to need a team.",
+    title: `${TITLE} | Bradley Isenbek`,
+    description: SHORT,
     url: "https://bradley.io/the-shift",
     type: "article",
   },
   twitter: {
     card: "summary_large_image",
-    title: "The Shift · bio·bradley.io",
-    description:
-      "How AI rewrites the economics of building software: one person covering ground that used to need a team.",
+    title: `${TITLE} | Bradley Isenbek`,
+    description: SHORT,
   },
 }
 
-export default function V3TheShiftLayout({ children }: { children: React.ReactNode }) {
+export default function TheShiftLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <script
@@ -31,11 +46,12 @@ export default function V3TheShiftLayout({ children }: { children: React.ReactNo
             "@type": "Article",
             "@id": "https://bradley.io/the-shift",
             url: "https://bradley.io/the-shift",
-            headline: "The Shift: how AI rewrites the economics of building software",
+            headline: "The shift: how AI rewrites the economics of building software",
             author: { "@id": "https://bradley.io/#person" },
             publisher: { "@id": "https://bradley.io/#person" },
             isPartOf: { "@id": "https://bradley.io/#website" },
             mainEntityOfPage: "https://bradley.io/the-shift",
+            description: SHORT,
           }),
         }}
       />

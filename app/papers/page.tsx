@@ -1,298 +1,511 @@
-import { readFileSync } from "fs"
+import { existsSync, readFileSync, statSync } from "fs"
 import { join } from "path"
 import Link from "next/link"
 import type { Metadata } from "next"
-import { RowChart, RampKey } from "../_charts"
+import { BarStrip, RampKey, RowChart, type ChartTick, type StripDatum } from "../_charts"
 import { BetaMeasured } from "../_measured"
+import { FilterHash } from "@/components/papers/FilterHash"
+import { StudyCard, type PaperFile, type ResolvedNote } from "@/components/papers/StudyCard"
+import { imageSize } from "@/components/papers/image-size"
+import {
+  ABSTRACT_NOTES,
+  DOMAIN_FALLBACK,
+  STATUS_ORDER,
+  cleanTitle,
+  dayMonthYear,
+  domainLabel,
+  hasResults,
+  isAgentAuthored,
+  isSafeId,
+  isWithdrawn,
+  monthYear,
+  statusTag,
+  type Figure,
+  type PapersData,
+} from "@/components/papers/study"
 
 export const revalidate = 3600
 
-export const metadata: Metadata = {
-  title: "Papers",
-  description:
-    "Research notes across seismology, space weather, climate and hydrology, with the cross-domain clustering work that connects them.",
-}
+// The description, the share text and the JSON-LD live in layout.tsx, once.
+// Only the title is set here, so the root template makes it "Papers | ...".
+export const metadata: Metadata = { title: "Papers" }
 
-interface Study {
-  slug: string
-  title: string
-  description: string
-  status: string
-  author: string
-  category: string
-  createdAt: string
-  hasPaper: boolean
-  hasViz: boolean
-  previewImage: string | null
-  paperUrl: string | null
-  dataFileCount: number
-  references?: { title?: string; url?: string }[]
-  /** Set by the pipeline from 2026-10-02; absent on an older papers-data.json. */
-  withdrawn?: boolean
-  resultsSummary?: {
-    totalStreams: number
-    clustered: number
-    highlights: { label: string; category: string; cv: number; events: number; verdict: string }[]
+/** The radio group's name. FilterHash listens for it; the CSS does not need it. */
+const FILTER = "papers-domain"
+
+function load(): PapersData | null {
+  try {
+    return JSON.parse(
+      readFileSync(join(process.cwd(), "public/data/papers-data.json"), "utf-8")
+    ) as PapersData
+  } catch {
+    return null
   }
 }
 
-interface PapersData {
-  generated: string
-  totalStudies: number
-  categories: Record<string, number>
-  /** Studies the source project took off its own site. Absent on older data. */
-  withdrawnCount?: number
-  /** "omitted": not in `studies` at all. "listed": in `studies`, title only. */
-  withdrawnPolicy?: string
-  studies: Study[]
-}
-
-/** Em dashes are banned in shipped text; the source titles are full of them. */
-const clean = (s: string) => s.replace(/\s*—\s*/g, ": ")
-
-type StatusTag = { cls: "" | "live" | "warn"; label: string }
-
-const FINISHED = "live" as const
-const IN_FLIGHT = "warn" as const
-const NEUTRAL = "" as const
-
 /**
- * Every status the pipeline can emit, mapped on purpose. Three tag states:
- * `live` for work that is finished, `warn` for work in flight, and the plain
- * neutral tag for everything else.
- *
- * Withdrawn is NEUTRAL. A withdrawn study is a decision that was taken, not an
- * assertion that failed (red) and not something waiting on anyone (orange).
- * Before 2026-10-02 "withdrawn" rendered red and "withdrawn-permanent" fell
- * through to orange; both were wrong.
- *
- * The first block is the pipeline's public vocabulary (STATUS_PUBLIC in
- * scripts/papers-pipeline.py). The second block is the raw strings an older
- * papers-data.json still carries, so the page reads correctly on either file.
- * The label is what is shown: a raw workflow string is never printed.
+ * A public path from the data file, or null unless the file is really there.
+ * 43 of 45 figures and one PDF existed on 2026-10-02; this is what keeps the
+ * other cards from showing a broken image or a button to a 404.
  */
-const STATUS: Record<string, StatusTag> = {
-  draft: { cls: IN_FLIGHT, label: "draft" },
-  active: { cls: IN_FLIGHT, label: "active" },
-  "in review": { cls: IN_FLIGHT, label: "in review" },
-  "in revision": { cls: IN_FLIGHT, label: "in revision" },
-  complete: { cls: FINISHED, label: "complete" },
-  accepted: { cls: FINISHED, label: "accepted" },
-  published: { cls: FINISHED, label: "published" },
-  withdrawn: { cls: NEUTRAL, label: "withdrawn" },
-  unknown: { cls: NEUTRAL, label: "status unknown" },
-
-  "withdrawn-permanent": { cls: NEUTRAL, label: "withdrawn" },
-  "revision-in-progress": { cls: IN_FLIGHT, label: "in revision" },
-  "draft-complete-pending-audit": { cls: IN_FLIGHT, label: "in review" },
-  "draft-complete-pending-hed-dek": { cls: IN_FLIGHT, label: "in review" },
+function inPublic(url: string | null | undefined): string | null {
+  if (!url || !url.startsWith("/") || url.includes("..")) return null
+  return existsSync(join(process.cwd(), "public", url)) ? url : null
 }
 
-function statusTag(status: string | null | undefined): StatusTag {
-  const s = (status ?? "").trim().toLowerCase()
-  // Own keys only: a status of "constructor" must not find Object.prototype.
-  if (Object.prototype.hasOwnProperty.call(STATUS, s)) return STATUS[s]
-  // Any other withdrawn-* variant is still withdrawn, and still neutral.
-  if (s.startsWith("withdrawn")) return { cls: NEUTRAL, label: "withdrawn" }
-  // The tenth raw string: a draft rewritten and waiting on another review round.
-  if (s.startsWith("rewritten")) return { cls: IN_FLIGHT, label: "in review" }
-  // Anything this page was not told about gets no colour and no guess.
-  return { cls: NEUTRAL, label: "status unknown" }
+/** A PDF that is really on disk, with its size, so the link can say it. */
+function paperIn(url: string | null | undefined): PaperFile | null {
+  const src = inPublic(url)
+  if (!src) return null
+  try {
+    return { src, bytes: statSync(join(process.cwd(), "public", src)).size }
+  } catch {
+    return null
+  }
+}
+
+/** A figure that is really on disk, with the size its own header states. */
+function figureIn(url: string | null | undefined): Figure | null {
+  const src = inPublic(url)
+  if (!src) return null
+  const size = imageSize(join(process.cwd(), "public", src))
+  return { src, width: size?.width ?? null, height: size?.height ?? null }
 }
 
 /**
- * Withdrawn at source: the project that produced the study took it off its own
- * site. Such a study is never featured and its figure is never shown, whatever
- * the data file carries. The pipeline already withholds those (WITHDRAWN_POLICY
- * in scripts/papers-pipeline.py); the status test is here so that an older
- * papers-data.json, which still lists them with figures, renders the same way.
+ * The provenance chip. The shared BetaMeasured prints the file name and the
+ * date as two flex items, and at 320px the second one wraps to a line that
+ * starts with a comma. Passing children as ONE item lets the text wrap like
+ * text, and the date is kept whole.
  */
-function isWithdrawn(s: Study): boolean {
-  return s.withdrawn === true || statusTag(s.status).label === "withdrawn"
+function Measured({ generated }: { generated: string | null | undefined }) {
+  const when = dayMonthYear(generated)
+  return (
+    <BetaMeasured source="papers-data.json">
+      <span>
+        <b>papers-data.json</b>,{" "}
+        <span className="beta-papers-nowrap">
+          {when ? `generated ${when}` : "generation date not recorded"}
+        </span>
+      </span>
+    </BetaMeasured>
+  )
 }
 
-function StatusBadge({ status }: { status: string | null | undefined }) {
-  const t = statusTag(status)
-  return <span className={t.cls ? `tag ${t.cls}` : "tag"}>{t.label}</span>
+const MONTH_NAMES = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+]
+
+/** Every calendar month from `from` to `to` inclusive, as "YYYY-MM". */
+function monthRange(from: string, to: string): string[] {
+  const out: string[] = []
+  let y = Number(from.slice(0, 4))
+  let m = Number(from.slice(5, 7))
+  const endY = Number(to.slice(0, 4))
+  const endM = Number(to.slice(5, 7))
+  // Bounded: a malformed stamp must not spin this loop.
+  while ((y < endY || (y === endY && m <= endM)) && out.length < 120) {
+    out.push(`${y}-${String(m).padStart(2, "0")}`)
+    m++
+    if (m > 12) {
+      m = 1
+      y++
+    }
+  }
+  return out
+}
+
+const plural = (n: number, one: string, many: string): string => (n === 1 ? one : many)
+
+function Head() {
+  return (
+    <div className="page-head">
+      <nav className="crumb" aria-label="Breadcrumb">
+        <Link href="/">bradley.io</Link>
+        <span>
+          {" / "}
+          <span aria-current="page">Papers</span>
+        </span>
+      </nav>
+      <h1>Papers</h1>
+    </div>
+  )
 }
 
 export default function BetaPapersPage() {
-  const d = JSON.parse(
-    readFileSync(join(process.cwd(), "public/data/papers-data.json"), "utf-8")
-  ) as PapersData
+  const d = load()
 
-  const cats = Object.entries(d.categories)
-    .sort((a, b) => b[1] - a[1])
-    .map(([name, n]) => ({ label: name, value: n, display: `${n}` }))
+  if (!d || !Array.isArray(d.studies)) {
+    return (
+      <div className="page">
+        <Head />
+        <div className="notice">
+          <b>The index is not readable right now.</b> This page is drawn from a file a pipeline
+          writes, and that file is missing or malformed. Nothing is shown rather than something
+          stale.
+        </div>
+      </div>
+    )
+  }
 
-  const sorted = [...d.studies].sort((a, b) =>
-    (b.createdAt ?? "").localeCompare(a.createdAt ?? "")
-  )
+  /* ---- What is listed ---------------------------------------------------- */
 
-  // The ones with something to actually look at lead the page. A study with a
-  // figure or a PDF is a thing you can read; the rest are a title and an
-  // abstract, and putting them first buries the work that is finished.
-  // A withdrawn study is never one of them.
-  const shown = d.studies.filter((s) => !isWithdrawn(s))
-  const featured = sorted
-    .filter((s) => !isWithdrawn(s) && (s.hasPaper || s.previewImage))
-    .slice(0, 12)
-  const withPaper = shown.filter((s) => s.hasPaper && s.paperUrl)
-  const withViz = shown.filter((s) => s.previewImage)
-
-  // How many are withdrawn, and whether they are in the index below at all.
-  // New data says so itself; older data lists them, so count them from there.
-  const withdrawnListed = d.studies.length - shown.length
+  const listed = d.studies.filter((s) => !isWithdrawn(s))
+  const withdrawnHere = d.studies.filter(isWithdrawn)
   const withdrawnOmitted =
     d.withdrawnPolicy === "omitted" && typeof d.withdrawnCount === "number" ? d.withdrawnCount : 0
 
+  // Newest first. A study with no start date sorts last, not first.
+  const sorted = [...listed].sort((a, b) =>
+    (b.createdAt || "0000").localeCompare(a.createdAt || "0000")
+  )
+
+  // A study with a published results table leads the grid on the wide card
+  // (see StudyCard). The sort is stable, so everything else stays newest first.
+  const ordered = [...sorted].sort((a, b) => Number(hasResults(b)) - Number(hasResults(a)))
+  const featured = ordered.filter(hasResults).length
+
+  // A hand-written note on an abstract shows only while both of its guards
+  // hold (see ABSTRACT_NOTES in components/papers/study.ts).
+  const bySlug = new Map(listed.map((s) => [s.slug, s]))
+  const noteFor = (slug: string, description: string): ResolvedNote | null => {
+    if (!Object.prototype.hasOwnProperty.call(ABSTRACT_NOTES, slug)) return null
+    const n = ABSTRACT_NOTES[slug]
+    const parent = bySlug.get(n.parent)
+    if (!parent || !(description ?? "").includes(n.guard)) return null
+    return { before: n.before, after: n.after, parentSlug: parent.slug, parentTitle: cleanTitle(parent.title) }
+  }
+
+  const cards = ordered.map((s) => ({
+    study: s,
+    figure: figureIn(s.previewImage),
+    paper: s.hasPaper ? paperIn(s.paperUrl) : null,
+    note: noteFor(s.slug, s.description),
+  }))
+
+  /*
+   * WHAT THE TWO COUNTS MEASURE. Read this before rewording them.
+   *
+   * shownFigures: cards with a preview image mirrored into public/. Not "has a
+   * figure": the pipeline only looks in a workspace's www/ folder, and on
+   * 2026-10-02 one of the two cards without a preview had figures in its paper
+   * and the other had an interactive figure at the lab.
+   *
+   * mirroredPapers: studies whose paper PDF is published ON THIS SITE. Not
+   * "has a written paper": hasPaper in the data file tests www/paper.pdf only.
+   * On 2026-10-02 it was 1, while 28 of the 45 listed workspaces held a
+   * compiled paper (paper/paper.pdf) and terrapulse.info served all 28. The
+   * first version of this page said "1 of 45 has a written paper", which was
+   * false and was contradicted by the pages its own cards link to.
+   */
+  const n = listed.length
+  const shownFigures = cards.filter((c) => c.figure).length
+  const mirroredPapers = cards.filter((c) => c.paper).length
+  const byAgent = listed.filter(isAgentAuthored).length
+
+  /* ---- Domains: counted from what is listed, not from the file's tally ---- */
+
+  const domainCount = new Map<string, number>()
+  for (const s of listed) domainCount.set(s.category, (domainCount.get(s.category) ?? 0) + 1)
+  const domains = [...domainCount.entries()]
+    .filter(([id]) => isSafeId(id))
+    .sort((a, b) => {
+      if ((a[0] === DOMAIN_FALLBACK) !== (b[0] === DOMAIN_FALLBACK))
+        return a[0] === DOMAIN_FALLBACK ? 1 : -1
+      return b[1] - a[1] || a[0].localeCompare(b[0])
+    })
+    .map(([id, count]) => ({ id, count, label: domainLabel(id) }))
+
+  // The filter, as CSS. One rule per domain: when its radio is checked, every
+  // card of another domain leaves the grid and the count line changes. Written
+  // from the data so a domain the pipeline adds tomorrow filters correctly with
+  // no edit here. Ids are checked by isSafeId before they reach a selector.
+  const filterCss = domains
+    .map(
+      ({ id }) =>
+        `.beta-papers-browse:has(#pf-${id}:checked) .beta-papers-card:not([data-domain="${id}"]){display:none}` +
+        `.beta-papers-browse:has(#pf-${id}:checked) .beta-papers-showing [data-for="${id}"]{display:inline}`
+    )
+    .join("")
+
+  /* ---- Status ------------------------------------------------------------ */
+
+  const statusCount = new Map<string, number>()
+  for (const s of listed) {
+    const label = statusTag(s.status).label
+    statusCount.set(label, (statusCount.get(label) ?? 0) + 1)
+  }
+  const statuses = [...statusCount.entries()]
+    .sort((a, b) => {
+      const ia = STATUS_ORDER.indexOf(a[0])
+      const ib = STATUS_ORDER.indexOf(b[0])
+      return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib)
+    })
+    .map(([label, value]) => ({ label, value }))
+
+  /* ---- When each was started ---------------------------------------------- */
+
+  const dated = listed.filter((s) => /^\d{4}-\d{2}/.test(s.createdAt ?? ""))
+  const undated = n - dated.length
+  const firstMonth = dated.reduce(
+    (min, s) => (s.createdAt.slice(0, 7) < min ? s.createdAt.slice(0, 7) : min),
+    "9999-12"
+  )
+  const lastMonth = /^\d{4}-\d{2}/.test(d.generated ?? "") ? d.generated.slice(0, 7) : firstMonth
+  const months: StripDatum[] =
+    dated.length > 0
+      ? monthRange(firstMonth, lastMonth).map((ym) => ({
+          label: `${MONTH_NAMES[Number(ym.slice(5, 7)) - 1]} ${ym.slice(0, 4)}`,
+          value: dated.filter((s) => s.createdAt.slice(0, 7) === ym).length,
+        }))
+      : []
+  const monthTicks: ChartTick[] = months.map((m, i) => ({ at: i, label: m.label.slice(0, 3) }))
+  const peak = months.reduce<StripDatum | null>((a, b) => (a && a.value >= b.value ? a : b), null)
+  const newest = sorted.find((s) => monthYear(s.createdAt))
+
   return (
     <div className="page">
-      <div className="page-head">
-        <nav className="crumb" aria-label="Breadcrumb">
-          <Link href="/">bradley.io</Link>
-          <span>
-            {" / "}
-            <span aria-current="page">Papers</span>
-          </span>
-        </nav>
-        <h1>Papers</h1>
-      </div>
+      <Head />
 
       <p className="lede">
-        {d.totalStudies} research notes across {Object.keys(d.categories).length} domains:
-        seismology, space weather, climate, hydrology, and the cross-domain clustering work that
-        connects them.
+        Research notes in environmental data science: seismology, space weather, climate,
+        hydrology, and the cross-domain bits where everything starts to look the same. They are
+        the workspaces of the Data Lab at{" "}
+        <a href="https://terrapulse.info" target="_blank" rel="noopener noreferrer">
+          TerraPulse
+        </a>
+        , a measured-data platform for climate and geophysical data. I am its architect.
       </p>
 
+      {/* The caveat and what is withheld, and nothing else: the counts are in
+          the panels below, once. */}
       <div className="notice">
-        <b>Most of this is unfinished.</b> {withPaper.length} of {d.totalStudies}{" "}
-        {withPaper.length === 1 ? "has" : "have"} a written
-        paper; {withViz.length} have a figure. The rest are notes with an abstract and a method,
-        and each one carries its own status below.
-        {withdrawnListed > 0 && (
+        <b>Most of this is unfinished, and none of it is peer reviewed.</b>
+        {byAgent > 0 && (
           <>
             {" "}
-            {withdrawnListed} of the {d.totalStudies} {withdrawnListed === 1 ? "is" : "are"}{" "}
-            withdrawn: the project that produced {withdrawnListed === 1 ? "it" : "them"} took{" "}
-            {withdrawnListed === 1 ? "it" : "them"} off its own site, so{" "}
-            {withdrawnListed === 1 ? "it appears" : "they appear"} here by title only.
+            {byAgent} of the {n} notes {plural(byAgent, "is", "are")} credited in the source data to
+            an AI agent.
+          </>
+        )}
+        {withdrawnHere.length > 0 && (
+          <>
+            {" "}
+            {withdrawnHere.length} more {plural(withdrawnHere.length, "study is", "studies are")}{" "}
+            withdrawn: the project that produced {plural(withdrawnHere.length, "it", "them")} took{" "}
+            {plural(withdrawnHere.length, "it", "them")} off its own site, so{" "}
+            {plural(withdrawnHere.length, "it appears", "they appear")} at the foot of this page by
+            title only.
           </>
         )}
         {withdrawnOmitted > 0 && (
           <>
             {" "}
-            {withdrawnOmitted} more {withdrawnOmitted === 1 ? "study is" : "studies are"} not
-            listed: the project that produced {withdrawnOmitted === 1 ? "it" : "them"} withdrew{" "}
-            {withdrawnOmitted === 1 ? "it" : "them"} from its own site, so nothing from{" "}
-            {withdrawnOmitted === 1 ? "it" : "them"} is published here.
+            {withdrawnOmitted} more {plural(withdrawnOmitted, "study is", "studies are")} not
+            listed: the project that produced {plural(withdrawnOmitted, "it", "them")} withdrew{" "}
+            {plural(withdrawnOmitted, "it", "them")} from its own site, so nothing from{" "}
+            {plural(withdrawnOmitted, "it", "them")} is published here.
           </>
         )}
       </div>
 
+      {/* ================================================================== */}
       <div className="prose beta-sec">
-        <h2>By domain</h2>
+        <h2>The index, counted</h2>
       </div>
 
       <RampKey low="fewer" high="more" />
 
-      <div className="panel">
-        <div className="panel-face">
-          <div className="panel-bar">
-            <b>Studies per domain</b>
-            <span>{d.totalStudies} total</span>
+      {/* Three measurements, each said once. The domain counts are not here:
+          the filter chips below carry them, and a chart of the same seven
+          numbers one screen above the chips said nothing the chips do not. */}
+      <div className="beta-papers-counts">
+        <div className="panel">
+          <div className="panel-face">
+            <div className="panel-bar">
+              <b>Where each note stands</b>
+              <span>{n} listed</span>
+            </div>
+            <RowChart caption="Notes per status" data={statuses} />
+            <p className="beta-chart__note">
+              A note&rsquo;s place in the lab&rsquo;s own workflow. Accepted means the lab&rsquo;s
+              internal review passed it; no journal was involved.
+            </p>
           </div>
-          <RowChart caption="Studies per domain" data={cats} />
+        </div>
+
+        <div className="panel">
+          <div className="panel-face">
+            <div className="panel-bar">
+              <b>What is in it</b>
+              <span>on this site</span>
+            </div>
+            <table className="readout beta-papers-readout">
+              <tbody>
+                <tr>
+                  <td>Listed here</td>
+                  <td className="num">{n}</td>
+                </tr>
+                <tr>
+                  <td>Figure shown</td>
+                  <td className="num">
+                    {shownFigures} of {n}
+                  </td>
+                </tr>
+                <tr>
+                  <td>Paper PDF on this site</td>
+                  <td className="num">
+                    {mirroredPapers} of {n}
+                  </td>
+                </tr>
+                {withdrawnOmitted > 0 && (
+                  <tr>
+                    <td>Withdrawn at source, not shown</td>
+                    <td className="num">{withdrawnOmitted}</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+            <p className="beta-chart__note">
+              These count what is mirrored on this site. More of the notes have figures and a
+              compiled paper in their workspace at the lab than are shown here.
+            </p>
+          </div>
+        </div>
+
+        <div className="panel beta-papers-counts__wide">
+          <div className="panel-face">
+            <div className="panel-bar">
+              <b>When each was started</b>
+              {newest && <span>newest {monthYear(newest.createdAt)}</span>}
+            </div>
+            <BarStrip
+              caption={
+                months.length > 0
+                  ? `Notes started per month, ${months[0].label} to ${months[months.length - 1].label}`
+                  : "Notes started per month"
+              }
+              summary={
+                peak
+                  ? `${dated.length} of ${n} notes carry a start date. The busiest month is ${peak.label} with ${peak.value}.`
+                  : "No note carries a start date."
+              }
+              unit="notes"
+              data={months}
+              ticks={monthTicks}
+              height={88}
+              emptyNote="No note in the file carries a start date."
+            />
+            <p className="beta-chart__note">
+              Counted by the date each workspace was created. Only the notes still listed are
+              counted, so a month can look quieter here than it was.
+              {undated > 0 &&
+                ` ${undated} ${plural(undated, "note has", "notes have")} no start date in the source and ${plural(undated, "is", "are")} not drawn.`}
+            </p>
+          </div>
         </div>
       </div>
 
-      <div className="prose beta-sec">
-        <h2>The work</h2>
-        <p>Studies with a figure or a paper, most recent first.</p>
-      </div>
+      <Measured generated={d.generated} />
 
-      <div className="beta-papers">
-        {featured.map((s) => (
-          <article className="rail beta-paper" key={s.slug}>
-            {s.previewImage && (
-              <a className="beta-paper__fig" href={s.paperUrl ?? s.previewImage}>
-                {/* Plain <img>: the @next/next eslint plugin is not configured in
-                    this repo, so a disable comment for no-img-element is itself
-                    an error, and next/image would want a loader for these. */}
-                <img src={s.previewImage} alt={`Figure from ${clean(s.title)}`} loading="lazy" />
-              </a>
-            )}
-            <h3>{clean(s.title)}</h3>
-            <p className="beta-paper__meta">
-              <StatusBadge status={s.status} />{" "}
-              <span className="tag">{s.category}</span>
-            </p>
-            <p>{clean(s.description)}</p>
-
-            {s.resultsSummary && (
-              <p className="quiet">
-                {s.resultsSummary.clustered} of {s.resultsSummary.totalStreams} streams clustered.
-                {s.resultsSummary.highlights.slice(0, 3).map((h) => (
-                  <span key={h.label}>
-                    {" "}
-                    {h.label}: CV {h.cv}, {h.verdict}.
-                  </span>
-                ))}
-              </p>
-            )}
-
-            <p className="beta-paper__links">
-              {s.paperUrl && (
-                <a className="btn" href={s.paperUrl} target="_blank" rel="noopener noreferrer">
-                  Read the paper
-                </a>
-              )}
-              {s.dataFileCount > 0 && (
-                <span className="quiet">
-                  {s.dataFileCount} data {s.dataFileCount === 1 ? "file" : "files"}
-                </span>
-              )}
-            </p>
-          </article>
-        ))}
-      </div>
-
-      <div className="prose beta-sec">
-        <h2>Everything else</h2>
+      {/* ================================================================== */}
+      <div className="prose beta-sec" id="notes">
+        <h2>The notes</h2>
         <p>
-          The full index, including notes with no figure yet.
+          {featured > 0
+            ? `The ${plural(featured, "note", "notes")} with a published results table ${plural(featured, "comes", "come")} first; the rest run newest first.`
+            : "Newest first."}{" "}
+          A figure opens at full size. Every card links to its workspace on terrapulse.info, where
+          the work is written out.
         </p>
       </div>
 
-      <div className="ledger">
-        <div className="scroller" tabIndex={0} role="region" aria-label="All studies">
-          <table>
-            <thead>
-              <tr>
-                <th>Study</th>
-                <th>Domain</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {sorted.map((s) => (
-                <tr key={s.slug}>
-                  <td className="name">{clean(s.title)}</td>
-                  <td>{s.category}</td>
-                  <td>
-                    <StatusBadge status={s.status} />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <div className="tbl-foot">
-            <span>{sorted.length} studies</span>
-          </div>
+      <div className="beta-papers-browse" data-papers-browse>
+        <style dangerouslySetInnerHTML={{ __html: filterCss }} />
+
+        <div
+          className="beta-papers-filter"
+          id="papers-filter"
+          role="radiogroup"
+          aria-labelledby="pf-legend"
+        >
+          <span className="beta-papers-filter__legend" id="pf-legend">
+            Domain
+          </span>
+          <span className="beta-papers-filter__opt">
+            <input
+              className="sr-only"
+              type="radio"
+              name={FILTER}
+              id="pf-all"
+              value="all"
+              defaultChecked
+            />
+            <label className="chip" htmlFor="pf-all">
+              All <span className="beta-papers-filter__n">{n}</span>
+            </label>
+          </span>
+          {domains.map(({ id, count, label }) => (
+            <span className="beta-papers-filter__opt" key={id}>
+              <input className="sr-only" type="radio" name={FILTER} id={`pf-${id}`} value={id} />
+              <label className="chip" htmlFor={`pf-${id}`}>
+                {label} <span className="beta-papers-filter__n">{count}</span>
+              </label>
+            </span>
+          ))}
         </div>
+
+        <p className="beta-papers-showing" data-showing>
+          <span data-for="all">All {n} notes.</span>
+          {domains.map(({ id, count, label }) => (
+            <span data-for={id} key={id}>
+              {count} of {n} {plural(count, "note", "notes")}: {label.toLowerCase()}.
+            </span>
+          ))}
+        </p>
+
+        <div className="beta-papers-grid">
+          {cards.map((c) => (
+            <StudyCard key={c.study.slug} {...c} />
+          ))}
+        </div>
+
+        {/* With scripts on, FilterHash puts a "back to the filter" control in
+            reach anywhere in the grid. With them off, this plain link at the
+            foot of the grid is the way back (shown only then: kit.css). */}
+        <p className="beta-papers-back">
+          <a href="#papers-filter">Back to the domain filter</a>
+        </p>
       </div>
 
-      <BetaMeasured generated={d.generated} source="papers-data.json" />
+      <FilterHash group={FILTER} />
+
+      {withdrawnHere.length > 0 && (
+        <details className="beta-papers-more beta-papers-withdrawn">
+          <summary>
+            {withdrawnHere.length} withdrawn {plural(withdrawnHere.length, "study", "studies")}, by
+            title
+          </summary>
+          <ul>
+            {withdrawnHere.map((s) => (
+              <li key={s.slug}>{cleanTitle(s.title)}</li>
+            ))}
+          </ul>
+        </details>
+      )}
+
+      <Measured generated={d.generated} />
     </div>
   )
 }

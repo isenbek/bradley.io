@@ -105,14 +105,18 @@ const nextConfig = {
 
       // The four org dossier pages are superseded by /work, which answers the
       // same question from the same commit data in one screen.
-      { source: '/projects/isenbek', destination: '/work', permanent: true },
-      { source: '/projects/tinymachines', destination: '/work', permanent: true },
-      { source: '/projects/nominate-ai', destination: '/work', permanent: true },
-      { source: '/projects/sysforge-ai', destination: '/work', permanent: true },
+      { source: '/projects/isenbek', destination: '/work#isenbek', permanent: true },
+      { source: '/projects/tinymachines', destination: '/work#tinymachines', permanent: true },
+      { source: '/projects/nominate-ai', destination: '/work#nominate-ai', permanent: true },
+      { source: '/projects/sysforge-ai', destination: '/work#sysforge-ai', permanent: true },
 
-      // Turfy was retired from the site on 2026-08-30. The irrigation sidecar
-      // still exists; the write-up about it does not.
-      { source: '/projects/turfy', destination: '/projects', permanent: true },
+      // /pilot-analytics was folded into /ai-pilot on 2026-10-02: one page holds
+      // the licence, the logbook, the models, the missions and the tokens.
+      { source: '/pilot-analytics', destination: '/ai-pilot', permanent: true },
+
+      // Turfy was retired from the site on 2026-08-30 and restored on
+      // 2026-10-02 at the owner's request ("bring turfy back"), so its redirect
+      // is gone and /projects/turfy is a real page again.
 
       // The 236 retired per-repository dossiers, named one by one.
       //

@@ -24,6 +24,15 @@ export interface NavLink {
    * KIT_ROUTES so they keep their own chrome.
    */
   legacy?: boolean
+  /**
+   * Set on the handful of links that also sit inline in the masthead on a wide
+   * screen. The number is the position in that row, left to right, because the
+   * row's order (what a visitor asks for first) is not the sheet's order (what
+   * belongs with what). A marker on the entry rather than a second list, for
+   * the reason at the top of this file: PRIMARY_LINKS below is derived, so a
+   * link cannot be in the masthead and missing from the menu.
+   */
+  primary?: number
 }
 
 export interface NavGroup {
@@ -37,20 +46,19 @@ export const NAV: NavGroup[] = [
     title: "The site",
     links: [
       { href: "/", label: "Home", blurb: "what I build and who it is for" },
-      { href: "/about", label: "About", blurb: "the bio, the timeline, the numbers" },
-      { href: "/resume", label: "Resume", blurb: "the full record since 1997, and the PDF" },
-      { href: "/services", label: "Services", blurb: "five practices, three ways to engage" },
-      { href: "/contact", label: "Contact", blurb: "the inbox, and what helps a first email" },
-      { href: "/projects", label: "Projects", blurb: "the three worth opening" },
-      { href: "/housecalls", label: "House Calls", blurb: "an AI hunting for work, logged in the open" },
+      { href: "/about", label: "About", blurb: "the story, the career, and how this site is built", primary: 4 },
+      { href: "/resume", label: "Resume", blurb: "the full record since 1997, and the PDF", primary: 3 },
+      { href: "/services", label: "Services", blurb: "five practices, three ways to engage", primary: 5 },
+      { href: "/contact", label: "Contact", blurb: "the inbox, and what helps a first email", primary: 6 },
+      { href: "/projects", label: "Projects", blurb: "the curated bench: chips, platforms, instruments, math", primary: 2 },
+      { href: "/housecalls", label: "House Calls", blurb: "business development, run by an AI, logged in the open" },
     ],
   },
   {
     title: "The evidence",
     links: [
-      { href: "/work", label: "Work", blurb: "four GitHub orgs, commit history rolled up" },
+      { href: "/work", label: "Work", blurb: "four GitHub orgs, commit history rolled up", primary: 1 },
       { href: "/ai-pilot", label: "AI pilot", blurb: "the licence: sessions, models, ratings" },
-      { href: "/pilot-analytics", label: "Pilot analytics", blurb: "the same record, cut finer" },
       { href: "/cost-analysis", label: "Cost analysis", blurb: "what the work costs, modelled" },
       { href: "/the-shift", label: "The shift", blurb: "what changed when the tooling changed" },
       { href: "/papers", label: "Papers", blurb: "research notes, figures, and what held" },
@@ -60,6 +68,9 @@ export const NAV: NavGroup[] = [
   {
     title: "Running instruments",
     links: [
+      // First, because it is the index of the rest: one page that says which of
+      // the entries under it are answering right now.
+      { href: "/bench", label: "The bench", blurb: "every live page on this server, and whether it is up" },
       { href: "/trng", label: "Hotbits", blurb: "true random numbers from radioactive decay" },
       { href: "/sdr", label: "SDR", blurb: "the scanner stack and what it is hearing" },
       { href: "/fleet", label: "Fleet", blurb: "node health across the cluster" },
@@ -69,10 +80,36 @@ export const NAV: NavGroup[] = [
       { href: "/meatball", label: "Meatball", blurb: "the sensory robot: sight, sound, memory" },
     ],
   },
+  {
+    // Three pages that had no inbound link at all. They are not evidence and
+    // they are not instruments reading hardware: each one is a thing the reader
+    // operates, so they get a group that says so.
+    title: "Things to operate",
+    links: [
+      { href: "/terminal", label: "Terminal", blurb: "the portfolio as a command line: type help" },
+      { href: "/bio-mark", label: "Bio mark", blurb: "the wordmark taken apart: drag the dot" },
+      { href: "/preferences", label: "Preferences", blurb: "what your device will let a page use" },
+    ],
+  },
 ]
 
 /** Every link, flattened. */
 export const NAV_LINKS: NavLink[] = NAV.flatMap((g) => g.links)
+
+/** The masthead row, in its own order. Derived, never listed. */
+export const PRIMARY_LINKS: NavLink[] = NAV_LINKS.filter((l) => l.primary !== undefined).sort(
+  (a, b) => (a.primary ?? 0) - (b.primary ?? 0),
+)
+
+/**
+ * Whether a path is inside a link's section: the page itself, or anything
+ * under it. "/projects/prime-zoo" is in Projects; "/workshop" is not in Work,
+ * which is why this compares against the href plus a slash and not a prefix.
+ */
+export function inSection(pathname: string, href: string): boolean {
+  if (href === "/") return pathname === "/"
+  return pathname === href || pathname.startsWith(`${href}/`)
+}
 
 /**
  * The routes that wear the kit, derived from the nav rather than listed twice.
@@ -94,10 +131,7 @@ const KIT_EXTRA = [
   "/dragonfli/worldevent",
   "/meatball/log",
   "/meatball/memory",
-  "/terminal",
-  "/preferences",
   "/eyes",
-  "/bio-mark",
   "/meatball/notes/senses",
   "/meatball/notes/listening",
   "/meatball/notes/motion",
@@ -107,6 +141,7 @@ const KIT_EXTRA = [
   "/projects/zeta-forge",
   "/projects/storm-plates",
   "/projects/critical-collapse",
+  "/projects/turfy",
   "/housecalls/plain",
   "/housecalls/network",
   "/housecalls/docs",
