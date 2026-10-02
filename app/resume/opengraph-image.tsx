@@ -10,8 +10,8 @@ export default function OG() {
     eyebrow: "Resume",
     title: "Bradley S. Isenbek.",
     subtitle:
-      "AI systems architect and machine learning engineer. Secure, large-scale data systems since 1997.",
-    tags: ["Grand Rapids, MI", "AI + data systems", "Government + enterprise"],
+      "AI systems architect and machine learning engineer. Open to full-time roles in AI systems and data architecture.",
+    tags: ["Open to full-time roles", "Remote or Grand Rapids, MI", "AI + data systems"],
     accent: "blue",
     cta: "Read the resume →",
   })

@@ -17,10 +17,42 @@
  * it describes. One such case: ConservativeConnector starts in 2018 here (the
  * PDF) and not 2020 (the old data file).
  *
+ * A third source, added 2026-10-02 for the work since February 2026: the
+ * owner's written answers of 2026-10-02 plus three read-only research passes
+ * over the repositories on this machine (the platform core, disaster
+ * recovery, MyFinalWishes), whose public-safe bullets were fact-checked. The
+ * SysForge.ai role and the 2026 research role are built from those, and only
+ * from those. The owner's rules for them, binding on every consumer:
+ *
+ *   - The prototype platform is described under SysForge.ai by what it does.
+ *     Its own names, and the names of the services in it, never appear.
+ *   - No salary, rate or range, anywhere. AVAILABILITY carries none on
+ *     purpose; a consumer asked about pay declines and points to a
+ *     conversation.
+ *   - MyFinalWishes is named and never linked.
+ *   - No users, customers or revenue for anything unless a source proves it.
+ *   - No hostnames, addresses, ports or security details.
+ *
  * Nothing on this page is generated or inferred. Every line traces to one of
- * those two documents, edited only for voice (third person, no "I") and for
- * the site's punctuation rules. Do not add a claim here that is not in a
+ * those documents, edited only for voice (third person, no "I") and for the
+ * site's punctuation rules. Do not add a claim here that is not in a
  * document the operator wrote or approved.
+ *
+ * EXPORTS (other code reads these: /resume, /resume/print and the PDF, the
+ * resume MCP server, the /ask chat, /about, /services, /contact, /terminal):
+ *
+ *   RESUME_UPDATED, RESUME_PDF, HEADLINE, SUMMARY   strings
+ *   ROLES, EARLIER_ROLES                            ResumeRole[]
+ *   GOVERNMENT                                      string[]
+ *   EXPERTISE, EDUCATION, PROJECTS                  as typed below
+ *   AVAILABILITY  (2026-10-02)  what he is open to and where; no pay, ever
+ *   STRENGTHS     (2026-10-02)  the three core strengths of the original site
+ *   AWARDS        (2026-10-02)  the PipeLive awards, as structured rows
+ *
+ * ResumeRole gained two optional fields on 2026-10-02. `groups` splits a long
+ * role into labelled runs of bullets; when present, `bullets` is still the
+ * full flat list (the groups concatenated, in order), so a consumer that
+ * ignores `groups` loses nothing. `links` are public pages for the role.
  */
 
 export interface ResumeRole {
@@ -30,35 +62,185 @@ export interface ResumeRole {
   location?: string
   /** One line on what the company or product was. */
   context?: string
+  /** Every bullet, flat. Always complete, even when `groups` is set. */
   bullets: string[]
+  /** Optional: the same bullets under short labels, in the same order. */
+  groups?: { label: string; bullets: string[] }[]
+  /** Optional: public pages for the role. Absolute URLs or site paths. */
+  links?: { label: string; href: string }[]
   tech?: string[]
 }
 
-export const RESUME_UPDATED = "2026-02-23"
+export const RESUME_UPDATED = "2026-10-02"
 
 export const RESUME_PDF = "/resume.pdf"
 
-export const HEADLINE = "AI systems architect, machine learning engineer, frontier technologist."
+export const HEADLINE =
+  "AI systems architect and machine learning engineer: agent platforms, data architecture, and the hardware they run on."
 
 export const SUMMARY: string[] = [
-  "AI-focused software architect with more than fifteen years designing secure, large-scale data systems for government and enterprise clients. Extensive hands-on experience with frontier AI models, agentic programming frameworks, and AI-augmented development workflows.",
-  "Proven track record leading technical teams on classified projects and building high-availability infrastructure processing billions of records. Expert in AI and ML pipelines, distributed systems, cloud infrastructure, and secure data management. Daily co-development with Claude and other frontier models across architecture, code generation, data analysis, and investigative tooling. Active builder of open-source AI tools and agentic systems.",
+  "AI systems architect and machine learning engineer with more than fifteen years designing secure, large-scale data systems for government and enterprise clients, including a classified project for the United States Government and infrastructure processing billions of records. Expert in AI and ML pipelines, distributed systems, and secure data management.",
+  "Since February 2026: a production-ready prototype platform of 84 self-hosted services on the SysForge fabric, with a journaled state kernel for agents, a declarative execution engine and planner, a service mesh, and an intelligence crawler; MyFinalWishes, a digital estate-planning product shipped through SysForge; a transistor-level 6502 and a switch-level NES at tinymachines.ai; and TerraPulse, an open climate and geophysical data platform. Daily co-development with Claude and other frontier models, with every working session and its cost on the public record.",
 ]
 
-/** 2014 to the present: the roles the current PDF carries, in its words. */
+/**
+ * What he is open to, in the owner's words of 2026-10-02. There is no pay
+ * field and there never will be: salary is private. A consumer asked about
+ * pay says so and points to `contact`.
+ */
+export const AVAILABILITY = {
+  open: true,
+  statement: "Open to full-time roles in AI systems and data architecture.",
+  employment: "Full-time",
+  areas: ["AI systems architecture", "Data architecture"],
+  location: "Remote, or on site in the Grand Rapids area.",
+  /** The hiring path: where to write, and the two documents to read first. */
+  contact: "/contact",
+  resume: "/resume",
+  pdf: "/resume.pdf",
+  asOf: "2026-10-02",
+} as const
+
+/** The original site's Core Strengths (lib/resume-data.json at 63d43d0), edited for voice. */
+export const STRENGTHS: { title: string; description: string }[] = [
+  {
+    title: "Full stack",
+    description:
+      "Software is the primary competency. Curiosity has carried the work across the full spectrum of technology, from physics to generative AI.",
+  },
+  {
+    title: "Always learning",
+    description:
+      "One is always a student. That mantra is the reason for a standing habit of evaluating new languages and platforms.",
+  },
+  {
+    title: "Inventor",
+    description:
+      "Turning generative AI into a problem solver, and developing novel tools that interface with the real world.",
+  },
+]
+
+/** PipeLive, 1997 to 2002: 12 industry awards, of which the record names two. */
+export const AWARDS: { award: string; company: string; years: string }[] = [
+  { award: "PC Magazine Winner's Circle", company: "PipeLive, LLC", years: "1997 to 2002" },
+  { award: "TMC Labs Innovation Award", company: "PipeLive, LLC", years: "1997 to 2002" },
+]
+
+/*
+ * SysForge.ai since 2026, in four runs. Sources, by run: the platform from the
+ * "core" research (repository READMEs and docs, the unified service spec of
+ * 2026-10-02, deduplicated git logs); disaster recovery from the "dr"
+ * research (the clean-stack plan and its results, the backup design doc, the
+ * documented restore test, the replication module's README); MyFinalWishes
+ * from the "myfw" research (its repository, package.json, docs and git log);
+ * infrastructure from the nginx configuration on this host.
+ */
+const SYSFORGE_GROUPS: { label: string; bullets: string[] }[] = [
+  {
+    label: "The platform",
+    bullets: [
+      "Built a production-ready prototype platform on the SysForge fabric: 84 self-hosted Python services exposing about 3,390 documented endpoints, where every read endpoint is also an MCP tool for connected models. More than 20,000 commits of his own across more than 140 repositories since February 2026, pair-programmed with AI, not counting automated chores and merges.",
+      "Designed a journaled state kernel for agents: five classical primitives (frontier, seen set, memo, plan DAG, disjoint groups) behind one loop, where the search strategy is configuration, not code. Every change goes to an append-only journal, so a crashed run replays to its exact next step and a supervisor can read an agent's state without asking it. It ships with a static lint whose three rules were each found first in production graphs.",
+      "Built a declarative execution engine that merged three in-house workflow engines into one. Graphs are written as YAML and run once, run durably (a run can sit at an approval gate for days and resume exactly once by replay), or run as long-lived reconcile services.",
+      "Built a planner on that engine. Two plain sentences go in. A typed judge picks a catalog template or a model writes a new graph, and a check against the live service catalog rejects any call to an operation that does not exist. Nothing runs until a person clicks Run, and anything that leaves the building waits at an approval gate.",
+      "Built the service mesh the platform runs on. Each service announces a card describing itself, peers find each other by broadcast and seed lists, and membership expires by TTL, so a dead node simply ages out. Services are called by name through one gateway.",
+      "Built the platform's intelligence crawler: an async jobs API that runs YAML pipelines (crawl, archive retrieval, screenshots, transcripts, vector search), running on a self-built cluster of crawl workers. Its largest measured run processed about 950 GB in nine days.",
+    ],
+  },
+  {
+    label: "Disaster recovery",
+    bullets: [
+      "Rehearsed a from-nothing rebuild of the platform on a second host: fresh secrets, empty schemas for 63 managed databases and 47 storage buckets, one tenant and one admin, then every service walked in dependency order. 67 of 93 units started clean, and the other 26 became tickets grouped by cause.",
+      "Turned that rehearsal into the platform's first fresh-host runbook: host preparation, secrets bootstrap, the order of the core services, and a verification checklist, with the layout assumptions that had lived only in people's heads written down.",
+      "Designed a whole-server encrypted offsite backup. It splits each disk into chunks that fit a nightly window, caps bandwidth, refuses to run if key material would leave the building, and uses credentials that cannot erase backup history. Seeding is in progress.",
+      "Restored a 235 MB database from its nightly backup into a throwaway catalog in 33 seconds and checked the counts against live with no mismatches, then wrote the result up as a reusable restore runbook.",
+      "Designed snapshot-based ZFS replication for an embedded database and its file blobs, with a failover guard that refuses to promote a standby that is behind on replication.",
+    ],
+  },
+  {
+    label: "MyFinalWishes, shipped through SysForge",
+    bullets: [
+      "Built MyFinalWishes, a digital estate-planning platform, as its only engineer: rebuilt from an earlier prototype into a single TypeScript application (TanStack Start, React 19, SQLite with Drizzle), 459 commits of his own and 68 schema migrations from July to September 2026.",
+      "Designed per-user envelope encryption for identity data and stored files: AES-256-GCM under a per-user key wrapped by a master key held outside the database, each sealed value bound to its user, table and column, and files sealed in 64 KiB chunks so ranged reads stay authenticated.",
+      "Took it to production with a replicated standby that can take over, nightly verified off-site backups, and a deep health check that proves sign-in, decryption and mail delivery rather than pinging. About 1,500 automated tests, unit and Playwright end to end, gate every change in CI.",
+    ],
+  },
+  {
+    label: "Infrastructure",
+    bullets: [
+      "Run a multi-domain web estate of more than 50 hostnames on owned hardware, with nginx, systemd, certbot and self-hosted BIND DNS, version-controlled units and encrypted secrets. No cloud host.",
+    ],
+  },
+]
+
+/*
+ * The 2026 research and open-source work. Sources: the "core" research's
+ * fact-checked bullets for tinymachines.ai, TerraPulse, tinychase and
+ * bradley.io; tinymachines/halfphi (README, Cargo.toml) and
+ * tinymachines/nes-bench (README) for the two lines that name them; the
+ * owner's 2026-10-02 wording for the roles ("architect and builder of
+ * TerraPulse", "engineered tinychase").
+ */
+const RESEARCH_GROUPS: { label: string; bullets: string[] }[] = [
+  {
+    label: "tinymachines.ai",
+    bullets: [
+      "Designed and shipped tinymachines.ai in six weeks (763 commits, August 22 to October 2, 2026): one self-hosted site over four projects on Next.js 16, FastAPI and Rust/WebAssembly, with an API spoken as both REST and MCP and documentation in English and Japanese. Its headline figures are read from data files written only by scripts, 42 Playwright specs check the live site, and a deploy is refused when a served WebAssembly bundle does not match its recorded source commit.",
+      "Built a transistor-level (switch-level) MOS 6502 simulator in Rust and WebAssembly on halfphi, an MIT-licensed library for switch-level simulation of chips traced from die photographs: 1,725 nodes, 3,510 switches and no behavioural model, matching the visual6502 reference bit for bit on every node across a 3,000 half-cycle trace. It has a WebGL2 die renderer, an HTTP API whose simulation calls are stateless, and an MCP endpoint.",
+      "Designed an engine ladder in which each faster engine is derived from the switch-level chip and held to it at the pins: a micro engine at 39.0 M half-cycles a second (about 1,465 times the switch-level engine) and a GPU kernel stepping 128,000 machines at once, with all 289 recorded pin traces replaying exactly and each comparison shown to fail under a deliberate mutation.",
+      "Extended the method to the NES: switch-level Ricoh 2A03 and 2C02 chips, an NTSC signal and CRT model, and a console with seven cartridge board types that passes blargg's CPU instruction and timing, sprite-hit and APU test ROMs, across eight public repositories and more than 830 commits in seven weeks.",
+      "Built the bench that holds the model to the real console under identical inputs: an inline bridge between an unmodified NES and an original pad (a shift register the console clocks, a microcontroller counting its latch and clock pulses in hardware) and a Raspberry Pi head that drives reset, power and the oscilloscope from scripts.",
+    ],
+  },
+  {
+    label: "TerraPulse, architect and builder",
+    bullets: [
+      "Architected and built TerraPulse, a measured-data climate and geophysical platform: 80 published per-phenomenon indexes holding 14.2M records (8.9M measured events and series plus a 5.3M-entry EPA facility directory), citing 183 upstream datasets from USGS, NOAA, NASA, EPA, USDA and others, on PostgreSQL/PostGIS, DuckDB and Parquet, self-hosted with systemd and nginx.",
+      "Designed and shipped its public Model Context Protocol server: 11 read-only tools over the indexes, research workspaces and a 1,353-node knowledge graph, with a machine-generated spec whose examples run against live data, connected to claude.ai as a custom connector.",
+    ],
+  },
+  {
+    label: "tinychase, engineered",
+    bullets: [
+      "Engineered tinychase.com in nine days (128 commits, AI pair-programmed, building on the TerraPulse data lake and model): an installable PWA where DuckDB-WASM range-reads static Parquet and a tinygrad-exported two-layer cyclone transformer runs in the browser on WebGPU, checked against the Python reference on a test storm (0.0000064 kt difference).",
+    ],
+  },
+  {
+    label: "bradley.io",
+    bullets: [
+      "Run bradley.io on owned hardware with no cloud host: a Next.js 16 site with live dashboards fed by real instruments, a public record of every AI working session and what it cost, and a staged deploy with automatic rollback used for more than 400 releases since February 2026.",
+    ],
+  },
+]
+
+/** 2014 to the present. SysForge.ai and the 2026 research role are rebuilt from the 2026-10-02 sources; the rest are the PDF's, in its words. */
 export const ROLES: ResumeRole[] = [
   {
     years: "2024 to present",
     title: "Founder and AI Systems Architect",
     company: "SysForge.ai",
-    context: "AI consulting and development firm delivering frontier AI solutions for enterprise clients.",
-    bullets: [
-      "Architecting AI-powered systems that integrate frontier language models into enterprise workflows for automation, analysis, and decision support.",
-      "Developing custom agentic AI pipelines using Claude, GPT-4, and open-source models for client-specific investigative and operational use cases.",
-      "Building AI-augmented development toolchains and internal platforms that accelerate secure software delivery.",
-      "Consulting on responsible AI deployment, prompt engineering strategy, and AI governance for regulated industries.",
+    context:
+      "AI systems and development firm. Since 2026 the work has centred on a production-ready prototype platform built on the SysForge fabric, on products shipped through it, and on the self-hosted infrastructure under both.",
+    bullets: SYSFORGE_GROUPS.flatMap((g) => g.bullets),
+    groups: SYSFORGE_GROUPS,
+    tech: ["Python", "FastAPI", "TypeScript", "Claude API", "MCP", "SQLite", "ZFS", "WireGuard", "OpenWrt", "systemd", "nginx"],
+  },
+  {
+    years: "2026 to present",
+    title: "Research and open source",
+    company: "tinymachines.ai, TerraPulse, tinychase",
+    context:
+      "Chips simulated from die photographs, an open climate and geophysical data platform, and a cyclone model that runs in the browser. Built in public, on owned hardware.",
+    bullets: RESEARCH_GROUPS.flatMap((g) => g.bullets),
+    groups: RESEARCH_GROUPS,
+    links: [
+      { label: "tinymachines.ai", href: "https://tinymachines.ai" },
+      { label: "6502.tinymachines.ai", href: "https://6502.tinymachines.ai" },
+      { label: "terrapulse.info", href: "https://terrapulse.info" },
+      { label: "tinychase.com", href: "https://tinychase.com" },
+      { label: "github.com/tinymachines", href: "https://github.com/tinymachines" },
     ],
-    tech: ["Python", "Claude API", "FastAPI", "AWS", "Docker", "Pinecone", "RAG", "Agentic frameworks"],
+    tech: ["Rust", "WebAssembly", "WebGL2", "WebGPU", "tinygrad", "Next.js", "FastAPI", "PostgreSQL/PostGIS", "DuckDB", "Parquet", "MCP"],
   },
   {
     years: "2022 to present",
@@ -148,7 +330,7 @@ export const EARLIER_ROLES: ResumeRole[] = [
     company: "J. Lack Consulting",
     location: "East Hampton, NY",
     bullets: [
-      "Maintained production e-commerce servers, ran daily mail campaigns, and analyzed response. Managed an e-commerce integration project for a wine retailer end to end.",
+      "Maintained production e-commerce servers, ran daily email marketing sends, and analyzed response. Managed an e-commerce integration project for a wine retailer end to end.",
       "Designed a secure network for a 120-bed healthcare facility, built to meet HIPAA requirements and protect patient data.",
     ],
   },
@@ -159,7 +341,7 @@ export const EARLIER_ROLES: ResumeRole[] = [
     location: "Mineola, NY",
     context: "Credit card processing start-up.",
     bullets: [
-      "Created a merchant transaction management system, supervising junior developers and ensuring daily card transactions cleared the banking system.",
+      "Created a merchant transaction management system, supervising other developers and ensuring daily card transactions cleared the banking system.",
       "Developed a web-based merchant application in PHP, integrated with SugarCRM over SOAP.",
     ],
   },
@@ -238,6 +420,8 @@ export const EXPERTISE: { area: string; items: string[] }[] = [
     area: "AI and machine learning",
     items: [
       "Claude and the Anthropic API",
+      "Model Context Protocol (MCP)",
+      "Agent state and orchestration",
       "OpenAI API",
       "Agentic frameworks",
       "Prompt engineering",
@@ -265,6 +449,10 @@ export const EXPERTISE: { area: string; items: string[] }[] = [
       "Distributed systems",
       "High-availability design",
       "Load balancing",
+      "Disaster recovery",
+      "WireGuard and OpenWrt",
+      "ZFS",
+      "nginx, systemd and BIND",
     ],
   },
   {
@@ -281,6 +469,9 @@ export const EXPERTISE: { area: string; items: string[] }[] = [
       "ETL pipelines",
       "Hadoop and Hive",
       "Vector embeddings",
+      "SQLite",
+      "DuckDB and Parquet",
+      "PostGIS",
     ],
   },
   {

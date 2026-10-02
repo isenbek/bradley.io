@@ -48,6 +48,7 @@ export const NAV: NavGroup[] = [
       { href: "/", label: "Home", blurb: "what I build and who it is for" },
       { href: "/about", label: "About", blurb: "the story, the career, and how this site is built", primary: 4 },
       { href: "/resume", label: "Resume", blurb: "the full record since 1997, and the PDF", primary: 3 },
+      { href: "/ask", label: "Ask", blurb: "questions about my work, answered by Claude from the resume" },
       { href: "/services", label: "Services", blurb: "five practices, three ways to engage", primary: 5 },
       { href: "/contact", label: "Contact", blurb: "the inbox, and what helps a first email", primary: 6 },
       { href: "/projects", label: "Projects", blurb: "the curated bench: chips, platforms, instruments, math", primary: 2 },

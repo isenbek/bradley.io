@@ -26,6 +26,10 @@ ProtectSystem=strict
 ProtectHome=read-only
 ReadWritePaths=/home/bisenbek/projects/bradleyio/.next
 ReadWritePaths=-/home/bisenbek/projects/bradleyio/data/housecalls-stash
+# The /ask chat's spend ledger and per-visitor counters (2026-10-02). It must
+# survive restarts and deploys, and the chat refuses to call the API when it
+# cannot write here (fails closed).
+ReadWritePaths=-/mnt/ursa/bradleyio/state/chat
 PrivateTmp=true
 
 [Install]

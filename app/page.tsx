@@ -9,6 +9,7 @@ import { LinkCard } from "@/components/home/LinkCard"
 import { OrgCards } from "@/components/home/OrgCards"
 import { RunningNow } from "@/components/home/RunningNow"
 import { SelectedWork, WORK_CHECKED } from "@/components/home/SelectedWork"
+import { RESUME_PDF } from "@/lib/resume"
 import { SiteStatsPanel } from "./_site-stats"
 import { AUTHOR_AUDIT, auditTotals, isoYear, loadOrgRollups } from "./work/_orgs"
 
@@ -169,6 +170,12 @@ export default async function Home() {
         <p className="quiet beta-home-where">
           <b>Bradley Isenbek.</b> Forest Hills, Michigan. On site across Grand Rapids and Kent
           County, remote everywhere else.
+        </p>
+        <p className="beta-resume-hire">
+          <span>
+            <b>Open to full-time roles</b> in AI systems and data architecture.{" "}
+            <Link href="/resume">The resume</Link>, or <a href={RESUME_PDF}>the PDF</a>.
+          </span>
         </p>
         <HeroChips totals={totals} />
       </div>

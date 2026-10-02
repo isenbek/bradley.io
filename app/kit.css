@@ -6672,3 +6672,522 @@ a.beta-papers-fig:focus-visible { outline: 2px solid var(--color-blue-ink); outl
   100% { stroke-width: 30px;  stroke-opacity: 1; }
 }
 /* end of block: beta-shell-* */
+
+/* ===========================================================================
+   beta-cvp-*: /resume/print, the sheet public/resume.pdf is printed from
+   (app/resume/print/page.tsx, scripts/build-resume-pdf.mjs). Phase 2, item
+   "pdf". Sizes are in points because the target is US Letter paper; on screen
+   the same sheet flows at up to 8.5in wide so the preview is the PDF.
+   Monochrome on purpose: ink, the muted ink, and hairlines. Nothing here is
+   ACTIVE or ATTENTION, so neither blue nor orange has a job, and a resume is
+   often printed on a black-and-white office printer.
+   =========================================================================== */
+.beta-cvp {
+  max-width: 8.5in;
+  margin: 0 auto;
+  padding: calc(var(--u) * 8) calc(var(--u) * 5);
+  font-family: var(--font-sans);
+  font-size: 8.75pt;
+  line-height: 1.28;
+  color: var(--color-ink);
+  overflow-wrap: break-word;
+}
+.beta-cvp a { color: inherit; text-decoration: none; border-bottom: 1px solid var(--color-ink-faint); }
+.beta-cvp b { font-weight: 600; }
+.beta-cvp-note { margin: 0 0 calc(var(--u) * 6); }
+
+.beta-cvp-head { padding-bottom: 7pt; border-bottom: 2px solid var(--color-rule); }
+.beta-cvp-head h1 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 22pt;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+}
+.beta-cvp-head__line {
+  margin: 3pt 0 0;
+  font-family: var(--font-serif);
+  font-size: 11pt;
+  line-height: 1.3;
+}
+/* A run of short items (contact line, role links). Each item keeps the dot
+   after it and does not break inside, so a wrapped line ends on a dot and
+   never opens on one. */
+.beta-cvp-run { display: flex; flex-wrap: wrap; }
+.beta-cvp-run > span { white-space: nowrap; }
+.beta-cvp-run__sep { margin: 0 0.7em; color: var(--color-ink-faint); }
+.beta-cvp-head__contact {
+  margin: 4pt 0 0;
+  font-family: var(--font-mono);
+  font-size: 8pt;
+  color: var(--color-ink-muted);
+}
+.beta-cvp-head__contact a { color: var(--color-ink); }
+
+.beta-cvp-sec { margin-top: 8pt; }
+.beta-cvp-sec h2 {
+  margin: 0 0 4pt;
+  padding-bottom: 1.5pt;
+  border-bottom: 1px solid var(--color-rule);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 8.5pt;
+  line-height: 1.2;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  break-after: avoid;
+}
+.beta-cvp-prose {
+  margin: 0 0 3pt;
+  font-family: var(--font-serif);
+  font-size: 9pt;
+  line-height: 1.38;
+}
+
+/* Preflight strips list markers sitewide, and Chrome's own disc printed as a
+   lopsided speck. A drawn dot instead: a border, not a background, because
+   the PDF is printed without backgrounds. */
+.beta-cvp ul { margin: 0; padding: 0 0 0 1.05em; list-style: none; }
+.beta-cvp li { position: relative; margin: 0 0 1pt; break-inside: avoid; }
+.beta-cvp ul:not(.beta-cvp-early, .beta-cvp-list--plain) > li::before {
+  content: "";
+  position: absolute;
+  left: -0.8em;
+  top: 0.5em;
+  width: 0;
+  height: 0;
+  border: 1.6pt solid var(--color-ink-muted);
+  border-radius: 50%;
+}
+
+/* A role may break across the sheet, but never between its heading and its
+   first line, and never through a bullet. Holding the whole role together
+   left a third of page one empty. */
+.beta-cvp-role { margin: 0 0 6pt; }
+.beta-cvp-role__head,
+.beta-cvp-role__ctx { break-after: avoid; }
+/* Nor leave one bullet and the tech line stranded at the top of a sheet. */
+.beta-cvp-role > ul > li:last-child,
+.beta-cvp-group:last-of-type > ul > li:last-child,
+.beta-cvp-role__tech { break-before: avoid; }
+.beta-cvp-role__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  column-gap: 12pt;
+}
+.beta-cvp-role__head h3 { margin: 0; font-size: 9.5pt; font-weight: 600; line-height: 1.3; }
+.beta-cvp-role__co { font-weight: 400; }
+.beta-cvp-role__co::before { content: ", "; }
+.beta-cvp-role__when {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 7.75pt;
+  color: var(--color-ink-muted);
+  white-space: nowrap;
+}
+.beta-cvp-role__when > * + *::before { content: " · "; }
+.beta-cvp-role__ctx {
+  margin: 0 0 1.5pt;
+  font-family: var(--font-serif);
+  font-size: 8.5pt;
+  color: var(--color-ink-muted);
+}
+/* A long role in labelled runs. The label is a run-in caption, not a heading
+   the eye stops at: small capitals in the display face, ink-muted. */
+.beta-cvp-group { margin: 2.5pt 0 0; }
+.beta-cvp-group__label {
+  margin: 0 0 1pt;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 7.25pt;
+  line-height: 1.3;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+  break-after: avoid;
+}
+.beta-cvp-role__links {
+  margin: 2pt 0 0;
+  font-family: var(--font-mono);
+  font-size: 7.5pt;
+  break-before: avoid;
+}
+.beta-cvp-head__open { margin: 5pt 0 0; font-size: 9pt; }
+.beta-cvp-awards { margin: 3pt 0 0; }
+.beta-cvp-role__tech {
+  margin: 1.5pt 0 0;
+  font-family: var(--font-mono);
+  font-size: 7.5pt;
+  color: var(--color-ink-muted);
+}
+
+.beta-cvp .beta-cvp-early { list-style: none; padding: 0; }
+.beta-cvp-early__row {
+  display: grid;
+  grid-template-columns: 6.6em minmax(0, 1fr);
+  column-gap: 8pt;
+  break-inside: avoid;
+}
+.beta-cvp-early__when {
+  font-family: var(--font-mono);
+  font-size: 7.75pt;
+  line-height: 1.7;
+  color: var(--color-ink-muted);
+}
+.beta-cvp-early__where,
+.beta-cvp-early__ctx { color: var(--color-ink-muted); }
+
+.beta-cvp .beta-cvp-list--plain { list-style: none; padding: 0; }
+.beta-cvp-list li { break-inside: avoid; }
+.beta-cvp-edu { margin: 0; }
+
+.beta-cvp-skills { margin: 0; }
+.beta-cvp-skills > div {
+  display: grid;
+  grid-template-columns: 12.5em minmax(0, 1fr);
+  column-gap: 8pt;
+  margin: 0 0 1.5pt;
+  break-inside: avoid;
+}
+.beta-cvp-skills dt { font-weight: 600; }
+.beta-cvp-skills dd { margin: 0; }
+
+.beta-cvp-foot {
+  margin-top: 10pt;
+  padding-top: 3pt;
+  border-top: 1px solid var(--color-rule);
+  font-family: var(--font-mono);
+  font-size: 7.5pt;
+  color: var(--color-ink-muted);
+}
+
+@media (max-width: 40rem) {
+  .beta-cvp-early__row,
+  .beta-cvp-skills > div { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* Named page, so the Letter size and margins apply to this sheet and to no
+   other page of the site when it is printed. */
+@page beta-cvp { size: letter; margin: 0.45in 0.5in; }
+
+@media print {
+  /* The root layout wraps every route in the site chrome and a nested route
+     cannot opt out, so the sheet hides it. Scoped with :has() to the one page
+     that carries a .beta-cvp, so no other page loses its chrome on paper. */
+  body:has(.beta-cvp) :is(.beta-skip, .app-head, .beta-nav-colophon, .app-foot) { display: none; }
+  body:has(.beta-cvp) .app-main { padding: 0; }
+  body:has(.beta-cvp) { background: none; }
+  .beta-cvp { page: beta-cvp; max-width: none; padding: 0; }
+  .beta-cvp-note { display: none; }
+}
+/* end of block: beta-cvp-* */
+
+/* ===========================================================================
+   ASK (begin block: beta-chat-*)
+   The chat on /ask, components/chat/ChatPanel.tsx. The conversation is
+   machine output, so it is a panel; the question box and the suggested
+   questions are the visitor writing, so they sit on paper below it, in the
+   kit's own .field, .input and .btn. Blue is the caret while an answer is
+   being written (ACTIVE); orange marks a notice that sends the reader to a
+   human (ATTENTION). Nothing here is red: a limit reached is not a failure.
+   ======================================================================== */
+.beta-chat {
+  display: grid;
+  gap: calc(var(--u) * 4);
+  margin-block: calc(var(--u) * 6);
+  min-width: 0;
+}
+.beta-chat .panel { min-width: 0; }
+.beta-chat-left {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  min-width: 0;
+}
+.beta-chat-disclose {
+  margin: 0 0 calc(var(--u) * 3);
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+  line-height: var(--leading-data);
+  color: var(--color-glass-muted);
+}
+
+/* The transcript: a well inside the panel. A fixed floor so the panel is the
+   same height before and after the first question, a ceiling so a long
+   conversation scrolls inside it instead of pushing the form off screen. */
+.beta-chat-log {
+  display: grid;
+  align-content: start;
+  gap: calc(var(--u) * 5);
+  min-height: 15rem;
+  max-height: min(65vh, 36rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: calc(var(--u) * 3);
+  background: var(--color-panel-sunk);
+  border: 1px solid var(--color-rule-panel);
+  border-radius: var(--radius-mod);
+}
+.beta-chat-log:focus-visible { outline: 2px solid var(--color-blue); outline-offset: 2px; }
+
+.beta-chat-empty,
+.beta-chat-text {
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: 1.55;
+  color: var(--color-glass);
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+.beta-chat-empty { color: var(--color-glass-muted); }
+.beta-chat-empty p,
+.beta-chat-text p,
+.beta-chat-text ul { margin: 0; }
+/* :is() so the gap outranks the margin reset above (0,1,2 against 0,1,1). */
+.beta-chat-empty > :is(p, ul) + :is(p, ul),
+.beta-chat-text > :is(p, ul) + :is(p, ul) { margin-top: calc(var(--u) * 2.5); }
+.beta-chat-text ul { padding-left: 1.2em; list-style: square; }
+.beta-chat-text li + li { margin-top: var(--u); }
+
+/* Links on a panel take the glass colour and an underline (as .beta-work). */
+.beta-chat-empty a,
+.beta-chat-text a {
+  color: var(--color-glass);
+  text-decoration: underline;
+  text-decoration-color: var(--color-glass-muted);
+  text-underline-offset: 3px;
+}
+.beta-chat-empty a:hover,
+.beta-chat-text a:hover { text-decoration-color: var(--color-glass); }
+.beta-chat-empty a:focus-visible,
+.beta-chat-text a:focus-visible { outline: 2px solid var(--color-blue); outline-offset: 2px; }
+
+.beta-chat-msg {
+  display: grid;
+  gap: calc(var(--u) * 1.5);
+  min-width: 0;
+  padding-left: calc(var(--u) * 3);
+  border-left: 2px solid var(--color-rule-panel);
+}
+.beta-chat-msg--user { border-left-color: var(--color-ocean); }
+.beta-chat-msg--user .beta-chat-text { color: var(--color-glass-muted); }
+.beta-chat-msg--notice { border-left-color: var(--color-orange); }
+.beta-chat-who {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-glass-muted);
+}
+.beta-chat-wait { color: var(--color-glass-muted); }
+.beta-chat-note {
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+  color: var(--color-glass-muted);
+}
+
+/* The caret on the answer being written. Static for reduced motion. */
+.beta-chat-msg[aria-busy="true"] .beta-chat-text > :last-child::after {
+  content: "";
+  display: inline-block;
+  width: 0.5em;
+  height: 1em;
+  margin-left: 3px;
+  vertical-align: -0.15em;
+  background: var(--color-blue);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .beta-chat-msg[aria-busy="true"] .beta-chat-text > :last-child::after {
+    animation: beta-chat-caret 1s steps(1) infinite;
+  }
+}
+@keyframes beta-chat-caret {
+  50% { opacity: 0; }
+}
+
+/* Paper, under the panel. */
+.beta-chat-suggest {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(var(--u) * 2.5);
+}
+.beta-chat-suggest .btn {
+  max-width: 100%;
+  white-space: normal;
+  text-align: left;
+  font-size: var(--text-fine);
+  padding: calc(var(--u) * 2) calc(var(--u) * 3);
+}
+.beta-chat .btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+.beta-chat-form {
+  display: grid;
+  gap: calc(var(--u) * 3);
+  max-width: 68ch;
+}
+.beta-chat-input {
+  resize: vertical;
+  min-height: 5.5rem;
+  line-height: 1.5;
+}
+.beta-chat-way {
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+  color: var(--color-ink-muted);
+  text-decoration: underline;
+  text-decoration-color: var(--color-ink-faint);
+  text-underline-offset: 3px;
+}
+.beta-chat-way:hover { color: var(--color-ink); }
+.beta-chat-way:focus-visible { outline: 2px solid var(--color-blue-ink); outline-offset: 2px; }
+.beta-chat-about { margin-top: calc(var(--u) * 4); }
+/* end of block: beta-chat-* */
+
+/* ===========================================================================
+   beta-resume-*: the 2026-10-02 additions to /resume (app/resume/page.tsx)
+   and the open-to-roles line on the home page. The role rows themselves are
+   the older .beta-cv-* block; this adds what that block does not have.
+
+   The availability block is paper (it is the person speaking), with the
+   kit's notice shape: a left rule on a sunk well. The rule and the mark are
+   blue because blue means ACTIVE and "open to roles" is a live status. It is
+   not orange: nothing here needs a human to act. No pay figure, ever.
+   =========================================================================== */
+.beta-resume-avail {
+  margin: calc(var(--u) * 5) 0 calc(var(--u) * 6);
+  padding: calc(var(--u) * 4) calc(var(--u) * 5);
+  border-left: 3px solid var(--color-blue-ink);
+  background: var(--color-paper-sunk);
+  max-width: 68rem;
+}
+.beta-resume-avail__status {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--u) * 2);
+  margin: 0 0 calc(var(--u) * 2);
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+  font-weight: 500;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-blue-ink);
+}
+.beta-resume-avail__mark {
+  width: 0.6em;
+  height: 0.6em;
+  border-radius: 50%;
+  background: var(--color-blue-ink);
+  flex: none;
+}
+.beta-resume-avail__line {
+  margin: 0 0 calc(var(--u) * 4);
+  font-size: var(--text-lead);
+  line-height: 1.45;
+  max-width: 60ch;
+}
+.beta-resume-avail__line b { font-weight: 600; }
+.beta-resume-avail__ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(var(--u) * 3);
+  margin: 0;
+}
+@media (max-width: 420px) {
+  .beta-resume-avail { padding: calc(var(--u) * 4); }
+  .beta-resume-avail__ctas .btn { flex: 1 1 100%; justify-content: center; text-align: center; }
+}
+
+/* A long role split into labelled runs (ResumeRole.groups). The label is a
+   mono caption, quieter than the role's own h3, so the eye still reads one
+   role with four parts and not four roles. */
+.beta-resume-group { margin: 0 0 calc(var(--u) * 4); }
+.beta-resume-group h4 {
+  margin: calc(var(--u) * 4) 0 calc(var(--u) * 2);
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  font-weight: 500;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-ink-muted);
+}
+.beta-resume-group:first-of-type h4 { margin-top: calc(var(--u) * 1); }
+.beta-resume-group ul { margin-bottom: 0; }
+
+/* Public pages for a role: a wrapping row of plain links, mono like the dates. */
+.beta-resume-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(var(--u) * 1) calc(var(--u) * 4);
+  margin: 0 0 calc(var(--u) * 3);
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+}
+.beta-resume-links a {
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--color-ink-faint);
+  text-underline-offset: 3px;
+  overflow-wrap: anywhere;
+}
+.beta-resume-links a:hover { text-decoration-color: var(--color-ink); }
+
+/* Core strengths: three cards, one column on a phone. */
+.beta-resume-strengths {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(16rem, 100%), 1fr));
+  gap: calc(var(--u) * 4);
+  margin: calc(var(--u) * 4) 0 calc(var(--u) * 10);
+}
+.beta-resume-strengths .rail p { margin: 0; font-size: var(--text-body); line-height: 1.55; }
+
+/* The closing hiring line, after the record and before the provenance note. */
+.beta-resume-close {
+  margin: calc(var(--u) * 10) 0 calc(var(--u) * 6);
+  padding-top: calc(var(--u) * 5);
+  border-top: 1px solid var(--color-rule);
+  max-width: 68ch;
+}
+.beta-resume-close p { margin: 0; line-height: 1.6; }
+.beta-resume-close b { font-weight: 600; }
+.beta-resume-close a,
+.beta-resume-prov a {
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--color-ink-faint);
+  text-underline-offset: 3px;
+}
+.beta-resume-close a:hover,
+.beta-resume-prov a:hover { text-decoration-color: var(--color-ink); }
+
+/* Home page: the one open-to-roles line under the hero's "where" line. */
+.beta-resume-hire {
+  display: flex;
+  gap: calc(var(--u) * 2);
+  margin: calc(var(--u) * 2) 0 0;
+  max-width: 68ch;
+}
+.beta-resume-hire::before {
+  content: "";
+  width: 0.55em;
+  height: 0.55em;
+  border-radius: 50%;
+  background: var(--color-blue-ink);
+  align-self: flex-start;
+  margin-top: 0.5em;
+  flex: none;
+}
+.beta-resume-hire > span { flex: 1 1 0; min-width: 0; }
+.beta-resume-hire a {
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--color-ink-faint);
+  text-underline-offset: 3px;
+}
+.beta-resume-hire a:hover { text-decoration-color: var(--color-ink); }
+/* end of block: beta-resume-* */

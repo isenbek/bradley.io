@@ -4,6 +4,7 @@ import Link from "next/link"
 import type { Metadata } from "next"
 import { RowChart, RampKey } from "../_charts"
 import { BetaMeasured } from "../_measured"
+import { RESUME_MCP_LISTING } from "@/lib/resume-mcp"
 
 export const revalidate = 3600
 
@@ -61,6 +62,13 @@ export default function BetaMcpPage() {
   ) as McpData
   const st = d.stats
 
+  // The resume server is part of this application, so it is listed from its
+  // own tool table rather than waiting for the nightly probe. Once
+  // scripts/generate-mcp-catalog.py lists it (id "resume"), the probed entry wins.
+  const servers: McpServer[] = d.mcpServers.some((s) => s.id === RESUME_MCP_LISTING.id)
+    ? d.mcpServers
+    : [RESUME_MCP_LISTING, ...d.mcpServers]
+
   const byCategory = d.categories
     .map((c) => ({
       label: c.name,
@@ -72,7 +80,7 @@ export default function BetaMcpPage() {
   // Answered, but would not enumerate: an auth gate rather than an outage.
   // Counted rather than written into the copy, so the sentence cannot go stale
   // the first time a server gains or drops a credential requirement.
-  const gated = d.mcpServers.filter((s) => s.reachable && s.tools.length === 0).length
+  const gated = servers.filter((s) => s.reachable && s.tools.length === 0).length
 
   return (
     <div className="page">
@@ -88,7 +96,7 @@ export default function BetaMcpPage() {
       </div>
 
       <p className="lede">
-        {st.mcpServers} Model Context Protocol servers, and the {st.fleetServices}-service REST
+        {servers.length} Model Context Protocol servers, and the {st.fleetServices}-service REST
         fleet behind them.
       </p>
 
@@ -98,14 +106,14 @@ export default function BetaMcpPage() {
           Each was asked for its tool list when this page was built, so what is below is what the
           server answered with, not what a README claims.
           {gated > 0
-            ? ` ${gated} of the ${st.mcpServers} require a credential and answered by refusing, which is the
+            ? ` ${gated} of the ${servers.length} require a credential and answered by refusing, which is the
                correct behaviour and is recorded as such rather than as an outage.`
             : ""}
         </p>
       </div>
 
       <div className="beta-orggrid">
-        {d.mcpServers.map((s) => (
+        {servers.map((s) => (
           <div className="panel" key={s.id}>
             <div className="panel-face">
               <div className="panel-bar">

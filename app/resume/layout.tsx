@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 
 const DESCRIPTION =
-  "Resume of Bradley S. Isenbek: AI systems architect and machine learning engineer in Grand Rapids, Michigan. Fifteen years of secure, large-scale data systems for government and enterprise."
+  "Resume of Bradley S. Isenbek: AI systems architect and machine learning engineer in Grand Rapids, Michigan. More than fifteen years of secure, large-scale data systems for government and enterprise. Open to full-time roles in AI systems and data architecture, remote or on site in the Grand Rapids area."
 
 export const metadata: Metadata = {
   title: "Resume · bio·bradley.io",
