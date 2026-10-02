@@ -462,8 +462,9 @@ export default async function ProjectsPage() {
         <div className="prose beta-sec">
           <h2 id="platforms-h">Platforms and tools</h2>
           <p>
-            Things other people can use: two data sites that run on this machine, the design system
-            under this page, and four tools for people who work out of a truck.
+            Things other people can use: three data sites that run on this machine, a product
+            shipped through SysForge, the design system under this page, and four tools for
+            people who work out of a truck.
           </p>
         </div>
         <BenchGrid items={PLATFORMS} pairs />
