@@ -28,6 +28,7 @@ import common  # noqa: E402
 MIN_PAGES = 20          # fewer than this means something is wrong; keep the old index
 CHUNK_CHARS = 900       # passage size, roughly 150 to 200 words
 SKIP_PATHS = ("/resume/print",)
+INLINE_BREAKS = {"span", "a", "b", "strong", "em", "i", "code", "kbd", "small", "div", "br", "dd", "dt", "label"}
 SKIP_TAGS = {"script", "style", "noscript", "svg", "nav", "footer", "button", "template"}
 
 
@@ -50,6 +51,8 @@ class MainText(HTMLParser):
         self._in_heading = False
 
     def handle_starttag(self, tag, attrs):
+        if tag == "br" and self._in_main:
+            self._buf.append(" ")
         if tag == "title":
             self._in_title = True
         if tag == "main":
@@ -72,6 +75,10 @@ class MainText(HTMLParser):
             return
         if tag in SKIP_TAGS and self._skip:
             self._skip -= 1
+        # Inline elements that end a word in the layout (chips, tags, line
+        # breaks, links) get a space, or "Pi" and "Custom" read "PiCustom".
+        if tag in INLINE_BREAKS:
+            self._buf.append(" ")
         if tag in self.BLOCKS:
             text = self._flush()
             if tag == "h1" and text:
