@@ -77,6 +77,8 @@ bradleyio/
 bun install            # Install dependencies (prefer bun over npm)
 npm run dev            # Next.js + wargames server (concurrently)
 npm run dev:next       # Next.js dev only (port 32221)
+npm run dev:preview    # dev server on :32290 with its own build dir (.next-preview);
+                       # safe beside the live service, used for agent screenshots
 npm run build          # Production build (don't run bare in the working dir!)
 npm run lint           # eslint .
 ```
@@ -107,8 +109,9 @@ npm run lint           # eslint .
 5. **Relative times are client-only** (`components/kit/DeployedAgo.tsx` pattern): render a deterministic absolute date at SSR, upgrade in an effect. `timeAgo()` at SSR put React #418 on every page for months.
 6. `toLocaleDateString` defaults to local tz — pass `timeZone: "UTC"` for `"YYYY-MM-DD"` inputs, or better, slice the ISO string.
 7. React 19 / Next 16: `useRef` needs an initial value; event handlers need `"use client"`; private `_folder/` escapes routing but TS + eslint still walk it (needs explicit excludes).
-8. Data flows: pages read `public/data/*.json` written by `scripts/*` pipelines — don't hand-edit those files. Timeline lookups go through the helpers, never re-read the JSONs.
-9. **Generated assets and artifacts live on `/mnt/ursa/bradleyio/`**, not in the working tree (operator rule, 2026-10-01). `playwright-report`, `test-results`, `data/claude-activity.duckdb`, `data/claude-parquet` and `data/claude-activity-export.zip` are symlinks to it; `playwright.config.ts` writes there directly. New heavy output goes there too, with a symlink back if code expects a repo path. Exceptions that stay on root: the live build (`.next*`, the site must not depend on a USB disk), git-tracked `public/`, and private `data/housecalls/`.
+8. Live data on pages goes through `/api/now` (`components/live/now-snapshot.ts`, cached 10 s) and `lib/instrument-status.ts` (LIVE / STALE / OFFLINE, never red). Charts come from the primitives in `app/_charts.tsx` (Sparkline, BarStrip, CalendarHeat, LineChart, TenureBars); read its header before adding a chart. A new page must also be added to `/bench` (`app/bench/page.tsx`, maintained by hand).
+9. Data flows: pages read `public/data/*.json` written by `scripts/*` pipelines — don't hand-edit those files. Timeline lookups go through the helpers, never re-read the JSONs.
+10. **Generated assets and artifacts live on `/mnt/ursa/bradleyio/`**, not in the working tree (operator rule, 2026-10-01). `playwright-report`, `test-results`, `data/claude-activity.duckdb`, `data/claude-parquet` and `data/claude-activity-export.zip` are symlinks to it; `playwright.config.ts` writes there directly. New heavy output goes there too, with a symlink back if code expects a repo path. Exceptions that stay on root: the live build (`.next*`, the site must not depend on a USB disk), git-tracked `public/`, and private `data/housecalls/`.
 
 ## Contact & Resources
 
