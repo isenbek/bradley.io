@@ -21,6 +21,61 @@ If asked about playing a game, suggest games like: Chess, Poker, Fighter Combat,
 Desert Warfare, Air-to-Ground Actions, Theaterwide Tactical Warfare, Theaterwide Biotoxic and Chemical Warfare, 
 and of course, Global Thermonuclear War.`
 
+// ---- Limits (2026-10-02) -------------------------------------------------
+// The socket is public on bradley.io, and every free-form line costs a run of
+// a local model on a box that is already busy. nginx caps connections per
+// visitor (/etc/nginx/conf.d/wopr-limits.conf); these cap what one open
+// socket can ask for, since nginx cannot see messages inside a WebSocket.
+// Scripted commands (help, games, logout...) are free and not counted.
+const MAX_INPUT_CHARS = 400          // longer lines are refused, not truncated
+const MODEL_CALLS_PER_WINDOW = 12    // per visitor address
+const WINDOW_MS = 10 * 60 * 1000     // ten minutes
+const MAX_CONCURRENT_MODEL_CALLS = 2 // across everyone
+const callLog = new Map()            // address -> [timestamps]
+let modelCallsInFlight = 0
+
+function visitorAddress(socket) {
+  // nginx sets X-Real-IP from the real client (the vhost resolves it from the
+  // LAN gateway's X-Forwarded-For); a direct connection has none.
+  const h = socket.handshake.headers['x-real-ip']
+  return (typeof h === 'string' && h) || socket.handshake.address || 'unknown'
+}
+
+function takeModelCall(addr) {
+  const now = Date.now()
+  const recent = (callLog.get(addr) || []).filter((t) => now - t < WINDOW_MS)
+  if (recent.length >= MODEL_CALLS_PER_WINDOW) {
+    callLog.set(addr, recent)
+    return Math.ceil((WINDOW_MS - (now - recent[0])) / 60000)
+  }
+  recent.push(now)
+  callLog.set(addr, recent)
+  return 0
+}
+
+// Forget idle addresses so the map cannot grow without bound.
+setInterval(() => {
+  const now = Date.now()
+  for (const [addr, ts] of callLog) {
+    if (!ts.some((t) => now - t < WINDOW_MS)) callLog.delete(addr)
+  }
+}, WINDOW_MS).unref()
+
+// The model writes markdown and sometimes its reasoning; WOPR is a 1983
+// teletype. Drop <think> blocks, emphasis and code marks, heading and list
+// markers, and quotes wrapped around the whole reply.
+function teletype(text) {
+  let s = String(text || '')
+  s = s.replace(/<think>[\s\S]*?<\/think>/gi, '')
+  s = s.replace(/\*\*|__|\*|`+/g, '')
+  s = s.replace(/^\s{0,3}#{1,6}\s+/gm, '')
+  s = s.replace(/^\s*[-+]\s+/gm, '')
+  s = s.trim()
+  if (/^["\u201c].*["\u201d]$/s.test(s)) s = s.slice(1, -1).trim()
+  s = s.replace(/^["\u201c]|["\u201d]$/g, '').trim()
+  return s
+}
+
 // Create HTTP server
 const server = createServer((req, res) => {
   // Simple health check endpoint
@@ -70,9 +125,17 @@ io.on('connection', (socket) => {
   }, 3000)
   
   // Handle incoming messages
+  const addr = visitorAddress(socket)
+  let busy = false
+
   socket.on('command', async (command) => {
-    console.log('Received command:', command)
-    
+    if (typeof command !== 'string') return
+    if (command.length > MAX_INPUT_CHARS) {
+      socket.emit('message', { text: `INPUT EXCEEDS ${MAX_INPUT_CHARS} CHARACTERS. PLEASE REPHRASE.`, type: 'system' })
+      return
+    }
+    console.log('Received command:', command.slice(0, 120))
+
     // Handle special WarGames commands
     const lowerCommand = command.toLowerCase().trim()
     
@@ -162,7 +225,25 @@ CONCLUSION: MUTUAL ASSURED DESTRUCTION CONFIRMED`,
       return
     }
     
-    // Use Ollama for other responses
+    // Use Ollama for other responses, within the limits above.
+    if (busy) {
+      socket.emit('message', { text: 'STILL COMPUTING. ONE QUESTION AT A TIME, PROFESSOR.', type: 'system' })
+      return
+    }
+    if (modelCallsInFlight >= MAX_CONCURRENT_MODEL_CALLS) {
+      socket.emit('message', { text: 'ALL CIRCUITS BUSY. TRY AGAIN IN A MOMENT.', type: 'system' })
+      return
+    }
+    const waitMin = takeModelCall(addr)
+    if (waitMin) {
+      socket.emit('message', {
+        text: `QUOTA EXCEEDED: ${MODEL_CALLS_PER_WINDOW} QUESTIONS PER ${WINDOW_MS / 60000} MINUTES. RESUME IN ${waitMin} MIN. THE SCRIPTED GAMES STILL WORK: TYPE HELP.`,
+        type: 'system'
+      })
+      return
+    }
+    busy = true
+    modelCallsInFlight++
     try {
       // Check if Ollama is available
       const response = await ollama.chat({
@@ -181,7 +262,7 @@ CONCLUSION: MUTUAL ASSURED DESTRUCTION CONFIRMED`,
       })
       
       socket.emit('message', {
-        text: response.message.content.toUpperCase(), // WOPR speaks in uppercase
+        text: (teletype(response.message.content) || 'NO RESPONSE.').toUpperCase(), // WOPR speaks in uppercase
         type: 'wopr'
       })
     } catch (error) {
@@ -199,6 +280,9 @@ CONCLUSION: MUTUAL ASSURED DESTRUCTION CONFIRMED`,
         text: fallbackResponses[Math.floor(Math.random() * fallbackResponses.length)],
         type: 'wopr'
       })
+    } finally {
+      busy = false
+      modelCallsInFlight--
     }
   })
   
