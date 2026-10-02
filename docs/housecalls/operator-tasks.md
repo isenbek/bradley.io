@@ -2,7 +2,7 @@
 title: "Operator tasks: Brad's board"
 project: housecalls
 status: LIVING document; the AI updates it, the human burns it down
-updated: 2026-09-10
+updated: 2026-10-02
 ---
 
 # The human's board
@@ -31,6 +31,18 @@ five-minute decision instead of an hour of archaeology.
       `node scripts/housecalls-send.mjs --to <email> --subject "<subj>"
       --letter data/housecalls/letters/<file>.txt --prospect <id> --send`
       (recipients/ids/subjects: `data/housecalls/letters/README.md`).
+- [ ] **Re-approve one letter: Roskam.** Its approved text speaks of
+      the October 1 cutover in the future tense, and that date has
+      passed. A two-sentence past-tense revision is drafted beside the
+      original. Say "approve roskam v2" or edit it. Until then Roskam
+      is held out of the send queue.
+- [x] **Freshness check, 2026-10-02:** the other nineteen letters
+      were re-read against today's date and need no changes. The three
+      free-fix gift lines were re-verified against the live sites and
+      all three still hold. The signals are aging, though: the August
+      20 cohort is six weeks old, the September 8 cohort is three and
+      a half. Every week of waiting makes the congratulations line a
+      little less natural.
 - [ ] **Identity decision (not blocking seed tests):** interim From is
       `isenbek@protonmail.com`. The design's identity is
       `brad@housecalls.bradley.io`: in Proton settings, add the
