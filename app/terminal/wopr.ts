@@ -22,10 +22,10 @@
  *      fix is in the server (send a typed "model offline" message); until then
  *      this list has to be kept in step with it by hand.
  *
- * WHERE IT CONNECTS. bradley.io's own nginx vhost has no /socket.io location,
- * so the browser talks to the host the old page used: wargames.tinymachines.ai,
- * which proxies /socket.io/ to port 3333 on this box. On a development machine
- * it goes straight to the port. WebSocket transport only: the public vhost
+ * WHERE IT CONNECTS. The page's own origin: bradley.io's nginx vhost proxies
+ * /socket.io/ to port 3333 on this box (since 2026-10-02; before that the
+ * browser had to dial wargames.tinymachines.ai, which gates it behind a PIN).
+ * On a development machine it goes straight to the port. WebSocket transport only: the public vhost
  * sends its CORS header twice (nginx adds one, the server adds one), which a
  * browser rejects on the long-polling transport, and a WebSocket has no such
  * check to fail.
@@ -137,7 +137,9 @@ export function woprEndpoint(): { url: string; host: string } {
   if (h === "localhost" || h === "127.0.0.1") {
     return { url: `http://${h}:3333`, host: `${h}:3333` }
   }
-  return { url: "https://wargames.tinymachines.ai", host: "wargames.tinymachines.ai" }
+  // Same origin: bradley.io's vhost proxies /socket.io/ to :3333 (added
+  // 2026-10-02). Any other host the page is served from dials itself too.
+  return { url: window.location.origin, host: h }
 }
 
 /**
