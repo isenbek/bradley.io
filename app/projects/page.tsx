@@ -138,6 +138,25 @@ const PLATFORMS: BenchItem[] = [
     tech: ["DuckDB-WASM", "WebGPU", "tinygrad", "PWA"],
   },
   {
+    // Its own homepage's words (nominate.ai, 2026-10-02); the owner's framing
+    // that it is built on the SysForge platform. Served from this box.
+    href: "https://nominate.ai",
+    title: "Nominate.AI",
+    kind: "search platform",
+    line: "The political web, searchable: crawls, broadcast transcripts, county filings and OCR'd scans harvested into one corpus you can ask a question of, with the source document attached to every answer. Built on the SysForge platform and served from this machine.",
+    tech: ["Python", "FastAPI", "OCR", "Vector search", "MCP"],
+  },
+  {
+    // Named, never linked (owner's rule, 2026-10-02): the card opens the
+    // resume entry, not the product's live site.
+    href: "/resume",
+    title: "MyFinalWishes",
+    kind: "product",
+    state: "production-ready",
+    line: "A digital estate-planning platform shipped through SysForge, rebuilt from an earlier prototype into one TypeScript application, with per-user envelope encryption for identity data and every stored file. The live site is not linked here; the resume has the detail.",
+    tech: ["TanStack Start", "React 19", "SQLite + Drizzle", "AES-256-GCM"],
+  },
+  {
     href: "https://tinymachines.ai/style",
     title: "The tinymachines style kit",
     kind: "design system",
