@@ -317,7 +317,7 @@ export const CAREER_LINES: Record<string, string> = {
 /**
  * The signature on "How this site is built".
  *
- * NULL UNTIL HE HAS READ IT. The block makes statements in two names, and a
+ * Signed 2026-10-02 at his request ("sign the how this site is built block"). It was NULL UNTIL HE HAD READ IT. The block makes statements in two names, and a
  * signature printed over text its signer has not read is the one thing on
  * this page that must not ship on anyone else's say-so. While this is null the
  * block renders without a "Signed" row: the two rails still say who does
@@ -325,4 +325,4 @@ export const CAREER_LINES: Record<string, string> = {
  * agrees, set the date he did (ISO, "YYYY-MM-DD") and the row appears, signed
  * by both.
  */
-export const SIGNED_ON: string | null = null
+export const SIGNED_ON: string | null = "2026-10-02"
