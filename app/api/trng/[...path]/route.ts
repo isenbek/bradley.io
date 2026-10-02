@@ -65,17 +65,19 @@ export async function GET(
   const search = req.nextUrl.search
   const target = `${TRNG_UPSTREAM}/${path.join("/")}${search}`
 
-  // The status paths are small and answered from memory by the box, so a
-  // healthy box replies in well under a second. Waiting 30 s for them left a
-  // visitor looking at "CHECKING" for half a minute while the box was off the
-  // LAN (nginx holds the connection about 14 s before its own 502). Give those
-  // 5 s and say OFFLINE sooner; the heavy paths (random bytes, archives, long
-  // metric windows) keep the long limit.
-  const quick = path[0] === "health" || path[0] === "stats" || path.join("/") === "metrics/latest"
+  // A healthy box answers its status, stats and metrics paths in well under a
+  // second. Waiting 30 s for them left a visitor looking at "CHECKING" for
+  // half a minute while the box was off the LAN (nginx can hold the connection
+  // about 14 s before its own 502).
+  // Only the entropy draws (random/*) are slow by nature: they wait on decay
+  // events. Everything else the board asks for gets 6 s. The board waits for
+  // ALL of its calls before it decides what to say, so one slow path used to
+  // hold the whole status back.
+  const slow = path[0] === "random"
   try {
     const upstream = await fetch(target, {
       cache: "no-store",
-      signal: AbortSignal.timeout(quick ? 5_000 : 30_000),
+      signal: AbortSignal.timeout(slow ? 30_000 : 6_000),
     })
     const contentType = upstream.headers.get("content-type") ?? "application/json"
     const isJson = contentType.includes("json")
