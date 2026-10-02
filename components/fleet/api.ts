@@ -2,6 +2,8 @@
 // /api/fleet proxy). worldsink is a second consumer of the WorldEvent bus that
 // adds per-node health, attention/alerting, and an auto-medic on top.
 
+import { upstreamError } from "@/lib/instrument-status"
+
 export const FLEET_PROXY = "/api/fleet"
 
 export interface NodeServices {
@@ -72,7 +74,9 @@ export interface FleetState {
 
 async function getJSON<T>(path: string, signal?: AbortSignal): Promise<T> {
   const res = await fetch(`${FLEET_PROXY}${path}`, { signal, cache: "no-store" })
-  if (!res.ok) throw new Error(`${path}: ${res.status}`)
+  // An UpstreamError keeps what the proxy remembered (when the collector last
+  // answered), so the board can say since when instead of just "down".
+  if (!res.ok) throw await upstreamError(path, res)
   return res.json() as Promise<T>
 }
 
@@ -88,7 +92,7 @@ export async function getMedicEvents(
     signal: s,
     cache: "no-store",
   })
-  if (!res.ok) throw new Error(`events.jsonl: ${res.status}`)
+  if (!res.ok) throw await upstreamError("events.jsonl", res)
   const text = await res.text()
   return text
     .split("\n")

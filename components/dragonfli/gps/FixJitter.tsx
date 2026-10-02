@@ -9,7 +9,7 @@ const SIZE = 300
 const C = SIZE / 2
 const PAD = 28
 
-export function FixJitter({ history }: { history: Tpv[] }) {
+export function FixJitter({ history, offline = false }: { history: Tpv[]; offline?: boolean }) {
   const model = useMemo(() => {
     if (history.length < 2) return null
     const meanLat = history.reduce((a, p) => a + p.lat, 0) / history.length
@@ -54,7 +54,7 @@ export function FixJitter({ history }: { history: Tpv[] }) {
         ) : (
           <div className="beta-gps-empty">
             <span className="beta-gps-empty__dot" aria-hidden />
-            awaiting GPS fix
+            {offline ? "receiver offline, no fixes to compare" : "awaiting GPS fix"}
           </div>
         )}
       </div>

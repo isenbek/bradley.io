@@ -101,7 +101,18 @@ const PING_MAX_M = 700 // ring's final radius
 const easeOut = (x: number) => 1 - Math.pow(1 - x, 3)
 
 // Default export so it can be dynamically imported (ssr:false) — maplibre touches window.
-export default function GroundTrack({ history, tpv, sats }: { history: Tpv[]; tpv: Tpv | null; sats: Sat[] }) {
+export default function GroundTrack({
+  history,
+  tpv,
+  sats,
+  offline = false,
+}: {
+  history: Tpv[]
+  tpv: Tpv | null
+  sats: Sat[]
+  // The receiver is not delivering: "awaiting GPS fix" would be a wait with no end.
+  offline?: boolean
+}) {
   const ref = useRef<HTMLDivElement>(null)
   const mapRef = useRef<maplibregl.Map | null>(null)
   const readyRef = useRef(false)
@@ -336,7 +347,9 @@ export default function GroundTrack({ history, tpv, sats }: { history: Tpv[]; tp
       {!tpv && (
         <div className="beta-gps-map-note">
           <span className="beta-gps-empty__dot" aria-hidden />
-          awaiting GPS fix, basemap centred on the receiver
+          {offline
+            ? "receiver offline, basemap centred on where it sits"
+            : "awaiting GPS fix, basemap centred on the receiver"}
         </div>
       )}
     </div>

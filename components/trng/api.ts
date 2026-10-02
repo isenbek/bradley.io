@@ -1,3 +1,5 @@
+import { upstreamError } from "@/lib/instrument-status"
+
 // Browser → same-origin proxy at /api/trng (server forwards to hotbits.tinymachines.ai).
 // Avoids CORS; upstream has no Access-Control-Allow-Origin header.
 export const TRNG_API = "/api/trng"
@@ -87,7 +89,9 @@ export interface BatteryHistory {
 
 async function getJSON<T>(path: string, signal?: AbortSignal): Promise<T> {
   const res = await fetch(`${TRNG_API}${path}`, { signal, cache: "no-store" })
-  if (!res.ok) throw new Error(`${path}: ${res.status}`)
+  // An UpstreamError keeps what the proxy remembered (when the box last
+  // answered), so the board can say since when instead of just "down".
+  if (!res.ok) throw await upstreamError(path, res)
   return res.json() as Promise<T>
 }
 
@@ -104,7 +108,7 @@ export async function getHealth(s?: AbortSignal): Promise<HealthResponse> {
       | null
     if (body) return body.detail ?? body
   }
-  throw new Error(`/health: ${res.status}`)
+  throw await upstreamError("/health", res)
 }
 export const getStats = (s?: AbortSignal) => getJSON<StatsResponse>("/stats", s)
 export const getLatestMetric = (s?: AbortSignal) =>

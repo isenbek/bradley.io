@@ -2,6 +2,14 @@
 
 import { useEffect, useState } from "react"
 import { Pager, usePager } from "./Pager"
+import {
+  InstrumentHead,
+  InstrumentNote,
+  When,
+  useInstrument,
+} from "@/components/kit/InstrumentStatus"
+import { relOrAbs } from "@/lib/instrument-status"
+import { newer, useSenses } from "./senses"
 
 interface Corr {
   type: string
@@ -28,27 +36,20 @@ interface Moment {
   correlated: Corr[]
 }
 
-function ago(ts: string): string {
-  const s = Math.max(0, Math.round((Date.now() - new Date(ts).getTime()) / 1000))
-  if (s < 60) return `${s}s ago`
-  if (s < 3600) return `${Math.round(s / 60)}m ago`
-  return `${Math.round(s / 3600)}h ago`
-}
-
 function Frame({ img, tag, variant }: { img?: string | null; tag: string; variant?: string }) {
   return (
     <figure className={`beta-mem__frame${variant ? ` beta-mem__frame--${variant}` : ""}`}>
       {img ? (
         <img src={`/moment-img.jpg?f=${encodeURIComponent(img)}`} alt={tag} loading="lazy" />
       ) : (
-        <div className="beta-mem__frame-missing">—</div>
+        <div className="beta-mem__frame-missing">no frame</div>
       )}
       <figcaption>{tag}</figcaption>
     </figure>
   )
 }
 
-function MomentCard({ m }: { m: Moment }) {
+function MomentCard({ m, now }: { m: Moment; now: number | null }) {
   const isMotion = m.type === "motion"
   const title = isMotion ? m.label || "movement" : m.text || ""
   return (
@@ -57,7 +58,8 @@ function MomentCard({ m }: { m: Moment }) {
         <span className="beta-memcard__icon">{isMotion ? "👁" : "🗣"}</span>
         <span className="beta-memcard__title">{isMotion ? title : `“${title}”`}</span>
         <span className="beta-memcard__meta">
-          {isMotion ? `${m.cam} · Δ${Number(m.delta ?? 0).toFixed(0)}` : `${m.mic} mic`} · {ago(m.ts)}
+          {isMotion ? `${m.cam} · Δ${Number(m.delta ?? 0).toFixed(0)}` : `${m.mic} mic`} ·{" "}
+          {relOrAbs(m.ts, now)}
         </span>
       </div>
       <div className={`beta-memcard__strip${isMotion && m.diff_img ? " beta-memcard__strip--4" : ""}`}>
@@ -109,20 +111,60 @@ export function MemoryTimeline() {
 
   const pager = usePager(moments, 10)
 
+  // A memory is a log, and a log's newest entry being old proves nothing by
+  // itself. What the reader needs is whether the senses that FEED it are still
+  // running: a moment is made from motion or from speech, so the newer of those
+  // two heartbeats is when the memory could last have grown.
+  const { senses, asked, error } = useSenses()
+  const inst = useInstrument("motion", {
+    lastHeard: newer(senses?.motion, senses?.ears),
+    error,
+    pending: !asked,
+  })
+  const live = inst.reading?.state === "live"
+
+  const head = (
+    <InstrumentHead name="Memory" status={inst}>
+      {inst.reading && !live && (
+        <InstrumentNote>
+          <b>Nothing new is being remembered.</b> The senses that feed this memory{" "}
+          {inst.lastHeardMs != null ? (
+            <>
+              last reported <When at={inst.lastHeardMs} now={inst.now} />
+            </>
+          ) : (
+            <>are not reporting</>
+          )}
+          .{" "}
+          {moments.length > 0
+            ? "The moments below are what it kept up to then, each with its own time."
+            : "There are no moments on record."}{" "}
+          This page keeps asking and resumes by itself when the senses do.
+        </InstrumentNote>
+      )}
+    </InstrumentHead>
+  )
+
   if (loaded && moments.length === 0) {
     return (
-      <div className="beta-log__empty">
-        No moments yet. Once motion or speech happens, the scene before &amp; after each event lands
-        here, with anything heard or seen nearby lined up alongside it.
-      </div>
+      <>
+        {head}
+        {live && (
+          <div className="beta-log__empty">
+            No moments yet. Once motion or speech happens, the scene before &amp; after each event
+            lands here, with anything heard or seen nearby lined up alongside it.
+          </div>
+        )}
+      </>
     )
   }
 
   return (
     <>
+      {head}
       <div className="beta-mem">
         {pager.slice.map((m) => (
-          <MomentCard key={m.id} m={m} />
+          <MomentCard key={m.id} m={m} now={inst.now} />
         ))}
       </div>
       <Pager {...pager} onPage={pager.setPage} unit="moments" />

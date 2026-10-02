@@ -1,3 +1,5 @@
+import { upstreamError } from "@/lib/instrument-status"
+
 export const SDR_PROXY = "/api/sdr"
 
 export interface HealthResponse {
@@ -66,7 +68,9 @@ export interface FleetChannels {
 
 async function getJSON<T>(path: string, signal?: AbortSignal): Promise<T> {
   const res = await fetch(`${SDR_PROXY}${path}`, { signal, cache: "no-store" })
-  if (!res.ok) throw new Error(`${path}: ${res.status}`)
+  // An UpstreamError keeps what the proxy remembered (when the control plane
+  // last answered), so the board can say since when instead of just "down".
+  if (!res.ok) throw await upstreamError(path, res)
   return res.json() as Promise<T>
 }
 

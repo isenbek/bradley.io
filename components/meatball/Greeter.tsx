@@ -1,6 +1,13 @@
 "use client"
 
 import { useCallback, useEffect, useRef, useState } from "react"
+import {
+  InstrumentHead,
+  InstrumentNote,
+  When,
+  useInstrument,
+} from "@/components/kit/InstrumentStatus"
+import { useSenses } from "./senses"
 
 interface Status {
   state: "idle" | "speaking" | "listening" | "done"
@@ -48,7 +55,7 @@ export function Greeter() {
     }
   }, [])
 
-  // steady heartbeat — surfaces auto-greets (motion-triggered) too, not just clicks
+  // steady heartbeat: surfaces auto-greets (motion-triggered) too, not just clicks
   useEffect(() => {
     fetchState()
     poll.current = setInterval(fetchState, 3000)
@@ -76,10 +83,40 @@ export function Greeter() {
   const live = status?.state === "speaking" || status?.state === "listening"
   const phase = status ? PHASE[status.state] : ""
 
+  // The greeter has no heartbeat of its own: it writes its status only when its
+  // state changes, so an idle greeter and a dead one look the same from here.
+  // What it cannot work without is the mic listener, because that is how it
+  // hears a reply (greet.py reads the listener's transcript, never the mics).
+  // The listener DOES heartbeat, about once a second, so that is the status
+  // shown, and it is named as the listener's rather than passed off as the
+  // greeter's own.
+  const { senses, asked, error } = useSenses()
+  const inst = useInstrument("ears", { lastHeard: senses?.ears, error, pending: !asked })
+  const canHear = inst.reading?.state === "live"
+
   return (
+    <>
+    <InstrumentHead name="Presence probe" status={inst}>
+      {inst.reading && !canHear && (
+        <InstrumentNote>
+          <b>Meatball cannot do this right now.</b> It hears a reply through the always-on mic
+          listener,{" "}
+          {inst.lastHeardMs != null ? (
+            <>
+              which last reported <When at={inst.lastHeardMs} now={inst.now} />
+            </>
+          ) : (
+            <>which has not reported at all</>
+          )}
+          . The button is off until the listener is back, so that a request is not left waiting
+          for a machine that cannot hear the answer.
+          {result ? " The verdict below is its last one, with the time it was reached." : ""}
+        </InstrumentNote>
+      )}
+    </InstrumentHead>
     <div className="beta-greet">
       <div className="beta-greet__row">
-        <button className="beta-greet__btn" onClick={sayHi} disabled={busy || live}>
+        <button className="beta-greet__btn" onClick={sayHi} disabled={busy || live || !canHear}>
           <span className="beta-greet__wave" aria-hidden>
             👋
           </span>
@@ -110,6 +147,10 @@ export function Greeter() {
                 nice to meet you, {result.name}
               </span>
             ) : null}
+            {/* A verdict is a reading, and a reading says when it was taken. */}
+            <span className="beta-greet__trig">
+              verdict reached <When at={result.ts} now={inst.now} />
+            </span>
             {result.heard ? (
               <span className="beta-greet__heard">
                 heard {result.mic ? `(${result.mic} mic)` : ""}: &ldquo;{result.heard}&rdquo;
@@ -127,5 +168,6 @@ export function Greeter() {
         catch someone, the simplest sensor there is.
       </p>
     </div>
+    </>
   )
 }

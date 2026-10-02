@@ -23,7 +23,17 @@ function pos(az: number, el: number): [number, number] {
   return [C + r * Math.sin(a), C - r * Math.cos(a)]
 }
 
-export function Skyplot({ sats, agg }: { sats: Sat[]; agg: SatAgg | null }) {
+// `offline`: the receiver is not delivering. "awaiting" would then be a wait
+// with no end, so the empty state says what is actually true instead.
+export function Skyplot({
+  sats,
+  agg,
+  offline = false,
+}: {
+  sats: Sat[]
+  agg: SatAgg | null
+  offline?: boolean
+}) {
   const rings = [0, 30, 60] // elevation circles
   return (
     <div className="beta-gps-panel">
@@ -68,9 +78,11 @@ export function Skyplot({ sats, agg }: { sats: Sat[]; agg: SatAgg | null }) {
         {sats.length === 0 && (
           <div className="beta-gps-empty">
             <span className="beta-gps-empty__dot" aria-hidden />
-            {agg && agg.n_visible > 0
-              ? `${agg.n_visible} visible · awaiting per-satellite detail`
-              : "awaiting satellite fix"}
+            {offline
+              ? "receiver offline, no satellites to plot"
+              : agg && agg.n_visible > 0
+                ? `${agg.n_visible} visible · awaiting per-satellite detail`
+                : "awaiting satellite fix"}
           </div>
         )}
       </div>

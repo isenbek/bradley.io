@@ -31,6 +31,10 @@ bun run lint
 ok "Lint passed"
 
 # 2b. Refresh live-data OG card images (fault-tolerant: never fails the deploy)
+# The lab card is cropped from the /eyes camera frame ONLY when /api/eyes/meta
+# says that frame is fresh; otherwise the script prints "lab card SKIPPED" with
+# the frame's age and leaves the committed image alone, so a dead camera no
+# longer puts a re-encoded copy of an old frame into every deploy commit.
 step "Refreshing live card images..."
 bash scripts/gen-card-images.sh || true
 

@@ -4,6 +4,9 @@ import { useEffect, useRef, useState } from "react"
 import maplibregl from "maplibre-gl"
 import "maplibre-gl/dist/maplibre-gl.css"
 import {
+  BUS_ADSB,
+  adsbLastHeard,
+  busLastHeard,
   getActive,
   getReceiver,
   getPredictBbox,
@@ -15,6 +18,12 @@ import { airspaceStyle, GR_CENTER } from "./style"
 import { useGeolocation } from "@/lib/useGeolocation"
 import { circlePolygon } from "@/lib/geo"
 import { mapRamp, MAP_INK, SEQUENTIAL_HEX } from "@/lib/beta/chart-theme"
+import {
+  InstrumentHead,
+  InstrumentNote,
+  When,
+  useInstrument,
+} from "@/components/kit/InstrumentStatus"
 
 type LayerKey = "aircraft" | "density" | "tracks" | "rssi"
 type DensityMode = "predicted" | "current" | "historical"
@@ -118,6 +127,13 @@ export default function AirspaceMap() {
   const [mode, setMode] = useState<DensityMode>("predicted")
   const [count, setCount] = useState(0)
   const [status, setStatus] = useState<"loading" | "live" | "offline">("loading")
+  // When the antenna was last heard, epoch ms, from ADS-B evidence only: the
+  // newest last_seen among the aircraft the decoder has shown this tab (a
+  // running maximum), and the perception bus's last ADS-B event. Not the API's
+  // /health "last event", which is any bus envelope, GPS frames included, and
+  // reads as live over a dead 1090 radio. See adsbLastHeard in ../api.
+  const [heardAt, setHeardAt] = useState<number | null>(null)
+  const [busAt, setBusAt] = useState<number | null>(null)
   // map.on("load") has fired AND the layers exist — gates the sync effects below
   // so they (re)apply current toggle/mode state the instant the map is live,
   // instead of silently bailing during the initial pre-load render (the race
@@ -163,11 +179,35 @@ export default function AirspaceMap() {
     let densityTimer: ReturnType<typeof setInterval> | null = null
     let moveTimer: ReturnType<typeof setTimeout> | null = null
     let aborted = false
+    let busAskedAt = 0
+
+    // The perception bus is a second reader of the same antenna, and keeps the
+    // time of the last ADS-B event it saw. Asked at most once a minute, and
+    // always: it is what says when the antenna was last heard while the list
+    // of tracked aircraft is empty or the API is down. Never rejects, and
+    // gives up by itself after a few seconds.
+    const askBus = (): Promise<void> => {
+      if (Date.now() - busAskedAt < 60_000) return Promise.resolve()
+      busAskedAt = Date.now()
+      return busLastHeard(BUS_ADSB).then((at) => {
+        if (!aborted && at != null) setBusAt(at)
+      })
+    }
 
     const pollAircraft = async () => {
+      // Started before the API call and awaited on both paths below, so the
+      // first judgement is made with the bus's answer in hand and the status
+      // does not flash "no data" in between.
+      const bus = askBus()
       try {
+        // /aircraft/active answering only proves the API is up: an API attached
+        // to a dead antenna answers with an empty list forever. What says the
+        // antenna is hearing is the age of the newest ADS-B frame.
         const res = await getActive()
+        await bus
         if (aborted || !mapRef.current) return
+        const seen = adsbLastHeard(res.aircraft, null)
+        if (seen != null) setHeardAt((prev) => (prev != null && prev > seen ? prev : seen))
         ;(map.getSource("aircraft") as maplibregl.GeoJSONSource)?.setData(aircraftFC(res.aircraft))
         setCount(res.count)
         setStatus("live")
@@ -182,8 +222,10 @@ export default function AirspaceMap() {
         setLoaded((s) => (s.tracks ? s : { ...s, tracks: true }))
       } catch {
         if (!aborted) {
+          await bus
+          if (aborted) return
           setStatus("offline")
-          // nothing more is coming — release the toggles so they don't blink forever
+          // nothing more is coming: release the toggles so they don't blink forever
           setLoaded({ aircraft: true, density: true, tracks: true, rssi: true })
         }
       }
@@ -411,7 +453,50 @@ export default function AirspaceMap() {
   // opaque cover until the map is live AND first aircraft poll has resolved
   const initializing = !ready || status === "loading"
 
+  const down = status === "offline"
+  const lastHeard = heardAt != null && busAt != null ? Math.max(heardAt, busAt) : (heardAt ?? busAt)
+  const inst = useInstrument("adsb", {
+    lastHeard,
+    error: down,
+    pending: status === "loading",
+  })
+  const notLive = inst.reading !== null && inst.reading.state !== "live"
+
   return (
+    <>
+    <InstrumentHead name="1090 MHz" status={inst}>
+      {notLive &&
+        (down ? (
+          <InstrumentNote>
+            <b>The receiver&apos;s API is not answering</b>, so the map has no aircraft to draw.{" "}
+            {lastHeard != null ? (
+              <>
+                The antenna was last heard <When at={lastHeard} now={inst.now} />.{" "}
+              </>
+            ) : null}
+            The basemap below is real; the sky on it is empty because nothing is being received,
+            not because nothing is flying. The map asks again every 8 seconds and resumes by
+            itself.
+          </InstrumentNote>
+        ) : lastHeard != null ? (
+          <InstrumentNote>
+            <b>The API is answering, but the antenna has gone quiet.</b> No aircraft has been
+            heard since <When at={lastHeard} now={inst.now} />, so any still drawn are from before
+            that.{" "}
+            {inst.reading?.state === "offline"
+              ? "An empty map here means the antenna is not delivering, not that the sky is empty."
+              : "An empty map here is more likely a silent antenna than an empty sky, though overnight the sky does go quiet for minutes at a time."}{" "}
+            The map asks again every 8 seconds and resumes by itself.
+          </InstrumentNote>
+        ) : (
+          <InstrumentNote>
+            <b>The API is answering, but there is no ADS-B message on record.</b> The decoder is
+            tracking no aircraft, and the perception bus, the second reader this page asks, has no
+            ADS-B time to give. So an empty map here could be an empty sky or a silent antenna, and
+            this page cannot tell which. The map asks again every 8 seconds and resumes by itself.
+          </InstrumentNote>
+        ))}
+    </InstrumentHead>
     <div className="beta-air">
       <div ref={containerRef} className="beta-air__map" />
 
@@ -423,9 +508,20 @@ export default function AirspaceMap() {
       ) : null}
 
       <div className="beta-air__hud beta-air__hud--top">
-        <span className={`beta-air__live beta-air__live--${status}`}>
+        {/* Blue is ACTIVE, and "0 aircraft" in blue over a dead antenna reads
+            as a quiet sky. An API that answers while the antenna is silent gets
+            the ATTENTION colour and says which it is. */}
+        <span
+          className={`beta-air__live beta-air__live--${status === "live" && notLive ? "offline" : status}`}
+        >
           <span className="beta-air__live-dot" aria-hidden />
-          {status === "offline" ? "receiver offline" : `${count} aircraft`}
+          {status === "offline"
+            ? "receiver offline"
+            : status === "live" && notLive
+              ? lastHeard != null
+                ? "antenna quiet"
+                : "nothing on record"
+              : `${count} aircraft`}
         </span>
       </div>
 
@@ -461,5 +557,6 @@ export default function AirspaceMap() {
         <span className="beta-air__legend-hi">40k ft</span>
       </div>
     </div>
+    </>
   )
 }

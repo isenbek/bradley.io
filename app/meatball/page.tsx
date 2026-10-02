@@ -20,7 +20,7 @@ const RIG: { junk: string; role: string }[] = [
 const SENSES = [
   {
     label: "Eyes",
-    body: "Two scrounged webcams. One grabs a frame a minute and serves it live; the vision model narrates what is in front of it.",
+    body: "Two scrounged webcams. One grabs a frame a minute and serves the newest; the vision model narrates what is in front of it.",
     href: "/eyes",
   },
   {
@@ -86,7 +86,7 @@ export default function MeatballPage() {
       </p>
 
       <div className="prose beta-sec">
-        <h2>What it can see right now</h2>
+        <h2>What it sees</h2>
       </div>
         <LiveEye />
 
@@ -117,7 +117,7 @@ export default function MeatballPage() {
             {s.href && (
               <p>
                 <Link className="btn" href={s.href}>
-                  See it live
+                  See the frame
                 </Link>
               </p>
             )}

@@ -2,6 +2,13 @@
 
 import { useEffect, useMemo, useState } from "react"
 import { RowChart, HeatGrid, RampKey } from "@/app/_charts"
+import {
+  InstrumentHead,
+  InstrumentNote,
+  InstrumentStatus,
+  When,
+  useInstrument,
+} from "@/components/kit/InstrumentStatus"
 
 /**
  * Who knocked, on the style kit.
@@ -101,6 +108,7 @@ const ago = (epoch: number) => {
 }
 
 const ALL = "__all__"
+const REFRESH_MS = 300_000
 
 export function KnockBoard() {
   const [s, setS] = useState<Snapshot | null>(null)
@@ -109,12 +117,23 @@ export function KnockBoard() {
 
   useEffect(() => {
     let live = true
-    fetch("/api/visitors")
-      .then((r) => (r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`))))
-      .then((d) => live && setS(d))
-      .catch((e) => live && setErr(String(e.message ?? e)))
+    // Asked again every five minutes (the collector writes every ten), so a
+    // page left open follows the snapshot, and a collector that was down when
+    // the page loaded is picked up when it returns without a reload.
+    const load = () =>
+      fetch("/api/visitors")
+        .then((r) => (r.ok ? r.json() : Promise.reject(new Error(`HTTP ${r.status}`))))
+        .then((d) => {
+          if (!live) return
+          setS(d)
+          setErr(null)
+        })
+        .catch((e) => live && setErr(String(e.message ?? e)))
+    load()
+    const id = setInterval(load, REFRESH_MS)
     return () => {
       live = false
+      clearInterval(id)
     }
   }, [])
 
@@ -124,18 +143,34 @@ export function KnockBoard() {
     return s.sites.find((x) => x.site === site) ?? s.visitors
   }, [s, site])
 
-  if (err) {
-    return (
-      <div className="notice fail">
-        <b>The collector is not answering.</b> {err}. The snapshot is written every ten minutes by
-        a systemd timer; this reads it rather than the logs, so an error here means the writer
-        stopped, not that nobody visited.
-      </div>
-    )
-  }
+  // The snapshot says when it was built. A timer rewrites it every ten minutes,
+  // so an old `generated` means the collector stopped, and every count on this
+  // page is then that old without looking it.
+  const inst = useInstrument("visitors", {
+    lastHeard: s?.generated,
+    error: err !== null,
+    pending: !s && err === null,
+    tickMs: 30_000,
+  })
+  const notLive = inst.reading !== null && inst.reading.state !== "live"
 
+  // A missing snapshot is a collector that is offline, which is ATTENTION and
+  // orange. It was a red notice, and red here means an assertion failed.
   if (!s || !view) {
-    return <p className="quiet">reading the logs…</p>
+    return (
+      <InstrumentHead name="Collector" status={inst}>
+        {err ? (
+          <InstrumentNote>
+            <b>The collector&apos;s snapshot cannot be read.</b> ({err}.) It is written every ten
+            minutes by a systemd timer, and this page reads it rather than the logs, so an error
+            here means the writer stopped, not that nobody visited. This page asks again every
+            five minutes and resumes by itself.
+          </InstrumentNote>
+        ) : (
+          <InstrumentNote>Reading the logs.</InstrumentNote>
+        )}
+      </InstrumentHead>
+    )
   }
 
   const isAll = site === ALL
@@ -177,10 +212,30 @@ export function KnockBoard() {
 
       <div className="panel">
         <div className="panel-face">
-          <div className="panel-bar">
+          <div className="panel-bar beta-inst-bar">
             <b>Whole host</b>
-            <span>{s.windowDays} days</span>
+            <span className="beta-inst-tags">
+              <InstrumentStatus status={inst} />
+              <span>{s.windowDays} days</span>
+            </span>
           </div>
+          {notLive && (
+            <InstrumentNote>
+              {err ? (
+                <>
+                  <b>The snapshot could not be re-read just now.</b> The figures below are from the
+                  last one this page received, built{" "}
+                </>
+              ) : (
+                <>
+                  <b>This snapshot is old.</b> The collector normally rewrites it every ten
+                  minutes, and this one was built{" "}
+                </>
+              )}
+              <When at={s.generated} now={inst.now} />. Every figure on this page is as of then.
+              This page asks again every five minutes.
+            </InstrumentNote>
+          )}
           <table className="readout">
             <tbody>
               <tr>

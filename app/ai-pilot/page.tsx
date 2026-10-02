@@ -1,6 +1,13 @@
 import Link from "next/link"
 import type { Metadata } from "next"
-import { loadPilotData, tokens } from "../_pilot-data"
+import {
+  loadPilotData,
+  tokens,
+  coverageText,
+  longDate,
+  usd,
+  COST_NOT_COMPUTED,
+} from "../_pilot-data"
 import { RowChart, RampKey } from "../_charts"
 import { BetaMeasured } from "../_measured"
 
@@ -9,12 +16,15 @@ export const revalidate = 3600
 export const metadata: Metadata = {
   title: "AI pilot licence",
   description:
-    "The AI pilot record: sessions, models flown, competency ratings and token economy, computed from the session logs rather than claimed.",
+    "The AI pilot record: sessions, models flown, competency ratings and token economy, computed from the session record rather than claimed.",
 }
 
 export default function BetaAiPilotPage() {
   const d = loadPilotData()
   const { license: L } = d
+  const since = longDate(d.coverage?.since)
+  const cost = usd(d.tokenEconomy.totalCostUSD)
+  const costReason = d.tokenEconomy.cost?.reason ?? "the session logs carry no cost field"
 
   // Models are keyed by id, but several ids share a display name, so labelling
   // by displayName alone silently merges rows that are different models.
@@ -49,6 +59,11 @@ export default function BetaAiPilotPage() {
 
       <p className="lede">
         Every figure here is computed from the session logs. None of it is self-assessed.
+      </p>
+
+      <p className="quiet">
+        {coverageText(d)} A message is one transcript record: a prompt, a tool result or one block
+        of a model reply.
       </p>
 
       <div className="panel">
@@ -94,9 +109,10 @@ export default function BetaAiPilotPage() {
       <div className="prose beta-sec">
         <h2>Ratings</h2>
         <p>
-          Instrument ratings are keyword coverage over the session transcripts, so they measure
-          what the work touched rather than how well it went. Competency scores come from the same
-          logs and are capped at 100.
+          Instrument ratings are keyword coverage over each project&apos;s CLAUDE.md, the plan
+          files and the technologies named in the session logs still on disk, which reach back
+          about 30 days. They measure what the work touched rather than how well it went, and
+          they describe recent work, not the whole record. Competency scores are capped at 100.
         </p>
       </div>
 
@@ -125,7 +141,7 @@ export default function BetaAiPilotPage() {
         <div className="panel-face">
           <div className="panel-bar">
             <b>Type ratings</b>
-            <span>share of cost</span>
+            <span>share of output tokens</span>
           </div>
           <RowChart caption="By model" data={models} />
         </div>
@@ -139,7 +155,7 @@ export default function BetaAiPilotPage() {
         <div className="panel-face">
           <div className="panel-bar">
             <b>Tokens</b>
-            <span>cumulative</span>
+            <span>{since ? `since ${since}` : "period not recorded"}</span>
           </div>
           <table className="readout">
             <tbody>
@@ -165,6 +181,10 @@ export default function BetaAiPilotPage() {
                 <td>Cache efficiency</td>
                 <td className="num">{d.tokenEconomy.cacheEfficiency.toFixed(1)}%</td>
               </tr>
+              <tr>
+                <td>Cost at API list price</td>
+                <td className="num">{cost ?? COST_NOT_COMPUTED}</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -172,6 +192,7 @@ export default function BetaAiPilotPage() {
 
       <p className="quiet">
         Token counts are abbreviated. Hover any of them for the exact figure.{" "}
+        {cost === null ? `Cost is not computed: ${costReason}. ` : ""}
         <Link href="/pilot-analytics">Pilot analytics</Link> cuts the same record by project,
         by hour and by day.
       </p>

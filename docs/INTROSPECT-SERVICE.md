@@ -1,5 +1,8 @@
 # INTROSPECT-SERVICE — the Claude × GitHub activity aggregator
 
+> **Update 2026-10-02:** `cost-model-pipeline.py` no longer runs in the 4-hourly refresh. `public/data/cost-model.json` is a frozen case study of 2025-12-01 to 2026-03-26, and the script refuses to overwrite it without `--unfreeze`. Activity totals now come from `data/claude-activity.duckdb` through `scripts/activity_db.py`, not from the rolling session logs.
+
+
 **What it is.** A cron-driven data pipeline that turns raw *operator activity* —
 Claude Code sessions and GitHub/git history — into the live JSON feeds the site
 renders (the homepage activity pulse, the AI-Pilot dashboard, cost model, project

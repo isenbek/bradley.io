@@ -14,10 +14,18 @@ export PATH=/home/bisenbek/.nvm/versions/node/v24.0.1/bin:/usr/local/bin:/usr/bi
   # ~20s). Standalone (not in the && chain) so a hiccup can't block the site pipeline.
   "$PY" "$SCRIPTS/claude-activity-export.py"
   "$PY" "$SCRIPTS/claude-activity-viz.py" --parquet --zip
-  "$PY" "$SCRIPTS/refresh-stats-cache.py" \
-    && "$PY" "$SCRIPTS/nightly-pipeline.py" \
-    && "$PY" "$SCRIPTS/ai-pilot-pipeline.py" \
-    && "$PY" "$SCRIPTS/papers-pipeline.py" \
-    && /usr/bin/python3 "$SCRIPTS/cost-model-pipeline.py"
+  # Each pipeline stands alone (2026-10-02). They used to be chained with &&,
+  # so one failing step silently skipped everything after it. Each now reads
+  # the durable DuckDB above directly, keeps its previous output when it
+  # cannot do its job, and says so in this log.
+  "$PY" "$SCRIPTS/refresh-stats-cache.py"
+  "$PY" "$SCRIPTS/ai-pilot-pipeline.py"
+  "$PY" "$SCRIPTS/nightly-pipeline.py"
+  "$PY" "$SCRIPTS/papers-pipeline.py" --prune
+  # cost-model-pipeline.py is deliberately NOT run here any more (2026-10-02).
+  # public/data/cost-model.json is a frozen case study of 2025-12-01 to
+  # 2026-03-26; its inputs no longer cover that window, and regenerating it
+  # every 4 hours had decayed it to "activeDays 1, velocity 1710x". The script
+  # now refuses to overwrite a frozen file without --unfreeze.
   "$SCRIPTS/mirror-to-cjgaldescom.sh"
 } >> "$LOG" 2>&1

@@ -13,6 +13,15 @@ import {
   type MetricRow,
   type StatsResponse,
 } from "@/components/trng"
+import {
+  InstrumentHead,
+  InstrumentNote,
+  InstrumentStatus,
+  UpstreamSilence,
+  When,
+  useInstrument,
+} from "@/components/kit/InstrumentStatus"
+import { NO_MEMORY, upstreamMemory, type UpstreamMemory } from "@/lib/instrument-status"
 
 /**
  * Hotbits, on the style kit.
@@ -62,11 +71,40 @@ export function TrngBoard() {
   const [cont, setCont] = useState<ContinuousHealth | null>(null)
   const [battery, setBattery] = useState<BatteryRow[]>([])
   const [seeds, setSeeds] = useState<number[] | null>(null)
-  const [err, setErr] = useState<string | null>(null)
+  // The first poll has come back, one way or the other.
+  const [asked, setAsked] = useState(false)
+  // The latest poll got no answer from any endpoint.
+  const [down, setDown] = useState(false)
+  // When the instrument was last heard, epoch ms: the time of the newest decay
+  // event in the daemon's log when /health says, otherwise the last answer.
+  const [heardAt, setHeardAt] = useState<number | null>(null)
+  // What the proxy remembers about a box that is not answering.
+  const [memory, setMemory] = useState<UpstreamMemory>(NO_MEMORY)
   const seedsAsked = useRef(false)
 
   useEffect(() => {
     const ac = new AbortController()
+
+    // Once per page, the first time the box is answering. Replayed seeds cannot
+    // drain the pool, but there is still no reason to re-ask for a sample nobody
+    // is watching change. It is asked from the poll rather than at mount so a
+    // board that loaded while the box was down still gets its sample when the
+    // box comes back; a failed ask clears the flag and the next poll retries.
+    const askSeeds = () => {
+      if (seedsAsked.current) return
+      seedsAsked.current = true
+      fetch("/api/trng/v1/seeds", { signal: ac.signal, cache: "no-store" })
+        .then((r) => (r.ok ? r.json() : null))
+        .then((d) => {
+          if (ac.signal.aborted) return
+          if (Array.isArray(d?.seeds) && d.seeds.length) setSeeds(d.seeds)
+          else seedsAsked.current = false
+        })
+        .catch(() => {
+          /* the sample is a nicety; its absence is not an error */
+          seedsAsked.current = false
+        })
+    }
 
     const poll = async () => {
       try {
@@ -78,38 +116,44 @@ export function TrngBoard() {
           getBattery(30, ac.signal),
         ])
         if (ac.signal.aborted) return
-        if (h.status === "fulfilled") setHealth(h.value)
+        const at = Date.now()
+        const results = [h, s, m, c, b]
+        // Only a total failure is "down". A single endpoint being out should
+        // grey out its own panel, not blank the page.
+        const allDown = results.every((r) => r.status === "rejected")
+        if (h.status === "fulfilled") {
+          setHealth(h.value)
+          // events_csv_age_s is how long since the logger wrote a decay event,
+          // which is the instrument's own clock rather than the API's.
+          const age = h.value?.events_csv_age_s
+          setHeardAt(typeof age === "number" && age >= 0 ? at - age * 1000 : at)
+        } else if (!allDown) {
+          // The box answered something, just not /health.
+          setHeardAt(at)
+        }
         if (s.status === "fulfilled") setStats(s.value)
         // /metrics/latest wraps the row: { row: MetricRow | null }
         if (m.status === "fulfilled") setMetric(m.value?.row ?? null)
         if (c.status === "fulfilled") setCont(c.value)
         if (b.status === "fulfilled") setBattery(b.value?.rows ?? [])
-        // Only a total failure is an error. A single endpoint being down
-        // should grey out its own panel, not blank the page.
-        setErr(
-          [h, s, m, c, b].every((r) => r.status === "rejected")
-            ? "the instrument is not answering"
-            : null
-        )
+        setDown(allDown)
+        if (!allDown) askSeeds()
+        if (allDown) {
+          setMemory(
+            upstreamMemory(results.map((r) => (r.status === "rejected" ? r.reason : null)))
+          )
+        }
+        setAsked(true)
       } catch {
-        if (!ac.signal.aborted) setErr("the instrument is not answering")
+        if (!ac.signal.aborted) {
+          setDown(true)
+          setAsked(true)
+        }
       }
     }
 
     poll()
     const timer = setInterval(poll, POLL_MS)
-
-    // Once, ever. Replayed seeds cannot drain the pool, but there is still no
-    // reason to re-ask for a sample nobody is watching change.
-    if (!seedsAsked.current) {
-      seedsAsked.current = true
-      fetch("/api/trng/v1/seeds", { signal: ac.signal, cache: "no-store" })
-        .then((r) => (r.ok ? r.json() : null))
-        .then((d) => !ac.signal.aborted && setSeeds(d?.seeds ?? null))
-        .catch(() => {
-          /* the sample is a nicety; its absence is not an error */
-        })
-    }
 
     return () => {
       ac.abort()
@@ -117,7 +161,14 @@ export function TrngBoard() {
     }
   }, [])
 
-  const online = health?.healthy ?? false
+  const inst = useInstrument("geiger", {
+    lastHeard: heardAt ?? memory.lastOkMs,
+    error: down,
+    pending: !asked,
+  })
+  const notLive = inst.reading !== null && inst.reading.state !== "live"
+  const hasData = Boolean(health || stats || metric || cont || battery.length)
+
   const poolPct = useMemo(() => {
     if (!stats?.fresh_bytes || !stats?.low_water_bytes) return null
     return Math.min(100, (stats.fresh_bytes / (stats.low_water_bytes * 4)) * 100)
@@ -136,13 +187,30 @@ export function TrngBoard() {
 
   const batteryRows = battery.slice(0, 10)
 
-  if (err && !stats && !health) {
+  // Nothing to show: either the first poll is still out, or the box has never
+  // answered this tab. Say which, in the panel, instead of drawing a board of
+  // zeros. The poll above keeps running either way, so this resolves itself.
+  if (!hasData) {
     return (
-      <div className="notice fail">
-        <b>The instrument is not answering.</b> The Geiger counter and its API run on separate
-        hardware; this page reads them over the network, so this means the link or the daemon is
-        down, not that the source stopped decaying.
-      </div>
+      <>
+        <div className="prose beta-sec">
+          <h2>The source</h2>
+        </div>
+        <InstrumentHead name="Geiger daemon" status={inst}>
+          {!asked ? (
+            <InstrumentNote>Asking the Geiger box.</InstrumentNote>
+          ) : (
+            <InstrumentNote>
+              <b>The Geiger box is not answering.</b>{" "}
+              <UpstreamSilence status={inst} watchingSinceMs={memory.watchingSinceMs} /> The
+              counter and its API run on separate hardware and this page reads them over the
+              network, so this means the link or the daemon is down, not that the source stopped
+              decaying. This board asks again every 30 seconds and resumes by itself when the box
+              answers.
+            </InstrumentNote>
+          )}
+        </InstrumentHead>
+      </>
     )
   }
 
@@ -154,41 +222,72 @@ export function TrngBoard() {
 
       <div className="panel">
         <div className="panel-face">
-          <div className="panel-bar">
+          <div className="panel-bar beta-inst-bar">
             <b>Geiger daemon</b>
-            <span>
-              <span className={`tag ${online ? "live" : "fail"}`}>
-                {online ? "healthy" : "unhealthy"}
-              </span>
+            <span className="beta-inst-tags">
+              <InstrumentStatus status={inst} />
+              {/* The daemon's own verdict on itself: logger running, event log
+                  fresh, pool not empty. Not healthy is a stalled instrument,
+                  which is ATTENTION, so it is orange and not red. Shown only
+                  when /health actually answered; no answer is not "unhealthy". */}
+              {health && !down ? (
+                <span className={`tag ${health.healthy ? "live" : "warn"}`}>
+                  {health.healthy ? "healthy" : "unhealthy"}
+                </span>
+              ) : null}
             </span>
           </div>
+          {notLive && (
+            <InstrumentNote>
+              {down ? (
+                <>
+                  <b>The Geiger box has stopped answering.</b> Every figure on this page is the
+                  last one it gave before that
+                </>
+              ) : (
+                <>
+                  <b>The daemon is answering, but its decay log has gone quiet.</b> The figures
+                  below are real and are older than they look
+                </>
+              )}
+              {inst.lastHeardMs != null ? (
+                <>
+                  : last heard <When at={inst.lastHeardMs} now={inst.now} />
+                </>
+              ) : null}
+              . This board keeps asking every 30 seconds and resumes by itself.
+            </InstrumentNote>
+          )}
+          {/* A dash, not a zero, for anything that was not read: "0 B" and
+              "stopped" are claims, and an endpoint that did not answer makes
+              no claim. */}
           <table className="readout">
             <tbody>
               <tr>
                 <td>Logger service</td>
                 <td className="num">
-                  {health?.logger_service_active ? "active" : "stopped"}
+                  {health ? (health.logger_service_active ? "active" : "stopped") : "-"}
                 </td>
               </tr>
               <tr>
                 <td>Event log age</td>
-                <td className="num">{num(health?.events_csv_age_s)} s</td>
+                <td className="num">{health ? `${num(health.events_csv_age_s)} s` : "-"}</td>
               </tr>
               <tr>
                 <td>Fresh pool</td>
-                <td className="num">{compactBytes(stats?.fresh_bytes ?? 0)}</td>
+                <td className="num">{stats ? compactBytes(stats.fresh_bytes ?? 0) : "-"}</td>
               </tr>
               <tr>
                 <td>Consumed, all time</td>
-                <td className="num">{compactBytes(stats?.consumed_bytes ?? 0)}</td>
+                <td className="num">{stats ? compactBytes(stats.consumed_bytes ?? 0) : "-"}</td>
               </tr>
               <tr>
                 <td>Archive</td>
-                <td className="num">{compactBytes(stats?.bits_bin_size_bytes ?? 0)}</td>
+                <td className="num">{stats ? compactBytes(stats.bits_bin_size_bytes ?? 0) : "-"}</td>
               </tr>
               <tr>
                 <td>Rejection window</td>
-                <td className="num">{num(stats?.reject_us)} µs</td>
+                <td className="num">{stats ? `${num(stats.reject_us)} µs` : "-"}</td>
               </tr>
             </tbody>
           </table>
@@ -237,7 +336,11 @@ export function TrngBoard() {
               </tbody>
             </table>
           ) : (
-            <p className="quiet">waiting for the first metric window…</p>
+            <p className="beta-chart__note">
+              {down
+                ? "no metric window was read before the box stopped answering"
+                : "waiting for the first metric window"}
+            </p>
           )}
         </div>
       </div>

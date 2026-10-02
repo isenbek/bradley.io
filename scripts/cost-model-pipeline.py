@@ -1,14 +1,48 @@
 #!/usr/bin/env python3
 """
-Cost Model Pipeline — Campaign Brain (cb*) Projects
-Generates /public/data/cost-model.json from ai-pilot-data.json,
-site-data.json, and nominate-ai-timeline.json.
+Cost Model Pipeline: Campaign Brain (cb*) projects, one FIXED window.
 
-Standard library only.
+Generates public/data/cost-model.json from ai-pilot-data.json and
+nominate-ai-timeline.json. Standard library only.
+
+THE PUBLISHED FILE IS FROZEN (2026-10-02). The model is a dated case study of
+2025-12-01 to 2026-03-26. Its inputs no longer cover that window: the pilot
+heatmap is a rolling recent window and the durable Claude activity database
+starts 2026-03-08. Left on the 4-hourly cron, this script decayed the output
+to activeDays 1 and a 1710x velocity multiplier. So:
+
+  * It is no longer called from scripts/refresh-4h.sh.
+  * It refuses to overwrite an output file that carries a top-level "frozen"
+    object unless run with --unfreeze (exit 3).
+  * Any run refuses to write when the result fails a sanity check (exit 4):
+    a source that was generated before the window's last day had ended, too
+    few active days in the window, or an implausible velocity multiplier.
+  * --out PATH writes somewhere other than public/data/cost-model.json.
+
+Why the "source generated before the window closed" check exists: the run that
+was frozen (2026-03-26 23:05 local) read a commit timeline whose latest commit
+was 2026-03-26T05:00:02Z and a pilot record generated 2026-03-26 20:01 local.
+Its in-window commit count was 5,315; the first timeline generated after the
+window closed (2026-04-03) counts 5,411 for the same days and the same 88
+repositories. The frozen file carries the corrected count and says so in
+"frozen.corrections".
+
+Known limits of what the numbers cover (see "frozen.notes" in the JSON):
+  * activeDays counts days with a recorded Claude Code session, not days worked.
+  * actual.commits is the full-history commit count of the cb* repos that were
+    active in the window, not commits inside the window. It runs to whenever
+    the timeline was generated, so it includes commits made after the window.
+  * timeSeries commits are org-wide, not cb* only. Commit days are UTC days
+    (GitHub author dates).
+  * A count of a closed window still depends on when it is taken: a repository
+    whose history is rewritten later (cbos was, between 2026-04-24 and
+    2026-05-08) changes the count for days long past.
 """
 
+import argparse
 import json
 import subprocess
+import sys
 from collections import defaultdict
 from datetime import datetime, date, timedelta
 from pathlib import Path
@@ -27,6 +61,75 @@ OUTPUT_PATH = PUBLIC_DATA / "cost-model.json"
 SCOPE_START = date(2025, 12, 1)
 SCOPE_END = date(2026, 3, 26)
 CB_PREFIX = "cb"
+
+# ---------- sanity floor ---------------------------------------------------
+# The last correct run (2026-03-26) recorded 34 active days in this window. A
+# fixed past window cannot lose active days, so fewer than that means the
+# source heatmap no longer covers the window and every figure built on it is
+# wrong. If SCOPE_START / SCOPE_END ever change, set this floor for the new
+# window deliberately.
+MIN_ACTIVE_DAYS = 34
+# 1,710 modelled person-days over 34 active days is 50.3x. Anything far past
+# that is a symptom of a collapsed active-day count, not a finding.
+MAX_PLAUSIBLE_VELOCITY = 100.0
+
+EXIT_FROZEN = 3
+EXIT_INSANE = 4
+
+# ---------- arguments ------------------------------------------------------
+
+_parser = argparse.ArgumentParser(
+    description="Regenerate the cost model for the fixed window "
+    f"{SCOPE_START} to {SCOPE_END}. The published file is frozen; see the module docstring."
+)
+_parser.add_argument(
+    "--out",
+    type=Path,
+    default=OUTPUT_PATH,
+    help="where to write the JSON (default: public/data/cost-model.json)",
+)
+_parser.add_argument(
+    "--unfreeze",
+    action="store_true",
+    help="allow overwriting an output file that carries a top-level 'frozen' object",
+)
+ARGS = _parser.parse_args()
+OUTPUT_PATH = ARGS.out
+
+
+def refuse(code: int, message: str) -> None:
+    """Print why nothing was written and exit non-zero."""
+    print(f"cost-model-pipeline: REFUSING TO WRITE {OUTPUT_PATH}", file=sys.stderr)
+    print(f"  {message}", file=sys.stderr)
+    sys.exit(code)
+
+
+def check_not_frozen() -> None:
+    """Stop before doing any work if the target file is a frozen case study."""
+    if ARGS.unfreeze or not OUTPUT_PATH.exists():
+        return
+    try:
+        with open(OUTPUT_PATH) as f:
+            existing = json.load(f)
+    except (OSError, ValueError) as exc:
+        refuse(
+            EXIT_FROZEN,
+            f"the existing file could not be read ({exc}), so it cannot be shown to be "
+            "unfrozen. Pass --unfreeze to overwrite it anyway.",
+        )
+    frozen = existing.get("frozen") if isinstance(existing, dict) else None
+    if frozen:
+        window = frozen.get("window", {}) if isinstance(frozen, dict) else {}
+        as_of = frozen.get("asOf", "an unrecorded date") if isinstance(frozen, dict) else "an unrecorded date"
+        refuse(
+            EXIT_FROZEN,
+            f"it is a frozen case study (window {window.get('start', '?')} to "
+            f"{window.get('end', '?')}, as of {as_of}). Pass --unfreeze to overwrite it, "
+            "or --out PATH to write somewhere else.",
+        )
+
+
+check_not_frozen()
 
 # ---------- helpers --------------------------------------------------------
 
@@ -63,6 +166,14 @@ if STATS_CACHE_PATH.exists():
     except Exception:
         pass
 
+# When each source was generated. A source generated on or before the window's
+# last day cannot hold that whole day, so the run is refused in the sanity
+# guard below. The timeline stamp is UTC and its commit days are UTC days; the
+# pilot stamp is local time with no zone.
+timeline_generated = str(timeline.get("generated") or "")
+timeline_latest_commit = str(timeline.get("latestCommit") or "")
+pilot_generated = str(ai_pilot.get("generated") or "")
+
 # ---------- 1. cb* projects from mission log ------------------------------
 
 mission_log = ai_pilot.get("missionLog", [])
@@ -87,7 +198,14 @@ cb_repos_in_scope = []
 for repo in cb_repos:
     last = repo.get("lastCommit", "")
     first = repo.get("firstCommit", "")
-    if last and date.fromisoformat(last[:10]) >= SCOPE_START:
+    # Active in the window: a commit on or after its first day, and a first
+    # commit on or before its last. Without the second test a timeline read
+    # after the window closed counts repositories created later.
+    if (
+        last
+        and date.fromisoformat(last[:10]) >= SCOPE_START
+        and (not first or date.fromisoformat(first[:10]) <= SCOPE_END)
+    ):
         cb_repos_in_scope.append(repo)
 
 total_cb_commits = sum(r["commits"] for r in cb_repos_in_scope)
@@ -106,15 +224,15 @@ for entry in pilot_heatmap:
         active_dates_in_scope.add(d)
 
 active_days = len(active_dates_in_scope)
-# Spec says 117 days for Dec 1 - Mar 26 scope (inclusive, rounded)
-total_days = (SCOPE_END - SCOPE_START).days + 1  # 116 calendar days
-total_days = max(total_days, 117)  # match spec
+# Inclusive calendar days in the window (116 for Dec 1 to Mar 26).
+total_days = (SCOPE_END - SCOPE_START).days + 1
 
 # ---------- 4. Tool calls from ai-pilot heatmap --------------------------
 
 total_tool_calls = sum(
     entry.get("toolCalls", 0)
     for entry in pilot_heatmap
+    if date_in_scope(entry.get("date", ""))
 )
 
 # ---------- 5. Domains and skills -----------------------------------------
@@ -193,6 +311,40 @@ velocity_multiplier = round((legacy_pm_midpoint * 20) / active_days, 1) if activ
 legacy_months_midpoint = (est_months_low + est_months_high) / 2
 time_compression = f"{legacy_months_midpoint:.0f} months -> {active_days} days"
 
+# ---------- 9b. Sanity guard ----------------------------------------------
+# Runs before the slow GitHub calls and long before anything is written.
+
+_heatmap_dates = sorted(e.get("date", "") for e in pilot_heatmap if e.get("date"))
+_heatmap_range = (
+    f"{_heatmap_dates[0]} to {_heatmap_dates[-1]}" if _heatmap_dates else "empty"
+)
+for _label, _stamp in (
+    ("commit timeline (nominate-ai-timeline.json)", timeline_generated),
+    ("pilot record (ai-pilot-data.json)", pilot_generated),
+):
+    if _stamp[:10] <= SCOPE_END.isoformat():
+        refuse(
+            EXIT_INSANE,
+            f"sanity check failed: the {_label} was generated "
+            f"{_stamp or 'at an unrecorded time'}, which is not after the window's last day "
+            f"({SCOPE_END}). It cannot hold that whole day, so counts for the window would "
+            "come out short. Nothing was written.",
+        )
+if active_days < MIN_ACTIVE_DAYS:
+    refuse(
+        EXIT_INSANE,
+        f"sanity check failed: {active_days} active days in {SCOPE_START} to {SCOPE_END}, "
+        f"below the floor of {MIN_ACTIVE_DAYS}. The source heatmap covers {_heatmap_range} "
+        f"({len(_heatmap_dates)} days), so it no longer holds this window. "
+        "Nothing was written.",
+    )
+if not (0 < velocity_multiplier <= MAX_PLAUSIBLE_VELOCITY):
+    refuse(
+        EXIT_INSANE,
+        f"sanity check failed: velocity multiplier {velocity_multiplier}x is outside "
+        f"(0, {MAX_PLAUSIBLE_VELOCITY}]. Nothing was written.",
+    )
+
 # ---------- 10. Time-series curves (weekly buckets) -----------------------
 
 # Generate week labels for the full scope
@@ -229,7 +381,7 @@ for entry in commit_heatmap:
 claude_by_week = defaultdict(lambda: {"messages": 0, "sessions": 0, "toolCalls": 0})
 for entry in pilot_heatmap:
     ed = entry.get("date", "")
-    if ed >= SCOPE_START.isoformat():
+    if date_in_scope(ed):
         wk = iso_week(date.fromisoformat(ed))
         claude_by_week[wk]["messages"] += entry.get("count", 0)
         claude_by_week[wk]["sessions"] += entry.get("sessions", 0)
@@ -259,7 +411,7 @@ try:
                 closed = issue.get("closedAt")
                 labels = [l.get("name", "").lower() for l in issue.get("labels", [])]
 
-                if created >= SCOPE_START.isoformat():
+                if date_in_scope(created):
                     total_issues["opened"] += 1
                     wk = iso_week(date.fromisoformat(created))
                     issues_by_week[wk]["opened"] += 1
@@ -272,7 +424,7 @@ try:
                     else:
                         total_issues["other"] += 1
 
-                if closed and closed[:10] >= SCOPE_START.isoformat():
+                if closed and date_in_scope(closed):
                     total_issues["closed"] += 1
                     wk = iso_week(date.fromisoformat(closed[:10]))
                     issues_by_week[wk]["closed"] += 1
@@ -339,12 +491,25 @@ industry_benchmarks = {
 
 output = {
     "generated": datetime.now().isoformat(),
-    "scope": "Campaign Brain Last 3 Months",
+    "scope": f"Campaign Brain (cb*) repositories, {SCOPE_START.isoformat()} to {SCOPE_END.isoformat()}",
     "timespan": {
         "start": SCOPE_START.isoformat(),
         "end": SCOPE_END.isoformat(),
         "days": total_days,
         "activeDays": active_days,
+    },
+    # What the counts were taken from, and when, so the file says what it covers.
+    "sources": {
+        "pilotGenerated": pilot_generated,
+        "timelineGenerated": timeline_generated,
+        "timelineLatestCommit": timeline_latest_commit,
+        "commitsInWindow": sum(commits_by_week.values()),
+        # Org repositories whose first commit is on or before the window's last
+        # day: the set the in-window commits can have come from.
+        "commitsInWindowRepos": sum(
+            1 for r in all_repos
+            if r.get("firstCommit") and r["firstCommit"][:10] <= SCOPE_END.isoformat()
+        ),
     },
     "actual": {
         "teamSize": 1,

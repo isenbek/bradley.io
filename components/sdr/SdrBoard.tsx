@@ -16,6 +16,15 @@ import {
   type SoakSummary,
 } from "@/components/sdr/api"
 import { RowChart, RampKey } from "@/app/_charts"
+import {
+  InstrumentHead,
+  InstrumentNote,
+  InstrumentStatus,
+  UpstreamSilence,
+  When,
+  useInstrument,
+} from "@/components/kit/InstrumentStatus"
+import { NO_MEMORY, upstreamMemory, type UpstreamMemory } from "@/lib/instrument-status"
 
 /**
  * The SDR scanner stack, on the style kit. All panel: it is a radio reporting.
@@ -51,7 +60,15 @@ export function SdrBoard() {
   const [jobs, setJobs] = useState<Job[]>([])
   const [chans, setChans] = useState<FleetChannels | null>(null)
   const [summary, setSummary] = useState<SoakSummary | null>(null)
-  const [err, setErr] = useState<string | null>(null)
+  // The first poll has come back, one way or the other.
+  const [asked, setAsked] = useState(false)
+  // The latest poll got no answer from any endpoint.
+  const [down, setDown] = useState(false)
+  // The control plane has no data clock of its own, so "last heard" is the
+  // last poll it answered, epoch ms.
+  const [heardAt, setHeardAt] = useState<number | null>(null)
+  // What the proxy remembers about a control plane that is not answering.
+  const [memory, setMemory] = useState<UpstreamMemory>(NO_MEMORY)
 
   useEffect(() => {
     const ac = new AbortController()
@@ -71,7 +88,14 @@ export function SdrBoard() {
       if (s.status === "fulfilled") setSoak(s.value ?? [])
       if (j.status === "fulfilled") setJobs(j.value ?? [])
       if (c.status === "fulfilled") setChans(c.value)
-      setErr(r.every((x) => x.status === "rejected") ? "the control plane is not answering" : null)
+      const allDown = r.every((x) => x.status === "rejected")
+      setDown(allDown)
+      if (allDown) {
+        setMemory(upstreamMemory(r.map((x) => (x.status === "rejected" ? x.reason : null))))
+      } else {
+        setHeardAt(Date.now())
+      }
+      setAsked(true)
 
       // The busiest band's frequency detail, fetched only once there is a band
       // to ask about. Chained rather than parallel because the band name is not
@@ -97,13 +121,37 @@ export function SdrBoard() {
     }
   }, [])
 
-  if (err && !health && !bands.length) {
+  const inst = useInstrument("sdr", {
+    lastHeard: heardAt ?? memory.lastOkMs,
+    error: down,
+    pending: !asked,
+  })
+  const notLive = inst.reading !== null && inst.reading.state !== "live"
+  const hasData = Boolean(health || bands.length || soak.length || jobs.length || chans)
+
+  // Nothing to show: the first poll is still out, or the control plane has
+  // never answered this tab. Say which, in the panel, rather than drawing four
+  // empty tables. The poll keeps running either way, so this resolves itself.
+  if (!hasData) {
     return (
-      <div className="notice fail">
-        <b>The control plane is not answering.</b> The scanners run on bali.lan and this page reads
-        them across the network, so this means the link or the daemon is down rather than the radio
-        hearing nothing.
-      </div>
+      <>
+        <div className="prose beta-sec">
+          <h2>The stack</h2>
+        </div>
+        <InstrumentHead name="Control plane" status={inst}>
+          {!asked ? (
+            <InstrumentNote>Asking the control plane.</InstrumentNote>
+          ) : (
+            <InstrumentNote>
+              <b>The control plane is not answering.</b>{" "}
+              <UpstreamSilence status={inst} watchingSinceMs={memory.watchingSinceMs} /> The
+              scanners run on bali.lan and this page reads them across the network, so this means
+              the link or the daemon is down rather than the radio hearing nothing. This board
+              asks again every minute and resumes by itself when the control plane answers.
+            </InstrumentNote>
+          )}
+        </InstrumentHead>
+      </>
     )
   }
 
@@ -127,14 +175,31 @@ export function SdrBoard() {
 
       <div className="panel">
         <div className="panel-face">
-          <div className="panel-bar">
+          <div className="panel-bar beta-inst-bar">
             <b>Control plane</b>
-            <span>
-              <span className={`tag ${health?.status === "ok" ? "live" : "warn"}`}>
-                {health?.status ?? "unknown"}
-              </span>
+            <span className="beta-inst-tags">
+              <InstrumentStatus status={inst} />
+              {/* The control plane's verdict on itself, shown only while it is
+                  the one saying it. */}
+              {health && !down ? (
+                <span className={`tag ${health.status === "ok" ? "live" : "warn"}`}>
+                  {health.status}
+                </span>
+              ) : null}
             </span>
           </div>
+          {notLive && (
+            <InstrumentNote>
+              <b>
+                {down
+                  ? "The control plane has stopped answering."
+                  : "This board has not heard from the control plane lately."}
+              </b>{" "}
+              Everything below was read <When at={inst.lastHeardMs} now={inst.now} /> and is a
+              record of that moment, not of the radios now. This board asks again every minute and
+              resumes by itself.
+            </InstrumentNote>
+          )}
           <table className="readout">
             <tbody>
               <tr>

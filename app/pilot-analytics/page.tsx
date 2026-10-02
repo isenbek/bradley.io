@@ -1,6 +1,6 @@
 import Link from "next/link"
 import type { Metadata } from "next"
-import { loadPilotData, tokens } from "../_pilot-data"
+import { loadPilotData, tokens, coverageText, usd, COST_NOT_COMPUTED } from "../_pilot-data"
 import { RowChart, HeatGrid, RampKey } from "../_charts"
 import { BetaMeasured } from "../_measured"
 
@@ -33,6 +33,13 @@ export default function BetaPilotAnalyticsPage() {
 
   const peak = d.hourlyDistribution.hours.find((h) => h.hour === d.hourlyDistribution.peakHour)
 
+  // Files written before pipeline 2.0.0 carry no zone, and their hours were UTC
+  // (this panel used to call them local time, which they were not).
+  const hourZone = (d.hourlyDistribution.timezone ?? "UTC").replace(/_/g, " ")
+  const dayZone = d.streaks.timezone
+  // The mission log is the top of the list, not the list.
+  const projectTotal = Math.max(d.license.projectCount, d.missionLog.length)
+
   return (
     <div className="page">
       <div className="page-head">
@@ -51,6 +58,11 @@ export default function BetaPilotAnalyticsPage() {
         by hour and by day.
       </p>
 
+      <p className="quiet">
+        {coverageText(d)} A message is one transcript record: a prompt, a tool result or one block
+        of a model reply.
+      </p>
+
       <RampKey low="fewer" high="more" />
 
       <div className="prose beta-sec">
@@ -62,7 +74,7 @@ export default function BetaPilotAnalyticsPage() {
           <div className="panel-bar">
             <b>Messages per project</b>
             <span>
-              top {byProject.length} of {d.missionLog.length}
+              top {byProject.length} of {projectTotal}
             </span>
           </div>
           <RowChart caption="Messages exchanged" data={byProject} />
@@ -81,7 +93,7 @@ export default function BetaPilotAnalyticsPage() {
         <div className="panel-face">
           <div className="panel-bar">
             <b>Hour of day</b>
-            <span>local time</span>
+            <span>{hourZone}</span>
           </div>
           <HeatGrid caption="Sessions per hour, 00:00 to 23:00" data={byHour} />
         </div>
@@ -92,6 +104,7 @@ export default function BetaPilotAnalyticsPage() {
         <p>
           {d.streaks.totalActiveDays} active days. The busiest was {d.streaks.peakDay} at{" "}
           {d.streaks.peakDayCount.toLocaleString()} messages.
+          {dayZone ? ` Days are ${dayZone} days.` : ""}
         </p>
       </div>
 
@@ -112,8 +125,9 @@ export default function BetaPilotAnalyticsPage() {
       <div className="prose beta-sec">
         <h2>What came up</h2>
         <p>
-          Technologies by how often they appear in the transcripts. This counts mentions, not
-          proficiency.
+          Technologies by how often they appear in a sample of the session logs still on disk,
+          which reach back about 30 days, and in each project&apos;s CLAUDE.md. This counts
+          mentions, not proficiency, and it describes recent work, not the whole record.
         </p>
       </div>
 
@@ -168,6 +182,15 @@ export default function BetaPilotAnalyticsPage() {
               <tr>
                 <td>Cache efficiency</td>
                 <td className="num">{d.tokenEconomy.cacheEfficiency.toFixed(1)}%</td>
+              </tr>
+              <tr>
+                <td>Cost at API list price</td>
+                <td
+                  className="num"
+                  title={d.tokenEconomy.cost?.reason ?? undefined}
+                >
+                  {usd(d.tokenEconomy.totalCostUSD) ?? COST_NOT_COMPUTED}
+                </td>
               </tr>
             </tbody>
           </table>

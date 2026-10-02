@@ -4,7 +4,7 @@ import { EyesLive } from "@/components/eyes/EyesLive"
 
 export const metadata: Metadata = {
   title: "Eyes",
-  description: "A live still from the camera on the bradley.io box, refreshed once a minute.",
+  description: "The newest still from the camera on the bradley.io box, with the time it was captured.",
   robots: { index: false, follow: false },
 }
 
@@ -23,8 +23,10 @@ export default function EyesPage() {
       </div>
 
       <p className="lede">
-        A live still from the camera attached to the bradley.io box, grabbed with ffmpeg straight
-        off /dev/video0 once a minute, cached on the metal and served same-origin.
+        The newest still from the camera attached to the bradley.io box, grabbed with ffmpeg
+        straight off /dev/video0 once a minute, cached on the metal and served same-origin. The
+        panel below says when the frame was taken, and says so plainly when the camera has
+        stopped.
       </p>
 
       <div className="prose beta-sec">

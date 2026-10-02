@@ -20,7 +20,7 @@ export default function Page() {
       </div>
 
       <p className="lede">
-        Live tracks over a local basemap, with a density layer built from what this receiver has heard rather than from a feed.
+        Aircraft tracks over a local basemap, with a density layer built from what this receiver has heard rather than from a feed. The panel below says whether the antenna is being heard right now.
       </p>
 
       <V3Airspace />

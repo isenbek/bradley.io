@@ -10,11 +10,16 @@ export const runtime = "nodejs"
 
 export async function GET() {
   try {
-    const buf = await fs.readFile(LATEST)
+    const [buf, st] = await Promise.all([fs.readFile(LATEST), fs.stat(LATEST)])
     return new Response(new Uint8Array(buf), {
       headers: {
         "Content-Type": "image/jpeg",
         "Cache-Control": "no-store, max-age=0, must-revalidate",
+        // This route answers 200 for as long as the file exists, however old
+        // the frame is. The mtime is when it was captured; say so, so nothing
+        // downstream has to take "200" to mean "now".
+        "Last-Modified": st.mtime.toUTCString(),
+        "X-Captured-At": st.mtime.toISOString(),
       },
     })
   } catch {

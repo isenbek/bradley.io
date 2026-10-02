@@ -1,6 +1,13 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import {
+  InstrumentHead,
+  InstrumentNote,
+  When,
+  useInstrument,
+} from "@/components/kit/InstrumentStatus"
+import { FRESHNESS, absDateTime, relOrAbs, toMs } from "@/lib/instrument-status"
 
 interface Latest {
   ts: string
@@ -19,19 +26,20 @@ interface Cam {
   label: { label: string; delta: number; ts: string } | null
 }
 
-// "12s ago" / "3m ago" from an ISO timestamp.
-function ago(ts: string): string {
-  const s = Math.max(0, Math.round((Date.now() - new Date(ts).getTime()) / 1000))
-  if (s < 60) return `${s}s ago`
-  if (s < 3600) return `${Math.round(s / 60)}m ago`
-  return `${Math.round(s / 3600)}h ago`
-}
+const FLOOR = 6 // motion threshold above the sensor-noise floor (~4 to 6)
 
-const FLOOR = 6 // motion threshold above the sensor-noise floor (~4–6)
-
-function CamPanel({ cam, nonce }: { cam: Cam; nonce: number }) {
+function CamPanel({ cam, now }: { cam: Cam; now: number | null }) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const { latest, history, name } = cam
+  // Each camera is judged on its own clock. One can be current while the other
+  // has been unplugged for months, and the board's one status tag cannot say
+  // that, so a camera whose last comparison is late says so on its own panel.
+  const capturedMs = toMs(latest?.ts)
+  const late =
+    now != null && capturedMs != null && (now - capturedMs) / 1000 > FRESHNESS.motion.staleAfterS
+  // The images are keyed on the comparison's own timestamp rather than on the
+  // poll, so a frame that has not changed is not fetched again every 10 s.
+  const nonce = capturedMs ?? 0
 
   useEffect(() => {
     const c = canvasRef.current
@@ -74,7 +82,11 @@ function CamPanel({ cam, nonce }: { cam: Cam; nonce: number }) {
     <div className="beta-motioncam">
       <div className="beta-motioncam__head">
         <span className="beta-motioncam__name">{name}</span>
-        <span className="beta-motioncam__peak">peak {max.toFixed(1)} · {deltas.length} samples</span>
+        <span className="beta-motioncam__peak">
+          {late && capturedMs != null
+            ? `captured ${absDateTime(capturedMs)}`
+            : `peak ${max.toFixed(1)} · ${deltas.length} samples`}
+        </span>
       </div>
       <div className="beta-motioncam__imgs">
         <div className="beta-motion__frame">
@@ -85,7 +97,8 @@ function CamPanel({ cam, nonce }: { cam: Cam; nonce: number }) {
           </span>
           {cam.label?.label ? (
             <span className="beta-motion__seen">
-              👁 {cam.label.label} <span className="beta-motion__seen-ago">· {ago(cam.label.ts)}</span>
+              👁 {cam.label.label}{" "}
+              <span className="beta-motion__seen-ago">· {relOrAbs(cam.label.ts, now)}</span>
             </span>
           ) : null}
         </div>
@@ -105,8 +118,10 @@ function CamPanel({ cam, nonce }: { cam: Cam; nonce: number }) {
 
 export function MotionTrack() {
   const [cams, setCams] = useState<Cam[]>([])
+  // The latest poll failed.
   const [dead, setDead] = useState(false)
-  const [nonce, setNonce] = useState(0)
+  // The first poll has come back, one way or the other.
+  const [asked, setAsked] = useState(false)
 
   useEffect(() => {
     let mounted = true
@@ -119,11 +134,11 @@ export function MotionTrack() {
         if (!mounted) return
         const list: Cam[] = d.cams || []
         setCams(list)
-        setDead(list.length === 0)
-        setNonce(Date.now())
+        setDead(false)
       } catch {
         if (mounted) setDead(true)
       }
+      if (mounted) setAsked(true)
     }
     tick()
     const id = setInterval(tick, 10000)
@@ -133,17 +148,46 @@ export function MotionTrack() {
     }
   }, [])
 
-  if (dead) return <div className="beta-motion__dead-box">motion tracker offline</div>
+  // Last heard is the newest comparison from any camera. /api/delta answers 200
+  // for as long as the files exist, so the timestamp inside them is the only
+  // thing that says whether the tracker is still running.
+  const newest = Math.max(0, ...cams.map((c) => toMs(c.latest?.ts) ?? 0)) || null
+  const inst = useInstrument("motion", { lastHeard: newest, error: dead, pending: !asked })
+  const live = inst.reading?.state === "live"
 
   return (
-    <div className="beta-motion-grid">
-      {cams.map((c) => (
-        <CamPanel key={c.name} cam={c} nonce={nonce} />
-      ))}
-      <p className="beta-motion-note">
-        each camera, every ~10s · left = frame + heatmap (where it changed) · right = the raw
-        subtraction · line = motion over time
-      </p>
-    </div>
+    <>
+      <InstrumentHead name="Motion tracker" status={inst}>
+        {inst.reading && !live && (
+          <InstrumentNote>
+            {newest == null ? (
+              <>
+                <b>The motion tracker has nothing to report.</b> Its data files are missing or
+                unreadable.
+              </>
+            ) : (
+              <>
+                <b>The motion tracker is not running.</b> It last compared frames{" "}
+                <When at={newest} now={inst.now} />. The frames, heatmaps and curves below are
+                from then, kept because they are the last true reading, and each camera is
+                labelled with its own capture time.
+              </>
+            )}{" "}
+            This board asks again every 10 seconds and resumes by itself when the tracker does.
+          </InstrumentNote>
+        )}
+      </InstrumentHead>
+      {cams.length > 0 && (
+        <div className="beta-motion-grid">
+          {cams.map((c) => (
+            <CamPanel key={c.name} cam={c} now={inst.now} />
+          ))}
+          <p className="beta-motion-note">
+            each camera, every ~10s · left = frame + heatmap (where it changed) · right = the raw
+            subtraction · line = motion over time
+          </p>
+        </div>
+      )}
+    </>
   )
 }

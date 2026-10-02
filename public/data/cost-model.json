@@ -1,51 +1,137 @@
 {
-  "generated": "2026-10-02T08:04:43.610572",
-  "scope": "Campaign Brain Last 3 Months",
+  "generated": "2026-03-26T23:05:18.822658",
+  "scope": "Campaign Brain (cb*) repositories, 2025-12-01 to 2026-03-26",
+  "frozen": {
+    "asOf": "2026-03-26",
+    "window": {
+      "start": "2025-12-01",
+      "end": "2026-03-26"
+    },
+    "reason": "Dated case study of one fixed window: a modelled conventional team against the recorded AI-assisted work. The AI-session figures cannot be recomputed: the pilot heatmap they came from is a rolling recent window, and the durable Claude activity record starts 2026-03-08. Regenerating the file every 4 hours had decayed it to activeDays 1 and a 1710x velocity multiplier. These are the numbers of the last version generated inside the window (2026-03-26), and the refresh no longer rewrites them. The commit counts can still be recounted from the org timeline. The in-window commit count has been replaced with the first count taken after the window closed, because the 2026-03-26 version was generated before its last day had ended; see corrections and coverage.",
+    "frozenOn": "2026-10-02",
+    "sourceCommit": "d532e3d",
+    "sourceGenerated": "2026-03-26T23:05:18.822658",
+    "corrections": [
+      {
+        "field": "timespan.days",
+        "was": 117,
+        "now": 116,
+        "why": "2025-12-01 to 2026-03-26 inclusive is 116 calendar days; the pipeline forced 117. No other figure depends on it (116 and 117 days both round to 4 months)."
+      },
+      {
+        "field": "scope",
+        "was": "Campaign Brain Last 3 Months",
+        "now": "Campaign Brain (cb*) repositories, 2025-12-01 to 2026-03-26",
+        "why": "The window is fixed and is 116 days long; it was never a rolling last 3 months."
+      },
+      {
+        "field": "frozen.coverage.commitsInWindow (the sum of timeSeries commits)",
+        "was": 5315,
+        "now": 5411,
+        "why": "The 2026-03-26 version read a commit timeline whose latest commit was 2026-03-26T05:00:02Z, so it held only the first 5 hours (UTC) of the window's last day: 25 commits on 2026-03-26. The first timeline generated after the window closed (public/data/nominate-ai-timeline.json as committed in bdf676a, generated 2026-04-03T09:06:45Z) counts 117 commits on that day, and one or two more on 2026-03-15, 2026-03-17 and 2026-03-23, in the same 88 repositories. Total for the window: 5,411."
+      },
+      {
+        "field": "timeSeries[2026-W11].commits",
+        "was": 394,
+        "now": 395,
+        "why": "Same recount, from public/data/nominate-ai-timeline.json as committed in bdf676a, generated 2026-04-03T09:06:45Z. cumulativeCommits for the week moves from 4690 to 4691."
+      },
+      {
+        "field": "timeSeries[2026-W12].commits",
+        "was": 487,
+        "now": 488,
+        "why": "Same recount, from public/data/nominate-ai-timeline.json as committed in bdf676a, generated 2026-04-03T09:06:45Z. cumulativeCommits for the week moves from 5177 to 5179."
+      },
+      {
+        "field": "timeSeries[2026-W13].commits",
+        "was": 138,
+        "now": 232,
+        "why": "Same recount, from public/data/nominate-ai-timeline.json as committed in bdf676a, generated 2026-04-03T09:06:45Z. cumulativeCommits for the week moves from 5315 to 5411."
+      }
+    ],
+    "coverage": {
+      "calendarDays": 116,
+      "claudeRecordStart": "2026-02-09",
+      "claudeRecordEnd": "2026-03-26",
+      "claudeRecordThrough": "2026-03-26T20:01:46-04:00",
+      "claudeActiveDays": 34,
+      "commitDaysInWindow": 116,
+      "commitsInWindow": 5411,
+      "commitsInWindowRepos": 88,
+      "commitsInWindowCountedOn": "2026-04-03",
+      "commitsInWindowSource": "public/data/nominate-ai-timeline.json as committed in bdf676a, generated 2026-04-03T09:06:45Z",
+      "commitsInWindowAtSnapshot": 5315,
+      "commitsSnapshotThrough": "2026-03-26T05:00:02Z",
+      "commitsInWindowRecount": {
+        "countedOn": "2026-10-02",
+        "commits": 5362
+      },
+      "commitsFullHistory": 9325,
+      "commitsFullHistoryRepos": 64,
+      "commitsFullHistoryStart": "2022-12-09",
+      "commitsFullHistoryThrough": "2026-03-26T05:00:02Z"
+    },
+    "notes": {
+      "timespan.activeDays": "Days with at least one recorded Claude Code session. That record begins 2026-02-09, so the 34 all fall between 2026-02-09 and 2026-03-26. It is not a count of days worked: commits landed on all 116 days of the window.",
+      "comparison.velocityMultiplier": "1,710 modelled person-days (85.5 person-months at 20 workdays) divided by activeDays (34). Because activeDays undercounts the days worked, this ratio overstates.",
+      "comparison.timeCompression": "9 months is the midpoint of the modelled 6 to 12 month estimate. 34 days is activeDays, not elapsed time; the elapsed time was the 116-day window.",
+      "comparison.costSavingsPercent": "1 minus actual.totalCost (60,800) over the midpoint of legacy.totalCost (1,282,500). One side is recorded, the other is a model.",
+      "actual.commits": "Full-history commit count of the 64 cb* repositories that had a commit on or after 2025-12-01, counted through 2026-03-26T05:00:02Z (the latest commit in the timeline the 2026-03-26 version read). Three of them predate the window (earliest first commit 2022-12-09) and hold 5,312 of the 9,325. It is not a count of commits inside the window, and it misses the last 19 hours of the window's last day.",
+      "timeSeries.commits": "Commits per ISO week inside the window across the 88 repositories that existed in the org by the window's last day, not cb* only. Days are UTC days (GitHub author dates). They sum to 5,411, as counted 2026-04-03, a week after the window closed. The version generated 2026-03-26 summed to 5,315 because its commit source stopped at 2026-03-26T05:00:02Z.",
+      "actual.sessions, actual.messages, actual.projects, actual.topProjects": "The 16 cb* projects among the 20 most active projects in the pilot mission log, as recorded 2026-03-26. cb* projects outside that top 20 are not counted. Same cut as the weekly series: the pilot record was generated 2026-03-26 at 20:01 US Eastern.",
+      "actual.toolCalls, timeSeries.messages, timeSeries.sessions, timeSeries.toolCalls": "All recorded Claude Code activity, every project, not cb* only. Zero before 2026-02-09 means no record, not no work. Counted from a pilot record generated 2026-03-26 at 20:01 US Eastern, so the last four hours of the window's last day are not in it. This cannot be corrected from a later record: later pilot records revise days inside the window upward (2026-03-23 reads 7,272 messages in this record, 8,239 a day later and 14,006 by 2026-04-03), and nothing in them says how much of that was added after the window closed.",
+      "actual.operatorCost, actual.aiCost": "Flat rates, not invoices: 15,000 a month for the operator and 200 a month for the AI plan, times 4 months.",
+      "issues": "GitHub issues in the cb* repositories opened, or closed, on or after 2025-12-01, as fetched 2026-03-26. The fetch read at most 500 issues per repository.",
+      "legacy": "A model of a team that was never hired: 9.5 people for 6 to 12 months at 15,000 per person-month.",
+      "frozen.coverage.commitsInWindowRecount": "The live org timeline counted 5,362 commits for the same window on 2026-10-02. The difference from 5,411 is one repository, cbos: between the timelines generated 2026-04-24 and 2026-05-08 its history went from 50 commits starting 2026-01-02 to 3 commits starting 2026-03-15, which removed 50 commits from 2026-01-02 to 2026-03-14 and added 1 on 2026-03-15. The 5,411 is kept because it counts the commits as they stood when the window closed.",
+      "actual.repos": "cb* repositories with a commit on or after 2025-12-01, as of 2026-03-26T05:00:02Z. The 2026-04-03 recount finds the same 64: every repository added after the snapshot has its first commit on or after 2026-03-27."
+    }
+  },
   "timespan": {
     "start": "2025-12-01",
     "end": "2026-03-26",
-    "days": 117,
-    "activeDays": 1
+    "days": 116,
+    "activeDays": 34
   },
   "actual": {
     "teamSize": 1,
-    "sessions": 45,
-    "messages": 157298,
-    "toolCalls": 137909,
-    "commits": 32765,
-    "repos": 136,
-    "projects": 11,
+    "sessions": 128,
+    "messages": 90106,
+    "toolCalls": 50628,
+    "commits": 9325,
+    "repos": 64,
+    "projects": 16,
     "operatorCost": 60000,
     "aiCost": 800,
     "totalCost": 60800,
     "domains": [
       {
-        "name": "AI / ML",
-        "score": 81
+        "name": "Backend",
+        "score": 91
       },
       {
-        "name": "Backend",
-        "score": 74
+        "name": "AI / ML",
+        "score": 73
       },
       {
         "name": "Security",
-        "score": 63
+        "score": 65
       },
       {
         "name": "Systems",
-        "score": 58
-      },
-      {
-        "name": "IoT / Edge",
-        "score": 51
+        "score": 60
       },
       {
         "name": "Frontend",
-        "score": 48
+        "score": 50
       },
       {
         "name": "Data Engineering",
         "score": 46
+      },
+      {
+        "name": "IoT / Edge",
+        "score": 45
       },
       {
         "name": "DevOps",
@@ -55,180 +141,205 @@
     "skills": [
       {
         "name": "Go",
-        "count": 9576
+        "count": 1839
       },
       {
         "name": "Git",
-        "count": 3879
-      },
-      {
-        "name": "Rust",
-        "count": 2351
-      },
-      {
-        "name": "JSON",
-        "count": 1822
+        "count": 816
       },
       {
         "name": "Nginx",
-        "count": 1201
+        "count": 751
       },
       {
-        "name": "CSS",
-        "count": 1181
-      },
-      {
-        "name": "HTML",
-        "count": 1147
-      },
-      {
-        "name": "SQLite",
-        "count": 1101
-      },
-      {
-        "name": "Bash",
-        "count": 984
-      },
-      {
-        "name": "SPI",
-        "count": 835
-      },
-      {
-        "name": "Python",
-        "count": 797
+        "name": "JSON",
+        "count": 554
       },
       {
         "name": "systemd",
-        "count": 538
+        "count": 458
       },
       {
-        "name": "DuckDB",
-        "count": 514
+        "name": "Python",
+        "count": 430
       },
       {
-        "name": "SSH",
-        "count": 426
-      },
-      {
-        "name": "CSV",
-        "count": 374
-      },
-      {
-        "name": "AWS",
-        "count": 345
-      },
-      {
-        "name": "React",
-        "count": 324
-      },
-      {
-        "name": "Redis",
-        "count": 249
-      },
-      {
-        "name": "Snowflake",
-        "count": 240
-      },
-      {
-        "name": "Markdown",
-        "count": 224
-      },
-      {
-        "name": "TLS",
-        "count": 217
-      },
-      {
-        "name": "Ollama",
-        "count": 194
+        "name": "HTML",
+        "count": 309
       },
       {
         "name": "FastAPI",
-        "count": 188
+        "count": 307
       },
       {
-        "name": "Pytest",
-        "count": 167
+        "name": "Bash",
+        "count": 207
       },
       {
-        "name": "Anthropic",
-        "count": 165
+        "name": "SSH",
+        "count": 166
       },
       {
-        "name": "TypeScript",
+        "name": "DuckDB",
         "count": 160
       },
       {
-        "name": "YAML",
-        "count": 147
+        "name": "Pytest",
+        "count": 149
+      },
+      {
+        "name": "TOML",
+        "count": 137
+      },
+      {
+        "name": "Pydantic",
+        "count": 124
+      },
+      {
+        "name": "OAuth",
+        "count": 123
+      },
+      {
+        "name": "Markdown",
+        "count": 108
       },
       {
         "name": "WireGuard",
-        "count": 139
+        "count": 103
+      },
+      {
+        "name": "CSS",
+        "count": 98
+      },
+      {
+        "name": "JWT",
+        "count": 95
+      },
+      {
+        "name": "SPI",
+        "count": 91
+      },
+      {
+        "name": "SQLite",
+        "count": 79
       },
       {
         "name": "Next.js",
-        "count": 134
+        "count": 78
       },
       {
-        "name": "Tailwind",
-        "count": 119
+        "name": "Snowflake",
+        "count": 76
+      },
+      {
+        "name": "Ollama",
+        "count": 75
+      },
+      {
+        "name": "WebSocket",
+        "count": 75
+      },
+      {
+        "name": "Node.js",
+        "count": 62
+      },
+      {
+        "name": "YAML",
+        "count": 62
+      },
+      {
+        "name": "MDX",
+        "count": 60
+      },
+      {
+        "name": "CSV",
+        "count": 59
+      },
+      {
+        "name": "TypeScript",
+        "count": 55
       }
     ],
     "topProjects": [
       {
-        "name": "cbapex",
-        "sessions": 3,
-        "messages": 50216
-      },
-      {
-        "name": "cbsvi",
-        "sessions": 1,
-        "messages": 28417
-      },
-      {
-        "name": "cbrural",
-        "sessions": 5,
-        "messages": 24441
-      },
-      {
-        "name": "cbcc",
-        "sessions": 1,
-        "messages": 17427
-      },
-      {
-        "name": "cbradio2",
-        "sessions": 11,
-        "messages": 8382
+        "name": "cbintel",
+        "sessions": 14,
+        "messages": 13993
       },
       {
         "name": "cbmodels",
-        "sessions": 8,
-        "messages": 7444
+        "sessions": 14,
+        "messages": 11607
       },
       {
-        "name": "cbintel",
+        "name": "cbdc",
         "sessions": 4,
-        "messages": 5369
+        "messages": 10611
       },
       {
-        "name": "cbai",
-        "sessions": 3,
-        "messages": 4504
+        "name": "cbpulse",
+        "sessions": 15,
+        "messages": 8970
       },
       {
-        "name": "cbbakery",
-        "sessions": 3,
-        "messages": 3818
+        "name": "cbnetwork",
+        "sessions": 12,
+        "messages": 7812
       },
       {
-        "name": "cbloom",
-        "sessions": 4,
-        "messages": 3655
+        "name": "cbmcp",
+        "sessions": 7,
+        "messages": 6767
       },
       {
-        "name": "cbvpn",
+        "name": "cbinfra",
+        "sessions": 12,
+        "messages": 5908
+      },
+      {
+        "name": "cbfiles",
+        "sessions": 10,
+        "messages": 5339
+      },
+      {
+        "name": "cbradio",
+        "sessions": 10,
+        "messages": 5088
+      },
+      {
+        "name": "cbea",
         "sessions": 2,
-        "messages": 3625
+        "messages": 2665
+      },
+      {
+        "name": "cboverseer",
+        "sessions": 9,
+        "messages": 2371
+      },
+      {
+        "name": "cbapp",
+        "sessions": 2,
+        "messages": 2157
+      },
+      {
+        "name": "cbmesh",
+        "sessions": 4,
+        "messages": 1768
+      },
+      {
+        "name": "cbweb",
+        "sessions": 3,
+        "messages": 1739
+      },
+      {
+        "name": "cbauth",
+        "sessions": 5,
+        "messages": 1692
+      },
+      {
+        "name": "cbworkflow",
+        "sessions": 5,
+        "messages": 1619
       }
     ]
   },
@@ -302,8 +413,8 @@
   },
   "comparison": {
     "costSavingsPercent": 95.3,
-    "velocityMultiplier": 1710.0,
-    "timeCompression": "9 months -> 1 days"
+    "velocityMultiplier": 50.3,
+    "timeCompression": "9 months -> 34 days"
   },
   "industryBenchmarks": {
     "locPerDevPerDay": {
@@ -404,8 +515,8 @@
     {
       "week": "2026-W01",
       "weekStart": "2025-12-29",
-      "commits": 133,
-      "cumulativeCommits": 745,
+      "commits": 159,
+      "cumulativeCommits": 771,
       "messages": 0,
       "sessions": 0,
       "toolCalls": 0,
@@ -419,8 +530,8 @@
     {
       "week": "2026-W02",
       "weekStart": "2026-01-05",
-      "commits": 270,
-      "cumulativeCommits": 1015,
+      "commits": 285,
+      "cumulativeCommits": 1056,
       "messages": 0,
       "sessions": 0,
       "toolCalls": 0,
@@ -434,8 +545,8 @@
     {
       "week": "2026-W03",
       "weekStart": "2026-01-12",
-      "commits": 290,
-      "cumulativeCommits": 1305,
+      "commits": 292,
+      "cumulativeCommits": 1348,
       "messages": 0,
       "sessions": 0,
       "toolCalls": 0,
@@ -450,7 +561,7 @@
       "week": "2026-W04",
       "weekStart": "2026-01-19",
       "commits": 286,
-      "cumulativeCommits": 1591,
+      "cumulativeCommits": 1634,
       "messages": 0,
       "sessions": 0,
       "toolCalls": 0,
@@ -464,8 +575,8 @@
     {
       "week": "2026-W05",
       "weekStart": "2026-01-26",
-      "commits": 475,
-      "cumulativeCommits": 2066,
+      "commits": 477,
+      "cumulativeCommits": 2111,
       "messages": 0,
       "sessions": 0,
       "toolCalls": 0,
@@ -480,14 +591,14 @@
       "week": "2026-W06",
       "weekStart": "2026-02-02",
       "commits": 459,
-      "cumulativeCommits": 2525,
+      "cumulativeCommits": 2570,
       "messages": 0,
       "sessions": 0,
       "toolCalls": 0,
-      "issuesOpened": 74,
-      "issuesClosed": 66,
-      "cumulativeIssuesOpened": 354,
-      "cumulativeIssuesClosed": 219,
+      "issuesOpened": 81,
+      "issuesClosed": 67,
+      "cumulativeIssuesOpened": 361,
+      "cumulativeIssuesClosed": 220,
       "cumulativeCostActual": 35765,
       "cumulativeCostLegacy": 329099
     },
@@ -495,14 +606,14 @@
       "week": "2026-W07",
       "weekStart": "2026-02-09",
       "commits": 404,
-      "cumulativeCommits": 2929,
-      "messages": 0,
-      "sessions": 0,
-      "toolCalls": 0,
-      "issuesOpened": 52,
-      "issuesClosed": 21,
-      "cumulativeIssuesOpened": 406,
-      "cumulativeIssuesClosed": 240,
+      "cumulativeCommits": 2974,
+      "messages": 4200,
+      "sessions": 6,
+      "toolCalls": 1500,
+      "issuesOpened": 83,
+      "issuesClosed": 41,
+      "cumulativeIssuesOpened": 444,
+      "cumulativeIssuesClosed": 261,
       "cumulativeCostActual": 39341,
       "cumulativeCostLegacy": 362009
     },
@@ -510,59 +621,59 @@
       "week": "2026-W08",
       "weekStart": "2026-02-16",
       "commits": 483,
-      "cumulativeCommits": 3412,
-      "messages": 0,
-      "sessions": 0,
-      "toolCalls": 0,
-      "issuesOpened": 45,
-      "issuesClosed": 24,
-      "cumulativeIssuesOpened": 451,
-      "cumulativeIssuesClosed": 264,
+      "cumulativeCommits": 3457,
+      "messages": 8862,
+      "sessions": 16,
+      "toolCalls": 3207,
+      "issuesOpened": 75,
+      "issuesClosed": 43,
+      "cumulativeIssuesOpened": 519,
+      "cumulativeIssuesClosed": 304,
       "cumulativeCostActual": 42918,
       "cumulativeCostLegacy": 394919
     },
     {
       "week": "2026-W09",
       "weekStart": "2026-02-23",
-      "commits": 463,
-      "cumulativeCommits": 3875,
-      "messages": 0,
-      "sessions": 0,
-      "toolCalls": 0,
-      "issuesOpened": 85,
-      "issuesClosed": 64,
-      "cumulativeIssuesOpened": 536,
-      "cumulativeIssuesClosed": 328,
+      "commits": 464,
+      "cumulativeCommits": 3921,
+      "messages": 46717,
+      "sessions": 109,
+      "toolCalls": 17366,
+      "issuesOpened": 91,
+      "issuesClosed": 74,
+      "cumulativeIssuesOpened": 610,
+      "cumulativeIssuesClosed": 378,
       "cumulativeCostActual": 46494,
       "cumulativeCostLegacy": 427829
     },
     {
       "week": "2026-W10",
       "weekStart": "2026-03-02",
-      "commits": 373,
-      "cumulativeCommits": 4248,
-      "messages": 24423,
-      "sessions": 1,
-      "toolCalls": 7925,
-      "issuesOpened": 102,
+      "commits": 375,
+      "cumulativeCommits": 4296,
+      "messages": 47237,
+      "sessions": 58,
+      "toolCalls": 17606,
+      "issuesOpened": 109,
       "issuesClosed": 62,
-      "cumulativeIssuesOpened": 638,
-      "cumulativeIssuesClosed": 390,
+      "cumulativeIssuesOpened": 719,
+      "cumulativeIssuesClosed": 440,
       "cumulativeCostActual": 50071,
       "cumulativeCostLegacy": 460739
     },
     {
       "week": "2026-W11",
       "weekStart": "2026-03-09",
-      "commits": 394,
-      "cumulativeCommits": 4642,
-      "messages": 0,
-      "sessions": 0,
-      "toolCalls": 0,
-      "issuesOpened": 161,
-      "issuesClosed": 59,
-      "cumulativeIssuesOpened": 799,
-      "cumulativeIssuesClosed": 449,
+      "commits": 395,
+      "cumulativeCommits": 4691,
+      "messages": 12718,
+      "sessions": 22,
+      "toolCalls": 4726,
+      "issuesOpened": 171,
+      "issuesClosed": 70,
+      "cumulativeIssuesOpened": 890,
+      "cumulativeIssuesClosed": 510,
       "cumulativeCostActual": 53647,
       "cumulativeCostLegacy": 493649
     },
@@ -570,14 +681,14 @@
       "week": "2026-W12",
       "weekStart": "2026-03-16",
       "commits": 488,
-      "cumulativeCommits": 5130,
-      "messages": 0,
-      "sessions": 0,
-      "toolCalls": 0,
-      "issuesOpened": 255,
-      "issuesClosed": 268,
-      "cumulativeIssuesOpened": 1054,
-      "cumulativeIssuesClosed": 717,
+      "cumulativeCommits": 5179,
+      "messages": 8262,
+      "sessions": 4,
+      "toolCalls": 3029,
+      "issuesOpened": 298,
+      "issuesClosed": 309,
+      "cumulativeIssuesOpened": 1188,
+      "cumulativeIssuesClosed": 819,
       "cumulativeCostActual": 57224,
       "cumulativeCostLegacy": 526559
     },
@@ -585,23 +696,23 @@
       "week": "2026-W13",
       "weekStart": "2026-03-23",
       "commits": 232,
-      "cumulativeCommits": 5362,
-      "messages": 0,
-      "sessions": 0,
-      "toolCalls": 0,
-      "issuesOpened": 306,
-      "issuesClosed": 197,
-      "cumulativeIssuesOpened": 1360,
-      "cumulativeIssuesClosed": 914,
+      "cumulativeCommits": 5411,
+      "messages": 8477,
+      "sessions": 22,
+      "toolCalls": 3194,
+      "issuesOpened": 181,
+      "issuesClosed": 134,
+      "cumulativeIssuesOpened": 1369,
+      "cumulativeIssuesClosed": 953,
       "cumulativeCostActual": 60800,
       "cumulativeCostLegacy": 559469
     }
   ],
   "issues": {
-    "opened": 5121,
-    "closed": 3424,
-    "bugs": 458,
-    "features": 556,
-    "other": 4107
+    "opened": 1369,
+    "closed": 953,
+    "bugs": 112,
+    "features": 239,
+    "other": 1018
   }
 }

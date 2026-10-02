@@ -2,6 +2,7 @@ import Link from "next/link"
 import type { Metadata } from "next"
 import { loadSiteDataStatic } from "@/lib/site-data"
 import { BetaMeasured } from "./_measured"
+import { SiteStatsPanel } from "./_site-stats"
 
 export const revalidate = 3600
 
@@ -96,38 +97,7 @@ export default async function BetaHome() {
         <h2>By the numbers</h2>
       </div>
 
-      <div className="panel">
-        <div className="panel-face">
-          <div className="panel-bar">
-            <b>Site index</b>
-            <span>regenerated each deploy</span>
-          </div>
-          <table className="readout">
-            <tbody>
-              <tr>
-                <td>Repositories indexed</td>
-                <td className="num">{stats.totalProjects.toLocaleString()}</td>
-              </tr>
-              <tr>
-                <td>AI sessions</td>
-                <td className="num">{stats.totalSessions.toLocaleString()}</td>
-              </tr>
-              <tr>
-                <td>Messages exchanged</td>
-                <td className="num">{stats.totalMessages.toLocaleString()}</td>
-              </tr>
-              <tr>
-                <td>Active days</td>
-                <td className="num">{stats.activeDays.toLocaleString()}</td>
-              </tr>
-              <tr>
-                <td>Current streak</td>
-                <td className="num">{stats.streak.toLocaleString()} d</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <SiteStatsPanel stats={stats} streak />
       <BetaMeasured generated={data.generated} source="site-data.json" />
 
       <div className="prose beta-sec">

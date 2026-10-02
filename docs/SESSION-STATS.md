@@ -1,5 +1,8 @@
 # SESSION-STATS — Lay of the Land
 
+> **Update 2026-10-02:** `cost-model-pipeline.py` no longer runs in the 4-hourly refresh. `public/data/cost-model.json` is a frozen case study of 2025-12-01 to 2026-03-26, and the script refuses to overwrite it without `--unfreeze`. Activity totals now come from `data/claude-activity.duckdb` through `scripts/activity_db.py`, not from the rolling session logs.
+
+
 A map of where Claude Code session data lives on this stack, how it flows
 through the bradley.io pipelines, and what comes out the other end. Written
 for the modeling team building a world model from chat history.

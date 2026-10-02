@@ -13,6 +13,11 @@ interface MarkerState {
   checked_at_iso: string
   transitioned_at_iso?: string
   prev_up?: boolean
+  // The last time this probe saw the Geiger box answer 200, carried forward
+  // across failed probes. Absent until it has been seen up at least once since
+  // the marker was last lost (.next is swapped on every deploy), which is the
+  // honest value: "not known", not "never".
+  last_up_iso?: string
 }
 
 async function readPrev(): Promise<MarkerState | null> {
@@ -47,6 +52,7 @@ export async function GET() {
     checked_at_iso: now,
     prev_up: prev?.up,
     transitioned_at_iso: flipped ? now : prev?.transitioned_at_iso,
+    last_up_iso: up ? now : prev?.last_up_iso,
   }
 
   await fs.mkdir(path.dirname(MARKER), { recursive: true })

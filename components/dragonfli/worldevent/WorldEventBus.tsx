@@ -3,6 +3,13 @@
 import { useEffect, useRef, useState } from "react"
 import { decoderFor, GenericSample } from "./decoders"
 import { CATEGORICAL } from "./decoders/palette"
+import {
+  InstrumentHead,
+  InstrumentNote,
+  When,
+  useInstrument,
+} from "@/components/kit/InstrumentStatus"
+import { toMs } from "@/lib/instrument-status"
 
 // ---- snapshot shape (written by worldevent-collector.service) -------------
 type WeType = {
@@ -24,6 +31,10 @@ type WeTail = { ts: number; type: string; host: string; id: string; summary: str
 type Snapshot = {
   offline?: boolean
   generatedAt?: string
+  // Added by /api/worldevent: the newest event of any schema, and the snapshot
+  // file's mtime. Optional so an older server's payload still renders.
+  lastEventAt?: string | null
+  snapshotAt?: string | null
   uptimeSec?: number
   source?: { port: number; transport: string; schemas: { schema: string; count: number }[] }
   totals?: {
@@ -95,10 +106,17 @@ function fmtUptime(s: number): string {
   if (m) return `${m}m ${ss}s`
   return `${ss}s`
 }
-function clock(ts: number): string {
+// With the bus quiet the tail is no longer "just now", and a bare time of day
+// on a three-day-old event reads as today. So a quiet bus gets the date too.
+function clock(ts: number, withDate: boolean): string {
   const d = new Date(ts * 1000)
-  return d.toLocaleTimeString("en-US", { hour12: false })
+  const t = d.toLocaleTimeString("en-US", { hour12: false })
+  if (!withDate) return t
+  return `${d.toLocaleDateString("en-US", { day: "numeric", month: "short" })} ${t}`
 }
+
+/** A collector that has not rewritten its snapshot in this long has stopped. */
+const COLLECTOR_STALE_S = 60
 
 // `hue` is an Earth Conductor token name now, not an hsl angle. See hueFor().
 function Sparkline({ data, hue, w = 120, h = 30 }: { data: number[]; hue: string; w?: number; h?: number }) {
@@ -126,7 +144,15 @@ export function WorldEventBus() {
 
   useEffect(() => {
     let alive = true
+    // `busy` and the cleared timer are what let the loop restart. The timer id
+    // used to be left in place after it fired, so the "is a tick scheduled?"
+    // test on becoming visible was always true and a tab that had been hidden
+    // once never polled again: a board that could not recover by itself.
+    let busy = false
     async function tick() {
+      if (busy) return
+      busy = true
+      timer.current = null
       try {
         const r = await fetch("/api/worldevent", { cache: "no-store" })
         const j: Snapshot = await r.json()
@@ -140,11 +166,12 @@ export function WorldEventBus() {
       } catch {
         if (alive) setStatus("offline")
       }
+      busy = false
       if (alive && document.visibilityState !== "hidden") timer.current = setTimeout(tick, POLL_MS)
     }
     tick()
     const onVis = () => {
-      if (document.visibilityState !== "hidden" && !timer.current) tick()
+      if (document.visibilityState !== "hidden" && !timer.current && !busy) tick()
     }
     document.addEventListener("visibilitychange", onVis)
     return () => {
@@ -162,13 +189,72 @@ export function WorldEventBus() {
   const schemas = snap?.source?.schemas ?? []
   const gMax = Math.max(1, ...(snap?.spark ?? [0]))
 
+  // The route answering says the COLLECTOR is up. Whether the BUS is live is a
+  // different question: the newest event of any schema, as an absolute time, so
+  // it stays right even if the collector dies and its ageSec values freeze.
+  const lastEvent =
+    toMs(snap?.lastEventAt) ??
+    (types.length ? toMs(Math.max(0, ...types.map((ty) => ty.lastTs ?? 0))) : null)
+  const inst = useInstrument("worldevent", {
+    lastHeard: lastEvent,
+    error: status === "offline",
+    pending: status === "connecting" && !snap,
+  })
+  const busLive = inst.reading?.state === "live"
+  const notLive = inst.reading !== null && !busLive
+  const collectorAt = toMs(snap?.snapshotAt ?? snap?.generatedAt)
+  const collectorStopped =
+    inst.now != null && collectorAt != null && (inst.now - collectorAt) / 1000 > COLLECTOR_STALE_S
+
   return (
     <div className="beta-we">
+      <InstrumentHead name="Perception bus" status={inst}>
+        {notLive && (
+          <InstrumentNote>
+            {status === "offline" ? (
+              <>
+                <b>The collector&apos;s snapshot cannot be read</b>, so there is nothing current
+                to show.{snap ? " What is below is the last snapshot this page received." : ""}
+              </>
+            ) : collectorStopped ? (
+              <>
+                <b>The collector has stopped writing.</b> Its last snapshot is from{" "}
+                <When at={collectorAt} now={inst.now} />, and everything below is from that
+                moment, including the ages, which are frozen.
+              </>
+            ) : (
+              <>
+                <b>The collector is up and listening, but nothing is talking.</b>{" "}
+                {lastEvent != null ? (
+                  <>
+                    No producer has sent an event since <When at={lastEvent} now={inst.now} />.
+                  </>
+                ) : (
+                  <>No producer has sent an event yet.</>
+                )}{" "}
+                The totals below were counted before the bus went quiet, and the zero throughput
+                is a true zero.
+              </>
+            )}{" "}
+            This page asks again every 2 seconds and resumes by itself when the bus does.
+          </InstrumentNote>
+        )}
+      </InstrumentHead>
+
       {/* HUD ===================================================== */}
+      {/* This dot is the COLLECTOR: the route answered, or it did not. The bus
+          itself is the tag above. "bus · live" used to be printed here whenever
+          the route answered, including with every producer silent. */}
       <div className="beta-we-hud">
-        <span className={`beta-we-hud__status is-${status}`}>
+        <span className={`beta-we-hud__status is-${status === "live" && collectorStopped ? "offline" : status}`}>
           <span className="beta-we-hud__dot" aria-hidden />
-          {status === "live" ? "bus · live" : status === "offline" ? "bus offline" : "connecting…"}
+          {status === "live"
+            ? collectorStopped
+              ? "collector stopped"
+              : "collector · up"
+            : status === "offline"
+              ? "collector offline"
+              : "connecting"}
         </span>
         <span className="beta-we-hud__meta">
           {schemas.map((s) => (
@@ -214,7 +300,13 @@ export function WorldEventBus() {
       <div className="beta-we-types">
         {types.length === 0 ? (
           <div className="beta-we-empty">
-            <span className="beta-we-hud__dot" aria-hidden /> waiting for the bus…
+            {status === "connecting" ? (
+              <>
+                <span className="beta-we-hud__dot" aria-hidden /> asking the collector
+              </>
+            ) : (
+              "no event types to show"
+            )}
           </div>
         ) : (
           types.map((ty) => {
@@ -267,16 +359,16 @@ export function WorldEventBus() {
         </div>
 
         <div className="beta-we-panel">
-          <h3 className="beta-we-panel__h">Live tail</h3>
+          <h3 className="beta-we-panel__h">{busLive ? "Live tail" : "Last events heard"}</h3>
           <ul className="beta-we-tail">
             {tail.map((e, i) => (
               <li key={`${e.id}-${i}`} style={{ ["--we-hue" as string]: `var(--color-${hueFor(e.type)})` }}>
-                <span className="beta-we-tail__t">{clock(e.ts)}</span>
+                <span className="beta-we-tail__t">{clock(e.ts, !busLive)}</span>
                 <span className="beta-we-tail__type">{e.type}</span>
                 <span className="beta-we-tail__sum">{e.summary}</span>
               </li>
             ))}
-            {tail.length === 0 ? <li className="beta-we-tail--none">…</li> : null}
+            {tail.length === 0 ? <li className="beta-we-tail--none">nothing heard</li> : null}
           </ul>
         </div>
       </div>

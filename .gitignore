@@ -59,6 +59,11 @@ logs/
 .*-timeline-cache.json
 .summary-cache.json
 
+# Rewritten every minute by cron (scripts/activity-pulse.py). Tracking it kept
+# the working tree permanently dirty and made every deploy commit a new copy.
+# It is machine state, not source: the file stays on disk and is still served.
+/public/data/activity-pulse.json
+
 # Local throwaways / personal exports
 claude-remove.sh
 docs/spicy-claude-web/
@@ -90,3 +95,6 @@ public/harness/duckdb/
 /test-results
 /playwright-report
 data/claude-parquet
+
+# Python bytecode from the pipeline scripts importing each other.
+__pycache__/

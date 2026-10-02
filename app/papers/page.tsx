@@ -27,6 +27,8 @@ interface Study {
   paperUrl: string | null
   dataFileCount: number
   references?: { title?: string; url?: string }[]
+  /** Set by the pipeline from 2026-10-02; absent on an older papers-data.json. */
+  withdrawn?: boolean
   resultsSummary?: {
     totalStreams: number
     clustered: number
@@ -38,25 +40,80 @@ interface PapersData {
   generated: string
   totalStudies: number
   categories: Record<string, number>
+  /** Studies the source project took off its own site. Absent on older data. */
+  withdrawnCount?: number
+  /** "omitted": not in `studies` at all. "listed": in `studies`, title only. */
+  withdrawnPolicy?: string
   studies: Study[]
 }
 
 /** Em dashes are banned in shipped text; the source titles are full of them. */
 const clean = (s: string) => s.replace(/\s*—\s*/g, ": ")
 
+type StatusTag = { cls: "" | "live" | "warn"; label: string }
+
+const FINISHED = "live" as const
+const IN_FLIGHT = "warn" as const
+const NEUTRAL = "" as const
+
 /**
- * Nine distinct status strings come out of the pipeline. Map them onto the
- * kit's three tag states rather than inventing colours: `live` for work that is
- * finished, `warn` for work in flight, `fail` for work that was abandoned.
+ * Every status the pipeline can emit, mapped on purpose. Three tag states:
+ * `live` for work that is finished, `warn` for work in flight, and the plain
+ * neutral tag for everything else.
  *
- * Withdrawn reads as `fail` because that is the kit's "this did not hold" state
- * and a withdrawn study is exactly that. It is not an error.
+ * Withdrawn is NEUTRAL. A withdrawn study is a decision that was taken, not an
+ * assertion that failed (red) and not something waiting on anyone (orange).
+ * Before 2026-10-02 "withdrawn" rendered red and "withdrawn-permanent" fell
+ * through to orange; both were wrong.
+ *
+ * The first block is the pipeline's public vocabulary (STATUS_PUBLIC in
+ * scripts/papers-pipeline.py). The second block is the raw strings an older
+ * papers-data.json still carries, so the page reads correctly on either file.
+ * The label is what is shown: a raw workflow string is never printed.
  */
-function statusTag(status: string): string {
-  const s = status.toLowerCase()
-  if (s === "withdrawn") return "fail"
-  if (s.startsWith("complete") || s === "published" || s === "accepted") return "live"
-  return "warn"
+const STATUS: Record<string, StatusTag> = {
+  draft: { cls: IN_FLIGHT, label: "draft" },
+  active: { cls: IN_FLIGHT, label: "active" },
+  "in review": { cls: IN_FLIGHT, label: "in review" },
+  "in revision": { cls: IN_FLIGHT, label: "in revision" },
+  complete: { cls: FINISHED, label: "complete" },
+  accepted: { cls: FINISHED, label: "accepted" },
+  published: { cls: FINISHED, label: "published" },
+  withdrawn: { cls: NEUTRAL, label: "withdrawn" },
+  unknown: { cls: NEUTRAL, label: "status unknown" },
+
+  "withdrawn-permanent": { cls: NEUTRAL, label: "withdrawn" },
+  "revision-in-progress": { cls: IN_FLIGHT, label: "in revision" },
+  "draft-complete-pending-audit": { cls: IN_FLIGHT, label: "in review" },
+  "draft-complete-pending-hed-dek": { cls: IN_FLIGHT, label: "in review" },
+}
+
+function statusTag(status: string | null | undefined): StatusTag {
+  const s = (status ?? "").trim().toLowerCase()
+  // Own keys only: a status of "constructor" must not find Object.prototype.
+  if (Object.prototype.hasOwnProperty.call(STATUS, s)) return STATUS[s]
+  // Any other withdrawn-* variant is still withdrawn, and still neutral.
+  if (s.startsWith("withdrawn")) return { cls: NEUTRAL, label: "withdrawn" }
+  // The tenth raw string: a draft rewritten and waiting on another review round.
+  if (s.startsWith("rewritten")) return { cls: IN_FLIGHT, label: "in review" }
+  // Anything this page was not told about gets no colour and no guess.
+  return { cls: NEUTRAL, label: "status unknown" }
+}
+
+/**
+ * Withdrawn at source: the project that produced the study took it off its own
+ * site. Such a study is never featured and its figure is never shown, whatever
+ * the data file carries. The pipeline already withholds those (WITHDRAWN_POLICY
+ * in scripts/papers-pipeline.py); the status test is here so that an older
+ * papers-data.json, which still lists them with figures, renders the same way.
+ */
+function isWithdrawn(s: Study): boolean {
+  return s.withdrawn === true || statusTag(s.status).label === "withdrawn"
+}
+
+function StatusBadge({ status }: { status: string | null | undefined }) {
+  const t = statusTag(status)
+  return <span className={t.cls ? `tag ${t.cls}` : "tag"}>{t.label}</span>
 }
 
 export default function BetaPapersPage() {
@@ -75,9 +132,19 @@ export default function BetaPapersPage() {
   // The ones with something to actually look at lead the page. A study with a
   // figure or a PDF is a thing you can read; the rest are a title and an
   // abstract, and putting them first buries the work that is finished.
-  const featured = sorted.filter((s) => s.hasPaper || s.previewImage).slice(0, 12)
-  const withPaper = d.studies.filter((s) => s.hasPaper && s.paperUrl)
-  const withViz = d.studies.filter((s) => s.previewImage)
+  // A withdrawn study is never one of them.
+  const shown = d.studies.filter((s) => !isWithdrawn(s))
+  const featured = sorted
+    .filter((s) => !isWithdrawn(s) && (s.hasPaper || s.previewImage))
+    .slice(0, 12)
+  const withPaper = shown.filter((s) => s.hasPaper && s.paperUrl)
+  const withViz = shown.filter((s) => s.previewImage)
+
+  // How many are withdrawn, and whether they are in the index below at all.
+  // New data says so itself; older data lists them, so count them from there.
+  const withdrawnListed = d.studies.length - shown.length
+  const withdrawnOmitted =
+    d.withdrawnPolicy === "omitted" && typeof d.withdrawnCount === "number" ? d.withdrawnCount : 0
 
   return (
     <div className="page">
@@ -99,9 +166,28 @@ export default function BetaPapersPage() {
       </p>
 
       <div className="notice">
-        <b>Most of this is unfinished.</b> {withPaper.length} of {d.totalStudies} have a written
+        <b>Most of this is unfinished.</b> {withPaper.length} of {d.totalStudies}{" "}
+        {withPaper.length === 1 ? "has" : "have"} a written
         paper; {withViz.length} have a figure. The rest are notes with an abstract and a method,
         and each one carries its own status below.
+        {withdrawnListed > 0 && (
+          <>
+            {" "}
+            {withdrawnListed} of the {d.totalStudies} {withdrawnListed === 1 ? "is" : "are"}{" "}
+            withdrawn: the project that produced {withdrawnListed === 1 ? "it" : "them"} took{" "}
+            {withdrawnListed === 1 ? "it" : "them"} off its own site, so{" "}
+            {withdrawnListed === 1 ? "it appears" : "they appear"} here by title only.
+          </>
+        )}
+        {withdrawnOmitted > 0 && (
+          <>
+            {" "}
+            {withdrawnOmitted} more {withdrawnOmitted === 1 ? "study is" : "studies are"} not
+            listed: the project that produced {withdrawnOmitted === 1 ? "it" : "them"} withdrew{" "}
+            {withdrawnOmitted === 1 ? "it" : "them"} from its own site, so nothing from{" "}
+            {withdrawnOmitted === 1 ? "it" : "them"} is published here.
+          </>
+        )}
       </div>
 
       <div className="prose beta-sec">
@@ -138,7 +224,7 @@ export default function BetaPapersPage() {
             )}
             <h3>{clean(s.title)}</h3>
             <p className="beta-paper__meta">
-              <span className={`tag ${statusTag(s.status)}`}>{s.status}</span>{" "}
+              <StatusBadge status={s.status} />{" "}
               <span className="tag">{s.category}</span>
             </p>
             <p>{clean(s.description)}</p>
@@ -194,7 +280,7 @@ export default function BetaPapersPage() {
                   <td className="name">{clean(s.title)}</td>
                   <td>{s.category}</td>
                   <td>
-                    <span className={`tag ${statusTag(s.status)}`}>{s.status}</span>
+                    <StatusBadge status={s.status} />
                   </td>
                 </tr>
               ))}

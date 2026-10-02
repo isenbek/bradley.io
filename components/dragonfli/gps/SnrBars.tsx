@@ -5,7 +5,15 @@ import { snrT, type Sat, type SatAgg } from "./stream"
 // Per-satellite signal-strength spectrum. Bars sorted by SNR; used sats lit.
 const MAX_SNR = 50
 
-export function SnrBars({ sats, agg }: { sats: Sat[]; agg: SatAgg | null }) {
+export function SnrBars({
+  sats,
+  agg,
+  offline = false,
+}: {
+  sats: Sat[]
+  agg: SatAgg | null
+  offline?: boolean
+}) {
   const sorted = [...sats].sort((a, b) => b.snr - a.snr)
   return (
     <div className="beta-gps-panel">
@@ -34,7 +42,11 @@ export function SnrBars({ sats, agg }: { sats: Sat[]; agg: SatAgg | null }) {
         ) : (
           <div className="beta-gps-empty">
             <span className="beta-gps-empty__dot" aria-hidden />
-            {agg ? `${agg.n_used}/${agg.n_visible} used · awaiting per-satellite SNR` : "awaiting signal"}
+            {offline
+              ? "receiver offline, no signal to measure"
+              : agg
+                ? `${agg.n_used}/${agg.n_visible} used · awaiting per-satellite SNR`
+                : "awaiting signal"}
           </div>
         )}
       </div>

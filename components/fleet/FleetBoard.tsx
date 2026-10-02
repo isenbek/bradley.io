@@ -9,6 +9,20 @@ import {
   type WorldEnvelope,
 } from "@/components/fleet/api"
 import { RowChart } from "@/app/_charts"
+import {
+  InstrumentHead,
+  InstrumentNote,
+  InstrumentStatus,
+  UpstreamSilence,
+  When,
+  useInstrument,
+} from "@/components/kit/InstrumentStatus"
+import {
+  NO_MEMORY,
+  ageWords,
+  upstreamMemory,
+  type UpstreamMemory,
+} from "@/lib/instrument-status"
 
 /**
  * Fleet health, on the style kit. All panel: every figure is a node reporting.
@@ -17,6 +31,11 @@ import { RowChart } from "@/app/_charts"
  * says they mean. `crit` is red because an invariant broke on that node; `warn`
  * is orange because it needs a human. Nothing else on the page is allowed to be
  * either colour, which is what makes them worth looking at.
+ *
+ * That includes the collector being unreachable. It used to be announced in a
+ * red notice, but a host being off the network is not a broken invariant: it is
+ * an instrument that is offline, which is ATTENTION, and the status tag in the
+ * panel head says so in orange.
  */
 
 const POLL_MS = 20_000
@@ -43,7 +62,14 @@ const bytes = (n: number | undefined) => {
 export function FleetBoard() {
   const [state, setState] = useState<FleetState | null>(null)
   const [medic, setMedic] = useState<WorldEnvelope<MedicAction>[]>([])
-  const [err, setErr] = useState<string | null>(null)
+  // The first poll has come back, one way or the other.
+  const [asked, setAsked] = useState(false)
+  // The latest poll for the collector's state failed.
+  const [down, setDown] = useState(false)
+  // When the state on screen was read, epoch ms.
+  const [stateAt, setStateAt] = useState<number | null>(null)
+  // What the proxy remembers about a collector that is not answering.
+  const [memory, setMemory] = useState<UpstreamMemory>(NO_MEMORY)
 
   useEffect(() => {
     const ac = new AbortController()
@@ -55,11 +81,14 @@ export function FleetBoard() {
       if (ac.signal.aborted) return
       if (s.status === "fulfilled") {
         setState(s.value)
-        setErr(null)
+        setStateAt(Date.now())
+        setDown(false)
       } else {
-        setErr(String((s.reason as Error)?.message ?? s.reason))
+        setDown(true)
+        setMemory(upstreamMemory([s.reason]))
       }
       if (m.status === "fulfilled") setMedic(m.value ?? [])
+      setAsked(true)
     }
     poll()
     const timer = setInterval(poll, POLL_MS)
@@ -69,16 +98,40 @@ export function FleetBoard() {
     }
   }, [])
 
-  if (err && !state) {
+  // Last heard is the newest message the collector received off the bus: the
+  // moment the state was read, less the age the collector reported for it. With
+  // no state at all, it is whatever the proxy remembers.
+  const lastHeard =
+    state && stateAt != null && typeof state.last_recv_age_s === "number"
+      ? stateAt - state.last_recv_age_s * 1000
+      : memory.lastOkMs
+  const inst = useInstrument("fleet", { lastHeard, error: down, pending: !asked })
+  const notLive = inst.reading !== null && inst.reading.state !== "live"
+
+  // Nothing to show: the first poll is still out, or the collector has never
+  // answered this tab. The poll keeps running either way.
+  if (!state) {
     return (
-      <div className="notice fail">
-        <b>The bus is not answering.</b> {err}. This page reads the collector on another host, so
-        this means the link or the collector is down. It says nothing about the nodes themselves.
-      </div>
+      <>
+        <div className="prose beta-sec">
+          <h2>The bus</h2>
+        </div>
+        <InstrumentHead name="Collector" status={inst}>
+          {!asked ? (
+            <InstrumentNote>Reading the bus.</InstrumentNote>
+          ) : (
+            <InstrumentNote>
+              <b>The collector is not answering.</b>{" "}
+              <UpstreamSilence status={inst} watchingSinceMs={memory.watchingSinceMs} /> This page
+              reads the collector on another host, so this means the link or the collector is
+              down. It says nothing about the nodes themselves. This board asks again every 20
+              seconds and resumes by itself when the collector answers.
+            </InstrumentNote>
+          )}
+        </InstrumentHead>
+      </>
     )
   }
-
-  if (!state) return <p className="quiet">reading the bus…</p>
 
   const nodes = Object.values(state.nodes ?? {}).sort((a, b) =>
     a.host.localeCompare(b.host)
@@ -99,14 +152,28 @@ export function FleetBoard() {
 
       <div className="panel">
         <div className="panel-face">
-          <div className="panel-bar">
+          <div className="panel-bar beta-inst-bar">
             <b>Collector</b>
-            <span>
-              <span className={`tag ${state.last_recv_age_s < 120 ? "live" : "warn"}`}>
-                {state.last_recv_age_s < 120 ? "receiving" : "quiet"}
-              </span>
-            </span>
+            <InstrumentStatus status={inst} />
           </div>
+          {notLive && (
+            <InstrumentNote>
+              {down ? (
+                <>
+                  <b>The collector has stopped answering.</b> The figures and the node table below
+                  are its last report, read <When at={stateAt} now={inst.now} />, and say nothing
+                  about the nodes now.
+                </>
+              ) : (
+                <>
+                  <b>The collector is answering, but the bus is quiet.</b> No node has sent it a
+                  message since <When at={inst.lastHeardMs} now={inst.now} />. Each row below is
+                  that node&apos;s last report, not its current state.
+                </>
+              )}{" "}
+              This board asks again every 20 seconds and resumes by itself.
+            </InstrumentNote>
+          )}
           <table className="readout">
             <tbody>
               <tr>
@@ -117,7 +184,12 @@ export function FleetBoard() {
               </tr>
               <tr>
                 <td>Last message</td>
-                <td className="num">{nf(Math.round(state.last_recv_age_s))} s ago</td>
+                {/* Off the ticking clock, so it keeps counting while the
+                    collector is not answering instead of freezing at the last
+                    value it reported. */}
+                <td className="num">
+                  {ageWords(inst.reading?.ageS ?? state.last_recv_age_s ?? 0)} ago
+                </td>
               </tr>
               <tr>
                 <td>Collector uptime</td>

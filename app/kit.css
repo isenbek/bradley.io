@@ -2053,3 +2053,104 @@ body:has(.beta-root) {
   .beta-cv-role { grid-template-columns: minmax(0, 1fr); }
   .beta-cv-when { display: flex; gap: calc(var(--u) * 1) calc(var(--u) * 4); flex-wrap: wrap; }
 }
+
+/* ===========================================================================
+   INSTRUMENT STATUS (components/kit/InstrumentStatus.tsx)
+
+   Every live instrument says, in its panel head, whether what is under it is
+   happening now: LIVE, STALE or OFFLINE. The decision and the thresholds are
+   lib/instrument-status.ts; this is only how the tag and its sentence sit.
+
+   Colour follows the kit's rule and nothing else. LIVE is blue because blue is
+   ACTIVE. STALE and OFFLINE use the kit's own `tag warn`, orange, because a
+   box that is unplugged is ATTENTION. Neither is ever red: red means an
+   assertion failed. The word carries the state, so none of this depends on
+   telling the two colours apart.
+   ======================================================================== */
+
+/* The tag. A kit .tag never wraps, which is right for "ok" and wrong for
+   "OFFLINE · last heard 29 Sep 2026 20:56 UTC" on a 320px screen, so this one
+   may break across lines, anywhere if it must, rather than push the panel
+   wider than the page. */
+.tag.beta-inst {
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.45;
+}
+/* On the tag's own paper ground, so the -ink step: 7.7:1. */
+.tag.beta-inst--live { border-color: var(--color-blue-ink); color: var(--color-blue-ink); }
+
+/* A panel-bar that holds a status tag lets it drop under the name when the two
+   do not fit on one line. The kit's bar is a single non-wrapping row. */
+.panel-bar.beta-inst-bar { flex-wrap: wrap; row-gap: calc(var(--u) * 2); }
+.panel-bar.beta-inst-bar > b { min-width: 0; overflow-wrap: anywhere; }
+
+/* The status tag beside a second tag or a caption, on the bar's right. */
+.beta-inst-tags {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: calc(var(--u) * 2);
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* What the instrument says about itself when it is not live. It is on panel
+   because the machine is the one saying it, and at full glass rather than
+   muted because when it appears it is the most important thing in the panel. */
+.beta-inst-note {
+  margin: 0 0 calc(var(--u) * 4);
+  max-width: 68ch;
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: 1.55;
+  color: var(--color-glass);
+  overflow-wrap: break-word;
+}
+.beta-inst-note:last-child { margin-bottom: 0; }
+.beta-inst-note b { font-weight: 700; }
+.beta-inst-note time { font-variant-numeric: tabular-nums; }
+
+/* The head-only panel that sits above a board which is not itself a kit panel
+   (the camera, the mics, the map). With nothing under the bar, the bar's rule
+   and its bottom spacing have nothing to separate, so they go. */
+.beta-inst-panel { margin-bottom: calc(var(--u) * 4); }
+.beta-inst-panel .panel-bar:last-child { border-bottom: 0; margin-bottom: 0; padding-bottom: 0; }
+
+/* A caption under a frame inside that panel: when the frame was captured. */
+.beta-inst-cap {
+  margin-top: calc(var(--u) * 2.5);
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+  line-height: 1.5;
+  color: var(--color-glass-muted);
+  overflow-wrap: anywhere;
+}
+
+/* The camera's overlay readouts now carry a full capture time when the frame
+   is stale, which is longer than "captured 40 s ago". Let them wrap inside the
+   frame instead of running out of it on a phone. */
+.beta-cam__hud { max-width: calc(100% - var(--u) * 6); flex-wrap: wrap; row-gap: calc(var(--u) * 1); }
+
+/* Offline is ATTENTION, not a failed assertion. These three dots were red, each
+   with a comment calling red right for "actually down". A receiver that is off
+   the network has broken no invariant; it wants a human, which is orange. The
+   rules above are left as they were written and overridden here, so the
+   reasoning and the correction can both be read. */
+.beta-we-hud__status.is-offline .beta-we-hud__dot { background: var(--color-orange); }
+.beta-gps-hud__status.is-offline .beta-gps-hud__dot { background: var(--color-orange); }
+.beta-air__live--offline { color: var(--color-orange); }
+
+/* The sentence under the site-index readout that says what period the
+   numbers cover. It sits on panel, so it takes the panel's muted ink. */
+.beta-stats-note {
+  margin: calc(var(--u) * 3) 0 0;
+  font-size: var(--text-fine);
+  line-height: 1.5;
+  color: var(--color-glass-muted);
+  max-width: 68ch;
+}
