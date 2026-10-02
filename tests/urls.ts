@@ -13,6 +13,7 @@ const BASE_URL = process.env.PLAYWRIGHT_BASE_URL ?? "http://localhost:32221"
 export const CORE_PATHS: string[] = [
   "/",
   "/about",
+  "/resume",
   "/contact",
   "/services",
   "/projects",

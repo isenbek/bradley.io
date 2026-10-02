@@ -102,6 +102,7 @@ export default async function BetaAboutPage() {
       <BetaMeasured generated={data.generated} source="site-data.json" />
 
       <p className="quiet">
+        <Link href="/resume">The full resume</Link> goes back to 1997.{" "}
         <Link href="/work">The commit-level record</Link> is on the work page.{" "}
         <Link href="/contact">Get in touch</Link> if any of it is relevant to what you are
         building.

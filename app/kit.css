@@ -1994,3 +1994,62 @@ body:has(.beta-root) {
   color: color-mix(in oklab, var(--color-ink) 65%, transparent);
   max-width: 62ch;
 }
+
+/* ---- the resume (app/resume) ----
+   A resume is documentation, so it stays on paper: no panel, no card. Each
+   role is a two-column row, dates on the left in mono so the eye can run down
+   them, the substance on the right. Under 720px the columns stack, dates
+   first. Lists here sit outside .prose (kit components are its siblings), so
+   they need their own bullets back after preflight. */
+.beta-cv-ctas { display: flex; gap: calc(var(--u) * 3); flex-wrap: wrap; margin: calc(var(--u) * 5) 0; }
+.beta-cv {
+  margin: calc(var(--u) * 4) 0 calc(var(--u) * 8);
+  border-top: 1px solid var(--color-rule);
+}
+.beta-cv-role {
+  display: grid;
+  grid-template-columns: minmax(0, 11rem) minmax(0, 1fr);
+  gap: calc(var(--u) * 2) calc(var(--u) * 6);
+  padding: calc(var(--u) * 5) 0;
+  border-bottom: 1px solid var(--color-ink-faint);
+}
+.beta-cv-when {
+  margin: 0;
+  display: grid;
+  align-content: start;
+  gap: calc(var(--u) * 1);
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+  line-height: 1.5;
+  color: var(--color-ink-muted);
+  font-variant-numeric: tabular-nums;
+}
+.beta-cv-body { min-width: 0; }
+.beta-cv-body h3 {
+  margin: 0 0 calc(var(--u) * 2);
+  font-family: var(--font-sans);
+  font-size: var(--text-lead);
+  font-weight: 600;
+  line-height: 1.25;
+}
+.beta-cv-body h3 span {
+  display: block;
+  font-size: var(--text-body);
+  font-weight: 400;
+  color: var(--color-ink-muted);
+}
+.beta-cv-body > p { margin: 0 0 calc(var(--u) * 3); max-width: 68ch; line-height: 1.55; }
+.beta-cv-body ul {
+  margin: 0 0 calc(var(--u) * 3);
+  padding-left: 1.15em;
+  list-style: disc;
+  max-width: 68ch;
+  display: grid;
+  gap: calc(var(--u) * 1.5);
+  line-height: 1.55;
+}
+.beta-cv-body .chips { margin: 0; }
+@media (max-width: 720px) {
+  .beta-cv-role { grid-template-columns: minmax(0, 1fr); }
+  .beta-cv-when { display: flex; gap: calc(var(--u) * 1) calc(var(--u) * 4); flex-wrap: wrap; }
+}

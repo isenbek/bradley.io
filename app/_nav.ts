@@ -38,6 +38,7 @@ export const NAV: NavGroup[] = [
     links: [
       { href: "/", label: "Home", blurb: "what I build and who it is for" },
       { href: "/about", label: "About", blurb: "the bio, the timeline, the numbers" },
+      { href: "/resume", label: "Resume", blurb: "the full record since 1997, and the PDF" },
       { href: "/services", label: "Services", blurb: "five practices, three ways to engage" },
       { href: "/contact", label: "Contact", blurb: "the inbox, and what helps a first email" },
       { href: "/projects", label: "Projects", blurb: "the three worth opening" },
