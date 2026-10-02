@@ -1,0 +1,23 @@
+# bradley.io site search: vectl over the site's own pages, embedded by the
+# local Ollama. Listens on 127.0.0.1:32295 only; reached through
+# app/api/search. Install: sudo cp bradley-io-search.service
+# /etc/systemd/system/ && sudo systemctl daemon-reload && sudo systemctl
+# enable --now bradley-io-search. Index: scripts/site-search/index.py
+# (run by scripts/refresh-4h.sh and after each deploy).
+[Unit]
+Description=bradley.io site search (vectl)
+After=network.target ollama.service
+Wants=ollama.service
+
+[Service]
+Type=simple
+User=bisenbek
+WorkingDirectory=/home/bisenbek/projects/bradleyio
+ExecStart=/mnt/nom01/envs/bradleyio-search/bin/python scripts/site-search/server.py
+Restart=on-failure
+RestartSec=10
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

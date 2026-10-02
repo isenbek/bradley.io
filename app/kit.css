@@ -2234,11 +2234,13 @@ body:has(.beta-root) {
    the row and its margin (462px), MENU (80px), two 12px gaps and the band's
    own 64px of padding: 775px with nothing to spare, and the first thing to
    give below that is the wordmark, which truncates. A desktop scrollbar takes
-   15px more. 52rem is 832px, so the row arrives with forty to fifty pixels of
+   15px more. Since 2026-10-02 the search pill (36px and a 12px gap) sits
+   beside MENU, so the switch moved from 52rem to 55rem (880px) to keep the
+   same slack. Originally: 52rem is 832px, so the row arrives with forty to fifty pixels of
    slack, which is also the room a fallback mono face would need, and a 768px
    tablet keeps the phone bar. In rem so a reader who has raised their font
    size gets the switch later, when their larger row actually fits. */
-@media (min-width: 52rem) {
+@media (min-width: 55rem) {
   /* Stretched to the bar's full height, through its padding, so each link is
      a target as tall as the bar and the marker can sit on the bar's own rule
      instead of floating under a word. The negative margin is the band's
@@ -7191,3 +7193,174 @@ a.beta-papers-fig:focus-visible { outline: 2px solid var(--color-blue-ink); outl
 }
 .beta-resume-hire a:hover { text-decoration-color: var(--color-ink); }
 /* end of block: beta-resume-* */
+
+/* ===========================================================================
+   SEARCH: the masthead pill and its dialog (components/search/SearchPill.tsx;
+   block prefix beta-search-*). Semantic site search over vectl, served from
+   this box (app/api/search). The pill wears MENU's vocabulary so the bar
+   reads as one set of controls; the dialog is the machine answering, so the
+   results sit on panel.
+   =========================================================================== */
+.beta-search-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--u) * 2);
+  margin-left: auto;
+  padding: calc(var(--u) * 2) calc(var(--u) * 2.5);
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-ink);
+  background: var(--color-paper-sunk);
+  border: 1px solid var(--color-ink);
+  border-radius: 999px;
+  box-shadow: 3px 3px 0 var(--color-ink-faint);
+  cursor: pointer;
+  position: relative;
+  z-index: 30;
+  transition: box-shadow var(--t-snap) var(--ease-detent), transform var(--t-snap) var(--ease-detent);
+}
+.beta-search-pill:hover { box-shadow: 3px 3px 0 var(--color-ink); }
+.beta-search-pill:active { transform: translate(3px, 3px); box-shadow: 0 0 0 var(--color-ink); }
+.beta-search-pill:focus-visible { outline: 2px solid var(--color-blue-ink); outline-offset: 2px; }
+.beta-search-pill svg { flex: 0 0 auto; }
+.beta-search-pill__label,
+.beta-search-pill__kbd { display: none; }
+.beta-search-pill__kbd {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  padding: 0 calc(var(--u) * 1.25);
+  border: 1px solid var(--color-ink-faint);
+  border-radius: var(--radius-hair);
+  color: var(--color-ink-muted);
+}
+/* The primary row takes the bar's width; the pill pushes MENU right only
+   when the row is hidden, so on desktop it needs no auto margin. */
+@media (min-width: 55rem) {
+  .beta-search-pill { margin-left: 0; }
+}
+@media (min-width: 80rem) {
+  .beta-search-pill__label,
+  .beta-search-pill__kbd { display: inline; }
+}
+
+.beta-search {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: grid;
+  align-items: start;
+  justify-items: center;
+  padding: calc(var(--u) * 16) calc(var(--u) * 4) calc(var(--u) * 4);
+}
+.beta-search__scrim {
+  position: absolute;
+  inset: 0;
+  background: color-mix(in oklab, var(--color-ink) 45%, transparent);
+}
+.beta-search__dialog {
+  position: relative;
+  width: min(44rem, 100%);
+  max-height: calc(100dvh - var(--u) * 24);
+  display: flex;
+  flex-direction: column;
+}
+.beta-search__dialog .panel-face {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  max-height: inherit;
+}
+.beta-search__field {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--u) * 2.5);
+  margin-top: calc(var(--u) * 3);
+  padding: calc(var(--u) * 2.5) calc(var(--u) * 3);
+  border: 1px solid var(--color-rule-panel);
+  color: var(--color-glass-muted);
+}
+.beta-search__field:focus-within { border-color: var(--color-blue-ink); }
+.beta-search__field input {
+  flex: 1 1 auto;
+  min-width: 0;
+  background: transparent;
+  border: 0;
+  outline: 0;
+  color: var(--color-glass);
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+}
+.beta-search__field input::placeholder { color: var(--color-glass-muted); }
+.beta-search__field input::-webkit-search-cancel-button { display: none; }
+.beta-search__close {
+  flex: 0 0 auto;
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-glass-muted);
+  background: transparent;
+  border: 1px solid var(--color-rule-panel);
+  border-radius: var(--radius-hair);
+  padding: calc(var(--u) * 0.5) calc(var(--u) * 1.5);
+  cursor: pointer;
+}
+.beta-search__body {
+  margin-top: calc(var(--u) * 3);
+  overflow-y: auto;
+  min-height: 0;
+  overscroll-behavior: contain;
+}
+.beta-search__note {
+  margin: 0;
+  font-size: var(--text-fine);
+  line-height: 1.55;
+  color: var(--color-glass-muted);
+  max-width: 60ch;
+}
+.beta-search__note a { color: var(--color-glass); }
+.beta-search__hits { list-style: none; margin: 0; padding: 0; display: grid; gap: calc(var(--u) * 1); }
+.beta-search__hits a {
+  display: grid;
+  gap: calc(var(--u) * 0.75);
+  padding: calc(var(--u) * 2.5) calc(var(--u) * 3);
+  border: 1px solid transparent;
+  text-decoration: none;
+  color: var(--color-glass);
+}
+.beta-search__hits a.is-active,
+.beta-search__hits a:focus-visible {
+  border-color: var(--color-blue-ink);
+  outline: 0;
+}
+.beta-search__title { font-family: var(--font-sans); font-weight: 600; font-size: var(--text-body); }
+.beta-search__path {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  color: var(--color-glass-muted);
+  overflow-wrap: anywhere;
+}
+.beta-search__snip {
+  font-size: var(--text-fine);
+  line-height: 1.5;
+  color: var(--color-glass-muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.beta-search__foot {
+  margin: calc(var(--u) * 3) 0 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  color: var(--color-glass-muted);
+}
+.beta-search__foot kbd { font-family: var(--font-mono); }
+@media (max-width: 34rem) {
+  .beta-search { padding: calc(var(--u) * 4) calc(var(--u) * 2); }
+  .beta-search__dialog { max-height: calc(100dvh - var(--u) * 8); }
+  .beta-search__foot { display: none; }
+}
+/* end of block: beta-search-* */

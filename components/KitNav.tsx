@@ -5,6 +5,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { NAV, PRIMARY_LINKS, inSection } from "@/app/_nav"
 import { BioLogo } from "@/components/kit/BioLogo"
+import { SearchPill } from "@/components/search/SearchPill"
 import { useActive } from "@/components/live/LiveDot"
 import { useChanged } from "@/lib/use-changed"
 
@@ -212,6 +213,8 @@ export function KitNav() {
             when focus went somewhere: a click on the scrim has no
             relatedTarget and is the scrim's own business, and so is the
             window losing focus. */}
+        <SearchPill />
+
         <div
           className="menu-wrap"
           onBlur={(e) => {

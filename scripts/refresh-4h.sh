@@ -27,5 +27,9 @@ export PATH=/home/bisenbek/.nvm/versions/node/v24.0.1/bin:/usr/local/bin:/usr/bi
   # 2026-03-26; its inputs no longer cover that window, and regenerating it
   # every 4 hours had decayed it to "activeDays 1, velocity 1710x". The script
   # now refuses to overwrite a frozen file without --unfreeze.
+  # Site search (vectl over every page; scripts/site-search/). Rebuilds into
+  # a new directory and swaps a symlink only when complete, so a failed run
+  # leaves the live index as it was.
+  /mnt/nom01/envs/bradleyio-search/bin/python "$SCRIPTS/site-search/index.py"
   "$SCRIPTS/mirror-to-cjgaldescom.sh"
 } >> "$LOG" 2>&1
