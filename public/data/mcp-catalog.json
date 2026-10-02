@@ -1,18 +1,18 @@
 {
-  "generated": "2026-09-09T16:01:39.588699+00:00",
+  "generated": "2026-10-02T12:02:17.139826+00:00",
   "sources": {
     "unifiedSpec": "https://mcp.campaignbrain.dev/openapi.json",
     "metadata": "scripts/mcp-catalog-meta.json (pulled 2026-08-29)"
   },
   "stats": {
     "totalServices": 55,
-    "totalEndpoints": 2800,
+    "totalEndpoints": 2324,
     "totalCategories": 5,
     "mcpServers": 4,
     "mcpServersReachable": 3,
     "fleetServices": 84,
-    "fleetEndpoints": 3818,
-    "uncataloguedServices": 43
+    "fleetEndpoints": 3386,
+    "uncataloguedServices": 44
   },
   "mcpServers": [
     {
@@ -78,7 +78,7 @@
       "what": "Home network management: the OpenWrt router, its dual WAN, and the fleet behind it.",
       "tools": [],
       "reachable": false,
-      "note": "HTTP 405"
+      "note": "<urlopen error [Errno 113] No route to host>"
     },
     {
       "id": "cbmcp",
@@ -97,6 +97,25 @@
       "id": "ai",
       "name": "AI & Intelligence",
       "services": [
+        {
+          "id": "cbintel",
+          "name": "Intelligence API",
+          "url": "https://intel.campaignbrain.dev",
+          "description": "Web crawling, screenshots, transcripts, document processing, workspaces. Scheduler for recurring jobs, planner for multi-step research. Embedded MCP at /mcp.",
+          "auth": "X-API-Key",
+          "capabilities": [
+            "crawl",
+            "screenshot",
+            "transcript",
+            "documents",
+            "workspaces",
+            "scheduler",
+            "planner",
+            "jobs",
+            "mcp-tools"
+          ],
+          "endpointCount": 177
+        },
         {
           "id": "cbindex",
           "name": "Document Index",
@@ -131,7 +150,7 @@
             "streaming",
             "mcp-tools"
           ],
-          "endpointCount": 24
+          "endpointCount": 26
         },
         {
           "id": "cbscout",
@@ -147,7 +166,7 @@
             "consolidation",
             "mcp-tools"
           ],
-          "endpointCount": 0
+          "endpointCount": 20
         },
         {
           "id": "cbunstruct",
@@ -176,25 +195,6 @@
             "comfyui",
             "gpu",
             "sprites"
-          ],
-          "endpointCount": 0
-        },
-        {
-          "id": "cbintel",
-          "name": "Intelligence API",
-          "url": "https://intel.campaignbrain.dev",
-          "description": "Web crawling, screenshots, transcripts, document processing, workspaces. Scheduler for recurring jobs, planner for multi-step research. Embedded MCP at /mcp.",
-          "auth": "X-API-Key",
-          "capabilities": [
-            "crawl",
-            "screenshot",
-            "transcript",
-            "documents",
-            "workspaces",
-            "scheduler",
-            "planner",
-            "jobs",
-            "mcp-tools"
           ],
           "endpointCount": 0
         },
@@ -234,7 +234,7 @@
             "address-hygiene",
             "mcp-tools"
           ],
-          "endpointCount": 156
+          "endpointCount": 176
         },
         {
           "id": "cbfiles",
@@ -255,22 +255,20 @@
           "endpointCount": 77
         },
         {
-          "id": "cbdistricts",
-          "name": "Congressional Districts",
-          "url": "https://districts.campaignbrain.dev",
-          "description": "119th Congress, 441 districts. Demographics, GeoJSON boundaries, radio coverage, geographic layers, state data. Embedded MCP at /mcp.",
-          "auth": "None (public)",
+          "id": "cbsurveys",
+          "name": "Survey Platform (YASP)",
+          "url": "https://surveys.campaignbrain.dev",
+          "description": "Create surveys, manage questions, collect and analyze responses. User management with API keys. Embedded MCP at /mcp.",
+          "auth": "X-API-Key",
           "capabilities": [
-            "districts",
-            "demographics",
-            "geojson",
-            "states",
-            "radio-coverage",
-            "intersections",
-            "layers",
+            "surveys",
+            "questions",
+            "responses",
+            "publish",
+            "users",
             "mcp-tools"
           ],
-          "endpointCount": 54
+          "endpointCount": 41
         },
         {
           "id": "cbiterable",
@@ -289,22 +287,6 @@
             "duckdb",
             "multi-tenant",
             "sql-query"
-          ],
-          "endpointCount": 40
-        },
-        {
-          "id": "cbsurveys",
-          "name": "Survey Platform (YASP)",
-          "url": "https://surveys.campaignbrain.dev",
-          "description": "Create surveys, manage questions, collect and analyze responses. User management with API keys. Embedded MCP at /mcp.",
-          "auth": "X-API-Key",
-          "capabilities": [
-            "surveys",
-            "questions",
-            "responses",
-            "publish",
-            "users",
-            "mcp-tools"
           ],
           "endpointCount": 40
         },
@@ -429,6 +411,24 @@
           "endpointCount": 7
         },
         {
+          "id": "cbdistricts",
+          "name": "Congressional Districts",
+          "url": "https://districts.campaignbrain.dev",
+          "description": "119th Congress, 441 districts. Demographics, GeoJSON boundaries, radio coverage, geographic layers, state data. Embedded MCP at /mcp.",
+          "auth": "None (public)",
+          "capabilities": [
+            "districts",
+            "demographics",
+            "geojson",
+            "states",
+            "radio-coverage",
+            "intersections",
+            "layers",
+            "mcp-tools"
+          ],
+          "endpointCount": 0
+        },
+        {
           "id": "sdr",
           "name": "SDR Scanner Control Plane",
           "url": "https://sdr.tinymachines.ai",
@@ -464,7 +464,7 @@
             "ai-gists",
             "mcp-tools"
           ],
-          "endpointCount": 45
+          "endpointCount": 57
         },
         {
           "id": "cbfront",
@@ -487,6 +487,22 @@
             "mcp-tools"
           ],
           "endpointCount": 31
+        },
+        {
+          "id": "cbsms",
+          "name": "SMS/MMS Gateway",
+          "url": "https://sms.campaignbrain.dev",
+          "description": "Unified SMS/MMS gateway for Ejoin devices. Single send, bulk send, device management, webhook responses. Embedded MCP at /mcp.",
+          "auth": "Webhook secret",
+          "capabilities": [
+            "sms-send",
+            "mms-send",
+            "bulk-sms",
+            "device-control",
+            "webhooks",
+            "mcp-tools"
+          ],
+          "endpointCount": 28
         },
         {
           "id": "cblinks",
@@ -522,22 +538,6 @@
           "endpointCount": 22
         },
         {
-          "id": "cbsms",
-          "name": "SMS/MMS Gateway",
-          "url": "https://sms.campaignbrain.dev",
-          "description": "Unified SMS/MMS gateway for Ejoin devices. Single send, bulk send, device management, webhook responses. Embedded MCP at /mcp.",
-          "auth": "Webhook secret",
-          "capabilities": [
-            "sms-send",
-            "mms-send",
-            "bulk-sms",
-            "device-control",
-            "webhooks",
-            "mcp-tools"
-          ],
-          "endpointCount": 21
-        },
-        {
           "id": "cbwebhook",
           "name": "Webhook Router",
           "url": "https://webhook.campaignbrain.dev",
@@ -550,7 +550,7 @@
             "consumer-management",
             "mcp-tools"
           ],
-          "endpointCount": 15
+          "endpointCount": 19
         }
       ]
     },
@@ -577,7 +577,22 @@
             "deploy",
             "mcp-tools"
           ],
-          "endpointCount": 91
+          "endpointCount": 100
+        },
+        {
+          "id": "cbvpn",
+          "name": "Network Inventory",
+          "url": "https://vpn.campaignbrain.dev",
+          "description": "Network device inventory and topology. Fleet status, device inventory with snapshots, network topology visualization. Embedded MCP at /mcp.",
+          "auth": "X-API-Key",
+          "capabilities": [
+            "fleet-status",
+            "device-inventory",
+            "topology",
+            "snapshots",
+            "mcp-tools"
+          ],
+          "endpointCount": 80
         },
         {
           "id": "cbauth",
@@ -601,21 +616,6 @@
             "mcp-tools"
           ],
           "endpointCount": 71
-        },
-        {
-          "id": "cbvpn",
-          "name": "Network Inventory",
-          "url": "https://vpn.campaignbrain.dev",
-          "description": "Network device inventory and topology. Fleet status, device inventory with snapshots, network topology visualization. Embedded MCP at /mcp.",
-          "auth": "X-API-Key",
-          "capabilities": [
-            "fleet-status",
-            "device-inventory",
-            "topology",
-            "snapshots",
-            "mcp-tools"
-          ],
-          "endpointCount": 68
         },
         {
           "id": "cbtenant",
@@ -830,58 +830,7 @@
             "inbox",
             "mcp-tools"
           ],
-          "endpointCount": 450
-        },
-        {
-          "id": "cbradio",
-          "name": "Rural AM/FM Rate Ingestion",
-          "url": "https://ruralamfm.campaignbrain.dev",
-          "description": "Radio station political advertising rates for AI-powered media buying. 2,000+ stations, rate cards with OCR extraction, proposals, radio buys, order packets, FCC data, Nielsen ratings, coverage contours. Embedded MCP at /mcp.",
-          "auth": "cbauth JWT",
-          "capabilities": [
-            "stations",
-            "rate-cards",
-            "rates",
-            "proposals",
-            "radio-buys",
-            "order-packets",
-            "fcc-data",
-            "nielsen-ratings",
-            "geo-coverage",
-            "ocr",
-            "documents",
-            "srm",
-            "agreements",
-            "voter-data",
-            "mcp-tools"
-          ],
-          "endpointCount": 367
-        },
-        {
-          "id": "cbradio-qa",
-          "name": "Rural AM/FM Rate Ingestion (QA)",
-          "url": "https://qaradio.campaignbrain.dev",
-          "description": "QA instance of cbradio. Mirrors production data for testing. Embedded MCP at /mcp.",
-          "auth": "cbauth JWT",
-          "capabilities": [
-            "stations",
-            "rate-cards",
-            "rates",
-            "proposals",
-            "radio-buys",
-            "order-packets",
-            "fcc-data",
-            "nielsen-ratings",
-            "geo-coverage",
-            "ocr",
-            "documents",
-            "srm",
-            "agreements",
-            "voter-data",
-            "mcp-tools",
-            "qa"
-          ],
-          "endpointCount": 367
+          "endpointCount": 462
         },
         {
           "id": "cbapp",
@@ -935,7 +884,7 @@
             "merchant-accounts",
             "mcp-tools"
           ],
-          "endpointCount": 22
+          "endpointCount": 55
         },
         {
           "id": "cbbanking",
@@ -953,7 +902,7 @@
             "export",
             "duckdb"
           ],
-          "endpointCount": 19
+          "endpointCount": 22
         },
         {
           "id": "cbesig",
@@ -1047,6 +996,57 @@
           "endpointCount": 0
         },
         {
+          "id": "cbradio",
+          "name": "Rural AM/FM Rate Ingestion",
+          "url": "https://ruralamfm.campaignbrain.dev",
+          "description": "Radio station political advertising rates for AI-powered media buying. 2,000+ stations, rate cards with OCR extraction, proposals, radio buys, order packets, FCC data, Nielsen ratings, coverage contours. Embedded MCP at /mcp.",
+          "auth": "cbauth JWT",
+          "capabilities": [
+            "stations",
+            "rate-cards",
+            "rates",
+            "proposals",
+            "radio-buys",
+            "order-packets",
+            "fcc-data",
+            "nielsen-ratings",
+            "geo-coverage",
+            "ocr",
+            "documents",
+            "srm",
+            "agreements",
+            "voter-data",
+            "mcp-tools"
+          ],
+          "endpointCount": 0
+        },
+        {
+          "id": "cbradio-qa",
+          "name": "Rural AM/FM Rate Ingestion (QA)",
+          "url": "https://qaradio.campaignbrain.dev",
+          "description": "QA instance of cbradio. Mirrors production data for testing. Embedded MCP at /mcp.",
+          "auth": "cbauth JWT",
+          "capabilities": [
+            "stations",
+            "rate-cards",
+            "rates",
+            "proposals",
+            "radio-buys",
+            "order-packets",
+            "fcc-data",
+            "nielsen-ratings",
+            "geo-coverage",
+            "ocr",
+            "documents",
+            "srm",
+            "agreements",
+            "voter-data",
+            "mcp-tools",
+            "qa"
+          ],
+          "endpointCount": 0
+        },
+        {
           "id": "cbtest",
           "name": "Test Bootstrap API",
           "url": "https://test.campaignbrain.dev",
@@ -1064,7 +1064,7 @@
   "uncatalogued": [
     {
       "id": "cbradio2",
-      "endpointCount": 122
+      "endpointCount": 135
     },
     {
       "id": "cbgreenroom",
@@ -1076,7 +1076,7 @@
     },
     {
       "id": "cbelections",
-      "endpointCount": 59
+      "endpointCount": 60
     },
     {
       "id": "cbstitch",
@@ -1092,35 +1092,39 @@
     },
     {
       "id": "cblist",
-      "endpointCount": 35
+      "endpointCount": 36
+    },
+    {
+      "id": "cbforge",
+      "endpointCount": 30
     },
     {
       "id": "cbcalendar",
       "endpointCount": 27
     },
     {
+      "id": "cbconvo",
+      "endpointCount": 25
+    },
+    {
+      "id": "cbea",
+      "endpointCount": 25
+    },
+    {
       "id": "cbship",
       "endpointCount": 25
     },
     {
-      "id": "cbconvo",
-      "endpointCount": 24
-    },
-    {
-      "id": "cbea",
-      "endpointCount": 24
-    },
-    {
       "id": "cbpublish",
-      "endpointCount": 20
+      "endpointCount": 21
     },
     {
       "id": "cbbilling",
-      "endpointCount": 18
+      "endpointCount": 20
     },
     {
       "id": "cbonboard",
-      "endpointCount": 18
+      "endpointCount": 19
     },
     {
       "id": "cbpersonnel",
@@ -1136,6 +1140,10 @@
     },
     {
       "id": "cbmarketing",
+      "endpointCount": 17
+    },
+    {
+      "id": "cbsquare",
       "endpointCount": 17
     },
     {
@@ -1183,16 +1191,12 @@
       "endpointCount": 12
     },
     {
-      "id": "cbforge",
-      "endpointCount": 12
-    },
-    {
       "id": "cbinbox",
       "endpointCount": 12
     },
     {
       "id": "cbnotify",
-      "endpointCount": 11
+      "endpointCount": 12
     },
     {
       "id": "cbsnailmail",
@@ -1207,15 +1211,7 @@
       "endpointCount": 9
     },
     {
-      "id": "cbsquare",
-      "endpointCount": 9
-    },
-    {
       "id": "cbharvest",
-      "endpointCount": 7
-    },
-    {
-      "id": "cbkrnl",
       "endpointCount": 7
     },
     {
@@ -1233,6 +1229,14 @@
     {
       "id": "cbworkspaces",
       "endpointCount": 5
+    },
+    {
+      "id": "cbforgeapp",
+      "endpointCount": 2
+    },
+    {
+      "id": "cbsvi",
+      "endpointCount": 1
     }
   ]
 }
