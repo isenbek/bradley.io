@@ -1,34 +1,62 @@
 {
-  "generated": "2026-10-02T12:02:11.520944+00:00",
+  "generated": "2026-10-02T16:11:13.667354+00:00",
   "stats": {
     "totalProjects": 84,
-    "totalSessions": 141,
-    "totalMessages": 434797,
-    "activeDays": 38,
-    "streak": 2
+    "totalSessions": 333,
+    "totalMessages": 1095113,
+    "activeDays": 187,
+    "streak": 128,
+    "coverage": {
+      "since": "2026-03-08",
+      "through": "2026-10-02",
+      "source": "claude-activity.duckdb",
+      "recordingBegan": "2026-07-07",
+      "dayTimezone": "UTC",
+      "stale": false,
+      "note": "Sessions, records, active days and the streak are read from the durable activity database and cover 2026-03-08 through 2026-10-02 (UTC days). The database started recording on 2026-07-07. From before that date it holds only the sessions whose logs were still on disk that day, so the earlier months are incomplete and nothing before 2026-03-08 is included.",
+      "definitions": {
+        "totalSessions": "Claude Code session logs in the record. Subagent logs are not counted.",
+        "totalMessages": "Transcript records in those sessions: a prompt, a tool result, or one content block of a model reply. Not a count of messages somebody typed.",
+        "activeDays": "Days with at least one transcript record.",
+        "streak": "Consecutive active days ending today or yesterday, as of 2026-10-02. 0 when the last active day is older.",
+        "totalProjects": "Entries in this file's project list: the Claude Web projects of the February 2026 export, the featured GitHub repos and the 20 most active Claude Code working directories, merged by name."
+      }
+    }
   },
   "activityFeed": [
     {
       "type": "github",
       "title": "Activity on isenbek/terrapulse",
-      "description": "Climate intelligence platform \u2014 ingest, normalize, and serve environmental data",
+      "description": "Climate intelligence platform: ingest, normalize, and serve environmental data",
       "projectSlug": "terrapulse",
       "category": "systems",
-      "date": "2026-10-02T00:03:56Z",
+      "date": "2026-10-02T15:49:08Z",
       "metadata": {
         "repo": "isenbek/terrapulse"
       }
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (590 messages)",
-      "description": "3 sessions, 198 tool calls",
+      "title": "Claude Code: 711 transcript records",
+      "description": "11 sessions active, 198 tool calls",
+      "projectSlug": null,
+      "category": null,
+      "date": "2026-10-02T11:57:04.077000Z",
+      "metadata": {
+        "messages": 711,
+        "sessions": 11
+      }
+    },
+    {
+      "type": "claude-code",
+      "title": "Claude Code: 7,508 transcript records",
+      "description": "16 sessions active, 2,354 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-10-01T23:59:00Z",
       "metadata": {
-        "messages": 590,
-        "sessions": 3
+        "messages": 7508,
+        "sessions": 16
       }
     },
     {
@@ -36,7 +64,7 @@
       "title": "Activity on Sysforge-AI/sfproject",
       "description": "Repository sfproject",
       "projectSlug": "sysforge",
-      "category": "systems",
+      "category": "hardware",
       "date": "2026-10-01T07:30:21Z",
       "metadata": {
         "repo": "Sysforge-AI/sfproject"
@@ -44,556 +72,554 @@
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (3752 messages)",
-      "description": "10 sessions, 1172 tool calls",
+      "title": "Claude Code: 12,715 transcript records",
+      "description": "32 sessions active, 3,755 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-09-30T23:59:00Z",
       "metadata": {
-        "messages": 3752,
-        "sessions": 10
+        "messages": 12715,
+        "sessions": 32
       }
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (1019 messages)",
-      "description": "3 sessions, 297 tool calls",
+      "title": "Claude Code: 9,187 transcript records",
+      "description": "17 sessions active, 2,974 tool calls",
+      "projectSlug": null,
+      "category": null,
+      "date": "2026-09-29T23:59:00Z",
+      "metadata": {
+        "messages": 9187,
+        "sessions": 17
+      }
+    },
+    {
+      "type": "claude-code",
+      "title": "Claude Code: 10,854 transcript records",
+      "description": "22 sessions active, 3,443 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-09-28T23:59:00Z",
       "metadata": {
-        "messages": 1019,
-        "sessions": 3
+        "messages": 10854,
+        "sessions": 22
       }
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (1664 messages)",
-      "description": "1 sessions, 478 tool calls",
+      "title": "Claude Code: 5,170 transcript records",
+      "description": "23 sessions active, 1,603 tool calls",
       "projectSlug": null,
       "category": null,
-      "date": "2026-09-26T23:59:00Z",
+      "date": "2026-09-27T23:59:00Z",
       "metadata": {
-        "messages": 1664,
-        "sessions": 1
-      }
-    },
-    {
-      "type": "claude-code",
-      "title": "Claude Code session (5639 messages)",
-      "description": "23 sessions, 1789 tool calls",
-      "projectSlug": null,
-      "category": null,
-      "date": "2026-09-25T23:59:00Z",
-      "metadata": {
-        "messages": 5639,
+        "messages": 5170,
         "sessions": 23
       }
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (7596 messages)",
-      "description": "11 sessions, 2272 tool calls",
+      "title": "Claude Code: 9,137 transcript records",
+      "description": "15 sessions active, 2,863 tool calls",
+      "projectSlug": null,
+      "category": null,
+      "date": "2026-09-26T23:59:00Z",
+      "metadata": {
+        "messages": 9137,
+        "sessions": 15
+      }
+    },
+    {
+      "type": "claude-code",
+      "title": "Claude Code: 21,347 transcript records",
+      "description": "50 sessions active, 6,414 tool calls",
+      "projectSlug": null,
+      "category": null,
+      "date": "2026-09-25T23:59:00Z",
+      "metadata": {
+        "messages": 21347,
+        "sessions": 50
+      }
+    },
+    {
+      "type": "claude-code",
+      "title": "Claude Code: 18,441 transcript records",
+      "description": "34 sessions active, 5,657 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-09-24T23:59:00Z",
       "metadata": {
-        "messages": 7596,
+        "messages": 18441,
+        "sessions": 34
+      }
+    },
+    {
+      "type": "claude-code",
+      "title": "Claude Code: 16,130 transcript records",
+      "description": "20 sessions active, 5,157 tool calls",
+      "projectSlug": null,
+      "category": null,
+      "date": "2026-09-23T23:59:00Z",
+      "metadata": {
+        "messages": 16130,
+        "sessions": 20
+      }
+    },
+    {
+      "type": "claude-code",
+      "title": "Claude Code: 12,776 transcript records",
+      "description": "27 sessions active, 4,262 tool calls",
+      "projectSlug": null,
+      "category": null,
+      "date": "2026-09-22T23:59:00Z",
+      "metadata": {
+        "messages": 12776,
+        "sessions": 27
+      }
+    },
+    {
+      "type": "claude-code",
+      "title": "Claude Code: 9,402 transcript records",
+      "description": "19 sessions active, 3,162 tool calls",
+      "projectSlug": null,
+      "category": null,
+      "date": "2026-09-21T23:59:00Z",
+      "metadata": {
+        "messages": 9402,
+        "sessions": 19
+      }
+    },
+    {
+      "type": "claude-code",
+      "title": "Claude Code: 6,516 transcript records",
+      "description": "11 sessions active, 2,181 tool calls",
+      "projectSlug": null,
+      "category": null,
+      "date": "2026-09-20T23:59:00Z",
+      "metadata": {
+        "messages": 6516,
         "sessions": 11
       }
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (9896 messages)",
-      "description": "4 sessions, 2865 tool calls",
+      "title": "Claude Code: 4,184 transcript records",
+      "description": "15 sessions active, 1,282 tool calls",
       "projectSlug": null,
       "category": null,
-      "date": "2026-09-23T23:59:00Z",
+      "date": "2026-09-19T23:59:00Z",
       "metadata": {
-        "messages": 9896,
-        "sessions": 4
+        "messages": 4184,
+        "sessions": 15
       }
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (2171 messages)",
-      "description": "6 sessions, 792 tool calls",
-      "projectSlug": null,
-      "category": null,
-      "date": "2026-09-22T23:59:00Z",
-      "metadata": {
-        "messages": 2171,
-        "sessions": 6
-      }
-    },
-    {
-      "type": "claude-code",
-      "title": "Claude Code session (1902 messages)",
-      "description": "1 sessions, 603 tool calls",
-      "projectSlug": null,
-      "category": null,
-      "date": "2026-09-21T23:59:00Z",
-      "metadata": {
-        "messages": 1902,
-        "sessions": 1
-      }
-    },
-    {
-      "type": "claude-code",
-      "title": "Claude Code session (18944 messages)",
-      "description": "3 sessions, 6049 tool calls",
+      "title": "Claude Code: 8,644 transcript records",
+      "description": "22 sessions active, 2,503 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-09-18T23:59:00Z",
       "metadata": {
-        "messages": 18944,
-        "sessions": 3
+        "messages": 8644,
+        "sessions": 22
       }
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (13534 messages)",
-      "description": "3 sessions, 4132 tool calls",
+      "title": "Claude Code: 4,674 transcript records",
+      "description": "14 sessions active, 1,434 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-09-17T23:59:00Z",
       "metadata": {
-        "messages": 13534,
-        "sessions": 3
-      }
-    },
-    {
-      "type": "claude-code",
-      "title": "Claude Code session (223 messages)",
-      "description": "1 sessions, 77 tool calls",
-      "projectSlug": null,
-      "category": null,
-      "date": "2026-09-15T23:59:00Z",
-      "metadata": {
-        "messages": 223,
-        "sessions": 1
-      }
-    },
-    {
-      "type": "claude-code",
-      "title": "Claude Code session (9033 messages)",
-      "description": "6 sessions, 2963 tool calls",
-      "projectSlug": null,
-      "category": null,
-      "date": "2026-09-14T23:59:00Z",
-      "metadata": {
-        "messages": 9033,
-        "sessions": 6
-      }
-    },
-    {
-      "type": "claude-code",
-      "title": "Claude Code session (5087 messages)",
-      "description": "5 sessions, 1664 tool calls",
-      "projectSlug": null,
-      "category": null,
-      "date": "2026-09-13T23:59:00Z",
-      "metadata": {
-        "messages": 5087,
-        "sessions": 5
-      }
-    },
-    {
-      "type": "claude-code",
-      "title": "Claude Code session (7663 messages)",
-      "description": "3 sessions, 2254 tool calls",
-      "projectSlug": null,
-      "category": null,
-      "date": "2026-09-10T23:59:00Z",
-      "metadata": {
-        "messages": 7663,
-        "sessions": 3
-      }
-    },
-    {
-      "type": "claude-code",
-      "title": "Claude Code session (3488 messages)",
-      "description": "3 sessions, 1015 tool calls",
-      "projectSlug": null,
-      "category": null,
-      "date": "2026-09-09T23:59:00Z",
-      "metadata": {
-        "messages": 3488,
-        "sessions": 3
-      }
-    },
-    {
-      "type": "claude-code",
-      "title": "Claude Code session (184 messages)",
-      "description": "1 sessions, 70 tool calls",
-      "projectSlug": null,
-      "category": null,
-      "date": "2026-09-08T23:59:00Z",
-      "metadata": {
-        "messages": 184,
-        "sessions": 1
-      }
-    },
-    {
-      "type": "claude-code",
-      "title": "Claude Code session (4563 messages)",
-      "description": "8 sessions, 1486 tool calls",
-      "projectSlug": null,
-      "category": null,
-      "date": "2026-09-06T23:59:00Z",
-      "metadata": {
-        "messages": 4563,
-        "sessions": 8
-      }
-    },
-    {
-      "type": "claude-code",
-      "title": "Claude Code session (3847 messages)",
-      "description": "1 sessions, 1116 tool calls",
-      "projectSlug": null,
-      "category": null,
-      "date": "2026-09-05T23:59:00Z",
-      "metadata": {
-        "messages": 3847,
-        "sessions": 1
-      }
-    },
-    {
-      "type": "claude-code",
-      "title": "Claude Code session (4772 messages)",
-      "description": "1 sessions, 1602 tool calls",
-      "projectSlug": null,
-      "category": null,
-      "date": "2026-09-04T23:59:00Z",
-      "metadata": {
-        "messages": 4772,
-        "sessions": 1
-      }
-    },
-    {
-      "type": "claude-code",
-      "title": "Claude Code session (1004 messages)",
-      "description": "3 sessions, 309 tool calls",
-      "projectSlug": null,
-      "category": null,
-      "date": "2026-09-02T23:59:00Z",
-      "metadata": {
-        "messages": 1004,
-        "sessions": 3
-      }
-    },
-    {
-      "type": "claude-code",
-      "title": "Claude Code session (30625 messages)",
-      "description": "2 sessions, 9845 tool calls",
-      "projectSlug": null,
-      "category": null,
-      "date": "2026-09-01T23:59:00Z",
-      "metadata": {
-        "messages": 30625,
-        "sessions": 2
-      }
-    },
-    {
-      "type": "claude-code",
-      "title": "Claude Code session (22113 messages)",
-      "description": "14 sessions, 7070 tool calls",
-      "projectSlug": null,
-      "category": null,
-      "date": "2026-08-31T23:59:00Z",
-      "metadata": {
-        "messages": 22113,
+        "messages": 4674,
         "sessions": 14
       }
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (50 messages)",
-      "description": "1 sessions, 13 tool calls",
+      "title": "Claude Code: 7,076 transcript records",
+      "description": "12 sessions active, 2,319 tool calls",
+      "projectSlug": null,
+      "category": null,
+      "date": "2026-09-16T23:59:00Z",
+      "metadata": {
+        "messages": 7076,
+        "sessions": 12
+      }
+    },
+    {
+      "type": "claude-code",
+      "title": "Claude Code: 8,246 transcript records",
+      "description": "19 sessions active, 2,904 tool calls",
+      "projectSlug": null,
+      "category": null,
+      "date": "2026-09-15T23:59:00Z",
+      "metadata": {
+        "messages": 8246,
+        "sessions": 19
+      }
+    },
+    {
+      "type": "claude-code",
+      "title": "Claude Code: 11,337 transcript records",
+      "description": "24 sessions active, 3,652 tool calls",
+      "projectSlug": null,
+      "category": null,
+      "date": "2026-09-14T23:59:00Z",
+      "metadata": {
+        "messages": 11337,
+        "sessions": 24
+      }
+    },
+    {
+      "type": "claude-code",
+      "title": "Claude Code: 6,377 transcript records",
+      "description": "13 sessions active, 2,124 tool calls",
+      "projectSlug": null,
+      "category": null,
+      "date": "2026-09-13T23:59:00Z",
+      "metadata": {
+        "messages": 6377,
+        "sessions": 13
+      }
+    },
+    {
+      "type": "claude-code",
+      "title": "Claude Code: 2,146 transcript records",
+      "description": "8 sessions active, 692 tool calls",
+      "projectSlug": null,
+      "category": null,
+      "date": "2026-09-12T23:59:00Z",
+      "metadata": {
+        "messages": 2146,
+        "sessions": 8
+      }
+    },
+    {
+      "type": "claude-code",
+      "title": "Claude Code: 6,987 transcript records",
+      "description": "17 sessions active, 2,186 tool calls",
+      "projectSlug": null,
+      "category": null,
+      "date": "2026-09-11T23:59:00Z",
+      "metadata": {
+        "messages": 6987,
+        "sessions": 17
+      }
+    },
+    {
+      "type": "claude-code",
+      "title": "Claude Code: 9,768 transcript records",
+      "description": "17 sessions active, 3,154 tool calls",
+      "projectSlug": null,
+      "category": null,
+      "date": "2026-09-10T23:59:00Z",
+      "metadata": {
+        "messages": 9768,
+        "sessions": 17
+      }
+    },
+    {
+      "type": "claude-code",
+      "title": "Claude Code: 6,317 transcript records",
+      "description": "18 sessions active, 2,075 tool calls",
+      "projectSlug": null,
+      "category": null,
+      "date": "2026-09-09T23:59:00Z",
+      "metadata": {
+        "messages": 6317,
+        "sessions": 18
+      }
+    },
+    {
+      "type": "claude-code",
+      "title": "Claude Code: 6,967 transcript records",
+      "description": "12 sessions active, 2,216 tool calls",
+      "projectSlug": null,
+      "category": null,
+      "date": "2026-09-08T23:59:00Z",
+      "metadata": {
+        "messages": 6967,
+        "sessions": 12
+      }
+    },
+    {
+      "type": "claude-code",
+      "title": "Claude Code: 7,414 transcript records",
+      "description": "9 sessions active, 2,466 tool calls",
+      "projectSlug": null,
+      "category": null,
+      "date": "2026-09-07T23:59:00Z",
+      "metadata": {
+        "messages": 7414,
+        "sessions": 9
+      }
+    },
+    {
+      "type": "claude-code",
+      "title": "Claude Code: 10,190 transcript records",
+      "description": "15 sessions active, 3,453 tool calls",
+      "projectSlug": null,
+      "category": null,
+      "date": "2026-09-06T23:59:00Z",
+      "metadata": {
+        "messages": 10190,
+        "sessions": 15
+      }
+    },
+    {
+      "type": "claude-code",
+      "title": "Claude Code: 8,830 transcript records",
+      "description": "34 sessions active, 2,751 tool calls",
+      "projectSlug": null,
+      "category": null,
+      "date": "2026-09-05T23:59:00Z",
+      "metadata": {
+        "messages": 8830,
+        "sessions": 34
+      }
+    },
+    {
+      "type": "claude-code",
+      "title": "Claude Code: 7,435 transcript records",
+      "description": "11 sessions active, 2,474 tool calls",
+      "projectSlug": null,
+      "category": null,
+      "date": "2026-09-04T23:59:00Z",
+      "metadata": {
+        "messages": 7435,
+        "sessions": 11
+      }
+    },
+    {
+      "type": "claude-code",
+      "title": "Claude Code: 9,487 transcript records",
+      "description": "12 sessions active, 2,829 tool calls",
+      "projectSlug": null,
+      "category": null,
+      "date": "2026-09-03T23:59:00Z",
+      "metadata": {
+        "messages": 9487,
+        "sessions": 12
+      }
+    },
+    {
+      "type": "claude-code",
+      "title": "Claude Code: 16,282 transcript records",
+      "description": "24 sessions active, 5,048 tool calls",
+      "projectSlug": null,
+      "category": null,
+      "date": "2026-09-02T23:59:00Z",
+      "metadata": {
+        "messages": 16282,
+        "sessions": 24
+      }
+    },
+    {
+      "type": "claude-code",
+      "title": "Claude Code: 14,225 transcript records",
+      "description": "14 sessions active, 4,535 tool calls",
+      "projectSlug": null,
+      "category": null,
+      "date": "2026-09-01T23:59:00Z",
+      "metadata": {
+        "messages": 14225,
+        "sessions": 14
+      }
+    },
+    {
+      "type": "claude-code",
+      "title": "Claude Code: 15,185 transcript records",
+      "description": "35 sessions active, 4,702 tool calls",
+      "projectSlug": null,
+      "category": null,
+      "date": "2026-08-31T23:59:00Z",
+      "metadata": {
+        "messages": 15185,
+        "sessions": 35
+      }
+    },
+    {
+      "type": "claude-code",
+      "title": "Claude Code: 10,906 transcript records",
+      "description": "11 sessions active, 3,318 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-08-30T23:59:00Z",
       "metadata": {
-        "messages": 50,
-        "sessions": 1
+        "messages": 10906,
+        "sessions": 11
       }
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (8122 messages)",
-      "description": "5 sessions, 2488 tool calls",
+      "title": "Claude Code: 12,642 transcript records",
+      "description": "41 sessions active, 3,783 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-08-29T23:59:00Z",
       "metadata": {
-        "messages": 8122,
-        "sessions": 5
+        "messages": 12642,
+        "sessions": 41
       }
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (2747 messages)",
-      "description": "4 sessions, 752 tool calls",
+      "title": "Claude Code: 16,957 transcript records",
+      "description": "30 sessions active, 5,322 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-08-28T23:59:00Z",
       "metadata": {
-        "messages": 2747,
-        "sessions": 4
+        "messages": 16957,
+        "sessions": 30
       }
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (6598 messages)",
-      "description": "2 sessions, 2107 tool calls",
+      "title": "Claude Code: 18,886 transcript records",
+      "description": "31 sessions active, 5,844 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-08-27T23:59:00Z",
       "metadata": {
-        "messages": 6598,
-        "sessions": 2
+        "messages": 18886,
+        "sessions": 31
       }
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (36672 messages)",
-      "description": "2 sessions, 11824 tool calls",
+      "title": "Claude Code: 17,821 transcript records",
+      "description": "17 sessions active, 5,655 tool calls",
+      "projectSlug": null,
+      "category": null,
+      "date": "2026-08-26T23:59:00Z",
+      "metadata": {
+        "messages": 17821,
+        "sessions": 17
+      }
+    },
+    {
+      "type": "claude-code",
+      "title": "Claude Code: 10,520 transcript records",
+      "description": "16 sessions active, 3,271 tool calls",
+      "projectSlug": null,
+      "category": null,
+      "date": "2026-08-25T23:59:00Z",
+      "metadata": {
+        "messages": 10520,
+        "sessions": 16
+      }
+    },
+    {
+      "type": "claude-code",
+      "title": "Claude Code: 14,654 transcript records",
+      "description": "17 sessions active, 4,748 tool calls",
+      "projectSlug": null,
+      "category": null,
+      "date": "2026-08-24T23:59:00Z",
+      "metadata": {
+        "messages": 14654,
+        "sessions": 17
+      }
+    },
+    {
+      "type": "claude-code",
+      "title": "Claude Code: 11,335 transcript records",
+      "description": "13 sessions active, 3,795 tool calls",
+      "projectSlug": null,
+      "category": null,
+      "date": "2026-08-23T23:59:00Z",
+      "metadata": {
+        "messages": 11335,
+        "sessions": 13
+      }
+    },
+    {
+      "type": "claude-code",
+      "title": "Claude Code: 11,250 transcript records",
+      "description": "10 sessions active, 3,622 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-08-22T23:59:00Z",
       "metadata": {
-        "messages": 36672,
-        "sessions": 2
+        "messages": 11250,
+        "sessions": 10
       }
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (23054 messages)",
-      "description": "1 sessions, 7242 tool calls",
+      "title": "Claude Code: 11,554 transcript records",
+      "description": "21 sessions active, 3,637 tool calls",
+      "projectSlug": null,
+      "category": null,
+      "date": "2026-08-21T23:59:00Z",
+      "metadata": {
+        "messages": 11554,
+        "sessions": 21
+      }
+    },
+    {
+      "type": "claude-code",
+      "title": "Claude Code: 14,574 transcript records",
+      "description": "19 sessions active, 4,771 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-08-20T23:59:00Z",
       "metadata": {
-        "messages": 23054,
-        "sessions": 1
+        "messages": 14574,
+        "sessions": 19
       }
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (49670 messages)",
-      "description": "1 sessions, 16243 tool calls",
+      "title": "Claude Code: 11,727 transcript records",
+      "description": "21 sessions active, 3,897 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-08-19T23:59:00Z",
       "metadata": {
-        "messages": 49670,
-        "sessions": 1
+        "messages": 11727,
+        "sessions": 21
       }
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (17427 messages)",
-      "description": "1 sessions, 5374 tool calls",
+      "title": "Claude Code: 11,400 transcript records",
+      "description": "13 sessions active, 3,690 tool calls",
+      "projectSlug": null,
+      "category": null,
+      "date": "2026-08-18T23:59:00Z",
+      "metadata": {
+        "messages": 11400,
+        "sessions": 13
+      }
+    },
+    {
+      "type": "claude-code",
+      "title": "Claude Code: 11,204 transcript records",
+      "description": "13 sessions active, 3,795 tool calls",
       "projectSlug": null,
       "category": null,
       "date": "2026-08-17T23:59:00Z",
       "metadata": {
-        "messages": 17427,
-        "sessions": 1
+        "messages": 11204,
+        "sessions": 13
       }
     },
     {
       "type": "claude-code",
-      "title": "Claude Code session (11354 messages)",
-      "description": "2 sessions, 3642 tool calls",
+      "title": "Claude Code: 14,451 transcript records",
+      "description": "13 sessions active, 4,804 tool calls",
       "projectSlug": null,
       "category": null,
-      "date": "2026-08-13T23:59:00Z",
+      "date": "2026-08-16T23:59:00Z",
       "metadata": {
-        "messages": 11354,
-        "sessions": 2
-      }
-    },
-    {
-      "type": "claude-code",
-      "title": "Claude Code session (44828 messages)",
-      "description": "1 sessions, 14844 tool calls",
-      "projectSlug": null,
-      "category": null,
-      "date": "2026-08-12T23:59:00Z",
-      "metadata": {
-        "messages": 44828,
-        "sessions": 1
-      }
-    },
-    {
-      "type": "claude-code",
-      "title": "Claude Code session (2265 messages)",
-      "description": "1 sessions, 504 tool calls",
-      "projectSlug": null,
-      "category": null,
-      "date": "2026-08-01T23:59:00Z",
-      "metadata": {
-        "messages": 2265,
-        "sessions": 1
-      }
-    },
-    {
-      "type": "claude-code",
-      "title": "Claude Code session (43925 messages)",
-      "description": "1 sessions, 13492 tool calls",
-      "projectSlug": null,
-      "category": null,
-      "date": "2026-07-28T23:59:00Z",
-      "metadata": {
-        "messages": 43925,
-        "sessions": 1
-      }
-    },
-    {
-      "type": "claude-code",
-      "title": "Claude Code session (2862 messages)",
-      "description": "1 sessions, 945 tool calls",
-      "projectSlug": null,
-      "category": null,
-      "date": "2026-07-19T23:59:00Z",
-      "metadata": {
-        "messages": 2862,
-        "sessions": 1
-      }
-    },
-    {
-      "type": "claude-code",
-      "title": "Claude Code session (1491 messages)",
-      "description": "1 sessions, 374 tool calls",
-      "projectSlug": null,
-      "category": null,
-      "date": "2026-07-18T23:59:00Z",
-      "metadata": {
-        "messages": 1491,
-        "sessions": 1
-      }
-    },
-    {
-      "type": "claude-code",
-      "title": "Claude Code session (24423 messages)",
-      "description": "1 sessions, 7925 tool calls",
-      "projectSlug": null,
-      "category": null,
-      "date": "2026-03-08T23:59:00Z",
-      "metadata": {
-        "messages": 24423,
-        "sessions": 1
-      }
-    },
-    {
-      "type": "github",
-      "title": "Activity on tinymachines/esp32",
-      "description": "Repository esp32",
-      "projectSlug": "esp32",
-      "category": "hardware",
-      "date": "2026-02-18T21:12:13Z",
-      "metadata": {
-        "repo": "tinymachines/esp32"
-      }
-    },
-    {
-      "type": "claude-web",
-      "title": "Political AI strategy from Michigan roots",
-      "description": "The user, who goes by \"speyecee,\" \"spicy,\" or \"5p1cy\" (Brad), is the tech lead at a Michigan-based strategy organization with decades of data and experience in the space. He works closely with MrGreen (CJ) on business strategy and front-end developme",
-      "projectSlug": null,
-      "category": null,
-      "date": "2026-02-14T20:26:17.738734Z",
-      "metadata": {
-        "messages": 19
-      }
-    },
-    {
-      "type": "claude-web",
-      "title": "Local AI hub knowledge transfer architecture",
-      "description": "The user is working on an AI hub setup called CBAI (ai.nominate.ai) designed to keep costs down by using local models. Their architecture uses Anthropic and Mistral as \"master\" models that transfer knowledge to \"student\" models - tiny local machines ",
-      "projectSlug": null,
-      "category": null,
-      "date": "2026-02-14T19:38:52.071106Z",
-      "metadata": {
-        "messages": 6
-      }
-    },
-    {
-      "type": "claude-web",
-      "title": "Conway's Game of Life on ESP32 with live web dashboard",
-      "description": "The user, known as \"Spicy,\" shared an exciting development in their ESP32-C6 embedded systems project. They successfully implemented Conway's Game of Life running on an OLED display connected to the ESP32-C6, with updates every 10 seconds, and set up",
-      "projectSlug": "esp32",
-      "category": "hardware",
-      "date": "2026-02-14T19:04:45.736672Z",
-      "metadata": {
-        "messages": 8
-      }
-    },
-    {
-      "type": "claude-web",
-      "title": "Running ESP32 on coin cell batteries",
-      "description": "The user inquired about powering an ESP32 microcontroller using coin cell batteries without WiFi functionality. Claude provided detailed technical guidance on the feasibility and practical considerations for this battery-powered setup. The discussion",
-      "projectSlug": "esp32",
-      "category": "hardware",
-      "date": "2026-02-14T17:31:06.702724Z",
-      "metadata": {
-        "messages": 2
-      }
-    },
-    {
-      "type": "claude-web",
-      "title": "Huntington bank API key integration",
-      "description": "The user is charged with integrating their business with Huntington Bank's API but has been unable to get clear guidance from their sales representative on how to obtain API keys. They suspected that Huntington's recent acquisition might be causing d",
-      "projectSlug": null,
-      "category": null,
-      "date": "2026-02-13T22:04:18.323956Z",
-      "metadata": {
-        "messages": 2
-      }
-    },
-    {
-      "type": "claude-web",
-      "title": "Idiomatic Rust Game of Life implementation",
-      "description": "The user requested help building a fast, idiomatic Rust implementation of Conway's Game of Life. They provided the specific rules for cell evolution and emphasized wanting both performance and clean Rust code. Claude created a complete Rust project w",
-      "projectSlug": "rust",
-      "category": "ai-ml",
-      "date": "2026-02-13T19:21:57.578333Z",
-      "metadata": {
-        "messages": 2
-      }
-    },
-    {
-      "type": "claude-web",
-      "title": "Building a form service MVP with FastAPI and FastHTML",
-      "description": "The user requested development of a forms service for their Campaign Brain platform, specifically wanting a TypeForm-like solution built with FastAPI and FastHTML rather than React to save development time. They asked Claude to research TypeForm's fe",
-      "projectSlug": null,
-      "category": null,
-      "date": "2026-02-13T01:36:45.279040Z",
-      "metadata": {
-        "messages": 2
-      }
-    },
-    {
-      "type": "claude-web",
-      "title": "\ud83d\udcac My boss wants a spec for manag\u2026",
-      "description": "The user worked on developing a comprehensive technical specification for a luxury resort's humanoid robot service system, focusing on Tesla Optimus robots for hospitality operations in a tropical marine environment. They began by creating detailed o",
-      "projectSlug": "os",
-      "category": "ai-ml",
-      "date": "2026-02-11T18:38:07.427610Z",
-      "metadata": {
-        "messages": 11
-      }
-    },
-    {
-      "type": "claude-web",
-      "title": "Making technical documentation accessible for screen readers",
-      "description": "The user requested Claude to modify a technical document about OLED displays on ESP32-C6 microcontrollers to make it accessible for screen readers and text-to-speech applications. The original document contained extensive code blocks, ASCII diagrams,",
-      "projectSlug": "cc",
-      "category": "data",
-      "date": "2026-02-10T22:17:18.465102Z",
-      "metadata": {
-        "messages": 2
+        "messages": 14451,
+        "sessions": 13
       }
     }
   ],
@@ -601,24 +627,24 @@
     {
       "slug": "terrapulse",
       "name": "terrapulse",
-      "tagline": "Climate intelligence platform \u2014 ingest, normalize, and serve environmental data",
-      "description": "Climate intelligence platform \u2014 ingest, normalize, and serve environmental data",
+      "tagline": "Climate intelligence platform: ingest, normalize, and serve environmental data",
+      "description": "Climate intelligence platform: ingest, normalize, and serve environmental data",
       "category": "systems",
       "isResearch": false,
       "isFeatured": true,
       "status": "active",
       "technologies": [
-        "Bash",
-        "FastAPI",
-        "Go",
-        "JSON",
-        "Nginx",
+        "PostgreSQL",
+        "DuckDB",
         "Python",
-        "Redis",
-        "WebSocket"
+        "systemd",
+        "FastAPI",
+        "Nginx",
+        "WebSocket",
+        "JWT"
       ],
-      "lastActivity": "2026-10-02T00:03:56Z",
-      "totalMessages": 39329,
+      "lastActivity": "2026-10-02T15:49:08Z",
+      "totalMessages": 83226,
       "sources": {
         "github": {
           "repo": "isenbek/terrapulse",
@@ -627,11 +653,168 @@
           "lastPush": "2026-10-02"
         },
         "claudeCode": {
-          "totalSessions": 7,
-          "totalMessages": 39329,
-          "lastSession": "2026-10-01"
+          "totalSessions": 16,
+          "totalMessages": 83226,
+          "lastSession": "2026-10-02"
         }
-      }
+      },
+      "provenance": {
+        "tagline": "github",
+        "description": "github"
+      },
+      "categoryBasis": "keywords"
+    },
+    {
+      "slug": "myfw",
+      "name": "MYFW",
+      "tagline": "A multi-server application for managing documents, wills and beneficiaries.",
+      "description": "A multi-server application for managing documents, wills and beneficiaries.",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [
+        "Nginx",
+        "SQLite",
+        "Drizzle",
+        "systemd",
+        "React",
+        "Redis",
+        "Python",
+        "TypeScript"
+      ],
+      "lastActivity": "2026-10-02",
+      "totalMessages": 51556,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 2,
+          "totalMessages": 51556,
+          "lastSession": "2026-10-02"
+        }
+      },
+      "provenance": {
+        "tagline": "claude-web",
+        "description": "claude-web"
+      },
+      "categoryBasis": "keywords"
+    },
+    {
+      "slug": "cbloom",
+      "name": "cbloom",
+      "tagline": "Loom - Campaign Content & Narrative Engine",
+      "description": "Loom - Campaign Content & Narrative Engine",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-10-02",
+      "totalMessages": 104128,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 37,
+          "totalMessages": 104128,
+          "lastSession": "2026-10-02"
+        },
+        "timeline": {
+          "org": "Nominate-AI",
+          "repo": "cbloom",
+          "commits": 3284,
+          "descriptionSource": "unknown"
+        }
+      },
+      "provenance": {
+        "tagline": "timeline",
+        "description": "timeline"
+      },
+      "categoryBasis": "default"
+    },
+    {
+      "slug": "infra",
+      "name": "infra",
+      "tagline": "",
+      "description": "",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-10-02",
+      "totalMessages": 96519,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 9,
+          "totalMessages": 96519,
+          "lastSession": "2026-10-02"
+        }
+      },
+      "provenance": {
+        "tagline": "none",
+        "description": "none"
+      },
+      "categoryBasis": "default"
+    },
+    {
+      "slug": "cbapex",
+      "name": "cbapex",
+      "tagline": "cbapex: Cross-app charter and shared layer ownership",
+      "description": "The cbapex app family container: cross-app charter and shared-layer ownership. The apps (cbprospect, cbnight, cbpublic) are their own repos.",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-10-02",
+      "totalMessages": 53690,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 5,
+          "totalMessages": 53690,
+          "lastSession": "2026-10-02"
+        },
+        "timeline": {
+          "org": "Nominate-AI",
+          "repo": "cbapex",
+          "commits": 824,
+          "descriptionSource": "unknown"
+        }
+      },
+      "provenance": {
+        "tagline": "ai",
+        "description": "timeline"
+      },
+      "categoryBasis": "default"
+    },
+    {
+      "slug": "public",
+      "name": "public",
+      "tagline": "tinymachines.ai: the site, the API and the docs for the 6502 work",
+      "description": "tinymachines.ai: the site, the API and the docs for the 6502 work",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-10-02",
+      "totalMessages": 33612,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 1,
+          "totalMessages": 33612,
+          "lastSession": "2026-10-02"
+        },
+        "timeline": {
+          "org": "tinymachines",
+          "repo": "public",
+          "commits": 746,
+          "descriptionSource": "unknown"
+        }
+      },
+      "provenance": {
+        "tagline": "timeline",
+        "description": "timeline"
+      },
+      "categoryBasis": "keywords"
     },
     {
       "slug": "cbsvi",
@@ -644,21 +827,82 @@
       "status": "active",
       "technologies": [],
       "lastActivity": "2026-10-02",
-      "totalMessages": 28347,
+      "totalMessages": 32028,
       "sources": {
         "claudeCode": {
-          "totalSessions": 1,
-          "totalMessages": 28347,
+          "totalSessions": 2,
+          "totalMessages": 32028,
           "lastSession": "2026-10-02"
         }
-      }
+      },
+      "provenance": {
+        "tagline": "none",
+        "description": "none"
+      },
+      "categoryBasis": "default"
+    },
+    {
+      "slug": "cbrural",
+      "name": "cbrural",
+      "tagline": "Rural AM.FM. on the Apex frame. Port 32295 @ rural.campaignbrain.dev.",
+      "description": "Rural AM.FM. on the Apex frame. Port 32295 @ rural.campaignbrain.dev.",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-10-02",
+      "totalMessages": 24441,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 5,
+          "totalMessages": 24441,
+          "lastSession": "2026-10-02"
+        },
+        "timeline": {
+          "org": "Nominate-AI",
+          "repo": "cbrural",
+          "commits": 660,
+          "descriptionSource": "unknown"
+        }
+      },
+      "provenance": {
+        "tagline": "timeline",
+        "description": "timeline"
+      },
+      "categoryBasis": "default"
+    },
+    {
+      "slug": "cbweb",
+      "name": "cbweb",
+      "tagline": "",
+      "description": "",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-10-02",
+      "totalMessages": 16828,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 5,
+          "totalMessages": 16828,
+          "lastSession": "2026-10-02"
+        }
+      },
+      "provenance": {
+        "tagline": "none",
+        "description": "none"
+      },
+      "categoryBasis": "default"
     },
     {
       "slug": "sysforge",
       "name": "sfproject",
       "tagline": "Building resilient systems, reliably.",
-      "description": "SFProject is a system designed to enhance stability and scalability through advanced monitoring and automated diagnostics. It focuses on proactive identification and resolution of potential issues within complex infrastructure.\n\nWe leverage [mention key technologies - e.g., Kafka, Kubernetes, Prometheus] to collect and analyze data, enabling early detection of anomalies. Ultimately, SFProject aims to minimize downtime and maximize system uptime.",
-      "category": "systems",
+      "description": "SfProject is a TypeScript software project focused on automating Forge Console deployment and development. The repository focuses heavily on recent contributions including integration tests, Forge Console backend enhancements (mesh interaction), build information updates, and initial system configuration setup. Key milestones identified are the addition of new tests, Forge console backend functionality, and the creation of production deployment configurations.",
+      "category": "hardware",
       "isResearch": false,
       "isFeatured": true,
       "status": "active",
@@ -671,284 +915,165 @@
           "stars": 0,
           "language": "TypeScript",
           "lastPush": "2026-10-01"
+        },
+        "timeline": {
+          "org": "Sysforge-AI",
+          "repo": "sfproject",
+          "commits": 258,
+          "descriptionSource": "unknown"
         }
-      }
+      },
+      "provenance": {
+        "tagline": "previous",
+        "description": "timeline"
+      },
+      "categoryBasis": "keywords"
     },
     {
-      "slug": "cbapex",
-      "name": "cbapex",
-      "tagline": "",
-      "description": "",
+      "slug": "6502",
+      "name": "6502",
+      "tagline": "Want to build 6502 apps.",
+      "description": "Want to build 6502 apps.",
       "category": "systems",
       "isResearch": false,
       "isFeatured": false,
       "status": "active",
       "technologies": [],
       "lastActivity": "2026-10-01",
-      "totalMessages": 50216,
+      "totalMessages": 55158,
       "sources": {
         "claudeCode": {
-          "totalSessions": 3,
-          "totalMessages": 50216,
+          "totalSessions": 5,
+          "totalMessages": 55158,
           "lastSession": "2026-10-01"
         }
-      }
-    },
-    {
-      "slug": "public",
-      "name": "public",
-      "tagline": "",
-      "description": "",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-10-01",
-      "totalMessages": 33612,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 1,
-          "totalMessages": 33612,
-          "lastSession": "2026-10-01"
-        }
-      }
+      },
+      "provenance": {
+        "tagline": "claude-web",
+        "description": "claude-web"
+      },
+      "categoryBasis": "default"
     },
     {
       "slug": "bradleyio",
       "name": "bradleyio",
       "tagline": "",
       "description": "",
-      "category": "data",
+      "category": "systems",
       "isResearch": false,
       "isFeatured": false,
       "status": "active",
       "technologies": [
-        "DuckDB",
-        "Go",
         "Next.js",
-        "Nginx",
-        "Ollama",
+        "systemd",
         "React",
+        "PM2",
         "Tailwind CSS",
+        "Ollama",
+        "Socket.IO",
         "TypeScript"
       ],
       "lastActivity": "2026-10-01",
-      "totalMessages": 27659,
+      "totalMessages": 32861,
       "sources": {
         "claudeCode": {
-          "totalSessions": 2,
-          "totalMessages": 27659,
+          "totalSessions": 6,
+          "totalMessages": 32861,
           "lastSession": "2026-10-01"
         }
-      }
+      },
+      "provenance": {
+        "tagline": "none",
+        "description": "none"
+      },
+      "categoryBasis": "default"
     },
     {
-      "slug": "cbrural",
-      "name": "cbrural",
+      "slug": "cbelections",
+      "name": "cbelections",
       "tagline": "",
       "description": "",
       "category": "systems",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-10-01",
-      "totalMessages": 24441,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 5,
-          "totalMessages": 24441,
-          "lastSession": "2026-10-01"
-        }
-      }
-    },
-    {
-      "slug": "infra",
-      "name": "infra",
-      "tagline": "",
-      "description": "",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-10-01",
-      "totalMessages": 13024,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 2,
-          "totalMessages": 13024,
-          "lastSession": "2026-10-01"
-        }
-      }
-    },
-    {
-      "slug": "proton",
-      "name": "proton",
-      "tagline": "",
-      "description": "",
-      "category": "data",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [
-        "AWS",
-        "Docker",
-        "DuckDB",
-        "FastAPI",
-        "Ollama",
-        "Python",
-        "SQLite",
-        "Snowflake"
-      ],
-      "lastActivity": "2026-10-01",
-      "totalMessages": 6645,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 1,
-          "totalMessages": 6645,
-          "lastSession": "2026-10-01"
-        }
-      }
-    },
-    {
-      "slug": "cbloom",
-      "name": "cbloom",
-      "tagline": "",
-      "description": "",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-10-01",
-      "totalMessages": 3655,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 4,
-          "totalMessages": 3655,
-          "lastSession": "2026-10-01"
-        }
-      }
-    },
-    {
-      "slug": "cbradio2",
-      "name": "cbradio2",
-      "tagline": "",
-      "description": "",
-      "category": "hardware",
       "isResearch": false,
       "isFeatured": false,
       "status": "active",
       "technologies": [],
       "lastActivity": "2026-09-30",
-      "totalMessages": 8382,
+      "totalMessages": 41642,
       "sources": {
         "claudeCode": {
-          "totalSessions": 11,
-          "totalMessages": 8382,
+          "totalSessions": 6,
+          "totalMessages": 41642,
           "lastSession": "2026-09-30"
         }
-      }
+      },
+      "provenance": {
+        "tagline": "none",
+        "description": "none"
+      },
+      "categoryBasis": "default"
     },
     {
       "slug": "cbintel",
       "name": "cbintel",
-      "tagline": "",
-      "description": "",
+      "tagline": "cbintel: Crawling, screenshots, OCR, and more.",
+      "description": "Web intelligence API: crawling, screenshots, OCR, transcripts, vector search, research graphs (FastAPI, :9003)",
       "category": "systems",
       "isResearch": false,
       "isFeatured": false,
       "status": "active",
       "technologies": [],
       "lastActivity": "2026-09-30",
-      "totalMessages": 5369,
+      "totalMessages": 20550,
       "sources": {
         "claudeCode": {
-          "totalSessions": 4,
-          "totalMessages": 5369,
+          "totalSessions": 6,
+          "totalMessages": 20550,
           "lastSession": "2026-09-30"
+        },
+        "timeline": {
+          "org": "Nominate-AI",
+          "repo": "cbintel",
+          "commits": 1359,
+          "descriptionSource": "unknown"
         }
-      }
-    },
-    {
-      "slug": "tinychase",
-      "name": "tinychase",
-      "tagline": "",
-      "description": "",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [
-        "Docker",
-        "DuckDB",
-        "FastAPI",
-        "JavaScript",
-        "Nginx",
-        "Python",
-        "React",
-        "SQLite"
-      ],
-      "lastActivity": "2026-09-30",
-      "totalMessages": 4600,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 2,
-          "totalMessages": 4600,
-          "lastSession": "2026-09-30"
-        }
-      }
+      },
+      "provenance": {
+        "tagline": "ai",
+        "description": "timeline"
+      },
+      "categoryBasis": "keywords"
     },
     {
       "slug": "cbmodels",
       "name": "cbmodels",
-      "tagline": "",
-      "description": "",
-      "category": "systems",
+      "tagline": "Political data and insights engine",
+      "description": "Political data & insights engine: voter segments, i360, election results, audience builder (FastAPI/DuckDB+Snowflake, :32411)",
+      "category": "data",
       "isResearch": false,
       "isFeatured": false,
       "status": "active",
       "technologies": [],
       "lastActivity": "2026-09-28",
-      "totalMessages": 7444,
+      "totalMessages": 58254,
       "sources": {
         "claudeCode": {
-          "totalSessions": 8,
-          "totalMessages": 7444,
+          "totalSessions": 12,
+          "totalMessages": 58254,
           "lastSession": "2026-09-28"
+        },
+        "timeline": {
+          "org": "Nominate-AI",
+          "repo": "cbmodels",
+          "commits": 1350,
+          "descriptionSource": "unknown"
         }
-      }
-    },
-    {
-      "slug": "junior",
-      "name": "junior",
-      "tagline": "",
-      "description": "",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [
-        "FastAPI",
-        "Git",
-        "Go",
-        "Nginx",
-        "Python",
-        "Raspberry Pi",
-        "Rust",
-        "systemd"
-      ],
-      "lastActivity": "2026-09-28",
-      "totalMessages": 4201,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 10,
-          "totalMessages": 4201,
-          "lastSession": "2026-09-28"
-        }
-      }
+      },
+      "provenance": {
+        "tagline": "ai",
+        "description": "timeline"
+      },
+      "categoryBasis": "keywords"
     },
     {
       "slug": "cbcc",
@@ -968,67 +1093,167 @@
           "totalMessages": 17427,
           "lastSession": "2026-09-25"
         }
-      }
+      },
+      "provenance": {
+        "tagline": "none",
+        "description": "none"
+      },
+      "categoryBasis": "default"
     },
     {
-      "slug": "cbvpn",
-      "name": "cbvpn",
-      "tagline": "",
-      "description": "",
+      "slug": "cbprospect",
+      "name": "cbprospect",
+      "tagline": "cbprospect: Harvest, score, present prospects.",
+      "description": "Prospect: harvest, score and present prospects for the sales group. First cbapex app.",
       "category": "systems",
       "isResearch": false,
       "isFeatured": false,
       "status": "active",
       "technologies": [],
       "lastActivity": "2026-09-25",
-      "totalMessages": 3625,
+      "totalMessages": 17200,
       "sources": {
         "claudeCode": {
-          "totalSessions": 2,
-          "totalMessages": 3625,
+          "totalSessions": 4,
+          "totalMessages": 17200,
           "lastSession": "2026-09-25"
+        },
+        "timeline": {
+          "org": "Nominate-AI",
+          "repo": "cbprospect",
+          "commits": 474,
+          "descriptionSource": "unknown"
         }
-      }
+      },
+      "provenance": {
+        "tagline": "ai",
+        "description": "timeline"
+      },
+      "categoryBasis": "default"
     },
     {
-      "slug": "cbai",
-      "name": "cbai",
-      "tagline": "",
-      "description": "",
+      "slug": "cbradio",
+      "name": "cbradio",
+      "tagline": "Radio station management for political AM/FM advertising",
+      "description": "Radio station management for political AM/FM advertising: rate cards, agreements, FCC data (FastAPI, :32331 API / :32330 UI)",
       "category": "systems",
       "isResearch": false,
       "isFeatured": false,
       "status": "recent",
       "technologies": [],
-      "lastActivity": "2026-09-22",
-      "totalMessages": 4504,
+      "lastActivity": "2026-09-02",
+      "totalMessages": 19770,
       "sources": {
         "claudeCode": {
-          "totalSessions": 3,
-          "totalMessages": 4504,
-          "lastSession": "2026-09-22"
+          "totalSessions": 8,
+          "totalMessages": 19770,
+          "lastSession": "2026-09-02"
+        },
+        "timeline": {
+          "org": "Nominate-AI",
+          "repo": "cbradio",
+          "commits": 920,
+          "descriptionSource": "unknown"
         }
-      }
+      },
+      "provenance": {
+        "tagline": "ai",
+        "description": "timeline"
+      },
+      "categoryBasis": "keywords"
     },
     {
-      "slug": "cbbakery",
-      "name": "cbbakery",
-      "tagline": "",
-      "description": "",
+      "slug": "cbhive",
+      "name": "cbhive",
+      "tagline": "cbhive: Autonomous agent control plane supervision",
+      "description": "Autonomous agent control plane: MAPE-K supervisor over the CB fleet (FastAPI/CBApp, hive.campaignbrain.dev, :32519)",
+      "category": "ai-ml",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "archived",
+      "technologies": [],
+      "lastActivity": "2026-08-24",
+      "totalMessages": 27848,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 9,
+          "totalMessages": 27848,
+          "lastSession": "2026-08-24"
+        },
+        "timeline": {
+          "org": "Nominate-AI",
+          "repo": "cbhive",
+          "commits": 294,
+          "descriptionSource": "unknown"
+        }
+      },
+      "provenance": {
+        "tagline": "ai",
+        "description": "timeline"
+      },
+      "categoryBasis": "keywords"
+    },
+    {
+      "slug": "cbstitch",
+      "name": "cbstitch",
+      "tagline": "cbstitch: Host loading stateful reconcile-loop controllers",
+      "description": "Virtual Service Runtime: FastAPI host loading stateful reconcile-loop controllers (virtual services), driving the cbintel\u2192cbmodels\u2192cbweave\u2192cbcast vertical",
       "category": "systems",
       "isResearch": false,
       "isFeatured": false,
-      "status": "recent",
+      "status": "archived",
       "technologies": [],
-      "lastActivity": "2026-09-05",
-      "totalMessages": 3818,
+      "lastActivity": "2026-08-23",
+      "totalMessages": 39625,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 4,
+          "totalMessages": 39625,
+          "lastSession": "2026-08-23"
+        },
+        "timeline": {
+          "org": "Nominate-AI",
+          "repo": "cbstitch",
+          "commits": 465,
+          "descriptionSource": "unknown"
+        }
+      },
+      "provenance": {
+        "tagline": "ai",
+        "description": "timeline"
+      },
+      "categoryBasis": "keywords"
+    },
+    {
+      "slug": "cbcast",
+      "name": "cbcast",
+      "tagline": "cbcast: Rendering cbweave scenes to Pi kiosks",
+      "description": "Display/casting layer: renders cbweave SVG scenes to Pi framebuffer kiosks (FastAPI/CBApp, :32531)",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "archived",
+      "technologies": [],
+      "lastActivity": "2026-08-04",
+      "totalMessages": 16468,
       "sources": {
         "claudeCode": {
           "totalSessions": 3,
-          "totalMessages": 3818,
-          "lastSession": "2026-09-05"
+          "totalMessages": 16468,
+          "lastSession": "2026-08-04"
+        },
+        "timeline": {
+          "org": "Nominate-AI",
+          "repo": "cbcast",
+          "commits": 174,
+          "descriptionSource": "unknown"
         }
-      }
+      },
+      "provenance": {
+        "tagline": "ai",
+        "description": "timeline"
+      },
+      "categoryBasis": "keywords"
     },
     {
       "slug": "esp32",
@@ -1049,13 +1274,18 @@
           "language": "Python",
           "lastPush": "2026-02-18"
         }
-      }
+      },
+      "provenance": {
+        "tagline": "previous",
+        "description": "claude-web"
+      },
+      "categoryBasis": "keywords"
     },
     {
       "slug": "190personel",
       "name": "190PERSONEL",
       "tagline": "190PERSONEL: Seamless banking automation.",
-      "description": "190PERSONEL streamlines banking operations by intelligently automating key processes. Leveraging advanced technology, this project optimizes workflows and enhances efficiency across the entire banking ecosystem.  It\u2019s designed for robust, scalable solutions.",
+      "description": "190PERSONEL streamlines banking operations by intelligently automating key processes. Leveraging advanced technology, this project optimizes workflows and enhances efficiency across the entire banking ecosystem. It\u2019s designed for robust, scalable solutions.",
       "category": "systems",
       "isResearch": false,
       "isFeatured": false,
@@ -1063,13 +1293,18 @@
       "technologies": [],
       "lastActivity": "2026-02-13T22:00:40.326626+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "ai-legacy"
+      },
+      "categoryBasis": "default"
     },
     {
       "slug": "spicy",
       "name": "Spicy",
       "tagline": "Spice up your hardware.",
-      "description": "\u2018Spicy\u2019 is a hardware project focused on enhancing digital experience through innovative sensor integration. We're building a system that subtly shifts and reacts to ambient data, creating a dynamic and responsive interface.  Its goal is to provide a truly intuitive and engaging digital environment.",
+      "description": "\u2018Spicy\u2019 is a hardware project focused on enhancing digital experience through innovative sensor integration. We're building a system that subtly shifts and reacts to ambient data, creating a dynamic and responsive interface. Its goal is to provide a truly intuitive and engaging digital environment.",
       "category": "hardware",
       "isResearch": false,
       "isFeatured": false,
@@ -1077,41 +1312,56 @@
       "technologies": [],
       "lastActivity": "2026-02-04T02:26:12.396332+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "ai-legacy"
+      },
+      "categoryBasis": "keywords"
     },
     {
       "slug": "os",
       "name": "OS",
       "tagline": "Unlock AI Potential. Build with OS.",
-      "description": "OS is a technical project designed to enhance ClaudeCode projects through advanced AI integration. It focuses on building a powerful AI assistant to streamline development, automate tasks, and boost efficiency.  We\u2019re building a core tool for intelligent coding assistance.",
-      "category": "ai-ml",
+      "description": "OS is a technical project designed to enhance ClaudeCode projects through advanced AI integration. It focuses on building a powerful AI assistant to streamline development, automate tasks, and boost efficiency. We\u2019re building a core tool for intelligent coding assistance.",
+      "category": "systems",
       "isResearch": false,
       "isFeatured": false,
       "status": "active",
       "technologies": [],
       "lastActivity": "2026-01-09T17:30:09.979309+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "ai-legacy"
+      },
+      "categoryBasis": "default"
     },
     {
       "slug": "impera",
       "name": "IMPERA",
       "tagline": "Unlock Intelligence. Command the Future.",
-      "description": "IMPERA is an AI/ML project focused on optimizing complex systems through intelligent automation. Leveraging advanced algorithms and deep learning, IMPERA analyzes data to identify patterns and streamline processes, delivering unparalleled insights and control.  It\u2019s designed to empower strategic decision-making with predictive capabilities.",
-      "category": "ai-ml",
+      "description": "IMPERA is an AI/ML project focused on optimizing complex systems through intelligent automation. Leveraging advanced algorithms and deep learning, IMPERA analyzes data to identify patterns and streamline processes, delivering unparalleled insights and control. It\u2019s designed to empower strategic decision-making with predictive capabilities.",
+      "category": "systems",
       "isResearch": false,
       "isFeatured": false,
       "status": "active",
       "technologies": [],
       "lastActivity": "2026-01-05T22:25:46.387665+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "ai-legacy"
+      },
+      "categoryBasis": "default"
     },
     {
       "slug": "vipulse",
       "name": "VIPULSE",
       "tagline": "VIPULSE: Seamlessly Connect USVI Systems.",
-      "description": "VIPULSE provides a unified command center for all USVI properties, streamlining operations and enhancing efficiency. It integrates data and workflows across all departments, creating a robust and accessible platform.  This project enhances control and optimizes performance within the USVI's complex infrastructure.",
+      "description": "VIPULSE provides a unified command center for all USVI properties, streamlining operations and enhancing efficiency. It integrates data and workflows across all departments, creating a robust and accessible platform. This project enhances control and optimizes performance within the USVI's complex infrastructure.",
       "category": "systems",
       "isResearch": false,
       "isFeatured": false,
@@ -1119,7 +1369,12 @@
       "technologies": [],
       "lastActivity": "2025-12-22T15:38:09.055422+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "ai-legacy"
+      },
+      "categoryBasis": "keywords"
     },
     {
       "slug": "splam",
@@ -1133,7 +1388,12 @@
       "technologies": [],
       "lastActivity": "2025-12-19T16:44:29.197375+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "ai-legacy"
+      },
+      "categoryBasis": "default"
     },
     {
       "slug": "ruralamfm",
@@ -1147,7 +1407,12 @@
       "technologies": [],
       "lastActivity": "2025-12-18T16:32:01.621653+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "claude-web"
+      },
+      "categoryBasis": "keywords"
     },
     {
       "slug": "gnomes",
@@ -1161,13 +1426,18 @@
       "technologies": [],
       "lastActivity": "2025-12-11T14:17:50.006792+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "ai-legacy"
+      },
+      "categoryBasis": "keywords"
     },
     {
       "slug": "neotokyo",
       "name": "NEOTOKYO",
       "tagline": "NeoTokyo: Seamless Content Delivery.",
-      "description": "NeoTokyo is a system designed to optimize and distribute college content across various platforms. Utilizing advanced routing and caching, it ensures optimal user experience and minimal latency.  It\u2019s built for scalability and reliability, focusing on delivering content efficiently to students worldwide.",
+      "description": "NeoTokyo is a system designed to optimize and distribute college content across various platforms. Utilizing advanced routing and caching, it ensures optimal user experience and minimal latency. It\u2019s built for scalability and reliability, focusing on delivering content efficiently to students worldwide.",
       "category": "systems",
       "isResearch": false,
       "isFeatured": false,
@@ -1175,13 +1445,18 @@
       "technologies": [],
       "lastActivity": "2025-12-11T01:42:42.655205+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "ai-legacy"
+      },
+      "categoryBasis": "default"
     },
     {
       "slug": "ugyftdrdtfygui",
       "name": "ugyftdrdtfygui",
       "tagline": "Unlocking Data Streams, Seamlessly.",
-      "description": "Ugyftdrdtfygui is a system designed to manage and optimize data flow within complex networks. It focuses on real-time data processing and reliable connectivity, crucial for modern systems.  It provides robust monitoring and transformation capabilities.",
+      "description": "Ugyftdrdtfygui is a system designed to manage and optimize data flow within complex networks. It focuses on real-time data processing and reliable connectivity, crucial for modern systems. It provides robust monitoring and transformation capabilities.",
       "category": "systems",
       "isResearch": false,
       "isFeatured": false,
@@ -1189,13 +1464,18 @@
       "technologies": [],
       "lastActivity": "2025-12-08T19:55:30.205877+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "previous"
+      },
+      "categoryBasis": "keywords"
     },
     {
       "slug": "campaignbrain",
       "name": "CAMPAIGNBRAIN",
       "tagline": "Ignite Your Campaign. Strategically.",
-      "description": "CAMPAIGNBRAIN is a systems-based platform designed to streamline grassroots campaign management. It provides tools for task delegation, data tracking, and real-time analysis, optimizing your efforts for maximum impact.  We\u2019re building a smarter, more efficient approach to grassroots engagement.",
+      "description": "CAMPAIGNBRAIN is a systems-based platform designed to streamline grassroots campaign management. It provides tools for task delegation, data tracking, and real-time analysis, optimizing your efforts for maximum impact. We\u2019re building a smarter, more efficient approach to grassroots engagement.",
       "category": "systems",
       "isResearch": false,
       "isFeatured": false,
@@ -1203,27 +1483,37 @@
       "technologies": [],
       "lastActivity": "2025-12-02T18:50:37.785352+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "ai-legacy"
+      },
+      "categoryBasis": "default"
     },
     {
       "slug": "vectl",
       "name": "VECTL",
       "tagline": "VECTL: Precision Vector Storage.",
-      "description": "VECTL is a new system designed for efficient storage and retrieval of vector similarity data. Utilizing advanced algorithms, it provides rapid similarity searches across large datasets, crucial for machine learning and data analytics.  It leverages solid-state technology for enhanced speed and stability.",
-      "category": "systems",
+      "description": "VECTL is a new system designed for efficient storage and retrieval of vector similarity data. Utilizing advanced algorithms, it provides rapid similarity searches across large datasets, crucial for machine learning and data analytics. It leverages solid-state technology for enhanced speed and stability.",
+      "category": "data",
       "isResearch": false,
       "isFeatured": false,
       "status": "active",
       "technologies": [],
       "lastActivity": "2025-11-30T23:35:11.481171+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "ai-legacy"
+      },
+      "categoryBasis": "keywords"
     },
     {
       "slug": "tingymachinines",
       "name": "TINGYMACHININES",
       "tagline": "TINGYMACHININES: AI-powered systems, streamlined.",
-      "description": "TINGYMACHININES is a collection of tools designed to simplify the development and deployment of AI-driven systems. We provide a suite of technologies focused on efficient model building, deployment, and monitoring, empowering developers to quickly integrate AI into their applications.  It\u2019s about accelerating your AI journey.",
+      "description": "TINGYMACHININES is a collection of tools designed to simplify the development and deployment of AI-driven systems. We provide a suite of technologies focused on efficient model building, deployment, and monitoring, empowering developers to quickly integrate AI into their applications. It\u2019s about accelerating your AI journey.",
       "category": "systems",
       "isResearch": false,
       "isFeatured": false,
@@ -1231,7 +1521,12 @@
       "technologies": [],
       "lastActivity": "2025-11-28T23:10:45.933734+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "ai-legacy"
+      },
+      "categoryBasis": "keywords"
     },
     {
       "slug": "azure",
@@ -1245,13 +1540,18 @@
       "technologies": [],
       "lastActivity": "2025-11-21T19:21:26.332556+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "claude-web"
+      },
+      "categoryBasis": "default"
     },
     {
       "slug": "tinygrad",
       "name": "TINYGRAD",
       "tagline": "Unlock the potential of tiny gradients.",
-      "description": "TinyGrad is a project focused on mastering the intricacies of gradient descent algorithms. It provides a deep dive into optimization techniques, allowing users to understand and implement them effectively.  Gain a competitive edge with this comprehensive system for advanced numerical methods.",
+      "description": "TinyGrad is a project focused on mastering the intricacies of gradient descent algorithms. It provides a deep dive into optimization techniques, allowing users to understand and implement them effectively. Gain a competitive edge with this comprehensive system for advanced numerical methods.",
       "category": "systems",
       "isResearch": false,
       "isFeatured": false,
@@ -1259,27 +1559,12 @@
       "technologies": [],
       "lastActivity": "2025-11-20T20:49:00.117932+00:00",
       "totalMessages": 0,
-      "sources": {}
-    },
-    {
-      "slug": "6502",
-      "name": "6502",
-      "tagline": "",
-      "description": "Want to build 6502 apps.",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2025-11-16T23:20:33.365308+00:00",
-      "totalMessages": 55513,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 5,
-          "totalMessages": 55513,
-          "lastSession": "2026-10-01"
-        }
-      }
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "ai-legacy"
+      },
+      "categoryBasis": "default"
     },
     {
       "slug": "carai",
@@ -1293,35 +1578,50 @@
       "technologies": [],
       "lastActivity": "2025-11-15T17:09:51.588939+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "claude-web"
+      },
+      "categoryBasis": "default"
     },
     {
       "slug": "physics",
       "name": "PHYSICS",
       "tagline": "Unlocking Insights, Transforming Data.",
-      "description": "PHYSICS is a system designed to analyze and interpret complex physics data. It streamlines research and development by providing robust tools for simulations, modeling, and visualization.  We empower scientists and engineers with powerful insights derived from physical systems.",
-      "category": "systems",
+      "description": "PHYSICS is a system designed to analyze and interpret complex physics data. It streamlines research and development by providing robust tools for simulations, modeling, and visualization. We empower scientists and engineers with powerful insights derived from physical systems.",
+      "category": "creative",
       "isResearch": false,
       "isFeatured": false,
       "status": "active",
       "technologies": [],
       "lastActivity": "2025-11-15T16:23:41.903704+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "ai-legacy"
+      },
+      "categoryBasis": "keywords"
     },
     {
       "slug": "a-game",
       "name": "A GAME",
       "tagline": "Forge your words, conquer the game.",
       "description": "Want to create a novel, leisurely word game in the spirit of Wordl.",
-      "category": "hardware",
+      "category": "systems",
       "isResearch": false,
       "isFeatured": false,
       "status": "active",
       "technologies": [],
       "lastActivity": "2025-11-06T14:26:51.627364+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "claude-web"
+      },
+      "categoryBasis": "default"
     },
     {
       "slug": "rust",
@@ -1335,13 +1635,18 @@
       "technologies": [],
       "lastActivity": "2025-11-05T21:26:18.660879+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "claude-web"
+      },
+      "categoryBasis": "keywords"
     },
     {
       "slug": "job",
       "name": "JOB",
       "tagline": "Unlock Your Potential.",
-      "description": "JOB is a system designed to streamline job searching and enhance your career prospects. It utilizes advanced algorithms and data analysis to connect you with relevant opportunities.  It\u2019s your personalized pathway to professional success.",
+      "description": "JOB is a system designed to streamline job searching and enhance your career prospects. It utilizes advanced algorithms and data analysis to connect you with relevant opportunities. It\u2019s your personalized pathway to professional success.",
       "category": "systems",
       "isResearch": false,
       "isFeatured": false,
@@ -1349,7 +1654,12 @@
       "technologies": [],
       "lastActivity": "2025-11-03T18:06:21.668445+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "ai-legacy"
+      },
+      "categoryBasis": "default"
     },
     {
       "slug": "ferett",
@@ -1363,13 +1673,18 @@
       "technologies": [],
       "lastActivity": "2025-10-30T01:49:57.375247+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "claude-web"
+      },
+      "categoryBasis": "default"
     },
     {
       "slug": "victory-modeling",
       "name": "VICTORY MODELING",
       "tagline": "Unlock Model Power, Optimize Ahead.",
-      "description": "We want to up our modeling game. This project is for examining our current process and for discovering new ways to analyze, enhance and improve our modeling process with AI / Neural Nets / Machine learning.\n",
+      "description": "We want to up our modeling game. This project is for examining our current process and for discovering new ways to analyze, enhance and improve our modeling process with AI / Neural Nets / Machine learning.",
       "category": "systems",
       "isResearch": false,
       "isFeatured": false,
@@ -1377,7 +1692,12 @@
       "technologies": [],
       "lastActivity": "2025-10-21T21:22:33.748017+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "claude-web"
+      },
+      "categoryBasis": "default"
     },
     {
       "slug": "swrm",
@@ -1391,21 +1711,31 @@
       "technologies": [],
       "lastActivity": "2025-10-17T16:37:13.898246+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "claude-web"
+      },
+      "categoryBasis": "default"
     },
     {
       "slug": "clarion",
       "name": "CLARION",
       "tagline": "Clion: Clarity in your systems.",
       "description": "Clion is a powerful system for managing and analyzing data within complex IT environments. It streamlines data integration, anomaly detection, and reporting, ensuring optimal system performance and proactive problem solving. Utilizing advanced analytics and visualization, Clion empowers teams to make informed decisions and maintain robust, reliable systems.",
-      "category": "systems",
+      "category": "data",
       "isResearch": false,
       "isFeatured": false,
       "status": "active",
       "technologies": [],
       "lastActivity": "2025-10-13T19:34:09.227364+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "previous"
+      },
+      "categoryBasis": "keywords"
     },
     {
       "slug": "hotbits",
@@ -1426,7 +1756,12 @@
           "language": "TypeScript",
           "lastPush": "2025-10-07"
         }
-      }
+      },
+      "provenance": {
+        "tagline": "previous",
+        "description": "ai-legacy"
+      },
+      "categoryBasis": "keywords"
     },
     {
       "slug": "umbra",
@@ -1446,21 +1781,31 @@
           "totalMessages": 8,
           "lastConversation": "2025-10-22"
         }
-      }
+      },
+      "provenance": {
+        "tagline": "previous",
+        "description": "claude-web"
+      },
+      "categoryBasis": "keywords"
     },
     {
       "slug": "stable-diffusion",
       "name": "STABLE DIFFUSION",
       "tagline": "Unleash the future of visuals. Stable Diffusion, engineered for precision.",
-      "description": "STABLE DIFFUSION is a hardware-focused project developing advanced diffusion models for enhanced image generation. We're pushing the boundaries of speed and detail, utilizing specialized hardware to deliver unparalleled results.  Expect optimized performance and robust control for your creative workflows.",
-      "category": "hardware",
+      "description": "STABLE DIFFUSION is a hardware-focused project developing advanced diffusion models for enhanced image generation. We're pushing the boundaries of speed and detail, utilizing specialized hardware to deliver unparalleled results. Expect optimized performance and robust control for your creative workflows.",
+      "category": "creative",
       "isResearch": false,
       "isFeatured": false,
       "status": "active",
       "technologies": [],
       "lastActivity": "2025-09-28T21:22:53.123197+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "ai-legacy"
+      },
+      "categoryBasis": "keywords"
     },
     {
       "slug": "assembly",
@@ -1474,13 +1819,18 @@
       "technologies": [],
       "lastActivity": "2025-09-28T21:22:41.452421+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "claude-web"
+      },
+      "categoryBasis": "keywords"
     },
     {
       "slug": "pocket",
       "name": "POCKET",
       "tagline": "Pocket: Streamline your systems, intelligently.",
-      "description": "POCKET is a technical project focused on optimizing system workflows. It leverages advanced data analysis and automation to enhance efficiency and reduce bottlenecks within existing systems.  Our goal is to create a robust, scalable solution for improved operational performance.",
+      "description": "POCKET is a technical project focused on optimizing system workflows. It leverages advanced data analysis and automation to enhance efficiency and reduce bottlenecks within existing systems. Our goal is to create a robust, scalable solution for improved operational performance.",
       "category": "systems",
       "isResearch": false,
       "isFeatured": false,
@@ -1488,7 +1838,12 @@
       "technologies": [],
       "lastActivity": "2025-09-28T21:22:33.061483+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "ai-legacy"
+      },
+      "categoryBasis": "default"
     },
     {
       "slug": "random",
@@ -1502,7 +1857,12 @@
       "technologies": [],
       "lastActivity": "2025-09-28T21:22:06.663745+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "ai-legacy"
+      },
+      "categoryBasis": "keywords"
     },
     {
       "slug": "the-idea",
@@ -1516,7 +1876,12 @@
       "technologies": [],
       "lastActivity": "2025-09-28T21:21:58.874889+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "ai-legacy"
+      },
+      "categoryBasis": "default"
     },
     {
       "slug": "redteam",
@@ -1530,13 +1895,18 @@
       "technologies": [],
       "lastActivity": "2025-09-28T21:21:30.234860+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "claude-web"
+      },
+      "categoryBasis": "default"
     },
     {
       "slug": "spydr",
       "name": "SPYDR",
       "tagline": "Uncover Secrets. Deeply Analyze.",
-      "description": "SPYDR is an advanced OSINT crawler designed for comprehensive threat intelligence gathering. Utilizing cutting-edge techniques, it efficiently identifies and analyzes relevant data across the web and dark web.  It\u2019s built for rapid discovery and actionable insights.",
+      "description": "SPYDR is an advanced OSINT crawler designed for comprehensive threat intelligence gathering. Utilizing cutting-edge techniques, it efficiently identifies and analyzes relevant data across the web and dark web. It\u2019s built for rapid discovery and actionable insights.",
       "category": "systems",
       "isResearch": false,
       "isFeatured": false,
@@ -1544,7 +1914,12 @@
       "technologies": [],
       "lastActivity": "2025-09-28T21:21:18.410631+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "ai-legacy"
+      },
+      "categoryBasis": "default"
     },
     {
       "slug": "transaxt",
@@ -1558,13 +1933,18 @@
       "technologies": [],
       "lastActivity": "2025-09-28T21:21:03.622088+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "ai-legacy"
+      },
+      "categoryBasis": "default"
     },
     {
       "slug": "deepsift",
       "name": "DEEPSIFT",
       "tagline": "Deep Insights, Streamlined Systems.",
-      "description": "DEEPSIFT analyzes data from diverse sources to uncover hidden patterns and trends. It provides actionable insights for optimizing systems and improving performance.  This project focuses on intelligent data correlation for enhanced decision-making.",
+      "description": "DEEPSIFT analyzes data from diverse sources to uncover hidden patterns and trends. It provides actionable insights for optimizing systems and improving performance. This project focuses on intelligent data correlation for enhanced decision-making.",
       "category": "systems",
       "isResearch": false,
       "isFeatured": false,
@@ -1572,27 +1952,37 @@
       "technologies": [],
       "lastActivity": "2025-09-28T21:20:52.445694+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "ai-legacy"
+      },
+      "categoryBasis": "default"
     },
     {
       "slug": "resume",
       "name": "RESUME",
       "tagline": "Elevate your resume, powerfully.",
-      "description": "RESUME is a tool designed to meticulously craft your professional resume, optimizing it for Applicant Tracking Systems (ATS) and showcasing your skills effectively. It provides customizable templates and suggestions to ensure your resume stands out.  It\u2019s your key to unlocking better job opportunities.",
-      "category": "hardware",
+      "description": "RESUME is a tool designed to meticulously craft your professional resume, optimizing it for Applicant Tracking Systems (ATS) and showcasing your skills effectively. It provides customizable templates and suggestions to ensure your resume stands out. It\u2019s your key to unlocking better job opportunities.",
+      "category": "systems",
       "isResearch": false,
       "isFeatured": false,
       "status": "active",
       "technologies": [],
       "lastActivity": "2025-09-28T21:20:33.547650+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "ai-legacy"
+      },
+      "categoryBasis": "default"
     },
     {
       "slug": "dspy",
       "name": "DSPY",
       "tagline": "DSPY: Precision Audio Decoding \u2013 Unleash the Sound.",
-      "description": "DSPY is a cutting-edge system designed for audio processing and decoding. It leverages advanced algorithms to deliver superior audio quality and efficient processing, ideal for professional audio engineers and developers.  It streamlines workflows and enhances audio fidelity.",
+      "description": "DSPY is a cutting-edge system designed for audio processing and decoding. It leverages advanced algorithms to deliver superior audio quality and efficient processing, ideal for professional audio engineers and developers. It streamlines workflows and enhances audio fidelity.",
       "category": "systems",
       "isResearch": false,
       "isFeatured": false,
@@ -1600,7 +1990,12 @@
       "technologies": [],
       "lastActivity": "2025-09-28T21:20:19.897848+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "ai-legacy"
+      },
+      "categoryBasis": "default"
     },
     {
       "slug": "snowflake",
@@ -1614,21 +2009,31 @@
       "technologies": [],
       "lastActivity": "2025-09-28T21:20:09.981166+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "ai-legacy"
+      },
+      "categoryBasis": "keywords"
     },
     {
       "slug": "plumbr",
       "name": "PLUMBR",
       "tagline": "Flowing data, intelligent insights.",
       "description": "Working on a low-level data plumbing toolkit for experimenting with AI datastreams.",
-      "category": "creative",
+      "category": "systems",
       "isResearch": false,
       "isFeatured": false,
       "status": "active",
       "technologies": [],
       "lastActivity": "2025-09-28T21:19:59.912508+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "claude-web"
+      },
+      "categoryBasis": "default"
     },
     {
       "slug": "g-combinator",
@@ -1642,7 +2047,12 @@
       "technologies": [],
       "lastActivity": "2025-09-28T21:19:47.632655+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "claude-web"
+      },
+      "categoryBasis": "default"
     },
     {
       "slug": "organization",
@@ -1656,13 +2066,18 @@
       "technologies": [],
       "lastActivity": "2025-09-28T21:19:32.143871+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "ai-legacy"
+      },
+      "categoryBasis": "default"
     },
     {
       "slug": "ai-chat",
       "name": "AI CHAT",
       "tagline": "Seamless Payments, Everywhere, Instantly.",
-      "description": "Ephemeral, ubiquitous AI payment backend that allows a user to make payments anywhere, anytime through several channels (iPhone App, SMS, Web, Carrier Pigeon ...)\n",
+      "description": "Ephemeral, ubiquitous AI payment backend that allows a user to make payments anywhere, anytime through several channels (iPhone App, SMS, Web, Carrier Pigeon ...)",
       "category": "systems",
       "isResearch": false,
       "isFeatured": false,
@@ -1670,13 +2085,18 @@
       "technologies": [],
       "lastActivity": "2025-09-28T21:19:12.337074+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "claude-web"
+      },
+      "categoryBasis": "default"
     },
     {
       "slug": "onshape",
       "name": "ONSHAPE",
       "tagline": "Shape Your Future, Digitally.",
-      "description": "ONSHAPE streamlines your 3D modeling workflow, offering intelligent tools and automation to optimize your designs. It\u2019s designed for efficient and accurate shape creation, boosting productivity across all stages of the process.  Get started with effortless 3D modeling, now.",
+      "description": "ONSHAPE streamlines your 3D modeling workflow, offering intelligent tools and automation to optimize your designs. It\u2019s designed for efficient and accurate shape creation, boosting productivity across all stages of the process. Get started with effortless 3D modeling, now.",
       "category": "systems",
       "isResearch": false,
       "isFeatured": false,
@@ -1684,13 +2104,18 @@
       "technologies": [],
       "lastActivity": "2025-09-28T21:18:56.532701+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "ai-legacy"
+      },
+      "categoryBasis": "default"
     },
     {
       "slug": "cc",
       "name": "CC",
       "tagline": "Unlock Data Insights with CC.",
-      "description": "CC is a powerful tool for analyzing Snowflake data. It leverages advanced query techniques to uncover hidden patterns and trends, providing actionable intelligence.  It streamlines data exploration and reporting for improved decision-making.",
+      "description": "CC is a powerful tool for analyzing Snowflake data. It leverages advanced query techniques to uncover hidden patterns and trends, providing actionable intelligence. It streamlines data exploration and reporting for improved decision-making.",
       "category": "data",
       "isResearch": false,
       "isFeatured": false,
@@ -1698,7 +2123,12 @@
       "technologies": [],
       "lastActivity": "2025-09-28T21:18:44.616151+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "ai-legacy"
+      },
+      "categoryBasis": "keywords"
     },
     {
       "slug": "zephyr",
@@ -1712,7 +2142,12 @@
       "technologies": [],
       "lastActivity": "2025-09-28T21:18:23.735342+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "claude-web"
+      },
+      "categoryBasis": "keywords"
     },
     {
       "slug": "consulting",
@@ -1726,13 +2161,18 @@
       "technologies": [],
       "lastActivity": "2025-09-28T21:18:11.169950+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "claude-web"
+      },
+      "categoryBasis": "default"
     },
     {
       "slug": "xray",
       "name": "XRAY",
       "tagline": "XRAY: Uncover the unseen.",
-      "description": "XRAY is a system designed to analyze your X-ray images and provide detailed insights. It automatically identifies anomalies and patterns within your scans, offering a quick and efficient diagnostic experience.  It\u2019s a powerful tool for medical professionals and researchers.",
+      "description": "XRAY is a system designed to analyze your X-ray images and provide detailed insights. It automatically identifies anomalies and patterns within your scans, offering a quick and efficient diagnostic experience. It\u2019s a powerful tool for medical professionals and researchers.",
       "category": "systems",
       "isResearch": false,
       "isFeatured": false,
@@ -1740,7 +2180,12 @@
       "technologies": [],
       "lastActivity": "2025-09-28T21:17:44.067870+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "ai-legacy"
+      },
+      "categoryBasis": "default"
     },
     {
       "slug": "rural-amfm",
@@ -1754,7 +2199,12 @@
       "technologies": [],
       "lastActivity": "2025-09-28T21:17:34.464690+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "claude-web"
+      },
+      "categoryBasis": "keywords"
     },
     {
       "slug": "crawl",
@@ -1768,41 +2218,56 @@
       "technologies": [],
       "lastActivity": "2025-09-28T21:17:17.846426+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "claude-web"
+      },
+      "categoryBasis": "default"
     },
     {
       "slug": "dragonfli",
       "name": "DRAGONFLI",
       "tagline": "Decoding Skies, Predicting the Future.",
-      "description": "DRAGONFLI utilizes AI/ML to analyze aviation data, predicting potential risks and optimizing operations. Our system leverages advanced algorithms to improve safety, reduce delays, and enhance efficiency across the industry.  It\u2019s designed for proactive insights, not reactive responses.",
-      "category": "ai-ml",
+      "description": "DRAGONFLI utilizes AI/ML to analyze aviation data, predicting potential risks and optimizing operations. Our system leverages advanced algorithms to improve safety, reduce delays, and enhance efficiency across the industry. It\u2019s designed for proactive insights, not reactive responses.",
+      "category": "systems",
       "isResearch": false,
       "isFeatured": false,
       "status": "active",
       "technologies": [],
       "lastActivity": "2025-09-28T21:17:04.292374+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "ai-legacy"
+      },
+      "categoryBasis": "default"
     },
     {
       "slug": "bradley-io",
       "name": "BRADLEY.IO",
       "tagline": "Bradley.IO: Secure Data Streams.",
-      "description": "Bradley.IO is a platform for managing and securing data pipelines. It offers JSON parsing and validation, crucial for backend systems and API development.  We simplify complex data workflows for enhanced data integrity.",
-      "category": "systems",
+      "description": "Bradley.IO is a platform for managing and securing data pipelines. It offers JSON parsing and validation, crucial for backend systems and API development. We simplify complex data workflows for enhanced data integrity.",
+      "category": "data",
       "isResearch": false,
       "isFeatured": false,
       "status": "active",
       "technologies": [],
       "lastActivity": "2025-09-28T21:16:54.733579+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "ai-legacy"
+      },
+      "categoryBasis": "keywords"
     },
     {
       "slug": "resurrecter",
       "name": "RESURRECTER",
       "tagline": "Reviving legacy sites, intelligently.",
-      "description": "Using tools to resurrect websites from CommonCrawl and other sources.\n",
+      "description": "Using tools to resurrect websites from CommonCrawl and other sources.",
       "category": "systems",
       "isResearch": false,
       "isFeatured": false,
@@ -1810,13 +2275,18 @@
       "technologies": [],
       "lastActivity": "2025-09-17T00:17:15.095094+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "claude-web"
+      },
+      "categoryBasis": "default"
     },
     {
       "slug": "wasm",
       "name": "WASM",
       "tagline": "Unlock Mobile Apps with WASM.",
-      "description": "WASM empowers you to build secure and performant mobile apps directly on the WebAssembly runtime.  It offers a modern, efficient alternative to traditional mobile development, streamlining development and enhancing security.  Seamlessly integrate WASM into your existing mobile projects.",
+      "description": "WASM empowers you to build secure and performant mobile apps directly on the WebAssembly runtime. It offers a modern, efficient alternative to traditional mobile development, streamlining development and enhancing security. Seamlessly integrate WASM into your existing mobile projects.",
       "category": "systems",
       "isResearch": false,
       "isFeatured": false,
@@ -1824,13 +2294,18 @@
       "technologies": [],
       "lastActivity": "2025-08-20T00:28:59.312164+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "ai-legacy"
+      },
+      "categoryBasis": "default"
     },
     {
       "slug": "networking",
       "name": "NETWORKING",
       "tagline": "Connect the world, intelligently.",
-      "description": "NETWORKING is a system focused on robust and secure network connectivity, leveraging OpenWRT's routing capabilities. We build reliable connections for diverse applications, ensuring optimal performance and stability.  It\u2019s about efficient data flow and network architecture.",
+      "description": "NETWORKING is a system focused on robust and secure network connectivity, leveraging OpenWRT's routing capabilities. We build reliable connections for diverse applications, ensuring optimal performance and stability. It\u2019s about efficient data flow and network architecture.",
       "category": "systems",
       "isResearch": false,
       "isFeatured": false,
@@ -1838,27 +2313,37 @@
       "technologies": [],
       "lastActivity": "2025-08-01T22:58:47.320551+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "ai-legacy"
+      },
+      "categoryBasis": "default"
     },
     {
       "slug": "classic-rock",
       "name": "CLASSIC ROCK",
       "tagline": "Legacy Sound. Modern Systems.",
-      "description": "\u2018CLASSIC ROCK\u2019 projects the definitive collection of Bash Scripts, meticulously recreating the sonic essence of iconic rock bands. Leveraging existing script data, it offers a powerful and intuitive tool for music automation and analysis.  This project transforms your favorite riffs into a dynamic system.",
-      "category": "systems",
+      "description": "\u2018CLASSIC ROCK\u2019 projects the definitive collection of Bash Scripts, meticulously recreating the sonic essence of iconic rock bands. Leveraging existing script data, it offers a powerful and intuitive tool for music automation and analysis. This project transforms your favorite riffs into a dynamic system.",
+      "category": "creative",
       "isResearch": false,
       "isFeatured": false,
       "status": "active",
       "technologies": [],
       "lastActivity": "2025-07-31T03:03:37.232693+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "ai-legacy"
+      },
+      "categoryBasis": "keywords"
     },
     {
       "slug": "cc-data-warehouse",
       "name": "CC DATA WAREHOUSE",
       "tagline": "Unlock Data Potential, Streamline Insights.",
-      "description": "CC DATA WAREHOUSE is a powerful data warehouse designed to optimize Snowflake queries and enhance data analysis. Leveraging advanced query optimization techniques, it provides faster, more accurate results.  It\u2019s built for improved performance and data-driven decision-making.",
+      "description": "CC DATA WAREHOUSE is a powerful data warehouse designed to optimize Snowflake queries and enhance data analysis. Leveraging advanced query optimization techniques, it provides faster, more accurate results. It\u2019s built for improved performance and data-driven decision-making.",
       "category": "data",
       "isResearch": false,
       "isFeatured": false,
@@ -1866,7 +2351,12 @@
       "technologies": [],
       "lastActivity": "2025-07-30T16:32:57.180961+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "ai-legacy"
+      },
+      "categoryBasis": "keywords"
     },
     {
       "slug": "watr",
@@ -1880,13 +2370,18 @@
       "technologies": [],
       "lastActivity": "2025-07-18T19:01:51.278610+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "claude-web"
+      },
+      "categoryBasis": "default"
     },
     {
       "slug": "lisp",
       "name": "LISP",
       "tagline": "Unlock the power of code. Learn LISP for AI.",
-      "description": "LISP is a programming language focused on symbolic computation and AI. This project provides a practical introduction to LISP, utilizing it to build and analyze intelligent systems.  Gain hands-on experience with core AI concepts through this engaging learning experience.",
+      "description": "LISP is a programming language focused on symbolic computation and AI. This project provides a practical introduction to LISP, utilizing it to build and analyze intelligent systems. Gain hands-on experience with core AI concepts through this engaging learning experience.",
       "category": "systems",
       "isResearch": false,
       "isFeatured": false,
@@ -1894,36 +2389,12 @@
       "technologies": [],
       "lastActivity": "2025-07-10T21:31:09.760939+00:00",
       "totalMessages": 0,
-      "sources": {}
-    },
-    {
-      "slug": "myfw",
-      "name": "MYFW",
-      "tagline": "",
-      "description": "A multi-server application for managing documents, wills and beneficiaries.",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [
-        "FastAPI",
-        "JavaScript",
-        "Nginx",
-        "PostgreSQL",
-        "Python",
-        "React",
-        "SQLite",
-        "TypeScript"
-      ],
-      "lastActivity": "2025-07-09T01:26:24.698633+00:00",
-      "totalMessages": 53155,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 2,
-          "totalMessages": 53155,
-          "lastSession": "2026-10-02"
-        }
-      }
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "ai-legacy"
+      },
+      "categoryBasis": "default"
     },
     {
       "slug": "vt25",
@@ -1937,7 +2408,12 @@
       "technologies": [],
       "lastActivity": "2025-06-30T17:51:25.199656+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "claude-web"
+      },
+      "categoryBasis": "default"
     },
     {
       "slug": "sovereign",
@@ -1958,13 +2434,18 @@
           "language": "Python",
           "lastPush": "2025-06-20"
         }
-      }
+      },
+      "provenance": {
+        "tagline": "github",
+        "description": "github"
+      },
+      "categoryBasis": "keywords"
     },
     {
       "slug": "addai",
       "name": "ADDAI",
       "tagline": "Unlocking Brain Insights, Simply.",
-      "description": "ADDAI is a homegrown EEG monitor, meticulously crafted for enhanced data collection. We've developed a robust and intuitive system for analyzing brainwave activity, offering valuable insights for personal wellness and research.  This project prioritizes ease of use and privacy.",
+      "description": "ADDAI is a homegrown EEG monitor, meticulously crafted for enhanced data collection. We've developed a robust and intuitive system for analyzing brainwave activity, offering valuable insights for personal wellness and research. This project prioritizes ease of use and privacy.",
       "category": "creative",
       "isResearch": true,
       "isFeatured": false,
@@ -1972,21 +2453,31 @@
       "technologies": [],
       "lastActivity": "2025-06-07T23:11:16.953865+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "ai-legacy"
+      },
+      "categoryBasis": "keywords"
     },
     {
       "slug": "how-to-use-claude",
       "name": "How to use Claude",
       "tagline": "Unlock Claude's Potential: Your Guide to Conversation.",
       "description": "An example project that also doubles as a how-to guide for using Claude. Chat with it to learn more about how to get the most out of chatting with Claude!",
-      "category": "hardware",
+      "category": "ai-ml",
       "isResearch": false,
       "isFeatured": false,
       "status": "active",
       "technologies": [],
       "lastActivity": "2025-06-02T03:23:27.439230+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "claude-web"
+      },
+      "categoryBasis": "keywords"
     }
   ],
   "categories": [
@@ -1995,35 +2486,35 @@
       "label": "Hardware & Edge",
       "color": "var(--brand-primary)",
       "icon": "Cpu",
-      "count": 10
+      "count": 6
     },
     {
       "id": "ai-ml",
       "label": "AI & Language",
       "color": "var(--brand-secondary)",
       "icon": "Brain",
-      "count": 6
+      "count": 5
     },
     {
       "id": "data",
       "label": "Data Engineering",
       "color": "var(--brand-info)",
       "icon": "Database",
-      "count": 5
+      "count": 7
     },
     {
       "id": "systems",
       "label": "Systems & Infra",
       "color": "var(--brand-steel)",
       "icon": "Server",
-      "count": 59
+      "count": 60
     },
     {
       "id": "creative",
       "label": "Creative & Research",
       "color": "var(--brand-warning)",
       "icon": "Lightbulb",
-      "count": 4
+      "count": 6
     }
   ],
   "about": {
@@ -2063,22 +2554,22 @@
     "timeline": [
       {
         "year": "2024-present",
-        "title": "Founder & AI Systems Architect \u2014 SysForge.ai",
+        "title": "Founder & AI Systems Architect: SysForge.ai",
         "description": "AI consulting and development firm delivering frontier AI solutions. Architecting AI-powered systems integrating frontier language models into enterprise workflows. Building custom agentic AI pipelines and AI-augmented development toolchains."
       },
       {
         "year": "2022-present",
-        "title": "Architect & Developer \u2014 Enterprise Messaging Platform",
+        "title": "Architect & Developer: Enterprise Messaging Platform",
         "description": "Enterprise-grade, high-volume messaging platform. Architected high-availability system handling millions of messages with 99.9% uptime. Built RESTful API layer with FastAPI integrating multiple carriers with automated failover."
       },
       {
         "year": "2018-2022",
-        "title": "Architect & Developer \u2014 Enterprise Data Platform",
+        "title": "Architect & Developer: Enterprise Data Platform",
         "description": "Large-scale ESP data management processing billions of messages and 100M+ contact records. Integrated 4.9 billion data points for ML model training and relationship discovery across 10,000+ data sources."
       },
       {
         "year": "2014-2018",
-        "title": "Senior Architect \u2014 Fortune 500 Financial Services",
+        "title": "Senior Architect: Fortune 500 Financial Services",
         "description": "Investigative intelligence platform serving law enforcement and government agencies. Lead developer on classified project with the United States Government. Built ML models for entity resolution and relationship mapping."
       }
     ]
@@ -2103,7 +2594,12 @@
           "language": "TypeScript",
           "lastPush": "2025-10-07"
         }
-      }
+      },
+      "provenance": {
+        "tagline": "previous",
+        "description": "ai-legacy"
+      },
+      "categoryBasis": "keywords"
     },
     {
       "slug": "zephyr",
@@ -2117,7 +2613,12 @@
       "technologies": [],
       "lastActivity": "2025-09-28T21:18:23.735342+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "claude-web"
+      },
+      "categoryBasis": "keywords"
     },
     {
       "slug": "sovereign",
@@ -2138,13 +2639,18 @@
           "language": "Python",
           "lastPush": "2025-06-20"
         }
-      }
+      },
+      "provenance": {
+        "tagline": "github",
+        "description": "github"
+      },
+      "categoryBasis": "keywords"
     },
     {
       "slug": "addai",
       "name": "ADDAI",
       "tagline": "Unlocking Brain Insights, Simply.",
-      "description": "ADDAI is a homegrown EEG monitor, meticulously crafted for enhanced data collection. We've developed a robust and intuitive system for analyzing brainwave activity, offering valuable insights for personal wellness and research.  This project prioritizes ease of use and privacy.",
+      "description": "ADDAI is a homegrown EEG monitor, meticulously crafted for enhanced data collection. We've developed a robust and intuitive system for analyzing brainwave activity, offering valuable insights for personal wellness and research. This project prioritizes ease of use and privacy.",
       "category": "creative",
       "isResearch": true,
       "isFeatured": false,
@@ -2152,7 +2658,31 @@
       "technologies": [],
       "lastActivity": "2025-06-07T23:11:16.953865+00:00",
       "totalMessages": 0,
-      "sources": {}
+      "sources": {},
+      "provenance": {
+        "tagline": "previous",
+        "description": "ai-legacy"
+      },
+      "categoryBasis": "keywords"
     }
-  ]
+  ],
+  "aiSummary": {
+    "succeeded": 8,
+    "failed": 0,
+    "reused": 0,
+    "keptPrevious": 63,
+    "notAttempted": 0,
+    "skippedByLimit": 0,
+    "skippedByBudget": 0,
+    "skippedBackendsDown": 0,
+    "noEvidence": 6,
+    "limit": null,
+    "budgetMin": 15.0,
+    "skipped": false,
+    "calls": 8,
+    "answeredByGateway": 0,
+    "answeredByOllama": 8,
+    "fallbackModel": "gemma3:4b",
+    "scope": "Taglines only. Descriptions are never written by the model."
+  }
 }

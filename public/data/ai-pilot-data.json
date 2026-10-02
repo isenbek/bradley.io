@@ -1,377 +1,1703 @@
 {
-  "generated": "2026-10-02T08:03:10.550926",
-  "pipelineVersion": "1.0.0",
+  "generated": "2026-10-02T12:10:41.331109",
+  "pipelineVersion": "2.0.0",
+  "coverage": {
+    "since": "2026-03-08",
+    "through": "2026-10-02",
+    "source": "claude-activity.duckdb",
+    "recordingBegan": "2026-07-07",
+    "dayTimezone": "UTC",
+    "hourTimezone": "America/Detroit",
+    "note": "Totals, days, models and projects are read from the durable activity database and cover 2026-03-08 through 2026-10-02 (UTC days). The database started recording on 2026-07-07. From before that date it holds only the sessions whose logs were still on disk that day, so the earlier months are incomplete and nothing before 2026-03-08 is included.",
+    "definitions": {
+      "message": "One transcript record: a prompt, a tool result, or one content block of a model reply. Not a count of prompts typed.",
+      "session": "One Claude Code session log. Subagent logs are not counted.",
+      "project": "The directory a session started in, by its last path component.",
+      "tokens": "Counted once per model response, not once per log line. The record does not store response ids, so a response is reconstructed from the usage counts its log lines repeat. On 2026-10-02 that rule was compared with response ids in the raw logs still on disk, about 40 percent of the record, and gave identical counts and token sums. The other 60 percent, whose logs were already pruned, is counted by the same rule and was not verified. Tokens used by subagents are not in the record."
+    },
+    "rollingWindow": {
+      "sections": [
+        "skillsCloud",
+        "instrumentRatings"
+      ],
+      "filesSampled": 96,
+      "note": "Keyword and technology mentions need message text, which the database does not store. They are counted over a sample of the raw session logs still on disk (about the last 30 days) plus the CLAUDE.md and plan files, so they describe recent work, not the whole record."
+    }
+  },
   "license": {
-    "number": "AIP-2026-0141",
+    "number": "AIP-2026-0333",
     "class": "ATP",
     "issued": "2026-03-08",
     "expires": "NEVER",
-    "totalSessions": 141,
-    "totalMessages": 434883,
-    "totalCostUSD": 0,
-    "totalInputTokens": 4478300,
-    "totalOutputTokens": 330078174,
-    "totalCacheTokens": 105359302311,
-    "modelCount": 8,
-    "projectCount": 66
+    "totalSessions": 333,
+    "totalMessages": 1095113,
+    "totalUserRecords": 382630,
+    "totalAssistantRecords": 712483,
+    "totalApiCalls": 338095,
+    "totalToolCalls": 342953,
+    "totalCostUSD": null,
+    "totalInputTokens": 13127616,
+    "totalOutputTokens": 320276290,
+    "totalCacheTokens": 119788741906,
+    "modelCount": 10,
+    "projectCount": 100
   },
   "typeRatings": [
     {
       "modelId": "claude-opus-5",
-      "displayName": "Opus",
-      "inputTokens": 426448,
-      "outputTokens": 132257738,
-      "cacheReadTokens": 51099705704,
-      "cacheCreationTokens": 948930693,
-      "costUSD": 0,
-      "costShare": 40.1,
+      "displayName": "Opus 5",
+      "apiCalls": 136154,
+      "inputTokens": 353511,
+      "outputTokens": 114147513,
+      "cacheReadTokens": 50621812100,
+      "cacheCreationTokens": 696846625,
+      "costUSD": null,
+      "costShare": 35.6,
       "proficiency": "Proficient",
-      "contextWindow": 0,
-      "maxOutputTokens": 0
-    },
-    {
-      "modelId": "claude-fable-5-1",
-      "displayName": "Fable",
-      "inputTokens": 1316381,
-      "outputTokens": 81562460,
-      "cacheReadTokens": 17124147656,
-      "cacheCreationTokens": 430670404,
-      "costUSD": 0,
-      "costShare": 24.7,
-      "proficiency": "Proficient",
-      "contextWindow": 0,
-      "maxOutputTokens": 0
-    },
-    {
-      "modelId": "claude-fable-5",
-      "displayName": "Fable",
-      "inputTokens": 2137651,
-      "outputTokens": 57921201,
-      "cacheReadTokens": 16560307125,
-      "cacheCreationTokens": 286358244,
-      "costUSD": 0,
-      "costShare": 17.5,
-      "proficiency": "Familiar",
-      "contextWindow": 0,
-      "maxOutputTokens": 0
+      "firstDay": "2026-07-26",
+      "lastDay": "2026-10-02",
+      "contextWindow": null,
+      "maxOutputTokens": null
     },
     {
       "modelId": "claude-opus-4-8",
-      "displayName": "Opus",
-      "inputTokens": 517632,
-      "outputTokens": 29794987,
-      "cacheReadTokens": 10713878976,
-      "cacheCreationTokens": 168620370,
-      "costUSD": 0,
-      "costShare": 9.0,
+      "displayName": "Opus 4.8",
+      "apiCalls": 94575,
+      "inputTokens": 9456919,
+      "outputTokens": 106342221,
+      "cacheReadTokens": 34547263580,
+      "cacheCreationTokens": 588870140,
+      "costUSD": null,
+      "costShare": 33.2,
+      "proficiency": "Proficient",
+      "firstDay": "2026-05-28",
+      "lastDay": "2026-10-01",
+      "contextWindow": null,
+      "maxOutputTokens": null
+    },
+    {
+      "modelId": "claude-fable-5",
+      "displayName": "Fable 5",
+      "apiCalls": 58885,
+      "inputTokens": 2652429,
+      "outputTokens": 51180802,
+      "cacheReadTokens": 18866194922,
+      "cacheCreationTokens": 291164528,
+      "costUSD": null,
+      "costShare": 16.0,
       "proficiency": "Familiar",
-      "contextWindow": 0,
-      "maxOutputTokens": 0
+      "firstDay": "2026-06-10",
+      "lastDay": "2026-09-23",
+      "contextWindow": null,
+      "maxOutputTokens": null
+    },
+    {
+      "modelId": "claude-fable-5-1",
+      "displayName": "Fable 5.1",
+      "apiCalls": 23213,
+      "inputTokens": 589793,
+      "outputTokens": 29859612,
+      "cacheReadTokens": 8164758550,
+      "cacheCreationTokens": 190628532,
+      "costUSD": null,
+      "costShare": 9.3,
+      "proficiency": "Familiar",
+      "firstDay": "2026-09-01",
+      "lastDay": "2026-10-02",
+      "contextWindow": null,
+      "maxOutputTokens": null
     },
     {
       "modelId": "claude-opus-5-5",
-      "displayName": "Opus",
-      "inputTokens": 54544,
-      "outputTokens": 25447025,
-      "cacheReadTokens": 8845623483,
-      "cacheCreationTokens": 171995985,
-      "costUSD": 0,
-      "costShare": 7.7,
-      "proficiency": "Familiar",
-      "contextWindow": 0,
-      "maxOutputTokens": 0
+      "displayName": "Opus 5.5",
+      "apiCalls": 12253,
+      "inputTokens": 25642,
+      "outputTokens": 9970381,
+      "cacheReadTokens": 3988464200,
+      "cacheCreationTokens": 71058532,
+      "costUSD": null,
+      "costShare": 3.1,
+      "proficiency": "Exposure",
+      "firstDay": "2026-09-23",
+      "lastDay": "2026-10-02",
+      "contextWindow": null,
+      "maxOutputTokens": null
     },
     {
       "modelId": "claude-opus-4-7",
-      "displayName": "Opus",
-      "inputTokens": 23535,
-      "outputTokens": 2830117,
-      "cacheReadTokens": 881868477,
-      "cacheCreationTokens": 14491122,
-      "costUSD": 0,
-      "costShare": 0.9,
+      "displayName": "Opus 4.7",
+      "apiCalls": 10388,
+      "inputTokens": 34333,
+      "outputTokens": 7505362,
+      "cacheReadTokens": 3095746306,
+      "cacheCreationTokens": 57370703,
+      "costUSD": null,
+      "costShare": 2.3,
       "proficiency": "Exposure",
-      "contextWindow": 0,
-      "maxOutputTokens": 0
+      "firstDay": "2026-04-17",
+      "lastDay": "2026-07-22",
+      "contextWindow": null,
+      "maxOutputTokens": null
     },
     {
       "modelId": "claude-opus-4-6",
       "displayName": "Opus 4.6",
-      "inputTokens": 2109,
-      "outputTokens": 264646,
-      "cacheReadTokens": 133770890,
-      "cacheCreationTokens": 7237005,
-      "costUSD": 0,
-      "costShare": 0.1,
+      "apiCalls": 2239,
+      "inputTokens": 12772,
+      "outputTokens": 1066902,
+      "cacheReadTokens": 411362391,
+      "cacheCreationTokens": 11747155,
+      "costUSD": null,
+      "costShare": 0.3,
       "proficiency": "Exposure",
-      "contextWindow": 0,
-      "maxOutputTokens": 0
+      "firstDay": "2026-03-08",
+      "lastDay": "2026-04-27",
+      "contextWindow": null,
+      "maxOutputTokens": null
+    },
+    {
+      "modelId": "claude-sonnet-5",
+      "displayName": "Sonnet 5",
+      "apiCalls": 172,
+      "inputTokens": 1974,
+      "outputTokens": 124256,
+      "cacheReadTokens": 70864148,
+      "cacheCreationTokens": 2281166,
+      "costUSD": null,
+      "costShare": 0.0,
+      "proficiency": "Exposure",
+      "firstDay": "2026-07-01",
+      "lastDay": "2026-08-26",
+      "contextWindow": null,
+      "maxOutputTokens": null
+    },
+    {
+      "modelId": "claude-sonnet-4-6",
+      "displayName": "Sonnet 4.6",
+      "apiCalls": 215,
+      "inputTokens": 233,
+      "outputTokens": 79198,
+      "cacheReadTokens": 22258511,
+      "cacheCreationTokens": 1140631,
+      "costUSD": null,
+      "costShare": 0.0,
+      "proficiency": "Exposure",
+      "firstDay": "2026-04-02",
+      "lastDay": "2026-04-02",
+      "contextWindow": null,
+      "maxOutputTokens": null
+    },
+    {
+      "modelId": "claude-haiku-4-5-20251001",
+      "displayName": "Haiku 4.5",
+      "apiCalls": 1,
+      "inputTokens": 10,
+      "outputTokens": 43,
+      "cacheReadTokens": 17198,
+      "cacheCreationTokens": 9972,
+      "costUSD": null,
+      "costShare": 0.0,
+      "proficiency": "Exposure",
+      "firstDay": "2026-07-14",
+      "lastDay": "2026-07-14",
+      "contextWindow": null,
+      "maxOutputTokens": null
     }
   ],
   "activityHeatmap": [
     {
       "date": "2026-03-08",
-      "count": 24423,
+      "count": 80,
       "sessions": 1,
-      "toolCalls": 7925,
-      "intensity": 2
-    },
-    {
-      "date": "2026-07-18",
-      "count": 1491,
-      "sessions": 1,
-      "toolCalls": 374,
+      "sessionsStarted": 1,
+      "toolCalls": 27,
       "intensity": 1
     },
     {
-      "date": "2026-07-19",
-      "count": 2862,
+      "date": "2026-03-12",
+      "count": 121,
       "sessions": 1,
-      "toolCalls": 945,
+      "sessionsStarted": 0,
+      "toolCalls": 45,
       "intensity": 1
     },
     {
-      "date": "2026-07-28",
-      "count": 43925,
+      "date": "2026-03-15",
+      "count": 282,
       "sessions": 1,
-      "toolCalls": 13492,
-      "intensity": 4
-    },
-    {
-      "date": "2026-08-01",
-      "count": 2265,
-      "sessions": 1,
-      "toolCalls": 504,
+      "sessionsStarted": 0,
+      "toolCalls": 107,
       "intensity": 1
     },
     {
-      "date": "2026-08-12",
-      "count": 44828,
-      "sessions": 1,
-      "toolCalls": 14844,
-      "intensity": 4
-    },
-    {
-      "date": "2026-08-13",
-      "count": 11370,
-      "sessions": 2,
-      "toolCalls": 3646,
-      "intensity": 1
-    },
-    {
-      "date": "2026-08-17",
-      "count": 17427,
-      "sessions": 1,
-      "toolCalls": 5374,
-      "intensity": 2
-    },
-    {
-      "date": "2026-08-19",
-      "count": 49670,
-      "sessions": 1,
-      "toolCalls": 16243,
-      "intensity": 4
-    },
-    {
-      "date": "2026-08-20",
-      "count": 23054,
-      "sessions": 1,
-      "toolCalls": 7242,
-      "intensity": 2
-    },
-    {
-      "date": "2026-08-22",
-      "count": 36672,
-      "sessions": 2,
-      "toolCalls": 11824,
-      "intensity": 3
-    },
-    {
-      "date": "2026-08-27",
-      "count": 6598,
-      "sessions": 2,
-      "toolCalls": 2107,
-      "intensity": 1
-    },
-    {
-      "date": "2026-08-28",
-      "count": 2747,
-      "sessions": 4,
-      "toolCalls": 752,
-      "intensity": 1
-    },
-    {
-      "date": "2026-08-29",
-      "count": 8122,
-      "sessions": 5,
-      "toolCalls": 2488,
-      "intensity": 1
-    },
-    {
-      "date": "2026-08-30",
+      "date": "2026-03-16",
       "count": 50,
       "sessions": 1,
-      "toolCalls": 13,
+      "sessionsStarted": 0,
+      "toolCalls": 18,
       "intensity": 1
     },
     {
-      "date": "2026-08-31",
-      "count": 22113,
-      "sessions": 14,
-      "toolCalls": 7070,
-      "intensity": 2
+      "date": "2026-03-17",
+      "count": 18,
+      "sessions": 1,
+      "sessionsStarted": 0,
+      "toolCalls": 7,
+      "intensity": 1
     },
     {
-      "date": "2026-09-01",
-      "count": 30695,
+      "date": "2026-03-21",
+      "count": 34,
+      "sessions": 1,
+      "sessionsStarted": 0,
+      "toolCalls": 11,
+      "intensity": 1
+    },
+    {
+      "date": "2026-03-22",
+      "count": 177,
+      "sessions": 1,
+      "sessionsStarted": 0,
+      "toolCalls": 63,
+      "intensity": 1
+    },
+    {
+      "date": "2026-03-23",
+      "count": 272,
+      "sessions": 1,
+      "sessionsStarted": 0,
+      "toolCalls": 103,
+      "intensity": 1
+    },
+    {
+      "date": "2026-03-24",
+      "count": 49,
+      "sessions": 1,
+      "sessionsStarted": 0,
+      "toolCalls": 18,
+      "intensity": 1
+    },
+    {
+      "date": "2026-03-25",
+      "count": 101,
+      "sessions": 1,
+      "sessionsStarted": 0,
+      "toolCalls": 37,
+      "intensity": 1
+    },
+    {
+      "date": "2026-03-26",
+      "count": 131,
+      "sessions": 1,
+      "sessionsStarted": 0,
+      "toolCalls": 46,
+      "intensity": 1
+    },
+    {
+      "date": "2026-03-27",
+      "count": 320,
+      "sessions": 1,
+      "sessionsStarted": 0,
+      "toolCalls": 117,
+      "intensity": 1
+    },
+    {
+      "date": "2026-03-28",
+      "count": 127,
       "sessions": 2,
-      "toolCalls": 9863,
-      "intensity": 3
-    },
-    {
-      "date": "2026-09-02",
-      "count": 1004,
-      "sessions": 3,
-      "toolCalls": 309,
+      "sessionsStarted": 1,
+      "toolCalls": 39,
       "intensity": 1
     },
     {
-      "date": "2026-09-04",
-      "count": 4772,
+      "date": "2026-03-29",
+      "count": 81,
       "sessions": 1,
-      "toolCalls": 1602,
+      "sessionsStarted": 1,
+      "toolCalls": 29,
       "intensity": 1
     },
     {
-      "date": "2026-09-05",
-      "count": 3847,
+      "date": "2026-03-31",
+      "count": 3,
       "sessions": 1,
-      "toolCalls": 1116,
+      "sessionsStarted": 0,
+      "toolCalls": 0,
       "intensity": 1
     },
     {
-      "date": "2026-09-06",
-      "count": 4563,
-      "sessions": 8,
-      "toolCalls": 1486,
-      "intensity": 1
-    },
-    {
-      "date": "2026-09-08",
-      "count": 184,
+      "date": "2026-04-02",
+      "count": 1010,
       "sessions": 1,
-      "toolCalls": 70,
+      "sessionsStarted": 0,
+      "toolCalls": 373,
       "intensity": 1
     },
     {
-      "date": "2026-09-09",
-      "count": 3488,
+      "date": "2026-04-03",
+      "count": 26,
+      "sessions": 1,
+      "sessionsStarted": 0,
+      "toolCalls": 10,
+      "intensity": 1
+    },
+    {
+      "date": "2026-04-07",
+      "count": 118,
+      "sessions": 1,
+      "sessionsStarted": 0,
+      "toolCalls": 39,
+      "intensity": 1
+    },
+    {
+      "date": "2026-04-08",
+      "count": 14,
+      "sessions": 1,
+      "sessionsStarted": 0,
+      "toolCalls": 5,
+      "intensity": 1
+    },
+    {
+      "date": "2026-04-10",
+      "count": 69,
+      "sessions": 2,
+      "sessionsStarted": 0,
+      "toolCalls": 24,
+      "intensity": 1
+    },
+    {
+      "date": "2026-04-11",
+      "count": 104,
+      "sessions": 1,
+      "sessionsStarted": 0,
+      "toolCalls": 42,
+      "intensity": 1
+    },
+    {
+      "date": "2026-04-12",
+      "count": 110,
+      "sessions": 1,
+      "sessionsStarted": 1,
+      "toolCalls": 41,
+      "intensity": 1
+    },
+    {
+      "date": "2026-04-13",
+      "count": 650,
       "sessions": 3,
-      "toolCalls": 1015,
+      "sessionsStarted": 1,
+      "toolCalls": 242,
       "intensity": 1
     },
     {
-      "date": "2026-09-10",
-      "count": 7663,
+      "date": "2026-04-14",
+      "count": 658,
+      "sessions": 4,
+      "sessionsStarted": 0,
+      "toolCalls": 223,
+      "intensity": 1
+    },
+    {
+      "date": "2026-04-15",
+      "count": 313,
+      "sessions": 2,
+      "sessionsStarted": 0,
+      "toolCalls": 116,
+      "intensity": 1
+    },
+    {
+      "date": "2026-04-16",
+      "count": 1251,
       "sessions": 3,
-      "toolCalls": 2254,
+      "sessionsStarted": 0,
+      "toolCalls": 452,
       "intensity": 1
     },
     {
-      "date": "2026-09-13",
-      "count": 5087,
+      "date": "2026-04-17",
+      "count": 768,
+      "sessions": 2,
+      "sessionsStarted": 0,
+      "toolCalls": 277,
+      "intensity": 1
+    },
+    {
+      "date": "2026-04-18",
+      "count": 16,
+      "sessions": 2,
+      "sessionsStarted": 0,
+      "toolCalls": 2,
+      "intensity": 1
+    },
+    {
+      "date": "2026-04-20",
+      "count": 657,
+      "sessions": 2,
+      "sessionsStarted": 0,
+      "toolCalls": 253,
+      "intensity": 1
+    },
+    {
+      "date": "2026-04-21",
+      "count": 2587,
+      "sessions": 4,
+      "sessionsStarted": 1,
+      "toolCalls": 885,
+      "intensity": 1
+    },
+    {
+      "date": "2026-04-22",
+      "count": 1758,
+      "sessions": 4,
+      "sessionsStarted": 0,
+      "toolCalls": 638,
+      "intensity": 1
+    },
+    {
+      "date": "2026-04-23",
+      "count": 1269,
+      "sessions": 4,
+      "sessionsStarted": 0,
+      "toolCalls": 489,
+      "intensity": 1
+    },
+    {
+      "date": "2026-04-24",
+      "count": 710,
+      "sessions": 4,
+      "sessionsStarted": 0,
+      "toolCalls": 251,
+      "intensity": 1
+    },
+    {
+      "date": "2026-04-25",
+      "count": 164,
       "sessions": 5,
-      "toolCalls": 1664,
+      "sessionsStarted": 0,
+      "toolCalls": 57,
       "intensity": 1
     },
     {
-      "date": "2026-09-14",
-      "count": 9033,
-      "sessions": 6,
-      "toolCalls": 2963,
+      "date": "2026-04-26",
+      "count": 456,
+      "sessions": 2,
+      "sessionsStarted": 0,
+      "toolCalls": 162,
       "intensity": 1
     },
     {
-      "date": "2026-09-15",
-      "count": 223,
+      "date": "2026-04-27",
+      "count": 27,
       "sessions": 1,
+      "sessionsStarted": 0,
+      "toolCalls": 9,
+      "intensity": 1
+    },
+    {
+      "date": "2026-04-28",
+      "count": 228,
+      "sessions": 1,
+      "sessionsStarted": 0,
+      "toolCalls": 84,
+      "intensity": 1
+    },
+    {
+      "date": "2026-04-29",
+      "count": 187,
+      "sessions": 3,
+      "sessionsStarted": 0,
+      "toolCalls": 53,
+      "intensity": 1
+    },
+    {
+      "date": "2026-04-30",
+      "count": 907,
+      "sessions": 2,
+      "sessionsStarted": 0,
+      "toolCalls": 322,
+      "intensity": 1
+    },
+    {
+      "date": "2026-05-01",
+      "count": 856,
+      "sessions": 2,
+      "sessionsStarted": 0,
+      "toolCalls": 338,
+      "intensity": 1
+    },
+    {
+      "date": "2026-05-02",
+      "count": 122,
+      "sessions": 2,
+      "sessionsStarted": 0,
+      "toolCalls": 45,
+      "intensity": 1
+    },
+    {
+      "date": "2026-05-03",
+      "count": 236,
+      "sessions": 4,
+      "sessionsStarted": 0,
       "toolCalls": 77,
       "intensity": 1
     },
     {
-      "date": "2026-09-17",
-      "count": 13534,
+      "date": "2026-05-04",
+      "count": 257,
+      "sessions": 2,
+      "sessionsStarted": 0,
+      "toolCalls": 94,
+      "intensity": 1
+    },
+    {
+      "date": "2026-05-05",
+      "count": 883,
+      "sessions": 2,
+      "sessionsStarted": 0,
+      "toolCalls": 334,
+      "intensity": 1
+    },
+    {
+      "date": "2026-05-06",
+      "count": 906,
       "sessions": 3,
-      "toolCalls": 4132,
+      "sessionsStarted": 0,
+      "toolCalls": 333,
+      "intensity": 1
+    },
+    {
+      "date": "2026-05-07",
+      "count": 1324,
+      "sessions": 4,
+      "sessionsStarted": 0,
+      "toolCalls": 375,
+      "intensity": 1
+    },
+    {
+      "date": "2026-05-08",
+      "count": 1124,
+      "sessions": 5,
+      "sessionsStarted": 0,
+      "toolCalls": 408,
+      "intensity": 1
+    },
+    {
+      "date": "2026-05-09",
+      "count": 119,
+      "sessions": 3,
+      "sessionsStarted": 0,
+      "toolCalls": 39,
+      "intensity": 1
+    },
+    {
+      "date": "2026-05-12",
+      "count": 1011,
+      "sessions": 2,
+      "sessionsStarted": 0,
+      "toolCalls": 363,
+      "intensity": 1
+    },
+    {
+      "date": "2026-05-13",
+      "count": 1480,
+      "sessions": 2,
+      "sessionsStarted": 0,
+      "toolCalls": 590,
+      "intensity": 1
+    },
+    {
+      "date": "2026-05-14",
+      "count": 60,
+      "sessions": 1,
+      "sessionsStarted": 0,
+      "toolCalls": 19,
+      "intensity": 1
+    },
+    {
+      "date": "2026-05-15",
+      "count": 634,
+      "sessions": 2,
+      "sessionsStarted": 0,
+      "toolCalls": 224,
+      "intensity": 1
+    },
+    {
+      "date": "2026-05-16",
+      "count": 58,
+      "sessions": 1,
+      "sessionsStarted": 0,
+      "toolCalls": 17,
+      "intensity": 1
+    },
+    {
+      "date": "2026-05-18",
+      "count": 538,
+      "sessions": 2,
+      "sessionsStarted": 0,
+      "toolCalls": 201,
+      "intensity": 1
+    },
+    {
+      "date": "2026-05-19",
+      "count": 1475,
+      "sessions": 2,
+      "sessionsStarted": 0,
+      "toolCalls": 536,
+      "intensity": 1
+    },
+    {
+      "date": "2026-05-21",
+      "count": 240,
+      "sessions": 1,
+      "sessionsStarted": 0,
+      "toolCalls": 84,
+      "intensity": 1
+    },
+    {
+      "date": "2026-05-22",
+      "count": 64,
+      "sessions": 1,
+      "sessionsStarted": 0,
+      "toolCalls": 26,
+      "intensity": 1
+    },
+    {
+      "date": "2026-05-23",
+      "count": 99,
+      "sessions": 1,
+      "sessionsStarted": 0,
+      "toolCalls": 35,
+      "intensity": 1
+    },
+    {
+      "date": "2026-05-26",
+      "count": 69,
+      "sessions": 1,
+      "sessionsStarted": 0,
+      "toolCalls": 24,
+      "intensity": 1
+    },
+    {
+      "date": "2026-05-28",
+      "count": 3837,
+      "sessions": 4,
+      "sessionsStarted": 3,
+      "toolCalls": 1123,
+      "intensity": 1
+    },
+    {
+      "date": "2026-05-29",
+      "count": 5455,
+      "sessions": 4,
+      "sessionsStarted": 1,
+      "toolCalls": 1639,
       "intensity": 2
     },
     {
-      "date": "2026-09-18",
-      "count": 18944,
+      "date": "2026-05-30",
+      "count": 3885,
+      "sessions": 4,
+      "sessionsStarted": 0,
+      "toolCalls": 1144,
+      "intensity": 1
+    },
+    {
+      "date": "2026-05-31",
+      "count": 494,
+      "sessions": 2,
+      "sessionsStarted": 0,
+      "toolCalls": 125,
+      "intensity": 1
+    },
+    {
+      "date": "2026-06-01",
+      "count": 3532,
+      "sessions": 5,
+      "sessionsStarted": 1,
+      "toolCalls": 1073,
+      "intensity": 1
+    },
+    {
+      "date": "2026-06-02",
+      "count": 4360,
+      "sessions": 5,
+      "sessionsStarted": 0,
+      "toolCalls": 1256,
+      "intensity": 1
+    },
+    {
+      "date": "2026-06-03",
+      "count": 4467,
+      "sessions": 6,
+      "sessionsStarted": 0,
+      "toolCalls": 1273,
+      "intensity": 1
+    },
+    {
+      "date": "2026-06-04",
+      "count": 1834,
+      "sessions": 6,
+      "sessionsStarted": 0,
+      "toolCalls": 621,
+      "intensity": 1
+    },
+    {
+      "date": "2026-06-05",
+      "count": 4529,
+      "sessions": 10,
+      "sessionsStarted": 1,
+      "toolCalls": 1331,
+      "intensity": 1
+    },
+    {
+      "date": "2026-06-06",
+      "count": 1841,
+      "sessions": 9,
+      "sessionsStarted": 1,
+      "toolCalls": 540,
+      "intensity": 1
+    },
+    {
+      "date": "2026-06-07",
+      "count": 1414,
       "sessions": 3,
-      "toolCalls": 6049,
+      "sessionsStarted": 0,
+      "toolCalls": 375,
+      "intensity": 1
+    },
+    {
+      "date": "2026-06-08",
+      "count": 6271,
+      "sessions": 9,
+      "sessionsStarted": 1,
+      "toolCalls": 1804,
+      "intensity": 2
+    },
+    {
+      "date": "2026-06-09",
+      "count": 8529,
+      "sessions": 10,
+      "sessionsStarted": 0,
+      "toolCalls": 2577,
+      "intensity": 2
+    },
+    {
+      "date": "2026-06-10",
+      "count": 6040,
+      "sessions": 7,
+      "sessionsStarted": 0,
+      "toolCalls": 1847,
+      "intensity": 2
+    },
+    {
+      "date": "2026-06-11",
+      "count": 3754,
+      "sessions": 7,
+      "sessionsStarted": 0,
+      "toolCalls": 1186,
+      "intensity": 1
+    },
+    {
+      "date": "2026-06-12",
+      "count": 6940,
+      "sessions": 7,
+      "sessionsStarted": 0,
+      "toolCalls": 2109,
+      "intensity": 2
+    },
+    {
+      "date": "2026-06-13",
+      "count": 2265,
+      "sessions": 6,
+      "sessionsStarted": 0,
+      "toolCalls": 631,
+      "intensity": 1
+    },
+    {
+      "date": "2026-06-14",
+      "count": 2336,
+      "sessions": 7,
+      "sessionsStarted": 1,
+      "toolCalls": 627,
+      "intensity": 1
+    },
+    {
+      "date": "2026-06-15",
+      "count": 6212,
+      "sessions": 9,
+      "sessionsStarted": 2,
+      "toolCalls": 1742,
+      "intensity": 2
+    },
+    {
+      "date": "2026-06-16",
+      "count": 6319,
+      "sessions": 8,
+      "sessionsStarted": 1,
+      "toolCalls": 1720,
+      "intensity": 2
+    },
+    {
+      "date": "2026-06-17",
+      "count": 8752,
+      "sessions": 8,
+      "sessionsStarted": 1,
+      "toolCalls": 2511,
+      "intensity": 2
+    },
+    {
+      "date": "2026-06-18",
+      "count": 8647,
+      "sessions": 11,
+      "sessionsStarted": 0,
+      "toolCalls": 2442,
+      "intensity": 2
+    },
+    {
+      "date": "2026-06-19",
+      "count": 7054,
+      "sessions": 15,
+      "sessionsStarted": 7,
+      "toolCalls": 1993,
+      "intensity": 2
+    },
+    {
+      "date": "2026-06-20",
+      "count": 4138,
+      "sessions": 11,
+      "sessionsStarted": 4,
+      "toolCalls": 1203,
+      "intensity": 1
+    },
+    {
+      "date": "2026-06-21",
+      "count": 3654,
+      "sessions": 4,
+      "sessionsStarted": 0,
+      "toolCalls": 1075,
+      "intensity": 1
+    },
+    {
+      "date": "2026-06-22",
+      "count": 4051,
+      "sessions": 8,
+      "sessionsStarted": 1,
+      "toolCalls": 1208,
+      "intensity": 1
+    },
+    {
+      "date": "2026-06-23",
+      "count": 6537,
+      "sessions": 10,
+      "sessionsStarted": 1,
+      "toolCalls": 1902,
+      "intensity": 2
+    },
+    {
+      "date": "2026-06-24",
+      "count": 5998,
+      "sessions": 17,
+      "sessionsStarted": 5,
+      "toolCalls": 1757,
+      "intensity": 2
+    },
+    {
+      "date": "2026-06-25",
+      "count": 6845,
+      "sessions": 21,
+      "sessionsStarted": 9,
+      "toolCalls": 1917,
+      "intensity": 2
+    },
+    {
+      "date": "2026-06-26",
+      "count": 9052,
+      "sessions": 9,
+      "sessionsStarted": 0,
+      "toolCalls": 2576,
+      "intensity": 2
+    },
+    {
+      "date": "2026-06-27",
+      "count": 5812,
+      "sessions": 6,
+      "sessionsStarted": 0,
+      "toolCalls": 1669,
+      "intensity": 2
+    },
+    {
+      "date": "2026-06-28",
+      "count": 3499,
+      "sessions": 6,
+      "sessionsStarted": 0,
+      "toolCalls": 1033,
+      "intensity": 1
+    },
+    {
+      "date": "2026-06-29",
+      "count": 8858,
+      "sessions": 8,
+      "sessionsStarted": 1,
+      "toolCalls": 2566,
+      "intensity": 2
+    },
+    {
+      "date": "2026-06-30",
+      "count": 8070,
+      "sessions": 18,
+      "sessionsStarted": 8,
+      "toolCalls": 2295,
+      "intensity": 2
+    },
+    {
+      "date": "2026-07-01",
+      "count": 9590,
+      "sessions": 11,
+      "sessionsStarted": 2,
+      "toolCalls": 2851,
+      "intensity": 2
+    },
+    {
+      "date": "2026-07-02",
+      "count": 9400,
+      "sessions": 10,
+      "sessionsStarted": 1,
+      "toolCalls": 3091,
+      "intensity": 2
+    },
+    {
+      "date": "2026-07-03",
+      "count": 5470,
+      "sessions": 7,
+      "sessionsStarted": 0,
+      "toolCalls": 1770,
+      "intensity": 2
+    },
+    {
+      "date": "2026-07-04",
+      "count": 1971,
+      "sessions": 5,
+      "sessionsStarted": 0,
+      "toolCalls": 581,
+      "intensity": 1
+    },
+    {
+      "date": "2026-07-05",
+      "count": 4007,
+      "sessions": 7,
+      "sessionsStarted": 1,
+      "toolCalls": 1139,
+      "intensity": 1
+    },
+    {
+      "date": "2026-07-06",
+      "count": 623,
+      "sessions": 4,
+      "sessionsStarted": 0,
+      "toolCalls": 156,
+      "intensity": 1
+    },
+    {
+      "date": "2026-07-07",
+      "count": 4492,
+      "sessions": 8,
+      "sessionsStarted": 0,
+      "toolCalls": 1334,
+      "intensity": 1
+    },
+    {
+      "date": "2026-07-08",
+      "count": 6394,
+      "sessions": 13,
+      "sessionsStarted": 7,
+      "toolCalls": 1924,
+      "intensity": 2
+    },
+    {
+      "date": "2026-07-09",
+      "count": 3991,
+      "sessions": 10,
+      "sessionsStarted": 0,
+      "toolCalls": 1120,
+      "intensity": 1
+    },
+    {
+      "date": "2026-07-10",
+      "count": 8427,
+      "sessions": 10,
+      "sessionsStarted": 0,
+      "toolCalls": 2470,
+      "intensity": 2
+    },
+    {
+      "date": "2026-07-11",
+      "count": 7694,
+      "sessions": 9,
+      "sessionsStarted": 1,
+      "toolCalls": 2248,
+      "intensity": 2
+    },
+    {
+      "date": "2026-07-12",
+      "count": 5721,
+      "sessions": 10,
+      "sessionsStarted": 3,
+      "toolCalls": 1655,
+      "intensity": 2
+    },
+    {
+      "date": "2026-07-13",
+      "count": 7462,
+      "sessions": 11,
+      "sessionsStarted": 0,
+      "toolCalls": 2301,
+      "intensity": 2
+    },
+    {
+      "date": "2026-07-14",
+      "count": 11695,
+      "sessions": 10,
+      "sessionsStarted": 3,
+      "toolCalls": 3587,
+      "intensity": 3
+    },
+    {
+      "date": "2026-07-15",
+      "count": 11238,
+      "sessions": 11,
+      "sessionsStarted": 0,
+      "toolCalls": 3412,
+      "intensity": 3
+    },
+    {
+      "date": "2026-07-16",
+      "count": 7150,
+      "sessions": 10,
+      "sessionsStarted": 0,
+      "toolCalls": 2100,
+      "intensity": 2
+    },
+    {
+      "date": "2026-07-17",
+      "count": 9405,
+      "sessions": 10,
+      "sessionsStarted": 0,
+      "toolCalls": 2676,
+      "intensity": 2
+    },
+    {
+      "date": "2026-07-18",
+      "count": 10376,
+      "sessions": 12,
+      "sessionsStarted": 4,
+      "toolCalls": 3319,
+      "intensity": 2
+    },
+    {
+      "date": "2026-07-19",
+      "count": 10076,
+      "sessions": 9,
+      "sessionsStarted": 2,
+      "toolCalls": 3095,
+      "intensity": 2
+    },
+    {
+      "date": "2026-07-20",
+      "count": 7651,
+      "sessions": 11,
+      "sessionsStarted": 3,
+      "toolCalls": 2189,
+      "intensity": 2
+    },
+    {
+      "date": "2026-07-21",
+      "count": 16559,
+      "sessions": 21,
+      "sessionsStarted": 8,
+      "toolCalls": 5050,
+      "intensity": 4
+    },
+    {
+      "date": "2026-07-22",
+      "count": 11738,
+      "sessions": 25,
+      "sessionsStarted": 9,
+      "toolCalls": 3648,
+      "intensity": 3
+    },
+    {
+      "date": "2026-07-23",
+      "count": 7287,
+      "sessions": 12,
+      "sessionsStarted": 2,
+      "toolCalls": 2115,
+      "intensity": 2
+    },
+    {
+      "date": "2026-07-24",
+      "count": 3916,
+      "sessions": 8,
+      "sessionsStarted": 1,
+      "toolCalls": 1051,
+      "intensity": 1
+    },
+    {
+      "date": "2026-07-25",
+      "count": 1614,
+      "sessions": 1,
+      "sessionsStarted": 0,
+      "toolCalls": 389,
+      "intensity": 1
+    },
+    {
+      "date": "2026-07-26",
+      "count": 4192,
+      "sessions": 3,
+      "sessionsStarted": 0,
+      "toolCalls": 1298,
+      "intensity": 1
+    },
+    {
+      "date": "2026-07-27",
+      "count": 8750,
+      "sessions": 9,
+      "sessionsStarted": 5,
+      "toolCalls": 3039,
+      "intensity": 2
+    },
+    {
+      "date": "2026-07-28",
+      "count": 8947,
+      "sessions": 15,
+      "sessionsStarted": 7,
+      "toolCalls": 3016,
+      "intensity": 2
+    },
+    {
+      "date": "2026-07-29",
+      "count": 9369,
+      "sessions": 12,
+      "sessionsStarted": 2,
+      "toolCalls": 3123,
+      "intensity": 2
+    },
+    {
+      "date": "2026-07-30",
+      "count": 14919,
+      "sessions": 15,
+      "sessionsStarted": 2,
+      "toolCalls": 5016,
+      "intensity": 3
+    },
+    {
+      "date": "2026-07-31",
+      "count": 14977,
+      "sessions": 19,
+      "sessionsStarted": 3,
+      "toolCalls": 4799,
+      "intensity": 3
+    },
+    {
+      "date": "2026-08-01",
+      "count": 13504,
+      "sessions": 14,
+      "sessionsStarted": 2,
+      "toolCalls": 4313,
+      "intensity": 3
+    },
+    {
+      "date": "2026-08-02",
+      "count": 11317,
+      "sessions": 12,
+      "sessionsStarted": 0,
+      "toolCalls": 3643,
+      "intensity": 3
+    },
+    {
+      "date": "2026-08-03",
+      "count": 9202,
+      "sessions": 12,
+      "sessionsStarted": 0,
+      "toolCalls": 2905,
+      "intensity": 2
+    },
+    {
+      "date": "2026-08-04",
+      "count": 14282,
+      "sessions": 14,
+      "sessionsStarted": 3,
+      "toolCalls": 4682,
+      "intensity": 3
+    },
+    {
+      "date": "2026-08-05",
+      "count": 8151,
+      "sessions": 6,
+      "sessionsStarted": 0,
+      "toolCalls": 2457,
+      "intensity": 2
+    },
+    {
+      "date": "2026-08-06",
+      "count": 9636,
+      "sessions": 8,
+      "sessionsStarted": 0,
+      "toolCalls": 3087,
+      "intensity": 2
+    },
+    {
+      "date": "2026-08-07",
+      "count": 4282,
+      "sessions": 3,
+      "sessionsStarted": 0,
+      "toolCalls": 1308,
+      "intensity": 1
+    },
+    {
+      "date": "2026-08-08",
+      "count": 1088,
+      "sessions": 3,
+      "sessionsStarted": 1,
+      "toolCalls": 334,
+      "intensity": 1
+    },
+    {
+      "date": "2026-08-09",
+      "count": 4271,
+      "sessions": 10,
+      "sessionsStarted": 2,
+      "toolCalls": 1344,
+      "intensity": 1
+    },
+    {
+      "date": "2026-08-10",
+      "count": 9363,
+      "sessions": 14,
+      "sessionsStarted": 3,
+      "toolCalls": 3017,
+      "intensity": 2
+    },
+    {
+      "date": "2026-08-11",
+      "count": 9493,
+      "sessions": 13,
+      "sessionsStarted": 1,
+      "toolCalls": 2993,
+      "intensity": 2
+    },
+    {
+      "date": "2026-08-12",
+      "count": 6048,
+      "sessions": 10,
+      "sessionsStarted": 2,
+      "toolCalls": 2037,
+      "intensity": 2
+    },
+    {
+      "date": "2026-08-13",
+      "count": 11203,
+      "sessions": 18,
+      "sessionsStarted": 4,
+      "toolCalls": 3811,
+      "intensity": 3
+    },
+    {
+      "date": "2026-08-14",
+      "count": 14124,
+      "sessions": 19,
+      "sessionsStarted": 0,
+      "toolCalls": 4665,
+      "intensity": 3
+    },
+    {
+      "date": "2026-08-15",
+      "count": 9763,
+      "sessions": 8,
+      "sessionsStarted": 3,
+      "toolCalls": 3253,
+      "intensity": 2
+    },
+    {
+      "date": "2026-08-16",
+      "count": 14451,
+      "sessions": 13,
+      "sessionsStarted": 3,
+      "toolCalls": 4804,
+      "intensity": 3
+    },
+    {
+      "date": "2026-08-17",
+      "count": 11204,
+      "sessions": 13,
+      "sessionsStarted": 2,
+      "toolCalls": 3795,
+      "intensity": 3
+    },
+    {
+      "date": "2026-08-18",
+      "count": 11400,
+      "sessions": 13,
+      "sessionsStarted": 4,
+      "toolCalls": 3690,
+      "intensity": 3
+    },
+    {
+      "date": "2026-08-19",
+      "count": 11727,
+      "sessions": 21,
+      "sessionsStarted": 2,
+      "toolCalls": 3897,
+      "intensity": 3
+    },
+    {
+      "date": "2026-08-20",
+      "count": 14574,
+      "sessions": 19,
+      "sessionsStarted": 5,
+      "toolCalls": 4771,
+      "intensity": 3
+    },
+    {
+      "date": "2026-08-21",
+      "count": 11554,
+      "sessions": 21,
+      "sessionsStarted": 3,
+      "toolCalls": 3637,
+      "intensity": 3
+    },
+    {
+      "date": "2026-08-22",
+      "count": 11250,
+      "sessions": 10,
+      "sessionsStarted": 2,
+      "toolCalls": 3622,
+      "intensity": 3
+    },
+    {
+      "date": "2026-08-23",
+      "count": 11335,
+      "sessions": 13,
+      "sessionsStarted": 0,
+      "toolCalls": 3795,
+      "intensity": 3
+    },
+    {
+      "date": "2026-08-24",
+      "count": 14654,
+      "sessions": 17,
+      "sessionsStarted": 1,
+      "toolCalls": 4748,
+      "intensity": 3
+    },
+    {
+      "date": "2026-08-25",
+      "count": 10520,
+      "sessions": 16,
+      "sessionsStarted": 1,
+      "toolCalls": 3271,
+      "intensity": 2
+    },
+    {
+      "date": "2026-08-26",
+      "count": 17821,
+      "sessions": 17,
+      "sessionsStarted": 4,
+      "toolCalls": 5655,
+      "intensity": 4
+    },
+    {
+      "date": "2026-08-27",
+      "count": 18886,
+      "sessions": 31,
+      "sessionsStarted": 7,
+      "toolCalls": 5844,
+      "intensity": 4
+    },
+    {
+      "date": "2026-08-28",
+      "count": 16957,
+      "sessions": 30,
+      "sessionsStarted": 11,
+      "toolCalls": 5322,
+      "intensity": 4
+    },
+    {
+      "date": "2026-08-29",
+      "count": 12642,
+      "sessions": 41,
+      "sessionsStarted": 25,
+      "toolCalls": 3783,
+      "intensity": 3
+    },
+    {
+      "date": "2026-08-30",
+      "count": 10906,
+      "sessions": 11,
+      "sessionsStarted": 1,
+      "toolCalls": 3318,
+      "intensity": 3
+    },
+    {
+      "date": "2026-08-31",
+      "count": 15185,
+      "sessions": 35,
+      "sessionsStarted": 16,
+      "toolCalls": 4702,
+      "intensity": 3
+    },
+    {
+      "date": "2026-09-01",
+      "count": 14225,
+      "sessions": 14,
+      "sessionsStarted": 2,
+      "toolCalls": 4535,
+      "intensity": 3
+    },
+    {
+      "date": "2026-09-02",
+      "count": 16282,
+      "sessions": 24,
+      "sessionsStarted": 4,
+      "toolCalls": 5048,
+      "intensity": 4
+    },
+    {
+      "date": "2026-09-03",
+      "count": 9487,
+      "sessions": 12,
+      "sessionsStarted": 0,
+      "toolCalls": 2829,
+      "intensity": 2
+    },
+    {
+      "date": "2026-09-04",
+      "count": 7435,
+      "sessions": 11,
+      "sessionsStarted": 1,
+      "toolCalls": 2474,
+      "intensity": 2
+    },
+    {
+      "date": "2026-09-05",
+      "count": 8830,
+      "sessions": 34,
+      "sessionsStarted": 1,
+      "toolCalls": 2751,
+      "intensity": 2
+    },
+    {
+      "date": "2026-09-06",
+      "count": 10190,
+      "sessions": 15,
+      "sessionsStarted": 7,
+      "toolCalls": 3453,
+      "intensity": 2
+    },
+    {
+      "date": "2026-09-07",
+      "count": 7414,
+      "sessions": 9,
+      "sessionsStarted": 1,
+      "toolCalls": 2466,
+      "intensity": 2
+    },
+    {
+      "date": "2026-09-08",
+      "count": 6967,
+      "sessions": 12,
+      "sessionsStarted": 1,
+      "toolCalls": 2216,
+      "intensity": 2
+    },
+    {
+      "date": "2026-09-09",
+      "count": 6317,
+      "sessions": 18,
+      "sessionsStarted": 3,
+      "toolCalls": 2075,
+      "intensity": 2
+    },
+    {
+      "date": "2026-09-10",
+      "count": 9768,
+      "sessions": 17,
+      "sessionsStarted": 3,
+      "toolCalls": 3154,
+      "intensity": 2
+    },
+    {
+      "date": "2026-09-11",
+      "count": 6987,
+      "sessions": 17,
+      "sessionsStarted": 0,
+      "toolCalls": 2186,
+      "intensity": 2
+    },
+    {
+      "date": "2026-09-12",
+      "count": 2146,
+      "sessions": 8,
+      "sessionsStarted": 0,
+      "toolCalls": 692,
+      "intensity": 1
+    },
+    {
+      "date": "2026-09-13",
+      "count": 6377,
+      "sessions": 13,
+      "sessionsStarted": 6,
+      "toolCalls": 2124,
+      "intensity": 2
+    },
+    {
+      "date": "2026-09-14",
+      "count": 11337,
+      "sessions": 24,
+      "sessionsStarted": 6,
+      "toolCalls": 3652,
+      "intensity": 3
+    },
+    {
+      "date": "2026-09-15",
+      "count": 8246,
+      "sessions": 19,
+      "sessionsStarted": 1,
+      "toolCalls": 2904,
+      "intensity": 2
+    },
+    {
+      "date": "2026-09-16",
+      "count": 7076,
+      "sessions": 12,
+      "sessionsStarted": 0,
+      "toolCalls": 2319,
+      "intensity": 2
+    },
+    {
+      "date": "2026-09-17",
+      "count": 4674,
+      "sessions": 14,
+      "sessionsStarted": 1,
+      "toolCalls": 1434,
+      "intensity": 1
+    },
+    {
+      "date": "2026-09-18",
+      "count": 8644,
+      "sessions": 22,
+      "sessionsStarted": 5,
+      "toolCalls": 2503,
+      "intensity": 2
+    },
+    {
+      "date": "2026-09-19",
+      "count": 4184,
+      "sessions": 15,
+      "sessionsStarted": 0,
+      "toolCalls": 1282,
+      "intensity": 1
+    },
+    {
+      "date": "2026-09-20",
+      "count": 6516,
+      "sessions": 11,
+      "sessionsStarted": 0,
+      "toolCalls": 2181,
       "intensity": 2
     },
     {
       "date": "2026-09-21",
-      "count": 1902,
-      "sessions": 1,
-      "toolCalls": 603,
-      "intensity": 1
+      "count": 9402,
+      "sessions": 19,
+      "sessionsStarted": 1,
+      "toolCalls": 3162,
+      "intensity": 2
     },
     {
       "date": "2026-09-22",
-      "count": 2171,
-      "sessions": 6,
-      "toolCalls": 792,
-      "intensity": 1
+      "count": 12776,
+      "sessions": 27,
+      "sessionsStarted": 6,
+      "toolCalls": 4262,
+      "intensity": 3
     },
     {
       "date": "2026-09-23",
-      "count": 9896,
-      "sessions": 4,
-      "toolCalls": 2865,
-      "intensity": 1
+      "count": 16130,
+      "sessions": 20,
+      "sessionsStarted": 4,
+      "toolCalls": 5157,
+      "intensity": 4
     },
     {
       "date": "2026-09-24",
-      "count": 7596,
-      "sessions": 11,
-      "toolCalls": 2272,
-      "intensity": 1
+      "count": 18441,
+      "sessions": 34,
+      "sessionsStarted": 11,
+      "toolCalls": 5657,
+      "intensity": 4
     },
     {
       "date": "2026-09-25",
-      "count": 5639,
-      "sessions": 23,
-      "toolCalls": 1789,
-      "intensity": 1
+      "count": 21347,
+      "sessions": 50,
+      "sessionsStarted": 23,
+      "toolCalls": 6414,
+      "intensity": 4
     },
     {
       "date": "2026-09-26",
-      "count": 1664,
-      "sessions": 1,
-      "toolCalls": 478,
+      "count": 9137,
+      "sessions": 15,
+      "sessionsStarted": 1,
+      "toolCalls": 2863,
+      "intensity": 2
+    },
+    {
+      "date": "2026-09-27",
+      "count": 5170,
+      "sessions": 23,
+      "sessionsStarted": 0,
+      "toolCalls": 1603,
       "intensity": 1
     },
     {
       "date": "2026-09-28",
-      "count": 1019,
-      "sessions": 3,
-      "toolCalls": 297,
-      "intensity": 1
+      "count": 10854,
+      "sessions": 22,
+      "sessionsStarted": 3,
+      "toolCalls": 3443,
+      "intensity": 3
+    },
+    {
+      "date": "2026-09-29",
+      "count": 9187,
+      "sessions": 17,
+      "sessionsStarted": 0,
+      "toolCalls": 2974,
+      "intensity": 2
     },
     {
       "date": "2026-09-30",
-      "count": 3752,
-      "sessions": 10,
-      "toolCalls": 1172,
-      "intensity": 1
+      "count": 12715,
+      "sessions": 32,
+      "sessionsStarted": 10,
+      "toolCalls": 3755,
+      "intensity": 3
     },
     {
       "date": "2026-10-01",
-      "count": 590,
-      "sessions": 3,
+      "count": 7508,
+      "sessions": 16,
+      "sessionsStarted": 3,
+      "toolCalls": 2354,
+      "intensity": 2
+    },
+    {
+      "date": "2026-10-02",
+      "count": 711,
+      "sessions": 11,
+      "sessionsStarted": 0,
       "toolCalls": 198,
       "intensity": 1
     }
@@ -381,126 +1707,151 @@
       {
         "hour": 0,
         "label": "00:00",
-        "count": 4
+        "count": 3,
+        "records": 33100
       },
       {
         "hour": 1,
         "label": "01:00",
-        "count": 5
+        "count": 8,
+        "records": 21775
       },
       {
         "hour": 2,
         "label": "02:00",
-        "count": 3
+        "count": 0,
+        "records": 10295
       },
       {
         "hour": 3,
         "label": "03:00",
-        "count": 3
+        "count": 0,
+        "records": 4431
       },
       {
         "hour": 4,
         "label": "04:00",
-        "count": 0
+        "count": 0,
+        "records": 1663
       },
       {
         "hour": 5,
         "label": "05:00",
-        "count": 5
+        "count": 0,
+        "records": 1856
       },
       {
         "hour": 6,
         "label": "06:00",
-        "count": 0
+        "count": 1,
+        "records": 3021
       },
       {
         "hour": 7,
         "label": "07:00",
-        "count": 0
+        "count": 0,
+        "records": 5696
       },
       {
         "hour": 8,
         "label": "08:00",
-        "count": 0
+        "count": 7,
+        "records": 29506
       },
       {
         "hour": 9,
         "label": "09:00",
-        "count": 0
+        "count": 23,
+        "records": 43557
       },
       {
         "hour": 10,
         "label": "10:00",
-        "count": 0
+        "count": 19,
+        "records": 58131
       },
       {
         "hour": 11,
         "label": "11:00",
-        "count": 1
+        "count": 23,
+        "records": 66167
       },
       {
         "hour": 12,
         "label": "12:00",
-        "count": 5
+        "count": 27,
+        "records": 71619
       },
       {
         "hour": 13,
         "label": "13:00",
-        "count": 9
+        "count": 20,
+        "records": 78053
       },
       {
         "hour": 14,
         "label": "14:00",
-        "count": 7
+        "count": 23,
+        "records": 86927
       },
       {
         "hour": 15,
         "label": "15:00",
-        "count": 16
+        "count": 25,
+        "records": 90609
       },
       {
         "hour": 16,
         "label": "16:00",
-        "count": 12
+        "count": 30,
+        "records": 77435
       },
       {
         "hour": 17,
         "label": "17:00",
-        "count": 9
+        "count": 21,
+        "records": 75835
       },
       {
         "hour": 18,
         "label": "18:00",
-        "count": 7
+        "count": 20,
+        "records": 60308
       },
       {
         "hour": 19,
         "label": "19:00",
-        "count": 13
+        "count": 13,
+        "records": 50127
       },
       {
         "hour": 20,
         "label": "20:00",
-        "count": 14
+        "count": 20,
+        "records": 53322
       },
       {
         "hour": 21,
         "label": "21:00",
-        "count": 10
+        "count": 26,
+        "records": 57416
       },
       {
         "hour": 22,
         "label": "22:00",
-        "count": 13
+        "count": 11,
+        "records": 63359
       },
       {
         "hour": 23,
         "label": "23:00",
-        "count": 5
+        "count": 13,
+        "records": 50905
       }
     ],
-    "peakHour": 15,
-    "peakCount": 16
+    "peakHour": 16,
+    "peakCount": 30,
+    "timezone": "America/Detroit"
   },
   "instrumentRatings": {
     "Data Engineering": {
@@ -628,47 +1979,105 @@
     {
       "axis": "Planning",
       "score": 47,
-      "detail": "2 plans created"
+      "detail": "2 plan files on disk"
     },
     {
       "axis": "Tool Mastery",
       "score": 95,
-      "detail": "54 tools, 107747 calls"
+      "detail": "132 tools, 342953 calls"
     },
     {
       "axis": "Debugging",
       "score": 95,
-      "detail": "93579 debug tool calls"
+      "detail": "278844 debug tool calls"
     },
     {
       "axis": "Architecture",
       "score": 70,
-      "detail": "66 projects designed"
+      "detail": "100 projects"
     },
     {
       "axis": "Iteration",
       "score": 76,
-      "detail": "3084 msgs/session avg"
+      "detail": "3288 records/session avg"
     },
     {
       "axis": "Multi-Project",
       "score": 95,
-      "detail": "0 context switches"
+      "detail": "34661 project switches in the prompt history"
     }
   ],
   "pilotingStyle": {
-    "directive": 17,
-    "collaborative": 83,
-    "planFirst": 53,
-    "iterate": 47,
+    "directive": 28,
+    "collaborative": 72,
+    "planFirst": 51,
+    "iterate": 49,
     "label": "Balanced",
     "description": "Flexibly adapts between planning and iteration as the task demands."
   },
   "missionLog": [
     {
+      "name": "cbloom",
+      "sessions": 37,
+      "messages": 104128,
+      "toolCalls": 32823,
+      "complexity": 10,
+      "domain": "General",
+      "technologies": [],
+      "status": "active",
+      "firstActive": "2026-05-28",
+      "lastActive": "2026-10-02"
+    },
+    {
+      "name": "infra",
+      "sessions": 9,
+      "messages": 96519,
+      "toolCalls": 28940,
+      "complexity": 10,
+      "domain": "General",
+      "technologies": [],
+      "status": "active",
+      "firstActive": "2026-06-06",
+      "lastActive": "2026-10-02"
+    },
+    {
+      "name": "terrapulse",
+      "sessions": 16,
+      "messages": 83226,
+      "toolCalls": 25299,
+      "complexity": 10,
+      "domain": "Data Engineering",
+      "technologies": [
+        "Python",
+        "FastAPI",
+        "Nginx",
+        "Redis",
+        "Go",
+        "WebSocket",
+        "Bash",
+        "JSON"
+      ],
+      "status": "active",
+      "firstActive": "2026-05-29",
+      "lastActive": "2026-10-02"
+    },
+    {
+      "name": "cbmodels",
+      "sessions": 12,
+      "messages": 58254,
+      "toolCalls": 16948,
+      "complexity": 10,
+      "domain": "General",
+      "technologies": [],
+      "status": "active",
+      "firstActive": "2026-05-28",
+      "lastActive": "2026-09-28"
+    },
+    {
       "name": "6502",
       "sessions": 5,
-      "messages": 55513,
+      "messages": 55158,
+      "toolCalls": 18081,
       "complexity": 10,
       "domain": "General",
       "technologies": [],
@@ -677,9 +2086,22 @@
       "lastActive": "2026-10-01"
     },
     {
+      "name": "cbapex",
+      "sessions": 5,
+      "messages": 53690,
+      "toolCalls": 17583,
+      "complexity": 10,
+      "domain": "General",
+      "technologies": [],
+      "status": "active",
+      "firstActive": "2026-08-18",
+      "lastActive": "2026-10-02"
+    },
+    {
       "name": "myfw",
       "sessions": 2,
-      "messages": 53171,
+      "messages": 51556,
+      "toolCalls": 15872,
       "complexity": 10,
       "domain": "Data Engineering",
       "technologies": [
@@ -697,62 +2119,46 @@
       "lastActive": "2026-10-02"
     },
     {
-      "name": "cbapex",
-      "sessions": 3,
-      "messages": 50216,
+      "name": "cbelections",
+      "sessions": 6,
+      "messages": 41642,
+      "toolCalls": 13656,
       "complexity": 10,
       "domain": "General",
       "technologies": [],
       "status": "active",
-      "firstActive": "2026-08-19",
-      "lastActive": "2026-10-01"
+      "firstActive": "2026-07-21",
+      "lastActive": "2026-09-30"
     },
     {
-      "name": "terrapulse",
-      "sessions": 7,
-      "messages": 39329,
+      "name": "cbstitch",
+      "sessions": 4,
+      "messages": 39625,
+      "toolCalls": 11719,
       "complexity": 10,
-      "domain": "Data Engineering",
-      "technologies": [
-        "Python",
-        "FastAPI",
-        "Nginx",
-        "Redis",
-        "Go",
-        "WebSocket",
-        "Bash",
-        "JSON"
-      ],
-      "status": "active",
-      "firstActive": "2026-08-31",
-      "lastActive": "2026-10-01"
+      "domain": "General",
+      "technologies": [],
+      "status": "archived",
+      "firstActive": "2026-06-05",
+      "lastActive": "2026-08-23"
     },
     {
       "name": "public",
       "sessions": 1,
       "messages": 33612,
+      "toolCalls": 10922,
       "complexity": 10,
       "domain": "General",
       "technologies": [],
       "status": "active",
       "firstActive": "2026-08-22",
-      "lastActive": "2026-10-01"
-    },
-    {
-      "name": "cbsvi",
-      "sessions": 1,
-      "messages": 28417,
-      "complexity": 10,
-      "domain": "General",
-      "technologies": [],
-      "status": "active",
-      "firstActive": "2026-08-31",
       "lastActive": "2026-10-02"
     },
     {
       "name": "bradleyio",
-      "sessions": 2,
-      "messages": 27659,
+      "sessions": 6,
+      "messages": 32861,
+      "toolCalls": 10155,
       "complexity": 10,
       "domain": "Data Engineering",
       "technologies": [
@@ -766,24 +2172,74 @@
         "Go"
       ],
       "status": "active",
-      "firstActive": "2026-03-07",
+      "firstActive": "2026-03-08",
       "lastActive": "2026-10-01"
+    },
+    {
+      "name": "cbsvi",
+      "sessions": 2,
+      "messages": 32028,
+      "toolCalls": 10447,
+      "complexity": 10,
+      "domain": "General",
+      "technologies": [],
+      "status": "active",
+      "firstActive": "2026-08-26",
+      "lastActive": "2026-10-02"
+    },
+    {
+      "name": "cbhive",
+      "sessions": 9,
+      "messages": 27848,
+      "toolCalls": 8699,
+      "complexity": 10,
+      "domain": "General",
+      "technologies": [],
+      "status": "archived",
+      "firstActive": "2026-06-15",
+      "lastActive": "2026-08-24"
     },
     {
       "name": "cbrural",
       "sessions": 5,
       "messages": 24441,
+      "toolCalls": 7700,
       "complexity": 10,
       "domain": "General",
       "technologies": [],
       "status": "active",
       "firstActive": "2026-08-20",
-      "lastActive": "2026-10-01"
+      "lastActive": "2026-10-02"
+    },
+    {
+      "name": "cbintel",
+      "sessions": 6,
+      "messages": 20550,
+      "toolCalls": 6205,
+      "complexity": 10,
+      "domain": "General",
+      "technologies": [],
+      "status": "active",
+      "firstActive": "2026-07-08",
+      "lastActive": "2026-09-30"
+    },
+    {
+      "name": "cbradio",
+      "sessions": 8,
+      "messages": 19770,
+      "toolCalls": 7230,
+      "complexity": 10,
+      "domain": "General",
+      "technologies": [],
+      "status": "recent",
+      "firstActive": "2026-04-13",
+      "lastActive": "2026-09-02"
     },
     {
       "name": "cbcc",
       "sessions": 1,
       "messages": 17427,
+      "toolCalls": 5374,
       "complexity": 10,
       "domain": "General",
       "technologies": [],
@@ -792,364 +2248,276 @@
       "lastActive": "2026-09-25"
     },
     {
-      "name": "infra",
-      "sessions": 2,
-      "messages": 13024,
-      "complexity": 10,
-      "domain": "General",
-      "technologies": [],
-      "status": "active",
-      "firstActive": "2026-09-06",
-      "lastActive": "2026-10-01"
-    },
-    {
-      "name": "cbradio2",
-      "sessions": 11,
-      "messages": 8382,
-      "complexity": 10,
-      "domain": "General",
-      "technologies": [],
-      "status": "active",
-      "firstActive": "2026-08-27",
-      "lastActive": "2026-09-30"
-    },
-    {
-      "name": "cbmodels",
-      "sessions": 8,
-      "messages": 7444,
-      "complexity": 10,
-      "domain": "General",
-      "technologies": [],
-      "status": "active",
-      "firstActive": "2026-08-31",
-      "lastActive": "2026-09-28"
-    },
-    {
-      "name": "proton",
-      "sessions": 1,
-      "messages": 6645,
-      "complexity": 10,
-      "domain": "Data Engineering",
-      "technologies": [
-        "Python",
-        "FastAPI",
-        "Docker",
-        "SQLite",
-        "DuckDB",
-        "Snowflake",
-        "AWS",
-        "Ollama"
-      ],
-      "status": "active",
-      "firstActive": "2026-08-29",
-      "lastActive": "2026-10-01"
-    },
-    {
-      "name": "cbintel",
+      "name": "cbprospect",
       "sessions": 4,
-      "messages": 5369,
+      "messages": 17200,
+      "toolCalls": 5770,
       "complexity": 10,
       "domain": "General",
       "technologies": [],
       "status": "active",
-      "firstActive": "2026-09-10",
-      "lastActive": "2026-09-30"
-    },
-    {
-      "name": "tinychase",
-      "sessions": 2,
-      "messages": 4600,
-      "complexity": 10,
-      "domain": "Data Engineering",
-      "technologies": [
-        "Python",
-        "JavaScript",
-        "React",
-        "FastAPI",
-        "Docker",
-        "Nginx",
-        "SQLite",
-        "DuckDB"
-      ],
-      "status": "active",
-      "firstActive": "2026-09-24",
-      "lastActive": "2026-09-30"
-    },
-    {
-      "name": "cbai",
-      "sessions": 3,
-      "messages": 4504,
-      "complexity": 10,
-      "domain": "General",
-      "technologies": [],
-      "status": "recent",
-      "firstActive": "2026-07-19",
-      "lastActive": "2026-09-22"
-    },
-    {
-      "name": "junior",
-      "sessions": 10,
-      "messages": 4201,
-      "complexity": 10,
-      "domain": "Backend",
-      "technologies": [
-        "Python",
-        "FastAPI",
-        "Nginx",
-        "Raspberry Pi",
-        "Rust",
-        "Go",
-        "systemd",
-        "Git"
-      ],
-      "status": "active",
-      "firstActive": "2026-08-28",
-      "lastActive": "2026-09-28"
-    },
-    {
-      "name": "cbbakery",
-      "sessions": 3,
-      "messages": 3818,
-      "complexity": 10,
-      "domain": "General",
-      "technologies": [],
-      "status": "recent",
-      "firstActive": "2026-08-30",
-      "lastActive": "2026-09-05"
-    },
-    {
-      "name": "cbloom",
-      "sessions": 4,
-      "messages": 3655,
-      "complexity": 10,
-      "domain": "General",
-      "technologies": [],
-      "status": "active",
-      "firstActive": "2026-08-31",
-      "lastActive": "2026-10-01"
-    },
-    {
-      "name": "cbvpn",
-      "sessions": 2,
-      "messages": 3625,
-      "complexity": 10,
-      "domain": "General",
-      "technologies": [],
-      "status": "active",
-      "firstActive": "2026-08-21",
+      "firstActive": "2026-08-16",
       "lastActive": "2026-09-25"
+    },
+    {
+      "name": "cbweb",
+      "sessions": 5,
+      "messages": 16828,
+      "toolCalls": 5517,
+      "complexity": 10,
+      "domain": "General",
+      "technologies": [],
+      "status": "active",
+      "firstActive": "2026-06-16",
+      "lastActive": "2026-10-02"
+    },
+    {
+      "name": "cbcast",
+      "sessions": 3,
+      "messages": 16468,
+      "toolCalls": 4491,
+      "complexity": 10,
+      "domain": "General",
+      "technologies": [],
+      "status": "archived",
+      "firstActive": "2026-06-01",
+      "lastActive": "2026-08-04"
     }
   ],
   "tokenEconomy": {
-    "totalInputTokens": 4478300,
-    "totalOutputTokens": 330078174,
-    "totalCacheReadTokens": 105359302311,
-    "totalCacheCreateTokens": 2028303823,
-    "totalCostUSD": 0,
-    "cacheEfficiency": 98.1,
-    "costPerSession": 0.0,
-    "webSearches": 0,
+    "totalInputTokens": 13127616,
+    "totalOutputTokens": 320276290,
+    "totalCacheReadTokens": 119788741906,
+    "totalCacheCreateTokens": 1911117984,
+    "totalCostUSD": null,
+    "cacheEfficiency": 98.4,
+    "costPerSession": null,
+    "webSearches": null,
     "dailyTokens": [
       {
-        "date": "2026-08-19",
-        "tokens": 38801002
-      },
-      {
-        "date": "2026-08-20",
-        "tokens": 16683492
-      },
-      {
-        "date": "2026-08-22",
-        "tokens": 28542300
-      },
-      {
-        "date": "2026-08-27",
-        "tokens": 4944711
-      },
-      {
-        "date": "2026-08-28",
-        "tokens": 1980304
-      },
-      {
-        "date": "2026-08-29",
-        "tokens": 5882317
-      },
-      {
-        "date": "2026-08-30",
-        "tokens": 48255
-      },
-      {
-        "date": "2026-08-31",
-        "tokens": 17690011
-      },
-      {
-        "date": "2026-09-01",
-        "tokens": 17545148
-      },
-      {
-        "date": "2026-09-02",
-        "tokens": 1279301
+        "date": "2026-09-03",
+        "tokens": 2477549
       },
       {
         "date": "2026-09-04",
-        "tokens": 2883134
+        "tokens": 2112746
       },
       {
         "date": "2026-09-05",
-        "tokens": 2510451
+        "tokens": 2660587
       },
       {
         "date": "2026-09-06",
-        "tokens": 2950955
+        "tokens": 3370158
+      },
+      {
+        "date": "2026-09-07",
+        "tokens": 2512592
       },
       {
         "date": "2026-09-08",
-        "tokens": 67711
+        "tokens": 2034255
       },
       {
         "date": "2026-09-09",
-        "tokens": 2140725
+        "tokens": 1799159
       },
       {
         "date": "2026-09-10",
-        "tokens": 6883111
+        "tokens": 2803934
+      },
+      {
+        "date": "2026-09-11",
+        "tokens": 2134882
+      },
+      {
+        "date": "2026-09-12",
+        "tokens": 815648
       },
       {
         "date": "2026-09-13",
-        "tokens": 8490997
+        "tokens": 2619776
       },
       {
         "date": "2026-09-14",
-        "tokens": 12221197
+        "tokens": 4023579
       },
       {
         "date": "2026-09-15",
-        "tokens": 274897
+        "tokens": 2957233
+      },
+      {
+        "date": "2026-09-16",
+        "tokens": 2459931
       },
       {
         "date": "2026-09-17",
-        "tokens": 10671954
+        "tokens": 1667482
       },
       {
         "date": "2026-09-18",
-        "tokens": 14060981
+        "tokens": 2432880
+      },
+      {
+        "date": "2026-09-19",
+        "tokens": 1160013
+      },
+      {
+        "date": "2026-09-20",
+        "tokens": 1722404
       },
       {
         "date": "2026-09-21",
-        "tokens": 959045
+        "tokens": 2456929
       },
       {
         "date": "2026-09-22",
-        "tokens": 2524771
+        "tokens": 3841151
       },
       {
         "date": "2026-09-23",
-        "tokens": 7262120
+        "tokens": 4919087
       },
       {
         "date": "2026-09-24",
-        "tokens": 6020948
+        "tokens": 4725985
       },
       {
         "date": "2026-09-25",
-        "tokens": 4240821
+        "tokens": 5656921
       },
       {
         "date": "2026-09-26",
-        "tokens": 1482113
+        "tokens": 2820963
+      },
+      {
+        "date": "2026-09-27",
+        "tokens": 1429624
       },
       {
         "date": "2026-09-28",
-        "tokens": 745036
+        "tokens": 3055551
+      },
+      {
+        "date": "2026-09-29",
+        "tokens": 2652508
       },
       {
         "date": "2026-09-30",
-        "tokens": 3637767
+        "tokens": 3739227
       },
       {
         "date": "2026-10-01",
-        "tokens": 758608
+        "tokens": 2156095
+      },
+      {
+        "date": "2026-10-02",
+        "tokens": 126387
       }
-    ]
+    ],
+    "cost": {
+      "totalUSD": null,
+      "reason": "the durable record does not say whether cache writes used the 5 minute or the 1 hour TTL, which are priced differently",
+      "basis": "Anthropic API list price, standard speed. Not an invoice.",
+      "pricesAsOf": "2026-09-25",
+      "pricesSource": "claude-api skill model table (Anthropic API list prices)",
+      "unpricedModels": [],
+      "cacheWriteTtl": null,
+      "componentsUSD": {
+        "input": 81.82,
+        "output": 9980.41,
+        "cacheRead": 66064.02
+      },
+      "cacheWrite": {
+        "tokens": 1911117984,
+        "usdIfAll5m": 14855.42,
+        "usdIfAll1h": 23768.66
+      },
+      "perModelUSD": {}
+    }
   },
   "streaks": {
-    "current": 2,
-    "longest": 7,
-    "peakDay": "2026-08-19",
-    "peakDayCount": 49670,
-    "peakWeek": "2026-08-17",
-    "peakWeekCount": 126823,
-    "totalActiveDays": 38
+    "current": 128,
+    "longest": 128,
+    "longestStart": "2026-05-28",
+    "longestEnd": "2026-10-02",
+    "peakDay": "2026-09-25",
+    "peakDayCount": 21347,
+    "peakWeek": "2026-08-24",
+    "peakWeekCount": 102386,
+    "totalActiveDays": 187,
+    "asOf": "2026-10-02",
+    "timezone": "UTC"
   },
   "skillsCloud": [
     {
       "name": "Go",
-      "count": 9576,
+      "count": 9591,
       "category": "General"
     },
     {
       "name": "Git",
-      "count": 3879,
+      "count": 3890,
       "category": "General"
     },
     {
       "name": "Rust",
-      "count": 2351,
+      "count": 2357,
       "category": "Systems"
     },
     {
       "name": "JSON",
-      "count": 1822,
+      "count": 1828,
       "category": "General"
     },
     {
       "name": "Nginx",
-      "count": 1201,
+      "count": 1203,
       "category": "DevOps"
     },
     {
       "name": "CSS",
-      "count": 1181,
+      "count": 1182,
       "category": "Frontend"
     },
     {
       "name": "HTML",
-      "count": 1147,
+      "count": 1148,
       "category": "Frontend"
     },
     {
       "name": "SQLite",
-      "count": 1101,
+      "count": 1102,
       "category": "Data Engineering"
     },
     {
       "name": "Bash",
-      "count": 984,
+      "count": 985,
       "category": "General"
     },
     {
       "name": "SPI",
-      "count": 835,
+      "count": 836,
       "category": "IoT / Edge"
     },
     {
       "name": "Python",
-      "count": 797,
+      "count": 802,
       "category": "Backend"
     },
     {
       "name": "systemd",
-      "count": 538,
+      "count": 539,
       "category": "DevOps"
     },
     {
       "name": "DuckDB",
-      "count": 514,
+      "count": 516,
       "category": "Data Engineering"
     },
     {
       "name": "SSH",
-      "count": 426,
+      "count": 427,
       "category": "DevOps"
     },
     {
@@ -1164,7 +2532,7 @@
     },
     {
       "name": "React",
-      "count": 324,
+      "count": 325,
       "category": "Frontend"
     },
     {
@@ -1194,7 +2562,7 @@
     },
     {
       "name": "FastAPI",
-      "count": 188,
+      "count": 189,
       "category": "Backend"
     },
     {
@@ -1204,7 +2572,7 @@
     },
     {
       "name": "Anthropic",
-      "count": 165,
+      "count": 167,
       "category": "AI / ML"
     },
     {

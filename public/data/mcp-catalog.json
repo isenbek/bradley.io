@@ -1,17 +1,17 @@
 {
-  "generated": "2026-10-02T12:02:17.139826+00:00",
+  "generated": "2026-10-02T16:11:15.623982+00:00",
   "sources": {
     "unifiedSpec": "https://mcp.campaignbrain.dev/openapi.json",
     "metadata": "scripts/mcp-catalog-meta.json (pulled 2026-08-29)"
   },
   "stats": {
     "totalServices": 55,
-    "totalEndpoints": 2324,
+    "totalEndpoints": 2328,
     "totalCategories": 5,
-    "mcpServers": 4,
+    "mcpServers": 3,
     "mcpServersReachable": 3,
     "fleetServices": 84,
-    "fleetEndpoints": 3386,
+    "fleetEndpoints": 3390,
     "uncataloguedServices": 44
   },
   "mcpServers": [
@@ -68,17 +68,6 @@
         }
       ],
       "reachable": true
-    },
-    {
-      "id": "junior",
-      "name": "junior",
-      "url": "https://junior.bradley.io/mcp",
-      "transport": "streamable HTTP",
-      "auth": "Bearer token",
-      "what": "Home network management: the OpenWrt router, its dual WAN, and the fleet behind it.",
-      "tools": [],
-      "reachable": false,
-      "note": "<urlopen error [Errno 113] No route to host>"
     },
     {
       "id": "cbmcp",
@@ -234,7 +223,7 @@
             "address-hygiene",
             "mcp-tools"
           ],
-          "endpointCount": 176
+          "endpointCount": 180
         },
         {
           "id": "cbfiles",

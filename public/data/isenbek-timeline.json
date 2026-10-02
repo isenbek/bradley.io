@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-02T09:10:46.205536+00:00",
+  "generated": "2026-10-02T16:14:03.691307+00:00",
   "org": "isenbek",
   "totalRepos": 16,
   "firstCommit": "2014-10-16T10:45:09Z",
@@ -4402,10 +4402,10 @@
   ],
   "phases": [
     {
-      "name": "Phase 1",
+      "name": "Data & Infrastructure Pipelines",
       "startDate": "2017-01-26",
       "endDate": "2025-01-15",
-      "description": "Development of BootstrapXL, bloomfilter, systemd-ngrok and 4 more repos.",
+      "description": "This repository collection represents the core infrastructure and data-related components built as part of the isenbek project ecosystem. It encompasses essential tools for data management, system automation, and application development, reflecting a focus on building robust systems for processing and sharing data. The projects range from foundational CSS files to advanced Python libraries and tooling, showcasing a continuous evolution of the development workflow.",
       "repos": [
         "BootstrapXL",
         "bloomfilter",
@@ -4415,14 +4415,48 @@
         "pincone-examples",
         "saas-myfw"
       ],
-      "milestones": [],
-      "category": "systems"
+      "milestones": [
+        {
+          "date": "2017-01-26",
+          "title": "BootstrapXL - CSS File for Screen Size",
+          "repo": "BootstrapXL"
+        },
+        {
+          "date": "2017-05-24",
+          "title": "bloomfilter - Python Bloom Filter Implementation",
+          "repo": "bloomfilter"
+        },
+        {
+          "date": "2021-05-30",
+          "title": "systemd-ngrok - Systemd Triggered ngrok",
+          "repo": "systemd-ngrok"
+        },
+        {
+          "date": "2023-05-07",
+          "title": "streamlit-example - Streamlit App for Sharing",
+          "repo": "streamlit-example"
+        },
+        {
+          "date": "2023-11-16",
+          "title": "meatball - Minecraft-Inspired JARVIS Agent",
+          "repo": "meatball"
+        },
+        {
+          "date": "2024-05-17",
+          "title": "pincone-examples - Jupyter Notebooks for Pinecone",
+          "repo": "pincone-examples"
+        }
+      ],
+      "category": "data",
+      "source": "reused",
+      "generatedAt": "2026-04-22",
+      "model": "cbai"
     },
     {
-      "name": "Phase 2",
+      "name": "Bradley AI Experimentation",
       "startDate": "2025-01-15",
       "endDate": "2026-09-07",
-      "description": "Development of vite-react-chakra-starter, bradley.io, mike and 4 more repos.",
+      "description": "This period focused on building a terminal application inspired by 'WarGames' incorporating AI elements, alongside experimentation with large language models and backend infrastructure. The project involved integrating a React frontend, streaming a massive Kimi K3 model, and developing a local backend for trading tools.",
       "repos": [
         "vite-react-chakra-starter",
         "bradley.io",
@@ -4432,8 +4466,22 @@
         "waste",
         "housecalls-harness"
       ],
-      "milestones": [],
-      "category": "systems"
+      "milestones": [
+        {
+          "date": "2025-08-13",
+          "title": "Homepage Revamp",
+          "repo": "bradley.io"
+        },
+        {
+          "date": "2025-08-14",
+          "title": "WOPR Terminal Integration",
+          "repo": "bradley.io"
+        }
+      ],
+      "category": "ai-ml",
+      "source": "ai",
+      "generatedAt": "2026-10-02",
+      "model": "ollama:gemma3:4b"
     },
     {
       "name": "Phase 3",
@@ -4445,7 +4493,10 @@
         "NavierStokesAndEuler"
       ],
       "milestones": [],
-      "category": "systems"
+      "category": "systems",
+      "source": "fallback",
+      "generatedAt": null,
+      "model": null
     }
   ],
   "repos": [
@@ -4456,16 +4507,22 @@
       "commits": 6,
       "firstCommit": "2014-10-16T10:45:09Z",
       "lastCommit": "2015-08-10T07:46:32Z",
-      "phase": "Phase 1"
+      "phase": "Data & Infrastructure Pipelines",
+      "descriptionSource": "github",
+      "descriptionGeneratedAt": null,
+      "descriptionModel": null
     },
     {
       "name": "bloomfilter",
-      "description": "",
+      "description": "The `bloomfilter` repository is a Python project focused on implementing bloom filters. The commits show an iterative process of development, primarily involving updates and improvements to the `bloom.py` file, along with adding features like compression algorithms, integrity checking, and command-line tools for managing bloom filter creation. Initial work included addressing formatting issues and documenting changes in README files.",
       "language": "Python",
       "commits": 31,
       "firstCommit": "2017-03-22T02:59:47Z",
       "lastCommit": "2017-05-11T19:46:53Z",
-      "phase": "Phase 1"
+      "phase": "Data & Infrastructure Pipelines",
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-02",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "systemd-ngrok",
@@ -4474,7 +4531,10 @@
       "commits": 13,
       "firstCommit": "2017-04-10T04:37:02Z",
       "lastCommit": "2020-12-13T14:31:26Z",
-      "phase": "Phase 1"
+      "phase": "Data & Infrastructure Pipelines",
+      "descriptionSource": "github",
+      "descriptionGeneratedAt": null,
+      "descriptionModel": null
     },
     {
       "name": "streamlit-example",
@@ -4483,7 +4543,10 @@
       "commits": 4,
       "firstCommit": "2020-11-03T06:29:22Z",
       "lastCommit": "2022-06-29T01:03:06Z",
-      "phase": "Phase 1"
+      "phase": "Data & Infrastructure Pipelines",
+      "descriptionSource": "github",
+      "descriptionGeneratedAt": null,
+      "descriptionModel": null
     },
     {
       "name": "pincone-examples",
@@ -4492,7 +4555,10 @@
       "commits": 1000,
       "firstCommit": "2021-03-11T23:44:58Z",
       "lastCommit": "2024-05-16T12:50:29Z",
-      "phase": "Phase 1"
+      "phase": "Data & Infrastructure Pipelines",
+      "descriptionSource": "github",
+      "descriptionGeneratedAt": null,
+      "descriptionModel": null
     },
     {
       "name": "saas-myfw",
@@ -4501,7 +4567,10 @@
       "commits": 1962,
       "firstCommit": "2022-07-13T12:44:33Z",
       "lastCommit": "2025-01-10T13:09:02Z",
-      "phase": "Phase 1"
+      "phase": "Data & Infrastructure Pipelines",
+      "descriptionSource": "reused",
+      "descriptionGeneratedAt": null,
+      "descriptionModel": "cbai"
     },
     {
       "name": "meatball",
@@ -4510,25 +4579,34 @@
       "commits": 1,
       "firstCommit": "2023-11-13T02:24:21Z",
       "lastCommit": "2023-11-13T02:24:21Z",
-      "phase": "Phase 1"
+      "phase": "Data & Infrastructure Pipelines",
+      "descriptionSource": "github",
+      "descriptionGeneratedAt": null,
+      "descriptionModel": null
     },
     {
       "name": "vite-react-chakra-starter",
-      "description": "Commits: ",
+      "description": "",
       "language": "TypeScript",
       "commits": 1,
       "firstCommit": "2025-01-15T21:53:02Z",
       "lastCommit": "2025-01-15T21:53:02Z",
-      "phase": "Phase 2"
+      "phase": "Bradley AI Experimentation",
+      "descriptionSource": "none",
+      "descriptionGeneratedAt": null,
+      "descriptionModel": null
     },
     {
       "name": "bradley.io",
-      "description": "",
+      "description": "The bradley.io repository is a TypeScript project focused on developing a terminal application, potentially inspired by \"WarGames\" and incorporating AI elements. It involves building out core website features like navigation and styling, alongside experimental terminal functionality and data engineering components, with frequent releases of build versions.",
       "language": "TypeScript",
       "commits": 1218,
       "firstCommit": "2025-08-13T04:48:37Z",
       "lastCommit": "2026-10-01T19:42:27Z",
-      "phase": "Phase 2"
+      "phase": "Bradley AI Experimentation",
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-02",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "mike",
@@ -4537,7 +4615,10 @@
       "commits": 5,
       "firstCommit": "2025-09-19T22:43:17Z",
       "lastCommit": "2025-10-23T01:21:37Z",
-      "phase": "Phase 2"
+      "phase": "Bradley AI Experimentation",
+      "descriptionSource": "commits",
+      "descriptionGeneratedAt": null,
+      "descriptionModel": null
     },
     {
       "name": "cjgaldescom",
@@ -4546,7 +4627,10 @@
       "commits": 18,
       "firstCommit": "2026-04-23T22:07:56Z",
       "lastCommit": "2026-08-01T01:16:39Z",
-      "phase": "Phase 2"
+      "phase": "Bradley AI Experimentation",
+      "descriptionSource": "github",
+      "descriptionGeneratedAt": null,
+      "descriptionModel": null
     },
     {
       "name": "waste",
@@ -4555,16 +4639,22 @@
       "commits": 126,
       "firstCommit": "2026-07-23T07:16:25Z",
       "lastCommit": "2026-07-31T12:12:22Z",
-      "phase": "Phase 2"
+      "phase": "Bradley AI Experimentation",
+      "descriptionSource": "github",
+      "descriptionGeneratedAt": null,
+      "descriptionModel": null
     },
     {
       "name": "jamesd",
-      "description": "Commits: ",
+      "description": "",
       "language": "Unknown",
       "commits": 0,
       "firstCommit": "2026-07-29T00:49:28Z",
       "lastCommit": "2026-07-29T00:49:29Z",
-      "phase": "Phase 2"
+      "phase": "Bradley AI Experimentation",
+      "descriptionSource": "none",
+      "descriptionGeneratedAt": null,
+      "descriptionModel": null
     },
     {
       "name": "housecalls-harness",
@@ -4573,7 +4663,10 @@
       "commits": 4,
       "firstCommit": "2026-09-07T03:25:16Z",
       "lastCommit": "2026-09-07T14:07:53Z",
-      "phase": "Phase 2"
+      "phase": "Bradley AI Experimentation",
+      "descriptionSource": "github",
+      "descriptionGeneratedAt": null,
+      "descriptionModel": null
     },
     {
       "name": "NavierStokesAndEuler",
@@ -4582,16 +4675,47 @@
       "commits": 1,
       "firstCommit": "2026-09-08T10:57:25Z",
       "lastCommit": "2026-09-08T10:57:25Z",
-      "phase": "Phase 3"
+      "phase": "Phase 3",
+      "descriptionSource": "github",
+      "descriptionGeneratedAt": null,
+      "descriptionModel": null
     },
     {
       "name": "housecalls",
-      "description": "House Calls: honest tech service, in public. The container for the hunt, the free trades tools, the farm vertical, and the kit that makes it replicable.",
+      "description": "The `housecalls` repository appears to be the development environment for a project focused on agricultural data analysis and potentially related services, centered around a 'farm vertical' and incorporating elements of 'honest tech service'. It involves running iterations of models (specifically an \u2018AG-MI\u2019 Michigan ag world model), managing data through containerized tools, and tracking progress across various initiatives including grant prospects and Deere-related activities. The repository seems to be experimenting with different approaches for data processing and integration, particularly concerning API interactions and GPU resource management.",
       "language": "Unknown",
       "commits": 12,
       "firstCommit": "2026-09-08T14:38:25Z",
       "lastCommit": "2026-10-01T20:50:10Z",
-      "phase": "Phase 3"
+      "phase": "Phase 3",
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-02",
+      "descriptionModel": "ollama:gemma3:4b"
     }
-  ]
+  ],
+  "aiSummary": {
+    "callsOk": 4,
+    "callsFailed": 0,
+    "reused": 2,
+    "kept": 0,
+    "skippedByLimit": 0,
+    "skippedByBudget": 4,
+    "skippedBackendsDown": 0,
+    "withoutModelText": 4,
+    "phaseSources": {
+      "reused": 1,
+      "ai": 1,
+      "fallback": 1
+    },
+    "descriptionSources": {
+      "ai": 3,
+      "github": 9,
+      "none": 2,
+      "commits": 1,
+      "reused": 1
+    },
+    "limitAi": 8,
+    "budgetMin": 2.0,
+    "skipAi": false
+  }
 }
