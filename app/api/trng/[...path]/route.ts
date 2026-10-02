@@ -65,10 +65,17 @@ export async function GET(
   const search = req.nextUrl.search
   const target = `${TRNG_UPSTREAM}/${path.join("/")}${search}`
 
+  // The status paths are small and answered from memory by the box, so a
+  // healthy box replies in well under a second. Waiting 30 s for them left a
+  // visitor looking at "CHECKING" for half a minute while the box was off the
+  // LAN (nginx holds the connection about 14 s before its own 502). Give those
+  // 5 s and say OFFLINE sooner; the heavy paths (random bytes, archives, long
+  // metric windows) keep the long limit.
+  const quick = path[0] === "health" || path[0] === "stats" || path.join("/") === "metrics/latest"
   try {
     const upstream = await fetch(target, {
       cache: "no-store",
-      signal: AbortSignal.timeout(30_000),
+      signal: AbortSignal.timeout(quick ? 5_000 : 30_000),
     })
     const contentType = upstream.headers.get("content-type") ?? "application/json"
     const isJson = contentType.includes("json")
