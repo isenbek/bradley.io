@@ -191,3 +191,16 @@ private repositories, so the write-up lives in the private
 - **The design export** is kept in the private sysforge-site repo
   (`design-source/`). The copy in this repo's `docs/` stays untracked,
   because this repo is public.
+
+### Site routing audit, and the docket (2026-10-03)
+
+- **The audit:** every hostname this box serves, plus a crawl of 11 sites
+  and about 28,000 links. The family sites route cleanly; the problems sit
+  around the edges.
+- **The report and the work list** are in the private
+  `isenbek/meatball-labs` repo (`docs/SITE-ROUTING-AUDIT.md`). They stay out
+  of this repo because they name internal hosts and services that are down.
+- **Next, in order:**
+  1. The routing fixes.
+  2. The owner's five: one kit across the sites, a device/user handshake,
+     first-party tracking, SEO and sharing, one header and footer.
