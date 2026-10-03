@@ -154,3 +154,24 @@ private repositories, so the write-up lives in the private
 - **To add a family site,** put its hue, name and address in the family
   list on all three sites.
 
+
+### sysforge.ai rebuilt for investors, and four family sites (2026-10-03)
+
+- **sysforge.ai** is now a plain-language site for a first group of small
+  investors. It covers what the platform does, an interactive "pick a job,
+  watch it come together" board, numbers counted from the code, where the
+  work stands, and a contact card. Static, self-hosted fonts, no outside
+  requests. Source: `~/projects/sysforge-site` (private,
+  `Sysforge-AI/sysforge-site`); publish with its `deploy.sh`.
+- **The old Next.js site** (`sfproject.service`, :32236) still runs and is
+  just no longer served. Rollback is the saved nginx file named in that
+  repo's README.
+- **The certificate** had lapsed in May because renewal checks reached the
+  app and got a 404. The new config answers them; it is renewed to
+  2027-01-01.
+- **The family strip** now links all four sites: meatball.ai, sysforge.ai,
+  bradley.io, tinymachines.ai. SysForge is the ochre dot.
+- **The SysForge vs cb\* boundary map** (all 171 repos, where to merge or
+  split) is in the private `Nominate-AI/infrastructure` docs. A read-only
+  mirror of the org lives at `/mnt/ursa/mirrors` with a refresh script.
+  Findings stay there, not here.
