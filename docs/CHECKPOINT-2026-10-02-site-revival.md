@@ -171,6 +171,8 @@ private repositories, so the write-up lives in the private
   2027-01-01.
 - **The family strip** now links all four sites: meatball.ai, sysforge.ai,
   bradley.io, tinymachines.ai. SysForge is the ochre dot.
+- **SysForge contact** is hello@sysforge.ai (the domain's mail is on
+  Proton). Confirm the address exists there before sending investors the link.
 - **The SysForge vs cb\* boundary map** (all 171 repos, where to merge or
   split) is in the private `Nominate-AI/infrastructure` docs. A read-only
   mirror of the org lives at `/mnt/ursa/mirrors` with a refresh script.
