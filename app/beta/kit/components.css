@@ -1044,6 +1044,29 @@ h2.display { font-size: var(--text-h2); }
 .prose li > ul,
 .prose li > ol { margin: calc(var(--u) * 2) 0 0; }
 
+/* A run of text with no break in it takes the whole document sideways, not
+   just itself. The paragraph's box stays the width of the column and its
+   CONTENT is wider, so a scan of element boxes finds nothing over-wide while
+   the page scrolls anyway: that is why this went unnoticed until the e2e
+   overflow check named the footer, which was merely as wide as the document
+   had become.
+
+   Measured 2026-09-21 on /ja/docs/nes/p3-report at 390px, 37px out, from
+   "$2000、$2001、$2003、$2004、$2005、$2006、": Chrome offers no break
+   between an ideographic comma and a following dollar sign, and the English
+   page wraps fine because its commas are followed by spaces. So this is not
+   one document's typo. It is every Japanese body that lists registers, an
+   identifier or an address.
+
+   break-word is a last resort by definition, so a line that can wrap the
+   ordinary way still does and English is untouched. .prose > h1 already
+   carries a phone-width version of the same guarantee, for the same reason.
+   A pre does not wrap at all and scrolls instead, which is what a code block
+   should do. */
+/* Headings too: a document's h2 can be one identifier longer than a phone
+   ("Why SOC_USB_OTG_SUPPORTED is the line that matters", 449px in 350). */
+.prose > :is(p, ul, ol, blockquote, table, h2, h3, h4) { overflow-wrap: break-word; }
+
 .prose a {
   color: var(--color-ink);
   text-decoration: underline;
@@ -1189,6 +1212,66 @@ h2.display { font-size: var(--text-h2); }
   padding-top: calc(var(--u) * 4);
   border-top: 1px solid var(--color-rule);
 }
+
+/* The family strip. Meatball Labs is the parent of a small family of sites,
+   and each one carries the same row of dots in its footer, its own dot
+   marked, so the sites read as related without sharing a logo. The rule
+   comes from the family's style guide (meatball.ai/styleguide.html). The
+   order is the colour wheel and fixed; a site that exists is a link, a hue
+   still open is a plain dot. Colours are the --color-family-* tokens and
+   nothing else may borrow them.
+
+     <nav class="family" aria-label="Meatball Labs and family">
+       <a class="family-dot" data-hue="clay" href="https://meatball.ai"
+          aria-label="Meatball Labs" title="Meatball Labs"></a>
+       ...
+       <span class="family-dot is-me" data-hue="iris"
+          aria-current="page" title="tinymachines.ai (you are here)"></span>
+       <span class="family-dot" data-hue="rose" aria-hidden="true"></span>
+     </nav>
+
+   A dot is 8px; the marked one is 11px with a ring in the page's own ground
+   and muted ink, as the style guide draws it. A linked dot's hit area is
+   16px (the ::after), which is why the gap is 2u: neighbouring targets
+   touch but never overlap. */
+.family {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--u) * 2);
+  flex-wrap: wrap;
+}
+.family-dot {
+  position: relative;
+  display: block;
+  flex: 0 0 auto;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+a.family-dot::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+}
+.family-dot.is-me {
+  width: 11px;
+  height: 11px;
+  box-shadow: 0 0 0 2px var(--color-paper), 0 0 0 3px var(--color-ink-muted);
+}
+a.family-dot:hover,
+a.family-dot:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--color-paper), 0 0 0 3px var(--color-ink);
+}
+.family-dot[data-hue="clay"]   { background: var(--color-family-clay); }
+.family-dot[data-hue="ochre"]  { background: var(--color-family-ochre); }
+.family-dot[data-hue="moss"]   { background: var(--color-family-moss); }
+.family-dot[data-hue="sage"]   { background: var(--color-family-sage); }
+.family-dot[data-hue="spruce"] { background: var(--color-family-spruce); }
+.family-dot[data-hue="steel"]  { background: var(--color-family-steel); }
+.family-dot[data-hue="iris"]   { background: var(--color-family-iris); }
+.family-dot[data-hue="plum"]   { background: var(--color-family-plum); }
+.family-dot[data-hue="rose"]   { background: var(--color-family-rose); }
 
 /* The masthead's title is a display h1, but .prose > h1 does not reach it:
    the masthead sits outside the prose column. Stated here so the two cannot
@@ -2230,7 +2313,14 @@ html[lang="ja"] .crumb { word-break: keep-all; line-break: strict; }
 }
 .page-head .mh-meta { margin-top: calc(var(--u) * 3); }
 @media (max-width: 34rem) {
-  .page-head :is(h1, .mh-title) { font-size: var(--text-h2); }
+  /* The prose h1 joins the page head here for the same reason the masthead
+     grid uses minmax(0, 1fr): a single unbreakable word at --text-h1 can be
+     wider than a phone's column ("documentation" at 48px is 358px), and the
+     symptom is the whole document sliding sideways, not a clipped heading.
+     The wrap rule is the guarantee for whatever word a pulled document
+     brings next; the smaller size is why it should never be needed. */
+  .page-head :is(h1, .mh-title), .prose > h1 { font-size: var(--text-h2); }
+  .prose > h1 { overflow-wrap: break-word; }
 }
 
 /* The bar is short now, so the fallbacks that assumed an 11rem masthead
@@ -2264,10 +2354,32 @@ html[lang="ja"] .crumb { word-break: keep-all; line-break: strict; }
 .menu-item { padding: calc(var(--u) * 1.5) calc(var(--u) * 2.5); }
 /* The scrim is the page, as far as the panel is concerned: a click on it
    closes the menu at every width. It paints nothing above a phone; below,
-   the wash in the block further down. */
-.menu-scrim { position: fixed; inset: 0; z-index: 29; background: transparent; }
-/* The page holds still while the panel is up. The panel scrolls itself. */
-html.menu-open, html.menu-open body { overflow: hidden; }
+   the wash in the block further down.
+
+   THE PAGE IS NOT LOCKED while the panel is up. It was, from 2026-08-25 to
+   2026-09-22, with overflow: hidden on html and body both, and that pair
+   made body the scroll container: the sticky bar's scrollport became a box
+   scrolled to zero, so opening the menu anywhere but the top of a page put
+   the bar, the button and the panel a page-height above the viewport, in
+   Chrome and WebKit alike, on a desk and on a phone. On a desk the lock also
+   took the document's scrollbar away, and the whole page reflowed wider
+   under the reader's pointer as the panel opened. The reason the lock
+   existed, a finger overshooting the sheet and scrolling the page behind
+   it, is answered where the finger lands instead: the scrim takes no touch
+   scrolling, and the panel already keeps its own scroll from chaining. A
+   wheel over the scrim still scrolls the page, under the bar, and the
+   panel, hung from the bar, stays where it is. */
+.menu-scrim { position: fixed; inset: 0; z-index: 29; background: transparent; touch-action: none; }
+
+/* The word on the button is MENU or CLOSE, and the button is as wide as the
+   wider of the two whichever it says: both are drawn into one grid cell and
+   the one not showing is only invisible. Before this the button grew by the
+   difference as it opened, and the flag beside it moved (the owner's
+   "clicking Menu reformats the page", 2026-09-22, the other half of which
+   was the scrollbar above). */
+.menu-btn .word { display: grid; text-align: left; }
+.menu-btn .word > span { grid-area: 1 / 1; }
+.menu-btn .word > span[aria-hidden="true"] { visibility: hidden; }
 
 /* On a phone the card floats over a faint wash of paper, centred, still a
    card: the wash is what stops it reading as a page. */
@@ -2316,6 +2428,9 @@ html.menu-open, html.menu-open body { overflow: hidden; }
    mobile sweep of 2026-08-25), so the run drops whole to a second line. The
    footer's height is measured live, so the main region's padding follows. */
 .app-foot .foot-run { white-space: nowrap; }
+/* The family strip sits between the name and the run. It holds no text, so it
+   has no baseline to share with them: centre it on the band instead. */
+.app-foot .site-foot .family { align-self: center; }
 .app-main { padding-bottom: calc(var(--app-foot-h, 3rem) + var(--u) * 6); }
 
 /* Where the content owns the h1, the page head's title is a section label,
@@ -2667,5 +2782,414 @@ html.has-fullscreen .workbench .app-head { display: none; }
 .wb-strip a[aria-current] { color: var(--color-ink); border-bottom-color: var(--color-accent-ink); }
 .wb-strip a:focus-visible { outline: 2px solid var(--color-blue-ink); outline-offset: -2px; }
 html.has-fullscreen .wb-strip { top: 0; }
+/* The section's parts under the bar on a reading page (components/PartsStrip.tsx):
+   the same strip, on paper, at the page's measure so it lines up with the
+   crumb under it, and the whole width on a phone so it scrolls sideways
+   from the edge. Sticky under the bar like the workbench's. */
+.app-shell .parts-strip {
+  /* width: 100% matters: the shell is a column flex container, and an item
+     with auto inline margins and no width shrinks to its content there,
+     which on a phone was a 1120px strip scrolling the whole page sideways
+     (measured on /nes/chips at 390, 2026-09-23). */
+  width: 100%;
+  max-width: calc(var(--u) * 280);
+  margin-inline: auto;
+  padding-inline: calc(var(--u) * 8);
+  box-sizing: border-box;
+}
+@media (max-width: 40rem) {
+  .app-shell .parts-strip { padding-inline: calc(var(--u) * 5); }
+}
 /* A section reached through the strip lands under it, not beneath it. */
 .workbench .explorer-shell :is(section[id], h2[id]) { scroll-margin-top: calc(var(--u) * 24); }
+
+/* The beta origin's own line, above the page. It is not a notice component:
+   a notice is about the page you are on, and this is about the origin the
+   page is being served from. One rule at the top, in the orange the kit uses
+   for "wants attention", and it is the only thing on this site that is
+   allowed to be sticky above the masthead. */
+.beta-bar {
+  margin: 0;
+  padding: calc(var(--u) * 2) calc(var(--u) * 4);
+  background: var(--color-orange-ink);
+  color: var(--color-paper);
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+  text-align: center;
+}
+
+.beta-bar a {
+  color: var(--color-paper);
+  text-decoration: underline;
+}
+
+/* The three doors on the front page. Three of one kind of thing, so one
+   shape repeated: a name, a line, and the page it opens with. They are cards
+   because they ARE separate objects, unlike the lists behind them. */
+.door-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: calc(var(--u) * 4);
+  margin: calc(var(--u) * 4) 0 calc(var(--u) * 8);
+}
+
+.door-card {
+  border: 1px solid var(--color-rule);
+  padding: calc(var(--u) * 4);
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--u) * 2);
+}
+
+.door-card h3 {
+  margin: 0;
+  font-size: var(--text-h3);
+}
+
+.door-card p {
+  margin: 0;
+  color: var(--color-ink-muted);
+}
+
+.door-open {
+  margin-top: auto !important;
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+}
+
+/* ==========================================================================
+   29. THE FRAME'S LINES, 2026-09-24. The owner: "the horizontal rules are a
+   bit sloppy". They were: the bar's rule stopped at the band's measure, the
+   strip's ran a different width and faded out under its own mask, the
+   footer's ran edge to edge, the page head's heavy rule ran the content
+   measure and every section's rule under it ran the prose column's. Five
+   lengths on one screen. One rule now, for lines as for everything else:
+
+     chrome runs edge to edge    the bar, the strip, the footer, the floor
+     content runs its own width  the page head's heavy rule closes the head
+
+   and the sections inside a document open on a short mark instead of a
+   line of their own, so no two lines of different lengths ever stack.
+
+   The strip's words and the page's text share one left edge: the strip is
+   full bleed and pads itself to the band's measure, and the mark over a link
+   is exactly as wide as its word.
+   ========================================================================== */
+
+/* The measure and the gutter the bands use, as one expression each. */
+:root {
+  --frame-measure: calc(var(--u) * 280);
+  --frame-gutter: calc(var(--u) * 8);
+  --frame-inset: max(var(--frame-gutter), calc((100% - var(--frame-measure)) / 2 + var(--frame-gutter)));
+}
+@media (max-width: 40rem) {
+  :root { --frame-gutter: calc(var(--u) * 5); }
+}
+
+/* THE BAR's line leaves the band for the head, which is full bleed. Where a
+   strip follows, the strip's line closes both, and the bar and the strip
+   read as one head. */
+.app-head .band.topbar { border-bottom: 0; }
+.app-head { border-bottom: 1px solid var(--color-rule); }
+.app-head:has(+ .wb-strip) { border-bottom-color: transparent; }
+
+/* THE STRIP. Full bleed, its words on the band's left edge, clusters with a
+   hairline between them, no fade and no sideways scroll: a row that would
+   not fit folds into one button (Strip.tsx measures). */
+.wb-strip,
+.app-shell .parts-strip {
+  width: 100%;
+  max-width: none;
+  margin-inline: 0;
+  padding-inline: var(--frame-inset);
+  box-sizing: border-box;
+  overflow: visible;
+  scroll-snap-type: none;
+  mask-image: none;
+  -webkit-mask-image: none;
+  display: block;
+}
+.strip-row {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  min-width: 0;
+}
+.strip-run { display: flex; align-items: stretch; gap: calc(var(--u) * 5); }
+.strip-run + .strip-run {
+  position: relative;
+  margin-left: calc(var(--u) * 5);
+  padding-left: calc(var(--u) * 5);
+}
+.strip-run + .strip-run::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: calc(var(--u) * 3);
+  bottom: calc(var(--u) * 3);
+  border-left: 1px solid var(--color-ink-faint);
+}
+.strip-row > .strip-run > :is(a, span) {
+  flex: 0 0 auto;
+  /* The mark for where you are runs ABOVE the word, on the strip's top
+     edge under the bar (owner, 2026-09-27), not on the rule below it. */
+  padding: calc(var(--u) * 2.5) 0 calc(var(--u) * 3);
+  font-family: var(--font-display);
+  font-size: var(--text-micro);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--color-ink-muted);
+  text-decoration: none;
+  border-top: 2px solid transparent;
+  border-bottom: 0;
+  transition: color var(--t-snap) linear, border-color var(--t-snap) linear;
+}
+.strip-row > .strip-run > a:hover { color: var(--color-ink); border-top-color: var(--color-ink-faint); }
+.strip-row > .strip-run > a[aria-current] { color: var(--color-ink); border-top-color: var(--color-accent-ink); }
+.strip-row > .strip-run > a:focus-visible { outline: 2px solid var(--color-blue-ink); outline-offset: 2px; }
+
+/* The ghost the script measures: the row at its natural width, unseen. */
+.strip-ghost {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: max-content;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* THE FOLD: one button naming where you are, and the same links as a list. */
+.strip-fold {
+  display: none;
+  align-items: center;
+  gap: calc(var(--u) * 2.5);
+  width: 100%;
+  /* The row's own box, border and all, so a strip is one height folded
+     or not, and a placeholder of the row holds the room for either. */
+  padding: calc(var(--u) * 3) 0 calc(var(--u) * 2.5);
+  margin-bottom: -1px;
+  border-bottom: 2px solid transparent;
+  line-height: inherit;
+  font-family: var(--font-display);
+  font-size: var(--text-micro);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+  background: none;
+  border-top: 0;
+  border-inline: 0;
+  cursor: pointer;
+  text-align: left;
+}
+.strip-fold:focus-visible { outline: 2px solid var(--color-blue-ink); outline-offset: -2px; }
+.strip-fold .bars { display: grid; gap: 2px; width: calc(var(--u) * 3.5); }
+.strip-fold .bars i { display: block; height: 1.5px; background: currentColor; transition: transform var(--t-detent) var(--ease-detent), opacity var(--t-snap) linear; }
+.strip-fold[aria-expanded="true"] .bars i:first-child { transform: translateY(3.5px) rotate(45deg); }
+.strip-fold[aria-expanded="true"] .bars i:nth-child(2) { opacity: 0; }
+.strip-fold[aria-expanded="true"] .bars i:last-child { transform: translateY(-3.5px) rotate(-45deg); }
+.strip-here { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.strip-chev {
+  width: 6px;
+  height: 6px;
+  margin-right: 2px;
+  border-right: 1.5px solid var(--color-ink-muted);
+  border-bottom: 1.5px solid var(--color-ink-muted);
+  transform: translateY(-2px) rotate(45deg);
+  transition: transform var(--t-detent) var(--ease-detent);
+}
+.strip-fold[aria-expanded="true"] .strip-chev { transform: translateY(1px) rotate(-135deg); }
+
+/* A row too wide for its screen scrolls sideways, as the strip did before
+   the fold (owner, 2026-09-26: the list reads better than the folded
+   button, which hid half the create desk's windows). Strip.tsx still
+   measures, and a row that overflows (data-fold="1") scrolls inside the
+   strip with a fade at the edge it continues past, and brings the current
+   entry into view; the page itself never scrolls sideways. The fold button
+   and its list stay in the code and never show. The scroll container is
+   positioned, so nothing laid out inside it escapes into the page's width. */
+.wb-strip > .strip-row:not(.strip-ghost) {
+  position: relative;
+  overflow-x: auto;
+  /* Sideways only (owner, 2026-09-27: "vertical scroll slop"). A row that
+     scrolls on x computes y as scrollable too, so y is clipped, and nothing
+     inside overhangs the row (the mark sits inside each link's box). A
+     vertical swipe that starts on the strip still scrolls the page, and one
+     at either end of the row is not handed on as a back or forward
+     gesture. */
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  scroll-snap-type: x proximity;
+}
+.wb-strip > .strip-row:not(.strip-ghost)::-webkit-scrollbar { display: none; }
+.wb-strip[data-fold="1"] > .strip-row:not(.strip-ghost) {
+  mask-image: linear-gradient(90deg, #000 calc(100% - 2.5rem), transparent);
+  -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 2.5rem), transparent);
+}
+.wb-strip > .strip-fold { display: none; }
+
+.strip-sheet {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  max-height: calc(100dvh - var(--app-head-h, 4rem) - var(--u) * 24);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: calc(var(--u) * 1) var(--frame-inset) calc(var(--u) * 3);
+  background: var(--color-paper);
+  border-bottom: 1px solid var(--color-rule);
+  box-shadow: 0 12px 24px -16px color-mix(in srgb, var(--color-ink) 45%, transparent);
+  animation: module-snap var(--t-detent) var(--ease-detent);
+}
+.strip-sheet-run { display: grid; padding: calc(var(--u) * 1.5) 0; }
+.strip-sheet-run + .strip-sheet-run { border-top: 1px solid var(--color-ink-faint); }
+.strip-sheet a {
+  display: block;
+  padding: calc(var(--u) * 2.5) calc(var(--u) * 3);
+  margin-inline: calc(var(--u) * -3);
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  font-weight: 500;
+  color: var(--color-ink);
+  text-decoration: none;
+  border-left: 2px solid transparent;
+}
+.strip-sheet a:hover { background: var(--color-paper-sunk); }
+.strip-sheet a[aria-current] { font-weight: 700; border-left-color: var(--color-accent-ink); background: var(--color-paper-sunk); }
+.strip-sheet a:focus-visible { outline: 2px solid var(--color-blue-ink); outline-offset: -2px; }
+
+/* A document's sections open on a short mark, not a line: a line under the
+   head's heavy rule, one column narrower, was the mismatch the eye caught.
+   The mark is the burnt ink the links wear, the width of a word. */
+.prose > h2 { border-top: 0; padding-top: calc(var(--u) * 6); position: relative; }
+.prose > h2::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: calc(var(--u) * 8);
+  height: 2px;
+  background: var(--color-accent-ink);
+}
+.prose > h1 + h2 { padding-top: 0; }
+.prose > h1 + h2::before { content: none; }
+
+/* THE MENU, inside a section: the section first, its clusters split by a
+   hairline, the strip's one word as the name and the full name under it;
+   then the site and the projects, two short columns of names. */
+.menu-section .menu-run { display: grid; }
+.menu-section .menu-run + .menu-run { margin-top: calc(var(--u) * 1.5); padding-top: calc(var(--u) * 1.5); border-top: 1px solid var(--color-ink-faint); }
+.menu-brief {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: calc(var(--u) * 2);
+}
+.menu-brief > h2 { grid-column: 1 / -1; }
+.menu-brief .menu-item { padding: calc(var(--u) * 1.25) calc(var(--u) * 2.5); }
+.menu-brief .menu-item b { font-size: var(--text-data); font-weight: 500; color: var(--color-ink-muted); }
+.menu-brief .menu-item:hover b, .menu-brief .menu-item[aria-current] b { color: var(--color-ink); }
+.menu-section + .menu-brief { margin-top: calc(var(--u) * 5); }
+.menu-item[aria-current="location"] { background: var(--color-paper-sunk); border-left-color: var(--color-ink-faint); }
+
+/* ==========================================================================
+   30. THE DRAWING, 2026-09-29. A drawn figure in a document (a mermaid
+   fence, drawn in the browser by components/Diagram.tsx): the whole picture
+   at the column's width as a thumbnail, and the same picture full screen
+   behind a press, fitted to the screen or at its own size (owner: "the
+   diagrams should have thumbnails and a full screen version").
+
+   The thumbnail is a button and reads as one: it stands in the kit's
+   hairline on paper, sinks on hover like the ghost button, and its cursor
+   says it opens; the caption says so in words too. The full screen is a
+   dialog the size of the viewport, paper, with one bar: the caption, the
+   size toggle and Close. Structure only. The drawing's own colours are
+   mermaid's neutral theme until the owner sets them (Diagram.tsx, `theme`).
+   ========================================================================== */
+
+.diagram { margin: 0 0 calc(var(--u) * 6); }
+.diagram-thumb {
+  display: block;
+  width: 100%;
+  padding: calc(var(--u) * 3);
+  background: var(--color-paper);
+  color: var(--color-ink);
+  border: 1px solid var(--color-rule);
+  border-radius: var(--radius-hair);
+  cursor: zoom-in;
+  font: inherit;
+}
+.diagram-thumb:hover { background: var(--color-paper-sunk); }
+.diagram-thumb:focus-visible { outline: 2px solid var(--color-blue-ink); outline-offset: 2px; }
+/* The whole drawing, never a crop: shrunk to the column's width or to a
+   sensible height, whichever binds, keeping its shape. Mermaid writes its
+   own width on the element; the thumbnail's size is the frame's to decide. */
+.diagram-thumb svg {
+  display: block;
+  margin: 0 auto;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 26rem;
+}
+.diagram figcaption {
+  margin-top: calc(var(--u) * 2);
+  font-family: var(--font-sans);
+  font-size: var(--text-fine);
+  line-height: 1.45;
+  color: var(--color-ink-muted);
+}
+.diagram-hint { color: var(--color-accent-ink); white-space: nowrap; }
+.diagram-failed {
+  margin: calc(var(--u) * 2) 0 0;
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  color: var(--color-red-ink);
+}
+
+/* Full screen: the viewport, as a dialog. The bar is the only chrome. */
+.diagram-full {
+  width: 100vw;
+  height: 100dvh;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+.diagram-full[open] { display: flex; flex-direction: column; }
+.diagram-full::backdrop { background: color-mix(in srgb, var(--color-ink) 60%, transparent); }
+.diagram-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: calc(var(--u) * 2);
+  padding: calc(var(--u) * 2) calc(var(--u) * 4);
+  border-bottom: 1px solid var(--color-rule);
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+}
+.diagram-title { flex: 1 1 12rem; min-width: 0; font-weight: 600; }
+.diagram-bar .btn { padding: calc(var(--u) * 1.5) calc(var(--u) * 3); font-size: var(--text-data); }
+/* Fitted: the sheet takes the room under the bar and the drawing keeps
+   its shape inside it, so the whole of it is on the screen. Actual: the
+   component sets the sheet's width inline to the width mermaid drew (data,
+   not a token), the drawing fills it, and the view scrolls. Mermaid's own
+   inline max-width yields to both. */
+.diagram-view {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  padding: calc(var(--u) * 4);
+}
+.diagram-view .diagram-sheet { height: 100%; }
+.diagram-view svg { display: block; width: 100%; height: 100%; max-width: none !important; }
+.diagram-view.actual .diagram-sheet { height: auto; margin: 0 auto; }
+.diagram-view.actual svg { height: auto; }

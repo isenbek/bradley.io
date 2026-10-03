@@ -7,9 +7,9 @@ are lost the next time it is resynced.
 |---|---|
 | Source | `~/projects/tinymachines/public/style/` |
 | Upstream repo | `tinymachines/public` |
-| Commit | `e491d8615285e8b86031615ade442fbf18c741f9` |
-| Dated | 2026-08-28 |
-| Vendored | 2026-08-28 |
+| Commit | `ad98ceca30d5847beb04678a8d1cb591ca55cf28` |
+| Dated | 2026-10-02 |
+| Vendored | 2026-10-02 |
 | Published at | https://tinymachines.ai/style and /style/zoo |
 
 ## What was copied

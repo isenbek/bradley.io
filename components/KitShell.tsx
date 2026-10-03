@@ -1,3 +1,4 @@
+import { Family } from "@/components/kit/Family"
 import Link from "next/link"
 import buildInfo from "@/lib/build-info.json"
 import { DeployedAgo } from "@/components/kit/DeployedAgo"
@@ -88,6 +89,9 @@ export function KitShell({ children }: { children: React.ReactNode }) {
           <div className="band">
             <footer className="crumb site-foot">
               <Link href="/">bradley.io</Link>
+              {/* The Meatball Labs family: the same strip on every family
+                  site, this site's dot marked (owner's call, 2026-10-02). */}
+              <Family me="steel" />
               <span>
                 {" / "}
                 <a
