@@ -133,7 +133,24 @@ planner, the agent-state kernel, the CLI and the MCP directory). It covers
 private repositories, so the write-up lives in the private
 `Nominate-AI/infrastructure` repo, at `docs/NOMINATE-CORE-EXPLAINED.md`.
 
-### Next: meatball.ai
+### meatball.ai is live, and the family is linked (v1.0.420)
 
-The owner's next site: "the Grandaddy site ... above us all". The brief is
-in `docs/meatballai/`.
+- **meatball.ai** is the Meatball Labs parent site, built from the owner's
+  design export (`docs/meatballai/`, left untracked here because this repo
+  is public). It is static, with self-hosted fonts and no outside requests.
+  Source: `~/projects/meatball-labs` (private GitHub
+  `isenbek/meatball-labs`). Publish with its `deploy.sh`, which swaps
+  releases atomically. nginx serves the apex and www only, with a Let's
+  Encrypt certificate valid to 2027-01-01. The logo is bigger (64px on
+  desktop, 48px on phones).
+- **The family strip.** meatball.ai, bradley.io and tinymachines.ai all carry
+  the same nine-dot strip in their footers, each with its own dot marked,
+  and the three live sites linked to each other. The colours and the
+  component live in the tinymachines style kit (`--color-family-*`,
+  `.family`), with a specimen in the kit's zoo.
+- **The kit resync.** bradley.io resynced its copy of the kit to pick the
+  strip up. That brought a month of upstream fixes, notably that the menu
+  no longer locks page scroll.
+- **To add a family site,** put its hue, name and address in the family
+  list on all three sites.
+
