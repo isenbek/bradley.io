@@ -177,3 +177,17 @@ private repositories, so the write-up lives in the private
   split) is in the private `Nominate-AI/infrastructure` docs. A read-only
   mirror of the org lives at `/mnt/ursa/mirrors` with a refresh script.
   Findings stay there, not here.
+
+### sysforge.ai in the forge design (2026-10-03)
+
+- **sysforge.ai now wears the owner's "working forge" design:** anvil and
+  sparks, slag ticker, riveted shop-floor plates, five-step process,
+  tempering chart, the smiths, the warranty, and a light/dark switch.
+- **The earlier page's content is merged into it:** the interactive job
+  board, the counted numbers (as "hallmarks"), the roadmap, the four
+  promises as the warranty's fine print, the investor card
+  (hello@sysforge.ai), the disclaimer, and the linked family strip.
+- **Fonts are self-hosted;** the favicon and share card are the anvil.
+- **The design export** is kept in the private sysforge-site repo
+  (`design-source/`). The copy in this repo's `docs/` stays untracked,
+  because this repo is public.
