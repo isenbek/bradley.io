@@ -1,10 +1,10 @@
 {
-  "generated": "2026-10-02T16:16:10.047157+00:00",
+  "generated": "2026-10-03T09:34:08.480162+00:00",
   "org": "tinymachines",
   "totalRepos": 71,
   "firstCommit": "2016-02-27T16:07:26Z",
-  "latestCommit": "2026-10-01T15:40:41Z",
-  "totalCommits": 6763,
+  "latestCommit": "2026-10-03T01:45:26Z",
+  "totalCommits": 6826,
   "languages": {
     "Python": 27,
     "C": 7,
@@ -7033,9 +7033,21 @@
     },
     {
       "date": "2026-10-01",
-      "commits": 23,
-      "repos": 2,
-      "intensity": 2
+      "commits": 37,
+      "repos": 3,
+      "intensity": 3
+    },
+    {
+      "date": "2026-10-02",
+      "commits": 46,
+      "repos": 3,
+      "intensity": 3
+    },
+    {
+      "date": "2026-10-03",
+      "commits": 3,
+      "repos": 1,
+      "intensity": 1
     }
   ],
   "phases": [
@@ -7295,10 +7307,10 @@
       "model": "cbai"
     },
     {
-      "name": "Phase 9",
+      "name": "Early Tinymachines Development",
       "startDate": "2026-05-04",
       "endDate": "2026-08-03",
-      "description": "Development of geiger, adsb, sdr and 4 more repos.",
+      "description": "This development effort focused on building a distributed system for collecting and processing data, primarily centered around ADS-B tracking and sensor measurements. The project involved deploying hardware components like SDRs and camera systems alongside infrastructure management tools to support the overall data collection pipeline.",
       "repos": [
         "geiger",
         "adsb",
@@ -7308,17 +7320,38 @@
         "entropy",
         "krnl"
       ],
-      "milestones": [],
-      "category": "systems",
-      "source": "fallback",
-      "generatedAt": null,
-      "model": null
+      "milestones": [
+        {
+          "date": "2026-05-04",
+          "title": "Initial Bench Tooling & Option B Wiring",
+          "repo": "geiger"
+        },
+        {
+          "date": "2026-05-13",
+          "title": "Initial Provisioning",
+          "repo": "sdr"
+        },
+        {
+          "date": "2026-05-22",
+          "title": "Initial Sandbox Setup",
+          "repo": "tinybrain"
+        },
+        {
+          "date": "2026-06-30",
+          "title": "Firehose Client SDK",
+          "repo": "adsb"
+        }
+      ],
+      "category": "data",
+      "source": "ai",
+      "generatedAt": "2026-10-03",
+      "model": "ollama:gemma3:4b"
     },
     {
-      "name": "Phase 10",
+      "name": "NES Simulation Development",
       "startDate": "2026-08-17",
       "endDate": "2026-09-05",
-      "description": "Development of halfphi, public, ntsc-crt and 4 more repos.",
+      "description": "This development effort focused on recreating and simulating the Nintendo Entertainment System (NES) at a switch level. The project utilized various Rust repositories to build a comprehensive simulation, including the CPU, PPU, and memory management, alongside detailed analysis of its hardware components.",
       "repos": [
         "halfphi",
         "public",
@@ -7328,25 +7361,46 @@
         "2a03",
         "nes"
       ],
-      "milestones": [],
-      "category": "systems",
-      "source": "fallback",
-      "generatedAt": null,
-      "model": null
+      "milestones": [
+        {
+          "date": "2026-08-17",
+          "title": "Initial Simulation Release",
+          "repo": "halfphi"
+        },
+        {
+          "date": "2026-08-27",
+          "title": "Branchless Engine Implementation",
+          "repo": "halfphi"
+        },
+        {
+          "date": "2026-09-02",
+          "title": "Initial Harness Implementation",
+          "repo": "2c02"
+        },
+        {
+          "date": "2026-09-04",
+          "title": "Palette Write Path Correction",
+          "repo": "2c02"
+        }
+      ],
+      "category": "hardware",
+      "source": "ai",
+      "generatedAt": "2026-10-03",
+      "model": "ollama:gemma3:4b"
     },
     {
-      "name": "Phase 11",
+      "name": "NES Controller Scripting",
       "startDate": "2026-09-07",
       "endDate": "2026-09-07",
-      "description": "Development of nes-bench.",
+      "description": "This development focused on creating a unified, scriptable environment for controlling the NES bench. The team integrated controller ports, relays, and a scope into a single script to ensure identical inputs across both the part and switch-level models.",
       "repos": [
         "nes-bench"
       ],
       "milestones": [],
-      "category": "systems",
-      "source": "fallback",
-      "generatedAt": null,
-      "model": null
+      "category": "hardware",
+      "source": "ai",
+      "generatedAt": "2026-10-03",
+      "model": "ollama:gemma3:4b"
     }
   ],
   "repos": [
@@ -7370,21 +7424,21 @@
       "firstCommit": "2025-03-11T01:39:27Z",
       "lastCommit": "2025-03-30T08:47:43Z",
       "phase": "Core Infrastructure & API Development",
-      "descriptionSource": "ai",
+      "descriptionSource": "reused",
       "descriptionGeneratedAt": "2026-10-02",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "gene-pool",
-      "description": "The Gene-Pool repository focuses on curating and analyzing AI coding agent prompt sets. It includes updates to documentation, security advisories, and file management, reflecting ongoing efforts to improve the archive and its analysis capabilities. Recent commits highlight improvements to the repository structure and a growing collection of prompts.",
+      "description": "The gene-pool repository is an archive and analysis tool focused on AI coding agent system prompts, primarily centered around prompt engineering for AI assistants like Perplexity. The project includes documentation, configuration files (like FUNDING.yml and Tools.json), and various prompt examples related to AI agent research and development, with a growing emphasis on security advisories concerning prompt injection.",
       "language": "Unknown",
       "commits": 479,
       "firstCommit": "2025-03-26T06:58:25Z",
       "lastCommit": "2026-02-21T23:00:06Z",
       "phase": "Development Pipeline - Tinymachine Ecosystem",
-      "descriptionSource": "kept",
-      "descriptionGeneratedAt": "2026-03-06",
-      "descriptionModel": "cbai"
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-03",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "vectl",
@@ -7406,7 +7460,7 @@
       "firstCommit": "2025-04-01T03:36:08Z",
       "lastCommit": "2026-03-06T02:14:52Z",
       "phase": "Core Infrastructure & API Development",
-      "descriptionSource": "ai",
+      "descriptionSource": "reused",
       "descriptionGeneratedAt": "2026-10-02",
       "descriptionModel": "ollama:gemma3:4b"
     },
@@ -7442,7 +7496,7 @@
       "firstCommit": "2025-04-15T16:42:25Z",
       "lastCommit": "2025-04-30T05:49:03Z",
       "phase": "Evolve & Rando: Evolutionary Cycle of Development",
-      "descriptionSource": "ai",
+      "descriptionSource": "reused",
       "descriptionGeneratedAt": "2026-10-02",
       "descriptionModel": "ollama:gemma3:4b"
     },
@@ -7526,7 +7580,7 @@
       "firstCommit": "2025-04-23T21:18:08Z",
       "lastCommit": "2025-04-24T22:11:02Z",
       "phase": "Evolve & Rando: Evolutionary Cycle of Development",
-      "descriptionSource": "ai",
+      "descriptionSource": "reused",
       "descriptionGeneratedAt": "2026-10-02",
       "descriptionModel": "ollama:gemma3:4b"
     },
@@ -7592,15 +7646,15 @@
     },
     {
       "name": "sovereign",
-      "description": "Sovereign is a Python-based assembly-like agentic programming language focused on self-improvement and system optimization. The repository includes recent commits addressing bug fixes, documentation updates, and refinements to the core infrastructure, demonstrating a commitment to ongoing development and improvement. Key milestones include the completion of Phase 1 infrastructure, the addition of comprehensive development plans, and the implementation of new features like environment variable-based model default.",
+      "description": "The `sovereign` repository contains the source code for an assembly-like agentic programming language designed for self-improving systems. It represents a phased development, starting with an initial implementation and progressing through core infrastructure enhancements and detailed documentation. The project includes fixes for test stability, linting issues, and execution capabilities, alongside updates to the README and developer experience.",
       "language": "Python",
       "commits": 13,
       "firstCommit": "2025-06-18T00:55:54Z",
       "lastCommit": "2025-06-20T19:53:29Z",
       "phase": "Development Pipeline - Tinymachines Core Components",
-      "descriptionSource": "kept",
-      "descriptionGeneratedAt": "2026-03-06",
-      "descriptionModel": "cbai"
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-03",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "spidr",
@@ -7616,15 +7670,15 @@
     },
     {
       "name": "plumbr",
-      "description": "Plumbr is a C-language project focused on developing Raft consensus and KV storage foundations. Recent commits highlight significant progress in implementing the Raft consensus RPC layer, deployment system documentation, DSM monitoring, and resource management. The repository includes significant work on foundational infrastructure, API enhancements, and security improvements, particularly related to the Raft consensus and KV storage aspects. It\u2019s a substantial update with numerous tasks and refactorings across various areas.",
+      "description": "The `plumbr` repository is a C-based software project focused on building a distributed system, initially developed through two phases. It includes features like Raft consensus, network monitoring, deployment tools, and resource management, culminating in a production-hardening effort. The codebase demonstrates an iterative development process starting with the foundational elements of Phase I and progressing to more complex distributed systems components in Phase II.",
       "language": "C",
       "commits": 140,
       "firstCommit": "2025-07-06T18:04:01Z",
       "lastCommit": "2025-07-16T19:50:30Z",
       "phase": "Development Pipeline - Tinymachines Core Components",
-      "descriptionSource": "kept",
-      "descriptionGeneratedAt": "2026-03-06",
-      "descriptionModel": "cbai"
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-03",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "gcombinatr",
@@ -7664,15 +7718,15 @@
     },
     {
       "name": "zephyr",
-      "description": "The Zephyr repository is a Python-based project focused on developing a wireless networking system. Recent commits highlight a significant refactoring of the handler system, incorporating new services, libraries, and improvements to the overall structure. The repository also includes updates to the WiFi monitoring system, network transport robustness, and message handling. It also addresses important bug fixes, quality improvements, and documentation enhancements.",
+      "description": "The Zephyr repository is a Python software project focused on building and integrating various services, including LLM (Large Language Model) capabilities with Ollama. It incorporates network monitoring tools like libpcap/tcpdump, WiFi location detection, and a vector memory system, alongside a comprehensive test suite and documentation. The project has evolved from an initial library implementation to include production-ready handlers and asynchronous LLM integration.",
       "language": "Python",
       "commits": 120,
       "firstCommit": "2025-07-29T21:48:29Z",
       "lastCommit": "2025-08-13T02:33:30Z",
       "phase": "Development & Research - Tinymachine Ecosystem",
-      "descriptionSource": "kept",
-      "descriptionGeneratedAt": "2026-03-06",
-      "descriptionModel": "cbai"
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-03",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "classic-rock",
@@ -7832,15 +7886,15 @@
     },
     {
       "name": "swrm",
-      "description": "The repository, `swrm`, is a shell script focused on improving the stability, monitoring, and deployment of the Sworm cluster. It includes bug fixes, configuration updates, and documentation improvements. It\u2019s a series of commits addressing various aspects of the cluster infrastructure, including Redis management, monitoring, and worker deployment.",
+      "description": "The swrm repository contains the codebase for a cluster infrastructure project, primarily focused on deploying and managing applications using Celery and Redis. The commits demonstrate a complete buildout of a cluster system with support for various deployment methods, monitoring, and proxy configurations, culminating in operational cluster functionality.",
       "language": "Shell",
       "commits": 27,
       "firstCommit": "2025-10-17T22:46:28Z",
       "lastCommit": "2025-10-21T16:34:19Z",
       "phase": "Development of Core UI Components & Tools",
-      "descriptionSource": "kept",
-      "descriptionGeneratedAt": "2026-03-06",
-      "descriptionModel": "cbai"
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-03",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "leaks",
@@ -7856,15 +7910,15 @@
     },
     {
       "name": "ferret",
-      "description": "This GitHub repository, named `ferret`, focuses on improving the stability, functionality, and documentation of the Ferret SWRM client library. Recent commits highlight bug fixes, architectural enhancements, and integration improvements, particularly around session management, privacy, and deployment processes. It represents a significant effort to consolidate existing code and provide a more robust and well-documented tool for interacting with the SWRM cluster.",
+      "description": "The `ferret` repository is a shell-based project focused on managing the SWRM cluster, including browser launches with proxy support and privacy system controls. It involves deployment scripts, WebSocket server integration, and client library development for monitoring and testing the SWRM cluster's state and performance. The project includes documentation and architectural analysis to guide its evolution.",
       "language": "Shell",
       "commits": 18,
       "firstCommit": "2025-10-30T18:54:40Z",
       "lastCommit": "2026-01-26T03:36:31Z",
       "phase": "Development of Core UI Components & Tools",
-      "descriptionSource": "kept",
-      "descriptionGeneratedAt": "2026-03-06",
-      "descriptionModel": "cbai"
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-03",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "tiny",
@@ -7904,27 +7958,27 @@
     },
     {
       "name": "tgmi",
-      "description": "The `tgmi` repository is a project focused on developing a web-based framework for machine learning models, specifically for the MNIST dataset. Recent commits highlight improvements to the server configuration, model management, and user interface. Key features include unified server management, a Explore module with enhanced documentation and UI, a robust ExploreSession testing framework, and integration with various machine learning tools. The repository also includes code cleanup, testing, and documentation updates.",
+      "description": "This repository contains the source code for a TinyGrad Inspector, a tool designed to analyze and trace the execution of deep learning models, particularly focusing on understanding the flow of computation within UOp graphs. The project has evolved through several phases, starting with core foundation elements like architecture tracing and IR layer implementation, culminating in a comprehensive visualization suite and integration tests for MNIST datasets. It provides tools for debugging and optimizing TinyGrad models by providing insights into their internal operations.",
       "language": "HTML",
       "commits": 140,
       "firstCommit": "2025-11-14T23:36:30Z",
       "lastCommit": "2025-12-20T03:11:04Z",
       "phase": "Tinymachine Ecosystem Development Phases",
-      "descriptionSource": "kept",
-      "descriptionGeneratedAt": "2026-03-06",
-      "descriptionModel": "cbai"
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-03",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "scout",
-      "description": "The Scout network scanner is a shell-based tool that performs various tasks such as automated key installation, drive-time guide, run verification report, and more. The repository has undergone significant updates since its initial release on November 22, 2025, with recent commits adding features like SSH access enumeration, distributed deployment system, and service reconnaissance system. The current version is v1.0.0.",
+      "description": "The `scout` repository contains the source code for a network scanner, version 1.0.0, developed primarily in shell scripting. The project includes features such as automated key installation, deployment workflows, service reconnaissance, and system status reporting, with an emphasis on root-user fallback and SSH enumeration. It provides a comprehensive guide to its usage and implementation.",
       "language": "Shell",
       "commits": 15,
       "firstCommit": "2025-11-22T23:06:30Z",
       "lastCommit": "2025-11-26T17:25:19Z",
       "phase": "Tinymachine Ecosystem Development Phases",
-      "descriptionSource": "kept",
-      "descriptionGeneratedAt": "2026-03-22",
-      "descriptionModel": "cbai"
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-03",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "rustforhaters",
@@ -8012,63 +8066,63 @@
     },
     {
       "name": "infrastructure",
-      "description": "Data center infrastructure \u2014 systemd units, SOPS scripts, health daemon, certbot hooks, BIND zones (moved from Nominate-AI/cbdc 2026-06-30)",
+      "description": "This repository manages the data center infrastructure, primarily through systemd units, SOPS scripts, and related tools like certbot and BIND zones. It supports deployment and maintenance of services across multiple DC environments, with a focus on operational stability and reproducibility.",
       "language": "Shell",
       "commits": 350,
       "firstCommit": "2026-03-01T15:16:40Z",
       "lastCommit": "2026-07-21T16:48:49Z",
-      "phase": "Phase 9",
-      "descriptionSource": "github",
-      "descriptionGeneratedAt": null,
-      "descriptionModel": null
+      "phase": "Early Tinymachines Development",
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-03",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "geiger",
-      "description": "The repository is a log of recent changes made to the `geiger` HTML project. It contains detailed updates on various tasks including documentation, `auto` reports, and maintenance efforts. It focuses on addressing issues related to the optocoupler, inverter noise reference, and ensuring stable operation.",
+      "description": "The 'geiger' repository contains an HTML application that generates daily reports, likely related to measurements or data analysis, and includes features for serving plots and reports via a domain (tinymachines.ai). The project involves managing hardware components, controlling scopes (Rigol DS1054Z), and implementing various measurement options with associated documentation.",
       "language": "HTML",
       "commits": 301,
       "firstCommit": "2026-05-04T03:01:06Z",
       "lastCommit": "2026-09-29T03:02:54Z",
-      "phase": "Phase 9",
-      "descriptionSource": "kept",
-      "descriptionGeneratedAt": null,
-      "descriptionModel": "cbai"
+      "phase": "Early Tinymachines Development",
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-03",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "adsb",
-      "description": "Bare-metal provisioning for two Raspberry Pi 4 ADS-B/UAT distribution nodes (1090 + 978)",
+      "description": "This repository provides the software for a distributed network of Raspberry Pi nodes that collect and distribute ADS-B (Automatic Dependent Surveillance-Broadcast) aircraft tracking data, primarily from radio receivers. The system utilizes a combination of GPS, satellite data, and trajectory forecasting to generate real-time flight information, which is then streamed to various users and applications. It\u2019s designed for robust operation with multiple nodes and incorporates features like trajectory prediction and historical data analysis.",
       "language": "Python",
       "commits": 55,
       "firstCommit": "2026-05-07T17:16:20Z",
       "lastCommit": "2026-06-30T01:05:59Z",
-      "phase": "Phase 9",
-      "descriptionSource": "github",
-      "descriptionGeneratedAt": null,
-      "descriptionModel": null
+      "phase": "Early Tinymachines Development",
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-03",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "sdr",
-      "description": "Full SDR stack provisioner for bali.lan (RTL2838) complete with recent code commits addressing core functionalities and improvements. The repository focuses heavily on the deployment of this system to a target host.",
+      "description": "The sdr repository is a Python-based provisioner designed to deploy and manage an SDR (Software Defined Radio) stack on the host bali.lan, specifically targeting RTL2838 hardware. The project focuses on automating the setup and maintenance of this SDR environment, including features for data collection, analysis, and fleet management.",
       "language": "Python",
       "commits": 225,
       "firstCommit": "2026-05-13T20:32:50Z",
       "lastCommit": "2026-07-03T22:21:37Z",
-      "phase": "Phase 9",
-      "descriptionSource": "kept",
-      "descriptionGeneratedAt": null,
-      "descriptionModel": "cbai"
+      "phase": "Early Tinymachines Development",
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-03",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "tinybrain",
-      "description": "Hand-crafted, interpretable on-device vision classifier sandbox (Python \u2192 Rust on ESP32-C6)",
+      "description": "This repository contains firmware for a camera system, primarily focused on processing images captured by the Waveshare R47 NC camera module. The project involves developing and testing image processing algorithms, initially targeting an ESP32-C6 microcontroller but also supporting a Raspberry Pi platform for debugging and evaluation. It includes code for capturing video streams, performing various image analysis tasks, and generating visual outputs, with a strong emphasis on experimentation and troubleshooting related to the camera hardware.",
       "language": "Python",
       "commits": 80,
       "firstCommit": "2026-05-22T18:25:22Z",
       "lastCommit": "2026-06-01T12:34:15Z",
-      "phase": "Phase 9",
-      "descriptionSource": "github",
-      "descriptionGeneratedAt": null,
-      "descriptionModel": null
+      "phase": "Early Tinymachines Development",
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-03",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "entropy",
@@ -8077,94 +8131,94 @@
       "commits": 5,
       "firstCommit": "2026-07-31T00:19:33Z",
       "lastCommit": "2026-08-24T12:54:54Z",
-      "phase": "Phase 9",
+      "phase": "Early Tinymachines Development",
       "descriptionSource": "github",
       "descriptionGeneratedAt": null,
       "descriptionModel": null
     },
     {
       "name": "krnl",
-      "description": "Commits: Add krnl.tool CLI and roadmap-1 experiment harness; Add self-enforcing kitchen-sink tests; advertise fetch in TOOL_SCHEMA; Add docs/ARCHITECTURE.md \u2014 flow diagrams, examples, and the CPU analogy; Add the cbforge krnl op-pack and curated fixes for both broken graphs; Unify into the krnl package: kernel + graph-state lint",
+      "description": "This repository appears to be an experimental project focused on creating a self-improving AI system, tentatively named 'krnl'. It combines elements of software engineering, graph theory, and potentially distributed computing. The core goal seems to be building a robust and adaptable system capable of continuous learning and refinement through automated testing and feedback loops.",
       "language": "Python",
       "commits": 8,
       "firstCommit": "2026-08-03T20:18:09Z",
       "lastCommit": "2026-08-06T06:07:38Z",
-      "phase": "Phase 9",
-      "descriptionSource": "commits",
-      "descriptionGeneratedAt": null,
-      "descriptionModel": null
+      "phase": "Early Tinymachines Development",
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-03",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "6502",
-      "description": "Transistor-level MOS 6502 simulator in Rust/WASM with a WebGL renderer of the real die",
+      "description": "This repository is a simulation of a 6502 MOS microcomputer, built in Rust/WASM with a WebGL renderer that visualizes the chip's internal workings at a transistor level. The project focuses on recreating the hardware and includes features for analyzing and documenting its behavior, particularly through detailed schematics, data sheets, and archive preservation efforts. It appears to be an ongoing effort to meticulously recreate a specific 6502 implementation.",
       "language": "JavaScript",
       "commits": 351,
       "firstCommit": "2026-08-12T16:38:57Z",
       "lastCommit": "2026-09-28T13:44:23Z",
       "phase": "Tinymachine Ecosystem Development Phases",
-      "descriptionSource": "github",
-      "descriptionGeneratedAt": null,
-      "descriptionModel": null
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-03",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "halfphi",
-      "description": "Switch-level simulation and analysis of transistor-level chip netlists traced from die photographs",
+      "description": "The `halfphi` repository is a Rust-based software project focused on switch-level simulation and analysis of transistor-level chip netlists derived from die photographs. It performs charge rule calculations, manages rail conflicts using weighted votes based on measurements, and includes features for tracking solver searches to optimize group identification. The core functionality involves simulating the behavior of electronic circuits at a detailed level.",
       "language": "Rust",
       "commits": 19,
       "firstCommit": "2026-08-17T03:33:36Z",
       "lastCommit": "2026-09-04T17:23:16Z",
-      "phase": "Phase 10",
-      "descriptionSource": "github",
-      "descriptionGeneratedAt": null,
-      "descriptionModel": null
+      "phase": "NES Simulation Development",
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-03",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "public",
-      "description": "tinymachines.ai: the site, the API and the docs for the 6502 work",
+      "description": "This repository documents and supports the tinymachines.ai project, which focuses on recreating and analyzing 6502-based computers and their associated software. The work involves creating lessons, documenting hardware components (like the PPU), providing interactive learning experiences, and managing a codebase with a focus on documentation and development architecture.",
       "language": "TypeScript",
-      "commits": 746,
+      "commits": 801,
       "firstCommit": "2026-08-22T15:44:09Z",
-      "lastCommit": "2026-10-01T15:40:41Z",
-      "phase": "Phase 10",
-      "descriptionSource": "github",
-      "descriptionGeneratedAt": null,
-      "descriptionModel": null
+      "lastCommit": "2026-10-03T01:45:26Z",
+      "phase": "NES Simulation Development",
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-03",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "ntsc-crt",
-      "description": "Signal-level NTSC encode, decode and CRT simulation in Rust: exact-rational grid, NES and SMPTE 170M sources, comb rungs, capture recovery. Companion to tinymachines/6502.",
+      "description": "This repository is a software project focused on simulating the NES console's video output, specifically targeting its color palette and timing. It achieves this by modeling the NES\u2019s hardware components, including the PPU (Picture Processing Unit) and various source formats like NTSC, allowing for accurate recreation of the original display. The project has evolved through iterative development, starting with basic measurements and progressing to full-fledged simulations with support for different capture modes and hardware.",
       "language": "Rust",
       "commits": 37,
       "firstCommit": "2026-09-02T01:11:55Z",
       "lastCommit": "2026-09-27T23:19:04Z",
-      "phase": "Phase 10",
-      "descriptionSource": "github",
-      "descriptionGeneratedAt": null,
-      "descriptionModel": null
+      "phase": "NES Simulation Development",
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-03",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "2c02",
-      "description": "Switch-level Ricoh 2C02 (NES PPU) via halfphi: the netlist in, the behaviour out. Companion to tinymachines/6502 and tinymachines/ntsc-crt.",
+      "description": "This repository implements a switch-level simulation of the Ricoh 2C02 (NES PPU) using the halfphi framework, allowing for analysis and experimentation with its behavior. It focuses on recreating the NES's graphics processing unit by modeling its internal components and interactions, providing a tool for understanding and debugging NES hardware. The project is closely tied to other related repositories like tinymachines/6502 and tinymachines/ntsc-crt.",
       "language": "Rust",
       "commits": 40,
       "firstCommit": "2026-09-02T19:15:40Z",
       "lastCommit": "2026-09-27T23:33:37Z",
-      "phase": "Phase 10",
-      "descriptionSource": "github",
-      "descriptionGeneratedAt": null,
-      "descriptionModel": null
+      "phase": "NES Simulation Development",
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-03",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "nes-bus",
-      "description": "Commits: Saved states: every board saves its registers and RAM, never its ROM, behind a 'state' feature; Every board says where in its PRG a CPU read lands: prg_offset, for a debugger; The sketch's Gate 1 says \"case\", as the gate test quotes it; The A12 filter takes ten dots of low and not nine: one clock a frame; MMC2, mapper 9: the CHR bank the PPU's own fetches choose",
+      "description": "This repository contains the source code for a software simulation of the Nintendo Entertainment System (NES) console, specifically focusing on its hardware components like the CPU, PPU, and memory mapping. The project aims to accurately emulate the NES's behavior, allowing developers to test and debug games or create new ones within the NES environment. It includes multiple mapper boards that simulate different cartridge types and their associated features.",
       "language": "Rust",
       "commits": 13,
       "firstCommit": "2026-09-02T21:40:26Z",
       "lastCommit": "2026-09-27T23:18:28Z",
-      "phase": "Phase 10",
-      "descriptionSource": "commits",
-      "descriptionGeneratedAt": null,
-      "descriptionModel": null
+      "phase": "NES Simulation Development",
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-03",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "2a03",
@@ -8173,7 +8227,7 @@
       "commits": 34,
       "firstCommit": "2026-09-03T00:11:39Z",
       "lastCommit": "2026-09-27T23:15:03Z",
-      "phase": "Phase 10",
+      "phase": "NES Simulation Development",
       "descriptionSource": "commits",
       "descriptionGeneratedAt": null,
       "descriptionModel": null
@@ -8182,10 +8236,10 @@
       "name": "nes",
       "description": "The NES console: where the family's switch-level chips meet. The authored glue, the scheduler, the shell, and the end-to-end goldens.",
       "language": "Rust",
-      "commits": 82,
+      "commits": 87,
       "firstCommit": "2026-09-05T16:29:39Z",
-      "lastCommit": "2026-09-30T03:07:18Z",
-      "phase": "Phase 10",
+      "lastCommit": "2026-10-02T19:38:00Z",
+      "phase": "NES Simulation Development",
       "descriptionSource": "github",
       "descriptionGeneratedAt": null,
       "descriptionModel": null
@@ -8194,38 +8248,37 @@
       "name": "nes-bench",
       "description": "The NES bench made scriptable: a controller-port bridge, relays and the scope under one script, so the part and the switch-level model run identical inputs",
       "language": "Python",
-      "commits": 259,
+      "commits": 262,
       "firstCommit": "2026-09-07T01:23:48Z",
-      "lastCommit": "2026-10-01T01:30:55Z",
-      "phase": "Phase 11",
+      "lastCommit": "2026-10-02T17:01:42Z",
+      "phase": "NES Controller Scripting",
       "descriptionSource": "github",
       "descriptionGeneratedAt": null,
       "descriptionModel": null
     }
   ],
   "aiSummary": {
-    "callsOk": 4,
-    "callsFailed": 1,
-    "reused": 25,
-    "kept": 10,
+    "callsOk": 23,
+    "callsFailed": 0,
+    "reused": 29,
+    "kept": 0,
     "skippedByLimit": 0,
-    "skippedByBudget": 25,
+    "skippedByBudget": 3,
     "skippedBackendsDown": 0,
-    "withoutModelText": 16,
+    "withoutModelText": 3,
     "phaseSources": {
       "reused": 8,
-      "fallback": 3
+      "ai": 3
     },
     "descriptionSources": {
-      "ai": 4,
-      "reused": 17,
-      "github": 23,
-      "commits": 13,
+      "reused": 21,
+      "github": 15,
+      "commits": 11,
       "none": 4,
-      "kept": 10
+      "ai": 20
     },
-    "limitAi": 8,
-    "budgetMin": 2.0,
+    "limitAi": null,
+    "budgetMin": 15.0,
     "skipAi": false
   }
 }

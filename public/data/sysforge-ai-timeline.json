@@ -1,12 +1,13 @@
 {
-  "generated": "2026-10-02T16:11:57.508113+00:00",
+  "generated": "2026-10-03T09:34:51.250577+00:00",
   "org": "Sysforge-AI",
-  "totalRepos": 1,
+  "totalRepos": 2,
   "firstCommit": "2026-02-15T03:26:15Z",
-  "latestCommit": "2026-10-01T07:30:20Z",
-  "totalCommits": 258,
+  "latestCommit": "2026-10-03T07:30:30Z",
+  "totalCommits": 260,
   "languages": {
-    "TypeScript": 1
+    "TypeScript": 1,
+    "HTML": 1
   },
   "activityHeatmap": [
     {
@@ -1298,71 +1299,86 @@
       "commits": 1,
       "repos": 1,
       "intensity": 1
+    },
+    {
+      "date": "2026-10-03",
+      "commits": 2,
+      "repos": 2,
+      "intensity": 2
     }
   ],
   "phases": [
     {
-      "name": "SfProject",
+      "name": "Forge Console Setup",
       "startDate": "2026-02-16",
-      "endDate": "2026-02-16",
-      "description": "This repository represents the initial development phase of the Sysforge-AI project ecosystem. It's a TypeScript project focused on building a foundational framework for AI and Machine Learning applications within the Sysforge platform. The primary goal was to establish a basic structure for data management, model deployment, and other core functionalities.",
+      "endDate": "2026-10-03",
+      "description": "This development effort focused on establishing a SysForge system, primarily centered around the integration of Forge Console and mesh interaction. The work involved initial project setup and deployment configuration using TypeScript.",
       "repos": [
-        "sfproject"
+        "sfproject",
+        "sysforge-site"
       ],
       "milestones": [
         {
-          "date": "2026-02-16",
-          "title": "Initial Project Setup & Core Logic",
+          "date": "2026-02-15",
+          "title": "Production Deployment Setup",
           "repo": "sfproject"
         },
         {
           "date": "2026-02-17",
-          "title": "Implement Data Storage & Retrieval",
-          "repo": "sfproject"
-        },
-        {
-          "date": "2026-02-20",
-          "title": "Develop Basic Model Deployment Interface",
+          "title": "Forge Console Integration",
           "repo": "sfproject"
         }
       ],
       "category": "systems",
-      "source": "reused",
-      "generatedAt": "2026-04-22",
-      "model": "cbai"
+      "source": "ai",
+      "generatedAt": "2026-10-03",
+      "model": "ollama:gemma3:4b"
     }
   ],
   "repos": [
     {
       "name": "sfproject",
-      "description": "The sfproject repository is a TypeScript project that initially set up a SysForge system, including a Forge Console backend with an agentic API route for mesh interaction. Recent work has focused on adding integration tests and production deployment configurations using tools like systemd, nginx, and SSL.",
+      "description": "The sfproject repository is a TypeScript project focused on setting up a SysForge system, likely involving Forge Console and mesh interaction. It includes initial project setup, deployment configurations for production environments (including systemd, nginx, and SSL), and integration tests for the Forge Console backend API route.",
       "language": "TypeScript",
-      "commits": 258,
+      "commits": 259,
       "firstCommit": "2026-02-15T03:26:15Z",
-      "lastCommit": "2026-10-01T07:30:20Z",
-      "phase": "SfProject",
+      "lastCommit": "2026-10-03T07:30:30Z",
+      "phase": "Forge Console Setup",
       "descriptionSource": "ai",
-      "descriptionGeneratedAt": "2026-10-02",
+      "descriptionGeneratedAt": "2026-10-03",
       "descriptionModel": "ollama:gemma3:4b"
+    },
+    {
+      "name": "sysforge-site",
+      "description": "sysforge.ai: the SysForge investor site (static)",
+      "language": "HTML",
+      "commits": 1,
+      "firstCommit": "2026-10-03T03:29:50Z",
+      "lastCommit": "2026-10-03T03:29:50Z",
+      "phase": "Forge Console Setup",
+      "descriptionSource": "github",
+      "descriptionGeneratedAt": null,
+      "descriptionModel": null
     }
   ],
   "aiSummary": {
-    "callsOk": 1,
+    "callsOk": 2,
     "callsFailed": 0,
-    "reused": 1,
+    "reused": 0,
     "kept": 0,
     "skippedByLimit": 0,
     "skippedByBudget": 0,
     "skippedBackendsDown": 0,
     "withoutModelText": 0,
     "phaseSources": {
-      "reused": 1
-    },
-    "descriptionSources": {
       "ai": 1
     },
-    "limitAi": 8,
-    "budgetMin": 2.0,
+    "descriptionSources": {
+      "ai": 1,
+      "github": 1
+    },
+    "limitAi": null,
+    "budgetMin": 15.0,
     "skipAi": false
   }
 }

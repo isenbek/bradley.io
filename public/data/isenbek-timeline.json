@@ -1,10 +1,10 @@
 {
-  "generated": "2026-10-02T16:14:03.691307+00:00",
+  "generated": "2026-10-03T09:38:00.384713+00:00",
   "org": "isenbek",
   "totalRepos": 16,
   "firstCommit": "2014-10-16T10:45:09Z",
-  "latestCommit": "2026-10-01T20:50:10Z",
-  "totalCommits": 4402,
+  "latestCommit": "2026-10-03T02:43:12Z",
+  "totalCommits": 4455,
   "languages": {
     "TypeScript": 3,
     "Python": 2,
@@ -4398,6 +4398,18 @@
       "commits": 2,
       "repos": 2,
       "intensity": 1
+    },
+    {
+      "date": "2026-10-02",
+      "commits": 46,
+      "repos": 2,
+      "intensity": 3
+    },
+    {
+      "date": "2026-10-03",
+      "commits": 7,
+      "repos": 1,
+      "intensity": 1
     }
   ],
   "phases": [
@@ -4479,24 +4491,30 @@
         }
       ],
       "category": "ai-ml",
-      "source": "ai",
+      "source": "reused",
       "generatedAt": "2026-10-02",
       "model": "ollama:gemma3:4b"
     },
     {
-      "name": "Phase 3",
+      "name": "Early Farm Vertical Harvest",
       "startDate": "2026-09-08",
       "endDate": "2026-09-09",
-      "description": "Development of housecalls, NavierStokesAndEuler.",
+      "description": "This initial development focused on establishing a basic framework for agricultural data analysis, primarily centered around farm vertical harvests. The team utilized tools like `cbintel` to gather and analyze data related to crop yields and potentially other farming metrics. Initial efforts were concentrated on collecting data and running the first harvest.",
       "repos": [
         "housecalls",
         "NavierStokesAndEuler"
       ],
-      "milestones": [],
-      "category": "systems",
-      "source": "fallback",
-      "generatedAt": null,
-      "model": null
+      "milestones": [
+        {
+          "date": "2026-09-08",
+          "title": "Initial Farm Vertical Harvest",
+          "repo": "housecalls"
+        }
+      ],
+      "category": "data",
+      "source": "ai",
+      "generatedAt": "2026-10-03",
+      "model": "ollama:gemma3:4b"
     }
   ],
   "repos": [
@@ -4520,21 +4538,21 @@
       "firstCommit": "2017-03-22T02:59:47Z",
       "lastCommit": "2017-05-11T19:46:53Z",
       "phase": "Data & Infrastructure Pipelines",
-      "descriptionSource": "ai",
+      "descriptionSource": "reused",
       "descriptionGeneratedAt": "2026-10-02",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "systemd-ngrok",
-      "description": "Automatically start ngrok by systemd",
+      "description": "This repository, named systemd-ngrok, provides a way to automatically start ngrok using systemd service definitions. The project includes scripts for installation and uninstallation, along with configuration files, and ensures that services are always restarted upon changes. It addresses an initial typo and prevents issues related to cloning the project folder during installation.",
       "language": "Unknown",
       "commits": 13,
       "firstCommit": "2017-04-10T04:37:02Z",
       "lastCommit": "2020-12-13T14:31:26Z",
       "phase": "Data & Infrastructure Pipelines",
-      "descriptionSource": "github",
-      "descriptionGeneratedAt": null,
-      "descriptionModel": null
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-03",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "streamlit-example",
@@ -4550,15 +4568,15 @@
     },
     {
       "name": "pincone-examples",
-      "description": "Jupyter Notebooks to help you get hands-on with Pinecone vector databases",
+      "description": "The pincone-examples repository contains Jupyter Notebooks designed to demonstrate the use of Pinecone vector databases, primarily for applications like semantic search and retrieval-augmented generation (RAG). The notebooks provide hands-on examples covering various features including agents, chunking, Langchain integration, and serverless RAG implementations. It includes documentation and tutorials to help users get started with Pinecone.",
       "language": "Unknown",
       "commits": 1000,
       "firstCommit": "2021-03-11T23:44:58Z",
       "lastCommit": "2024-05-16T12:50:29Z",
       "phase": "Data & Infrastructure Pipelines",
-      "descriptionSource": "github",
-      "descriptionGeneratedAt": null,
-      "descriptionModel": null
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-03",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "saas-myfw",
@@ -4598,14 +4616,14 @@
     },
     {
       "name": "bradley.io",
-      "description": "The bradley.io repository is a TypeScript project focused on developing a terminal application, potentially inspired by \"WarGames\" and incorporating AI elements. It involves building out core website features like navigation and styling, alongside experimental terminal functionality and data engineering components, with frequent releases of build versions.",
+      "description": "The bradley.io repository is a TypeScript project focused on building a website, initially centered around showcasing and documenting various AI projects including Nominate-AI, MyFinalWishes, and a WOPR terminal with WebSocket integration. The codebase includes core site elements like navigation, footer, and search functionality alongside documentation updates and iterative improvements to the homepage design and styling.",
       "language": "TypeScript",
-      "commits": 1218,
+      "commits": 1269,
       "firstCommit": "2025-08-13T04:48:37Z",
-      "lastCommit": "2026-10-01T19:42:27Z",
+      "lastCommit": "2026-10-03T02:43:12Z",
       "phase": "Bradley AI Experimentation",
       "descriptionSource": "ai",
-      "descriptionGeneratedAt": "2026-10-02",
+      "descriptionGeneratedAt": "2026-10-03",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
@@ -4634,15 +4652,15 @@
     },
     {
       "name": "waste",
-      "description": "Run the full 2.78-trillion-parameter Kimi K3 model beyond available RAM by streaming activated weights directly from NVMe. A dependency-free, embeddable C inference engine.",
+      "description": "The `waste` repository is a C-based inference engine designed to run the large Kimi K3 language model (2.78 trillion parameters) by streaming weights directly from NVMe storage, overcoming RAM limitations. It\u2019s an embeddable system with cross-platform support and a focus on optimizing I/O performance for this demanding task. The project involves extensive testing, documentation updates, and the development of tools to manage the model's loading and execution.",
       "language": "C",
       "commits": 126,
       "firstCommit": "2026-07-23T07:16:25Z",
       "lastCommit": "2026-07-31T12:12:22Z",
       "phase": "Bradley AI Experimentation",
-      "descriptionSource": "github",
-      "descriptionGeneratedAt": null,
-      "descriptionModel": null
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-03",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "jamesd",
@@ -4675,47 +4693,46 @@
       "commits": 1,
       "firstCommit": "2026-09-08T10:57:25Z",
       "lastCommit": "2026-09-08T10:57:25Z",
-      "phase": "Phase 3",
+      "phase": "Early Farm Vertical Harvest",
       "descriptionSource": "github",
       "descriptionGeneratedAt": null,
       "descriptionModel": null
     },
     {
       "name": "housecalls",
-      "description": "The `housecalls` repository appears to be the development environment for a project focused on agricultural data analysis and potentially related services, centered around a 'farm vertical' and incorporating elements of 'honest tech service'. It involves running iterations of models (specifically an \u2018AG-MI\u2019 Michigan ag world model), managing data through containerized tools, and tracking progress across various initiatives including grant prospects and Deere-related activities. The repository seems to be experimenting with different approaches for data processing and integration, particularly concerning API interactions and GPU resource management.",
+      "description": "The `housecalls` repository appears to be the development environment for a project focused on agricultural data analysis and potentially related services, utilizing tools like `cbintel` and various models. It encompasses elements such as Michigan ag world modeling, farm vertical operations (including harvest passes), and a 'kit' designed for replicable processes. The repository shows ongoing attempts to run iterations of a process named \u2018AG-MI\u2019 with frequent resubmissions due to failures, alongside work on data structures and API integrations.",
       "language": "Unknown",
-      "commits": 12,
+      "commits": 14,
       "firstCommit": "2026-09-08T14:38:25Z",
-      "lastCommit": "2026-10-01T20:50:10Z",
-      "phase": "Phase 3",
+      "lastCommit": "2026-10-02T12:27:06Z",
+      "phase": "Early Farm Vertical Harvest",
       "descriptionSource": "ai",
-      "descriptionGeneratedAt": "2026-10-02",
+      "descriptionGeneratedAt": "2026-10-03",
       "descriptionModel": "ollama:gemma3:4b"
     }
   ],
   "aiSummary": {
-    "callsOk": 4,
+    "callsOk": 6,
     "callsFailed": 0,
-    "reused": 2,
+    "reused": 4,
     "kept": 0,
     "skippedByLimit": 0,
-    "skippedByBudget": 4,
+    "skippedByBudget": 0,
     "skippedBackendsDown": 0,
-    "withoutModelText": 4,
+    "withoutModelText": 0,
     "phaseSources": {
-      "reused": 1,
-      "ai": 1,
-      "fallback": 1
+      "reused": 2,
+      "ai": 1
     },
     "descriptionSources": {
-      "ai": 3,
-      "github": 9,
+      "reused": 2,
+      "github": 6,
+      "ai": 5,
       "none": 2,
-      "commits": 1,
-      "reused": 1
+      "commits": 1
     },
-    "limitAi": 8,
-    "budgetMin": 2.0,
+    "limitAi": null,
+    "budgetMin": 15.0,
     "skipAi": false
   }
 }
