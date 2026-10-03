@@ -124,3 +124,16 @@ router at 192.168.1.250.
 - The crawler figure: about 950 GB measured, versus "terabytes".
 - Whether the router at 192.168.1.250 and the September 28 network
   change were intended.
+
+### Later still: the Nominate-AI core
+
+A read-only deep analysis of how the platform's core fits together (the
+shared service base class and its mesh registration card, the forge
+planner, the agent-state kernel, the CLI and the MCP directory). It covers
+private repositories, so the write-up lives in the private
+`Nominate-AI/infrastructure` repo, at `docs/NOMINATE-CORE-EXPLAINED.md`.
+
+### Next: meatball.ai
+
+The owner's next site: "the Grandaddy site ... above us all". The brief is
+in `docs/meatballai/`.
