@@ -314,3 +314,16 @@ private audit report.
   from bradley.io were invisible.
 - **Next:** a family panel on /visitors (unlisted), then the device
   handshake (item 6).
+
+### The family panel on /visitors (2026-10-04)
+
+- **/visitors shows the family** (v1.0.430): one row per family site with
+  its dot, pages read, visits, the first day in the window and the top
+  outside referrer, then a Doors table of crossings between family sites.
+- **Shipped in three passes:** the doors began as a bar chart that cut the
+  site names, so they became a table; a missing space and "1 crossings"
+  were fixed.
+- **The local preview server did not hydrate any page** this session, so
+  client-side boards were verified on the live site instead.
+- **Next:** the device handshake (item 6). The doors will mean more after a
+  few days of traffic.
