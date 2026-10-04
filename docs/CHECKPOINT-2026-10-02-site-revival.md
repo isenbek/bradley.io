@@ -377,3 +377,12 @@ private audit report.
   `site/family/assets/<hue>/`; empty and reserved slots say so.
 - **Found, not fixed:** bradley.io's favicon is still the v3 Bio Blue, not
   Steel.
+
+### The favicon in Steel (2026-10-04)
+
+- **bradley.io's favicon and app icons are Steel** (v1.0.432): a Steel tile,
+  the bio wordmark in the kit's paper, the i-dot in Steel's tint. The tab
+  icon had still been the deleted v3's blue; the app icons were mustard on
+  ink to match the masthead. All four now agree with bradley.io's family dot.
+- **The masthead logo is unchanged** (still mustard on ink); moving it to
+  Steel is a small follow-up if wanted.
