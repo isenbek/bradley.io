@@ -493,17 +493,13 @@ const shortDay = (iso: string) => `${Number(iso.slice(8, 10))} ${MON[Number(iso.
  */
 function FamilyPanel({ f, windowDays }: { f: Family; windowDays: number }) {
   const hueOf = (site: string) => FAMILY.find((m) => m.href && new URL(m.href).hostname === site)?.hue
-  const doors = f.doors.map((d) => ({
-    label: `${d.from} → ${d.to}`,
-    value: d.reads,
-    display: nf(d.reads),
-  }))
+  const crossings = f.doors.reduce((n, d) => n + d.reads, 0)
   return (
     <>
       <div className="prose beta-sec">
         <h2>The family</h2>
         <p>
-          Meatball Labs and its sites, side by side, over the same {windowDays} days: pages people
+          Meatball Labs and its sites, side by side, over the same {`${windowDays} days`}: pages people
           read, the visits they came in, and how often someone walked through a door from one
           family site to another. Taken from the server&apos;s own logs, with no cookie, pixel or
           script on any of the sites.
@@ -546,21 +542,41 @@ function FamilyPanel({ f, windowDays }: { f: Family; windowDays: number }) {
         </div>
       </div>
 
-      <div className="panel">
-        <div className="panel-face">
-          <div className="panel-bar">
-            <b>Doors</b>
-            <span>{nf(f.doors.reduce((n, d) => n + d.reads, 0))} crossings</span>
+      {/* A table, not a bar chart: a door is two site names, and the chart's
+          label column cut them to "bradley.io → t…". */}
+      <div className="ledger">
+        <div className="scroller" tabIndex={0} role="region" aria-label="Doors between family sites">
+          <table>
+            <thead>
+              <tr>
+                <th>From</th>
+                <th>To</th>
+                <th className="num">Crossings</th>
+              </tr>
+            </thead>
+            <tbody>
+              {f.doors.length ? (
+                f.doors.map((d) => (
+                  <tr key={`${d.from}>${d.to}`}>
+                    <td className="name">{d.from}</td>
+                    <td className="name">{d.to}</td>
+                    <td className="num">{nf(d.reads)}</td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan={3}>No crossings yet.</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+          <div className="tbl-foot">
+            <span>
+              {nf(crossings)} {crossings === 1 ? "crossing" : "crossings"}, counted on the receiving
+              site from the origin a browser sends with a cross-site click. The doors opened on 4
+              October 2026, so this is mostly ahead.
+            </span>
           </div>
-          <RowChart
-            caption="Pages read on one family site, arriving from another"
-            data={doors}
-            emptyNote="No crossings yet."
-          />
-          <p className="beta-chart__note">
-            Counted on the receiving site, from the origin the browser sends with a cross-site
-            click. The doors between the sites opened on 4 October 2026, so this is mostly ahead.
-          </p>
         </div>
       </div>
     </>
