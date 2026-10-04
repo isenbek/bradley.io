@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react"
 import { RowChart, HeatGrid, RampKey } from "@/app/_charts"
+import { FAMILY } from "@/components/kit/family-data"
 import {
   InstrumentHead,
   InstrumentNote,
@@ -95,6 +96,20 @@ interface Snapshot {
     paths: { path: string; hits: number }[]
   }
   edge: { ok: boolean; feeds?: { name: string; pkts: number }[] }
+  /** Absent from snapshots written before 2026-10-04. */
+  family?: Family
+}
+
+interface Family {
+  note: string
+  members: {
+    site: string
+    reads: number
+    visits: number
+    byDay: { d: string; reads: number }[]
+    from: { host: string; reads: number }[]
+  }[]
+  doors: { from: string; to: string; reads: number }[]
 }
 
 const nf = (n: number | undefined) => (n ?? 0).toLocaleString()
@@ -266,6 +281,8 @@ export function KnockBoard() {
           </table>
         </div>
       </div>
+
+      {s.family && <FamilyPanel f={s.family} windowDays={s.windowDays} />}
 
       {/* THE SITE SELECTOR */}
       <div className="prose beta-sec">
@@ -450,6 +467,102 @@ export function KnockBoard() {
           {s.sitesFolded.map((f) => `${f.site} (${f.reads})`).join(", ")}.
         </p>
       )}
+    </>
+  )
+}
+
+/** "2026-10-03" as "3 Oct", sliced from the string so no timezone moves it. */
+const MON = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+const shortDay = (iso: string) => `${Number(iso.slice(8, 10))} ${MON[Number(iso.slice(5, 7)) - 1] ?? ""}`
+
+/**
+ * The family: meatball.ai and its sites, side by side, and the doors between
+ * them (docket item 7, 2026-10-04).
+ *
+ * Its numbers are the collector's "family" section: human page reads only
+ * (no bots, assets, API calls or prefetches), visits split by a 30-minute
+ * gap, outside referrers by host name only. A door is a read on one family
+ * site whose referrer is another; it is countable because links into the
+ * family keep their origin (lib/external-rel.ts). Nothing here comes from a
+ * cookie, a pixel or a script: it is nginx's own logs.
+ *
+ * "Since" is the first day a site has any reads in the window, so a site
+ * that has only existed for two days says so instead of looking quiet next
+ * to one with a month of history. Each site wears its family dot, the one
+ * identity colour the family shares; the numbers stay in ink.
+ */
+function FamilyPanel({ f, windowDays }: { f: Family; windowDays: number }) {
+  const hueOf = (site: string) => FAMILY.find((m) => m.href && new URL(m.href).hostname === site)?.hue
+  const doors = f.doors.map((d) => ({
+    label: `${d.from} → ${d.to}`,
+    value: d.reads,
+    display: nf(d.reads),
+  }))
+  return (
+    <>
+      <div className="prose beta-sec">
+        <h2>The family</h2>
+        <p>
+          Meatball Labs and its sites, side by side, over the same {windowDays} days: pages people
+          read, the visits they came in, and how often someone walked through a door from one
+          family site to another. Taken from the server&apos;s own logs, with no cookie, pixel or
+          script on any of the sites.
+        </p>
+      </div>
+
+      <div className="ledger">
+        <div className="scroller" tabIndex={0} role="region" aria-label="The family, by site">
+          <table>
+            <thead>
+              <tr>
+                <th>Site</th>
+                <th className="num">Pages read</th>
+                <th className="num">Visits</th>
+                <th>Since</th>
+                <th>Most readers from</th>
+              </tr>
+            </thead>
+            <tbody>
+              {f.members.map((m) => {
+                const hue = hueOf(m.site)
+                const top = m.from[0]
+                return (
+                  <tr key={m.site}>
+                    <td className="name">
+                      <span className="beta-fam-site">
+                        {hue && <span className="family-dot" data-hue={hue} aria-hidden="true" />}
+                        {m.site}
+                      </span>
+                    </td>
+                    <td className="num">{nf(m.reads)}</td>
+                    <td className="num">{nf(m.visits)}</td>
+                    <td>{m.byDay[0] ? shortDay(m.byDay[0].d) : "no reads"}</td>
+                    <td>{top ? `${top.host} (${nf(top.reads)})` : "no outside referrers"}</td>
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div className="panel">
+        <div className="panel-face">
+          <div className="panel-bar">
+            <b>Doors</b>
+            <span>{nf(f.doors.reduce((n, d) => n + d.reads, 0))} crossings</span>
+          </div>
+          <RowChart
+            caption="Pages read on one family site, arriving from another"
+            data={doors}
+            emptyNote="No crossings yet."
+          />
+          <p className="beta-chart__note">
+            Counted on the receiving site, from the origin the browser sends with a cross-site
+            click. The doors between the sites opened on 4 October 2026, so this is mostly ahead.
+          </p>
+        </div>
+      </div>
     </>
   )
 }
