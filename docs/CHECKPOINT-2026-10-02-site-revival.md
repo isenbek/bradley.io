@@ -281,3 +281,20 @@ private audit report.
 - **tinymachines.ai** has the contract; its own session decides.
 - **Next:** hues for hotbits, amy.io and snailmail.ai when they land; then
   docket item 8 (SEO and share cards).
+
+### SEO and share cards, started (2026-10-04)
+
+- **Audit:** bradley.io and tinymachines.ai already had title, description,
+  canonical, a share card, structured data, robots.txt and a sitemap.
+  sysforge.ai lacked the canonical, structured data, robots and sitemap;
+  meatball.ai had none of it, and its title sat inside the body.
+- **The family kit now writes all of it** for the two static sites from
+  `family/seo.json` (private `isenbek/meatball-labs`): the head block, the
+  structured data (SysForge names Meatball Labs as its parent), robots.txt
+  and sitemap.xml. meatball.ai's head is fixed and it has its own share card
+  and icons. Both live.
+- **tinymachines.ai reads the family registry** too (its own session, on
+  beta and deploying): a change to the family list now means resyncing
+  bradley.io and tinymachines.ai before their deploys.
+- **Open:** whether bradley.io's and tinymachines.ai's structured data
+  should name Meatball Labs as parent (the owner's call).
