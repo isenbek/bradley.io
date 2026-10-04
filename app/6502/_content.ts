@@ -150,7 +150,7 @@ export const GROUPS: Group[] = [
     items: [
       {
         name: "Visual 6502 · run it",
-        href: "https://6502.tinymachines.ai/",
+        href: "https://tinymachines.ai/6502/explorer",
         note: "Pan, zoom, tap a wire to trace its connected group, and watch the registers fall out of the silicon.",
       },
       {

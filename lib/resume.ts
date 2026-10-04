@@ -235,7 +235,7 @@ export const ROLES: ResumeRole[] = [
     groups: RESEARCH_GROUPS,
     links: [
       { label: "tinymachines.ai", href: "https://tinymachines.ai" },
-      { label: "6502.tinymachines.ai", href: "https://6502.tinymachines.ai" },
+      { label: "tinymachines.ai/6502", href: "https://tinymachines.ai/6502/explorer" },
       { label: "terrapulse.info", href: "https://terrapulse.info" },
       { label: "tinychase.com", href: "https://tinychase.com" },
       { label: "github.com/tinymachines", href: "https://github.com/tinymachines" },
