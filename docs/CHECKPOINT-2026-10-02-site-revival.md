@@ -298,3 +298,19 @@ private audit report.
   bradley.io and tinymachines.ai before their deploys.
 - **Open:** whether bradley.io's and tinymachines.ai's structured data
   should name Meatball Labs as parent (the owner's call).
+
+### First-party tracking, started (2026-10-04)
+
+- **No new tracker.** The /visitors collector already read every nginx log
+  on the box (bots split from people, page reads, visits, no IP kept). It
+  now also writes a **family** section: reads and visits per family site,
+  the outside sites that sent readers (host names only), and **doors**:
+  clicks from one family site to another. No cookie, pixel or script.
+- **First 30 days:** tinymachines.ai 13,994 reads in 5,518 visits;
+  bradley.io 9,794 in 4,298; sysforge.ai and meatball.ai are two days old
+  (378 and 177). One door crossing so far.
+- **Links into the family keep their referrer** (`lib/external-rel.ts`,
+  v1.0.427); every other outbound link still sends none. Without it, doors
+  from bradley.io were invisible.
+- **Next:** a family panel on /visitors (unlisted), then the device
+  handshake (item 6).
