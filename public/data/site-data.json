@@ -1,9 +1,9 @@
 {
-  "generated": "2026-10-04T16:02:58.689600+00:00",
+  "generated": "2026-10-04T20:02:44.268322+00:00",
   "stats": {
     "totalProjects": 84,
     "totalSessions": 336,
-    "totalMessages": 1107785,
+    "totalMessages": 1110148,
     "activeDays": 189,
     "streak": 130,
     "coverage": {
@@ -26,14 +26,14 @@
   "activityFeed": [
     {
       "type": "claude-code",
-      "title": "Claude Code: 2,653 transcript records",
-      "description": "16 sessions active, 793 tool calls",
+      "title": "Claude Code: 5,016 transcript records",
+      "description": "18 sessions active, 1,474 tool calls",
       "projectSlug": null,
       "category": null,
-      "date": "2026-10-04T16:00:47.900000Z",
+      "date": "2026-10-04T19:57:19.739000Z",
       "metadata": {
-        "messages": 2653,
-        "sessions": 16
+        "messages": 5016,
+        "sessions": 18
       }
     },
     {
@@ -716,11 +716,11 @@
         "TypeScript"
       ],
       "lastActivity": "2026-10-04",
-      "totalMessages": 51777,
+      "totalMessages": 51793,
       "sources": {
         "claudeCode": {
           "totalSessions": 2,
-          "totalMessages": 51777,
+          "totalMessages": 51793,
           "lastSession": "2026-10-04"
         }
       },
@@ -729,6 +729,31 @@
         "description": "claude-web"
       },
       "categoryBasis": "keywords"
+    },
+    {
+      "slug": "6502",
+      "name": "6502",
+      "tagline": "Want to build 6502 apps.",
+      "description": "Want to build 6502 apps.",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-10-04",
+      "totalMessages": 55922,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 5,
+          "totalMessages": 55922,
+          "lastSession": "2026-10-04"
+        }
+      },
+      "provenance": {
+        "tagline": "claude-web",
+        "description": "claude-web"
+      },
+      "categoryBasis": "default"
     },
     {
       "slug": "infra",
@@ -741,11 +766,11 @@
       "status": "active",
       "technologies": [],
       "lastActivity": "2026-10-04",
-      "totalMessages": 97595,
+      "totalMessages": 97729,
       "sources": {
         "claudeCode": {
           "totalSessions": 9,
-          "totalMessages": 97595,
+          "totalMessages": 97729,
           "lastSession": "2026-10-04"
         }
       },
@@ -766,11 +791,11 @@
       "status": "active",
       "technologies": [],
       "lastActivity": "2026-10-04",
-      "totalMessages": 53745,
+      "totalMessages": 53749,
       "sources": {
         "claudeCode": {
           "totalSessions": 5,
-          "totalMessages": 53745,
+          "totalMessages": 53749,
           "lastSession": "2026-10-04"
         },
         "timeline": {
@@ -797,11 +822,11 @@
       "status": "active",
       "technologies": [],
       "lastActivity": "2026-10-04",
-      "totalMessages": 36308,
+      "totalMessages": 36669,
       "sources": {
         "claudeCode": {
           "totalSessions": 1,
-          "totalMessages": 36308,
+          "totalMessages": 36669,
           "lastSession": "2026-10-04"
         },
         "timeline": {
@@ -812,7 +837,7 @@
         }
       },
       "provenance": {
-        "tagline": "ai",
+        "tagline": "ai-cached",
         "description": "timeline"
       },
       "categoryBasis": "keywords"
@@ -837,11 +862,11 @@
         "TypeScript"
       ],
       "lastActivity": "2026-10-04",
-      "totalMessages": 35204,
+      "totalMessages": 35652,
       "sources": {
         "claudeCode": {
           "totalSessions": 6,
-          "totalMessages": 35204,
+          "totalMessages": 35652,
           "lastSession": "2026-10-04"
         },
         "timeline": {
@@ -868,11 +893,11 @@
       "status": "active",
       "technologies": [],
       "lastActivity": "2026-10-04",
-      "totalMessages": 33610,
+      "totalMessages": 33751,
       "sources": {
         "claudeCode": {
           "totalSessions": 2,
-          "totalMessages": 33610,
+          "totalMessages": 33751,
           "lastSession": "2026-10-04"
         }
       },
@@ -960,31 +985,6 @@
       "provenance": {
         "tagline": "none",
         "description": "none"
-      },
-      "categoryBasis": "default"
-    },
-    {
-      "slug": "6502",
-      "name": "6502",
-      "tagline": "Want to build 6502 apps.",
-      "description": "Want to build 6502 apps.",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-10-03",
-      "totalMessages": 55481,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 5,
-          "totalMessages": 55481,
-          "lastSession": "2026-10-03"
-        }
-      },
-      "provenance": {
-        "tagline": "claude-web",
-        "description": "claude-web"
       },
       "categoryBasis": "default"
     },
@@ -1101,7 +1101,7 @@
         }
       },
       "provenance": {
-        "tagline": "ai",
+        "tagline": "ai-cached",
         "description": "timeline"
       },
       "categoryBasis": "keywords"
@@ -2680,9 +2680,9 @@
     }
   ],
   "aiSummary": {
-    "succeeded": 2,
+    "succeeded": 0,
     "failed": 0,
-    "reused": 9,
+    "reused": 11,
     "keptPrevious": 63,
     "notAttempted": 0,
     "skippedByLimit": 0,
@@ -2692,9 +2692,9 @@
     "limit": null,
     "budgetMin": 15.0,
     "skipped": false,
-    "calls": 2,
+    "calls": 0,
     "answeredByGateway": 0,
-    "answeredByOllama": 2,
+    "answeredByOllama": 0,
     "fallbackModel": "gemma3:4b",
     "scope": "Taglines only. Descriptions are never written by the model."
   }
