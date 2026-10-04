@@ -43,6 +43,20 @@ export function Family({ me }: { me: FamilyHue }) {
             />
           );
         }
+        // A reserved hue: a site that is not answering yet. Named, not linked,
+        // the same as the static sites draw it (meatball-labs/family/build.py).
+        if (f.reserved && f.name) {
+          return (
+            <span
+              key={f.hue}
+              className="family-dot"
+              data-hue={f.hue}
+              role="img"
+              aria-label={`${f.name}, coming`}
+              title={`${f.name} (coming)`}
+            />
+          );
+        }
         return <span key={f.hue} className="family-dot" data-hue={f.hue} aria-hidden="true" />;
       })}
     </nav>

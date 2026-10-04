@@ -492,7 +492,14 @@ const shortDay = (iso: string) => `${Number(iso.slice(8, 10))} ${MON[Number(iso.
  * identity colour the family shares; the numbers stay in ink.
  */
 function FamilyPanel({ f, windowDays }: { f: Family; windowDays: number }) {
-  const hueOf = (site: string) => FAMILY.find((m) => m.href && new URL(m.href).hostname === site)?.hue
+  // The member whose link is the site's root: hotbits shares tinymachines.ai's
+  // host (tinymachines.ai/hotbits) but the row is tinymachines.ai's.
+  const hueOf = (site: string) =>
+    FAMILY.find((m) => {
+      if (!m.href) return false
+      const u = new URL(m.href)
+      return u.hostname === site && (u.pathname === "/" || u.pathname === "")
+    })?.hue
   const crossings = f.doors.reduce((n, d) => n + d.reads, 0)
   return (
     <>

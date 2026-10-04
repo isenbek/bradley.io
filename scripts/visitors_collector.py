@@ -118,7 +118,10 @@ FAMILY_DATA = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "co
 def family_hosts():
     try:
         with open(FAMILY_DATA) as fh:
-            return [h.lower() for h in re.findall(r'href: "https://([^"/]+)"', fh.read())]
+            # hotbits lives at tinymachines.ai/hotbits: a member with a path is
+            # still one host, and a host is counted once.
+            hosts = [h.lower() for h in re.findall(r'href: "https://([^"/]+)', fh.read())]
+            return list(dict.fromkeys(hosts))
     except OSError:
         return []
 
