@@ -427,8 +427,10 @@ body:has(.beta-root) {
      Paper on Steel is 4.6:1. Every other .die keeps the kit's ink tile. */
   --beta-steel: var(--color-family-steel);
   --beta-steel-tint: #c8daea;
-  background: var(--beta-steel);
 }
+/* The kit paints the tile with `.topbar .die`, which outranks a lone class;
+   this matches it and adds one, so the Steel wins without !important. */
+.topbar .die.die--mark { background: var(--beta-steel); }
 .die--mark svg {
   display: block;
   overflow: visible;
