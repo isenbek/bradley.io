@@ -1,17 +1,17 @@
 {
-  "generated": "2026-10-04T00:08:33.899442+00:00",
+  "generated": "2026-10-04T12:06:32.304255+00:00",
   "sources": {
     "unifiedSpec": "https://mcp.campaignbrain.dev/openapi.json",
     "metadata": "scripts/mcp-catalog-meta.json (pulled 2026-08-29)"
   },
   "stats": {
     "totalServices": 55,
-    "totalEndpoints": 2328,
+    "totalEndpoints": 2384,
     "totalCategories": 5,
     "mcpServers": 3,
     "mcpServersReachable": 3,
-    "fleetServices": 84,
-    "fleetEndpoints": 3390,
+    "fleetServices": 85,
+    "fleetEndpoints": 3447,
     "uncataloguedServices": 44
   },
   "mcpServers": [
@@ -244,6 +244,24 @@
           "endpointCount": 77
         },
         {
+          "id": "cbdistricts",
+          "name": "Congressional Districts",
+          "url": "https://districts.campaignbrain.dev",
+          "description": "119th Congress, 441 districts. Demographics, GeoJSON boundaries, radio coverage, geographic layers, state data. Embedded MCP at /mcp.",
+          "auth": "None (public)",
+          "capabilities": [
+            "districts",
+            "demographics",
+            "geojson",
+            "states",
+            "radio-coverage",
+            "intersections",
+            "layers",
+            "mcp-tools"
+          ],
+          "endpointCount": 56
+        },
+        {
           "id": "cbsurveys",
           "name": "Survey Platform (YASP)",
           "url": "https://surveys.campaignbrain.dev",
@@ -398,24 +416,6 @@
             "mcp-tools"
           ],
           "endpointCount": 7
-        },
-        {
-          "id": "cbdistricts",
-          "name": "Congressional Districts",
-          "url": "https://districts.campaignbrain.dev",
-          "description": "119th Congress, 441 districts. Demographics, GeoJSON boundaries, radio coverage, geographic layers, state data. Embedded MCP at /mcp.",
-          "auth": "None (public)",
-          "capabilities": [
-            "districts",
-            "demographics",
-            "geojson",
-            "states",
-            "radio-coverage",
-            "intersections",
-            "layers",
-            "mcp-tools"
-          ],
-          "endpointCount": 0
         },
         {
           "id": "sdr",
@@ -1065,7 +1065,7 @@
     },
     {
       "id": "cbelections",
-      "endpointCount": 60
+      "endpointCount": 61
     },
     {
       "id": "cbstitch",

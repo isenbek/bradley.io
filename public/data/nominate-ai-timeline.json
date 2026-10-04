@@ -1,10 +1,10 @@
 {
-  "generated": "2026-10-03T09:20:21.084287+00:00",
+  "generated": "2026-10-04T09:18:55.419932+00:00",
   "org": "Nominate-AI",
   "totalRepos": 171,
   "firstCommit": "2022-12-09T19:55:42Z",
-  "latestCommit": "2026-10-03T08:49:28Z",
-  "totalCommits": 36023,
+  "latestCommit": "2026-10-04T08:49:14Z",
+  "totalCommits": 36048,
   "languages": {
     "Python": 114,
     "TypeScript": 28,
@@ -8036,26 +8036,32 @@
     },
     {
       "date": "2026-09-30",
-      "commits": 115,
+      "commits": 117,
       "repos": 39,
       "intensity": 1
     },
     {
       "date": "2026-10-01",
-      "commits": 65,
-      "repos": 14,
+      "commits": 71,
+      "repos": 16,
       "intensity": 1
     },
     {
       "date": "2026-10-02",
-      "commits": 36,
+      "commits": 37,
       "repos": 15,
       "intensity": 1
     },
     {
       "date": "2026-10-03",
-      "commits": 21,
-      "repos": 10,
+      "commits": 31,
+      "repos": 14,
+      "intensity": 1
+    },
+    {
+      "date": "2026-10-04",
+      "commits": 6,
+      "repos": 4,
       "intensity": 1
     }
   ],
@@ -8153,7 +8159,7 @@
         }
       ],
       "category": "data",
-      "source": "ai",
+      "source": "reused",
       "generatedAt": "2026-10-03",
       "model": "ollama:gemma3:4b"
     },
@@ -8543,7 +8549,7 @@
         }
       ],
       "category": "ai-ml",
-      "source": "ai",
+      "source": "reused",
       "generatedAt": "2026-10-03",
       "model": "ollama:gemma3:4b"
     },
@@ -8604,7 +8610,7 @@
         }
       ],
       "category": "systems",
-      "source": "ai",
+      "source": "reused",
       "generatedAt": "2026-10-03",
       "model": "ollama:gemma3:4b"
     },
@@ -8624,7 +8630,7 @@
       ],
       "milestones": [],
       "category": "data",
-      "source": "ai",
+      "source": "reused",
       "generatedAt": "2026-10-03",
       "model": "ollama:gemma3:4b"
     },
@@ -8655,15 +8661,15 @@
         }
       ],
       "category": "ai-ml",
-      "source": "ai",
+      "source": "reused",
       "generatedAt": "2026-10-03",
       "model": "ollama:gemma3:4b"
     },
     {
-      "name": "Phase 20",
+      "name": "Early Scanner Development",
       "startDate": "2026-07-18",
       "endDate": "2026-07-21",
-      "description": "Development of cbscan, cbvector, cbelections and 4 more repos.",
+      "description": "This development focused on the core scanning infrastructure and initial data handling. The team built a bridge to scan mailboxes, stored documents in cbfiles, and began submitting them for processing. This work laid the foundation for subsequent vector storage and campaign analysis.",
       "repos": [
         "cbscan",
         "cbvector",
@@ -8673,17 +8679,33 @@
         "cbsquare",
         "cbunifi"
       ],
-      "milestones": [],
-      "category": "systems",
-      "source": "fallback",
-      "generatedAt": null,
-      "model": null
+      "milestones": [
+        {
+          "date": "2026-07-18",
+          "title": "Scanner Intake Bridge",
+          "repo": "cbscan"
+        },
+        {
+          "date": "2026-07-19",
+          "title": "Campaign Brain Vector Store",
+          "repo": "cbvector"
+        },
+        {
+          "date": "2026-07-21",
+          "title": "FEC Candidate Master Adapter",
+          "repo": "cbelections"
+        }
+      ],
+      "category": "data",
+      "source": "ai",
+      "generatedAt": "2026-10-04",
+      "model": "ollama:gemma3:4b"
     },
     {
-      "name": "Phase 21",
+      "name": "Nominate AI Development Sprint",
       "startDate": "2026-07-22",
       "endDate": "2026-08-12",
-      "description": "Development of cbcaptive, nominate-web, cbloop and 4 more repos.",
+      "description": "This sprint focused on building out the core components of the Nominate AI platform, integrating various data aggregation and research tools. The team worked to create a consumer-facing surface for Campaign Brain alongside internal agent kernels and supporting infrastructure.",
       "repos": [
         "cbcaptive",
         "nominate-web",
@@ -8693,17 +8715,38 @@
         "cbkrnl",
         "cbnominate"
       ],
-      "milestones": [],
-      "category": "systems",
-      "source": "fallback",
-      "generatedAt": null,
-      "model": null
+      "milestones": [
+        {
+          "date": "2026-07-22",
+          "title": "Marching Orders Documentation",
+          "repo": "cbcaptive"
+        },
+        {
+          "date": "2026-07-24",
+          "title": "Nominate Web Site Launch",
+          "repo": "nominate-web"
+        },
+        {
+          "date": "2026-07-24",
+          "title": "Marching Orders Block Generation",
+          "repo": "cbloop"
+        },
+        {
+          "date": "2026-07-30",
+          "title": "SearXNG Deployment",
+          "repo": "cbsearx"
+        }
+      ],
+      "category": "ai-ml",
+      "source": "ai",
+      "generatedAt": "2026-10-04",
+      "model": "ollama:gemma3:4b"
     },
     {
-      "name": "Phase 22",
+      "name": "Nominate-AI Development Sprint",
       "startDate": "2026-08-14",
       "endDate": "2026-08-19",
-      "description": "Development of cbsme, cbprint, cbprospect and 4 more repos.",
+      "description": "This sprint focused on building and refining several key components for Nominate-AI, including prospect generation, election tracking, and media buying systems. The team rapidly developed applications using TypeScript and Python, integrating them into a central cbapex container.",
       "repos": [
         "cbsme",
         "cbprint",
@@ -8713,17 +8756,38 @@
         "cbapex",
         "cbradio2"
       ],
-      "milestones": [],
+      "milestones": [
+        {
+          "date": "2026-08-14",
+          "title": "cbsme Fixes",
+          "repo": "cbsme"
+        },
+        {
+          "date": "2026-08-14",
+          "title": "cbprint Documentation Updates",
+          "repo": "cbprint"
+        },
+        {
+          "date": "2026-08-15",
+          "title": "cbprospect Initial Development",
+          "repo": "cbprospect"
+        },
+        {
+          "date": "2026-08-17",
+          "title": "cbnight Election Porting",
+          "repo": "cbnight"
+        }
+      ],
       "category": "systems",
-      "source": "fallback",
-      "generatedAt": null,
-      "model": null
+      "source": "ai",
+      "generatedAt": "2026-10-04",
+      "model": "ollama:gemma3:4b"
     },
     {
-      "name": "Phase 23",
+      "name": "Campaign Brain Initial Development",
       "startDate": "2026-08-19",
       "endDate": "2026-08-21",
-      "description": "Development of cbradio-proc, cbrural, cbconnector and 4 more repos.",
+      "description": "This development effort focused on establishing core components for Campaign Brain, including data acquisition, processing, and partner interfaces. The projects built a foundational infrastructure for the system's various functions.",
       "repos": [
         "cbradio-proc",
         "cbrural",
@@ -8733,17 +8797,48 @@
         "cbharvest",
         "radio-plans"
       ],
-      "milestones": [],
-      "category": "systems",
-      "source": "fallback",
-      "generatedAt": null,
-      "model": null
+      "milestones": [
+        {
+          "date": "2026-08-19",
+          "title": "cbradio data plane",
+          "repo": "cbradio-proc"
+        },
+        {
+          "date": "2026-08-19",
+          "title": "Rural AM.FM.",
+          "repo": "cbrural"
+        },
+        {
+          "date": "2026-08-20",
+          "title": "Email Audit",
+          "repo": "cbconnector"
+        },
+        {
+          "date": "2026-08-20",
+          "title": "Victory Modeling",
+          "repo": "cbvmod"
+        },
+        {
+          "date": "2026-08-20",
+          "title": "Partners - Owners View",
+          "repo": "cbpartners"
+        },
+        {
+          "date": "2026-08-20",
+          "title": "State-package harvest engine",
+          "repo": "cbharvest"
+        }
+      ],
+      "category": "data",
+      "source": "ai",
+      "generatedAt": "2026-10-04",
+      "model": "ollama:gemma3:4b"
     },
     {
-      "name": "Phase 24",
+      "name": "Victory Text Development",
       "startDate": "2026-08-22",
       "endDate": "2026-09-01",
-      "description": "Development of cbadmin, cbforgeapp, cbvipulse and 4 more repos.",
+      "description": "This development effort focused on building out the core components for Victory Text, a voter texting application. It involved integrating AI conversation layers, contact enrichment services, and client surfaces to manage voter interactions and data.",
       "repos": [
         "cbadmin",
         "cbforgeapp",
@@ -8753,41 +8848,78 @@
         "cbenrichment",
         "cbconvoops"
       ],
-      "milestones": [],
-      "category": "systems",
-      "source": "fallback",
-      "generatedAt": null,
-      "model": null
+      "milestones": [
+        {
+          "date": "2026-08-22",
+          "title": "cbadmin creation",
+          "repo": "cbadmin"
+        },
+        {
+          "date": "2026-08-22",
+          "title": "cbforgeapp creation",
+          "repo": "cbforgeapp"
+        },
+        {
+          "date": "2026-08-24",
+          "title": "cbvipulse creation",
+          "repo": "cbvipulse"
+        },
+        {
+          "date": "2026-08-26",
+          "title": "cbsvi creation",
+          "repo": "cbsvi"
+        }
+      ],
+      "category": "ai-ml",
+      "source": "ai",
+      "generatedAt": "2026-10-04",
+      "model": "ollama:gemma3:4b"
     },
     {
-      "name": "Phase 25",
+      "name": "Initial Kit Development",
       "startDate": "2026-09-03",
       "endDate": "2026-09-23",
-      "description": "Development of cbsitrep, cbassay, cbhq.",
+      "description": "This initial development focused on establishing the core components of the system, including user interface elements and basic functionality. The team worked to integrate vendor kits and build foundational interactions.",
       "repos": [
         "cbsitrep",
         "cbassay",
         "cbhq"
       ],
-      "milestones": [],
-      "category": "systems",
-      "source": "fallback",
-      "generatedAt": null,
-      "model": null
+      "milestones": [
+        {
+          "date": "2026-09-03",
+          "title": "kit: vendor cbapex 7284053, the logo goes home, About moves into the menu",
+          "repo": "cbsitrep"
+        },
+        {
+          "date": "2026-09-06",
+          "title": "kit: vendor cbapex 7284053, the logo goes home, About moves into the menu",
+          "repo": "cbassay"
+        },
+        {
+          "date": "2026-09-23",
+          "title": "kit: vendor cbapex 7284053, the logo goes home, About moves into the menu",
+          "repo": "cbhq"
+        }
+      ],
+      "category": "creative",
+      "source": "ai",
+      "generatedAt": "2026-10-04",
+      "model": "ollama:gemma3:4b"
     }
   ],
   "repos": [
     {
       "name": "cbunstruct",
-      "description": "This GitHub repository contains an open-source FastAPI wrapper for the unstructured library 'sysforge'. It focuses primarily on documentation, bug fixes, and a streamlined API for testing. Recent commits indicate active development involving dependency management, code linting, and format improvements.",
+      "description": "This repository appears to be a Dockerized FastAPI application designed for processing unstructured documents, specifically focusing on converting them into various formats. It utilizes the `cbinfra` library and provides an OpenAPI documentation endpoint for interacting with its functionality. The project includes CI/CD pipelines for building and publishing Docker images, along with extensive testing and logging infrastructure.",
       "language": "Python",
       "commits": 364,
       "firstCommit": "2022-12-09T19:55:42Z",
       "lastCommit": "2026-09-28T06:28:31Z",
       "phase": "Nominate-AI Infrastructure & Development",
-      "descriptionSource": "kept",
-      "descriptionGeneratedAt": "2026-06-18",
-      "descriptionModel": "cbai"
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-04",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "cbcomfy",
@@ -8881,7 +9013,7 @@
       "firstCommit": "2025-04-27T04:28:53Z",
       "lastCommit": "2025-04-29T02:29:25Z",
       "phase": "Data & Processing Stream",
-      "descriptionSource": "ai",
+      "descriptionSource": "reused",
       "descriptionGeneratedAt": "2026-10-03",
       "descriptionModel": "ollama:gemma3:4b"
     },
@@ -8893,7 +9025,7 @@
       "firstCommit": "2025-05-01T21:48:30Z",
       "lastCommit": "2025-06-12T06:09:18Z",
       "phase": "Nominate AI Core Infrastructure & Feature Development",
-      "descriptionSource": "ai",
+      "descriptionSource": "reused",
       "descriptionGeneratedAt": "2026-10-03",
       "descriptionModel": "ollama:gemma3:4b"
     },
@@ -8941,7 +9073,7 @@
       "firstCommit": "2025-08-01T00:35:43Z",
       "lastCommit": "2026-06-26T22:27:48Z",
       "phase": "Nominate AI Core Infrastructure & Feature Development",
-      "descriptionSource": "ai",
+      "descriptionSource": "reused",
       "descriptionGeneratedAt": "2026-10-03",
       "descriptionModel": "ollama:gemma3:4b"
     },
@@ -8965,7 +9097,7 @@
       "firstCommit": "2025-08-16T18:25:39Z",
       "lastCommit": "2026-03-06T02:15:18Z",
       "phase": "Nominate AI Core Infrastructure & Feature Development",
-      "descriptionSource": "ai",
+      "descriptionSource": "reused",
       "descriptionGeneratedAt": "2026-10-03",
       "descriptionModel": "ollama:gemma3:4b"
     },
@@ -8989,7 +9121,7 @@
       "firstCommit": "2025-09-17T03:05:51Z",
       "lastCommit": "2025-10-27T14:14:27Z",
       "phase": "Backend Development & Refinement",
-      "descriptionSource": "ai",
+      "descriptionSource": "reused",
       "descriptionGeneratedAt": "2026-10-03",
       "descriptionModel": "ollama:gemma3:4b"
     },
@@ -9013,7 +9145,7 @@
       "firstCommit": "2025-10-13T20:09:18Z",
       "lastCommit": "2025-11-11T19:48:32Z",
       "phase": "Backend Development & Refinement",
-      "descriptionSource": "ai",
+      "descriptionSource": "reused",
       "descriptionGeneratedAt": "2026-10-03",
       "descriptionModel": "ollama:gemma3:4b"
     },
@@ -9025,7 +9157,7 @@
       "firstCommit": "2025-10-13T20:09:18Z",
       "lastCommit": "2025-11-13T21:54:06Z",
       "phase": "Backend Development & Refinement",
-      "descriptionSource": "ai",
+      "descriptionSource": "reused",
       "descriptionGeneratedAt": "2026-10-03",
       "descriptionModel": "ollama:gemma3:4b"
     },
@@ -9049,7 +9181,7 @@
       "firstCommit": "2025-10-30T16:58:15Z",
       "lastCommit": "2026-09-28T06:28:27Z",
       "phase": "Backend Development & Refinement",
-      "descriptionSource": "ai",
+      "descriptionSource": "reused",
       "descriptionGeneratedAt": "2026-10-03",
       "descriptionModel": "ollama:gemma3:4b"
     },
@@ -9061,7 +9193,7 @@
       "firstCommit": "2025-12-02T21:07:30Z",
       "lastCommit": "2026-10-02T13:49:38Z",
       "phase": "Early CRM Development",
-      "descriptionSource": "ai",
+      "descriptionSource": "reused",
       "descriptionGeneratedAt": "2026-10-03",
       "descriptionModel": "ollama:gemma3:4b"
     },
@@ -9073,7 +9205,7 @@
       "firstCommit": "2025-12-02T23:55:28Z",
       "lastCommit": "2026-09-28T06:27:08Z",
       "phase": "Early CRM Development",
-      "descriptionSource": "ai",
+      "descriptionSource": "reused",
       "descriptionGeneratedAt": "2026-10-03",
       "descriptionModel": "ollama:gemma3:4b"
     },
@@ -9085,7 +9217,7 @@
       "firstCommit": "2025-12-10T18:05:37Z",
       "lastCommit": "2026-05-21T14:23:28Z",
       "phase": "Early CRM Development",
-      "descriptionSource": "ai",
+      "descriptionSource": "reused",
       "descriptionGeneratedAt": "2026-10-03",
       "descriptionModel": "ollama:gemma3:4b"
     },
@@ -9097,7 +9229,7 @@
       "firstCommit": "2025-12-13T21:24:17Z",
       "lastCommit": "2026-09-30T19:20:57Z",
       "phase": "Early CRM Development",
-      "descriptionSource": "ai",
+      "descriptionSource": "reused",
       "descriptionGeneratedAt": "2026-10-03",
       "descriptionModel": "ollama:gemma3:4b"
     },
@@ -9109,7 +9241,7 @@
       "firstCommit": "2025-12-14T18:55:03Z",
       "lastCommit": "2026-04-27T14:41:07Z",
       "phase": "Early CRM Development",
-      "descriptionSource": "ai",
+      "descriptionSource": "reused",
       "descriptionGeneratedAt": "2026-10-03",
       "descriptionModel": "ollama:gemma3:4b"
     },
@@ -9121,7 +9253,7 @@
       "firstCommit": "2025-12-15T23:30:50Z",
       "lastCommit": "2026-09-28T06:27:32Z",
       "phase": "Early CRM Development",
-      "descriptionSource": "ai",
+      "descriptionSource": "reused",
       "descriptionGeneratedAt": "2026-10-03",
       "descriptionModel": "ollama:gemma3:4b"
     },
@@ -9133,33 +9265,33 @@
       "firstCommit": "2025-12-15T23:30:50Z",
       "lastCommit": "2026-09-28T06:27:05Z",
       "phase": "Early CRM Development",
-      "descriptionSource": "ai",
+      "descriptionSource": "reused",
       "descriptionGeneratedAt": "2026-10-03",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "cbmodels",
-      "description": "The CB Models repository is a Python project focused on data handling, specifically with a focus on metadata management and automated processes. It contains recent commits exploring various features related to the `cbmodels` framework, including improved automation for data lifecycle operations (including AWS infrastructure cleanup), changes in workflow, and enhancing data accessibility through auditing.",
+      "description": "The cbmodels repository is a political data engine built with Python, designed to provide voter segments, election results analysis, and audience building capabilities. It utilizes technologies like FastAPI, DuckDB, Snowflake, and S3 for data processing and storage, and includes tools for data transformation and reporting. The project incorporates various data sources including SFMC feeds and integrates with Claude for advanced analytics.",
       "language": "Python",
       "commits": 1355,
       "firstCommit": "2025-12-17T05:45:49Z",
       "lastCommit": "2026-10-02T16:15:26Z",
       "phase": "Data Pipeline and Core Components",
-      "descriptionSource": "kept",
-      "descriptionGeneratedAt": "2026-06-18",
-      "descriptionModel": "cbai"
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-04",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "cbradio",
-      "description": "This GitHub repository, `cbradio`, focuses on developing and maintaining the CBApp, a Python-based application for managing and distributing content across various platforms, particularly focusing on the MCPA (Medium Capacity Marketing Application) server. The code includes features for email delivery, security, API management, and content distribution. It\u2019s a significant effort to improve the application\u2019s stability, functionality, and security.",
+      "description": "This repository manages political radio advertising rates, encompassing data ingestion, rate card creation and management, and reporting functionalities. It handles the processing of broadcast station information, including call signs and coverage areas, alongside the generation of rate cards for various political campaigns. The system incorporates AI-powered OCR to extract data from documents and provides APIs for accessing and manipulating this rate information.",
       "language": "Python",
       "commits": 920,
       "firstCommit": "2025-12-19T06:37:50Z",
       "lastCommit": "2026-09-28T06:28:11Z",
       "phase": "Data Pipeline and Core Components",
-      "descriptionSource": "kept",
-      "descriptionGeneratedAt": "2026-03-05",
-      "descriptionModel": "cbai"
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-04",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "RCI-Frontend",
@@ -9175,303 +9307,303 @@
     },
     {
       "name": "cbsurveys",
-      "description": "This GitHub repository, `cbsurveys`, is a project focused on maintaining and improving the core codebase for the sysforge platform. It includes code updates for various components across the server management system, particularly related to database management, image processing, and workflow automation. Recent commits focus on stability fixes, dependency management, and bug squashing.",
+      "description": "The cbsurveys repository is a Python-based API-only survey platform built using FastAPI, Pydantic, and DuckDB. It provides functionality for creating surveys and collecting responses, with an emphasis on aggregating data and supporting integrations like TripAdvisor reviews. The project utilizes fleet for pre-commit hooks and manages dependencies through pip.",
       "language": "Python",
       "commits": 124,
       "firstCommit": "2025-12-21T06:06:49Z",
       "lastCommit": "2026-09-28T06:28:24Z",
       "phase": "Data Pipeline and Core Components",
-      "descriptionSource": "kept",
-      "descriptionGeneratedAt": "2026-06-18",
-      "descriptionModel": "cbai"
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-04",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "cbinfra",
-      "description": "This GitHub repository, maintained by cbinfra, focuses on infrastructure updates and documentation for the CBApp project. It includes changes to configuration, service management, and documentation, primarily addressing recent commits related to the infrastructure and core functionalities of the CBApp. Key milestones identified include updates to service topology, mesh sidecar retirement, and the migration of services to the CBApp.",
+      "description": "This repository, named 'c', appears to be an infrastructure automation project focused on managing and deploying applications across various environments, primarily utilizing a fleet-based deployment system. It includes components for backups, monitoring, DNS management (through integration with Nginx), and potentially GPU resource protection. The core functionality revolves around automating the setup, configuration, and maintenance of these applications, likely within a cloud or hybrid environment.",
       "language": "Python",
       "commits": 384,
       "firstCommit": "2025-12-21T21:41:51Z",
       "lastCommit": "2026-09-30T04:28:12Z",
       "phase": "Data Pipeline and Core Components",
-      "descriptionSource": "kept",
-      "descriptionGeneratedAt": "2026-03-05",
-      "descriptionModel": "cbai"
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-04",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "cbfiles",
-      "description": "The cbfiles repository appears to be a Python project that provides various features for image and video processing, including vision inference, search, and media asset management. Recent commits have focused on improving performance, adding new features such as HEIC support, and enhancing compatibility with different platforms. The repository has also undergone domain migrations and refactorings.",
+      "description": "The cbfiles repository is a Python-based file management system that utilizes MinIO object storage and provides a CDN service. It wraps MinIO with signed URLs, allowing access to files through the `files/cdn.campaignbrain.dev` endpoint on port 32401, and includes features like usage tracking and AI-directed content indexing. The repository manages buckets, files, and their associated metadata, supporting various workflows including image tagging and search.",
       "language": "Python",
       "commits": 139,
       "firstCommit": "2025-12-22T17:44:17Z",
       "lastCommit": "2026-10-02T13:52:50Z",
       "phase": "Data Pipeline and Core Components",
-      "descriptionSource": "kept",
-      "descriptionGeneratedAt": "2026-03-22",
-      "descriptionModel": "cbai"
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-04",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "cbdocs",
-      "description": "The `cbdocs` repository is a tool focused on maintaining and updating documentation for various projects, particularly those related to API cataloging and service discovery. It continuously refreshes documentation for numerous projects, incorporating changes such as API catalog synchronization, inventory updates, and documentation improvements. The repository emphasizes automation through chore tasks like archiving and metadata updates.",
+      "description": "This repository contains the documentation for the Campaign Brain (CB) platform, a complex system likely involving data analysis and potentially intelligence gathering. The documentation covers various modules like CBOS, CBintel, and CBauth, along with infrastructure components, and provides instructions and specifications for developers and users. It utilizes a modern documentation platform based on MkDocs and incorporates automated documentation refresh processes.",
       "language": "Shell",
-      "commits": 341,
+      "commits": 342,
       "firstCommit": "2025-12-24T20:06:09Z",
-      "lastCommit": "2026-10-03T08:49:28Z",
+      "lastCommit": "2026-10-04T08:49:14Z",
       "phase": "Data Pipeline and Core Components",
-      "descriptionSource": "kept",
-      "descriptionGeneratedAt": "2026-03-05",
-      "descriptionModel": "cbai"
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-04",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "cbintel",
-      "description": "Qu\u00e9 es este repositorio de GitHub? El repositorio se centra en la optimizaci\u00f3n y mejora del c\u00f3digo espec\u00edfico relacionado con el proyecto Elections (2026). Los commits revelan un trabajo intensivo en tareas como la correcci\u00f3n de errores, la refactorizaci\u00f3n del c\u00f3digo, el manejo de datos y las pruebas.",
+      "description": "This repository, cbintel, is a software project focused on building a crawling and data extraction pipeline for various sources, primarily centered around election data. It incorporates OCR capabilities, vector storage for semantic search, and management of VPN clusters, with an emphasis on integrating AI models like CBAI into the workflow. The project has evolved from initial setup to include advanced features such as wireguard deployment and complex dependency mapping.",
       "language": "Python",
       "commits": 1359,
       "firstCommit": "2025-12-31T00:33:04Z",
       "lastCommit": "2026-09-30T05:24:34Z",
       "phase": "Core Infrastructure & API Development",
-      "descriptionSource": "kept",
-      "descriptionGeneratedAt": "2026-06-18",
-      "descriptionModel": "cbai"
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-04",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "cbproject",
-      "description": "Code Refactoring and Dependency Management** Recent activity has focused on improving the codebase through automated refinement tasks, including decommissioning service records. The repository also emphasizes a streamlined workflow for dependencies, bug tracking, and code security.",
+      "description": "The `cbproject` repository is a TypeScript project focused on generating executive reports and publications, likely related to a 'Campaign Brain Executive' system. The commits show an ongoing effort to maintain documentation through nightly refreshes, update the health page with service information, and implement features like Model Cards and AI Metering, alongside security improvements regarding package management.",
       "language": "TypeScript",
       "commits": 125,
       "firstCommit": "2025-12-31T22:45:20Z",
       "lastCommit": "2026-04-27T14:52:50Z",
       "phase": "Core Infrastructure & API Development",
-      "descriptionSource": "kept",
-      "descriptionGeneratedAt": "2026-06-18",
-      "descriptionModel": "cbai"
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-04",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "cbauth",
-      "description": "This GitHub repository, `cbauth`, focuses on updating and improving the core authentication library for a system called `campaignbrain.dev`. Recent commits highlight improvements to the documentation, error handling, and the overall architecture of the authentication flow. The repository includes changes to the `admin_ui` page, the `auth` module, and the overall project structure. It also addresses security vulnerabilities and improves maintainability through documentation updates and code style changes.",
+      "description": "The cbauth repository is an authentication service built with Python, utilizing JWTs for access tokens and group-based permissioning. It integrates with NGINX via the auth_request gate and employs a combination of SQLite and Redis for data storage, offering a flexible architecture. The service supports PIN gate authentication and provides features like tenant management and API key integration.",
       "language": "Python",
       "commits": 255,
       "firstCommit": "2026-01-02T03:19:11Z",
       "lastCommit": "2026-09-30T03:59:09Z",
       "phase": "Core Infrastructure & API Development",
-      "descriptionSource": "kept",
-      "descriptionGeneratedAt": "2026-03-05",
-      "descriptionModel": "cbai"
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-04",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "cbmesh",
-      "description": "The repository, `cbmesh`, is a Python project focused on improving the reliability and safety of message exchange through a decentralized messaging system. Recent commits emphasize improvements to the codebase\u2019s functionality, focusing heavily on security, caching, and message handling. The code prioritizes stability, robustness, and automation via webhook updates.",
+      "description": "The cbmesh repository is a Python project focused on creating a distributed WebSocket mesh proxy using FastAPI services, leveraging UDP discovery and API Cards. It facilitates the routing of traffic between services within a mesh network, likely for campaign brain applications as described in its GitHub description.",
       "language": "Python",
-      "commits": 131,
+      "commits": 132,
       "firstCommit": "2026-01-09T17:03:41Z",
-      "lastCommit": "2026-09-28T06:27:57Z",
+      "lastCommit": "2026-10-01T20:50:37Z",
       "phase": "Data Pipeline and Core Components",
-      "descriptionSource": "kept",
-      "descriptionGeneratedAt": "2026-06-18",
-      "descriptionModel": "cbai"
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-04",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "cbmaintain",
-      "description": "This GitHub repository is a comprehensive set of patches for the 'cb' project, focusing on improvements to its frontend, including bug fixes, refactoring, and performance enhancements.",
+      "description": "This repository manages the codebase for a complex software project, primarily focused on inventory management, audit processes, and documentation maintenance within a fleet of systems. It utilizes automated checks and snapshots to ensure data integrity and compliance with established standards, while also incorporating various tooling for security and development workflows.",
       "language": "Mermaid",
       "commits": 70,
       "firstCommit": "2026-01-14T21:39:09Z",
       "lastCommit": "2026-09-30T03:32:57Z",
       "phase": "Core Infrastructure & API Development",
-      "descriptionSource": "kept",
-      "descriptionGeneratedAt": "2026-06-18",
-      "descriptionModel": "cbai"
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-04",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "cbtest",
-      "description": "This GitHub repository, `cbtest`, is a Python test project focused on verifying the bootstrap API. Recent commits highlight bug fixes, updates to documentation and coding standards, and improved testing procedures for the API endpoints.",
+      "description": "The cbtest repository is a Python project created as a test for the bootstrap API. It includes documentation updates, tests for various endpoints (health, root, OpenAPI), and URL migrations related to nominate.ai and campaignbrain.dev. The project was initially set up with basic templates and directory structures.",
       "language": "Python",
       "commits": 11,
       "firstCommit": "2026-01-15T03:08:56Z",
       "lastCommit": "2026-03-06T13:49:27Z",
       "phase": "Core Infrastructure & API Development",
-      "descriptionSource": "kept",
-      "descriptionGeneratedAt": "2026-06-18",
-      "descriptionModel": "cbai"
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-04",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "cbsms",
-      "description": "The cbsms GitHub repository is a Python-based API for managing Ejoin SMS/MMS devices, focusing on streamlining communication and improving the API\u2019s structure. Recent commits include feature enhancements like webhook handling, documentation updates, and a migration to a standardized FastAPI framework. The repository is actively maintained with a focus on bug fixes, documentation, and ongoing development of core functionalities.",
+      "description": "The cbsms repository is a Python-based SMS Gateway API designed for use with Ejoin SMS/MMS devices. It provides functionality for handling incoming SMS messages, routing them based on rules, generating carrier delivery reports, and managing device status via webhooks. The project includes features related to number management, message metering, and integration with various messaging protocols like GoIP.",
       "language": "Python",
       "commits": 111,
       "firstCommit": "2026-01-16T21:25:04Z",
       "lastCommit": "2026-09-28T06:28:49Z",
       "phase": "Core Infrastructure & API Development",
-      "descriptionSource": "kept",
-      "descriptionGeneratedAt": "2026-03-05",
-      "descriptionModel": "cbai"
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-04",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "cbtor",
-      "description": "The repository developed infrastructure for WireGuard tunnel routing through distributed TOR routing, focusing on automation, stability, and efficiency. Recent commits include improvements to the codebase, documentation, and build processes.",
+      "description": "The cbtor repository implements a WireGuard-to-TOR tunnel infrastructure for distributing TOR routing, primarily focused on managing and monitoring the health of a TOR fleet. The project involves deploying and maintaining components related to load balancing, health checks, and API endpoints for observing the status of the TOR network.",
       "language": "Python",
       "commits": 66,
       "firstCommit": "2026-01-18T01:04:19Z",
       "lastCommit": "2026-09-28T06:28:50Z",
       "phase": "Nominate-AI Infrastructure & Development",
-      "descriptionSource": "kept",
-      "descriptionGeneratedAt": "2026-06-18",
-      "descriptionModel": "cbai"
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-04",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "cbmobile",
-      "description": "The cbmobile repository focuses on improving the Vite preview experience, specifically adding mobile.campaignbrain.dev support and refining the card view functionality. It also addresses bug fixes, streamlines workflows, and enhances the development environment with features like a dry-run flag and improved debugging tools. The repository also includes refactoring and documentation updates.",
+      "description": "The repository, cbmobile-web, is a Progressive Web App (PWA) designed for iOS Safari, focused on offline canvassing and data collection. It utilizes technologies like React/Vite, RxDB sync, and MapLibre GL to provide an interactive mapping experience with survey responses, and incorporates a fleet baseline infrastructure managed by pre-commit hooks. The project has evolved from initial core infrastructure and walkbook functionality to include features like persistent synced survey responses, inline survey panels, and a brand style guide.",
       "language": "TypeScript",
       "commits": 258,
       "firstCommit": "2026-01-18T04:44:02Z",
       "lastCommit": "2026-09-28T06:27:58Z",
       "phase": "Nominate-AI Infrastructure & Development",
-      "descriptionSource": "kept",
-      "descriptionGeneratedAt": "2026-03-05",
-      "descriptionModel": "cbai"
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-04",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "cbuserguide",
-      "description": "Automated User Guide Generator for Campaign Brain Web Applications** The repository `cbuserguide` is developed by CBUserGuide to automatically generate user guides for the Campaign Brain web applications. It employs Python and utilizes a GitHub workflow system, frequently incorporating code updates and bug fixes. Recent commits focus on improving the generator\u2019s functionality through regular updates, maintenance of documentation and configuration, and enhancing the overall codebase. The repository includes features such as regenerate cbcli-reference (weekly), add 2026-06-06 maintenance reports & new documentation sections, automate dependency management with `chore` commands like dropping unused packages and pruning dependencies to enhance code cleanliness. The team also performs regular commits to ensure the project\u2019s stability via a schedule of actions and updates.",
+      "description": "The cbuserguide repository is an automated user guide generator for Campaign Brain web applications, primarily using Python and the cbcli command-line interface. It focuses on generating reference and user guides from various sources including specifications and documentation, with a strong emphasis on maintaining and updating these guides through regular regeneration cycles and incorporating new features like screenshots and system integration.",
       "language": "Python",
       "commits": 79,
       "firstCommit": "2026-01-20T23:28:03Z",
       "lastCommit": "2026-09-30T03:32:59Z",
       "phase": "Nominate-AI Infrastructure & Development",
-      "descriptionSource": "kept",
-      "descriptionGeneratedAt": "2026-06-18",
-      "descriptionModel": "cbai"
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-04",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "cbemail",
-      "description": "The `cbemail` GitHub repository provides a Python API for managing IMAP/SMTP operations, focusing on enhancing functionality through custom tools and code improvements. Recent commits include a migration to a standardized FastAPI pattern, documentation updates, and a maintenance cycle focused on improving code quality and maintainability. The repository is designed to be a headless email client API.",
+      "description": "This repository implements a command-line email client named cbemail, designed to interact with various mail servers using IMAP and SMTP protocols. It provides features for sending, receiving, listing, and managing emails, including attachment support and customizable MCP (Mail Command Protocol) tools. The project utilizes FastAPI for its API and emphasizes maintainability through automated testing and pre-commit hooks.",
       "language": "Python",
       "commits": 69,
       "firstCommit": "2026-01-22T18:50:39Z",
       "lastCommit": "2026-09-30T02:35:32Z",
       "phase": "Nominate-AI Infrastructure & Development",
-      "descriptionSource": "kept",
-      "descriptionGeneratedAt": "2026-03-05",
-      "descriptionModel": "cbai"
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-04",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "cbindex",
-      "description": "The CBIndex GitHub repository is a Python FastAPI wrapper designed for efficient vectorless RAG document indexing. It focuses on workspace management, AI abstraction, and OCR integration, with a strong emphasis on documentation and testing. Recent commits highlight improvements to the core functionality and comprehensive documentation, leading to a more robust and well-documented system.",
+      "description": "The cbindex repository is a Python software project, a FastAPI wrapper for PageIndex, which provides vectorless RAG document indexing and workspace management. It has evolved from initial development focused on core functionality to include features like AI abstraction, OCR integration, and enhanced documentation, alongside ongoing maintenance tasks.",
       "language": "Python",
       "commits": 69,
       "firstCommit": "2026-01-23T01:44:28Z",
       "lastCommit": "2026-09-28T06:27:40Z",
       "phase": "Nominate-AI Infrastructure & Development",
-      "descriptionSource": "kept",
-      "descriptionGeneratedAt": "2026-03-05",
-      "descriptionModel": "cbai"
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-04",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "cbtiles",
-      "description": "This GitHub repository contains a C++ library focused on caching and prefetching, specifically for Web application tiles (like those used in systems like SysForge). It\u2019s primarily written in Rust, with significant focus on performance optimizations through smart refactoring. The code includes features for smart merging, dependency management, hardening, and automated testing.",
+      "description": "This repository is a tile caching proxy, primarily focused on generating CBtiles (compressed binary tiles) for CartoDB's raster data. It utilizes a pre-commit hook system to enforce code quality and maintainability, manages dependencies through a fleet baseline, and includes features like monthly basemap refreshes and cache performance metrics. The project has undergone significant migration from older technologies like fetch paths to more modern approaches using CBApp and shared libraries.",
       "language": "Python",
       "commits": 67,
       "firstCommit": "2026-01-25T18:46:34Z",
       "lastCommit": "2026-09-28T06:28:28Z",
       "phase": "Nominate-AI Infrastructure & Development",
-      "descriptionSource": "kept",
-      "descriptionGeneratedAt": "2026-06-18",
-      "descriptionModel": "cbai"
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-04",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "cbgeo",
-      "description": "The `cbgeo` GitHub repository focuses on building and maintaining a Nominatim-based campaign brain geolocation service, using Python. Recent commits include improvements to the deployment process, documentation updates, and bug fixes related to routing, security, and API infrastructure. It\u2019s actively maintained with frequent changes and reflects a focus on stability and functionality.",
+      "description": "The cbgeo repository is a Python-based service for geocoding, likely utilizing the Nominatim API. It appears to be focused on expanding geographic coverage and improving its deployment and operational stability through automated processes and dependency management. The project includes documentation generation and support for various data models.",
       "language": "Python",
       "commits": 57,
       "firstCommit": "2026-01-26T00:04:25Z",
       "lastCommit": "2026-09-28T06:27:35Z",
       "phase": "Campaign Brain Development Pipeline",
-      "descriptionSource": "kept",
-      "descriptionGeneratedAt": "2026-06-18",
-      "descriptionModel": "cbai"
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-04",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "cbmaps",
-      "description": "This GitHub repository focuses on improving the stability, security, and maintainability of a Python project. It includes fixes for various issues related to code quality, bug fixing, testing, and documentation. The core activity involves routine commits, bug fixes within existing features, and improvements across different areas such as dependency management, configuration updates, and documentation enhancements. Specific milestones identified are the addition of new features (like 'docs' fields), address of specific vulnerabilities, and streamlining of the code base.",
+      "description": "This repository develops a service for generating interactive map posters, primarily focused on city maps. It utilizes technologies like Leaflet and Bun to render these maps dynamically, incorporating features such as cbtiles data and automatic mesh registration. The project maintains a robust deployment pipeline with pre-commit hooks and continuous integration practices.",
       "language": "Python",
       "commits": 66,
       "firstCommit": "2026-01-26T16:39:27Z",
       "lastCommit": "2026-09-28T06:27:53Z",
       "phase": "Campaign Brain Development Pipeline",
-      "descriptionSource": "kept",
-      "descriptionGeneratedAt": "2026-06-18",
-      "descriptionModel": "cbai"
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-04",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "cbcli",
-      "description": "A unified CLI for Nominate AI services, incorporating features like zero-perm spec fetch, leak-safe token bootstrapping, and improved notification channels. Recent commits focus on usability enhancements, bug fixes, and adding core components to the system's functionality.",
+      "description": "cbcli is a unified command-line interface (CLI) designed for interacting with Nominate AI services, modeled after the AWS CLI. It provides access to various functionalities including fleet management, data analysis, user authentication, and service registry operations. The project has evolved from its initial core functionality to include advanced features like multi-DC routing, OAuth2/Bearer authentication support, and a comprehensive test suite.",
       "language": "Python",
       "commits": 218,
       "firstCommit": "2026-01-26T17:26:41Z",
       "lastCommit": "2026-10-02T19:36:02Z",
       "phase": "Campaign Brain Development Pipeline",
-      "descriptionSource": "kept",
-      "descriptionGeneratedAt": "2026-06-18",
-      "descriptionModel": "cbai"
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-04",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "cbcdn",
-      "description": "Campaign Brain self-hosted CDN assets",
+      "description": "The cb-cdn repository is a software project focused on providing a content delivery network (CDN) for campaign branding assets, primarily images and icons. It offers self-hosting capabilities with support for various technologies like SVG fonts and DuckDB-Wasm, allowing users to manage their brand assets directly and reduce reliance on external services. The repository includes documentation, maintenance cycles, and updates to the CDN infrastructure.",
       "language": "JavaScript",
       "commits": 75,
       "firstCommit": "2026-01-28T19:25:59Z",
       "lastCommit": "2026-09-18T14:09:49Z",
       "phase": "Campaign Brain Development Pipeline",
-      "descriptionSource": "github",
-      "descriptionGeneratedAt": null,
-      "descriptionModel": null
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-04",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "cbcore",
-      "description": "Core library for Campaign Brain FastAPI services, focused on simplifying the API lifecycle and bolstering MCP functionalities. Recent changes include systemd sd_notify integration, enhanced MCP auth with default settings, improved documentation, and updated modules for crucial features like permission-based access control and automated schema updates.",
+      "description": "The cbcore repository is a Python library providing core services for Campaign Brain, utilizing FastAPI. It includes features like authentication (OAuth 2.1), MCP access control, and mesh integration, along with configuration management and health checking capabilities. The library's development has focused on improving stability, security, and extensibility through various updates and additions.",
       "language": "Python",
       "commits": 34,
       "firstCommit": "2026-01-29T18:27:34Z",
       "lastCommit": "2026-03-15T01:50:54Z",
       "phase": "Campaign Brain Development Pipeline",
-      "descriptionSource": "kept",
-      "descriptionGeneratedAt": "2026-06-18",
-      "descriptionModel": "cbai"
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-04",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "cblinks",
-      "description": "This GitHub repository, cblinks, is a FastAPI URL shortener service developed by the team. It\u2019s actively maintained with recent commits focusing on bug fixes, documentation improvements, and architectural changes. The repository includes a migration to a core API and initial implementation, demonstrating ongoing development and feature expansion.",
+      "description": "The cblinks repository is a FastAPI URL shortening service, initially implemented in Python and deployed with systemd services and nginx. The project includes features like route-level authorization (cbauth), configuration management through environment variables, and documentation updates to reflect these changes. It has evolved from an initial implementation to include CLI functionality and automated dependency management.",
       "language": "Python",
       "commits": 73,
       "firstCommit": "2026-01-31T01:15:27Z",
       "lastCommit": "2026-09-28T06:27:48Z",
       "phase": "Campaign Brain Development Pipeline",
-      "descriptionSource": "kept",
-      "descriptionGeneratedAt": "2026-03-05",
-      "descriptionModel": "cbai"
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-04",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "cbscout",
-      "description": "The cbscout GitHub repository is a Python-based agent memory and knowledge management service focused on automating the extraction of facts and summaries from various data sources. Recent commits highlight improvements to the documentation, architecture, memory system, and integration with a large language model (LLM). The project includes significant updates to the documentation, focusing on developer-friendly explanations and visual aids, and a core architectural overhaul.",
+      "description": "The cbscout repository is a Python-based service, Campaign Brain Scout, designed for agent memory and knowledge management within a fleet environment. It utilizes a layered memory system with DuckDB storage and incorporates LLM integration for fact extraction and summarization. The codebase has evolved from an initial FastAPI project to include pre-commit hooks, dependency management, and deployment scripts.",
       "language": "Python",
       "commits": 96,
       "firstCommit": "2026-01-31T02:31:31Z",
       "lastCommit": "2026-09-28T06:28:14Z",
       "phase": "Campaign Brain Development Pipeline",
-      "descriptionSource": "kept",
-      "descriptionGeneratedAt": "2026-03-05",
-      "descriptionModel": "cbai"
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-04",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "cboverseer",
-      "description": "Campaign Brain System Manager - Distributed monitoring and self-healing infrastructure",
+      "description": "This repository implements Campaign Brain, a distributed monitoring and self-healing infrastructure for smart home devices, primarily focusing on controlling lighting via OpenRGB. It utilizes a combination of agents, a central collector, and AI-powered diagnostics to proactively identify and resolve issues with connected devices, offering automated remediation capabilities and alerting through SMS.",
       "language": "Python",
       "commits": 237,
       "firstCommit": "2026-02-02T00:35:45Z",
       "lastCommit": "2026-09-30T15:23:24Z",
       "phase": "Campaign Brain Ecosystem",
-      "descriptionSource": "github",
-      "descriptionGeneratedAt": null,
-      "descriptionModel": null
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-04",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "vip-frontend",
@@ -9487,39 +9619,39 @@
     },
     {
       "name": "cbwebhook",
-      "description": "The cbwebhook GitHub repository is a Python project focused on providing a webhooks ingestion service. It's actively developed with recent commits highlighting improvements to the core functionality, including error handling (restart on webhook), Google OIDC JWT support, and improved data consistency through validation and verification. Recent features include a new BoldSign webhook receiver, revisions to the `doc` repository, and maintenance tasks focused improving security, streamlines existing code, and bug fixes.",
+      "description": "The cbwebhook repository is a Python-based webhook ingestion service designed to process incoming webhooks, likely for data extraction and integration. It includes features like filtering events by provider, tenant registration, API endpoints for data extraction with authentication, and support for various integrations such as Typeform. The project has evolved from an initial scaffold to include deployment scripts, dependency management, and documentation.",
       "language": "Python",
       "commits": 94,
       "firstCommit": "2026-02-06T00:40:11Z",
       "lastCommit": "2026-09-28T06:28:36Z",
       "phase": "Campaign Brain Ecosystem",
-      "descriptionSource": "kept",
-      "descriptionGeneratedAt": "2026-06-18",
-      "descriptionModel": "cbai"
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-04",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "cbissues",
-      "description": "The cbissues repository is an issue tracking dashboard built with Python, aiming to provide a centralized system for managing and tracking issues. The project has undergone various refactorings, fixes, and feature additions, including integration with MCP (Campaign Brain) and sysadmin operations handbook. Recent changes have focused on improving the user experience, security, and functionality of the application.",
+      "description": "This repository contains the codebase for a Claude.ai project, specifically focusing on integrating with GitHub Issues and providing an MCP (Marching Orders) server. The project utilizes FastAPI for its API and incorporates features like webhook handling, dependency management via Ruff, and documentation generation to support the Claude.ai service.",
       "language": "Python",
       "commits": 56,
       "firstCommit": "2026-02-06T00:40:12Z",
       "lastCommit": "2026-09-28T06:27:43Z",
       "phase": "Campaign Brain Ecosystem",
-      "descriptionSource": "kept",
-      "descriptionGeneratedAt": "2026-03-22",
-      "descriptionModel": "cbai"
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-04",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "cbpulse",
-      "description": "Qu\u00e9 es el repositorio CBPulse? Es un sistema de monitoreo de paneles de anuncios de Python que ofrece una herramienta real del tiempo para analizar la salud y las actividades en los paneles.",
+      "description": "The cbpulse repository is a Python-based system designed to provide real-time health and activity monitoring for a hospitality platform, specifically focusing on campaign brain pulse. It integrates with various external services like Clover, Homebase, and Cloudbeds to collect and analyze data related to bookings, guest requests, financial transactions, and operational workflows, ultimately delivering insights through a dashboard.",
       "language": "Python",
       "commits": 951,
       "firstCommit": "2026-02-06T17:48:36Z",
       "lastCommit": "2026-10-01T18:55:29Z",
       "phase": "Campaign Brain Ecosystem",
-      "descriptionSource": "kept",
-      "descriptionGeneratedAt": "2026-06-18",
-      "descriptionModel": "cbai"
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-04",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "cbvpn",
@@ -9585,9 +9717,9 @@
       "name": "cbexecutive",
       "description": "CB Executive Summaries",
       "language": "Python",
-      "commits": 241,
+      "commits": 242,
       "firstCommit": "2026-02-20T15:15:58Z",
-      "lastCommit": "2026-10-02T09:54:44Z",
+      "lastCommit": "2026-10-03T09:54:32Z",
       "phase": "Development & Iteration of Nominate-AI Core Components",
       "descriptionSource": "github",
       "descriptionGeneratedAt": null,
@@ -9657,9 +9789,9 @@
       "name": "cbtemplates",
       "description": "A template repository designed for Campaign Brain services, focusing on deployment and infrastructure management. Recent commits indicate a focus on automating key tasks through hooks and features like auto-updates, staging patterns, and smoke tests.",
       "language": "TypeScript",
-      "commits": 316,
+      "commits": 317,
       "firstCommit": "2026-02-23T15:19:26Z",
-      "lastCommit": "2026-09-30T03:16:27Z",
+      "lastCommit": "2026-10-04T05:55:10Z",
       "phase": "Core Infrastructure & Tooling",
       "descriptionSource": "kept",
       "descriptionGeneratedAt": "2026-06-18",
@@ -9669,9 +9801,9 @@
       "name": "cbcron",
       "description": "Configurable scheduled task engine for cbcron registry updates and snapshots, focusing on refreshing data from the source and managing radio stations to ensure consistent functionality.",
       "language": "Python",
-      "commits": 327,
+      "commits": 328,
       "firstCommit": "2026-02-26T16:28:21Z",
-      "lastCommit": "2026-10-02T11:45:47Z",
+      "lastCommit": "2026-10-03T11:45:35Z",
       "phase": "Core Infrastructure & Tooling",
       "descriptionSource": "kept",
       "descriptionGeneratedAt": "2026-06-18",
@@ -9765,9 +9897,9 @@
       "name": "infrastructure",
       "description": "Focuses on enhancing core functionality, fixing errors, improving stability, and incorporating new features for the CJ client.",
       "language": "Python",
-      "commits": 1743,
+      "commits": 1751,
       "firstCommit": "2026-03-12T22:38:20Z",
-      "lastCommit": "2026-10-03T03:21:33Z",
+      "lastCommit": "2026-10-04T02:20:25Z",
       "phase": "Nominate-AI Core Development",
       "descriptionSource": "kept",
       "descriptionGeneratedAt": "2026-06-18",
@@ -9775,15 +9907,15 @@
     },
     {
       "name": "cbos",
-      "description": "The cbos repository appears to be a Python project that has undergone significant development and maintenance over several months, with recent commits focusing on improving code quality, adding new features, and updating dependencies. The repository has seen multiple major releases (v0.3.1, v0.4.0, v0.5.0) and several minor updates, indicating a steady pace of development and refinement. Overall, the project seems to be centered around building a mesh-based system with various features and tools.",
+      "description": "The cbos repository is a Python-based orchestration harness for Claude, incorporating a session manager and a pattern miner (the Coding Ninja runtime). It manages Claude sessions via a TS socket (:32516) and utilizes fleet tools for deployment and maintenance. The project focuses on automating the execution of coding tasks within the Claude environment, with an emphasis on controlled deployments and testing.",
       "language": "Python",
       "commits": 72,
       "firstCommit": "2026-03-15T22:42:08Z",
       "lastCommit": "2026-09-28T06:28:44Z",
       "phase": "Core Infrastructure & API Development",
-      "descriptionSource": "kept",
-      "descriptionGeneratedAt": "2026-03-22",
-      "descriptionModel": "cbai"
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-04",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "cbea",
@@ -9837,9 +9969,9 @@
       "name": "cbloom",
       "description": "GitHub repository documentation for an HTML/JavaScript framework focused on creating interactive and visually rich user interfaces. It covers development best practices, code organization, and design principles to create responsive web applications.",
       "language": "HTML",
-      "commits": 3284,
+      "commits": 3285,
       "firstCommit": "2026-03-27T14:52:52Z",
-      "lastCommit": "2026-10-02T01:56:32Z",
+      "lastCommit": "2026-10-02T13:25:36Z",
       "phase": "Operational Infrastructure and Tooling",
       "descriptionSource": "kept",
       "descriptionGeneratedAt": "2026-06-18",
@@ -9945,9 +10077,9 @@
       "name": "cbbanking",
       "description": "cbbanking_campaignbrain integrates with Huntington\u2019s SFTP client for banking, specifically focusing on the integration between cbbanking and its friends. Recent commits prioritize streamlining the codebase through refactorings and improvements to the `db` module, including a focus on data persistence and auditing.",
       "language": "Python",
-      "commits": 170,
+      "commits": 172,
       "firstCommit": "2026-04-21T17:54:44Z",
-      "lastCommit": "2026-10-02T16:12:05Z",
+      "lastCommit": "2026-10-03T20:59:36Z",
       "phase": "Data & Infrastructure Pipeline - Core Functionality",
       "descriptionSource": "kept",
       "descriptionGeneratedAt": "2026-06-18",
@@ -10380,7 +10512,7 @@
       "commits": 18,
       "firstCommit": "2026-07-18T22:17:41Z",
       "lastCommit": "2026-09-28T06:28:13Z",
-      "phase": "Phase 20",
+      "phase": "Early Scanner Development",
       "descriptionSource": "github",
       "descriptionGeneratedAt": null,
       "descriptionModel": null
@@ -10392,7 +10524,7 @@
       "commits": 22,
       "firstCommit": "2026-07-19T01:56:30Z",
       "lastCommit": "2026-09-28T06:28:32Z",
-      "phase": "Phase 20",
+      "phase": "Early Scanner Development",
       "descriptionSource": "github",
       "descriptionGeneratedAt": null,
       "descriptionModel": null
@@ -10404,19 +10536,19 @@
       "commits": 169,
       "firstCommit": "2026-07-20T01:07:47Z",
       "lastCommit": "2026-09-27T17:05:34Z",
-      "phase": "Phase 20",
+      "phase": "Early Scanner Development",
       "descriptionSource": "commits",
       "descriptionGeneratedAt": null,
       "descriptionModel": null
     },
     {
       "name": "cbelections",
-      "description": "Commits: docs(sitreps): 09-19 and 09-21; test(prospecting): Nevada fixtures; chore(pre-commit): bump to fleet baseline (ruff v0.16.9, hooks v6.0.0); data(repairs): the officeholder join's rollback file, written before the live run (cbapex#21); fix(prospecting): officeholder join precision guards found by the dry run (cbapex#21); feat(prospecting): the Open States current-legislator join, dry-run first (cbapex#21 step 3)",
+      "description": "Commits: feat(prospecting): fec_bulk adapter \u2014 federal candidates (USS, USH-NN) from the FEC candidate master, level=federal, stage=general (cbelections#135); feat(engine): general-election boards MI-GEN, GA-GEN, TX-GEN, IA-GEN; party token GEN, party_tag, suffix-free labels (cbelections#136, infrastructure#336 \u00a73 item 10); feat(engine): official-vs-reference disagreement table: disagreements(), GET /{channel}/disagreement, election_night action=disagreement (infrastructure#336 \u00a73 item 5); feat(engine): per-state projection: county roster + office words from the channel, reference archive from channel yaml; county rosters for MI/GA/TX/IA (infrastructure#336 \u00a73 item 3); feat(channels): mi/ga/tx 2026 general channel files, statewide + US House on glass (infrastructure#336 \u00a73 items 6, 10)",
       "language": "Python",
-      "commits": 790,
+      "commits": 797,
       "firstCommit": "2026-07-20T18:07:13Z",
-      "lastCommit": "2026-09-30T03:33:00Z",
-      "phase": "Phase 20",
+      "lastCommit": "2026-10-01T12:46:14Z",
+      "phase": "Early Scanner Development",
       "descriptionSource": "commits",
       "descriptionGeneratedAt": null,
       "descriptionModel": null
@@ -10428,7 +10560,7 @@
       "commits": 24,
       "firstCommit": "2026-07-21T04:47:02Z",
       "lastCommit": "2026-09-28T06:27:52Z",
-      "phase": "Phase 20",
+      "phase": "Early Scanner Development",
       "descriptionSource": "commits",
       "descriptionGeneratedAt": null,
       "descriptionModel": null
@@ -10440,7 +10572,7 @@
       "commits": 20,
       "firstCommit": "2026-07-21T04:50:29Z",
       "lastCommit": "2026-09-28T06:28:20Z",
-      "phase": "Phase 20",
+      "phase": "Early Scanner Development",
       "descriptionSource": "commits",
       "descriptionGeneratedAt": null,
       "descriptionModel": null
@@ -10452,7 +10584,7 @@
       "commits": 33,
       "firstCommit": "2026-07-21T04:53:30Z",
       "lastCommit": "2026-09-28T06:28:29Z",
-      "phase": "Phase 20",
+      "phase": "Early Scanner Development",
       "descriptionSource": "commits",
       "descriptionGeneratedAt": null,
       "descriptionModel": null
@@ -10464,7 +10596,7 @@
       "commits": 11,
       "firstCommit": "2026-07-22T05:30:21Z",
       "lastCommit": "2026-08-28T16:59:45Z",
-      "phase": "Phase 21",
+      "phase": "Nominate AI Development Sprint",
       "descriptionSource": "commits",
       "descriptionGeneratedAt": null,
       "descriptionModel": null
@@ -10476,7 +10608,7 @@
       "commits": 3,
       "firstCommit": "2026-07-24T18:46:39Z",
       "lastCommit": "2026-08-06T16:33:33Z",
-      "phase": "Phase 21",
+      "phase": "Nominate AI Development Sprint",
       "descriptionSource": "github",
       "descriptionGeneratedAt": null,
       "descriptionModel": null
@@ -10488,7 +10620,7 @@
       "commits": 5,
       "firstCommit": "2026-07-24T20:57:15Z",
       "lastCommit": "2026-08-28T02:00:36Z",
-      "phase": "Phase 21",
+      "phase": "Nominate AI Development Sprint",
       "descriptionSource": "commits",
       "descriptionGeneratedAt": null,
       "descriptionModel": null
@@ -10500,7 +10632,7 @@
       "commits": 4,
       "firstCommit": "2026-07-30T17:08:40Z",
       "lastCommit": "2026-10-03T02:37:53Z",
-      "phase": "Phase 21",
+      "phase": "Nominate AI Development Sprint",
       "descriptionSource": "github",
       "descriptionGeneratedAt": null,
       "descriptionModel": null
@@ -10512,7 +10644,7 @@
       "commits": 38,
       "firstCommit": "2026-08-04T19:34:10Z",
       "lastCommit": "2026-10-03T02:38:39Z",
-      "phase": "Phase 21",
+      "phase": "Nominate AI Development Sprint",
       "descriptionSource": "github",
       "descriptionGeneratedAt": null,
       "descriptionModel": null
@@ -10524,7 +10656,7 @@
       "commits": 236,
       "firstCommit": "2026-08-06T21:49:29Z",
       "lastCommit": "2026-10-01T20:45:05Z",
-      "phase": "Phase 21",
+      "phase": "Nominate AI Development Sprint",
       "descriptionSource": "github",
       "descriptionGeneratedAt": null,
       "descriptionModel": null
@@ -10536,7 +10668,7 @@
       "commits": 227,
       "firstCommit": "2026-08-10T19:49:11Z",
       "lastCommit": "2026-10-03T02:38:56Z",
-      "phase": "Phase 21",
+      "phase": "Nominate AI Development Sprint",
       "descriptionSource": "github",
       "descriptionGeneratedAt": null,
       "descriptionModel": null
@@ -10548,7 +10680,7 @@
       "commits": 14,
       "firstCommit": "2026-08-14T14:38:21Z",
       "lastCommit": "2026-10-03T02:56:10Z",
-      "phase": "Phase 22",
+      "phase": "Nominate-AI Development Sprint",
       "descriptionSource": "commits",
       "descriptionGeneratedAt": null,
       "descriptionModel": null
@@ -10560,7 +10692,7 @@
       "commits": 4,
       "firstCommit": "2026-08-14T19:17:16Z",
       "lastCommit": "2026-08-28T17:01:26Z",
-      "phase": "Phase 22",
+      "phase": "Nominate-AI Development Sprint",
       "descriptionSource": "commits",
       "descriptionGeneratedAt": null,
       "descriptionModel": null
@@ -10572,7 +10704,7 @@
       "commits": 474,
       "firstCommit": "2026-08-15T17:21:15Z",
       "lastCommit": "2026-09-30T03:16:01Z",
-      "phase": "Phase 22",
+      "phase": "Nominate-AI Development Sprint",
       "descriptionSource": "github",
       "descriptionGeneratedAt": null,
       "descriptionModel": null
@@ -10584,7 +10716,7 @@
       "commits": 319,
       "firstCommit": "2026-08-17T00:35:15Z",
       "lastCommit": "2026-09-30T03:16:05Z",
-      "phase": "Phase 22",
+      "phase": "Nominate-AI Development Sprint",
       "descriptionSource": "kept",
       "descriptionGeneratedAt": "2026-06-18",
       "descriptionModel": "cbai"
@@ -10596,7 +10728,7 @@
       "commits": 374,
       "firstCommit": "2026-08-17T00:35:29Z",
       "lastCommit": "2026-09-30T03:15:55Z",
-      "phase": "Phase 22",
+      "phase": "Nominate-AI Development Sprint",
       "descriptionSource": "github",
       "descriptionGeneratedAt": null,
       "descriptionModel": null
@@ -10608,7 +10740,7 @@
       "commits": 825,
       "firstCommit": "2026-08-18T17:07:19Z",
       "lastCommit": "2026-10-02T16:12:09Z",
-      "phase": "Phase 22",
+      "phase": "Nominate-AI Development Sprint",
       "descriptionSource": "github",
       "descriptionGeneratedAt": null,
       "descriptionModel": null
@@ -10620,7 +10752,7 @@
       "commits": 209,
       "firstCommit": "2026-08-19T18:39:25Z",
       "lastCommit": "2026-09-30T19:08:57Z",
-      "phase": "Phase 22",
+      "phase": "Nominate-AI Development Sprint",
       "descriptionSource": "github",
       "descriptionGeneratedAt": null,
       "descriptionModel": null
@@ -10632,7 +10764,7 @@
       "commits": 3,
       "firstCommit": "2026-08-19T18:39:47Z",
       "lastCommit": "2026-08-28T02:02:23Z",
-      "phase": "Phase 23",
+      "phase": "Campaign Brain Initial Development",
       "descriptionSource": "github",
       "descriptionGeneratedAt": null,
       "descriptionModel": null
@@ -10641,10 +10773,10 @@
       "name": "cbrural",
       "description": "Rural AM.FM. on the Apex frame. Port 32295 @ rural.campaignbrain.dev.",
       "language": "TypeScript",
-      "commits": 660,
+      "commits": 662,
       "firstCommit": "2026-08-19T19:48:12Z",
-      "lastCommit": "2026-10-01T00:56:06Z",
-      "phase": "Phase 23",
+      "lastCommit": "2026-10-04T01:09:06Z",
+      "phase": "Campaign Brain Initial Development",
       "descriptionSource": "github",
       "descriptionGeneratedAt": null,
       "descriptionModel": null
@@ -10656,7 +10788,7 @@
       "commits": 370,
       "firstCommit": "2026-08-20T12:55:03Z",
       "lastCommit": "2026-10-02T13:40:29Z",
-      "phase": "Phase 23",
+      "phase": "Campaign Brain Initial Development",
       "descriptionSource": "commits",
       "descriptionGeneratedAt": null,
       "descriptionModel": null
@@ -10668,7 +10800,7 @@
       "commits": 339,
       "firstCommit": "2026-08-20T16:06:55Z",
       "lastCommit": "2026-09-30T03:28:14Z",
-      "phase": "Phase 23",
+      "phase": "Campaign Brain Initial Development",
       "descriptionSource": "github",
       "descriptionGeneratedAt": null,
       "descriptionModel": null
@@ -10680,7 +10812,7 @@
       "commits": 265,
       "firstCommit": "2026-08-20T18:02:26Z",
       "lastCommit": "2026-09-30T03:15:58Z",
-      "phase": "Phase 23",
+      "phase": "Campaign Brain Initial Development",
       "descriptionSource": "github",
       "descriptionGeneratedAt": null,
       "descriptionModel": null
@@ -10692,7 +10824,7 @@
       "commits": 41,
       "firstCommit": "2026-08-21T00:50:45Z",
       "lastCommit": "2026-10-03T02:37:55Z",
-      "phase": "Phase 23",
+      "phase": "Campaign Brain Initial Development",
       "descriptionSource": "github",
       "descriptionGeneratedAt": null,
       "descriptionModel": null
@@ -10704,7 +10836,7 @@
       "commits": 1,
       "firstCommit": "2026-08-21T19:02:17Z",
       "lastCommit": "2026-08-21T19:02:17Z",
-      "phase": "Phase 23",
+      "phase": "Campaign Brain Initial Development",
       "descriptionSource": "none",
       "descriptionGeneratedAt": null,
       "descriptionModel": null
@@ -10716,7 +10848,7 @@
       "commits": 260,
       "firstCommit": "2026-08-22T05:55:08Z",
       "lastCommit": "2026-09-30T03:15:33Z",
-      "phase": "Phase 24",
+      "phase": "Victory Text Development",
       "descriptionSource": "github",
       "descriptionGeneratedAt": null,
       "descriptionModel": null
@@ -10728,7 +10860,7 @@
       "commits": 438,
       "firstCommit": "2026-08-22T05:55:08Z",
       "lastCommit": "2026-09-30T03:15:47Z",
-      "phase": "Phase 24",
+      "phase": "Victory Text Development",
       "descriptionSource": "github",
       "descriptionGeneratedAt": null,
       "descriptionModel": null
@@ -10740,7 +10872,7 @@
       "commits": 360,
       "firstCommit": "2026-08-24T22:34:04Z",
       "lastCommit": "2026-10-01T20:36:59Z",
-      "phase": "Phase 24",
+      "phase": "Victory Text Development",
       "descriptionSource": "github",
       "descriptionGeneratedAt": null,
       "descriptionModel": null
@@ -10752,7 +10884,7 @@
       "commits": 522,
       "firstCommit": "2026-08-26T19:19:03Z",
       "lastCommit": "2026-10-02T17:03:25Z",
-      "phase": "Phase 24",
+      "phase": "Victory Text Development",
       "descriptionSource": "commits",
       "descriptionGeneratedAt": null,
       "descriptionModel": null
@@ -10764,7 +10896,7 @@
       "commits": 93,
       "firstCommit": "2026-08-28T21:57:31Z",
       "lastCommit": "2026-09-29T04:15:03Z",
-      "phase": "Phase 24",
+      "phase": "Victory Text Development",
       "descriptionSource": "github",
       "descriptionGeneratedAt": null,
       "descriptionModel": null
@@ -10776,7 +10908,7 @@
       "commits": 24,
       "firstCommit": "2026-08-31T14:59:23Z",
       "lastCommit": "2026-10-03T02:39:46Z",
-      "phase": "Phase 24",
+      "phase": "Victory Text Development",
       "descriptionSource": "github",
       "descriptionGeneratedAt": null,
       "descriptionModel": null
@@ -10788,7 +10920,7 @@
       "commits": 157,
       "firstCommit": "2026-09-01T16:54:06Z",
       "lastCommit": "2026-09-30T03:15:44Z",
-      "phase": "Phase 24",
+      "phase": "Victory Text Development",
       "descriptionSource": "commits",
       "descriptionGeneratedAt": null,
       "descriptionModel": null
@@ -10800,7 +10932,7 @@
       "commits": 170,
       "firstCommit": "2026-09-03T12:12:45Z",
       "lastCommit": "2026-09-30T03:16:15Z",
-      "phase": "Phase 25",
+      "phase": "Initial Kit Development",
       "descriptionSource": "commits",
       "descriptionGeneratedAt": null,
       "descriptionModel": null
@@ -10812,7 +10944,7 @@
       "commits": 160,
       "firstCommit": "2026-09-06T16:10:34Z",
       "lastCommit": "2026-09-30T03:15:37Z",
-      "phase": "Phase 25",
+      "phase": "Initial Kit Development",
       "descriptionSource": "commits",
       "descriptionGeneratedAt": null,
       "descriptionModel": null
@@ -10824,33 +10956,32 @@
       "commits": 146,
       "firstCommit": "2026-09-23T14:19:16Z",
       "lastCommit": "2026-09-30T03:15:51Z",
-      "phase": "Phase 25",
+      "phase": "Initial Kit Development",
       "descriptionSource": "commits",
       "descriptionGeneratedAt": null,
       "descriptionModel": null
     }
   ],
   "aiSummary": {
-    "callsOk": 20,
-    "callsFailed": 1,
-    "reused": 16,
-    "kept": 68,
+    "callsOk": 38,
+    "callsFailed": 0,
+    "reused": 36,
+    "kept": 38,
     "skippedByLimit": 0,
-    "skippedByBudget": 134,
+    "skippedByBudget": 97,
     "skippedBackendsDown": 0,
-    "withoutModelText": 67,
+    "withoutModelText": 59,
     "phaseSources": {
-      "reused": 14,
-      "ai": 5,
-      "fallback": 6
+      "reused": 19,
+      "ai": 6
     },
     "descriptionSources": {
-      "reused": 2,
-      "github": 60,
-      "ai": 15,
+      "reused": 17,
+      "github": 58,
       "commits": 23,
       "none": 3,
-      "kept": 68
+      "ai": 32,
+      "kept": 38
     },
     "limitAi": null,
     "budgetMin": 15.0,
