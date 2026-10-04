@@ -358,3 +358,7 @@ private audit report.
   and amy.io joins the family view.
 - **tinymachines.ai must resync** the registry before its next deploy; its
   session has the details.
+- **Done everywhere (2026-10-04):** tinymachines.ai resynced and deployed
+  (its own session); all four family sites now serve the same nine dots, in
+  the same order, checked live. tinymachines.ai also added a check that holds
+  its dots to the registry hue by hue.
