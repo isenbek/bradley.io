@@ -266,3 +266,18 @@ private audit report.
 - **Still open:** questions 1 to 3 (cjgaldes.com, isenbek.io, the
   tinymachines side projects), 7 (the resume rule) and the rest in
   ORG-MODEL.md; then the shared base kit, header and footer.
+
+### The family base kit, started (2026-10-04)
+
+- **One registry and one skeleton** in the private `isenbek/meatball-labs`
+  repo (`family/`): `family.json` lists the family's sites and their nine
+  hues; `base.css` is the shared masthead, footer and dots, skinned per site
+  by variables; `build.py` writes them into the sites and refuses stale
+  deploys (`--check`).
+- **meatball.ai and sysforge.ai** wear the shared masthead and footer. On a
+  phone their links now keep a scrolling row instead of disappearing.
+- **bradley.io's footer dots** read the registry (`scripts/sync-family.sh`,
+  v1.0.426); its masthead and footer stay the tinymachines kit's.
+- **tinymachines.ai** has the contract; its own session decides.
+- **Next:** hues for hotbits, amy.io and snailmail.ai when they land; then
+  docket item 8 (SEO and share cards).
