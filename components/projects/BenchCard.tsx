@@ -2,6 +2,7 @@ import Link from "next/link"
 import { ArrowRight, ArrowUpRight } from "lucide-react"
 import type { NowId, NowSnapshot } from "@/components/live/types"
 import { BenchDot } from "./BenchDot"
+import { externalRel } from "@/lib/external-rel"
 
 /**
  * BenchCard: one thing on the bench, as a card that is a link.
@@ -46,7 +47,8 @@ import { BenchDot } from "./BenchDot"
  * anywhere, a screen reader hears "The 6502, link" once, and the `more` links
  * sit above the stretched layer and are pressed for themselves.
  *
- * External links open in a new tab with rel="noopener noreferrer", as every
+ * External links open in a new tab with lib/external-rel.ts's rel ("noopener
+ * noreferrer", but only "noopener" into the family, so doors can be counted), as every
  * external link in the shell does, and take the up-right arrow.
  *
  * Put it in a .beta-bench-grid (BenchGrid below), as a sibling of .prose.
@@ -88,7 +90,7 @@ function Door({
 }) {
   if (isExternal(href)) {
     return (
-      <a href={href} className={className} target="_blank" rel="noopener noreferrer">
+      <a href={href} className={className} target="_blank" rel={externalRel(href)}>
         {children}
       </a>
     )

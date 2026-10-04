@@ -173,7 +173,7 @@ const ABOUT: Record<string, ReactNode> = {
       decay, ADS-B receivers. All the hardware-meets-AI experiments live here. Since August 2026 so
       does the chip work: transistor-level simulations of the{" "}
       <Link href="/6502">MOS 6502</Link> and the chips of the NES, published at{" "}
-      <a href="https://tinymachines.ai" target="_blank" rel="noopener noreferrer">
+      <a href="https://tinymachines.ai" target="_blank" rel="noopener">
         tinymachines.ai
       </a>
       . The instruments on this site (<Link href="/trng">Hotbits</Link>,{" "}

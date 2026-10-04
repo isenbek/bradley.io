@@ -107,6 +107,31 @@ BOT_RE = re.compile(
 # NOT listing cloud ASNs like Hetzner/OVH here: those carry real VPN users.
 BOT_ASNS = {15169}
 
+# THE FAMILY (docket item 7, 2026-10-04). The family's sites come from the
+# registry, not a list here: components/kit/family-data.ts is generated from
+# meatball-labs/family/family.json and synced by scripts/sync-family.sh, so a
+# site joining the family is counted here without touching this file. The
+# file is generated in a fixed shape, so one regex reads it.
+FAMILY_DATA = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "components", "kit", "family-data.ts")
+
+
+def family_hosts():
+    try:
+        with open(FAMILY_DATA) as fh:
+            return [h.lower() for h in re.findall(r'href: "https://([^"/]+)"', fh.read())]
+    except OSError:
+        return []
+
+
+def ref_host(ref):
+    """`https://www.meatball.ai/x` -> `meatball.ai`; '' when there is none."""
+    m = re.match(r"^[a-z][a-z0-9+.-]*://([^/:?#]+)", ref or "", re.I)
+    if not m:
+        return ""
+    h = m.group(1).lower()
+    return h[4:] if h.startswith("www.") else h
+
+
 # Non-browser assets we don't want inflating "pageviews".
 ASSET_RE = re.compile(r"\.(?:webp|png|jpe?g|svg|ico|css|js|woff2?|map|txt|xml|json)(?:$|\?)", re.I)
 
@@ -410,6 +435,34 @@ def read_edge():
 
 
 # ------------------------------------------------------------------ main ---
+def family_out(hosts, reads, sessions, refs, doors, days_sorted):
+    def visits(stamps_by_key):
+        n = 0
+        for stamps in stamps_by_key.values():
+            stamps.sort()
+            n += 1 + sum(1 for a, b in zip(stamps, stamps[1:]) if b - a > SESSION_GAP)
+        return n
+
+    members = []
+    for h in hosts:
+        members.append({
+            "site": h,
+            "reads": sum(reads[h].values()),
+            "visits": visits(sessions[h]),
+            "byDay": [{"d": d, "reads": reads[h][d]} for d in days_sorted if reads[h].get(d)],
+            "from": sorted(({"host": r, "reads": n} for r, n in refs[h].items()),
+                           key=lambda r: -r["reads"])[:15],
+        })
+    sessions.clear()  # the only place a visitor's IP survived; drop it once counted
+    return {
+        "note": "Human page reads only (no bots, assets, APIs or prefetches, nothing from this network). "
+                "Referrers are hosts, never full URLs. No cookie, pixel or script: nginx logs only.",
+        "members": members,
+        "doors": sorted(({"from": f, "to": t, "reads": n} for (f, t), n in doors.items()),
+                        key=lambda x: -x["reads"]),
+    }
+
+
 def main():
     t0 = time.time()
     geo = Geo()
@@ -426,6 +479,17 @@ def main():
     agg = Bucket("all")
     site_buckets = {}
     per_site_sources = []
+
+    # The family: reads per member per day, where readers arrived from outside
+    # (referrer HOST only, never the full URL), and the doors: a read on one
+    # family site whose referrer is another family site. Browsers send the
+    # origin across sites (strict-origin-when-cross-origin), so a click
+    # through a door is visible on the receiving side's log.
+    fam_hosts = family_hosts()
+    fam_reads = defaultdict(lambda: defaultdict(int))     # host -> day -> reads
+    fam_sessions = defaultdict(lambda: defaultdict(list))  # host -> (ip, ua) -> [ts]
+    fam_from = defaultdict(lambda: defaultdict(int))      # host -> referrer host -> reads
+    fam_doors = defaultdict(int)                          # (from, to) -> reads
 
     def make_on_access(site):
         def on_access(m, ts):
@@ -508,6 +572,16 @@ def main():
                     a = b.asns[g["asn"]]
                     a["sessions"] += 1
                     a["org"] = a["org"] or g["org"]
+
+            host = site.name
+            if read and host in fam_hosts:
+                fam_reads[host][d] += 1
+                fam_sessions[host][(ip, ua)].append(ts.timestamp())
+                rh = ref_host(ref)
+                if rh in fam_hosts and rh != host:
+                    fam_doors[(rh, host)] += 1
+                elif rh and rh != host and not any(rh == o or rh.endswith("." + o) for o in own_hosts):
+                    fam_from[host][rh] += 1
 
         return on_access
 
@@ -634,6 +708,11 @@ def main():
             for b in sorted(site_buckets.values(), key=lambda b: -b.rows)
             if b.name in UTILITY_SITES or b.pageviews < SITE_MIN_READS
         ],
+
+        # The family (meatball.ai and its sites), side by side: reads, visits
+        # (a 30-minute gap starts a new one), where readers came from, and how
+        # often someone walked through a door from one family site to another.
+        "family": family_out(fam_hosts, fam_reads, fam_sessions, fam_from, fam_doors, days_sorted),
 
         "scanners": {
             "hits": scan_hits,

@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { ArrowRight, ArrowUpRight } from "lucide-react"
 import type { ReactNode } from "react"
+import { externalRel } from "@/lib/external-rel"
 
 /**
  * LinkCard: a whole card that is one link, with the kit's detent press.
@@ -11,7 +12,8 @@ import type { ReactNode } from "react"
  *
  * PROPS
  *   href      a path on this site ("/meatball") or a full URL. A full URL opens
- *             in a new tab with rel="noopener noreferrer", as every external
+ *             in a new tab with lib/external-rel.ts's rel (no referrer, except
+ *             into the family, where doors are counted), as every external
  *             link in the shell does, and takes the up-right arrow.
  *   title     the card's h3.
  *   children  the body: one or two sentences.
@@ -65,7 +67,7 @@ export function LinkCard({
   )
 
   return external ? (
-    <a className="rail beta-linkcard" href={href} target="_blank" rel="noopener noreferrer">
+    <a className="rail beta-linkcard" href={href} target="_blank" rel={externalRel(href)}>
       {inside}
     </a>
   ) : (

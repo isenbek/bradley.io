@@ -269,7 +269,7 @@ export default async function Home() {
               className="btn btn-ghost"
               href="https://tinymachines.ai/6502"
               target="_blank"
-              rel="noopener noreferrer"
+              rel="noopener"
             >
               Run it at tinymachines.ai
             </a>
