@@ -8,30 +8,17 @@
  * the colours are its `--color-family-*` tokens; this file only says which
  * dots are sites, where they live, and which one is this site.
  *
- * Kept identical across the three sites on purpose: tinymachines.ai and
- * meatball.ai carry the same list, in the same order, each marking itself.
- * Source of the component this mirrors: tinymachines/public
- * web/app/components/Family.tsx.
+ * The list of sites is not written here. It comes from the family registry
+ * (meatball-labs/family/family.json), copied in as ./family-data.ts by
+ * scripts/sync-family.sh, so this footer, meatball.ai's and sysforge.ai's
+ * cannot disagree about who is in the family.
  */
 
-type Hue = "clay" | "ochre" | "moss" | "sage" | "spruce" | "steel" | "iris" | "plum" | "rose";
+import { FAMILY, FAMILY_LABEL, type FamilyHue } from "./family-data"
 
-/** The colour wheel, warm to cool. Fixed order; a new site takes an open hue. */
-const FAMILY: { hue: Hue; name?: string; href?: string }[] = [
-  { hue: "clay", name: "Meatball Labs", href: "https://meatball.ai" },
-  { hue: "ochre", name: "SysForge", href: "https://sysforge.ai" },
-  { hue: "moss" },
-  { hue: "sage" },
-  { hue: "spruce" },
-  { hue: "steel", name: "bradley.io", href: "https://bradley.io" },
-  { hue: "iris", name: "tinymachines.ai", href: "https://tinymachines.ai" },
-  { hue: "plum" },
-  { hue: "rose" },
-];
-
-export function Family({ me }: { me: Hue }) {
+export function Family({ me }: { me: FamilyHue }) {
   return (
-    <nav className="family" aria-label="Meatball Labs and family">
+    <nav className="family" aria-label={FAMILY_LABEL}>
       {FAMILY.map((f) => {
         if (f.hue === me) {
           return (
