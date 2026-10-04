@@ -344,3 +344,17 @@ private audit report.
   dark; its server log never sees the choice.
 - **Open:** what choice, if any, bradley.io and tinymachines.ai would carry
   (both single-ground, no theme switch).
+
+### Hues for hotbits, amy.io and snailmail.ai (2026-10-04)
+
+- **Sage is hotbits** (linking to tinymachines.ai/hotbits), **Spruce is
+  amy.io**, **Rose is snailmail.ai**, held as *reserved*: named in every
+  footer but not a link, since the site is retired. Moss and Plum stay open.
+- **Live on meatball.ai, sysforge.ai and bradley.io** (v1.0.431); the house
+  cards name their hues, and the style guide now takes each hue's owner from
+  the family registry (it had shown Ochre as open).
+- **bradley.io:** the visitor collector counts tinymachines.ai once even
+  though hotbits shares its host, /visitors keeps tinymachines.ai's own hue,
+  and amy.io joins the family view.
+- **tinymachines.ai must resync** the registry before its next deploy; its
+  session has the details.
