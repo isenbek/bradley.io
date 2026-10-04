@@ -215,3 +215,23 @@ private repositories, so the write-up lives in the private
   next to the earlier core explainer and the boundary map. The analysis
   data and scripts live on `/mnt/ursa`. None of it belongs in this repo,
   which is public.
+
+### The routing fixes (2026-10-03)
+
+All four routing items on the docket are done. The details stay in the
+private audit report.
+
+- **TerraPulse's API** had stopped answering while its health check still
+  said OK. One route walked the data disk on every request until every
+  worker was stuck. It now keeps a cached answer, and 60 simultaneous
+  requests take milliseconds. Fixed in its own repo.
+- **TerraPulse backups** keep 7 days. The backup disk had filled up and the
+  nightly backup was failing.
+- **housecalls.bradley.io is off** and redirects to bradley.io. The House
+  Calls section on bradley.io itself is unchanged.
+- **18 dead hostnames retired.** They answer "410 Gone", and the old
+  configs are kept for undo.
+- **Broken links on tinymachines.ai fixed.** The 6502 tool and article pages
+  now root their relative links. bradley.io's 6502 links point straight at
+  the new address (v1.0.422).
+- **Next:** the owner's five, starting with one kit across the sites.
