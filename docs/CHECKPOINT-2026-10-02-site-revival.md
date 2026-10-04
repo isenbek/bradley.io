@@ -245,3 +245,24 @@ private audit report.
   `isenbek/meatball-labs` repo (`docs/ORG-MODEL.md`).
 - **Next session:** the owner answers those questions; then meatball.ai's
   directory, bradley.io's client section, and the shared base kit.
+
+### The two hubs, built (2026-10-04)
+
+- **bradley.io's top level is Me / Work / Projects,** the owner's call: three
+  bold doors under the home headline, above the fold at every width (Me for
+  hiring, Work for clients, Projects for builders). The masthead reads Me,
+  Work, Projects, Contact (v1.0.423).
+- **The client projects moved onto /work:** TerraPulse and Campaign Brain
+  large, then tinychase, Nominate.AI and MyFinalWishes (still named, not
+  linked). The commit record follows as "The record". /projects keeps the
+  lab; its "Platforms" group is now "Tools" (v1.0.424).
+- **/projects has a door to the Thought Lab** at meatball.ai (v1.0.425).
+- **meatball.ai's house is the lab directory:** tinymachines, SysForge,
+  hotbits, amy.io and snailmail.ai (slots held) and the boneyard, each card
+  in its own site's style; a "Brad's work is next door" strip to bradley.io;
+  12 retired hostnames in the boneyard, epitaphs still to write.
+- **deploy.sh fix:** it no longer stops when untracked files sit outside
+  its paths and nothing is staged.
+- **Still open:** questions 1 to 3 (cjgaldes.com, isenbek.io, the
+  tinymachines side projects), 7 (the resume rule) and the rest in
+  ORG-MODEL.md; then the shared base kit, header and footer.
