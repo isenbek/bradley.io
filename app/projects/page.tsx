@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import { ArrowUpRight } from "lucide-react"
 import { peekNow } from "@/components/live/now-snapshot"
 import { BenchCard, BenchGrid, type BenchItem } from "@/components/projects/BenchCard"
+import { LinkCard } from "@/components/home/LinkCard"
 import atlasPic from "@/components/projects/thumbs/prime-atlas.webp"
 import zetaPic from "@/components/projects/thumbs/zeta-forge.webp"
 import orchestraPic from "@/components/projects/thumbs/prime-orchestra.webp"
@@ -373,6 +374,22 @@ export default async function ProjectsPage() {
         shipped with Claude as co-pilot. The sites are self-hosted; the repositories are on GitHub.
       </p>
 
+      {/* The door to the Thought Lab (owner's org model, 2026-10-04): this
+          page is the lab's work as seen from bradley.io; meatball.ai is the
+          lab itself, where every lab site is shown in its own style. One
+          card, full width, before the groups, so a builder finds it first. */}
+      <div className="beta-labdoor">
+        <LinkCard
+          href="https://meatball.ai"
+          title="The Thought Lab"
+          go="meatball.ai"
+          tags={["tinymachines", "SysForge", "the weird stuff"]}
+        >
+          Artisanal intelligence, hand-rolled. Meatball Labs is where Spicy and Bear dream things
+          up and build them, and where every lab site lives in its own style.
+        </LinkCard>
+      </div>
+
       <nav className="beta-bench-jump" aria-label="Groups on this page">
         {GROUPS.map((g) => (
           <a className="tag" href={`#${g.id}`} key={g.id}>
@@ -502,8 +519,9 @@ export default async function ProjectsPage() {
         <h2>The rest</h2>
         <p>
           This is the short list. <Link href="/bench">The bench</Link> lists every page this server
-          serves and says which instruments are up. <Link href="/work">The work page</Link> counts
-          every repository across four GitHub organisations from the commit log.
+          serves and says which instruments are up. <Link href="/work">The work page</Link> has the
+          client projects, and counts every repository across four GitHub organisations from the
+          commit log. The lab itself is at <a href="https://meatball.ai">meatball.ai</a>.
         </p>
       </div>
     </div>

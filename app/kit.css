@@ -4894,6 +4894,11 @@ a.beta-papers-fig:focus-visible { outline: 2px solid var(--color-blue-ink); outl
 }
 @media print { .beta-doors { display: none; } }
 
+/* ---- The Thought Lab door on /projects ---------------------------------
+   One LinkCard, full width, between the lede and the group tags. */
+.beta-labdoor { margin: calc(var(--u) * 6) 0; }
+.beta-labdoor > .rail { max-width: none; }
+
 /* ---- Running now -------------------------------------------------------- */
 /* Answering instruments (NowPanel) and the silent ones (one slim panel) on
    the left, the Claude Code pulse on the right; one column on anything
