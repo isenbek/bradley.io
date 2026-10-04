@@ -53,6 +53,13 @@ const NOTES = [
   },
 ]
 
+/** The top level of the site, in the owner's order (2026-10-04). */
+const DOORS = [
+  { href: "/about", label: "Me", forWho: "Hiring", blurb: "Who I am, the resume, and the full-time search." },
+  { href: "/work", label: "Work", forWho: "Clients", blurb: "What I architect and build, and the record behind it." },
+  { href: "/projects", label: "Projects", forWho: "Builders", blurb: "Chips, instruments, math, and the weird stuff." },
+] as const
+
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
 /** "2026-10-02" as "2 Oct 2026", sliced from the string so no timezone can move the day. */
@@ -153,20 +160,25 @@ export default async function Home() {
           <br />
           AI pilot.
         </h1>
+        {/* The three doors, first thing under the name. Each reader picks a
+            path before reading a word of the rest: an employer wants Me, a
+            client wants Work, a developer wants Projects. Everything below
+            the hero is the evidence, not the menu. */}
+        <nav className="beta-doors" aria-label="Start here">
+          {DOORS.map((d) => (
+            <Link key={d.href} className="beta-door" href={d.href}>
+              <span className="beta-door__label">{d.label}</span>
+              <span className="beta-door__for">{d.forWho}</span>
+              <span className="beta-door__blurb">{d.blurb}</span>
+            </Link>
+          ))}
+        </nav>
         <p className="lede">
           I build at the seam where enterprise scale meets maker culture: ESP32 mesh networks,
           Fortune 500 data warehouses, and a lot of Claude as co-pilot. This site runs on my own
           hardware, and the panels below are this server and the instruments around it reporting
           in.
         </p>
-        <div className="hero-ctas">
-          <Link className="btn btn-primary" href="/services">
-            What I do
-          </Link>
-          <Link className="btn btn-ghost" href="/contact">
-            Start a conversation
-          </Link>
-        </div>
         <p className="quiet beta-home-where">
           <b>Bradley Isenbek.</b> Forest Hills, Michigan. On site across Grand Rapids and Kent
           County, remote everywhere else.

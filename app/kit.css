@@ -4825,6 +4825,75 @@ a.beta-papers-fig:focus-visible { outline: 2px solid var(--color-blue-ink); outl
   }
 }
 
+/* ---- The three doors (Me, Work, Projects) ------------------------------
+   The top level of the site, under the headline, above the fold on a phone.
+   On a phone they are three full-width rows (label left, who it is for
+   right): three across at 320px shrank the labels to 12px, and rows of
+   about 56px each still land all three above the fold at 320x640. From
+   40rem they are three cards with a blurb. A door is a link, so it gets the
+   kit's detent press, not a hover colour. */
+.beta-doors {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: calc(var(--u) * 2);
+  margin: 0 0 calc(var(--u) * 6);
+}
+.beta-door {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: calc(var(--u) * 3);
+  min-width: 0;
+  container-type: inline-size;
+  padding: calc(var(--u) * 3) calc(var(--u) * 4);
+  border: 2px solid var(--color-ink);
+  background: var(--color-paper);
+  color: var(--color-ink);
+  text-decoration: none;
+  box-shadow: 0 3px 0 var(--color-ink);
+  transition: transform 80ms ease-out, box-shadow 80ms ease-out;
+}
+.beta-door:hover { background: var(--color-paper-sunk); }
+.beta-door:active { transform: translateY(3px); box-shadow: 0 0 0 var(--color-ink); }
+.beta-door:focus-visible { outline: 3px solid var(--color-ocean); outline-offset: 2px; }
+.beta-door__label {
+  font-family: var(--font-display);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  font-size: var(--text-h2);
+  white-space: nowrap;
+}
+.beta-door__for {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-ink-muted, currentColor);
+}
+.beta-door__blurb { display: none; font-size: var(--text-body); line-height: 1.4; }
+@media (min-width: 40rem) {
+  .beta-doors { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: calc(var(--u) * 4); }
+  .beta-door {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: calc(var(--u) * 1);
+    padding: calc(var(--u) * 4) calc(var(--u) * 5) calc(var(--u) * 5);
+  }
+  /* Sized by the card: "PROJECTS", the longest, has to fit one line in a
+     third of the column. All three share the size, so they read as a set. */
+  .beta-door__label { font-size: min(16cqi, var(--text-h1)); }
+  .beta-door__blurb { display: block; margin-top: calc(var(--u) * 1); }
+}
+@media (min-width: 80rem) {
+  .hero.beta-home-hero > .beta-doors { grid-column: 1; }
+  .hero.beta-home-hero > .hero-chips { grid-row: 2 / span 4; }
+}
+@media print { .beta-doors { display: none; } }
+
 /* ---- Running now -------------------------------------------------------- */
 /* Answering instruments (NowPanel) and the silent ones (one slim panel) on
    the left, the Claude Code pulse on the right; one column on anything
