@@ -235,3 +235,13 @@ private audit report.
   now root their relative links. bradley.io's 6502 links point straight at
   the new address (v1.0.422).
 - **Next:** the owner's five, starting with one kit across the sites.
+
+### The family org model (2026-10-04)
+
+- **meatball.ai becomes the Thought Lab,** the top level for every lab site,
+  each shown in its own style. **bradley.io is Brad:** his work, his client
+  projects, and a door to the lab.
+- **The notes, thoughts and 11 open questions** are in the private
+  `isenbek/meatball-labs` repo (`docs/ORG-MODEL.md`).
+- **Next session:** the owner answers those questions; then meatball.ai's
+  directory, bradley.io's client section, and the shared base kit.
