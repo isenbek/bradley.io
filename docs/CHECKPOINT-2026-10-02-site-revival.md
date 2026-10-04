@@ -327,3 +327,20 @@ private audit report.
   client-side boards were verified on the live site instead.
 - **Next:** the device handshake (item 6). The doors will mean more after a
   few days of traffic.
+
+### The device handshake, started (2026-10-04)
+
+- **A visitor's own choices follow them between family sites** (docket
+  item 6, live on meatball.ai and sysforge.ai). Today the only choice is the
+  theme (Auto, Light, Dark).
+- **No identity, nothing server-side.** The choice is kept in the visitor's
+  browser and rides family links after the `#` (`#fam=theme.dark`), which
+  browsers never send to a server; the receiving page applies it before
+  paint, keeps it, and cleans the address bar. Only listed choices are
+  accepted, defaults are not sent, and a link's own anchor is never touched.
+- **Only sites that run it receive it** (`"handshake": true` in the family
+  registry), so bradley.io and tinymachines.ai never get a stray `#fam=`.
+- **Verified live:** Dark on meatball.ai, click through, sysforge.ai opens
+  dark; its server log never sees the choice.
+- **Open:** what choice, if any, bradley.io and tinymachines.ai would carry
+  (both single-ground, no theme switch).
