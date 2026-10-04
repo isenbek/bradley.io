@@ -542,6 +542,10 @@ function FamilyPanel({ f, windowDays }: { f: Family; windowDays: number }) {
         </div>
       </div>
 
+      <div className="prose beta-sec">
+        <h3>Doors</h3>
+      </div>
+
       {/* A table, not a bar chart: a door is two site names, and the chart's
           label column cut them to "bradley.io → t…". */}
       <div className="ledger">
