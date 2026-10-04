@@ -419,6 +419,15 @@ body:has(.beta-root) {
 .die--mark {
   padding: 0;
   overflow: visible;
+  /* Steel, bradley.io's family hue (owner's call, 2026-10-04), so the
+     masthead, the favicon and the family dot are one colour. The kit keeps
+     --color-family-* for the family dots; this is the one other place it is
+     right to use one: the site's own mark, in the site's own hue. The tint
+     is Steel's from the family style guide (meatball.ai/styleguide.html#steel).
+     Paper on Steel is 4.6:1. Every other .die keeps the kit's ink tile. */
+  --beta-steel: var(--color-family-steel);
+  --beta-steel-tint: #c8daea;
+  background: var(--beta-steel);
 }
 .die--mark svg {
   display: block;
@@ -6700,9 +6709,9 @@ a.beta-papers-fig:focus-visible { outline: 2px solid var(--color-blue-ink); outl
    BioLogo's dotColor), so with this block missing the dot still tells the
    truth; these rules only say how it gets from one state to the other.
 
-   Lit is not only a hue. Mustard and blue are about 1.5:1 apart in
-   luminance, which a greyscale glance or a tritan eye cannot separate, so the
-   lit dot also wears a paper rim: a blue lamp in a light bezel, against the
+   Lit is not only a hue. On the Steel tile the lit blue sits close to the
+   tile itself, and the unlit Steel tint is a pale disc, so the lit dot also
+   wears a paper rim: a blue lamp in a light bezel, against the
    plain disc of the unlit dot. That is the LiveDot's own rule (lit and unlit
    differ in shape, not only in colour) at the size of a full stop.
 

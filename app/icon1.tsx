@@ -2,7 +2,8 @@
  * Steel, bradley.io's family hue (owner's call, 2026-10-04): the tile is
  * Steel's main tone (#41749D), the wordmark is the kit's paper (#F4F2EC) and
  * the i-dot is Steel's tint (#C8DAEA). The same three colours as app/icon.svg,
- * so the tab, the home-screen icon and the Meatball Labs family dot agree.
+ * so the tab, the home-screen icon, the masthead die (.die--mark in
+ * app/kit.css) and the Meatball Labs family dot agree.
  * (Until 2026-10-04 these were the masthead die, mustard on ink, while the
  * SVG favicon was still the deleted v3's blue.)
  *

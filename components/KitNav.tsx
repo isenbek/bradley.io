@@ -38,7 +38,7 @@ import { useChanged } from "@/lib/use-changed"
  * the close-on-navigation effect below never fires for a link to the page you
  * are already on.
  *
- * THE DOT OF THE "i" IS THE SITE'S LIVE DOT. It is the mark's own mustard
+ * THE DOT OF THE "i" IS THE SITE'S LIVE DOT. It is Steel's pale tint
  * until a Claude Code session is known to have written on this host in the
  * last five minutes, and ACTIVE blue while one has: useActive() from
  * components/live/LiveDot.tsx, the same fact and the same proof the home
@@ -47,7 +47,7 @@ import { useChanged } from "@/lib/use-changed"
  *   - It starts unlit, on the server and on the first client render, and
  *     lights only when an answer has arrived and says so. It is never lit on
  *     a guess, so it cannot flash lit and then go out.
- *   - Lit is not hue alone. Mustard and blue are close in luminance, so the
+ *   - Lit is not hue alone. Blue sits close to the Steel tile, so the
  *     lit dot also wears a thin paper rim (the beta-shell block in
  *     app/kit.css): a lamp in a bezel against a plain disc, which survives
  *     greyscale. The rim is paint under the fill, inside the tile. Nothing is
@@ -148,13 +148,13 @@ export function KitNav() {
   return (
     <header className="app-head" ref={headRef}>
       <div className="band topbar">
-        {/* The real wordmark in the die, not the letters "BIO".
-            Recoloured onto the kit palette: mustard on the ink tile (9.5:1,
-            the same treatment the kit gives its own die text). The i-dot is
-            the live dot (see the head of this file): mustard like the rest
-            until a session is active, then the panel form of ACTIVE blue,
-            which is what the three-piece split in lib/bio-logo-path.ts makes
-            possible. */}
+        {/* The real wordmark in the die, not the letters "BIO". In Steel,
+            bradley.io's family hue (2026-10-04): paper on a Steel tile (the
+            tile colour is .die--mark in app/kit.css), the same three colours
+            as the favicon. The i-dot is the live dot (see the head of this
+            file): Steel's tint until a session is active, then ACTIVE blue in
+            a paper rim, which is what the three-piece split in
+            lib/bio-logo-path.ts makes possible. */}
         <Link
           className="wordmark beta-nav-mark"
           href="/"
@@ -170,8 +170,8 @@ export function KitNav() {
               className="beta-shell-mark"
               data-live={live.active ? "true" : undefined}
               data-tick={live.active && ticked ? "true" : undefined}
-              bodyColor="var(--color-mustard)"
-              dotColor={live.active ? "var(--color-blue)" : "var(--color-mustard)"}
+              bodyColor="var(--color-paper)"
+              dotColor={live.active ? "var(--color-blue)" : "var(--beta-steel-tint)"}
               bobOnHover
             />
           </span>
