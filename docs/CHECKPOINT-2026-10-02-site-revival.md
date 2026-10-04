@@ -362,3 +362,18 @@ private audit report.
   (its own session); all four family sites now serve the same nine dots, in
   the same order, checked live. tinymachines.ai also added a check that holds
   its dots to the registry hue by hue.
+
+### Boneyard epitaphs and the one-slot style guide (2026-10-04)
+
+- **The boneyard has its epitaphs:** twelve stones on meatball.ai, each with
+  its dates (from its own repository) and one line on what it was, taken
+  from the project's record or its retired nginx config. The five with no
+  repository (tiles, bigballs, overlay, prism, robotics) say only what the
+  address did at the end.
+- **The style guide shows one slot in full:** pick a hue and see that site's
+  own logo files (downloadable), its colours beyond the family tones, and
+  its type. Every slot has its own link (`styleguide.html#ochre`). Data in
+  `family/slots.json` (private `isenbek/meatball-labs`); files in
+  `site/family/assets/<hue>/`; empty and reserved slots say so.
+- **Found, not fixed:** bradley.io's favicon is still the v3 Bio Blue, not
+  Steel.
