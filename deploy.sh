@@ -54,8 +54,14 @@ if [[ -n "$(git status --porcelain)" ]]; then
              wargames-server.js .env; do
         git add "$p" 2>/dev/null || true
     done
-    git commit -m "deploy: $(date '+%Y-%m-%d %H:%M:%S')"
-    ok "Committed"
+    # Untracked files outside the paths above (docs drafts) make the tree
+    # look dirty with nothing staged, and an empty commit fails under set -e.
+    if git diff --cached --quiet; then
+        ok "Nothing to commit in the deploy paths"
+    else
+        git commit -m "deploy: $(date '+%Y-%m-%d %H:%M:%S')"
+        ok "Committed"
+    fi
 else
     ok "Working tree clean"
 fi
