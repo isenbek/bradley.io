@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 
 const DESCRIPTION =
-  "Four GitHub organisations, counted from their commit logs: a year of daily commits, the months since the first, the language mix and the most recently active public repositories for each."
+  "The platforms Bradley Isenbek architects and builds for clients (TerraPulse, Campaign Brain, tinychase, Nominate.AI, MyFinalWishes), and four GitHub organisations counted from their commit logs."
 
 /* The site's own card. A route-level openGraph object replaces the root one
    whole, so without this /work would share with no image at all. */
@@ -37,7 +37,7 @@ export default function WorkLayout({ children }: { children: React.ReactNode }) 
             "@type": "CollectionPage",
             "@id": "https://bradley.io/work",
             url: "https://bradley.io/work",
-            name: "Work: four GitHub organisations",
+            name: "Work: client projects and four GitHub organisations",
             description: DESCRIPTION,
             author: { "@id": "https://bradley.io/#person" },
             isPartOf: { "@id": "https://bradley.io/#website" },

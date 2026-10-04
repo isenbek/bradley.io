@@ -58,7 +58,7 @@ export const NAV: NavGroup[] = [
   {
     title: "The evidence",
     links: [
-      { href: "/work", label: "Work", blurb: "four GitHub orgs, commit history rolled up", primary: 2 },
+      { href: "/work", label: "Work", blurb: "client projects, and four GitHub orgs counted", primary: 2 },
       { href: "/ai-pilot", label: "AI pilot", blurb: "the licence: sessions, models, ratings" },
       { href: "/cost-analysis", label: "Cost analysis", blurb: "what the work costs, modelled" },
       { href: "/the-shift", label: "The shift", blurb: "what changed when the tooling changed" },

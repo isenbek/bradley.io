@@ -13,7 +13,7 @@ import collapsePic from "@/components/projects/thumbs/critical-collapse.webp"
 export const metadata: Metadata = {
   title: "Projects",
   description:
-    "What is on the bench: chips rebuilt from their own dies, data platforms, instruments reading real hardware, math instruments that run in the browser, and a few ideas that might not ship.",
+    "What is on the bench: chips rebuilt from their own dies, instruments reading real hardware, math instruments that run in the browser, and a few ideas that might not ship.",
   alternates: { canonical: "/projects" },
 }
 
@@ -119,43 +119,6 @@ const CHIPS_MORE: BenchItem[] = [
 ]
 
 const PLATFORMS: BenchItem[] = [
-  {
-    href: "https://terrapulse.info",
-    title: "TerraPulse",
-    kind: "data platform",
-    line: "A measured-data platform for climate and geophysical data: readings from public instruments, and no models, forecasts or reanalysis. It serves the same records to AI agents through a public, read-only MCP server. I am its architect.",
-    tech: ["Python", "FastAPI", "PostgreSQL + PostGIS", "Parquet", "MCP"],
-    more: [
-      { href: "https://terrapulse.info/mcp", label: "The MCP server" },
-      { href: "/papers", label: "Research notes, here" },
-    ],
-  },
-  {
-    href: "https://tinychase.com",
-    title: "tinychase",
-    kind: "web app",
-    line: "Small models on measured public data, run entirely in your browser: DuckDB-WASM reads Parquet over ranged requests, and an experimental cyclone model runs on your own GPU through WebGPU. I engineered it.",
-    tech: ["DuckDB-WASM", "WebGPU", "tinygrad", "PWA"],
-  },
-  {
-    // Its own homepage's words (nominate.ai, 2026-10-02); the owner's framing
-    // that it is built on the SysForge platform. Served from this box.
-    href: "https://nominate.ai",
-    title: "Nominate.AI",
-    kind: "search platform",
-    line: "The political web, searchable: crawls, broadcast transcripts, county filings and OCR'd scans harvested into one corpus you can ask a question of, with the source document attached to every answer. Built on the SysForge platform and served from this machine.",
-    tech: ["Python", "FastAPI", "OCR", "Vector search", "MCP"],
-  },
-  {
-    // Named, never linked (owner's rule, 2026-10-02): the card opens the
-    // resume entry, not the product's live site.
-    href: "/resume",
-    title: "MyFinalWishes",
-    kind: "product",
-    state: "production-ready",
-    line: "A digital estate-planning platform shipped through SysForge, rebuilt from an earlier prototype into one TypeScript application, with per-user envelope encryption for identity data and every stored file. The live site is not linked here; the resume has the detail.",
-    tech: ["TanStack Start", "React 19", "SQLite + Drizzle", "AES-256-GCM"],
-  },
   {
     href: "https://tinymachines.ai/style",
     title: "The tinymachines style kit",
@@ -333,7 +296,7 @@ const SKETCHES: Sketch[] = [
 /** The jump row: a short name for each group and how many things are in it. */
 const GROUPS: Group[] = [
   { id: "chips", title: "Chips", count: CHIPS_FEATURE.length + CHIPS_MORE.length },
-  { id: "platforms", title: "Platforms", count: PLATFORMS.length },
+  { id: "platforms", title: "Tools", count: PLATFORMS.length },
   { id: "instruments", title: "Instruments", count: INSTRUMENTS.length },
   { id: "math", title: "Math", count: MATH.length },
   { id: "ideas", title: "Ideas", count: IDEAS.length + SKETCHES.length },
@@ -352,7 +315,7 @@ const ALL: { title: string; href: string }[] = [
 ]
 
 const DESCRIPTION =
-  "What is on the bench: chips rebuilt from their own dies, data platforms, instruments reading real hardware, math instruments that run in the browser, and a few ideas that might not ship."
+  "What is on the bench: chips rebuilt from their own dies, instruments reading real hardware, math instruments that run in the browser, and a few ideas that might not ship."
 
 
 export default async function ProjectsPage() {
@@ -405,8 +368,8 @@ export default async function ProjectsPage() {
       </div>
 
       <p className="lede">
-        {TOTAL} things on the bench. Chips rebuilt from their own dies, data platforms, instruments
-        reading real hardware, math you can operate, and a few ideas that might not ship. Most
+        {TOTAL} things on the bench. Chips rebuilt from their own dies, instruments reading real
+        hardware, math you can operate, and a few ideas that might not ship. Most
         shipped with Claude as co-pilot. The sites are self-hosted; the repositories are on GitHub.
       </p>
 
@@ -460,11 +423,11 @@ export default async function ProjectsPage() {
 
       <section id="platforms" className="beta-bench-group" aria-labelledby="platforms-h">
         <div className="prose beta-sec">
-          <h2 id="platforms-h">Platforms and tools</h2>
+          <h2 id="platforms-h">Tools</h2>
           <p>
-            Things other people can use: three data sites that run on this machine, a product
-            shipped through SysForge, the design system under this page, and four tools for
-            people who work out of a truck.
+            Things other people can use: the design system under this page, and four tools for
+            people who work out of a truck. The platforms I architect and build for clients are
+            on <Link href="/work">the work page</Link>.
           </p>
         </div>
         <BenchGrid items={PLATFORMS} pairs />

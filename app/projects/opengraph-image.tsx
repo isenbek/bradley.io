@@ -10,7 +10,7 @@ export default function OG() {
     eyebrow: "Projects",
     title: "What is on the bench.",
     subtitle:
-      "Chips rebuilt from their own dies, data platforms, instruments reading real hardware, and math you can operate.",
+      "Chips rebuilt from their own dies, instruments reading real hardware, and math you can operate.",
     tags: ["Chips", "Platforms", "Instruments", "Math"],
     accent: "blue",
     cta: "See the bench →",

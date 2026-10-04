@@ -12,7 +12,7 @@ import type { Metadata } from "next"
  */
 
 const DESCRIPTION =
-  "What is on the bench: chips rebuilt from their own dies, data platforms, instruments reading real hardware, math instruments that run in the browser, and a few ideas that might not ship."
+  "What is on the bench: chips rebuilt from their own dies, instruments reading real hardware, math instruments that run in the browser, and a few ideas that might not ship."
 
 export const metadata: Metadata = {
   title: "Projects · bio·bradley.io",

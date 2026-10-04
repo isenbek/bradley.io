@@ -20,9 +20,16 @@ import {
 } from "../_charts"
 import { BetaMeasured } from "../_measured"
 import { CHART_INK, SERIES } from "@/lib/beta/chart-theme"
+import { BenchGrid } from "@/components/projects/BenchCard"
+import { CLIENTS_FEATURED, CLIENTS_MORE } from "./_clients"
 
 /**
- * /work: four GitHub organisations, counted from their commit logs.
+ * /work: the client projects first, then four GitHub organisations, counted
+ * from their commit logs.
+ *
+ * The client projects (app/work/_clients.ts) open the page because /work is
+ * the door a client takes from the home page (Me, Work, Projects; the
+ * owner's top level, 2026-10-04). The record under them is the evidence.
  *
  * Each org is one board on a panel: four figures, a year of days, the months
  * since the first commit under the owner's name, and the language mix. Under
@@ -482,15 +489,31 @@ export default function BetaWorkPage() {
       </div>
 
       <p className="lede">
-        Four GitHub organisations, {fmtMonth(earliest)} to now: {nf(totalRepos)} repositories and{" "}
-        {nf(commitsSince)} commits, counted from the log rather than described.
+        The platforms I architect and build for clients, and the record behind them: four GitHub
+        organisations, counted from the log rather than described.
       </p>
+
+      <section id="clients" className="beta-bench-group" aria-labelledby="clients-h">
+        <div className="prose beta-sec">
+          <h2 id="clients-h">Client projects</h2>
+          <p>
+            Five platforms, each built for someone else: two data platforms, and three products.
+            Each card opens the live site, except one product whose site stays unlinked; that card
+            opens the resume.
+          </p>
+        </div>
+        <BenchGrid items={CLIENTS_FEATURED} pairs feature />
+        <BenchGrid items={CLIENTS_MORE} />
+      </section>
 
       {/* .prose for the text run only; the panels below are siblings. */}
       <div className="prose beta-sec">
+        <h2 id="record">The record</h2>
         <p>
-          Each organisation is counted from my first commit in it (<a href="#counting">how</a>);
-          work before {earliest.slice(0, 4)} is on the <Link href="/resume">resume</Link>.
+          Four GitHub organisations, {fmtMonth(earliest)} to now: {nf(totalRepos)} repositories and{" "}
+          {nf(commitsSince)} commits. Each is counted from my first commit in it{" "}
+          (<a href="#counting">how</a>); work before {earliest.slice(0, 4)} is on the{" "}
+          <Link href="/resume">resume</Link>.
         </p>
       </div>
 
