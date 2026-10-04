@@ -204,3 +204,14 @@ private repositories, so the write-up lives in the private
   1. The routing fixes.
   2. The owner's five: one kit across the sites, a device/user handshake,
      first-party tracking, SEO and sharing, one header and footer.
+
+### The Nominate-AI deep dive, continued (2026-10-03)
+
+- **cbmodels and FQL** (its federated query layer) were read in full and
+  written up as the data half of the core.
+- **The core triad** was named, and the services were sorted into packs
+  that could be bundled and sold, with the first offer recommended.
+- **All findings are in the private `Nominate-AI/infrastructure` docs,**
+  next to the earlier core explainer and the boundary map. The analysis
+  data and scripts live on `/mnt/ursa`. None of it belongs in this repo,
+  which is public.
