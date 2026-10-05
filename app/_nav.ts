@@ -142,6 +142,7 @@ const KIT_EXTRA = [
   "/projects/zeta-forge",
   "/projects/storm-plates",
   "/projects/critical-collapse",
+  "/projects/computer-tree",
   "/projects/turfy",
   "/housecalls/plain",
   "/housecalls/network",

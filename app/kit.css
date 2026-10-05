@@ -7454,3 +7454,204 @@ a.beta-papers-fig:focus-visible { outline: 2px solid var(--color-blue-ink); outl
   .beta-search__foot { display: none; }
 }
 /* end of block: beta-search-* */
+
+/* ---------------------------------------------------------------------------
+   beta-ctree-*: the Computer Tree (/projects/computer-tree,
+   components/computer-tree/ComputerTree.tsx). A panel: the drawing is laid out
+   by lib/computer-tree.ts, so it is the machine talking. Identity is two hues
+   (ocean: on the 1961 chart, burnt: added since); blue is ACTIVE, the selected
+   line; mustard marks a cross-link and appears only beside its legend entry.
+   ------------------------------------------------------------------------ */
+.beta-ctree { margin: calc(var(--u) * 2) 0 calc(var(--u) * 4); }
+.beta-ctree__controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: calc(var(--u) * 3);
+  margin-bottom: calc(var(--u) * 3);
+}
+.beta-ctree__find { display: grid; gap: calc(var(--u) * 1); flex: 1 1 16rem; min-width: 0; max-width: 24rem; }
+.beta-ctree__find > span {
+  font-family: var(--font-mono);
+  font-size: var(--text-micro);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-glass-muted);
+}
+.beta-ctree__find input {
+  width: 100%;
+  min-width: 0;
+  padding: calc(var(--u) * 2) calc(var(--u) * 2.5);
+  font-family: var(--font-mono);
+  font-size: max(16px, var(--text-data)); /* 16px stops iOS zooming on focus */
+  color: var(--color-glass);
+  background: var(--color-panel-sunk);
+  border: 1px solid var(--color-rule-panel);
+  border-radius: var(--radius-hair);
+}
+.beta-ctree__find input::placeholder { color: var(--color-glass-muted); }
+.beta-ctree__find input:focus-visible { outline: 2px solid var(--color-blue); outline-offset: 2px; }
+.beta-ctree__toggles { display: flex; flex-wrap: wrap; gap: calc(var(--u) * 2); }
+.beta-ctree__seg { display: inline-flex; border: 1px solid var(--color-rule-panel); border-radius: var(--radius-hair); }
+.beta-ctree__seg button,
+.beta-ctree__chip {
+  min-height: 36px;
+  padding: 0 calc(var(--u) * 3);
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+  color: var(--color-glass-muted);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+.beta-ctree__seg button + button { border-left: 1px solid var(--color-rule-panel); }
+.beta-ctree__chip { border: 1px solid var(--color-rule-panel); border-radius: var(--radius-hair); }
+.beta-ctree__seg button[aria-pressed="true"],
+.beta-ctree__chip[aria-pressed="true"] { color: var(--color-panel); background: var(--color-glass); }
+.beta-ctree__seg button:focus-visible,
+.beta-ctree__chip:focus-visible { outline: 2px solid var(--color-blue); outline-offset: 2px; }
+
+.beta-ctree__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) min(19rem, 100%);
+  gap: calc(var(--u) * 4);
+  align-items: start;
+}
+@media (max-width: 52rem) {
+  .beta-ctree__body { grid-template-columns: minmax(0, 1fr); }
+}
+/* The drawing scrolls in its own box when zoomed; the page never does. */
+.beta-ctree__box {
+  overflow: auto;
+  max-height: min(80vh, 56rem);
+  aspect-ratio: 1;
+  background: var(--color-panel-sunk);
+  border: 1px solid var(--color-rule-panel);
+  border-radius: var(--radius-hair);
+  overscroll-behavior: contain;
+}
+.beta-ctree__box[data-zoom="1"] { overflow: hidden; }
+.beta-ctree__box svg { display: block; max-width: none; height: auto; touch-action: manipulation; }
+
+.beta-ctree__rings circle { fill: none; stroke: var(--color-rule-panel); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.beta-ctree__rings text {
+  fill: var(--color-glass-muted);
+  font-family: var(--font-mono);
+  text-anchor: middle;
+}
+.beta-ctree__links path,
+.beta-ctree__cross path,
+.beta-ctree__near path,
+.beta-ctree__line path { fill: none; stroke-linecap: round; }
+.beta-ctree__links path { stroke: var(--color-glass-muted); opacity: 0.45; }
+.beta-ctree__cross path { stroke: var(--color-mustard); opacity: 0.7; }
+.beta-ctree__near path { stroke: var(--color-glass); opacity: 0.8; }
+.beta-ctree__line path { stroke: var(--color-blue); }
+
+.beta-ctree__nodes circle { stroke: var(--color-panel-sunk); }
+.beta-ctree__nodes .is-chart { fill: var(--color-ocean); }
+.beta-ctree__nodes .is-ext { fill: var(--color-burnt); }
+.beta-ctree__nodes .is-line { stroke: var(--color-blue); }
+.beta-ctree__hits circle { fill: transparent; cursor: pointer; }
+.beta-ctree__sel { fill: none; stroke: var(--color-blue); pointer-events: none; }
+.beta-ctree__label {
+  fill: var(--color-glass);
+  font-family: var(--font-mono);
+  stroke: var(--color-panel-sunk);
+  paint-order: stroke;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+.beta-ctree__label.is-strong { font-weight: 700; }
+
+.beta-ctree__read { font-family: var(--font-mono); font-size: var(--text-data); min-width: 0; }
+.beta-ctree__read p { margin: 0; }
+.beta-ctree__name {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-h3);
+  line-height: 1.1;
+  color: var(--color-glass);
+  overflow-wrap: anywhere;
+  margin-bottom: calc(var(--u) * 2) !important;
+}
+.beta-ctree__meta { color: var(--color-glass-muted); line-height: 1.6; }
+.beta-ctree__notes {
+  margin-top: calc(var(--u) * 2) !important;
+  font-family: var(--font-sans);
+  font-size: var(--text-body);
+  line-height: 1.5;
+  color: var(--color-glass);
+}
+.beta-ctree__h {
+  margin-top: calc(var(--u) * 4) !important;
+  padding-bottom: calc(var(--u) * 1.5);
+  border-bottom: 1px solid var(--color-rule-panel);
+  font-size: var(--text-micro);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-glass-muted);
+}
+.beta-ctree__lineage,
+.beta-ctree__list { list-style: none; margin: 0; padding: 0; max-height: 22rem; overflow-y: auto; }
+.beta-ctree__lineage li,
+.beta-ctree__list li {
+  display: flex;
+  justify-content: space-between;
+  gap: calc(var(--u) * 2);
+  padding: calc(var(--u) * 1) 0;
+  border-bottom: 1px solid var(--color-rule-panel);
+}
+.beta-ctree__lineage li span,
+.beta-ctree__list li span { color: var(--color-glass-muted); text-align: right; flex: none; }
+.beta-ctree__lineage button,
+.beta-ctree__list button {
+  min-width: 0;
+  padding: 0;
+  font: inherit;
+  text-align: left;
+  color: var(--color-glass);
+  background: none;
+  border: 0;
+  text-decoration: underline;
+  text-decoration-color: var(--color-rule-panel);
+  text-underline-offset: 3px;
+  cursor: pointer;
+  overflow-wrap: anywhere;
+}
+.beta-ctree__lineage button:hover,
+.beta-ctree__list button:hover { text-decoration-color: var(--color-blue); }
+.beta-ctree__lineage button:focus-visible,
+.beta-ctree__list button:focus-visible { outline: 2px solid var(--color-blue); outline-offset: 2px; }
+
+.beta-ctree__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(var(--u) * 2) calc(var(--u) * 5);
+  list-style: none;
+  margin: calc(var(--u) * 3) 0 0;
+  padding: calc(var(--u) * 2.5) 0 0;
+  border-top: 1px solid var(--color-rule-panel);
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+  color: var(--color-glass-muted);
+}
+.beta-ctree__legend li { display: inline-flex; align-items: center; gap: calc(var(--u) * 1.5); }
+.beta-ctree__key { display: inline-block; width: 10px; height: 10px; border-radius: 50%; flex: none; margin-right: calc(var(--u) * 1); vertical-align: -1px; }
+.beta-ctree__legend .beta-ctree__key { margin-right: 0; }
+.beta-ctree__key.is-chart { background: var(--color-ocean); }
+.beta-ctree__key.is-ext { background: var(--color-burnt); }
+.beta-ctree__key.is-line { background: transparent; border: 2px solid var(--color-blue); }
+.beta-ctree__dash { display: inline-block; width: 22px; border-top: 2px dashed var(--color-glass-muted); }
+.beta-ctree__dash.is-cross { border-top-style: solid; border-top-color: var(--color-mustard); }
+/* end of block: beta-ctree-* */
+.beta-ctree-all > summary {
+  cursor: pointer;
+  margin-bottom: calc(var(--u) * 3);
+  font-family: var(--font-mono);
+  font-size: var(--text-data);
+  color: var(--color-ink);
+}
+.beta-ctree-all .scroller { max-height: 36rem; }
+.beta-ctree-all tbody th[scope="rowgroup"] { background: var(--color-paper-sunk); }

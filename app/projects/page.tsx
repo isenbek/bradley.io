@@ -10,6 +10,7 @@ import orchestraPic from "@/components/projects/thumbs/prime-orchestra.webp"
 import zooPic from "@/components/projects/thumbs/prime-zoo.webp"
 import stormPic from "@/components/projects/thumbs/storm-plates.webp"
 import collapsePic from "@/components/projects/thumbs/critical-collapse.webp"
+import treePic from "@/components/projects/thumbs/computer-tree.webp"
 
 export const metadata: Metadata = {
   title: "Projects",
@@ -245,6 +246,20 @@ const MATH: BenchItem[] = [
   },
 ]
 
+const HISTORY: BenchItem[] = [
+  {
+    href: "/projects/computer-tree",
+    title: "The Computer Tree",
+    kind: "dataset",
+    line: "The US Army's 1961 family tree of the computer, transcribed and grown one ring per decade to 2025. 542 machines from ENIAC to Fugaku; pick one and the tree draws its line home. The data and its card are free to take, weaknesses stated.",
+    tech: ["542 machines", "614 links", "CSV and JSON"],
+    pic: {
+      ...treePic,
+      alt: "The Computer Tree: a radial tree of computers around ENIAC, teal dots from the 1961 chart, orange dots added since, one lineage traced in blue",
+    },
+  },
+]
+
 const IDEAS: BenchItem[] = [
   {
     href: "/projects/turfy",
@@ -300,6 +315,7 @@ const GROUPS: Group[] = [
   { id: "platforms", title: "Tools", count: PLATFORMS.length },
   { id: "instruments", title: "Instruments", count: INSTRUMENTS.length },
   { id: "math", title: "Math", count: MATH.length },
+  { id: "history", title: "History", count: HISTORY.length },
   { id: "ideas", title: "Ideas", count: IDEAS.length + SKETCHES.length },
 ]
 
@@ -311,6 +327,7 @@ const ALL: { title: string; href: string }[] = [
   ...PLATFORMS,
   ...INSTRUMENTS,
   ...MATH,
+  ...HISTORY,
   ...IDEAS,
   ...SKETCHES.filter((k): k is Sketch & { href: string } => Boolean(k.href)),
 ]
@@ -474,6 +491,17 @@ export default async function ProjectsPage() {
           </p>
         </div>
         <BenchGrid items={MATH} />
+      </section>
+
+      <section id="history" className="beta-bench-group" aria-labelledby="history-h">
+        <div className="prose beta-sec">
+          <h2 id="history-h">History</h2>
+          <p>
+            Where the machines came from. A lineage chart drawn in 1961, carried forward to the
+            processors in your pocket and the supercomputers at the top of the list.
+          </p>
+        </div>
+        <BenchGrid items={HISTORY} />
       </section>
 
       <section id="ideas" className="beta-bench-group" aria-labelledby="ideas-h">

@@ -204,6 +204,11 @@ const SHELVES: Shelf[] = [
         name: "Critical Collapse",
         blurb: "A black hole solved in your browser.",
       },
+      {
+        href: "/projects/computer-tree",
+        name: "The Computer Tree",
+        blurb: "The 1961 family tree of the computer, grown to 2025.",
+      },
     ],
   },
   {
