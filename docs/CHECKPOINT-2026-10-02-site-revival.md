@@ -397,3 +397,21 @@ private audit report.
 - **What is still open** is listed in the private `isenbek/meatball-labs`
   repo, `docs/OPEN-ITEMS-2026-10-04.md`: tonight's TerraPulse runs, the
   owner's open questions, small loose ends, and items waiting on the owner.
+
+## 2026-10-05: Campaign Brain joins the family, lint, tidy
+
+- **Campaign Brain takes Plum**, the family's open hue (purple sides with
+  neither party). Brad's first-pass card and low-poly eagle were retuned:
+  white head, light Plum brow, a Plum seal ring. It has a full-width spine on
+  meatball.ai's house and a style guide slot; bradley.io's family dots carry
+  it from v1.0.435.
+- **meatball.ai style guide** gained an "Every property" table and registry
+  facts per slot, plus each site's own icons and share cards.
+- **Full lint clean** (eslint, tsc, the family kit). The worldevent readouts
+  showed an em dash for a missing value; now a hyphen, like the other
+  readouts (v1.0.436).
+- **Tidy:** Brad's design hand-offs left this public repo for the private
+  meatball-labs and sysforge-site repos; three merged branches deleted.
+- **The to-do list** now lives in the private `isenbek/meatball-labs` repo,
+  `docs/TODO-2026-10-05.md` (it replaces OPEN-ITEMS-2026-10-04). First item:
+  the TerraPulse nightly backup.
