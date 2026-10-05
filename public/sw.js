@@ -2,7 +2,7 @@
  * - app shell + static assets cached for offline launch
  * - live sensor JSON (/api/*) cached network-first so dashboards render the
  *   last-seen data when the network drops
- * - never touches the wargames socket, cross-origin, or non-GET requests
+ * - never touches cross-origin or non-GET requests
  */
 const VERSION = "v1"
 const SHELL = `bio-shell-${VERSION}` // navigations + static assets
@@ -51,7 +51,6 @@ self.addEventListener("fetch", (e) => {
   if (req.method !== "GET") return
   const url = new URL(req.url)
   if (url.origin !== self.location.origin) return // cross-origin (incl. wss / tiles) untouched
-  if (url.pathname.startsWith("/api/socket")) return // wargames socket.io — hands off
 
   // Live data JSON → network-first into the DATA cache (offline snapshot).
   if (url.pathname.startsWith("/api/")) {

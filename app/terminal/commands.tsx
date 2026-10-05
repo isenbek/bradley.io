@@ -111,7 +111,7 @@ export const COMMANDS: CommandInfo[] = [
   { name: "bench", desc: "the instrument pages", group: "Live" },
   { name: "uptime", desc: "the build that is answering you", group: "Live" },
 
-  { name: "wopr", desc: "shall we play a game?", group: "Play", aliases: ["joshua"] },
+  { name: "wopr", desc: "retired: the WarGames homage", group: "Play", aliases: ["joshua"] },
   { name: "matrix", desc: "you know what this does", group: "Play" },
   {
     name: "theme",

@@ -135,8 +135,8 @@
   white-space: nowrap;
 }
 
-/* What the terminal is attached to: the build it was served by, or the WOPR
-   line while one is up. A fact, so it is steady. */
+/* What the terminal is attached to: the build it was served by. A fact, so it
+   is steady. */
 .term__status {
   justify-self: end;
   font-size: 10.5px;
@@ -145,8 +145,6 @@
   text-transform: uppercase;
   white-space: nowrap;
 }
-.term[data-mode="wopr"] .term__status { color: var(--term-fg); }
-.term[data-mode="dialling"] .term__status { color: var(--term-warn); }
 
 /* ---- The glass ------------------------------------------------------------ */
 
@@ -388,7 +386,6 @@
 }
 .term__banner--wopr { font-size: clamp(6px, 2.2cqw, 13px); }
 
-.term__wopr { color: var(--term-fg); }
 
 /* ---- The prompt ------------------------------------------------------------ */
 
@@ -431,26 +428,11 @@
   box-shadow: inset 0 0 0 1px var(--term-fg);
   animation: none;
 }
-.term__cursor--typing { animation: none; margin-left: 1px; }
 @keyframes term-blink {
   0%, 50% { opacity: 1; }
   50.01%, 100% { opacity: 0.15; }
 }
 
-/* A real request is out and has not come back. */
-.term__wait { color: var(--term-warn); }
-.term__wait-dots::after {
-  content: "...";
-  display: inline-block;
-  width: 3ch;
-  overflow: hidden;
-  vertical-align: bottom;
-  animation: term-dots 1.2s steps(4, jump-none) infinite;
-}
-@keyframes term-dots {
-  0% { width: 0; }
-  100% { width: 3ch; }
-}
 
 /* ---- The rain -------------------------------------------------------------- */
 
@@ -560,7 +542,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .term__cursor { animation: none; }
-  .term__wait-dots::after { animation: none; width: 3ch; }
   .term__key, .term__cmd, .term__more, .term-run code { transition: none; }
   .term__key:active { transform: none; }
   .term::after { display: none; }

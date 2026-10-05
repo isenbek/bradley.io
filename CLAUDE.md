@@ -31,7 +31,7 @@ Charts and MapLibre colour come from `lib/beta/chart-theme.ts` — one source. M
 - **Styling**: Tailwind CSS 4 (`@theme` in `globals.css` compiles the kit's tokens) + the kit's plain-CSS components
 - **Maps**: MapLibre GL (`/dragonfli/gps`, `/dragonfli/airspace`)
 - **Packages**: **bun** (`bun.lock` is in git; systemd still runs Node for `next start`). 12 runtime dependencies — kept deliberately small, verify anything new is actually needed
-- **Wargames**: standalone Socket.io server (`wargames-server.js`, port 3333) with Ollama-powered WOPR; not currently linked from any page
+- **Wargames**: RETIRED 2026-10-05. The WOPR server (`wargames-server.js`, Socket.io on 3333, PM2) and the `/terminal` client are archived at git tag `archive/wargames`; `wopr` in the terminal now prints a retirement note
 
 ### Project Structure
 ```
@@ -65,8 +65,6 @@ bradleyio/
 ├── scripts/                # data pipelines (activity, pilot, mcp-catalog,
 │                           # visitors/worldevent collectors), vendor/sync helpers
 ├── public/data/            # pipeline output the pages read (committed by deploy)
-├── wargames-server.js      # standalone Socket.io + Ollama server (PM2)
-├── ecosystem.config.js     # PM2 config (wargames only)
 ├── bradley-io.service      # systemd unit (Next.js production)
 └── deploy.sh               # THE deploy path — see below
 ```
@@ -75,7 +73,7 @@ bradleyio/
 
 ```bash
 bun install            # Install dependencies (prefer bun over npm)
-npm run dev            # Next.js + wargames server (concurrently)
+npm run dev            # Next.js dev (same as dev:next)
 npm run dev:next       # Next.js dev only (port 32221)
 npm run dev:preview    # dev server on :32290 with its own build dir (.next-preview);
                        # safe beside the live service, used for agent screenshots
@@ -93,7 +91,6 @@ npm run lint           # eslint .
 ```
 
 - **Next.js**: systemd service `bradley-io` on port 32221
-- **Wargames**: PM2 process `bradley-io-wargames`
 - **Nginx**: `bradley.io` and `new.bradley.io` proxy to 127.0.0.1:32221
 - **Never bare-build in the working directory** — it swaps `.next` under the live service and 404s the CSS for real visitors. deploy.sh stages safely and keeps `.next-previous` for rollback.
 - deploy.sh commits `public/` + build-info + package.json/bun.lock, but **NOT `next.config.mjs` or other root files** — commit those by hand or the deployed site and the repo disagree.

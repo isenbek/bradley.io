@@ -4,7 +4,7 @@ import type { Metadata } from "next"
 export const metadata: Metadata = {
   title: "Terminal · bio·bradley.io",
   description:
-    "The site as a command line. Type help: the resume, the projects, live instrument status, the build that is answering you, and a WOPR to play against.",
+    "The site as a command line. Type help: the resume, the projects, live instrument status, and the build that is answering you.",
   alternates: { canonical: "/terminal" },
   openGraph: {
     title: "Terminal · bio·bradley.io",

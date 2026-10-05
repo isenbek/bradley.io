@@ -52,8 +52,6 @@ export default tseslint.config(
       "scripts/**",
       "public/**",
       "next-env.d.ts",
-      "wargames-server.js",
-      "ecosystem.config.js",
       "telemetry/**",
     ],
   }

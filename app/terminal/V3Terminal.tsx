@@ -46,27 +46,17 @@ import {
 import { MatrixRain, matrixStill } from "./Matrix"
 import { RUN_EVENT } from "./RunWord"
 import type { TermData } from "./types"
-import {
-  dial,
-  isCanned,
-  isScripted,
-  MAX_LINE,
-  REPLY_TIMEOUT_MS,
-  teletype,
-  WOPR_MODEL,
-  woprEndpoint,
-  type WoprDown,
-  type WoprLink,
-  type WoprMessage,
-} from "./wopr"
 
 /**
- * The terminal: a prompt, a transcript, and three modes.
+ * The terminal: a prompt and a transcript. Commands come from ./commands.tsx,
+ * printed from data the server assembled (./load.ts) or asked of /api/now when
+ * typed.
  *
- *   shell     commands from ./commands.tsx, printed from data the server
- *             assembled (./load.ts) or asked of /api/now when typed
- *   dialling  `wopr` was typed and the socket has not answered yet
- *   wopr      every line goes to wargames-server.js until the line drops
+ * WOPR, RETIRED. Until 2026-10-05 `wopr` dialled wargames-server.js, a
+ * Socket.io server on this box that played the computer from WarGames (1983)
+ * through a local model, and the terminal had a second mode for the call. The
+ * server was sunset that day; `wopr` and `joshua` now say so. The server and
+ * the client half are archived at git tag archive/wargames.
  *
  * KEYBOARD. There is one real <input>, laid invisibly over the prompt line so
  * a tap or a click on the line focuses it the way any text field is focused
@@ -83,7 +73,7 @@ import {
  *                complete, Tab is left alone, so the keyboard can still leave
  *                the terminal.
  *   Ctrl+L       clear        Ctrl+U  erase the line
- *   Ctrl+C, Esc  drop the WOPR line, stop the rain, or abandon the line
+ *   Ctrl+C, Esc  stop the rain, or abandon the line
  *
  * FOCUS. On a machine with a mouse the prompt takes focus on load (without
  * scrolling the page to it). On a touch device it does not, because that
@@ -92,11 +82,8 @@ import {
  * command, or finished a text selection.
  *
  * NOTHING IS FAKED. A command that needs the network says "asking", then
- * prints the answer or says there was none. WOPR either connects or is
- * reported as down. See ./wopr.ts for the two rules that mode follows.
+ * prints the answer or says there was none.
  */
-
-type Mode = "shell" | "dialling" | "wopr"
 
 interface Entry {
   id: number
@@ -107,14 +94,14 @@ interface Entry {
 }
 
 const SHELL_PROMPT = "bradley@io:~$"
-const WOPR_PROMPT = ">"
+/** The longest line the terminal takes. */
+const MAX_LINE = 240
 const MAX_ENTRIES = 300
 const PHOSPHOR_KEY = "term-phosphor"
 /** Air kept between the monitor and the page's fixed chrome, in px. */
 const REVEAL_GAP = 8
 
-const SHELL_KEYS = ["help", "about", "now", "projects", "work", "stats", "wopr"]
-const WOPR_KEYS = ["help", "status", "run simulation", "joshua", "logout"]
+const SHELL_KEYS = ["help", "about", "now", "projects", "work", "stats"]
 
 /* The original terminal's banner (git show 63d43d0:app/terminal/page.tsx). */
 const BANNER = `██████╗ ██████╗  █████╗ ██████╗ ██╗     ███████╗██╗   ██╗   ██╗ ██████╗
@@ -151,34 +138,24 @@ function commonPrefix(words: string[]): string {
 }
 
 /**
- * A reply, typed out. The original WOPR page typed at 30 ms a character; this
- * keeps that pace for a short line and speeds up so that no reply takes more
- * than about five seconds. With reduced motion the text is simply there.
- * A screen reader gets the whole line once, not a character at a time.
+ * What `wopr` and `joshua` print now. The banner is the original WOPR page's;
+ * the line under it is the film's last word on the matter.
  */
-function Typed({ text }: { text: string }) {
-  const [n, setN] = useState(() => (reducedMotion() ? text.length : 0))
-
-  useEffect(() => {
-    if (reducedMotion()) return
-    const step = Math.max(1, Math.ceil(text.length / 170))
-    const timer = setInterval(() => {
-      setN((v) => {
-        if (v + step >= text.length) clearInterval(timer)
-        return Math.min(text.length, v + step)
-      })
-    }, 30)
-    return () => clearInterval(timer)
-  }, [text])
-
+function WoprRetired({ backdoor }: { backdoor: boolean }) {
   return (
-    <>
-      <span aria-hidden="true">
-        {text.slice(0, n)}
-        {n < text.length ? <span className="term__cursor term__cursor--typing"> </span> : null}
-      </span>
-      <span className="term__sr">{text}</span>
-    </>
+    <div className="term__out">
+      <pre className="term__banner term__banner--wopr" aria-hidden="true">
+        {WOPR_BANNER}
+      </pre>
+      <div className="term__mute">
+        {backdoor ? "The back door is closed. " : ""}WOPR was a homage to WarGames (1983): a real
+        server on this box that played the film&rsquo;s computer through a local model. It was
+        retired on 5 October 2026, and its code is archived in the site&rsquo;s repository.
+      </div>
+      <div className="term__accent">
+        A STRANGE GAME. THE ONLY WINNING MOVE IS NOT TO PLAY.
+      </div>
+    </div>
   )
 }
 
@@ -206,9 +183,6 @@ export function V3Terminal({ data }: { data: TermData }) {
   const [input, setInput] = useState("")
   const [caret, setCaret] = useState(0)
   const [focused, setFocused] = useState(false)
-  const [mode, setMode] = useState<Mode>("shell")
-  const [waitingSince, setWaitingSince] = useState<number | null>(null)
-  const [waited, setWaited] = useState(0)
   const [rain, setRain] = useState(false)
   const [phosphor, setPhosphor] = useState<Phosphor>("blue")
   /** True while there is output under the bottom edge of the glass. */
@@ -232,14 +206,6 @@ export function V3Terminal({ data }: { data: TermData }) {
   const draft = useRef("")
   const lastTab = useRef("")
 
-  const link = useRef<WoprLink | null>(null)
-  const modeRef = useRef<Mode>("shell")
-  const waiting = useRef(false)
-  const replyTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
-  /** Scripted "wopr" lines still on their way, which must not end a wait for the model. */
-  const scriptedDue = useRef(0)
-  const saidLogout = useRef(false)
-
   // ---- The transcript -------------------------------------------------------
 
   const append = useCallback((prompt: string | null, typed: string, output: ReactNode) => {
@@ -261,11 +227,6 @@ export function V3Terminal({ data }: { data: TermData }) {
         el.setSelectionRange(value.length, value.length)
       }
     })
-  }, [])
-
-  const switchMode = useCallback((m: Mode) => {
-    modeRef.current = m
-    setMode(m)
   }, [])
 
   /** Whether there is output under the bottom edge, for the "more below" key. */
@@ -321,7 +282,7 @@ export function V3Terminal({ data }: { data: TermData }) {
 
   useLayoutEffect(() => {
     pin()
-  }, [entries, mode, waitingSince, pin])
+  }, [entries, pin])
 
   useEffect(() => {
     const body = bodyRef.current
@@ -391,231 +352,7 @@ export function V3Terminal({ data }: { data: TermData }) {
       /* Private window or blocked storage: the default phosphor is fine. */
     }
     if (finePointer()) inputRef.current?.focus({ preventScroll: true })
-    return () => {
-      if (replyTimer.current) clearTimeout(replyTimer.current)
-      link.current?.hangup()
-    }
   }, [])
-
-  useEffect(() => {
-    if (waitingSince === null) return
-    const timer = setInterval(() => setWaited(Math.floor((Date.now() - waitingSince) / 1000)), 1000)
-    return () => clearInterval(timer)
-  }, [waitingSince])
-
-  // ---- WOPR -----------------------------------------------------------------
-
-  const stopWaiting = useCallback(() => {
-    waiting.current = false
-    if (replyTimer.current) clearTimeout(replyTimer.current)
-    replyTimer.current = null
-    setWaitingSince(null)
-    setWaited(0)
-  }, [])
-
-  const onWoprMessage = useCallback(
-    (m: WoprMessage) => {
-      if (m.type === "system") {
-        // The console around the machine (LOGON, the games list, the status
-        // report). Not attention: nothing has gone wrong.
-        append(null, "", <div className="term__out term__mute term__pre">{m.text}</div>)
-        return
-      }
-      if (isCanned(m.text)) {
-        stopWaiting()
-        append(
-          null,
-          "",
-          <div className="term__out term__warn">
-            [MODEL OFFLINE] The server could not reach its local model and sent a stock line in its
-            place. That is not a reply, so it is not printed. The scripted commands still work:{" "}
-            <Cmd c="help" />.
-          </div>,
-        )
-        return
-      }
-      if (scriptedDue.current > 0) scriptedDue.current -= 1
-      else stopWaiting()
-      const said = teletype(m.text)
-      if (!said) {
-        append(
-          null,
-          "",
-          <div className="term__out term__warn">
-            [EMPTY REPLY] The model answered, and there was nothing in it to print.
-          </div>,
-        )
-        return
-      }
-      append(
-        null,
-        "",
-        <div className="term__out term__wopr term__pre">
-          <Typed text={said} />
-        </div>,
-      )
-    },
-    [append, stopWaiting],
-  )
-
-  const onWoprDown = useCallback(
-    (why: WoprDown, host: string) => {
-      const wasUp = modeRef.current === "wopr"
-      link.current = null
-      stopWaiting()
-      switchMode("shell")
-      if (why === "no-answer" || why === "no-client") {
-        append(
-          null,
-          "",
-          <div className="term__out">
-            <div className="term__warn">
-              [OFFLINE] NO CARRIER.{" "}
-              {why === "no-client"
-                ? "The socket client did not load, so the call was never placed."
-                : `WOPR did not answer at ${host}.`}
-            </div>
-            <div className="term__mute">
-              It is a real server on this box, and when it is down there is no one to play. Nothing
-              here is simulated.
-            </div>
-            <div className="term__mute">
-              &ldquo;A strange game. The only winning move is not to play.&rdquo; (WarGames, 1983)
-            </div>
-          </div>,
-        )
-        return
-      }
-      if (why === "hangup" && !wasUp) {
-        append(null, "", <div className="term__out term__mute">Hung up before WOPR answered.</div>)
-        return
-      }
-      const unasked = why === "dropped" && !saidLogout.current
-      append(
-        null,
-        "",
-        <div className={`term__out ${unasked ? "term__warn" : "term__mute"}`}>
-          CONNECTION TERMINATED
-          {unasked ? ". The far end closed the line." : null}
-        </div>,
-      )
-    },
-    [append, stopWaiting, switchMode],
-  )
-
-  const startWopr = useCallback(
-    (raw: string, backdoor: boolean) => {
-      const { host } = woprEndpoint()
-      append(SHELL_PROMPT, raw, <div className="term__out term__mute">DIALLING {host} ...</div>)
-      switchMode("dialling")
-      saidLogout.current = false
-      // The server greets with two typed lines; neither is the model.
-      scriptedDue.current = 2
-      const l: WoprLink = dial({
-        onUp: () => {
-          switchMode("wopr")
-          append(
-            null,
-            "",
-            <div className="term__out">
-              <pre className="term__banner term__banner--wopr" aria-hidden="true">
-                {WOPR_BANNER}
-              </pre>
-              <div className="term__accent">WAR OPERATION PLAN RESPONSE · link up to {host}</div>
-              <div className="term__mute">
-                A homage to WarGames (1983), and a real server on this box. Its set pieces are
-                scripted. Anything else you type is answered by a local model ({WOPR_MODEL} on
-                Ollama); nothing goes to a cloud.
-              </div>
-              <div className="term__mute">
-                <Cmd c="help" /> lists the games. <Cmd c="logout" /> hangs up.
-              </div>
-            </div>,
-          )
-          if (backdoor) {
-            // `joshua` at the shell is the film's back door: dial, let the
-            // greeting finish, then say the password.
-            setTimeout(() => {
-              if (link.current !== l) return
-              scriptedDue.current += 1
-              append(WOPR_PROMPT, "joshua", null)
-              l.send("joshua")
-            }, 3600)
-          }
-        },
-        onMessage: onWoprMessage,
-        onDown: (why) => {
-          if (link.current === l) onWoprDown(why, host)
-        },
-      })
-      link.current = l
-    },
-    [append, onWoprDown, onWoprMessage, switchMode],
-  )
-
-  const sayToWopr = useCallback(
-    (raw: string) => {
-      const text = raw.trim()
-      const l = link.current
-      if (!text || !l) {
-        append(WOPR_PROMPT, "", null)
-        return
-      }
-      history.current.push(text)
-      if (text.toLowerCase() === "clear") {
-        setEntries([])
-        setWelcome(false)
-        return
-      }
-      const scripted = isScripted(text)
-      if (!scripted && waiting.current) {
-        append(
-          WOPR_PROMPT,
-          text,
-          <div className="term__out term__mute">
-            One question at a time. Still waiting on the model for the last one.
-          </div>,
-        )
-        return
-      }
-      append(WOPR_PROMPT, text, null)
-      l.send(text)
-
-      const lower = text.toLowerCase()
-      if (!scripted) {
-        waiting.current = true
-        setWaited(0)
-        setWaitingSince(Date.now())
-        replyTimer.current = setTimeout(() => {
-          if (!waiting.current) return
-          stopWaiting()
-          append(
-            null,
-            "",
-            <div className="term__out term__warn">
-              [NO REPLY] {REPLY_TIMEOUT_MS / 1000} s and nothing from the model. The line is up; the
-              model behind it ({WOPR_MODEL}) is not answering, or is still loading. If it answers
-              late, the reply will appear here. The scripted commands work without it:{" "}
-              <Cmd c="status" />, <Cmd c="run simulation" />.
-            </div>,
-          )
-        }, REPLY_TIMEOUT_MS)
-        return
-      }
-      if (lower === "joshua" || lower === "run simulation" || lower.includes("global thermonuclear war")) {
-        scriptedDue.current += 1
-      }
-      if (lower === "logout" || lower === "exit") {
-        saidLogout.current = true
-        // The server says goodbye and closes the line a second later. If it
-        // does not, this end does.
-        setTimeout(() => {
-          if (link.current === l) l.hangup()
-        }, 4000)
-      }
-    },
-    [append, stopWaiting],
-  )
 
   // ---- The shell ------------------------------------------------------------
 
@@ -751,7 +488,7 @@ export function V3Terminal({ data }: { data: TermData }) {
           return out(<div className="term__out term__mute">Entering the matrix...</div>)
         }
         case "wopr":
-          return startWopr(text, word === "joshua")
+          return out(<WoprRetired backdoor={word === "joshua"} />)
         case "sudo":
           return out(
             <div className="term__out term__mute">
@@ -770,29 +507,18 @@ export function V3Terminal({ data }: { data: TermData }) {
           return out(<NotFound word={parts[0]} />)
       }
     },
-    [append, data, phosphor, startWopr],
+    [append, data, phosphor],
   )
 
-  /** Run a line in whatever mode the terminal is in. */
+  /** Run a line. */
   const submit = useCallback(
     (raw: string) => {
       hIdx.current = -1
       draft.current = ""
       lastTab.current = ""
-      if (modeRef.current === "dialling") {
-        append(
-          null,
-          "",
-          <div className="term__out term__mute">
-            Still dialling, so that line went nowhere. <kbd className="term__kbd">Esc</kbd> cancels the call.
-          </div>,
-        )
-        return
-      }
-      if (modeRef.current === "wopr") sayToWopr(raw)
-      else runShell(raw)
+      runShell(raw)
     },
-    [append, runShell, sayToWopr],
+    [runShell],
   )
 
   // Commands printed in the transcript are buttons that run themselves. They
@@ -832,10 +558,6 @@ export function V3Terminal({ data }: { data: TermData }) {
   }, [tap])
 
   // ---- Keys -----------------------------------------------------------------
-
-  function hangUp() {
-    link.current?.hangup()
-  }
 
   function complete() {
     const before = input.slice(0, caret)
@@ -906,7 +628,7 @@ export function V3Terminal({ data }: { data: TermData }) {
       const h = history.current
       setLine(hIdx.current === -1 ? draft.current : h[h.length - 1 - hIdx.current])
     } else if (e.key === "Tab" && !e.shiftKey && !ctrl && !e.altKey) {
-      if (mode === "shell" && complete()) e.preventDefault()
+      if (complete()) e.preventDefault()
     } else if (e.key.toLowerCase() === "l" && ctrl) {
       e.preventDefault()
       setEntries([])
@@ -918,10 +640,7 @@ export function V3Terminal({ data }: { data: TermData }) {
       const el = e.currentTarget
       const selecting = (el.selectionStart ?? 0) !== (el.selectionEnd ?? 0)
       if (e.key !== "Escape" && selecting) return // Ctrl+C with a selection is a copy.
-      if (mode !== "shell") {
-        e.preventDefault()
-        hangUp()
-      } else if (input) {
+      if (input) {
         e.preventDefault()
         append(SHELL_PROMPT, `${input}^C`, null)
         setLine("")
@@ -952,9 +671,7 @@ export function V3Terminal({ data }: { data: TermData }) {
     inputRef.current?.focus({ preventScroll: true })
   }
 
-  const prompt = mode === "wopr" ? WOPR_PROMPT : mode === "dialling" ? "" : SHELL_PROMPT
   const at = Math.min(caret, input.length)
-  const keys = mode === "wopr" ? WOPR_KEYS : SHELL_KEYS
 
   return (
     <RunContext.Provider value={tap}>
@@ -962,7 +679,6 @@ export function V3Terminal({ data }: { data: TermData }) {
         ref={termRef}
         className="term"
         data-phosphor={phosphor}
-        data-mode={mode}
         data-open={opened ? "true" : undefined}
         onClick={onGlassClick}
       >
@@ -972,10 +688,8 @@ export function V3Terminal({ data }: { data: TermData }) {
             <span />
             <span />
           </div>
-          <div className="term__title">{mode === "wopr" ? "WOPR" : "bradley@io: ~"}</div>
-          <div className="term__status">
-            {mode === "wopr" ? "link up" : mode === "dialling" ? "dialling" : data.build.version}
-          </div>
+          <div className="term__title">bradley@io: ~</div>
+          <div className="term__status">{data.build.version}</div>
         </div>
 
         <div ref={tubeRef} className="term__tube">
@@ -999,15 +713,9 @@ export function V3Terminal({ data }: { data: TermData }) {
               ))}
             </div>
 
-            {waitingSince !== null ? (
-              <div className="term__wait">
-                waiting on the local model<span className="term__wait-dots" aria-hidden="true" /> {waited} s
-              </div>
-            ) : null}
-
             <form ref={formRef} className="term__form" onSubmit={onSubmit}>
               <label className="term__line term__input-line">
-                <span className="term__prompt">{prompt}</span>
+                <span className="term__prompt">{SHELL_PROMPT}</span>
                 <span className="term__typed" aria-hidden="true">
                   {input.slice(0, at)}
                   <span className="term__cursor" data-focused={focused ? "true" : "false"}>
@@ -1029,7 +737,7 @@ export function V3Terminal({ data }: { data: TermData }) {
                   onKeyDown={onKeyDown}
                   onFocus={() => setFocused(true)}
                   onBlur={() => setFocused(false)}
-                  aria-label={mode === "wopr" ? "Say to WOPR" : "Terminal command"}
+                  aria-label="Terminal command"
                   autoComplete="off"
                   autoCorrect="off"
                   autoCapitalize="none"
@@ -1050,7 +758,7 @@ export function V3Terminal({ data }: { data: TermData }) {
         </div>
 
         <div className="term__keys">
-          {keys.map((c) => (
+          {SHELL_KEYS.map((c) => (
             <button key={c} type="button" className="term__key" onClick={() => tap(c)}>
               {c}
             </button>
@@ -1069,7 +777,7 @@ export function V3Terminal({ data }: { data: TermData }) {
           <kbd>Ctrl</kbd>+<kbd>L</kbd> clear
         </span>
         <span>
-          <kbd>Esc</kbd> cancel or hang up
+          <kbd>Esc</kbd> cancel
         </span>
       </div>
     </RunContext.Provider>

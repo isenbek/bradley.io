@@ -45,11 +45,13 @@ export default async function TerminalPage() {
           All of it. <RunWord c="now" /> and <RunWord c="ping" /> ask this server what its instruments are
           doing at the moment you press Enter, and an instrument that is switched off is printed as
           offline. <RunWord c="stats" />, <RunWord c="work" /> and <RunWord c="uptime" /> read the same files
-          as the pages they summarise. <RunWord c="wopr" /> dials a real server on this machine, a
-          homage to <i>WarGames</i>{" "}that was added the day after this site&rsquo;s first commit, in
-          August 2025: its set pieces are scripted and the rest is answered by a language model
-          running here, not in a cloud. When that server is down the command says so and stops.{" "}
-          <RunWord c="matrix" /> is just for fun.
+          as the pages they summarise. <RunWord c="matrix" /> is just for fun.
+        </p>
+        <p>
+          <RunWord c="wopr" /> used to dial a real server on this machine, a homage to{" "}
+          <i>WarGames</i>{" "}added the day after this site&rsquo;s first commit, in August 2025: its
+          set pieces were scripted and the rest was answered by a language model running here. It was
+          retired on 5 October 2026, and the command now says so.
         </p>
       </div>
     </div>

@@ -49,9 +49,9 @@ if [[ -n "$(git status --porcelain)" ]]; then
              package.json bun.lock next.config.mjs playwright.config.ts \
              tsconfig.json postcss.config.mjs \
              eslint.config.mjs .gitignore CLAUDE.md deploy.sh \
-             bradley-io.service bradley-cam.service bradley-cam.timer ecosystem.config.js \
+             bradley-io.service bradley-cam.service bradley-cam.timer \
              housecalls-rfp.service housecalls-rfp.timer \
-             wargames-server.js .env; do
+             .env; do
         git add "$p" 2>/dev/null || true
     done
     # Untracked files outside the paths above (docs drafts) make the tree
@@ -150,16 +150,9 @@ step "Restarting bradley-io service..."
 sudo systemctl restart bradley-io
 ok "Systemd service restarted"
 
-# 8. Restart PM2 wargames
-step "Restarting wargames server..."
-if pm2 describe bradley-io-wargames >/dev/null 2>&1; then
-    pm2 restart bradley-io-wargames
-    ok "Wargames restarted"
-else
-    pm2 start ecosystem.config.js
-    pm2 save
-    ok "Wargames started"
-fi
+# (Step 8 restarted the PM2 wargames server. WOPR was retired on 2026-10-05;
+# the server is archived at git tag archive/wargames. The numbers below are
+# kept so older notes that cite "step 9" or "step 10" still point right.)
 
 # 9. Health check — poll until it actually answers.
 #
