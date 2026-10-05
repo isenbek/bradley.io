@@ -1,10 +1,10 @@
 {
-  "generated": "2026-10-04T09:21:29.527535+00:00",
+  "generated": "2026-10-05T09:22:19.376896+00:00",
   "org": "tinymachines",
   "totalRepos": 71,
   "firstCommit": "2016-02-27T16:07:26Z",
-  "latestCommit": "2026-10-04T04:01:21Z",
-  "totalCommits": 6861,
+  "latestCommit": "2026-10-05T01:03:00Z",
+  "totalCommits": 6883,
   "languages": {
     "Python": 27,
     "C": 7,
@@ -7051,9 +7051,15 @@
     },
     {
       "date": "2026-10-04",
-      "commits": 13,
+      "commits": 34,
+      "repos": 2,
+      "intensity": 3
+    },
+    {
+      "date": "2026-10-05",
+      "commits": 1,
       "repos": 1,
-      "intensity": 2
+      "intensity": 1
     }
   ],
   "phases": [
@@ -8180,14 +8186,14 @@
     },
     {
       "name": "public",
-      "description": "This repository contains the site, API, and documentation for a project focused on recreating the 6502 processor and its use in the Zelda game. The work involves creating interactive lessons covering various aspects of the system, including graphics, sound, and gameplay mechanics, with a particular emphasis on visual elements like screens and animations. The codebase utilizes TypeScript and employs a stack of technologies such as Next.js for the frontend and FastAPI for the backend.",
+      "description": "This repository contains the site, API, and documentation for a 6502 work, primarily focused on recreating and analyzing classic games like Mario. The project utilizes TypeScript and involves detailed lessons, benchmarking tools, and development infrastructure to simulate and understand the behavior of the 6502 processor within these game environments.",
       "language": "TypeScript",
-      "commits": 830,
+      "commits": 850,
       "firstCommit": "2026-08-22T15:44:09Z",
-      "lastCommit": "2026-10-04T04:01:21Z",
+      "lastCommit": "2026-10-05T01:03:00Z",
       "phase": "NES Simulation Development",
       "descriptionSource": "ai",
-      "descriptionGeneratedAt": "2026-10-04",
+      "descriptionGeneratedAt": "2026-10-05",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
@@ -8234,7 +8240,7 @@
       "firstCommit": "2026-09-03T00:11:39Z",
       "lastCommit": "2026-09-27T23:15:03Z",
       "phase": "NES Simulation Development",
-      "descriptionSource": "ai",
+      "descriptionSource": "reused",
       "descriptionGeneratedAt": "2026-10-04",
       "descriptionModel": "ollama:gemma3:4b"
     },
@@ -8246,27 +8252,27 @@
       "firstCommit": "2026-09-05T16:29:39Z",
       "lastCommit": "2026-10-03T21:00:48Z",
       "phase": "NES Simulation Development",
-      "descriptionSource": "ai",
+      "descriptionSource": "reused",
       "descriptionGeneratedAt": "2026-10-04",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "nes-bench",
-      "description": "This repository documents the construction of a custom NES cartridge reader, likely for reverse engineering or emulation purposes. The commits detail the creation of wiring diagrams, calibration procedures, and firmware development related to interfacing with an ESP32 microcontroller and a custom-built cartridge adapter. It appears to be a comprehensive record of the hardware and software development process.",
+      "description": "This repository appears to be developing a hardware emulation system, likely for retro gaming consoles like the NES. It involves building and calibrating custom hardware boards that mimic the functionality of the original console's cartridge reader and associated electronics, with a focus on capturing timing data and frame information during gameplay. The commits demonstrate efforts to create a calibration cart, build a serial bridge, and manage related firmware and tooling.",
       "language": "Python",
-      "commits": 265,
+      "commits": 267,
       "firstCommit": "2026-09-07T01:23:48Z",
-      "lastCommit": "2026-10-03T18:23:25Z",
+      "lastCommit": "2026-10-04T19:43:04Z",
       "phase": "NES Controller Scripting",
       "descriptionSource": "ai",
-      "descriptionGeneratedAt": "2026-10-04",
+      "descriptionGeneratedAt": "2026-10-05",
       "descriptionModel": "ollama:gemma3:4b"
     }
   ],
   "aiSummary": {
-    "callsOk": 4,
+    "callsOk": 2,
     "callsFailed": 0,
-    "reused": 51,
+    "reused": 53,
     "kept": 0,
     "skippedByLimit": 0,
     "skippedByBudget": 0,
@@ -8276,11 +8282,11 @@
       "reused": 11
     },
     "descriptionSources": {
-      "reused": 40,
+      "reused": 42,
       "github": 13,
       "commits": 10,
       "none": 4,
-      "ai": 4
+      "ai": 2
     },
     "limitAi": null,
     "budgetMin": 15.0,

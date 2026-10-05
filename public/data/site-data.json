@@ -1,9 +1,9 @@
 {
-  "generated": "2026-10-05T04:01:49.838950+00:00",
+  "generated": "2026-10-05T20:02:17.962082+00:00",
   "stats": {
     "totalProjects": 84,
-    "totalSessions": 336,
-    "totalMessages": 1112600,
+    "totalSessions": 340,
+    "totalMessages": 1118247,
     "activeDays": 190,
     "streak": 131,
     "coverage": {
@@ -26,14 +26,36 @@
   "activityFeed": [
     {
       "type": "claude-code",
-      "title": "Claude Code: 1,205 transcript records",
-      "description": "15 sessions active, 346 tool calls",
+      "title": "Claude Code: 6,852 transcript records",
+      "description": "34 sessions active, 2,008 tool calls",
       "projectSlug": null,
       "category": null,
-      "date": "2026-10-05T03:56:48.813000Z",
+      "date": "2026-10-05T20:00:42.089000Z",
       "metadata": {
-        "messages": 1205,
-        "sessions": 15
+        "messages": 6852,
+        "sessions": 34
+      }
+    },
+    {
+      "type": "github",
+      "title": "Activity on isenbek/terrapulse",
+      "description": "Climate intelligence platform: ingest, normalize, and serve environmental data",
+      "projectSlug": "terrapulse",
+      "category": "systems",
+      "date": "2026-10-05T19:57:05Z",
+      "metadata": {
+        "repo": "isenbek/terrapulse"
+      }
+    },
+    {
+      "type": "github",
+      "title": "Activity on Sysforge-AI/sfproject",
+      "description": "Repository sfproject",
+      "projectSlug": "sysforge",
+      "category": "systems",
+      "date": "2026-10-05T07:30:15Z",
+      "metadata": {
+        "repo": "Sysforge-AI/sfproject"
       }
     },
     {
@@ -46,28 +68,6 @@
       "metadata": {
         "messages": 6263,
         "sessions": 18
-      }
-    },
-    {
-      "type": "github",
-      "title": "Activity on Sysforge-AI/sfproject",
-      "description": "Repository sfproject",
-      "projectSlug": "sysforge",
-      "category": "systems",
-      "date": "2026-10-04T07:30:44Z",
-      "metadata": {
-        "repo": "Sysforge-AI/sfproject"
-      }
-    },
-    {
-      "type": "github",
-      "title": "Activity on isenbek/terrapulse",
-      "description": "Climate intelligence platform: ingest, normalize, and serve environmental data",
-      "projectSlug": "terrapulse",
-      "category": "systems",
-      "date": "2026-10-04T03:11:18Z",
-      "metadata": {
-        "repo": "isenbek/terrapulse"
       }
     },
     {
@@ -625,6 +625,78 @@
   ],
   "projects": [
     {
+      "slug": "terrapulse",
+      "name": "terrapulse",
+      "tagline": "Climate intelligence platform: ingest, normalize, and serve environmental data",
+      "description": "Climate intelligence platform: ingest, normalize, and serve environmental data",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": true,
+      "status": "active",
+      "technologies": [
+        "PostgreSQL",
+        "DuckDB",
+        "Python",
+        "systemd",
+        "FastAPI",
+        "Nginx",
+        "WebSocket",
+        "JWT"
+      ],
+      "lastActivity": "2026-10-05T19:57:05Z",
+      "totalMessages": 84885,
+      "sources": {
+        "github": {
+          "repo": "isenbek/terrapulse",
+          "stars": 1,
+          "language": "HTML",
+          "lastPush": "2026-10-05"
+        },
+        "claudeCode": {
+          "totalSessions": 16,
+          "totalMessages": 84885,
+          "lastSession": "2026-10-05"
+        }
+      },
+      "provenance": {
+        "tagline": "github",
+        "description": "github"
+      },
+      "categoryBasis": "keywords"
+    },
+    {
+      "slug": "sysforge",
+      "name": "sfproject",
+      "tagline": "Building resilient systems, reliably.",
+      "description": "The sfproject repository is a TypeScript project focused on setting up a SysForge system, including its backend and deployment configuration. It initially establishes the core project structure and then adds integration tests for Forge Console, along with an agentic API route for mesh interaction. The repository also includes production deployment details such as systemd, nginx, and SSL setup.",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": true,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-10-05T07:30:15Z",
+      "totalMessages": 0,
+      "sources": {
+        "github": {
+          "repo": "Sysforge-AI/sfproject",
+          "stars": 0,
+          "language": "TypeScript",
+          "lastPush": "2026-10-05"
+        },
+        "timeline": {
+          "org": "Sysforge-AI",
+          "repo": "sfproject",
+          "commits": 261,
+          "descriptionSource": "ai"
+        }
+      },
+      "provenance": {
+        "tagline": "previous",
+        "description": "timeline"
+      },
+      "categoryBasis": "keywords"
+    },
+    {
       "slug": "myfw",
       "name": "MYFW",
       "tagline": "A multi-server application for managing documents, wills and beneficiaries.",
@@ -644,11 +716,11 @@
         "TypeScript"
       ],
       "lastActivity": "2026-10-05",
-      "totalMessages": 51847,
+      "totalMessages": 52298,
       "sources": {
         "claudeCode": {
           "totalSessions": 2,
-          "totalMessages": 51847,
+          "totalMessages": 52298,
           "lastSession": "2026-10-05"
         }
       },
@@ -669,11 +741,11 @@
       "status": "active",
       "technologies": [],
       "lastActivity": "2026-10-05",
-      "totalMessages": 55961,
+      "totalMessages": 56252,
       "sources": {
         "claudeCode": {
           "totalSessions": 5,
-          "totalMessages": 55961,
+          "totalMessages": 56252,
           "lastSession": "2026-10-05"
         }
       },
@@ -682,6 +754,37 @@
         "description": "claude-web"
       },
       "categoryBasis": "default"
+    },
+    {
+      "slug": "cbloom",
+      "name": "cbloom",
+      "tagline": "cbloom: Documentation for an HTML/JavaScript framework",
+      "description": "GitHub repository documentation for an HTML/JavaScript framework focused on creating interactive and visually rich user interfaces. It covers development best practices, code organization, and design principles to create responsive web applications.",
+      "category": "creative",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-10-05",
+      "totalMessages": 104227,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 37,
+          "totalMessages": 104227,
+          "lastSession": "2026-10-05"
+        },
+        "timeline": {
+          "org": "Nominate-AI",
+          "repo": "cbloom",
+          "commits": 3291,
+          "descriptionSource": "kept"
+        }
+      },
+      "provenance": {
+        "tagline": "ai-cached",
+        "description": "timeline"
+      },
+      "categoryBasis": "keywords"
     },
     {
       "slug": "infra",
@@ -694,11 +797,11 @@
       "status": "active",
       "technologies": [],
       "lastActivity": "2026-10-05",
-      "totalMessages": 98490,
+      "totalMessages": 99153,
       "sources": {
         "claudeCode": {
           "totalSessions": 9,
-          "totalMessages": 98490,
+          "totalMessages": 99153,
           "lastSession": "2026-10-05"
         }
       },
@@ -707,6 +810,37 @@
         "description": "none"
       },
       "categoryBasis": "default"
+    },
+    {
+      "slug": "cbmodels",
+      "name": "cbmodels",
+      "tagline": "Political data analysis for voter insights.",
+      "description": "The cbmodels repository is a Python software project focused on political data analysis, providing voter segment insights, election results processing, and audience building capabilities. It utilizes technologies like FastAPI, DuckDB, Snowflake, and integrates with external data sources via ETL pipelines to generate actionable intelligence.",
+      "category": "data",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-10-05",
+      "totalMessages": 58425,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 13,
+          "totalMessages": 58425,
+          "lastSession": "2026-10-05"
+        },
+        "timeline": {
+          "org": "Nominate-AI",
+          "repo": "cbmodels",
+          "commits": 1365,
+          "descriptionSource": "ai"
+        }
+      },
+      "provenance": {
+        "tagline": "ai-cached",
+        "description": "timeline"
+      },
+      "categoryBasis": "keywords"
     },
     {
       "slug": "cbapex",
@@ -742,25 +876,25 @@
     {
       "slug": "public",
       "name": "public",
-      "tagline": "6502 processor recreation site, API, documentation",
-      "description": "This repository contains the site, API, and documentation for a project focused on recreating the 6502 processor and its use in the Zelda game. The work involves creating interactive lessons covering various aspects of the system, including graphics, sound, and gameplay mechanics, with a particular emphasis on visual elements like screens and animations. The codebase utilizes TypeScript and employs a stack of technologies such as Next.js for the frontend and FastAPI for the backend.",
+      "tagline": "6502 work, site, API, documentation, games",
+      "description": "This repository contains the site, API, and documentation for a 6502 work, primarily focused on recreating and analyzing classic games like Mario. The project utilizes TypeScript and involves detailed lessons, benchmarking tools, and development infrastructure to simulate and understand the behavior of the 6502 processor within these game environments.",
       "category": "systems",
       "isResearch": false,
       "isFeatured": false,
       "status": "active",
       "technologies": [],
       "lastActivity": "2026-10-05",
-      "totalMessages": 37142,
+      "totalMessages": 37387,
       "sources": {
         "claudeCode": {
           "totalSessions": 1,
-          "totalMessages": 37142,
+          "totalMessages": 37387,
           "lastSession": "2026-10-05"
         },
         "timeline": {
           "org": "tinymachines",
           "repo": "public",
-          "commits": 830,
+          "commits": 850,
           "descriptionSource": "ai"
         }
       },
@@ -773,8 +907,8 @@
     {
       "slug": "bradleyio",
       "name": "bradleyio",
-      "tagline": "bradley.io: TypeScript platform for Nominate-AI exploration",
-      "description": "The bradley.io repository is a TypeScript project focused on developing a platform, initially centered around the \"Nominate-AI\" concept and incorporating elements of data engineering and AI exploration. The codebase includes documentation, builds, and features like an interactive terminal with WebSocket integration, alongside homepage redesigns and site navigation improvements.",
+      "tagline": "Bradley.io: TypeScript terminal experience with WOPR.",
+      "description": "The bradley.io repository is a TypeScript project focused on developing an interactive terminal experience, initially centered around a \"WarGames-style WOPR\" terminal with WebSocket integration. The codebase includes elements like homepage redesigns, data engineering features, and core website components such as navigation and footers, alongside documentation and development tooling setup.",
       "category": "creative",
       "isResearch": false,
       "isFeatured": false,
@@ -790,17 +924,17 @@
         "TypeScript"
       ],
       "lastActivity": "2026-10-05",
-      "totalMessages": 35994,
+      "totalMessages": 36365,
       "sources": {
         "claudeCode": {
           "totalSessions": 6,
-          "totalMessages": 35994,
+          "totalMessages": 36365,
           "lastSession": "2026-10-05"
         },
         "timeline": {
           "org": "isenbek",
           "repo": "bradley.io",
-          "commits": 1284,
+          "commits": 1342,
           "descriptionSource": "ai"
         }
       },
@@ -821,11 +955,11 @@
       "status": "active",
       "technologies": [],
       "lastActivity": "2026-10-05",
-      "totalMessages": 33995,
+      "totalMessages": 34555,
       "sources": {
         "claudeCode": {
           "totalSessions": 2,
-          "totalMessages": 33995,
+          "totalMessages": 34555,
           "lastSession": "2026-10-05"
         }
       },
@@ -846,17 +980,17 @@
       "status": "active",
       "technologies": [],
       "lastActivity": "2026-10-05",
-      "totalMessages": 24634,
+      "totalMessages": 24815,
       "sources": {
         "claudeCode": {
           "totalSessions": 5,
-          "totalMessages": 24634,
+          "totalMessages": 24815,
           "lastSession": "2026-10-05"
         },
         "timeline": {
           "org": "Nominate-AI",
           "repo": "cbrural",
-          "commits": 662,
+          "commits": 663,
           "descriptionSource": "github"
         }
       },
@@ -865,6 +999,37 @@
         "description": "timeline"
       },
       "categoryBasis": "default"
+    },
+    {
+      "slug": "cbintel",
+      "name": "cbintel",
+      "tagline": "Data collection and analysis codebase.",
+      "description": "This repository contains the codebase for a complex data collection and analysis project, primarily focused on gathering information from various online sources, including websites and potentially video platforms, using crawling techniques. The core functionality revolves around extracting structured data (like election results or hyperlocal news) through automated processes, utilizing AI models like llama3.2:3b for entity extraction and classification, and managing a network of VPN exit nodes to facilitate this collection. The project incorporates elements of web scraping, OCR processing, and persistent memory management, alongside infrastructure components such as device management and WireGuard tunnel deployment.",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-10-05",
+      "totalMessages": 20560,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 6,
+          "totalMessages": 20560,
+          "lastSession": "2026-10-05"
+        },
+        "timeline": {
+          "org": "Nominate-AI",
+          "repo": "cbintel",
+          "commits": 1361,
+          "descriptionSource": "ai"
+        }
+      },
+      "provenance": {
+        "tagline": "ai-cached",
+        "description": "timeline"
+      },
+      "categoryBasis": "keywords"
     },
     {
       "slug": "cbcc",
@@ -877,11 +1042,11 @@
       "status": "active",
       "technologies": [],
       "lastActivity": "2026-10-05",
-      "totalMessages": 17922,
+      "totalMessages": 18043,
       "sources": {
         "claudeCode": {
           "totalSessions": 1,
-          "totalMessages": 17922,
+          "totalMessages": 18043,
           "lastSession": "2026-10-05"
         }
       },
@@ -917,109 +1082,6 @@
       "categoryBasis": "default"
     },
     {
-      "slug": "sysforge",
-      "name": "sfproject",
-      "tagline": "Building resilient systems, reliably.",
-      "description": "The `sfproject` repository is a TypeScript project that initially set up a SysForge system, including a Forge Console backend with an agentic API route for mesh interaction. Recent work has focused on adding integration tests and production deployment configurations, specifically utilizing systemd, nginx, and SSL.",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": true,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-10-04T07:30:44Z",
-      "totalMessages": 0,
-      "sources": {
-        "github": {
-          "repo": "Sysforge-AI/sfproject",
-          "stars": 0,
-          "language": "TypeScript",
-          "lastPush": "2026-10-04"
-        },
-        "timeline": {
-          "org": "Sysforge-AI",
-          "repo": "sfproject",
-          "commits": 260,
-          "descriptionSource": "ai"
-        }
-      },
-      "provenance": {
-        "tagline": "previous",
-        "description": "timeline"
-      },
-      "categoryBasis": "keywords"
-    },
-    {
-      "slug": "terrapulse",
-      "name": "terrapulse",
-      "tagline": "Climate intelligence platform: ingest, normalize, and serve environmental data",
-      "description": "Climate intelligence platform: ingest, normalize, and serve environmental data",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": true,
-      "status": "active",
-      "technologies": [
-        "PostgreSQL",
-        "DuckDB",
-        "Python",
-        "systemd",
-        "FastAPI",
-        "Nginx",
-        "WebSocket",
-        "JWT"
-      ],
-      "lastActivity": "2026-10-04T03:11:18Z",
-      "totalMessages": 84217,
-      "sources": {
-        "github": {
-          "repo": "isenbek/terrapulse",
-          "stars": 1,
-          "language": "HTML",
-          "lastPush": "2026-10-04"
-        },
-        "claudeCode": {
-          "totalSessions": 16,
-          "totalMessages": 84217,
-          "lastSession": "2026-10-03"
-        }
-      },
-      "provenance": {
-        "tagline": "github",
-        "description": "github"
-      },
-      "categoryBasis": "keywords"
-    },
-    {
-      "slug": "cbloom",
-      "name": "cbloom",
-      "tagline": "cbloom: Documentation for an HTML/JavaScript framework",
-      "description": "GitHub repository documentation for an HTML/JavaScript framework focused on creating interactive and visually rich user interfaces. It covers development best practices, code organization, and design principles to create responsive web applications.",
-      "category": "creative",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-10-02",
-      "totalMessages": 104225,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 37,
-          "totalMessages": 104225,
-          "lastSession": "2026-10-02"
-        },
-        "timeline": {
-          "org": "Nominate-AI",
-          "repo": "cbloom",
-          "commits": 3285,
-          "descriptionSource": "kept"
-        }
-      },
-      "provenance": {
-        "tagline": "ai-cached",
-        "description": "timeline"
-      },
-      "categoryBasis": "keywords"
-    },
-    {
       "slug": "cbelections",
       "name": "cbelections",
       "tagline": "",
@@ -1043,68 +1105,6 @@
         "description": "none"
       },
       "categoryBasis": "default"
-    },
-    {
-      "slug": "cbintel",
-      "name": "cbintel",
-      "tagline": "Crawling election data with OCR and vector search",
-      "description": "This repository, cbintel, is a software project focused on building a crawling and data extraction pipeline for various sources, primarily centered around election data. It incorporates OCR capabilities, vector storage for semantic search, and management of VPN clusters, with an emphasis on integrating AI models like CBAI into the workflow. The project has evolved from initial setup to include advanced features such as wireguard deployment and complex dependency mapping.",
-      "category": "data",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-09-30",
-      "totalMessages": 20550,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 6,
-          "totalMessages": 20550,
-          "lastSession": "2026-09-30"
-        },
-        "timeline": {
-          "org": "Nominate-AI",
-          "repo": "cbintel",
-          "commits": 1359,
-          "descriptionSource": "ai"
-        }
-      },
-      "provenance": {
-        "tagline": "ai-cached",
-        "description": "timeline"
-      },
-      "categoryBasis": "keywords"
-    },
-    {
-      "slug": "cbmodels",
-      "name": "cbmodels",
-      "tagline": "Political data engine built with Python",
-      "description": "The cbmodels repository is a political data engine built with Python, designed to provide voter segments, election results analysis, and audience building capabilities. It utilizes technologies like FastAPI, DuckDB, Snowflake, and S3 for data processing and storage, and includes tools for data transformation and reporting. The project incorporates various data sources including SFMC feeds and integrates with Claude for advanced analytics.",
-      "category": "data",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-09-28",
-      "totalMessages": 58254,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 12,
-          "totalMessages": 58254,
-          "lastSession": "2026-09-28"
-        },
-        "timeline": {
-          "org": "Nominate-AI",
-          "repo": "cbmodels",
-          "commits": 1355,
-          "descriptionSource": "ai"
-        }
-      },
-      "provenance": {
-        "tagline": "ai-cached",
-        "description": "timeline"
-      },
-      "categoryBasis": "keywords"
     },
     {
       "slug": "cbprospect",
@@ -1140,8 +1140,8 @@
     {
       "slug": "cbradio",
       "name": "cbradio",
-      "tagline": "Manages political radio advertising rates.",
-      "description": "This repository manages political radio advertising rates, encompassing data ingestion, rate card creation and management, and reporting functionalities. It handles the processing of broadcast station information, including call signs and coverage areas, alongside the generation of rate cards for various political campaigns. The system incorporates AI-powered OCR to extract data from documents and provides APIs for accessing and manipulating this rate information.",
+      "tagline": "Radio advertising rates managed with AI.",
+      "description": "This repository manages radio advertising rates, encompassing data ingestion, extraction, rate proposal generation, and API endpoints for accessing and manipulating this information. It appears to be a complex system focused on optimizing advertising campaigns within the AM/FM radio industry, incorporating AI-powered OCR and real-time billing adjustments.",
       "category": "hardware",
       "isResearch": false,
       "isFeatured": false,
@@ -1158,7 +1158,7 @@
         "timeline": {
           "org": "Nominate-AI",
           "repo": "cbradio",
-          "commits": 920,
+          "commits": 921,
           "descriptionSource": "ai"
         }
       },
@@ -1189,7 +1189,7 @@
         "timeline": {
           "org": "Nominate-AI",
           "repo": "cbhive",
-          "commits": 294,
+          "commits": 300,
           "descriptionSource": "kept"
         }
       },
@@ -1220,7 +1220,7 @@
         "timeline": {
           "org": "Nominate-AI",
           "repo": "cbstitch",
-          "commits": 465,
+          "commits": 468,
           "descriptionSource": "kept"
         }
       },
@@ -1251,7 +1251,7 @@
         "timeline": {
           "org": "Nominate-AI",
           "repo": "cbcast",
-          "commits": 174,
+          "commits": 178,
           "descriptionSource": "kept"
         }
       },
@@ -2513,14 +2513,14 @@
       "label": "Data Engineering",
       "color": "var(--brand-info)",
       "icon": "Database",
-      "count": 8
+      "count": 7
     },
     {
       "id": "systems",
       "label": "Systems & Infra",
       "color": "var(--brand-steel)",
       "icon": "Server",
-      "count": 58
+      "count": 59
     },
     {
       "id": "creative",
@@ -2554,15 +2554,15 @@
       "Snowflake",
       "TLS",
       "Markdown",
-      "FastAPI",
-      "Anthropic",
-      "Pytest",
       "Ollama",
+      "Anthropic",
+      "FastAPI",
+      "Pytest",
       "TypeScript",
-      "YAML",
       "WireGuard",
-      "Next.js",
-      "TOML"
+      "YAML",
+      "TOML",
+      "Next.js"
     ],
     "timeline": [
       {
