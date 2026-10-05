@@ -386,3 +386,14 @@ private audit report.
   ink to match the masthead. All four now agree with bradley.io's family dot.
 - **The masthead logo is unchanged** (still mustard on ink); moving it to
   Steel is a small follow-up if wanted.
+
+### The masthead in Steel, and the day's end (2026-10-04)
+
+- **The masthead mark is Steel** (v1.0.434): paper wordmark on a Steel tile,
+  the i-dot Steel's tint at rest and ACTIVE blue in a paper rim while a
+  session is live. It matches the favicon and the family dot. The kit's
+  `.topbar .die` outranked the first attempt (v1.0.433), fixed with a more
+  specific selector.
+- **What is still open** is listed in the private `isenbek/meatball-labs`
+  repo, `docs/OPEN-ITEMS-2026-10-04.md`: tonight's TerraPulse runs, the
+  owner's open questions, small loose ends, and items waiting on the owner.
