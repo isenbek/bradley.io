@@ -26,13 +26,13 @@ function strength(rssi: number): number {
 const rssiColor = (rssi: number) => rampColor(strength(rssi))
 
 function fmtWindow(s?: number): string {
-  if (!s) return "—"
+  if (!s) return "-"
   if (s >= 3600) return `${(s / 3600).toFixed(s % 3600 ? 1 : 0)}h`
   if (s >= 60) return `${Math.round(s / 60)}m`
   return `${s}s`
 }
 function fmtInt(n?: number): string {
-  return typeof n === "number" ? n.toLocaleString("en-US") : "—"
+  return typeof n === "number" ? n.toLocaleString("en-US") : "-"
 }
 
 export function BleDeviceCensus({ data }: { data: Census }) {
@@ -59,8 +59,8 @@ export function BleDeviceCensus({ data }: { data: Census }) {
 
       <dl className="beta-we-kv">
         <div><dt>addresses</dt><dd>{fmtInt(data.rpas)}</dd></div>
-        <div><dt>multi-node</dt><dd>{mnPct != null ? `${mnPct}%` : "—"}</dd></div>
-        <div><dt>collapse</dt><dd>{data.collapse != null ? `${data.collapse.toFixed(2)}×` : "—"}</dd></div>
+        <div><dt>multi-node</dt><dd>{mnPct != null ? `${mnPct}%` : "-"}</dd></div>
+        <div><dt>collapse</dt><dd>{data.collapse != null ? `${data.collapse.toFixed(2)}×` : "-"}</dd></div>
         <div><dt>public infra</dt><dd>{fmtInt(data.public_infra)}</dd></div>
         <div><dt>window</dt><dd>{fmtWindow(data.window_s)}</dd></div>
         <div><dt>anchors</dt><dd>{fmtInt(data.anchors?.length)}</dd></div>
@@ -70,10 +70,10 @@ export function BleDeviceCensus({ data }: { data: Census }) {
         <ul className="beta-we-ble__anchors">
           {anchors.map((a, i) => (
             <li key={a.addr ?? i} className="beta-we-ble__row">
-              <span className="beta-we-ble__addr">{a.addr ?? "—"}</span>
+              <span className="beta-we-ble__addr">{a.addr ?? "-"}</span>
               <span className="beta-we-ble__nodes">{a.nodes ?? 0}× nodes</span>
               <span className="beta-we-ble__rssi" style={{ color: a.rssi != null ? rssiColor(a.rssi) : undefined }}>
-                {a.rssi != null ? `${a.rssi.toFixed(0)} dBm` : "—"}
+                {a.rssi != null ? `${a.rssi.toFixed(0)} dBm` : "-"}
               </span>
               <span className="beta-we-ble__bar" aria-hidden>
                 <span style={{ width: `${Math.round(((a.obs ?? 0) / maxObs) * 100)}%` }} />

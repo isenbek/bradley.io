@@ -18,10 +18,10 @@ type Tpv = {
 const FIX: Record<number, string> = { 0: "no fix", 1: "no fix", 2: "2D", 3: "3D" }
 
 function deg(v?: number): string {
-  return v == null ? "—" : `${v.toFixed(5)}°`
+  return v == null ? "-" : `${v.toFixed(5)}°`
 }
 function m(v?: number, d = 1): string {
-  return v == null ? "—" : `${v.toFixed(d)} m`
+  return v == null ? "-" : `${v.toFixed(d)} m`
 }
 
 export function GpsPosition({ data, series }: { data: Tpv; series?: number[] }) {
@@ -46,8 +46,8 @@ export function GpsPosition({ data, series }: { data: Tpv; series?: number[] }) 
       <dl className="beta-we-kv">
         <div><dt>lat</dt><dd>{deg(data.lat)}</dd></div>
         <div><dt>lon</dt><dd>{deg(data.lon)}</dd></div>
-        <div><dt>speed</dt><dd>{data.speed == null ? "—" : `${data.speed.toFixed(2)} m/s`}</dd></div>
-        <div><dt>track</dt><dd>{data.track == null ? "—" : `${data.track.toFixed(0)}°`}</dd></div>
+        <div><dt>speed</dt><dd>{data.speed == null ? "-" : `${data.speed.toFixed(2)} m/s`}</dd></div>
+        <div><dt>track</dt><dd>{data.track == null ? "-" : `${data.track.toFixed(0)}°`}</dd></div>
         <div><dt>h err</dt><dd>{m(data.eph, 1)}</dd></div>
         <div><dt>v err</dt><dd>{m(data.epv, 1)}</dd></div>
       </dl>

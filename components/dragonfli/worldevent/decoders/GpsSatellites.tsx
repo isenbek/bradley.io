@@ -17,7 +17,7 @@ type Sky = {
 }
 
 function dop(v?: number): string {
-  return v == null ? "—" : v.toFixed(2)
+  return v == null ? "-" : v.toFixed(2)
 }
 
 // SNR (dB) → 0..1, then red→amber→green (matches the mesh edge palette)
@@ -111,7 +111,7 @@ export function GpsSatellites({ data, series }: { data: Sky; series?: number[] }
         <div><dt>vdop</dt><dd>{dop(data.vdop)}</dd></div>
         <div><dt>gdop</dt><dd>{dop(data.gdop)}</dd></div>
         <div><dt>in view</dt><dd>{n}</dd></div>
-        <div><dt>best SNR</dt><dd>{bestSs ? `${bestSs.toFixed(0)} dB` : "—"}</dd></div>
+        <div><dt>best SNR</dt><dd>{bestSs ? `${bestSs.toFixed(0)} dB` : "-"}</dd></div>
         <div><dt>used</dt><dd>{u}</dd></div>
       </dl>
     </div>

@@ -36,13 +36,13 @@ function OffsetSpark({ series }: { series: number[] }) {
 }
 
 function us(seconds?: number): string {
-  if (seconds == null) return "—"
+  if (seconds == null) return "-"
   const u = seconds * 1e6
   if (Math.abs(u) >= 1000) return `${(u / 1000).toFixed(2)} ms`
   return `${u >= 0 ? "+" : ""}${u.toFixed(0)} µs`
 }
 function ms(seconds?: number): string {
-  if (seconds == null) return "—"
+  if (seconds == null) return "-"
   return `${(seconds * 1000).toFixed(2)} ms`
 }
 
@@ -69,13 +69,13 @@ export function ChronyTracking({ data, series }: { data: Chrony; series?: number
         </div>
       ) : null}
       <dl className="beta-we-kv">
-        <div><dt>ref</dt><dd>{data.ref_address ?? data.ref_id_hex ?? "—"}</dd></div>
+        <div><dt>ref</dt><dd>{data.ref_address ?? data.ref_id_hex ?? "-"}</dd></div>
         <div><dt>rms offset</dt><dd>{us(data.rms_offset)}</dd></div>
         <div><dt>root dist</dt><dd>{ms(rootDist)}</dd></div>
         <div><dt>skew</dt><dd>{(data.skew_ppm ?? 0).toFixed(2)} ppm</dd></div>
         <div><dt>freq</dt><dd>{(data.frequency_ppm ?? 0).toFixed(2)} ppm</dd></div>
-        <div><dt>poll</dt><dd>{data.update_interval ? `${Math.round(data.update_interval)}s` : "—"}</dd></div>
-        <div><dt>leap</dt><dd>{data.leap_status ?? "—"}</dd></div>
+        <div><dt>poll</dt><dd>{data.update_interval ? `${Math.round(data.update_interval)}s` : "-"}</dd></div>
+        <div><dt>leap</dt><dd>{data.leap_status ?? "-"}</dd></div>
       </dl>
     </div>
   )

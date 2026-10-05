@@ -24,7 +24,7 @@ function rssiColor(rssi: number): string {
 }
 
 function num(v?: number): string {
-  return typeof v === "number" ? v.toLocaleString("en-US") : "—"
+  return typeof v === "number" ? v.toLocaleString("en-US") : "-"
 }
 
 // Heading compass: N up, clockwise. An aircraft glyph rotated to the true track,
@@ -98,20 +98,20 @@ export function AdsbUat({ data }: { data: Uat }) {
       {typeof track === "number" ? <HeadingRose track={track} vv={vv} /> : null}
 
       <dl className="beta-we-kv">
-        <div><dt>altitude</dt><dd>{data.pressure_altitude != null ? `${num(data.pressure_altitude)} ft` : "—"}</dd></div>
-        <div><dt>track</dt><dd>{typeof track === "number" ? `${track.toFixed(0)}°` : "—"}</dd></div>
+        <div><dt>altitude</dt><dd>{data.pressure_altitude != null ? `${num(data.pressure_altitude)} ft` : "-"}</dd></div>
+        <div><dt>track</dt><dd>{typeof track === "number" ? `${track.toFixed(0)}°` : "-"}</dd></div>
         <div>
           <dt>vert rate</dt>
-          <dd>{vv != null ? `${vv > 0 ? "↑" : vv < 0 ? "↓" : ""}${num(Math.abs(vv))} fpm` : "—"}</dd>
+          <dd>{vv != null ? `${vv > 0 ? "↑" : vv < 0 ? "↓" : ""}${num(Math.abs(vv))} fpm` : "-"}</dd>
         </div>
         <div>
           <dt>rssi</dt>
           <dd style={{ color: rssi != null ? rssiColor(rssi) : undefined }}>
-            {rssi != null ? `${rssi.toFixed(0)} dBm` : "—"}
+            {rssi != null ? `${rssi.toFixed(0)} dBm` : "-"}
           </dd>
         </div>
         <div><dt>nic</dt><dd>{num(data.nic)}</dd></div>
-        <div><dt>source</dt><dd>{qual || "—"}</dd></div>
+        <div><dt>source</dt><dd>{qual || "-"}</dd></div>
       </dl>
     </div>
   )
