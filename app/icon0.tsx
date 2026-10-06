@@ -1,9 +1,10 @@
 /*
  * Steel, bradley.io's family hue (owner's call, 2026-10-04): the tile is
- * Steel's main tone (#41749D), the wordmark is the kit's paper (#F4F2EC) and
- * the i-dot is Steel's tint (#C8DAEA). The same three colours as app/icon.svg,
- * so the tab, the home-screen icon, the masthead die (.die--mark in
- * app/kit.css) and the Meatball Labs family dot agree.
+ * Steel's main tone (#41749D) and the whole wordmark, dot included, is the
+ * kit's paper (#F4F2EC). The same two colours as app/icon.svg, so the tab,
+ * the home-screen icon, the masthead die (.die--mark in app/kit.css) and the
+ * Meatball Labs family dot agree. (The dot was Steel's tint until 2026-10-06;
+ * the owner asked for one mass, no tinted or bordered dot.)
  * (Until 2026-10-04 these were the masthead die, mustard on ink, while the
  * SVG favicon was still the deleted v3's blue.)
  *
@@ -42,7 +43,7 @@ export default function Icon192() {
           <g transform={BIO_LOGO_GROUP_TRANSFORM}>
             <path d={BIO_LOGO_BODY_PATH} fill="#F4F2EC" />
             <path d={BIO_LOGO_BOWL_PATH} fill="#F4F2EC" />
-            <circle cx={BIO_LOGO_DOT.cx} cy={BIO_LOGO_DOT.cy} r={BIO_LOGO_DOT.r} fill="#C8DAEA" />
+            <circle cx={BIO_LOGO_DOT.cx} cy={BIO_LOGO_DOT.cy} r={BIO_LOGO_DOT.r} fill="#F4F2EC" />
           </g>
         </svg>
       </div>

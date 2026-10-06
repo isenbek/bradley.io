@@ -422,11 +422,9 @@ body:has(.beta-root) {
   /* Steel, bradley.io's family hue (owner's call, 2026-10-04), so the
      masthead, the favicon and the family dot are one colour. The kit keeps
      --color-family-* for the family dots; this is the one other place it is
-     right to use one: the site's own mark, in the site's own hue. The tint
-     is Steel's from the family style guide (meatball.ai/styleguide.html#steel).
+     right to use one: the site's own mark, in the site's own hue.
      Paper on Steel is 4.6:1. Every other .die keeps the kit's ink tile. */
   --beta-steel: var(--color-family-steel);
-  --beta-steel-tint: #c8daea;
 }
 /* The kit paints the tile with `.topbar .die`, which outranks a lone class;
    this matches it and adds one, so the Steel wins without !important. */
@@ -6701,69 +6699,12 @@ a.beta-papers-fig:focus-visible { outline: 2px solid var(--color-blue-ink); outl
 }
 /* end of block: beta-turfy-* */
 
-/* ===========================================================================
-   SHELL (begin block: beta-shell-*)
-   components/KitNav.tsx
-
-   The dot of the "i" in the masthead mark is the site's live dot: the mark's
-   own mustard until a Claude Code session is known to be active on this
-   host, ACTIVE blue while one is. The colour itself is set by KitNav (it is
-   BioLogo's dotColor), so with this block missing the dot still tells the
-   truth; these rules only say how it gets from one state to the other.
-
-   Lit is not only a hue. On the Steel tile the lit blue sits close to the
-   tile itself, and the unlit Steel tint is a pale disc, so the lit dot also
-   wears a paper rim: a blue lamp in a light bezel, against the
-   plain disc of the unlit dot. That is the LiveDot's own rule (lit and unlit
-   differ in shape, not only in colour) at the size of a full stop.
-
-   Nothing here has a layout size. The dot is the same circle in the same
-   place lit or unlit; the rim is paint, drawn under the fill (paint-order),
-   so only its outer half shows and the blue keeps its full size. Strokes are
-   in the drawing's own units, 302 to the mark's 18px: 30 is a rim about 0.9px
-   wide, inside the tile, so the masthead cannot move.
-   ======================================================================== */
-
-/* The rim is always there and invisible until lit, so lighting it is an
-   opacity change that can share the fill's detent instead of popping in. */
-.beta-shell-mark [data-piece="dot"] {
-  stroke: var(--color-paper);
-  stroke-width: 30px;
-  stroke-opacity: 0;
-  paint-order: stroke;
-}
-.beta-shell-mark[data-live="true"] [data-piece="dot"] {
-  stroke-opacity: 1;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  /* The colour and the rim change on the detent, like a switch thrown,
-     instead of cutting. The selector repeats the nav block's lift rule and
-     adds to it: a second transition declaration would replace the first, and
-     the dot would stop lifting under the pointer. */
-  .beta-nav-mark svg.beta-shell-mark [data-piece="dot"] {
-    transition:
-      transform var(--t-detent) var(--ease-detent),
-      fill var(--t-detent) var(--ease-detent),
-      stroke-opacity var(--t-detent) var(--ease-detent);
-  }
-
-  /* One ring, once, when a new active minute is recorded: the class of event
-     the LiveDot rings for, at most once a minute. KitNav holds data-tick for
-     400 ms and the animation runs a single time inside it. The rim itself
-     goes out to 100 (about 3px past the dot, still inside the tile), fades,
-     and settles back to its resting width. */
-  .beta-shell-mark[data-tick="true"] [data-piece="dot"] {
-    animation: beta-shell-tick var(--t-slide) var(--ease-detent) 1;
-  }
-}
-@keyframes beta-shell-tick {
-  0%   { stroke-width: 30px;  stroke-opacity: 1; }
-  70%  { stroke-width: 100px; stroke-opacity: 0; }
-  71%  { stroke-width: 30px;  stroke-opacity: 0; }
-  100% { stroke-width: 30px;  stroke-opacity: 1; }
-}
-/* end of block: beta-shell-* */
+/* The masthead mark (components/KitNav.tsx) carries .beta-shell-mark and no
+   rules of its own: the whole wordmark, dot included, is paper on the Steel
+   tile. The live-dot treatment that stood here (a tinted disc, ACTIVE blue in
+   a paper rim and a ring on each new active minute) was retired on
+   2026-10-06: at 18px it read as a grainy, bordered dot floating over the i.
+   The home page's LiveDot still carries the live fact. */
 
 /* ===========================================================================
    beta-cvp-*: /resume/print, the sheet public/resume.pdf is printed from

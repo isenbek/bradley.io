@@ -7,17 +7,6 @@ import {
   BIO_LOGO_VIEWBOX,
 } from "@/lib/bio-logo-path"
 
-/** Tint a hex color toward white by ~22% — used for the i-dot accent in OG cards. */
-function lighten(hex: string): string {
-  const m = hex.match(/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i)
-  if (!m) return hex
-  const mix = (c: number) => Math.round(c + (255 - c) * 0.28)
-  const r = mix(parseInt(m[1], 16))
-  const g = mix(parseInt(m[2], 16))
-  const b = mix(parseInt(m[3], 16))
-  return `#${[r, g, b].map((x) => x.toString(16).padStart(2, "0")).join("")}`
-}
-
 export const OG_V3_SIZE = { width: 1200, height: 630 }
 export const OG_V3_CONTENT_TYPE = "image/png"
 
@@ -114,7 +103,7 @@ export function ogV3ImageResponse(cfg: OgCardV3Config): ImageResponse {
                 cx={BIO_LOGO_DOT.cx}
                 cy={BIO_LOGO_DOT.cy}
                 r={BIO_LOGO_DOT.r}
-                fill={lighten(accent.primary)}
+                fill={accent.primary}
               />
             </g>
           </svg>

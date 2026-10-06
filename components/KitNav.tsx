@@ -6,8 +6,6 @@ import { usePathname } from "next/navigation"
 import { NAV, PRIMARY_LINKS, inSection } from "@/app/_nav"
 import { BioLogo } from "@/components/kit/BioLogo"
 import { SearchPill } from "@/components/search/SearchPill"
-import { useActive } from "@/components/live/LiveDot"
-import { useChanged } from "@/lib/use-changed"
 
 /**
  * The site masthead and its menu.
@@ -38,36 +36,14 @@ import { useChanged } from "@/lib/use-changed"
  * the close-on-navigation effect below never fires for a link to the page you
  * are already on.
  *
- * THE DOT OF THE "i" IS THE SITE'S LIVE DOT. It is Steel's pale tint
- * until a Claude Code session is known to have written on this host in the
- * last five minutes, and ACTIVE blue while one has: useActive() from
- * components/live/LiveDot.tsx, the same fact and the same proof the home
- * page's dot uses, read from the one shared /api/now poll. The rules it keeps:
- *
- *   - It starts unlit, on the server and on the first client render, and
- *     lights only when an answer has arrived and says so. It is never lit on
- *     a guess, so it cannot flash lit and then go out.
- *   - Lit is not hue alone. Blue sits close to the Steel tile, so the
- *     lit dot also wears a thin paper rim (the beta-shell block in
- *     app/kit.css): a lamp in a bezel against a plain disc, which survives
- *     greyscale. The rim is paint under the fill, inside the tile. Nothing is
- *     added to the bar and nothing changes layout size, so the masthead and
- *     --app-head-h are what they were.
- *   - Words only when lit: the link is "bradley.io home" always, and while
- *     the dot is lit it also carries the sentence as its description (and as
- *     the tooltip). Unlit says nothing, because a dot that is not lit is just
- *     the dot of the i.
- *   - One short ring when a NEW active minute is recorded, at most once a
- *     minute, and none for a reader who asked for no motion. The CSS is the
- *     beta-shell block at the end of app/kit.css.
- *
- * Blue here is state, which is why the dot is no longer the accent: the kit's
- * accent is never used for state, and a burnt dot beside a blue one would
- * leave a visitor guessing which of the two means "on".
+ * The mark in the die is the wordmark itself (components/kit/BioLogo.tsx):
+ * one mass in the kit's paper on bradley.io's Steel tile, the i-dot the same
+ * paper as the rest. Until 2026-10-06 the dot was the site's live dot (a
+ * tinted disc, ACTIVE blue in a paper rim while a Claude Code session was
+ * active); at 18px that read as a grainy, bordered dot floating over the i,
+ * so the owner retired it. The home page's own LiveDot still carries the
+ * live fact; the masthead says nothing about it.
  */
-
-/** The id of the sentence the mark is described by while its dot is lit. */
-const LIVE_NOTE_ID = "beta-shell-live-note"
 
 /**
  * What a link says about where the reader is: "page" on the page itself,
@@ -85,12 +61,6 @@ export function KitNav() {
   const [open, setOpen] = useState(false)
   const headRef = useRef<HTMLElement>(null)
   const btnRef = useRef<HTMLButtonElement>(null)
-
-  // Is a Claude Code session active on this host right now? False until the
-  // shared poll has answered, so the server and the first client render agree.
-  const live = useActive("activity")
-  // True for 400 ms after the last known active minute moves on to a new one.
-  const ticked = useChanged(live.stamp, 400)
 
   // Measure the fixed chrome and publish it to the kit. ResizeObserver rather
   // than a resize listener because the header's own height changes when the
@@ -150,17 +120,12 @@ export function KitNav() {
       <div className="band topbar">
         {/* The real wordmark in the die, not the letters "BIO". In Steel,
             bradley.io's family hue (2026-10-04): paper on a Steel tile (the
-            tile colour is .die--mark in app/kit.css), the same three colours
-            as the favicon. The i-dot is the live dot (see the head of this
-            file): Steel's tint until a session is active, then ACTIVE blue in
-            a paper rim, which is what the three-piece split in
-            lib/bio-logo-path.ts makes possible. */}
+            tile colour is .die--mark in app/kit.css), the same two colours
+            as the favicon. The whole mark, dot included, is one paper mass. */}
         <Link
           className="wordmark beta-nav-mark"
           href="/"
           aria-label="bradley.io home"
-          aria-describedby={live.active ? LIVE_NOTE_ID : undefined}
-          title={live.active ? live.words : undefined}
           onClick={() => setOpen(false)}
         >
           <span className="die die--mark">
@@ -168,22 +133,12 @@ export function KitNav() {
               height={18}
               title=""
               className="beta-shell-mark"
-              data-live={live.active ? "true" : undefined}
-              data-tick={live.active && ticked ? "true" : undefined}
               bodyColor="var(--color-paper)"
-              dotColor={live.active ? "var(--color-blue)" : "var(--beta-steel-tint)"}
               bobOnHover
             />
           </span>
           <b>bradley.io</b>
         </Link>
-        {/* The lit dot in words. Rendered only while lit, and hidden: it is
-            read as the link's description, not as loose text in the bar. */}
-        {live.active ? (
-          <span id={LIVE_NOTE_ID} hidden>
-            {live.words}
-          </span>
-        ) : null}
 
         {/* The primary row. Before the menu in source order, so the tab order
             is skip link, mark, these six, then MENU and whatever it opened.
