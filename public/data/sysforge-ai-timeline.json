@@ -1,10 +1,10 @@
 {
-  "generated": "2026-10-05T09:22:56.689401+00:00",
+  "generated": "2026-10-06T09:20:22.903372+00:00",
   "org": "Sysforge-AI",
   "totalRepos": 2,
   "firstCommit": "2026-02-15T03:26:15Z",
-  "latestCommit": "2026-10-05T07:30:14Z",
-  "totalCommits": 270,
+  "latestCommit": "2026-10-06T07:30:13Z",
+  "totalCommits": 272,
   "languages": {
     "TypeScript": 1,
     "HTML": 1
@@ -1317,6 +1317,12 @@
       "commits": 3,
       "repos": 2,
       "intensity": 2
+    },
+    {
+      "date": "2026-10-06",
+      "commits": 2,
+      "repos": 2,
+      "intensity": 2
     }
   ],
   "phases": [
@@ -1350,26 +1356,26 @@
   "repos": [
     {
       "name": "sfproject",
-      "description": "The sfproject repository is a TypeScript project focused on setting up a SysForge system, including its backend and deployment configuration. It initially establishes the core project structure and then adds integration tests for Forge Console, along with an agentic API route for mesh interaction. The repository also includes production deployment details such as systemd, nginx, and SSL setup.",
+      "description": "This repository contains the source code for SysForge, an open-source project focused on creating and deploying Forge servers. The codebase includes a backend API using the Agentic framework for interacting with meshes, along with integration tests for a Forge Console environment. It provides a complete setup, including deployment configurations for production environments.",
       "language": "TypeScript",
-      "commits": 261,
+      "commits": 262,
       "firstCommit": "2026-02-15T03:26:15Z",
-      "lastCommit": "2026-10-05T07:30:14Z",
+      "lastCommit": "2026-10-06T07:30:13Z",
       "phase": "Forge Console Setup",
       "descriptionSource": "ai",
-      "descriptionGeneratedAt": "2026-10-05",
+      "descriptionGeneratedAt": "2026-10-06",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "sysforge-site",
-      "description": "The `sysforge-site` repository is a static HTML website for SysForge, specifically designed as an investor site. It contains core elements like the masthead, footer, and investor content, along with SEO optimization and branding assets. The project utilizes a 'family' theme system, incorporating reserved domain names and focusing on clear communication of investor information.",
+      "description": "The `sysforge-site` repository is a static HTML website, created by Meatball Labs, that serves as an investor site for SysForge. It contains the core design elements and content related to the SysForge investor platform, including branding assets, SEO optimization, and basic contact information. The site utilizes a 'family' theme and incorporates JSON-LD schema for improved search engine visibility.",
       "language": "HTML",
-      "commits": 9,
+      "commits": 10,
       "firstCommit": "2026-10-03T03:29:50Z",
-      "lastCommit": "2026-10-05T05:03:51Z",
+      "lastCommit": "2026-10-06T06:15:03Z",
       "phase": "Forge Console Setup",
       "descriptionSource": "ai",
-      "descriptionGeneratedAt": "2026-10-05",
+      "descriptionGeneratedAt": "2026-10-06",
       "descriptionModel": "ollama:gemma3:4b"
     }
   ],
