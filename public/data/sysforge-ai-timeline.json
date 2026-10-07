@@ -1,10 +1,10 @@
 {
-  "generated": "2026-10-06T09:20:22.903372+00:00",
+  "generated": "2026-10-07T09:15:25.052468+00:00",
   "org": "Sysforge-AI",
   "totalRepos": 2,
   "firstCommit": "2026-02-15T03:26:15Z",
-  "latestCommit": "2026-10-06T07:30:13Z",
-  "totalCommits": 272,
+  "latestCommit": "2026-10-07T07:30:20Z",
+  "totalCommits": 273,
   "languages": {
     "TypeScript": 1,
     "HTML": 1
@@ -1323,6 +1323,12 @@
       "commits": 2,
       "repos": 2,
       "intensity": 2
+    },
+    {
+      "date": "2026-10-07",
+      "commits": 1,
+      "repos": 1,
+      "intensity": 1
     }
   ],
   "phases": [
@@ -1356,14 +1362,14 @@
   "repos": [
     {
       "name": "sfproject",
-      "description": "This repository contains the source code for SysForge, an open-source project focused on creating and deploying Forge servers. The codebase includes a backend API using the Agentic framework for interacting with meshes, along with integration tests for a Forge Console environment. It provides a complete setup, including deployment configurations for production environments.",
+      "description": "The `sfproject` repository is a TypeScript project that initially sets up a SysForge system, including its backend and deployment configuration. It incorporates integration tests for Forge Console using a new agentic API route for mesh interaction, along with production deployment details such as systemd, nginx, and SSL setup. The project also includes a basic test suite.",
       "language": "TypeScript",
-      "commits": 262,
+      "commits": 263,
       "firstCommit": "2026-02-15T03:26:15Z",
-      "lastCommit": "2026-10-06T07:30:13Z",
+      "lastCommit": "2026-10-07T07:30:20Z",
       "phase": "Forge Console Setup",
       "descriptionSource": "ai",
-      "descriptionGeneratedAt": "2026-10-06",
+      "descriptionGeneratedAt": "2026-10-07",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
@@ -1374,15 +1380,15 @@
       "firstCommit": "2026-10-03T03:29:50Z",
       "lastCommit": "2026-10-06T06:15:03Z",
       "phase": "Forge Console Setup",
-      "descriptionSource": "ai",
+      "descriptionSource": "reused",
       "descriptionGeneratedAt": "2026-10-06",
       "descriptionModel": "ollama:gemma3:4b"
     }
   ],
   "aiSummary": {
-    "callsOk": 2,
+    "callsOk": 1,
     "callsFailed": 0,
-    "reused": 1,
+    "reused": 2,
     "kept": 0,
     "skippedByLimit": 0,
     "skippedByBudget": 0,
@@ -1392,7 +1398,8 @@
       "reused": 1
     },
     "descriptionSources": {
-      "ai": 2
+      "ai": 1,
+      "reused": 1
     },
     "limitAi": null,
     "budgetMin": 15.0,

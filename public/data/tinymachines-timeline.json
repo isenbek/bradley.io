@@ -1,10 +1,10 @@
 {
-  "generated": "2026-10-06T09:19:53.196286+00:00",
+  "generated": "2026-10-07T09:15:18.828619+00:00",
   "org": "tinymachines",
   "totalRepos": 71,
   "firstCommit": "2016-02-27T16:07:26Z",
-  "latestCommit": "2026-10-06T06:15:54Z",
-  "totalCommits": 6906,
+  "latestCommit": "2026-10-07T06:09:31Z",
+  "totalCommits": 6934,
   "languages": {
     "Python": 27,
     "C": 7,
@@ -7063,7 +7063,13 @@
     },
     {
       "date": "2026-10-06",
-      "commits": 17,
+      "commits": 25,
+      "repos": 4,
+      "intensity": 2
+    },
+    {
+      "date": "2026-10-07",
+      "commits": 20,
       "repos": 4,
       "intensity": 2
     }
@@ -8096,14 +8102,14 @@
     },
     {
       "name": "geiger",
-      "description": "The Geiger repository develops an HTML-based system for capturing and processing data from an emitter, likely a sensor device, using the ESP32-C6 microcontroller. The project involves streaming edge counts with acknowledgements over Wi-Fi, analyzing timestamps to detect collisions, and controlling a Rigol DS1054Z oscilloscope via a CLI interface. It appears to be in an early stage of development, transitioning between different wiring options (A and B) and incorporating features for remote control and data logging.",
+      "description": "The 'geiger' repository appears to be an experimental project focused on building and monitoring a custom optical receiver, likely for detecting some kind of signal. The commits detail the construction process, including hardware components (TM-TRNG-001), data extraction routines ('extract_stream'), and automated reporting ('auto'). It involves configuring a Rigol DS1054Z oscilloscope and managing parts orders to build a system that captures and analyzes an emitter's signal stream.",
       "language": "HTML",
-      "commits": 311,
+      "commits": 318,
       "firstCommit": "2026-05-04T03:01:06Z",
-      "lastCommit": "2026-10-06T04:52:11Z",
+      "lastCommit": "2026-10-07T02:12:53Z",
       "phase": "Early Tinymachines Development",
       "descriptionSource": "ai",
-      "descriptionGeneratedAt": "2026-10-06",
+      "descriptionGeneratedAt": "2026-10-07",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
@@ -8168,14 +8174,14 @@
     },
     {
       "name": "6502",
-      "description": "This repository is a transistor-level simulator of the MOS 6502 processor, implemented in Rust and WASM with a WebGL renderer that visualizes the processor's die. The project focuses on preserving and showcasing this technology through detailed documentation, archive releases, and responsive web interface development. It includes features for tracking changes, managing assets, and maintaining a record of the project\u2019s evolution.",
+      "description": "The 6502 repository is a software project focused on creating a detailed simulator of the MOS 6502 microprocessor in Rust/WASM, utilizing a WebGL renderer to visualize the processor's die. The project involves extensive work on simulation components like memory buses and emitter states, alongside efforts to create a responsive user interface for exploring and interacting with the simulated hardware. It includes archiving and preservation efforts related to visual6502.org.",
       "language": "JavaScript",
-      "commits": 354,
+      "commits": 356,
       "firstCommit": "2026-08-12T16:38:57Z",
-      "lastCommit": "2026-10-06T04:52:29Z",
+      "lastCommit": "2026-10-07T05:31:03Z",
       "phase": "Tinymachine Ecosystem Development Phases",
       "descriptionSource": "ai",
-      "descriptionGeneratedAt": "2026-10-06",
+      "descriptionGeneratedAt": "2026-10-07",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
@@ -8192,14 +8198,14 @@
     },
     {
       "name": "public",
-      "description": "This repository documents the development of a software project centered around recreating and analyzing the Nintendo Entertainment System (NES) console and its games. The work involves detailed documentation, including hardware specifications, code examples, and lessons related to game design and programming on the 6502 processor, with a focus on projects like Super Mario Bros.",
+      "description": "This repository documents the development of a 6502 work, likely related to emulation or hardware design, with a focus on creating a site, API, and documentation. The project involves detailed notebooks, drawings, and configuration management, and currently has significant Japanese language content.",
       "language": "TypeScript",
-      "commits": 858,
+      "commits": 876,
       "firstCommit": "2026-08-22T15:44:09Z",
-      "lastCommit": "2026-10-06T06:15:54Z",
+      "lastCommit": "2026-10-07T06:09:31Z",
       "phase": "NES Simulation Development",
       "descriptionSource": "ai",
-      "descriptionGeneratedAt": "2026-10-06",
+      "descriptionGeneratedAt": "2026-10-07",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
@@ -8264,14 +8270,14 @@
     },
     {
       "name": "nes-bench",
-      "description": "The nes-bench repository contains Python scripts designed to create a scriptable NES emulation environment, aiming for identical inputs between hardware and software models. It focuses on replicating the behavior of an NES system through a combination of hardware components like relays, sensors, and a BLE pad, controlled by a host computer.",
+      "description": "This repository documents the construction and testing of a custom electronic device, likely a retro computer emulator or similar project, involving hardware components like ESP32 boards, opto-isolators, and various sensors. The commits detail the iterative process of building, debugging, and documenting the device's design, including wiring diagrams, calibration procedures, and data capture using oscilloscopes and other tools. It appears to be a collaborative effort focused on recreating a specific hardware setup for analysis or experimentation.",
       "language": "Python",
-      "commits": 269,
+      "commits": 270,
       "firstCommit": "2026-09-07T01:23:48Z",
-      "lastCommit": "2026-10-06T04:51:46Z",
+      "lastCommit": "2026-10-07T01:32:56Z",
       "phase": "NES Controller Scripting",
       "descriptionSource": "ai",
-      "descriptionGeneratedAt": "2026-10-06",
+      "descriptionGeneratedAt": "2026-10-07",
       "descriptionModel": "ollama:gemma3:4b"
     }
   ],
