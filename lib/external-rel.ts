@@ -1,4 +1,4 @@
-import { FAMILY } from "@/components/kit/family-data"
+import { ELECTRIC, FAMILY } from "@/components/kit/family-data"
 
 /**
  * The rel for a link that leaves this site.
@@ -16,7 +16,7 @@ import { FAMILY } from "@/components/kit/family-data"
  * new family site gets the same treatment without an edit here.
  */
 const FAMILY_HOSTS = new Set(
-  FAMILY.flatMap((f) => (f.href ? [new URL(f.href).hostname, `www.${new URL(f.href).hostname}`] : [])),
+  [...FAMILY, ...ELECTRIC].flatMap((f) => (f.href ? [new URL(f.href).hostname, `www.${new URL(f.href).hostname}`] : [])),
 )
 
 export function externalRel(href: string): string {

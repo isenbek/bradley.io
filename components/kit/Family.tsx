@@ -12,9 +12,14 @@
  * (meatball-labs/family/family.json), copied in as ./family-data.ts by
  * scripts/sync-family.sh, so this footer, meatball.ai's and sysforge.ai's
  * cannot disagree about who is in the family.
+ *
+ * After the nine muted dots come the five of the electric set (brand library,
+ * 2026-10-07): sites that live on a dark screen hold no muted hue, and their
+ * dot is their hue's core tone. The kit has no token for those, so the colour
+ * comes from the registry as data, the same hex meatball.ai's family.css uses.
  */
 
-import { FAMILY, FAMILY_LABEL, type FamilyHue } from "./family-data"
+import { ELECTRIC, FAMILY, FAMILY_LABEL, type FamilyHue } from "./family-data"
 
 export function Family({ me }: { me: FamilyHue }) {
   return (
@@ -58,6 +63,20 @@ export function Family({ me }: { me: FamilyHue }) {
           );
         }
         return <span key={f.hue} className="family-dot" data-hue={f.hue} aria-hidden="true" />;
+      })}
+      {ELECTRIC.map((e) => {
+        const style = { background: e.tones.core }
+        if (e.href && e.who) {
+          return (
+            <a key={e.id} className="family-dot" data-electric={e.id} style={style} href={e.href} aria-label={e.who} title={e.who} />
+          );
+        }
+        if (e.reserved && e.who) {
+          return (
+            <span key={e.id} className="family-dot" data-electric={e.id} style={style} role="img" aria-label={`${e.who}, coming`} title={`${e.who} (coming)`} />
+          );
+        }
+        return <span key={e.id} className="family-dot" data-electric={e.id} style={style} aria-hidden="true" />;
       })}
     </nav>
   );
