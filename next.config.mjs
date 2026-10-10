@@ -163,6 +163,13 @@ const nextConfig = {
   distDir: process.env.NEXT_DIST_DIR || '.next',
 
   trailingSlash: false,
+
+  // Dev only. Next 16 refuses its own dev resources (/_next/webpack-hmr and
+  // the client chunks behind it) to any origin other than localhost, so a
+  // page opened as http://127.0.0.1:32290 renders its HTML and never
+  // hydrates: no menu, no live boards, no error on the page. Agent
+  // screenshots hit exactly that. Found 2026-10-10.
+  allowedDevOrigins: ['127.0.0.1'],
 }
 
 export default nextConfig

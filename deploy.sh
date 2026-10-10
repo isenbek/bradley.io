@@ -109,6 +109,16 @@ rm -rf "$STAGING"
 # by `next start`, and the swap below restores it from the staged build.
 rm -rf .next/types
 
+# Same for the dev preview's generated types (npm run dev:preview writes
+# .next-preview, and `next dev` adds it to tsconfig's include by itself). A
+# preview server that is killed mid-write leaves a truncated validator.ts
+# there, and the production build then fails its type check on it:
+#
+#   .next-preview/dev/types/validator.ts: Unexpected keyword or identifier
+#
+# Found 2026-10-10. A running preview regenerates them on its next request.
+rm -rf .next-preview/types .next-preview/dev/types
+
 if ! NEXT_DIST_DIR="$STAGING" bun run build; then
     rm -rf "$STAGING"
     fail "Build failed — LIVE SITE UNTOUCHED, still serving the previous build"
