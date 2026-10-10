@@ -11,7 +11,8 @@ export default function robots(): MetadataRoute.Robots {
       // not being linked anywhere.
       // /visitors is unlisted while its tiers get built out. Unlike /eyes it
       // has no opengraph-image to protect, so a Disallow is safe here.
-      disallow: ["/api/", "/visitors", "/resume/print"],
+      // /preview/* is client drafts (app/preview): never indexed.
+      disallow: ["/api/", "/visitors", "/resume/print", "/preview/"],
     },
     sitemap: "https://bradley.io/sitemap.xml",
     host: "https://bradley.io",
