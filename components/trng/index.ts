@@ -7,7 +7,7 @@
  * things read: TrngBoard, and the two modules behind /trng/space.
  *
  * Importers may equally use "@/components/trng/api" directly, and the newer
- * boards for sdr, fleet and dragonfli do exactly that. This barrel survives
+ * boards for fleet and dragonfli do exactly that. This barrel survives
  * only because those three call sites already point at it.
  */
 export * from "./api"

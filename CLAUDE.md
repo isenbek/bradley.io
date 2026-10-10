@@ -36,15 +36,15 @@ Charts and MapLibre colour come from `lib/beta/chart-theme.ts` — one source. M
 ### Project Structure
 ```
 bradleyio/
-├── app/                    # App Router; every dir here = one kit route (37 total)
+├── app/                    # App Router; every dir here = one kit route (36 total)
 │   ├── (prose)             #   about, services, contact, papers, work, projects
 │   ├── (pilot analytics)   #   ai-pilot, pilot-analytics, cost-analysis, the-shift
 │   │                       #   (data from app/_pilot-data, charts from app/_charts)
 │   ├── (instruments)       #   trng, visitors, 6502, dragonfli/*, meatball/*,
-│   │                       #   eyes, fleet, sdr, mcp, preferences, bio-mark
+│   │                       #   eyes, fleet, mcp, preferences, bio-mark
 │   ├── terminal/           #   CLI portfolio; own terminal.css (see above)
 │   ├── api/                #   route handlers proxying local services (trng,
-│   │                       #   visitors, worldevent, sdr, fleet, meatball feeds)
+│   │                       #   visitors, worldevent, fleet, meatball feeds)
 │   ├── beta/kit/           #   the VENDORED style kit — never edit, resync
 │   ├── _nav.ts             #   NAV + KIT_ROUTES; every new route registers here
 │   ├── kit.css             #   bradley.io's own beta-* rules on top of the kit
@@ -57,7 +57,7 @@ bradleyio/
 │   ├── dragonfli/          # airspace map, GPS board, worldevent bus + decoders
 │   ├── meatball/ mos/      # robot boards; 6502 die plates
 │   ├── trng/ visitors/     # Hotbits board; Knock-knock board
-│   ├── eyes/ fleet/ sdr/   # live instrument boards
+│   ├── eyes/ fleet/        # live instrument boards
 │   ├── projects/           # instrument embeds + companion cards
 │   └── preferences/ pwa/   # capability scanner; service worker
 ├── lib/                    # bio-logo-path, time-ago, build-info, og-cards,

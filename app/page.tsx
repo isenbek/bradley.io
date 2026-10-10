@@ -32,7 +32,7 @@ export const metadata: Metadata = {
  * and the footer already. RunningNow gives the answering ones rows and names
  * the silent ones once (components/home/RunningNow.tsx).
  */
-const NOW_ROWS: NowId[] = ["activity", "firewall", "geiger", "bus", "cameras", "fleet", "sdr"]
+const NOW_ROWS: NowId[] = ["activity", "firewall", "geiger", "bus", "cameras", "fleet"]
 
 /** The three field notes under /meatball/notes, titled as their own pages title them. */
 const NOTES = [

@@ -33,7 +33,6 @@ const NAMES: Partial<Record<NowId, string>> = {
   bus: "The perception bus",
   cameras: "The camera",
   fleet: "The fleet collector",
-  sdr: "The SDR control plane",
 }
 
 export function BenchDot({ of, initial }: { of: NowId; initial?: NowSnapshot | null }) {

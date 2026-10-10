@@ -144,17 +144,6 @@ const INSTRUMENTS: BenchInstrument[] = [
       },
     ],
   },
-  {
-    id: "sdr",
-    name: "SDR control plane",
-    pages: [
-      {
-        href: "/sdr",
-        name: "SDR",
-        blurb: "Software-defined radio scanner: bands, soaks, top frequencies.",
-      },
-    ],
-  },
   { id: "build", name: "This build", pages: [] },
 ]
 

@@ -49,7 +49,7 @@ export const metadata: Metadata = {
  * home page's PrimalitySuite panel and Critical Collapse promo had (git show
  * 4618109:components/home/PrimalitySuite.tsx, 4618109:app/page.tsx). Hotbits,
  * Knock knock and the 6502 keep the lines this page already had. Meatball,
- * Dragonfli, SDR, Fleet and the trades tools use the ledes of their own pages.
+ * Dragonfli, Fleet and the trades tools use the ledes of their own pages.
  * The last group's heading and first sentence are the old /lab page's.
  *
  * WHAT THE DOTS ARE. An instrument card prints components/live LiveDot with
@@ -176,14 +176,6 @@ const INSTRUMENTS: BenchItem[] = [
     line: "Everything that has tried the doors on this host, across every site it serves. Three tiers fused into one view: dropped at the edge by the router, trapped at the door by the scanner trap, and served. Almost all of it is automated.",
     tech: ["nginx", "OpenWrt"],
     dot: "firewall",
-  },
-  {
-    href: "/sdr",
-    title: "SDR",
-    kind: "radio scanner",
-    line: "Software-defined radios sweeping VHF and 802.15.4 and writing what comes back above threshold to an archive. This reads the control plane in front of them.",
-    tech: ["RTL-SDR", "VHF", "802.15.4"],
-    dot: "sdr",
   },
   {
     href: "/fleet",

@@ -29,7 +29,6 @@ export const CORE_PATHS: string[] = [
   "/terminal",
   "/trng",
   "/dragonfli",
-  "/sdr",
   // Mission timelines
   // A couple of project dossiers
 ]

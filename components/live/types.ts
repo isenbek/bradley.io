@@ -29,7 +29,6 @@ export const NOW_ORDER = [
   "bus",
   "cameras",
   "fleet",
-  "sdr",
   "build",
 ] as const
 

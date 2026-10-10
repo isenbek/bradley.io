@@ -99,6 +99,9 @@ const nextConfig = {
       { source: '/lab/listening', destination: '/meatball/notes/listening', permanent: true },
       { source: '/lab/motion', destination: '/meatball/notes/motion', permanent: true },
       { source: '/lab/bio-mark', destination: '/bio-mark', permanent: true },
+      // /sdr retired 2026-10-10: its upstream, sdr.tinymachines.ai, was retired
+      // on 2026-10-03 and the board had been dark since. Source in git history.
+      { source: '/sdr', destination: '/projects', permanent: true },
       { source: '/lab', destination: '/meatball', permanent: true },
       // Anything else under /lab was the catalog.
       { source: '/lab/:path*', destination: '/projects', permanent: true },

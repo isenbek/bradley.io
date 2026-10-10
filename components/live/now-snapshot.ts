@@ -18,8 +18,8 @@
  *       const initial = await peekNow()
  *       <NowPanel initial={initial} />
  *     Files on this host (the pulse, the bus, the camera, the firewall, the
- *     build) are read fresh. The three network instruments (Geiger, fleet,
- *     SDR) come from the last answer if it is under a minute old, and are
+ *     build) are read fresh. The two network instruments (Geiger, fleet)
+ *     come from the last answer if it is under a minute old, and are
  *     otherwise reported as "checking" while a refresh starts in the
  *     background; the page's first client poll fills them in. Never throws.
  *     A checking row's sentence is in the past tense and about the snapshot
@@ -35,7 +35,7 @@
  * that a route already knows. Each instrument is read by calling the GET
  * handler of the route that already serves its board (app/api/trng,
  * app/api/worldevent, app/api/eyes/meta, app/api/visitors, app/api/fleet,
- * app/api/sdr, app/api/hotbits-probe), in process, with no HTTP hop. The two
+ * app/api/hotbits-probe), in process, with no HTTP hop. The two
  * things read directly are the two that have no route: lib/build-info.json and
  * the pulse file the cron writes into public/data.
  *
@@ -68,7 +68,6 @@ import { GET as worldeventGET } from "@/app/api/worldevent/route"
 import { GET as eyesMetaGET } from "@/app/api/eyes/meta/route"
 import { GET as visitorsGET } from "@/app/api/visitors/route"
 import { GET as fleetGET } from "@/app/api/fleet/[...path]/route"
-import { GET as sdrGET } from "@/app/api/sdr/[...path]/route"
 import { NOW_ORDER, type NowId, type NowRow, type NowSnapshot, type Pulse, type PulseBar } from "./types"
 
 // ---- Timing ---------------------------------------------------------------
@@ -117,7 +116,6 @@ const META: Record<NowId, { label: string; href: string | null; freshness: Instr
     bus: { label: "Perception bus", href: "/dragonfli/worldevent", freshness: "worldevent" },
     cameras: { label: "Meatball eye", href: "/meatball", freshness: "camera" },
     fleet: { label: "Fleet", href: "/fleet", freshness: "fleet" },
-    sdr: { label: "SDR", href: "/sdr", freshness: "sdr" },
     build: { label: "This build", href: null, freshness: null },
   }
 
@@ -838,7 +836,7 @@ function camerasRow(a: Asked<CameraProbe>, now: number): NowRow {
   return r
 }
 
-// ---- Fleet and SDR --------------------------------------------------------
+// ---- Fleet -----------------------------------------------------------------
 
 interface FleetProbe {
   answered: boolean
@@ -877,29 +875,9 @@ async function readFleet(): Promise<FleetProbe> {
   }
 }
 
-interface SdrProbe {
-  answered: boolean
-  version: string | null
-  lastOkMs: number | null
-  watchingSinceMs: number | null
-}
-
-async function readSdr(): Promise<SdrProbe> {
-  const r = await viaProxy(sdrGET, "sdr", ["health"])
-  if (proxyFailed(r) || r.status >= 400) {
-    return { answered: false, version: null, ...proxyMemory(r.body) }
-  }
-  return {
-    answered: true,
-    version: typeof r.body?.version === "string" ? r.body.version : null,
-    lastOkMs: Date.now(),
-    watchingSinceMs: null,
-  }
-}
-
 /** The shared shape of a network instrument that is not giving a reading. */
 function silentRow(
-  id: "fleet" | "sdr",
+  id: "fleet",
   name: string,
   a: Asked<{ lastOkMs: number | null; watchingSinceMs: number | null }>,
   ok: boolean,
@@ -959,23 +937,6 @@ function fleetRow(a: Asked<FleetProbe>, peek: boolean, now: number): NowRow {
   )
 }
 
-function sdrRow(a: Asked<SdrProbe>, peek: boolean, now: number): NowRow {
-  const ok = usable(a, peek, now)
-  const p = a.value
-  if (ok && p && p.answered) {
-    const heard = remember("sdr", p.lastOkMs)
-    return row("sdr", now, {
-      value: "answering",
-      lastHeardMs: heard,
-      sentence:
-        `The SDR control plane answered` +
-        `${p.version ? `, running version ${p.version}` : ""}` +
-        `${heard != null ? `, ${absDateTime(heard)}` : ""}.`,
-    })
-  }
-  return silentRow("sdr", "the SDR control plane", a, ok, peek, now)
-}
-
 // ---- The build ------------------------------------------------------------
 
 function buildRow(now: number): NowRow {
@@ -998,14 +959,13 @@ async function assemble(networkWaitMs: number): Promise<NowSnapshot> {
   // was the box last up", and it must not hold anything else back.
   void ask("geiger-marker", readGeigerMarker, PROBE_TTL_MS, 0)
 
-  const [pulse, visitors, bus, cameras, geiger, fleet, sdr] = await Promise.all([
+  const [pulse, visitors, bus, cameras, geiger, fleet] = await Promise.all([
     ask("pulse", readPulse, SNAPSHOT_TTL_MS, LOCAL_WAIT_MS),
     ask("visitors", readVisitors, VISITORS_TTL_MS, LOCAL_WAIT_MS),
     ask("bus", readBus, SNAPSHOT_TTL_MS, LOCAL_WAIT_MS),
     ask("cameras", readCameras, SNAPSHOT_TTL_MS, LOCAL_WAIT_MS),
     ask("geiger", readGeiger, SNAPSHOT_TTL_MS, networkWait("geiger", networkWaitMs)),
     ask("fleet", readFleet, SNAPSHOT_TTL_MS, networkWait("fleet", networkWaitMs)),
-    ask("sdr", readSdr, SNAPSHOT_TTL_MS, networkWait("sdr", networkWaitMs)),
   ])
 
   const now = Date.now()
@@ -1017,7 +977,6 @@ async function assemble(networkWaitMs: number): Promise<NowSnapshot> {
     bus: busRow(bus, now),
     cameras: camerasRow(cameras, now),
     fleet: fleetRow(fleet, peek, now),
-    sdr: sdrRow(sdr, peek, now),
     build: buildRow(now),
   }
   return {

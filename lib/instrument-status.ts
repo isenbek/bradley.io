@@ -76,11 +76,6 @@ export const FRESHNESS = {
   // board's "receiving" line before this table existed.
   fleet: { staleAfterS: 120, offlineAfterS: 900 },
 
-  // SDR control plane (/sdr). It has no data clock of its own, so last heard
-  // is the last poll it answered. The board polls every 60 s: two and a half
-  // missed polls is late, ten is gone.
-  sdr: { staleAfterS: 150, offlineAfterS: 600 },
-
   // ADS-B receiver (/dragonfli, /dragonfli/airspace). Last heard is the last
   // ADS-B frame off the 1090 antenna: the newest last_seen among the aircraft
   // the decoder is tracking, or the perception bus's last adsb.mode_s /
@@ -236,7 +231,7 @@ export function statusLabel(r: InstrumentReading): string {
 }
 
 // ---- Upstream memory ------------------------------------------------------
-// The proxy routes (/api/trng, /api/sdr, /api/fleet) remember when their
+// The proxy routes (/api/trng, /api/fleet) remember when their
 // upstream last answered and say so in the body of a failure. These helpers
 // carry that from the failed Response to the board.
 

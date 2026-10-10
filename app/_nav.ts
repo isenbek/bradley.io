@@ -73,7 +73,6 @@ export const NAV: NavGroup[] = [
       // the entries under it are answering right now.
       { href: "/bench", label: "The bench", blurb: "every live page on this server, and whether it is up" },
       { href: "/trng", label: "Hotbits", blurb: "true random numbers from radioactive decay" },
-      { href: "/sdr", label: "SDR", blurb: "the scanner stack and what it is hearing" },
       { href: "/fleet", label: "Fleet", blurb: "node health across the cluster" },
       { href: "/dragonfli", label: "Dragonfli", blurb: "airspace, GPS, and the perception bus" },
       { href: "/visitors", label: "Knock knock", blurb: "who has been trying the doors, across every site here" },

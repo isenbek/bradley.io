@@ -79,8 +79,8 @@ export const FACTS: Fact[] = [
   // SITE: app/projects/page.tsx INSTRUMENTS; CLAUDE.md project overview.
   {
     topic: "This site and its live instruments",
-    text: "bradley.io is served from a box at Bradley's home, not from a cloud. Its instrument pages read real hardware: a Geiger counter turning radioactive decay into random numbers (/trng), an ADS-B receiver and GPS on one bus (/dragonfli), Meatball, a home server built from cast-off parts that can see, hear and talk with every model running locally (/meatball), software-defined radios (/sdr), and logs of who tried the doors (/visitors). /bench lists every live page and whether it is up.",
-    links: ["/bench", "/trng", "/dragonfli", "/meatball", "/sdr", "/visitors"],
+    text: "bradley.io is served from a box at Bradley's home, not from a cloud. Its instrument pages read real hardware: a Geiger counter turning radioactive decay into random numbers (/trng), an ADS-B receiver and GPS on one bus (/dragonfli), Meatball, a home server built from cast-off parts that can see, hear and talk with every model running locally (/meatball), and logs of who tried the doors (/visitors). /bench lists every live page and whether it is up.",
+    links: ["/bench", "/trng", "/dragonfli", "/meatball", "/visitors"],
   },
   // SITE: app/_nav.ts blurbs. /work, /ai-pilot and /cost-analysis are left out
   // on purpose: as of 2026-10-02 they print the private platform's name (owner

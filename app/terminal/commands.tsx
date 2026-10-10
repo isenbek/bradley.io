@@ -62,7 +62,6 @@ export const PING_NAMES: Record<NowId, string[]> = {
   bus: ["bus", "worldevent", "dragonfli"],
   cameras: ["meatball", "eye", "cameras"],
   fleet: ["fleet"],
-  sdr: ["sdr"],
   build: ["build"],
 }
 

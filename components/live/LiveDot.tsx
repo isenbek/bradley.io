@@ -15,7 +15,7 @@ import { useLiveNow } from "./use-live-now"
  *
  * PROPS
  *   of        "activity" (default) or any NowId ("geiger", "bus", "cameras",
- *             "firewall", "fleet", "sdr").
+ *             "firewall", "fleet").
  *             activity: lit when a Claude Code session is KNOWN to have written
  *             within the last five minutes (Pulse.lastActive, a lower bound, so
  *             the dot can be late to light and is never lit without proof).
@@ -60,7 +60,6 @@ const NAMES: Record<NowId, string> = {
   bus: "The perception bus",
   cameras: "The camera",
   fleet: "The fleet collector",
-  sdr: "The SDR control plane",
   build: "This build",
 }
 
