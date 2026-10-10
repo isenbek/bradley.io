@@ -1,10 +1,10 @@
 {
-  "generated": "2026-10-07T09:15:18.828619+00:00",
+  "generated": "2026-10-09T09:09:27.783990+00:00",
   "org": "tinymachines",
-  "totalRepos": 71,
+  "totalRepos": 72,
   "firstCommit": "2016-02-27T16:07:26Z",
-  "latestCommit": "2026-10-07T06:09:31Z",
-  "totalCommits": 6934,
+  "latestCommit": "2026-10-09T05:34:25Z",
+  "totalCommits": 6979,
   "languages": {
     "Python": 27,
     "C": 7,
@@ -7069,9 +7069,21 @@
     },
     {
       "date": "2026-10-07",
-      "commits": 20,
+      "commits": 37,
+      "repos": 4,
+      "intensity": 3
+    },
+    {
+      "date": "2026-10-08",
+      "commits": 24,
       "repos": 4,
       "intensity": 2
+    },
+    {
+      "date": "2026-10-09",
+      "commits": 4,
+      "repos": 1,
+      "intensity": 1
     }
   ],
   "phases": [
@@ -7413,17 +7425,24 @@
       "model": "ollama:gemma3:4b"
     },
     {
-      "name": "NES Controller Scripting",
+      "name": "Retro Computer Emulator Development",
       "startDate": "2026-09-07",
-      "endDate": "2026-09-07",
-      "description": "This development focused on creating a unified, scriptable environment for controlling the NES bench. The team integrated controller ports, relays, and a scope into a single script to ensure identical inputs across both the part and switch-level models.",
+      "endDate": "2026-10-08",
+      "description": "This development effort focused on building a custom electronic device, specifically a retro computer emulator. The project involved integrating hardware components like ESP32 boards and opto-isolators to recreate the functionality of older computers.",
       "repos": [
-        "nes-bench"
+        "nes-bench",
+        "tinypeek"
       ],
-      "milestones": [],
+      "milestones": [
+        {
+          "date": "2026-09-07",
+          "title": "B0 - Initial Hardware Setup",
+          "repo": "nes-bench"
+        }
+      ],
       "category": "hardware",
-      "source": "reused",
-      "generatedAt": "2026-10-03",
+      "source": "ai",
+      "generatedAt": "2026-10-09",
       "model": "ollama:gemma3:4b"
     }
   ],
@@ -8102,14 +8121,14 @@
     },
     {
       "name": "geiger",
-      "description": "The 'geiger' repository appears to be an experimental project focused on building and monitoring a custom optical receiver, likely for detecting some kind of signal. The commits detail the construction process, including hardware components (TM-TRNG-001), data extraction routines ('extract_stream'), and automated reporting ('auto'). It involves configuring a Rigol DS1054Z oscilloscope and managing parts orders to build a system that captures and analyzes an emitter's signal stream.",
+      "description": "The 'geiger' repository documents the construction and testing of a custom electronic instrument, likely for measuring or analyzing some physical signal. It contains detailed notes on wiring configurations ('Option A' and 'Option B'), component selection (including specific models like Rigol DS1054Z), and automated processes for data collection and reporting. The project appears to be focused on building a benchtop setup with a custom scope, incorporating elements of hardware control, data logging, and potentially real-time monitoring.",
       "language": "HTML",
-      "commits": 318,
+      "commits": 323,
       "firstCommit": "2026-05-04T03:01:06Z",
-      "lastCommit": "2026-10-07T02:12:53Z",
+      "lastCommit": "2026-10-08T04:36:14Z",
       "phase": "Early Tinymachines Development",
-      "descriptionSource": "ai",
-      "descriptionGeneratedAt": "2026-10-07",
+      "descriptionSource": "reused",
+      "descriptionGeneratedAt": "2026-10-08",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
@@ -8174,14 +8193,14 @@
     },
     {
       "name": "6502",
-      "description": "The 6502 repository is a software project focused on creating a detailed simulator of the MOS 6502 microprocessor in Rust/WASM, utilizing a WebGL renderer to visualize the processor's die. The project involves extensive work on simulation components like memory buses and emitter states, alongside efforts to create a responsive user interface for exploring and interacting with the simulated hardware. It includes archiving and preservation efforts related to visual6502.org.",
+      "description": "This repository contains a software project simulating a 6502 MOS microcontroller at the transistor level in Rust/WASM, utilizing a WebGL renderer to visualize its die. The project focuses on recreating the functionality and appearance of the real hardware, with ongoing efforts to improve the simulation's accuracy, documentation, and user experience through various development tasks like bug fixes, feature additions, and asset optimization.",
       "language": "JavaScript",
-      "commits": 356,
+      "commits": 358,
       "firstCommit": "2026-08-12T16:38:57Z",
-      "lastCommit": "2026-10-07T05:31:03Z",
+      "lastCommit": "2026-10-08T04:36:16Z",
       "phase": "Tinymachine Ecosystem Development Phases",
-      "descriptionSource": "ai",
-      "descriptionGeneratedAt": "2026-10-07",
+      "descriptionSource": "reused",
+      "descriptionGeneratedAt": "2026-10-08",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
@@ -8198,14 +8217,14 @@
     },
     {
       "name": "public",
-      "description": "This repository documents the development of a 6502 work, likely related to emulation or hardware design, with a focus on creating a site, API, and documentation. The project involves detailed notebooks, drawings, and configuration management, and currently has significant Japanese language content.",
+      "description": "This repository documents the development of a site, API, and documentation related to the 6502 processor, likely for a project involving emulation or analysis. The work focuses on building a system with multiple components including build chains, data records, and interactive lessons, utilizing TypeScript and various tooling.",
       "language": "TypeScript",
-      "commits": 876,
+      "commits": 913,
       "firstCommit": "2026-08-22T15:44:09Z",
-      "lastCommit": "2026-10-07T06:09:31Z",
+      "lastCommit": "2026-10-09T05:34:25Z",
       "phase": "NES Simulation Development",
       "descriptionSource": "ai",
-      "descriptionGeneratedAt": "2026-10-07",
+      "descriptionGeneratedAt": "2026-10-09",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
@@ -8275,30 +8294,43 @@
       "commits": 270,
       "firstCommit": "2026-09-07T01:23:48Z",
       "lastCommit": "2026-10-07T01:32:56Z",
-      "phase": "NES Controller Scripting",
-      "descriptionSource": "ai",
+      "phase": "Retro Computer Emulator Development",
+      "descriptionSource": "reused",
       "descriptionGeneratedAt": "2026-10-07",
       "descriptionModel": "ollama:gemma3:4b"
+    },
+    {
+      "name": "tinypeek",
+      "description": "Commits: tinypeek: tm:// protocol spec v0.2 and stack explainer",
+      "language": "Unknown",
+      "commits": 1,
+      "firstCommit": "2026-10-08T17:35:49Z",
+      "lastCommit": "2026-10-08T17:35:49Z",
+      "phase": "Retro Computer Emulator Development",
+      "descriptionSource": "commits",
+      "descriptionGeneratedAt": null,
+      "descriptionModel": null
     }
   ],
   "aiSummary": {
-    "callsOk": 4,
+    "callsOk": 2,
     "callsFailed": 0,
-    "reused": 51,
+    "reused": 53,
     "kept": 0,
     "skippedByLimit": 0,
     "skippedByBudget": 0,
     "skippedBackendsDown": 0,
     "withoutModelText": 0,
     "phaseSources": {
-      "reused": 11
+      "reused": 10,
+      "ai": 1
     },
     "descriptionSources": {
-      "reused": 40,
+      "reused": 43,
       "github": 13,
-      "commits": 10,
+      "commits": 11,
       "none": 4,
-      "ai": 4
+      "ai": 1
     },
     "limitAi": null,
     "budgetMin": 15.0,
