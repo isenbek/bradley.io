@@ -1,10 +1,10 @@
 {
-  "generated": "2026-10-09T09:09:27.783990+00:00",
+  "generated": "2026-10-10T09:08:56.116289+00:00",
   "org": "tinymachines",
   "totalRepos": 72,
   "firstCommit": "2016-02-27T16:07:26Z",
-  "latestCommit": "2026-10-09T05:34:25Z",
-  "totalCommits": 6979,
+  "latestCommit": "2026-10-10T02:26:09Z",
+  "totalCommits": 6996,
   "languages": {
     "Python": 27,
     "C": 7,
@@ -7075,14 +7075,20 @@
     },
     {
       "date": "2026-10-08",
-      "commits": 24,
+      "commits": 25,
       "repos": 4,
       "intensity": 2
     },
     {
       "date": "2026-10-09",
-      "commits": 4,
-      "repos": 1,
+      "commits": 14,
+      "repos": 2,
+      "intensity": 2
+    },
+    {
+      "date": "2026-10-10",
+      "commits": 6,
+      "repos": 3,
       "intensity": 1
     }
   ],
@@ -7441,7 +7447,7 @@
         }
       ],
       "category": "hardware",
-      "source": "ai",
+      "source": "reused",
       "generatedAt": "2026-10-09",
       "model": "ollama:gemma3:4b"
     }
@@ -8193,14 +8199,14 @@
     },
     {
       "name": "6502",
-      "description": "This repository contains a software project simulating a 6502 MOS microcontroller at the transistor level in Rust/WASM, utilizing a WebGL renderer to visualize its die. The project focuses on recreating the functionality and appearance of the real hardware, with ongoing efforts to improve the simulation's accuracy, documentation, and user experience through various development tasks like bug fixes, feature additions, and asset optimization.",
+      "description": "This repository is a software project developing a transistor-level simulator of the MOS 6502 microprocessor in Rust/WASM, utilizing a WebGL renderer to visualize the real die. The core development focuses on recreating and documenting the 6502 architecture, including its internal components and behavior, with an emphasis on archival and presentation of related materials. The project incorporates features for rendering, data visualization, and potentially managing assets like schematics and datasheets.",
       "language": "JavaScript",
-      "commits": 358,
+      "commits": 359,
       "firstCommit": "2026-08-12T16:38:57Z",
-      "lastCommit": "2026-10-08T04:36:16Z",
+      "lastCommit": "2026-10-10T01:45:01Z",
       "phase": "Tinymachine Ecosystem Development Phases",
-      "descriptionSource": "reused",
-      "descriptionGeneratedAt": "2026-10-08",
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-10",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
@@ -8217,14 +8223,14 @@
     },
     {
       "name": "public",
-      "description": "This repository documents the development of a site, API, and documentation related to the 6502 processor, likely for a project involving emulation or analysis. The work focuses on building a system with multiple components including build chains, data records, and interactive lessons, utilizing TypeScript and various tooling.",
+      "description": "This repository appears to be developing a software project, likely related to emulation or reverse engineering of the 6502 processor, given the frequent references to 'tm://', cartridges, and debugging techniques. The work involves building a complex system with multiple components, including a frontend (Next + MDX), backend (FastAPI), and various tooling for benchmarking, documentation, and configuration management, all centered around a core set of data and protocols.",
       "language": "TypeScript",
-      "commits": 913,
+      "commits": 925,
       "firstCommit": "2026-08-22T15:44:09Z",
-      "lastCommit": "2026-10-09T05:34:25Z",
+      "lastCommit": "2026-10-10T02:26:09Z",
       "phase": "NES Simulation Development",
       "descriptionSource": "ai",
-      "descriptionGeneratedAt": "2026-10-09",
+      "descriptionGeneratedAt": "2026-10-10",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
@@ -8301,11 +8307,11 @@
     },
     {
       "name": "tinypeek",
-      "description": "Commits: tinypeek: tm:// protocol spec v0.2 and stack explainer",
+      "description": "Commits: CLAUDE.md: what this repository is, where the server lives, how a change flows, what is left; spec v0.3: every marker re-checked against the running server (TM-13); spec v0.3: the second batch as shipped (TM-4, 5, 7, 18), the offbox mount; spec: the deny-list as shipped (TM-9); tinypeek: tm:// protocol spec v0.2 and stack explainer",
       "language": "Unknown",
-      "commits": 1,
+      "commits": 5,
       "firstCommit": "2026-10-08T17:35:49Z",
-      "lastCommit": "2026-10-08T17:35:49Z",
+      "lastCommit": "2026-10-10T01:59:50Z",
       "phase": "Retro Computer Emulator Development",
       "descriptionSource": "commits",
       "descriptionGeneratedAt": null,
@@ -8322,15 +8328,14 @@
     "skippedBackendsDown": 0,
     "withoutModelText": 0,
     "phaseSources": {
-      "reused": 10,
-      "ai": 1
+      "reused": 11
     },
     "descriptionSources": {
-      "reused": 43,
+      "reused": 42,
       "github": 13,
       "commits": 11,
       "none": 4,
-      "ai": 1
+      "ai": 2
     },
     "limitAi": null,
     "budgetMin": 15.0,
