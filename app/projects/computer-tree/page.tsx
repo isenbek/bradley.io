@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { ComputerTree } from "@/components/computer-tree/ComputerTree"
+import { externalRel } from "@/lib/external-rel"
 import { computerTree } from "@/lib/computer-tree"
 
 /**
@@ -116,6 +117,17 @@ export default function ComputerTreePage() {
           The dataset is a directed acyclic graph: every parent exists, there are no cycles, and no
           parent is dated more than a year after its child. Take it with you; the data card has
           the schema, the counts and how to add a decade.
+        </p>
+        <p>
+          The tree also stands on{" "}
+          <a href="https://tinymachines.ai/computer-tree" rel={externalRel("https://tinymachines.ai/computer-tree")}>
+            tinymachines.ai
+          </a>
+          , in English and{" "}
+          <a href="https://tinymachines.ai/ja/computer-tree" rel={externalRel("https://tinymachines.ai/ja/computer-tree")} hrefLang="ja">
+            Japanese
+          </a>
+          , drawn from this same dataset.
         </p>
       </div>
       <div className="ledger beta-sec">
