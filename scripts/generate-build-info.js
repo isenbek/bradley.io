@@ -10,15 +10,13 @@ const path = require('path');
 
 function getGitInfo() {
   try {
-    // Get the latest tag or fallback to package.json version
-    let version;
-    try {
-      version = execSync('git describe --tags --abbrev=0 2>/dev/null', { encoding: 'utf8' }).trim();
-    } catch {
-      // No tags found, use package.json version
-      const pkg = require('../package.json');
-      version = `v${pkg.version}`;
-    }
+    // package.json is the version: deploy.sh bumps it on every deploy. This
+    // used to prefer `git describe --tags`, which was fine while the repo had
+    // no tags, but the first tag ever made (archive/wargames, 2026-10-05) is
+    // not a version, and from then until 2026-10-13 every footer pill read
+    // "archive/wargames" instead of v1.0.4xx.
+    const pkg = require('../package.json');
+    const version = `v${pkg.version}`;
 
     // Get short commit hash
     const commitHash = execSync('git rev-parse --short HEAD', { encoding: 'utf8' }).trim();
