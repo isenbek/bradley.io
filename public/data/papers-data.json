@@ -1,84 +1,19 @@
 {
-  "generated": "2026-10-10T16:01:35.616170+00:00",
-  "totalStudies": 32,
-  "totalReferences": 8,
+  "generated": "2026-10-13T12:01:24.110701+00:00",
+  "totalStudies": 27,
+  "totalReferences": 4,
   "categories": {
-    "cross-domain": 2,
     "research": 7,
     "climate": 4,
-    "seismology": 10,
-    "space-weather": 5,
+    "seismology": 8,
     "radiation": 1,
-    "hydrology": 3
+    "hydrology": 3,
+    "space-weather": 3,
+    "cross-domain": 1
   },
-  "withdrawnCount": 52,
+  "withdrawnCount": 57,
   "withdrawnPolicy": "omitted",
   "studies": [
-    {
-      "slug": "cross-domain-clustering",
-      "title": "Cross-Domain Temporal Clustering Atlas \u2014 Inter-Event Time Analysis Across Environmental Metrics",
-      "description": "Applying the coefficient of variation (CV) inter-event time method proven on earthquakes (CV=1.545) to CMEs, radiation spikes, geomagnetic storms, AQI exceedances, and flood events. Building a clustering atlas across domains.",
-      "status": "draft",
-      "author": "Lab",
-      "category": "cross-domain",
-      "createdAt": "2026-03-22T20:02:04.335312+00:00",
-      "hasPaper": true,
-      "hasViz": true,
-      "previewImage": "/data/papers/cross-domain-clustering.png",
-      "paperUrl": "/data/papers/cross-domain-clustering-paper.pdf",
-      "dataFileCount": 13,
-      "refPaperCount": 0,
-      "references": [],
-      "withdrawn": false,
-      "resultsSummary": {
-        "totalStreams": 12,
-        "clustered": 12,
-        "highlights": [
-          {
-            "label": "Earthquakes M4+",
-            "category": "Seismic",
-            "cv": 1.17,
-            "events": 82189,
-            "verdict": "mildly clustered"
-          },
-          {
-            "label": "Earthquakes M5+",
-            "category": "Seismic",
-            "cv": 1.3,
-            "events": 9836,
-            "verdict": "mildly clustered"
-          },
-          {
-            "label": "Earthquakes M6+",
-            "category": "Seismic",
-            "cv": 1.32,
-            "events": 836,
-            "verdict": "CLUSTERED"
-          },
-          {
-            "label": "Kp Storms (\u22654)",
-            "category": "Space Weather",
-            "cv": 60.58,
-            "events": 12804,
-            "verdict": "CLUSTERED"
-          },
-          {
-            "label": "Kp Major (\u22655)",
-            "category": "Space Weather",
-            "cv": 55.81,
-            "events": 5914,
-            "verdict": "CLUSTERED"
-          },
-          {
-            "label": "CME Events",
-            "category": "Space Weather",
-            "cv": 21.49,
-            "events": 9043,
-            "verdict": "CLUSTERED"
-          }
-        ]
-      }
-    },
     {
       "slug": "hurricane-season-phase",
       "title": "It's Always Hurricane Season Somewhere",
@@ -128,60 +63,6 @@
       "dataFileCount": 3,
       "refPaperCount": 0,
       "references": [],
-      "withdrawn": false
-    },
-    {
-      "slug": "solar-seismic-correlation",
-      "title": "Solar Activity and Earthquake Frequency \u2014 Is There a Signal?",
-      "description": "Testing the controversial hypothesis that solar activity (CMEs, solar flux, geomagnetic storms) correlates with earthquake frequency or magnitude. Using NOAA SWPC, NASA DONKI, and USGS earthquake data.",
-      "status": "draft",
-      "author": "Lab",
-      "category": "seismology",
-      "createdAt": "2026-03-20T17:34:58.900341+00:00",
-      "hasPaper": false,
-      "hasViz": true,
-      "previewImage": "/data/papers/solar-seismic-correlation.png",
-      "paperUrl": null,
-      "dataFileCount": 8,
-      "refPaperCount": 5,
-      "references": [
-        {
-          "arxivId": "2601.07595v3",
-          "title": "Deep Search for Joint Sources of Gravitational Waves and High-Energy Neutrinos with IceCube During the Third Observing Run of LIGO and Virgo",
-          "abstract": "The discovery of joint sources of high-energy neutrinos and gravitational waves has been a primary target for the LIGO, Virgo, KAGRA, and IceCube observatories. The joint detection of high-energy neutrinos and gravitational waves would provide insight into cosmic processes, from the dynamics of comp",
-          "workspace": "solar-seismic-correlation",
-          "published": "2026-01-12T14:43:54+00:00",
-          "categories": "astro-ph.HE",
-          "url": "https://arxiv.org/abs/2601.07595v3"
-        },
-        {
-          "arxivId": "1610.00990v1",
-          "title": "The solar-stellar connection: Magnetic activity of seismic solar analogs",
-          "abstract": "Finding solar-analog stars with fundamental properties as close as possible to the Sun and studying the characteristics of their surface magnetic activity is a very promising way to understand the solar variability and its associated dynamo process. However, the identification of solar-analog stars ",
-          "workspace": "solar-seismic-correlation",
-          "published": "2016-10-04T13:44:35+00:00",
-          "categories": "astro-ph.SR",
-          "url": "https://arxiv.org/abs/1610.00990v1"
-        },
-        {
-          "arxivId": "1411.4413v2",
-          "title": "Observation of the rare $B^0_s\\to\u03bc^+\u03bc^-$ decay from the combined analysis of CMS and LHCb data",
-          "abstract": "A joint measurement is presented of the branching fractions $B^0_s\\to\u03bc^+\u03bc^-$ and $B^0\\to\u03bc^+\u03bc^-$ in proton-proton collisions at the LHC by the CMS and LHCb experiments. The data samples were collected in 2011 at a centre-of-mass energy of 7 TeV, and in 2012 at 8 TeV. The combined analysis produces th",
-          "workspace": "solar-seismic-correlation",
-          "published": "2014-11-17T10:10:25+00:00",
-          "categories": "hep-ex, hep-ph",
-          "url": "https://arxiv.org/abs/1411.4413v2"
-        },
-        {
-          "arxivId": "1003.2533v2",
-          "title": "Solar dynamo and geomagnetic activity",
-          "abstract": "The correlation between geomagnetic activity and the sunspot number in the 11-year solar cycle exhibits long-term variations due to the varying time lag between the sunspot-related and non-sunspot related geomagnetic activity, and the varying relative amplitude of the respective geomagnetic activity",
-          "workspace": "solar-seismic-correlation",
-          "published": "2010-03-12T12:57:17+00:00",
-          "categories": "astro-ph.SR",
-          "url": "https://arxiv.org/abs/1003.2533v2"
-        }
-      ],
       "withdrawn": false
     },
     {
@@ -236,23 +117,6 @@
           "url": "https://arxiv.org/abs/1104.4038v1"
         }
       ],
-      "withdrawn": false
-    },
-    {
-      "slug": "solar-geomagnetic-lag",
-      "title": "Solar Flux\u2013Kp Index Time Lag \u2014 Paper Replication Study",
-      "description": "Replicating Georgieva & Kirov (2010) claim that the correlation between solar activity and geomagnetic activity varies with a changing time lag. Testing with NOAA SWPC solar flux and Kp index data.",
-      "status": "draft",
-      "author": "Lab",
-      "category": "space-weather",
-      "createdAt": "2026-03-22T19:28:00.828278+00:00",
-      "hasPaper": false,
-      "hasViz": true,
-      "previewImage": "/data/papers/solar-geomagnetic-lag.png",
-      "paperUrl": null,
-      "dataFileCount": 5,
-      "refPaperCount": 0,
-      "references": [],
       "withdrawn": false
     },
     {
@@ -353,23 +217,6 @@
       "previewImage": "/data/papers/tornado-climatology.png",
       "paperUrl": null,
       "dataFileCount": 4,
-      "refPaperCount": 0,
-      "references": [],
-      "withdrawn": false
-    },
-    {
-      "slug": "ligo-environment",
-      "title": "LIGO\u2013Environment Coupling",
-      "description": "Do earthquakes, ocean microseisms, and geomagnetic storms correlate with gravitational wave detector sensitivity?",
-      "status": "draft",
-      "author": "Claude",
-      "category": "seismology",
-      "createdAt": "2026-03-24T03:35:35.881964+00:00",
-      "hasPaper": false,
-      "hasViz": true,
-      "previewImage": "/data/papers/ligo-environment.png",
-      "paperUrl": null,
-      "dataFileCount": 5,
       "refPaperCount": 0,
       "references": [],
       "withdrawn": false
@@ -521,23 +368,6 @@
       "hasPaper": false,
       "hasViz": true,
       "previewImage": "/data/papers/lunar-tidal-forcing-signature-in-usgs-st.png",
-      "paperUrl": null,
-      "dataFileCount": 4,
-      "refPaperCount": 0,
-      "references": [],
-      "withdrawn": false
-    },
-    {
-      "slug": "solar-wind-to-kp-storm-onset-lag-time",
-      "title": "Solar Wind to Kp Storm Onset Lag Time Distribution",
-      "description": "Research question: What is the empirical distribution of lag times between a southward IMF Bz excursion (DSCOVR L1 measurement) and the resulting Kp index increase indicating geomagnetic storm onset?",
-      "status": "complete",
-      "author": "Automated research agent",
-      "category": "space-weather",
-      "createdAt": "2026-04-19T06:12:47.298854+00:00",
-      "hasPaper": false,
-      "hasViz": true,
-      "previewImage": "/data/papers/solar-wind-to-kp-storm-onset-lag-time.png",
       "paperUrl": null,
       "dataFileCount": 4,
       "refPaperCount": 0,

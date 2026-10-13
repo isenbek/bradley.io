@@ -1,18 +1,18 @@
 {
-  "generated": "2026-10-10T09:08:56.116289+00:00",
+  "generated": "2026-10-13T09:10:05.543844+00:00",
   "org": "tinymachines",
-  "totalRepos": 72,
+  "totalRepos": 77,
   "firstCommit": "2016-02-27T16:07:26Z",
-  "latestCommit": "2026-10-10T02:26:09Z",
-  "totalCommits": 6996,
+  "latestCommit": "2026-10-13T05:10:58Z",
+  "totalCommits": 7162,
   "languages": {
-    "Python": 27,
-    "C": 7,
+    "Python": 28,
+    "C": 8,
+    "TypeScript": 8,
     "Rust": 7,
     "HTML": 6,
-    "TypeScript": 6,
     "Shell": 6,
-    "JavaScript": 2,
+    "JavaScript": 3,
     "C++": 1,
     "Common Lisp": 1
   },
@@ -7087,7 +7087,25 @@
     },
     {
       "date": "2026-10-10",
-      "commits": 6,
+      "commits": 19,
+      "repos": 4,
+      "intensity": 2
+    },
+    {
+      "date": "2026-10-11",
+      "commits": 83,
+      "repos": 6,
+      "intensity": 4
+    },
+    {
+      "date": "2026-10-12",
+      "commits": 65,
+      "repos": 10,
+      "intensity": 4
+    },
+    {
+      "date": "2026-10-13",
+      "commits": 5,
       "repos": 3,
       "intensity": 1
     }
@@ -7431,24 +7449,54 @@
       "model": "ollama:gemma3:4b"
     },
     {
-      "name": "Retro Computer Emulator Development",
+      "name": "Retro System Development",
       "startDate": "2026-09-07",
-      "endDate": "2026-10-08",
-      "description": "This development effort focused on building a custom electronic device, specifically a retro computer emulator. The project involved integrating hardware components like ESP32 boards and opto-isolators to recreate the functionality of older computers.",
+      "endDate": "2026-10-12",
+      "description": "This period focused on building a custom retro computer emulator and associated tooling, alongside experiments with network interaction and user interface customization. The team explored hardware integration, protocol definition, and agent-based monitoring of GitHub issues.",
       "repos": [
         "nes-bench",
-        "tinypeek"
+        "tinypeek",
+        "astrostack",
+        "tinyagent",
+        "kit",
+        "tinylens",
+        "tinyhelper"
       ],
       "milestones": [
         {
           "date": "2026-09-07",
           "title": "B0 - Initial Hardware Setup",
           "repo": "nes-bench"
+        },
+        {
+          "date": "2026-10-03",
+          "title": "Cartridge Build and Calibration",
+          "repo": "nes-bench"
+        },
+        {
+          "date": "2026-10-07",
+          "title": "Initial USB Connection",
+          "repo": "nes-bench"
+        },
+        {
+          "date": "2026-10-11",
+          "title": "TinyAgent v1 Release",
+          "repo": "tinyagent"
+        },
+        {
+          "date": "2026-10-11",
+          "title": "Initial Setup & Architecture",
+          "repo": "tinyagent"
+        },
+        {
+          "date": "2026-10-12",
+          "title": "v0.1.7 - Theme Type Separation",
+          "repo": "kit"
         }
       ],
       "category": "hardware",
-      "source": "reused",
-      "generatedAt": "2026-10-09",
+      "source": "ai",
+      "generatedAt": "2026-10-13",
       "model": "ollama:gemma3:4b"
     }
   ],
@@ -8127,14 +8175,14 @@
     },
     {
       "name": "geiger",
-      "description": "The 'geiger' repository documents the construction and testing of a custom electronic instrument, likely for measuring or analyzing some physical signal. It contains detailed notes on wiring configurations ('Option A' and 'Option B'), component selection (including specific models like Rigol DS1054Z), and automated processes for data collection and reporting. The project appears to be focused on building a benchtop setup with a custom scope, incorporating elements of hardware control, data logging, and potentially real-time monitoring.",
+      "description": "The 'geiger' repository appears to be related to the development of a measurement system, likely involving an emitter and data analysis. It focuses on generating reports based on emitter counts, utilizing Parquet files for storage and exporting data via HTTP from a Raspberry Pi, alongside various testing and monitoring routines.",
       "language": "HTML",
-      "commits": 323,
+      "commits": 340,
       "firstCommit": "2026-05-04T03:01:06Z",
-      "lastCommit": "2026-10-08T04:36:14Z",
+      "lastCommit": "2026-10-13T04:11:39Z",
       "phase": "Early Tinymachines Development",
-      "descriptionSource": "reused",
-      "descriptionGeneratedAt": "2026-10-08",
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-13",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
@@ -8199,14 +8247,14 @@
     },
     {
       "name": "6502",
-      "description": "This repository is a software project developing a transistor-level simulator of the MOS 6502 microprocessor in Rust/WASM, utilizing a WebGL renderer to visualize the real die. The core development focuses on recreating and documenting the 6502 architecture, including its internal components and behavior, with an emphasis on archival and presentation of related materials. The project incorporates features for rendering, data visualization, and potentially managing assets like schematics and datasheets.",
+      "description": "This repository documents a simulation of a 6502 microprocessor, likely for educational or historical purposes. It contains code and documentation related to the design, implementation, and visualization of this simulated processor, including its transistor-level details and a WebGL renderer for displaying the die. The project focuses on preserving and showcasing the visual6502.org archive, which provides resources and information about the 6502 architecture.",
       "language": "JavaScript",
-      "commits": 359,
+      "commits": 363,
       "firstCommit": "2026-08-12T16:38:57Z",
-      "lastCommit": "2026-10-10T01:45:01Z",
+      "lastCommit": "2026-10-12T15:53:10Z",
       "phase": "Tinymachine Ecosystem Development Phases",
       "descriptionSource": "ai",
-      "descriptionGeneratedAt": "2026-10-10",
+      "descriptionGeneratedAt": "2026-10-13",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
@@ -8223,14 +8271,14 @@
     },
     {
       "name": "public",
-      "description": "This repository appears to be developing a software project, likely related to emulation or reverse engineering of the 6502 processor, given the frequent references to 'tm://', cartridges, and debugging techniques. The work involves building a complex system with multiple components, including a frontend (Next + MDX), backend (FastAPI), and various tooling for benchmarking, documentation, and configuration management, all centered around a core set of data and protocols.",
+      "description": "This repository contains the development work for a project focused on creating interactive audio experiences, likely related to music or sound design, using a web-based interface. The codebase includes tools and documentation for building these experiences, with a strong emphasis on experimentation and iterative development, particularly around a 'tinypeek' platform.",
       "language": "TypeScript",
-      "commits": 925,
+      "commits": 978,
       "firstCommit": "2026-08-22T15:44:09Z",
-      "lastCommit": "2026-10-10T02:26:09Z",
+      "lastCommit": "2026-10-13T05:01:41Z",
       "phase": "NES Simulation Development",
       "descriptionSource": "ai",
-      "descriptionGeneratedAt": "2026-10-10",
+      "descriptionGeneratedAt": "2026-10-13",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
@@ -8283,14 +8331,14 @@
     },
     {
       "name": "nes",
-      "description": "The `nes` repository is a Rust software project focused on simulating the Nintendo Entertainment System (NES). It aims to recreate the console's behavior, including its graphics, sound, and memory management, through detailed emulation and testing using scripts and data analysis. The project utilizes various techniques like tracing, profiling, and model-based simulation to achieve this.",
+      "description": "The `nes` repository is a Rust project focused on simulating the Nintendo Entertainment System (NES). It aims to replicate the console's behavior, including graphics, sound, and cartridge interactions, through detailed emulation of its hardware components like the CPU, memory, and peripherals. The project utilizes various techniques such as frame-by-frame analysis, memory mapping, and chip-level simulation to achieve this.",
       "language": "Rust",
-      "commits": 90,
+      "commits": 91,
       "firstCommit": "2026-09-05T16:29:39Z",
-      "lastCommit": "2026-10-03T21:00:48Z",
+      "lastCommit": "2026-10-12T13:58:32Z",
       "phase": "NES Simulation Development",
-      "descriptionSource": "reused",
-      "descriptionGeneratedAt": "2026-10-04",
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-13",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
@@ -8300,42 +8348,103 @@
       "commits": 270,
       "firstCommit": "2026-09-07T01:23:48Z",
       "lastCommit": "2026-10-07T01:32:56Z",
-      "phase": "Retro Computer Emulator Development",
+      "phase": "Retro System Development",
       "descriptionSource": "reused",
       "descriptionGeneratedAt": "2026-10-07",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "tinypeek",
-      "description": "Commits: CLAUDE.md: what this repository is, where the server lives, how a change flows, what is left; spec v0.3: every marker re-checked against the running server (TM-13); spec v0.3: the second batch as shipped (TM-4, 5, 7, 18), the offbox mount; spec: the deny-list as shipped (TM-9); tinypeek: tm:// protocol spec v0.2 and stack explainer",
-      "language": "Unknown",
-      "commits": 5,
+      "description": "This repository contains the source code for a system named 'ask the box', which appears to be a custom protocol and associated tooling for interacting with a network of servers. The project focuses on managing DNS records, handling requests in ranges, and providing a mechanism for monitoring and controlling access to these servers, likely within a specific application or service. It includes documentation, specifications, and code related to the core protocol (tm://) and its implementation.",
+      "language": "TypeScript",
+      "commits": 36,
       "firstCommit": "2026-10-08T17:35:49Z",
-      "lastCommit": "2026-10-10T01:59:50Z",
-      "phase": "Retro Computer Emulator Development",
+      "lastCommit": "2026-10-12T23:26:01Z",
+      "phase": "Retro System Development",
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-13",
+      "descriptionModel": "ollama:gemma3:4b"
+    },
+    {
+      "name": "astrostack",
+      "description": "The AstroStack repository is a C-based software project that allows users to stack phone photographs on their devices, utilizing Rust and tinygrad within a WebAssembly module. It serves as an app for the tinychase kit, providing a way to process images locally and offering features like theme customization and frame management. The project's core functionality revolves around creating stacks of images from captured frames, with a focus on memory optimization and visual fidelity.",
+      "language": "C",
+      "commits": 22,
+      "firstCommit": "2026-10-11T01:10:45Z",
+      "lastCommit": "2026-10-12T22:26:45Z",
+      "phase": "Retro System Development",
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-13",
+      "descriptionModel": "ollama:gemma3:4b"
+    },
+    {
+      "name": "tinyagent",
+      "description": "This repository implements TinyAgent, a system designed to monitor GitHub issues and deliver replies as comments. It utilizes a loop agent to observe issues, a snail mail component for receiving email replies, and a context agent to manage interactions within the GitHub ecosystem. The core functionality revolves around automating responses to GitHub issues by tracking their status and delivering updates.",
+      "language": "Python",
+      "commits": 19,
+      "firstCommit": "2026-10-11T03:11:50Z",
+      "lastCommit": "2026-10-12T20:25:47Z",
+      "phase": "Retro System Development",
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-13",
+      "descriptionModel": "ollama:gemma3:4b"
+    },
+    {
+      "name": "kit",
+      "description": "The `kit` repository provides the TypeScript source code for the tinychase app, which is a Vite + React application focused on providing a customizable user interface with themes, offline capabilities, sharing features, and account management. It includes components like sensors and widgets, along with tools for creating new apps and managing installation from a private Git repository.",
+      "language": "TypeScript",
+      "commits": 11,
+      "firstCommit": "2026-10-12T14:56:49Z",
+      "lastCommit": "2026-10-12T22:02:54Z",
+      "phase": "Retro System Development",
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-13",
+      "descriptionModel": "ollama:gemma3:4b"
+    },
+    {
+      "name": "tinylens",
+      "description": "The `tinylens` repository is a JavaScript project that creates a browser for the `tm://` system, primarily used as a test of layer 2. It utilizes LensKit to manage handlers and treat the lens as an instrument on a single canvas, focusing on reading data from the server rather than processing it locally. The repository includes experimental 'pages' built from reads, suggesting a focus on interactive exploration and learning.",
+      "language": "JavaScript",
+      "commits": 6,
+      "firstCommit": "2026-10-12T18:08:56Z",
+      "lastCommit": "2026-10-13T05:10:58Z",
+      "phase": "Retro System Development",
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-13",
+      "descriptionModel": "ollama:gemma3:4b"
+    },
+    {
+      "name": "tinyhelper",
+      "description": "Commits: The index driver: all crawling and generating lives here; The helper pattern: ask, keep the raw result, give it an address",
+      "language": "Unknown",
+      "commits": 2,
+      "firstCommit": "2026-10-12T20:54:19Z",
+      "lastCommit": "2026-10-12T22:00:20Z",
+      "phase": "Retro System Development",
       "descriptionSource": "commits",
       "descriptionGeneratedAt": null,
       "descriptionModel": null
     }
   ],
   "aiSummary": {
-    "callsOk": 2,
+    "callsOk": 10,
     "callsFailed": 0,
-    "reused": 53,
+    "reused": 50,
     "kept": 0,
     "skippedByLimit": 0,
     "skippedByBudget": 0,
     "skippedBackendsDown": 0,
     "withoutModelText": 0,
     "phaseSources": {
-      "reused": 11
+      "reused": 10,
+      "ai": 1
     },
     "descriptionSources": {
-      "reused": 42,
+      "reused": 40,
       "github": 13,
       "commits": 11,
       "none": 4,
-      "ai": 2
+      "ai": 9
     },
     "limitAi": null,
     "budgetMin": 15.0,

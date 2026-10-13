@@ -1,18 +1,18 @@
 {
-  "generated": "2026-10-10T16:01:34.936573+00:00",
+  "generated": "2026-10-13T12:01:23.844215+00:00",
   "sources": {
     "unifiedSpec": "https://mcp.campaignbrain.dev/openapi.json",
     "metadata": "scripts/mcp-catalog-meta.json (pulled 2026-08-29)"
   },
   "stats": {
     "totalServices": 55,
-    "totalEndpoints": 2409,
+    "totalEndpoints": 2421,
     "totalCategories": 5,
     "mcpServers": 3,
     "mcpServersReachable": 3,
-    "fleetServices": 89,
-    "fleetEndpoints": 3647,
-    "uncataloguedServices": 48
+    "fleetServices": 90,
+    "fleetEndpoints": 3679,
+    "uncataloguedServices": 49
   },
   "mcpServers": [
     {
@@ -37,7 +37,7 @@
         },
         {
           "name": "resolve",
-          "description": "Read one URI of the tm:// namespace and get its content with typed links to the things around it. Start with tm://tinymachines/ (the mounts), read any URI ending in / to list its children, and read a file or page to get it: tm://tinymachines/fs/docs/nes/pile.md is a file of this checkout, tm://tinymachines/http/tinymachines.ai/docs/nes/pile?as=text is the page it becomes, as its readable text. A notebook page links to its markdown (tm:source) and the file links back (tm:renders-as); up, collection, alternate and describedby are the IANA relations. ?as=stat gives metadata without content. A URI that does not resolve is refused with the nearest ones that do, so try the nearest rather than guessing."
+          "description": "Read one URI of the tm:// namespace and get its content with typed links to the things around it. Start with tm://tinymachines/ (the mounts), read any URI ending in / to list its children, and read a file or page to get it: tm://tinymachines/fs/docs/nes/pile.md is a file of this checkout, tm://tinymachines/http/tinymachines.ai/docs/nes/pile?as=text is the page it becomes, as its readable text. A notebook page links to its markdown (tm:source) and the file links back (tm:renders-as); up, collection, alternate and describedby are the IANA relations. tm://tinymachines/entity/ holds the autopsy's patterns, games, routines and lessons as things with links between them (entity/pattern/pad-poll names every game and routine it was found in). ?as=stat gives metadata without content, ?as=links every link of a thing a page at a time (a read with more than a hundred ends in a tm:links link to it). A URI that does not resolve is refused with the nearest ones that do, so try the nearest rather than guessing."
         }
       ],
       "reachable": true
@@ -227,7 +227,7 @@
             "address-hygiene",
             "mcp-tools"
           ],
-          "endpointCount": 188
+          "endpointCount": 190
         },
         {
           "id": "cbfiles",
@@ -570,7 +570,7 @@
             "deploy",
             "mcp-tools"
           ],
-          "endpointCount": 100
+          "endpointCount": 102
         },
         {
           "id": "cbvpn",
@@ -585,7 +585,7 @@
             "snapshots",
             "mcp-tools"
           ],
-          "endpointCount": 80
+          "endpointCount": 88
         },
         {
           "id": "cbauth",
@@ -1073,7 +1073,7 @@
     },
     {
       "id": "cbelections",
-      "endpointCount": 61
+      "endpointCount": 62
     },
     {
       "id": "cbconvo",
@@ -1085,7 +1085,7 @@
     },
     {
       "id": "cbmirror",
-      "endpointCount": 46
+      "endpointCount": 47
     },
     {
       "id": "cbhive",
@@ -1104,11 +1104,11 @@
       "endpointCount": 30
     },
     {
-      "id": "cbcalendar",
-      "endpointCount": 27
+      "id": "cbship",
+      "endpointCount": 29
     },
     {
-      "id": "cbship",
+      "id": "cbcalendar",
       "endpointCount": 27
     },
     {
@@ -1164,6 +1164,10 @@
       "endpointCount": 15
     },
     {
+      "id": "cbkrnl",
+      "endpointCount": 15
+    },
+    {
       "id": "cbprint",
       "endpointCount": 15
     },
@@ -1212,11 +1216,11 @@
       "endpointCount": 9
     },
     {
-      "id": "cbharvest",
-      "endpointCount": 7
+      "id": "cbnode-reagan",
+      "endpointCount": 8
     },
     {
-      "id": "cbnode-reagan",
+      "id": "cbharvest",
       "endpointCount": 7
     },
     {
