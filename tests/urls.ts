@@ -21,6 +21,7 @@ export const CORE_PATHS: string[] = [
   "/bench",
   "/projects/turfy",
   "/work",
+  "/walk-ins",
   "/ai-pilot",
   "/mcp",
   "/papers",

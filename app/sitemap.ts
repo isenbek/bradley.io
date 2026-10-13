@@ -26,6 +26,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     // what the per-repository dossiers under /projects used to answer, so it
     // carries their weight rather than /projects' 0.9.
     { url: `${base}/work`, changeFrequency: "weekly", priority: 0.8, lastModified: now },
+    { url: `${base}/walk-ins`, changeFrequency: "daily", priority: 0.8, lastModified: now },
     { url: `${base}/mcp`, changeFrequency: "weekly", priority: 0.7, lastModified: now },
     { url: `${base}/papers`, changeFrequency: "weekly", priority: 0.8, lastModified: now },
     // A frozen case study (window 2025-12-01 to 2026-03-26, frozen 2026-10-02).

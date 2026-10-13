@@ -7559,3 +7559,45 @@ a.beta-papers-fig:focus-visible { outline: 2px solid var(--color-blue-ink); outl
 }
 .beta-ctree-all .scroller { max-height: 36rem; }
 .beta-ctree-all tbody th[scope="rowgroup"] { background: var(--color-paper-sunk); }
+
+/* ---- /walk-ins ------------------------------------------------------------
+   The sheet as a figure, the circle as three panels of names, the record as a
+   strip of readouts on a panel (the sheet's own tile strip, on the machine's
+   ground), and the log as a ledger whose entry cells wrap. */
+.beta-walkins-sheet { margin: calc(var(--u) * 4) 0 calc(var(--u) * 2); }
+.beta-walkins-sheet img { display: block; width: min(100%, 44rem); height: auto; border: 1px solid var(--color-rule); background: #fff; }
+.beta-walkins-sheet figcaption { font-family: var(--font-mono); font-size: var(--text-fine); color: var(--color-ink-muted); margin-top: calc(var(--u) * 2); }
+.beta-walkins-bands {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
+  align-items: start; /* three lists of different lengths: no panel stretches to the longest */
+  gap: calc(var(--u) * 4);
+  margin: calc(var(--u) * 4) 0 calc(var(--u) * 2);
+}
+.beta-walkins-list { list-style: none; margin: 0; padding: 0; }
+.beta-walkins-list > li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 calc(var(--u) * 2);
+  padding: calc(var(--u) * 1.5) 0;
+  border-bottom: 1px solid var(--color-rule-panel);
+  min-width: 0;
+}
+.beta-walkins-list > li:last-child { border-bottom: 0; }
+.beta-walkins-name { font-family: var(--font-sans); font-weight: 600; font-size: var(--text-body); }
+.beta-walkins-kind { font-family: var(--font-mono); font-size: var(--text-fine); color: var(--color-glass-muted); }
+.beta-walkins-readouts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(11rem, 100%), 1fr));
+  gap: calc(var(--u) * 4) calc(var(--u) * 5);
+  margin: 0 0 calc(var(--u) * 5);
+}
+.beta-walkins-readouts > div { border-top: 1px solid var(--color-rule-panel); padding-top: calc(var(--u) * 2); min-width: 0; }
+.beta-walkins-readouts b { display: block; font-family: var(--font-display, var(--font-sans)); font-weight: 800; font-size: var(--text-h2); line-height: 1; letter-spacing: -0.01em; }
+.beta-walkins-readouts span { display: block; font-weight: 600; font-size: var(--text-fine); margin-top: calc(var(--u) * 1); }
+.beta-walkins-readouts small { display: block; font-family: var(--font-mono); font-size: var(--text-micro); color: var(--color-glass-muted); margin-top: calc(var(--u) * 0.5); }
+.beta-walkins-readouts svg { display: block; margin-top: calc(var(--u) * 1.5); }
+.beta-walkins-log td { white-space: normal; }
+.beta-walkins-log td:first-child { white-space: nowrap; vertical-align: top; }
+.beta-walkins-log td b { font-family: var(--font-sans); }

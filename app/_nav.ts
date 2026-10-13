@@ -53,6 +53,7 @@ export const NAV: NavGroup[] = [
       { href: "/contact", label: "Contact", blurb: "the inbox, and what helps a first email", primary: 4 },
       { href: "/projects", label: "Projects", blurb: "the curated bench: chips, platforms, instruments, math", primary: 3 },
       { href: "/housecalls", label: "House Calls", blurb: "business development, run by an AI, logged in the open" },
+      { href: "/walk-ins", label: "Walk-ins", blurb: "the full-time search, door by door, logged in the open" },
     ],
   },
   {

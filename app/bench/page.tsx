@@ -157,6 +157,7 @@ const SHELVES: Shelf[] = [
     title: "Dashboards",
     pages: [
       { href: "/work", name: "Work", blurb: "Four GitHub orgs, commit history rolled up." },
+      { href: "/walk-ins", name: "Walk-ins", blurb: "The full-time search in the open: the sheet, the circle, the record, the log." },
       { href: "/cost-analysis", name: "Cost analysis", blurb: "What the work costs, modelled." },
       { href: "/the-shift", name: "The shift", blurb: "What changed when the tooling changed." },
       { href: "/papers", name: "Papers", blurb: "Research notes, figures, and what held." },

@@ -36,8 +36,9 @@ Charts and MapLibre colour come from `lib/beta/chart-theme.ts` — one source. M
 ### Project Structure
 ```
 bradleyio/
-├── app/                    # App Router; every dir here = one kit route (36 total)
-│   ├── (prose)             #   about, services, contact, papers, work, projects
+├── app/                    # App Router; every dir here = one kit route (37 total)
+│   ├── (prose)             #   about, services, contact, papers, work, projects,
+│   │                       #   walk-ins (the search log; data from scripts/walk-ins + scripts/claude-record)
 │   ├── (pilot analytics)   #   ai-pilot, pilot-analytics, cost-analysis, the-shift
 │   │                       #   (data from app/_pilot-data, charts from app/_charts)
 │   ├── (instruments)       #   trng, visitors, 6502, dragonfli/*, meatball/*,

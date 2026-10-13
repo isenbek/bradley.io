@@ -1,0 +1,2020 @@
+{
+ "generated": "2026-10-13T18:59:56+00:00",
+ "first": "2025-12-11",
+ "last": "2026-10-13",
+ "calendarDays": 307,
+ "activeDays": 273,
+ "messages": 1702279,
+ "sessions": 3361,
+ "toolCalls": 479538,
+ "early": {
+  "activeDays": 75,
+  "messages": 485022,
+  "sessions": 768,
+  "from": "2025-12-11",
+  "to": "2026-03-06"
+ },
+ "db": {
+  "activeDays": 198,
+  "messages": 1217257,
+  "sessions": 876,
+  "toolCalls": 382167,
+  "from": "2026-03-08",
+  "to": "2026-10-13"
+ },
+ "activeTime": {
+  "since": "2026-03-08",
+  "through": "2026-10-13",
+  "fiveMinuteBuckets": 22752,
+  "hours": 1896,
+  "minutesWithTurn": 83260,
+  "hoursTouched": 2907,
+  "definition": "five-minute buckets with at least one message in them, times five minutes; a session's open span is not counted",
+  "byMonth": [
+   {
+    "month": "2026-03",
+    "hours": 8
+   },
+   {
+    "month": "2026-04",
+    "hours": 63
+   },
+   {
+    "month": "2026-05",
+    "hours": 76
+   },
+   {
+    "month": "2026-06",
+    "hours": 296
+   },
+   {
+    "month": "2026-07",
+    "hours": 357
+   },
+   {
+    "month": "2026-08",
+    "hours": 469
+   },
+   {
+    "month": "2026-09",
+    "hours": 406
+   },
+   {
+    "month": "2026-10",
+    "hours": 221
+   }
+  ]
+ },
+ "sources": [
+  {
+   "commit": "59a0b6c",
+   "generated": "2026-02-20",
+   "days": 57,
+   "from": "2025-12-11",
+   "to": "2026-02-16",
+   "snapshotTotals": {
+    "totalSessions": 544,
+    "totalMessages": 397776,
+    "totalCostUSD": 252.16
+   }
+  },
+  {
+   "commit": "c648db2",
+   "generated": "2026-03-06",
+   "days": 18,
+   "from": "2026-02-17",
+   "to": "2026-03-07",
+   "snapshotTotals": {
+    "totalSessions": 408,
+    "totalMessages": 163020,
+    "totalCostUSD": 0
+   }
+  },
+  {
+   "commit": "working tree",
+   "generated": "2026-10-13",
+   "days": 198,
+   "from": "2026-03-08",
+   "to": "2026-10-13",
+   "snapshotTotals": {
+    "totalSessions": 876,
+    "totalMessages": 1217257,
+    "totalToolCalls": 382167
+   }
+  }
+ ],
+ "note": "Days before 2026-03-08 come from the old site's committed snapshots, which counted the logs still on disk that day; a day they do not hold is a day with no count. Sessions are counted per day, so a session that spans days is counted on each. Nothing is estimated.",
+ "days": [
+  {
+   "date": "2025-12-11",
+   "messages": 109,
+   "sessions": 2,
+   "toolCalls": 42,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2025-12-19",
+   "messages": 2945,
+   "sessions": 1,
+   "toolCalls": 933,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2025-12-20",
+   "messages": 4678,
+   "sessions": 2,
+   "toolCalls": 1366,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2025-12-21",
+   "messages": 646,
+   "sessions": 2,
+   "toolCalls": 218,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2025-12-23",
+   "messages": 125,
+   "sessions": 1,
+   "toolCalls": 38,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2025-12-24",
+   "messages": 847,
+   "sessions": 1,
+   "toolCalls": 267,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2025-12-25",
+   "messages": 6385,
+   "sessions": 2,
+   "toolCalls": 1828,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2025-12-26",
+   "messages": 9,
+   "sessions": 1,
+   "toolCalls": 0,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2025-12-27",
+   "messages": 39,
+   "sessions": 2,
+   "toolCalls": 10,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2025-12-30",
+   "messages": 6,
+   "sessions": 2,
+   "toolCalls": 0,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2025-12-31",
+   "messages": 7977,
+   "sessions": 17,
+   "toolCalls": 2451,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2026-01-01",
+   "messages": 733,
+   "sessions": 1,
+   "toolCalls": 223,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2026-01-02",
+   "messages": 2591,
+   "sessions": 5,
+   "toolCalls": 792,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2026-01-03",
+   "messages": 5600,
+   "sessions": 5,
+   "toolCalls": 1709,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2026-01-05",
+   "messages": 843,
+   "sessions": 21,
+   "toolCalls": 219,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2026-01-06",
+   "messages": 11370,
+   "sessions": 33,
+   "toolCalls": 3356,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2026-01-07",
+   "messages": 2996,
+   "sessions": 7,
+   "toolCalls": 872,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2026-01-08",
+   "messages": 4088,
+   "sessions": 12,
+   "toolCalls": 1190,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2026-01-09",
+   "messages": 3110,
+   "sessions": 5,
+   "toolCalls": 915,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2026-01-10",
+   "messages": 394,
+   "sessions": 2,
+   "toolCalls": 121,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2026-01-11",
+   "messages": 4981,
+   "sessions": 12,
+   "toolCalls": 1508,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2026-01-12",
+   "messages": 2928,
+   "sessions": 8,
+   "toolCalls": 860,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2026-01-13",
+   "messages": 1621,
+   "sessions": 6,
+   "toolCalls": 472,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2026-01-14",
+   "messages": 1732,
+   "sessions": 4,
+   "toolCalls": 507,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2026-01-15",
+   "messages": 2682,
+   "sessions": 4,
+   "toolCalls": 809,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2026-01-16",
+   "messages": 22818,
+   "sessions": 23,
+   "toolCalls": 4607,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2026-01-17",
+   "messages": 5907,
+   "sessions": 5,
+   "toolCalls": 854,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2026-01-18",
+   "messages": 4696,
+   "sessions": 12,
+   "toolCalls": 996,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2026-01-19",
+   "messages": 392,
+   "sessions": 3,
+   "toolCalls": 78,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2026-01-20",
+   "messages": 2018,
+   "sessions": 3,
+   "toolCalls": 288,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2026-01-21",
+   "messages": 11490,
+   "sessions": 23,
+   "toolCalls": 1348,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2026-01-22",
+   "messages": 15211,
+   "sessions": 14,
+   "toolCalls": 2241,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2026-01-23",
+   "messages": 6665,
+   "sessions": 7,
+   "toolCalls": 1258,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2026-01-24",
+   "messages": 1857,
+   "sessions": 1,
+   "toolCalls": 364,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2026-01-25",
+   "messages": 1292,
+   "sessions": 2,
+   "toolCalls": 296,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2026-01-26",
+   "messages": 12231,
+   "sessions": 5,
+   "toolCalls": 744,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2026-01-27",
+   "messages": 34661,
+   "sessions": 34,
+   "toolCalls": 3835,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2026-01-28",
+   "messages": 18776,
+   "sessions": 21,
+   "toolCalls": 2839,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2026-01-29",
+   "messages": 10802,
+   "sessions": 8,
+   "toolCalls": 1442,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2026-01-30",
+   "messages": 3313,
+   "sessions": 6,
+   "toolCalls": 511,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2026-01-31",
+   "messages": 7523,
+   "sessions": 11,
+   "toolCalls": 1407,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2026-02-01",
+   "messages": 5908,
+   "sessions": 21,
+   "toolCalls": 1107,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2026-02-02",
+   "messages": 6195,
+   "sessions": 8,
+   "toolCalls": 1120,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2026-02-03",
+   "messages": 13793,
+   "sessions": 5,
+   "toolCalls": 1383,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2026-02-04",
+   "messages": 4318,
+   "sessions": 2,
+   "toolCalls": 757,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2026-02-05",
+   "messages": 4216,
+   "sessions": 7,
+   "toolCalls": 621,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2026-02-06",
+   "messages": 21047,
+   "sessions": 27,
+   "toolCalls": 2414,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2026-02-07",
+   "messages": 6384,
+   "sessions": 14,
+   "toolCalls": 964,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2026-02-08",
+   "messages": 8356,
+   "sessions": 13,
+   "toolCalls": 1110,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2026-02-09",
+   "messages": 21544,
+   "sessions": 21,
+   "toolCalls": 2389,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2026-02-10",
+   "messages": 22658,
+   "sessions": 16,
+   "toolCalls": 2973,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2026-02-11",
+   "messages": 3691,
+   "sessions": 7,
+   "toolCalls": 582,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2026-02-12",
+   "messages": 12148,
+   "sessions": 15,
+   "toolCalls": 1468,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2026-02-13",
+   "messages": 9513,
+   "sessions": 11,
+   "toolCalls": 906,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2026-02-14",
+   "messages": 7271,
+   "sessions": 9,
+   "toolCalls": 668,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2026-02-15",
+   "messages": 12583,
+   "sessions": 16,
+   "toolCalls": 1521,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2026-02-16",
+   "messages": 9064,
+   "sessions": 16,
+   "toolCalls": 1353,
+   "source": "59a0b6c"
+  },
+  {
+   "date": "2026-02-17",
+   "messages": 12674,
+   "sessions": 36,
+   "toolCalls": 4546,
+   "source": "c648db2"
+  },
+  {
+   "date": "2026-02-18",
+   "messages": 1647,
+   "sessions": 5,
+   "toolCalls": 587,
+   "source": "c648db2"
+  },
+  {
+   "date": "2026-02-19",
+   "messages": 1002,
+   "sessions": 3,
+   "toolCalls": 366,
+   "source": "c648db2"
+  },
+  {
+   "date": "2026-02-20",
+   "messages": 6259,
+   "sessions": 17,
+   "toolCalls": 2258,
+   "source": "c648db2"
+  },
+  {
+   "date": "2026-02-21",
+   "messages": 3574,
+   "sessions": 12,
+   "toolCalls": 1351,
+   "source": "c648db2"
+  },
+  {
+   "date": "2026-02-22",
+   "messages": 3833,
+   "sessions": 12,
+   "toolCalls": 1423,
+   "source": "c648db2"
+  },
+  {
+   "date": "2026-02-23",
+   "messages": 3131,
+   "sessions": 11,
+   "toolCalls": 1167,
+   "source": "c648db2"
+  },
+  {
+   "date": "2026-02-24",
+   "messages": 8594,
+   "sessions": 25,
+   "toolCalls": 3105,
+   "source": "c648db2"
+  },
+  {
+   "date": "2026-02-25",
+   "messages": 9189,
+   "sessions": 24,
+   "toolCalls": 3406,
+   "source": "c648db2"
+  },
+  {
+   "date": "2026-02-26",
+   "messages": 6229,
+   "sessions": 11,
+   "toolCalls": 2324,
+   "source": "c648db2"
+  },
+  {
+   "date": "2026-02-27",
+   "messages": 9473,
+   "sessions": 14,
+   "toolCalls": 3570,
+   "source": "c648db2"
+  },
+  {
+   "date": "2026-02-28",
+   "messages": 4617,
+   "sessions": 16,
+   "toolCalls": 1719,
+   "source": "c648db2"
+  },
+  {
+   "date": "2026-03-01",
+   "messages": 5487,
+   "sessions": 9,
+   "toolCalls": 2075,
+   "source": "c648db2"
+  },
+  {
+   "date": "2026-03-02",
+   "messages": 6813,
+   "sessions": 10,
+   "toolCalls": 2521,
+   "source": "c648db2"
+  },
+  {
+   "date": "2026-03-03",
+   "messages": 1820,
+   "sessions": 7,
+   "toolCalls": 710,
+   "source": "c648db2"
+  },
+  {
+   "date": "2026-03-04",
+   "messages": 2575,
+   "sessions": 9,
+   "toolCalls": 973,
+   "source": "c648db2"
+  },
+  {
+   "date": "2026-03-05",
+   "messages": 326,
+   "sessions": 2,
+   "toolCalls": 120,
+   "source": "c648db2"
+  },
+  {
+   "date": "2026-03-06",
+   "messages": 3,
+   "sessions": 1,
+   "toolCalls": 0,
+   "source": "c648db2"
+  },
+  {
+   "date": "2026-03-08",
+   "messages": 80,
+   "sessions": 1,
+   "toolCalls": 27,
+   "source": "db"
+  },
+  {
+   "date": "2026-03-12",
+   "messages": 121,
+   "sessions": 1,
+   "toolCalls": 45,
+   "source": "db"
+  },
+  {
+   "date": "2026-03-15",
+   "messages": 282,
+   "sessions": 1,
+   "toolCalls": 107,
+   "source": "db"
+  },
+  {
+   "date": "2026-03-16",
+   "messages": 50,
+   "sessions": 1,
+   "toolCalls": 18,
+   "source": "db"
+  },
+  {
+   "date": "2026-03-17",
+   "messages": 18,
+   "sessions": 1,
+   "toolCalls": 7,
+   "source": "db"
+  },
+  {
+   "date": "2026-03-21",
+   "messages": 34,
+   "sessions": 1,
+   "toolCalls": 11,
+   "source": "db"
+  },
+  {
+   "date": "2026-03-22",
+   "messages": 177,
+   "sessions": 1,
+   "toolCalls": 63,
+   "source": "db"
+  },
+  {
+   "date": "2026-03-23",
+   "messages": 272,
+   "sessions": 1,
+   "toolCalls": 103,
+   "source": "db"
+  },
+  {
+   "date": "2026-03-24",
+   "messages": 49,
+   "sessions": 1,
+   "toolCalls": 18,
+   "source": "db"
+  },
+  {
+   "date": "2026-03-25",
+   "messages": 101,
+   "sessions": 1,
+   "toolCalls": 37,
+   "source": "db"
+  },
+  {
+   "date": "2026-03-26",
+   "messages": 131,
+   "sessions": 1,
+   "toolCalls": 46,
+   "source": "db"
+  },
+  {
+   "date": "2026-03-27",
+   "messages": 320,
+   "sessions": 1,
+   "toolCalls": 117,
+   "source": "db"
+  },
+  {
+   "date": "2026-03-28",
+   "messages": 127,
+   "sessions": 2,
+   "toolCalls": 39,
+   "source": "db"
+  },
+  {
+   "date": "2026-03-29",
+   "messages": 81,
+   "sessions": 1,
+   "toolCalls": 29,
+   "source": "db"
+  },
+  {
+   "date": "2026-03-31",
+   "messages": 3,
+   "sessions": 1,
+   "toolCalls": 0,
+   "source": "db"
+  },
+  {
+   "date": "2026-04-02",
+   "messages": 1010,
+   "sessions": 1,
+   "toolCalls": 373,
+   "source": "db"
+  },
+  {
+   "date": "2026-04-03",
+   "messages": 26,
+   "sessions": 1,
+   "toolCalls": 10,
+   "source": "db"
+  },
+  {
+   "date": "2026-04-07",
+   "messages": 118,
+   "sessions": 1,
+   "toolCalls": 39,
+   "source": "db"
+  },
+  {
+   "date": "2026-04-08",
+   "messages": 14,
+   "sessions": 1,
+   "toolCalls": 5,
+   "source": "db"
+  },
+  {
+   "date": "2026-04-10",
+   "messages": 69,
+   "sessions": 2,
+   "toolCalls": 24,
+   "source": "db"
+  },
+  {
+   "date": "2026-04-11",
+   "messages": 104,
+   "sessions": 1,
+   "toolCalls": 42,
+   "source": "db"
+  },
+  {
+   "date": "2026-04-12",
+   "messages": 110,
+   "sessions": 1,
+   "toolCalls": 41,
+   "source": "db"
+  },
+  {
+   "date": "2026-04-13",
+   "messages": 650,
+   "sessions": 3,
+   "toolCalls": 242,
+   "source": "db"
+  },
+  {
+   "date": "2026-04-14",
+   "messages": 658,
+   "sessions": 4,
+   "toolCalls": 223,
+   "source": "db"
+  },
+  {
+   "date": "2026-04-15",
+   "messages": 313,
+   "sessions": 2,
+   "toolCalls": 116,
+   "source": "db"
+  },
+  {
+   "date": "2026-04-16",
+   "messages": 1251,
+   "sessions": 3,
+   "toolCalls": 452,
+   "source": "db"
+  },
+  {
+   "date": "2026-04-17",
+   "messages": 768,
+   "sessions": 2,
+   "toolCalls": 277,
+   "source": "db"
+  },
+  {
+   "date": "2026-04-18",
+   "messages": 16,
+   "sessions": 2,
+   "toolCalls": 2,
+   "source": "db"
+  },
+  {
+   "date": "2026-04-20",
+   "messages": 657,
+   "sessions": 2,
+   "toolCalls": 253,
+   "source": "db"
+  },
+  {
+   "date": "2026-04-21",
+   "messages": 2587,
+   "sessions": 4,
+   "toolCalls": 885,
+   "source": "db"
+  },
+  {
+   "date": "2026-04-22",
+   "messages": 1758,
+   "sessions": 4,
+   "toolCalls": 638,
+   "source": "db"
+  },
+  {
+   "date": "2026-04-23",
+   "messages": 1269,
+   "sessions": 4,
+   "toolCalls": 489,
+   "source": "db"
+  },
+  {
+   "date": "2026-04-24",
+   "messages": 710,
+   "sessions": 4,
+   "toolCalls": 251,
+   "source": "db"
+  },
+  {
+   "date": "2026-04-25",
+   "messages": 164,
+   "sessions": 5,
+   "toolCalls": 57,
+   "source": "db"
+  },
+  {
+   "date": "2026-04-26",
+   "messages": 456,
+   "sessions": 2,
+   "toolCalls": 162,
+   "source": "db"
+  },
+  {
+   "date": "2026-04-27",
+   "messages": 27,
+   "sessions": 1,
+   "toolCalls": 9,
+   "source": "db"
+  },
+  {
+   "date": "2026-04-28",
+   "messages": 228,
+   "sessions": 1,
+   "toolCalls": 84,
+   "source": "db"
+  },
+  {
+   "date": "2026-04-29",
+   "messages": 187,
+   "sessions": 3,
+   "toolCalls": 53,
+   "source": "db"
+  },
+  {
+   "date": "2026-04-30",
+   "messages": 907,
+   "sessions": 2,
+   "toolCalls": 322,
+   "source": "db"
+  },
+  {
+   "date": "2026-05-01",
+   "messages": 856,
+   "sessions": 2,
+   "toolCalls": 338,
+   "source": "db"
+  },
+  {
+   "date": "2026-05-02",
+   "messages": 122,
+   "sessions": 2,
+   "toolCalls": 45,
+   "source": "db"
+  },
+  {
+   "date": "2026-05-03",
+   "messages": 236,
+   "sessions": 4,
+   "toolCalls": 77,
+   "source": "db"
+  },
+  {
+   "date": "2026-05-04",
+   "messages": 257,
+   "sessions": 2,
+   "toolCalls": 94,
+   "source": "db"
+  },
+  {
+   "date": "2026-05-05",
+   "messages": 883,
+   "sessions": 2,
+   "toolCalls": 334,
+   "source": "db"
+  },
+  {
+   "date": "2026-05-06",
+   "messages": 906,
+   "sessions": 3,
+   "toolCalls": 333,
+   "source": "db"
+  },
+  {
+   "date": "2026-05-07",
+   "messages": 1324,
+   "sessions": 4,
+   "toolCalls": 375,
+   "source": "db"
+  },
+  {
+   "date": "2026-05-08",
+   "messages": 1124,
+   "sessions": 5,
+   "toolCalls": 408,
+   "source": "db"
+  },
+  {
+   "date": "2026-05-09",
+   "messages": 119,
+   "sessions": 3,
+   "toolCalls": 39,
+   "source": "db"
+  },
+  {
+   "date": "2026-05-12",
+   "messages": 1011,
+   "sessions": 2,
+   "toolCalls": 363,
+   "source": "db"
+  },
+  {
+   "date": "2026-05-13",
+   "messages": 1480,
+   "sessions": 2,
+   "toolCalls": 590,
+   "source": "db"
+  },
+  {
+   "date": "2026-05-14",
+   "messages": 60,
+   "sessions": 1,
+   "toolCalls": 19,
+   "source": "db"
+  },
+  {
+   "date": "2026-05-15",
+   "messages": 634,
+   "sessions": 2,
+   "toolCalls": 224,
+   "source": "db"
+  },
+  {
+   "date": "2026-05-16",
+   "messages": 58,
+   "sessions": 1,
+   "toolCalls": 17,
+   "source": "db"
+  },
+  {
+   "date": "2026-05-18",
+   "messages": 538,
+   "sessions": 2,
+   "toolCalls": 201,
+   "source": "db"
+  },
+  {
+   "date": "2026-05-19",
+   "messages": 1475,
+   "sessions": 2,
+   "toolCalls": 536,
+   "source": "db"
+  },
+  {
+   "date": "2026-05-21",
+   "messages": 240,
+   "sessions": 1,
+   "toolCalls": 84,
+   "source": "db"
+  },
+  {
+   "date": "2026-05-22",
+   "messages": 64,
+   "sessions": 1,
+   "toolCalls": 26,
+   "source": "db"
+  },
+  {
+   "date": "2026-05-23",
+   "messages": 99,
+   "sessions": 1,
+   "toolCalls": 35,
+   "source": "db"
+  },
+  {
+   "date": "2026-05-26",
+   "messages": 69,
+   "sessions": 1,
+   "toolCalls": 24,
+   "source": "db"
+  },
+  {
+   "date": "2026-05-28",
+   "messages": 3837,
+   "sessions": 4,
+   "toolCalls": 1123,
+   "source": "db"
+  },
+  {
+   "date": "2026-05-29",
+   "messages": 5455,
+   "sessions": 4,
+   "toolCalls": 1639,
+   "source": "db"
+  },
+  {
+   "date": "2026-05-30",
+   "messages": 3885,
+   "sessions": 4,
+   "toolCalls": 1144,
+   "source": "db"
+  },
+  {
+   "date": "2026-05-31",
+   "messages": 494,
+   "sessions": 2,
+   "toolCalls": 125,
+   "source": "db"
+  },
+  {
+   "date": "2026-06-01",
+   "messages": 3532,
+   "sessions": 5,
+   "toolCalls": 1073,
+   "source": "db"
+  },
+  {
+   "date": "2026-06-02",
+   "messages": 4360,
+   "sessions": 5,
+   "toolCalls": 1256,
+   "source": "db"
+  },
+  {
+   "date": "2026-06-03",
+   "messages": 4467,
+   "sessions": 6,
+   "toolCalls": 1273,
+   "source": "db"
+  },
+  {
+   "date": "2026-06-04",
+   "messages": 1834,
+   "sessions": 6,
+   "toolCalls": 621,
+   "source": "db"
+  },
+  {
+   "date": "2026-06-05",
+   "messages": 4529,
+   "sessions": 10,
+   "toolCalls": 1331,
+   "source": "db"
+  },
+  {
+   "date": "2026-06-06",
+   "messages": 1841,
+   "sessions": 9,
+   "toolCalls": 540,
+   "source": "db"
+  },
+  {
+   "date": "2026-06-07",
+   "messages": 1414,
+   "sessions": 3,
+   "toolCalls": 375,
+   "source": "db"
+  },
+  {
+   "date": "2026-06-08",
+   "messages": 6271,
+   "sessions": 9,
+   "toolCalls": 1804,
+   "source": "db"
+  },
+  {
+   "date": "2026-06-09",
+   "messages": 8529,
+   "sessions": 10,
+   "toolCalls": 2577,
+   "source": "db"
+  },
+  {
+   "date": "2026-06-10",
+   "messages": 6040,
+   "sessions": 7,
+   "toolCalls": 1847,
+   "source": "db"
+  },
+  {
+   "date": "2026-06-11",
+   "messages": 3754,
+   "sessions": 7,
+   "toolCalls": 1186,
+   "source": "db"
+  },
+  {
+   "date": "2026-06-12",
+   "messages": 6940,
+   "sessions": 7,
+   "toolCalls": 2109,
+   "source": "db"
+  },
+  {
+   "date": "2026-06-13",
+   "messages": 2265,
+   "sessions": 6,
+   "toolCalls": 631,
+   "source": "db"
+  },
+  {
+   "date": "2026-06-14",
+   "messages": 2336,
+   "sessions": 7,
+   "toolCalls": 627,
+   "source": "db"
+  },
+  {
+   "date": "2026-06-15",
+   "messages": 6212,
+   "sessions": 9,
+   "toolCalls": 1742,
+   "source": "db"
+  },
+  {
+   "date": "2026-06-16",
+   "messages": 6319,
+   "sessions": 8,
+   "toolCalls": 1720,
+   "source": "db"
+  },
+  {
+   "date": "2026-06-17",
+   "messages": 8752,
+   "sessions": 8,
+   "toolCalls": 2511,
+   "source": "db"
+  },
+  {
+   "date": "2026-06-18",
+   "messages": 8647,
+   "sessions": 11,
+   "toolCalls": 2442,
+   "source": "db"
+  },
+  {
+   "date": "2026-06-19",
+   "messages": 7054,
+   "sessions": 15,
+   "toolCalls": 1993,
+   "source": "db"
+  },
+  {
+   "date": "2026-06-20",
+   "messages": 4138,
+   "sessions": 11,
+   "toolCalls": 1203,
+   "source": "db"
+  },
+  {
+   "date": "2026-06-21",
+   "messages": 3654,
+   "sessions": 4,
+   "toolCalls": 1075,
+   "source": "db"
+  },
+  {
+   "date": "2026-06-22",
+   "messages": 4051,
+   "sessions": 8,
+   "toolCalls": 1208,
+   "source": "db"
+  },
+  {
+   "date": "2026-06-23",
+   "messages": 6537,
+   "sessions": 10,
+   "toolCalls": 1902,
+   "source": "db"
+  },
+  {
+   "date": "2026-06-24",
+   "messages": 5998,
+   "sessions": 17,
+   "toolCalls": 1757,
+   "source": "db"
+  },
+  {
+   "date": "2026-06-25",
+   "messages": 6845,
+   "sessions": 21,
+   "toolCalls": 1917,
+   "source": "db"
+  },
+  {
+   "date": "2026-06-26",
+   "messages": 9052,
+   "sessions": 9,
+   "toolCalls": 2576,
+   "source": "db"
+  },
+  {
+   "date": "2026-06-27",
+   "messages": 5812,
+   "sessions": 6,
+   "toolCalls": 1669,
+   "source": "db"
+  },
+  {
+   "date": "2026-06-28",
+   "messages": 3499,
+   "sessions": 6,
+   "toolCalls": 1033,
+   "source": "db"
+  },
+  {
+   "date": "2026-06-29",
+   "messages": 8858,
+   "sessions": 8,
+   "toolCalls": 2566,
+   "source": "db"
+  },
+  {
+   "date": "2026-06-30",
+   "messages": 8070,
+   "sessions": 18,
+   "toolCalls": 2295,
+   "source": "db"
+  },
+  {
+   "date": "2026-07-01",
+   "messages": 9590,
+   "sessions": 11,
+   "toolCalls": 2851,
+   "source": "db"
+  },
+  {
+   "date": "2026-07-02",
+   "messages": 9400,
+   "sessions": 10,
+   "toolCalls": 3091,
+   "source": "db"
+  },
+  {
+   "date": "2026-07-03",
+   "messages": 5470,
+   "sessions": 7,
+   "toolCalls": 1770,
+   "source": "db"
+  },
+  {
+   "date": "2026-07-04",
+   "messages": 1971,
+   "sessions": 5,
+   "toolCalls": 581,
+   "source": "db"
+  },
+  {
+   "date": "2026-07-05",
+   "messages": 4007,
+   "sessions": 7,
+   "toolCalls": 1139,
+   "source": "db"
+  },
+  {
+   "date": "2026-07-06",
+   "messages": 623,
+   "sessions": 4,
+   "toolCalls": 156,
+   "source": "db"
+  },
+  {
+   "date": "2026-07-07",
+   "messages": 4492,
+   "sessions": 8,
+   "toolCalls": 1334,
+   "source": "db"
+  },
+  {
+   "date": "2026-07-08",
+   "messages": 6394,
+   "sessions": 13,
+   "toolCalls": 1924,
+   "source": "db"
+  },
+  {
+   "date": "2026-07-09",
+   "messages": 3991,
+   "sessions": 10,
+   "toolCalls": 1120,
+   "source": "db"
+  },
+  {
+   "date": "2026-07-10",
+   "messages": 8427,
+   "sessions": 10,
+   "toolCalls": 2470,
+   "source": "db"
+  },
+  {
+   "date": "2026-07-11",
+   "messages": 7694,
+   "sessions": 9,
+   "toolCalls": 2248,
+   "source": "db"
+  },
+  {
+   "date": "2026-07-12",
+   "messages": 5721,
+   "sessions": 10,
+   "toolCalls": 1655,
+   "source": "db"
+  },
+  {
+   "date": "2026-07-13",
+   "messages": 7462,
+   "sessions": 11,
+   "toolCalls": 2301,
+   "source": "db"
+  },
+  {
+   "date": "2026-07-14",
+   "messages": 11695,
+   "sessions": 10,
+   "toolCalls": 3587,
+   "source": "db"
+  },
+  {
+   "date": "2026-07-15",
+   "messages": 11238,
+   "sessions": 11,
+   "toolCalls": 3412,
+   "source": "db"
+  },
+  {
+   "date": "2026-07-16",
+   "messages": 7150,
+   "sessions": 10,
+   "toolCalls": 2100,
+   "source": "db"
+  },
+  {
+   "date": "2026-07-17",
+   "messages": 9405,
+   "sessions": 10,
+   "toolCalls": 2676,
+   "source": "db"
+  },
+  {
+   "date": "2026-07-18",
+   "messages": 10376,
+   "sessions": 12,
+   "toolCalls": 3319,
+   "source": "db"
+  },
+  {
+   "date": "2026-07-19",
+   "messages": 10076,
+   "sessions": 9,
+   "toolCalls": 3095,
+   "source": "db"
+  },
+  {
+   "date": "2026-07-20",
+   "messages": 7651,
+   "sessions": 11,
+   "toolCalls": 2189,
+   "source": "db"
+  },
+  {
+   "date": "2026-07-21",
+   "messages": 16559,
+   "sessions": 21,
+   "toolCalls": 5050,
+   "source": "db"
+  },
+  {
+   "date": "2026-07-22",
+   "messages": 11738,
+   "sessions": 25,
+   "toolCalls": 3648,
+   "source": "db"
+  },
+  {
+   "date": "2026-07-23",
+   "messages": 7287,
+   "sessions": 12,
+   "toolCalls": 2115,
+   "source": "db"
+  },
+  {
+   "date": "2026-07-24",
+   "messages": 3916,
+   "sessions": 8,
+   "toolCalls": 1051,
+   "source": "db"
+  },
+  {
+   "date": "2026-07-25",
+   "messages": 1614,
+   "sessions": 1,
+   "toolCalls": 389,
+   "source": "db"
+  },
+  {
+   "date": "2026-07-26",
+   "messages": 4192,
+   "sessions": 3,
+   "toolCalls": 1298,
+   "source": "db"
+  },
+  {
+   "date": "2026-07-27",
+   "messages": 8750,
+   "sessions": 9,
+   "toolCalls": 3039,
+   "source": "db"
+  },
+  {
+   "date": "2026-07-28",
+   "messages": 8947,
+   "sessions": 15,
+   "toolCalls": 3016,
+   "source": "db"
+  },
+  {
+   "date": "2026-07-29",
+   "messages": 9369,
+   "sessions": 12,
+   "toolCalls": 3123,
+   "source": "db"
+  },
+  {
+   "date": "2026-07-30",
+   "messages": 14919,
+   "sessions": 15,
+   "toolCalls": 5016,
+   "source": "db"
+  },
+  {
+   "date": "2026-07-31",
+   "messages": 14977,
+   "sessions": 19,
+   "toolCalls": 4799,
+   "source": "db"
+  },
+  {
+   "date": "2026-08-01",
+   "messages": 13504,
+   "sessions": 14,
+   "toolCalls": 4313,
+   "source": "db"
+  },
+  {
+   "date": "2026-08-02",
+   "messages": 11317,
+   "sessions": 12,
+   "toolCalls": 3643,
+   "source": "db"
+  },
+  {
+   "date": "2026-08-03",
+   "messages": 9202,
+   "sessions": 12,
+   "toolCalls": 2905,
+   "source": "db"
+  },
+  {
+   "date": "2026-08-04",
+   "messages": 14282,
+   "sessions": 14,
+   "toolCalls": 4682,
+   "source": "db"
+  },
+  {
+   "date": "2026-08-05",
+   "messages": 8151,
+   "sessions": 6,
+   "toolCalls": 2457,
+   "source": "db"
+  },
+  {
+   "date": "2026-08-06",
+   "messages": 9636,
+   "sessions": 8,
+   "toolCalls": 3087,
+   "source": "db"
+  },
+  {
+   "date": "2026-08-07",
+   "messages": 4282,
+   "sessions": 3,
+   "toolCalls": 1308,
+   "source": "db"
+  },
+  {
+   "date": "2026-08-08",
+   "messages": 1088,
+   "sessions": 3,
+   "toolCalls": 334,
+   "source": "db"
+  },
+  {
+   "date": "2026-08-09",
+   "messages": 4271,
+   "sessions": 10,
+   "toolCalls": 1344,
+   "source": "db"
+  },
+  {
+   "date": "2026-08-10",
+   "messages": 9363,
+   "sessions": 14,
+   "toolCalls": 3017,
+   "source": "db"
+  },
+  {
+   "date": "2026-08-11",
+   "messages": 9493,
+   "sessions": 13,
+   "toolCalls": 2993,
+   "source": "db"
+  },
+  {
+   "date": "2026-08-12",
+   "messages": 6048,
+   "sessions": 10,
+   "toolCalls": 2037,
+   "source": "db"
+  },
+  {
+   "date": "2026-08-13",
+   "messages": 11203,
+   "sessions": 18,
+   "toolCalls": 3811,
+   "source": "db"
+  },
+  {
+   "date": "2026-08-14",
+   "messages": 14124,
+   "sessions": 19,
+   "toolCalls": 4665,
+   "source": "db"
+  },
+  {
+   "date": "2026-08-15",
+   "messages": 9763,
+   "sessions": 8,
+   "toolCalls": 3253,
+   "source": "db"
+  },
+  {
+   "date": "2026-08-16",
+   "messages": 14451,
+   "sessions": 13,
+   "toolCalls": 4804,
+   "source": "db"
+  },
+  {
+   "date": "2026-08-17",
+   "messages": 11204,
+   "sessions": 13,
+   "toolCalls": 3795,
+   "source": "db"
+  },
+  {
+   "date": "2026-08-18",
+   "messages": 11400,
+   "sessions": 13,
+   "toolCalls": 3690,
+   "source": "db"
+  },
+  {
+   "date": "2026-08-19",
+   "messages": 11727,
+   "sessions": 21,
+   "toolCalls": 3897,
+   "source": "db"
+  },
+  {
+   "date": "2026-08-20",
+   "messages": 14574,
+   "sessions": 19,
+   "toolCalls": 4771,
+   "source": "db"
+  },
+  {
+   "date": "2026-08-21",
+   "messages": 11554,
+   "sessions": 21,
+   "toolCalls": 3637,
+   "source": "db"
+  },
+  {
+   "date": "2026-08-22",
+   "messages": 11250,
+   "sessions": 10,
+   "toolCalls": 3622,
+   "source": "db"
+  },
+  {
+   "date": "2026-08-23",
+   "messages": 11335,
+   "sessions": 13,
+   "toolCalls": 3795,
+   "source": "db"
+  },
+  {
+   "date": "2026-08-24",
+   "messages": 14654,
+   "sessions": 17,
+   "toolCalls": 4748,
+   "source": "db"
+  },
+  {
+   "date": "2026-08-25",
+   "messages": 10520,
+   "sessions": 16,
+   "toolCalls": 3271,
+   "source": "db"
+  },
+  {
+   "date": "2026-08-26",
+   "messages": 17821,
+   "sessions": 17,
+   "toolCalls": 5655,
+   "source": "db"
+  },
+  {
+   "date": "2026-08-27",
+   "messages": 18886,
+   "sessions": 31,
+   "toolCalls": 5844,
+   "source": "db"
+  },
+  {
+   "date": "2026-08-28",
+   "messages": 16957,
+   "sessions": 30,
+   "toolCalls": 5322,
+   "source": "db"
+  },
+  {
+   "date": "2026-08-29",
+   "messages": 12642,
+   "sessions": 41,
+   "toolCalls": 3783,
+   "source": "db"
+  },
+  {
+   "date": "2026-08-30",
+   "messages": 10906,
+   "sessions": 11,
+   "toolCalls": 3318,
+   "source": "db"
+  },
+  {
+   "date": "2026-08-31",
+   "messages": 15185,
+   "sessions": 35,
+   "toolCalls": 4702,
+   "source": "db"
+  },
+  {
+   "date": "2026-09-01",
+   "messages": 14225,
+   "sessions": 14,
+   "toolCalls": 4535,
+   "source": "db"
+  },
+  {
+   "date": "2026-09-02",
+   "messages": 16282,
+   "sessions": 24,
+   "toolCalls": 5048,
+   "source": "db"
+  },
+  {
+   "date": "2026-09-03",
+   "messages": 9487,
+   "sessions": 12,
+   "toolCalls": 2829,
+   "source": "db"
+  },
+  {
+   "date": "2026-09-04",
+   "messages": 7435,
+   "sessions": 11,
+   "toolCalls": 2474,
+   "source": "db"
+  },
+  {
+   "date": "2026-09-05",
+   "messages": 8830,
+   "sessions": 34,
+   "toolCalls": 2751,
+   "source": "db"
+  },
+  {
+   "date": "2026-09-06",
+   "messages": 10190,
+   "sessions": 15,
+   "toolCalls": 3453,
+   "source": "db"
+  },
+  {
+   "date": "2026-09-07",
+   "messages": 7414,
+   "sessions": 9,
+   "toolCalls": 2466,
+   "source": "db"
+  },
+  {
+   "date": "2026-09-08",
+   "messages": 6967,
+   "sessions": 12,
+   "toolCalls": 2216,
+   "source": "db"
+  },
+  {
+   "date": "2026-09-09",
+   "messages": 6317,
+   "sessions": 18,
+   "toolCalls": 2075,
+   "source": "db"
+  },
+  {
+   "date": "2026-09-10",
+   "messages": 9768,
+   "sessions": 17,
+   "toolCalls": 3154,
+   "source": "db"
+  },
+  {
+   "date": "2026-09-11",
+   "messages": 6987,
+   "sessions": 17,
+   "toolCalls": 2186,
+   "source": "db"
+  },
+  {
+   "date": "2026-09-12",
+   "messages": 2146,
+   "sessions": 8,
+   "toolCalls": 692,
+   "source": "db"
+  },
+  {
+   "date": "2026-09-13",
+   "messages": 6377,
+   "sessions": 13,
+   "toolCalls": 2124,
+   "source": "db"
+  },
+  {
+   "date": "2026-09-14",
+   "messages": 11337,
+   "sessions": 24,
+   "toolCalls": 3652,
+   "source": "db"
+  },
+  {
+   "date": "2026-09-15",
+   "messages": 8246,
+   "sessions": 19,
+   "toolCalls": 2904,
+   "source": "db"
+  },
+  {
+   "date": "2026-09-16",
+   "messages": 7076,
+   "sessions": 12,
+   "toolCalls": 2319,
+   "source": "db"
+  },
+  {
+   "date": "2026-09-17",
+   "messages": 4674,
+   "sessions": 14,
+   "toolCalls": 1434,
+   "source": "db"
+  },
+  {
+   "date": "2026-09-18",
+   "messages": 8644,
+   "sessions": 22,
+   "toolCalls": 2503,
+   "source": "db"
+  },
+  {
+   "date": "2026-09-19",
+   "messages": 4184,
+   "sessions": 15,
+   "toolCalls": 1282,
+   "source": "db"
+  },
+  {
+   "date": "2026-09-20",
+   "messages": 6516,
+   "sessions": 11,
+   "toolCalls": 2181,
+   "source": "db"
+  },
+  {
+   "date": "2026-09-21",
+   "messages": 9402,
+   "sessions": 19,
+   "toolCalls": 3162,
+   "source": "db"
+  },
+  {
+   "date": "2026-09-22",
+   "messages": 12776,
+   "sessions": 27,
+   "toolCalls": 4262,
+   "source": "db"
+  },
+  {
+   "date": "2026-09-23",
+   "messages": 16130,
+   "sessions": 20,
+   "toolCalls": 5157,
+   "source": "db"
+  },
+  {
+   "date": "2026-09-24",
+   "messages": 18441,
+   "sessions": 34,
+   "toolCalls": 5657,
+   "source": "db"
+  },
+  {
+   "date": "2026-09-25",
+   "messages": 21347,
+   "sessions": 50,
+   "toolCalls": 6414,
+   "source": "db"
+  },
+  {
+   "date": "2026-09-26",
+   "messages": 9137,
+   "sessions": 15,
+   "toolCalls": 2863,
+   "source": "db"
+  },
+  {
+   "date": "2026-09-27",
+   "messages": 5170,
+   "sessions": 23,
+   "toolCalls": 1603,
+   "source": "db"
+  },
+  {
+   "date": "2026-09-28",
+   "messages": 10854,
+   "sessions": 22,
+   "toolCalls": 3443,
+   "source": "db"
+  },
+  {
+   "date": "2026-09-29",
+   "messages": 9187,
+   "sessions": 17,
+   "toolCalls": 2974,
+   "source": "db"
+  },
+  {
+   "date": "2026-09-30",
+   "messages": 12715,
+   "sessions": 32,
+   "toolCalls": 3755,
+   "source": "db"
+  },
+  {
+   "date": "2026-10-01",
+   "messages": 7508,
+   "sessions": 16,
+   "toolCalls": 2354,
+   "source": "db"
+  },
+  {
+   "date": "2026-10-02",
+   "messages": 7162,
+   "sessions": 20,
+   "toolCalls": 2099,
+   "source": "db"
+  },
+  {
+   "date": "2026-10-03",
+   "messages": 3568,
+   "sessions": 16,
+   "toolCalls": 1004,
+   "source": "db"
+  },
+  {
+   "date": "2026-10-04",
+   "messages": 6263,
+   "sessions": 18,
+   "toolCalls": 1823,
+   "source": "db"
+  },
+  {
+   "date": "2026-10-05",
+   "messages": 9469,
+   "sessions": 36,
+   "toolCalls": 2816,
+   "source": "db"
+  },
+  {
+   "date": "2026-10-06",
+   "messages": 12776,
+   "sessions": 24,
+   "toolCalls": 4032,
+   "source": "db"
+  },
+  {
+   "date": "2026-10-07",
+   "messages": 16190,
+   "sessions": 34,
+   "toolCalls": 4977,
+   "source": "db"
+  },
+  {
+   "date": "2026-10-08",
+   "messages": 9430,
+   "sessions": 30,
+   "toolCalls": 2792,
+   "source": "db"
+  },
+  {
+   "date": "2026-10-09",
+   "messages": 8069,
+   "sessions": 22,
+   "toolCalls": 2373,
+   "source": "db"
+  },
+  {
+   "date": "2026-10-10",
+   "messages": 5265,
+   "sessions": 17,
+   "toolCalls": 1561,
+   "source": "db"
+  },
+  {
+   "date": "2026-10-11",
+   "messages": 14690,
+   "sessions": 114,
+   "toolCalls": 4897,
+   "source": "db"
+  },
+  {
+   "date": "2026-10-12",
+   "messages": 24524,
+   "sessions": 277,
+   "toolCalls": 9200,
+   "source": "db"
+  },
+  {
+   "date": "2026-10-13",
+   "messages": 5449,
+   "sessions": 181,
+   "toolCalls": 1838,
+   "source": "db"
+  }
+ ]
+}
