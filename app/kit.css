@@ -4921,57 +4921,20 @@ a.beta-papers-fig:focus-visible { outline: 2px solid var(--color-blue-ink); outl
 .beta-home-now {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  grid-template-areas: "rows" "pulse" "quiet";
+  grid-template-areas: "rows" "pulse";
   gap: calc(var(--u) * 6);
   align-items: start;
   margin: calc(var(--u) * 6) 0 0;
 }
 .beta-home-now__rows { grid-area: rows; min-width: 0; }
 .beta-home-now__pulse { grid-area: pulse; min-width: 0; }
-.beta-home-quiet { grid-area: quiet; min-width: 0; }
-/* At laptop width the answering rows and the pulse sit side by side, and the
-   silent instruments run under both: one line of names, not a column. */
+/* At laptop width the answering rows and the pulse sit side by side. */
 @media (min-width: 64rem) {
   .beta-home-now {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    grid-template-areas: "rows pulse" "quiet quiet";
+    grid-template-areas: "rows pulse";
   }
 }
-/* The instruments that are not answering, named once instead of a row each.
-   One orange tag for the lot: ATTENTION, said once, not five times. Names and
-   last-heard dates are muted panel ink, as NowPanel draws an offline row. */
-.beta-home-quiet__list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: calc(var(--u) * 2) calc(var(--u) * 6);
-}
-.beta-home-quiet__list > li {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0 calc(var(--u) * 2);
-  min-width: 0;
-  font-family: var(--font-sans);
-  font-size: var(--text-body);
-  color: var(--color-glass-muted);
-}
-.beta-home-quiet__when {
-  font-family: var(--font-mono);
-  font-size: var(--text-fine);
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-}
-/* Drawn as NowPanel draws its own offline tags: an outline on the panel
-   ground, orange words (5.2:1 on panel), not a paper chip on the glass. */
-.beta-home-quiet .panel-bar .tag.warn {
-  background: transparent;
-  border-color: var(--color-rule-panel);
-  color: var(--color-orange);
-}
-
 /* ---- Selected work ------------------------------------------------------ */
 .beta-home-work {
   display: grid;
