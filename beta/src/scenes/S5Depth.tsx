@@ -6,7 +6,7 @@ import { Cap, PosterFrame, Stack } from "../components/bits";
 
 // The console's own address, not games.tinymachines.ai/b/tinymachines/die-runner: that one 301s here without its query
 // string, which would drop power=1. power=1 (tinymachines/6502 0d1002e) boots the cartridge as soon as it loads, so
-// Boot is one press; until tinymachines.ai serves a 6502 release with it, the console ignores it and waits for power.
+// Boot is one press (live since 6502 v0.367, boarded on tinymachines.ai 1.0.270).
 const CART = "https://tinymachines.ai/6502/games?cart=" + encodeURIComponent("https://tinymachines.ai/6502/api/v1/registry/b/tinymachines/roms/die-runner/cart") + "&power=1";
 
 export function S5Depth() {
@@ -19,7 +19,7 @@ export function S5Depth() {
         lead="A 339-byte ROM on 3,510 switches." ratio="4 / 5"
         line="The screen is a page of the chip's memory. Every frame settles the real die over HTTP, so the frame rate is the round trip, and the page says so."
         button="Boot the console" off="Power off"
-        note={<>Arrow keys steer. After Boot, press the console's own <b>power</b>. The gates you thread are pass transistors on the die, and which channel conducts is read off the chip running the game, one frame behind.</>} />
+        note={<>Arrow keys steer. The gates you thread are pass transistors on the die, and which channel conducts is read off the chip running the game, one frame behind.</>} />
       <p className="bio-cap">No modelled CPU. Wires and switches, traced from a photograph of the die, and the behaviour falls out of them. The game is a 339-byte ROM, the screen is a page of the chip&rsquo;s memory, and every frame settles 3,510 switches for real.</p>
       <Stack tags={["Rust", "WASM", "switch-level simulation", "tinymachines.ai/6502"]} />
       <p className="bio-credit">Die photograph: <a href="http://www.visual6502.org/">visual6502.org</a>, CC BY-NC-SA 3.0. The game and the engine: tinymachines/6502.</p>

@@ -30,7 +30,7 @@ import { Play, Square } from "lucide-react"
 
 // The console's own address: games.tinymachines.ai/b/tinymachines/die-runner 301s here WITHOUT its query string,
 // which would drop power=1. power=1 (tinymachines/6502 0d1002e) boots the cartridge once it loads, so Boot is one
-// press; until tinymachines.ai serves a 6502 release with it, the console ignores it and waits for its power button.
+// press (live since 6502 v0.367, boarded on tinymachines.ai 1.0.270).
 const CART =
   "https://tinymachines.ai/6502/games?cart=" +
   encodeURIComponent("https://tinymachines.ai/6502/api/v1/registry/b/tinymachines/roms/die-runner/cart") +
