@@ -13,7 +13,7 @@ const build = typeof __APP_VERSION__ === "string" ? { version: __APP_VERSION__, 
 
 export const APP: AppConfig = {
   name: "bradley.io",
-  tagline: "AI systems, data and the edge, built in the open",
+  tagline: "production software in days, from ready-made parts",
   site: "https://beta.bradley.io",
   prefix: "bradleyio",
   logo: "/logo.svg",
@@ -35,7 +35,9 @@ export const APP: AppConfig = {
   ] },
   pages: [
     { path: "/", title: "bradley.io", card: "home", index: false, kicker: "AI systems, data and the edge",
-      description: "The simplified bradley.io, on the tinymachines app kit. Being built in the open: the content arrives page by page." },
+      description: "One person, a platform of ready-made parts, and Claude. Production software in days. Open for projects with local companies in Grand Rapids and Kent County." },
+    { path: "/contact", title: "Start a conversation", card: "plain", index: false, kicker: "contact",
+      description: "Write to brad@bradley.io: what the job is, what systems it touches, and when you need it." },
     { path: "/zoo", title: "Widget zoo", card: "plain", index: false, kicker: "every component",
       description: "Every component in the kit, rendered live with the exact markup that produced it." },
     { path: "/zoo/widgets", title: "Widget bench", card: "plain", index: false, kicker: "the web components",
@@ -54,7 +56,8 @@ export const APP: AppConfig = {
   notHere: "the shell for now; the content is on its way.",
   doors: [
     { id: "site", title: "bradley.io", hint: "The site, as it is built.", pages: [
-      { href: "/", title: "Home", hint: "Where it starts." },
+      { href: "/", title: "Home", hint: "Ten scenes, top to bottom." },
+      { href: "/contact", title: "Start a conversation", hint: "brad@bradley.io, and what helps a first email." },
     ] },
     { id: "kit", title: "The kit", hint: "Every piece of the app kit, working.", pages: [
       { href: "/zoo", title: "Widget zoo", hint: "Every component, live, with its markup." },
@@ -71,6 +74,7 @@ export const APP: AppConfig = {
   ],
   shortcuts: [
     { id: "home", label: "Home", href: "/" },
+    { id: "contact", label: "Contact", href: "/contact" },
     { id: "zoo", label: "Zoo", href: "/zoo" },
     { id: "widgets", label: "Widgets", href: "/zoo/widgets" },
     { id: "sensors", label: "Sensors", href: "/sensors" },
@@ -78,5 +82,5 @@ export const APP: AppConfig = {
     { id: "app", label: "This app", href: "/app" },
     { id: "account", label: "Account", href: "/account" },
   ],
-  defaultShortcuts: ["home", "zoo", "theme"],
+  defaultShortcuts: ["home", "contact", "theme"],
 };

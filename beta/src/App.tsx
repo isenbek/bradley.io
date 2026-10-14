@@ -17,6 +17,8 @@ import Zoo from "./pages/Zoo";
 import Widgets from "./pages/Widgets";
 import Start from "./pages/Start";
 import NotHere from "./pages/NotHere";
+import Contact from "./pages/Contact";
+import { ZoomControl } from "./components/ZoomControl";
 
 export function App() {
   const path = usePath();
@@ -29,6 +31,7 @@ export function App() {
   else if (path === "/zoo") page = <Zoo />;
   else if (path === "/zoo/widgets") page = <Widgets />;
   else if (path === "/start") page = <Start />;
+  else if (path === "/contact") page = <Contact />;
   else if (path === "/theme") page = <ThemePage />;
   else if (path === "/sensors") page = <SensorsPage />;
   else if (path === "/share") page = <SharePage />;
@@ -38,6 +41,7 @@ export function App() {
   return (
     <>
       <SiteHeader path={path} />
+      <ZoomControl />
       <UpdateBar />
       <main>{page}</main>
       <SiteFooter path={path} />

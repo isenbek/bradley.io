@@ -19,10 +19,11 @@ page.on("pageerror", (e) => errors.push(e.message));
 page.on("console", (m) => { const t = m.text(); if (m.type() === "error" && !offline && !/401|Not signed in/.test(t)) errors.push(t); });
 await page.setViewport({ width: 390, height: 844 });
 const text = (sel: string) => page.evaluate((s) => document.querySelector(s)?.textContent?.trim() ?? "", sel);
+const count = (sel: string) => page.evaluate((s) => document.querySelectorAll(s).length, sel);
 const clickText = (sel: string, t: string) => page.evaluate((s, t) => { const el = [...document.querySelectorAll<HTMLElement>(s)].find((e) => e.textContent?.includes(t)); el?.click(); return !!el; }, sel, t);
 
 // 1. every page
-for (const p of ["/", "/zoo", "/zoo/widgets", "/sensors", "/start", "/theme", "/app", "/account", "/share", "/nowhere"]) {
+for (const p of ["/", "/contact", "/zoo", "/zoo/widgets", "/sensors", "/start", "/theme", "/app", "/account", "/share", "/nowhere"]) {
   await page.goto(`${origin}${p}`, { waitUntil: "networkidle0" });
   const h1 = await text("main h1"), brand = await text("header .brand");
   const logo = await page.evaluate(() => (document.querySelector("header .brand img") as HTMLImageElement | null)?.naturalWidth ?? 0);
@@ -34,7 +35,35 @@ await page.goto(`${origin}/`, { waitUntil: "networkidle0" });
 await page.click("header .menu-btn"); await sleep(300);
 const doors = await page.evaluate(() => [...(document.getElementById("tc-menu")?.shadowRoot?.querySelectorAll("button, a") ?? [])].map((b) => b.textContent?.trim() ?? "").filter(Boolean));
 ok(doors.some((d) => d.startsWith("The kit")) && doors.some((d) => d.startsWith("bradley.io")) && doors.some((d) => d.startsWith("You")), `the Menu lists the doors: ${doors.slice(0, 4).join(" | ")}`);
-ok(/commits in the last 60 days/.test(await text("main .src")), "the front page carries the commit count from the git logs");
+// the ten scenes (isenbek/bradley.io #3 to #9), in order, and no frame before the reader presses
+await page.goto(`${origin}/`, { waitUntil: "networkidle0" }); await sleep(800);
+const scenes = await page.$$eval("main .bio-scene", (els) => els.map((e) => e.id));
+ok(scenes.join(",") === "door,claim,two-days,parts,depth,edge,record,craft,process,ask", `the ten scenes in order: ${scenes.join(", ")}`);
+ok((await count("main iframe")) === 0, "nothing is framed before the reader presses");
+ok(/33,\d{3}/.test(await text("#door")), `scene 1 carries the commit count: ${(await text("#door .bio-proofs li:nth-child(2) .bio-cap")).slice(0, 80)}`);
+await page.waitForFunction(() => document.querySelectorAll(".bio-now__rows li").length > 0, { timeout: 20_000 }).catch(() => null);
+ok((await count(".bio-now__rows li")) > 0, `Running now answers through /api/now (${await count(".bio-now__rows li")} instruments)`);
+await page.waitForFunction(() => /\d/.test(document.querySelector(".bio-live__n b")?.textContent ?? ""), { timeout: 20_000 }).catch(() => null);
+ok(/\d+\s*of \d+ services up/.test(await text(".bio-live__n")), `scene 4's live number: "${await text(".bio-live__n")}"`);
+ok((await count("#record .bio-months rect")) >= 12, "scene 7 draws the commits a month");
+ok((await count("#craft .bio-shelf li")) >= 5, "scene 8 lists the family");
+// the zoom: Beginner by default, Builder shows the stack tags, kept across a reload
+const z0 = await page.evaluate(() => document.documentElement.dataset.zoom);
+const cap0 = await text("#depth .bio-cap");
+const tags0 = await count(".bio-tags .bio-tag");
+await page.evaluate(() => [...document.querySelectorAll<HTMLButtonElement>(".bio-zoom button")].find((b) => b.textContent === "Builder")?.click()); await sleep(300);
+const cap1 = await text("#depth .bio-cap");
+const tags1 = await count(".bio-tags .bio-tag");
+ok(z0 === "beginner" && cap0 !== cap1 && tags1 > tags0, `the zoom: Beginner by default, Builder changes the captions and shows the stack (${tags0} to ${tags1} tags)`);
+await page.reload({ waitUntil: "networkidle0" }); await sleep(400);
+ok((await page.evaluate(() => document.documentElement.dataset.zoom)) === "builder", "the zoom is kept across a reload");
+await page.evaluate(() => [...document.querySelectorAll<HTMLButtonElement>(".bio-zoom button")].find((b) => b.textContent === "Beginner")?.click());
+// Die Runner boots on a press into a frame
+await page.evaluate(() => [...document.querySelectorAll<HTMLButtonElement>("#depth button")].find((b) => /Boot/.test(b.textContent ?? ""))?.click());
+await page.waitForSelector("#depth iframe", { timeout: 10_000 }).catch(() => null);
+ok((await count("#depth iframe")) === 1, "Boot puts the console in a frame");
+await page.goto(`${origin}/contact`, { waitUntil: "networkidle0" });
+ok((await count('a[href^="mailto:brad@bradley.io"]')) >= 1, "the contact page has the inbox");
 
 // 2. the zoo
 await page.goto(`${origin}/zoo`, { waitUntil: "networkidle0" }); await sleep(500);

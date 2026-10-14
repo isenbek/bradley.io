@@ -4,6 +4,7 @@
 # scripts/check.sh and scripts/site-deploy.sh before the build; never typed by hand.
 set -euo pipefail
 cd "$(dirname "$0")/.."
+(cd .. && bun run beta/scripts/record.ts)
 python3 - <<'PY'
 import json, subprocess, datetime, pathlib
 home = pathlib.Path.home() / "projects"
