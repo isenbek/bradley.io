@@ -5063,6 +5063,56 @@ a.beta-papers-fig:focus-visible { outline: 2px solid var(--color-blue-ink); outl
 /* Two buttons side by side, outside the hero (the kit's .hero-ctas is a row
    only inside .hero). */
 .beta-home-row { display: flex; flex-wrap: wrap; gap: calc(var(--u) * 3); }
+
+/* ---- Die Runner on the front page (components/home/DieRunner.tsx) ---------
+   One frame with two states. Off: a poster on the sunk panel, the console's
+   tag and the button. On: the console's own page in an iframe. The frame has
+   the same height in both states so pressing the button moves nothing below
+   it. The height is viewport-relative like the atlas embed, because the
+   console sizes itself to its window; it is capped so a desktop reader sees
+   the caption without scrolling past the game. */
+.beta-runner { margin: calc(var(--u) * 5) 0 0; }
+.beta-runner__frame {
+  position: relative;
+  height: min(70vh, 640px);
+  min-height: 420px;
+  border: 1px solid var(--color-rule-panel);
+  border-radius: var(--radius-mod);
+  overflow: hidden;
+  background: var(--color-panel-sunk);
+}
+.beta-runner__frame iframe { display: block; width: 100%; height: 100%; border: 0; background: var(--color-panel-sunk); }
+.beta-runner__poster {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  gap: calc(var(--u) * 4);
+  padding: calc(var(--u) * 6);
+  color: var(--color-glass);
+}
+.beta-runner__poster .beta-die__tag { position: static; align-self: start; line-height: 1.5; }
+.beta-runner__poster-words { display: grid; gap: calc(var(--u) * 2); max-width: 34rem; }
+.beta-runner__poster-words b { font-family: var(--font-display); font-size: var(--text-h3); line-height: 1.2; }
+.beta-runner__poster-words span { font-size: var(--text-fine); color: var(--color-glass-muted); }
+.beta-runner__poster .btn { display: inline-flex; align-items: center; gap: calc(var(--u) * 1.5); }
+.beta-runner__caption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: calc(var(--u) * 3);
+  margin-top: calc(var(--u) * 3);
+  font-size: var(--text-fine);
+  color: var(--color-ink-muted);
+}
+.beta-runner__caption > span { flex: 1 1 24rem; min-width: 0; }
+.beta-runner__caption .btn { display: inline-flex; align-items: center; gap: calc(var(--u) * 1.5); }
+@media (max-width: 720px) {
+  .beta-runner__frame { height: min(60vh, 520px); min-height: 360px; }
+  .beta-runner__poster { padding: calc(var(--u) * 4); }
+}
 /* A .rail-list of doors. The kit's list is one column; here the entries sit
    side by side when there is room, so six links are two rows and not a
    ladder. minmax(0, ...) because a track's floor is otherwise its content. */

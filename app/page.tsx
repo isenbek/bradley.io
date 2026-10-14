@@ -4,6 +4,7 @@ import { loadSiteDataStatic } from "@/lib/site-data"
 import { peekNow } from "@/components/live/now-snapshot"
 import type { NowId } from "@/components/live/types"
 import { DieFigure } from "@/components/home/DieFigure"
+import { DieRunner } from "@/components/home/DieRunner"
 import { HeroChips, type OrgTotals } from "@/components/home/HeroChips"
 import { LinkCard } from "@/components/home/LinkCard"
 import { OrgCards } from "@/components/home/OrgCards"
@@ -276,6 +277,23 @@ export default async function Home() {
           </div>
         </div>
       </div>
+
+      <div className="prose beta-sec">
+        <h2>Play it: Die Runner</h2>
+        <p>
+          A console on that chip. The game is a 339-byte ROM, the screen is a page of the
+          6502&apos;s memory, and the browser draws it. There is no emulator in the frame: every
+          frame settles the 3,510 switches above through the engine at tinymachines.ai, and the
+          gates you thread are pass transistors on the die, open or shut by the state of the chip
+          running the game. Boot it when you are ready; it makes a request a frame and nothing
+          until you press.
+        </p>
+      </div>
+      <DieRunner />
+      <Measured>
+        <b>tinymachines/6502</b>: games/README.md, the ROM at rom/dierunner.s and the mint
+        report, checked {shortDate(WORK_CHECKED)}
+      </Measured>
 
       <div className="prose beta-sec">
         <h2>The record</h2>
