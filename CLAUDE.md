@@ -101,6 +101,24 @@ npm run lint           # eslint .
 - `next.config.mjs` also **generates ~310 redirects** (retired dossiers, `/lab`, `/trng/space`, `/v3/*`); after editing it, re-verify a few redirects, not just that routes return 200.
 - The user verifies on the **live site** via the footer version pill — deploy after every batch of changes.
 
+## Working GitHub issues (the sequence)
+
+Brad files work as issues on `isenbek/bradley.io` (often written by a remote agent). For each one, in this order
+(Brad, 2026-10-14):
+
+1. **Work the issue.** A question for the person who wrote it goes on the issue, not only in chat; a fact the issue
+   gets wrong is corrected from the source and said on the issue.
+2. **Test and lint.** beta: `beta/scripts/check.sh` (typecheck, lint with zero warnings, build, the site in headless
+   Chrome). Main site: `bun run lint`, `npx tsc --noEmit`, and the Playwright specs the work touches
+   (`PLAYWRIGHT_BROWSERS_PATH=/mnt/ursa/bradleyio/ms-playwright BASE_URL=... npx playwright test tests/<spec>`).
+3. **Commit with a real message and push to GitHub.**
+4. **Deploy.** beta: `beta/scripts/ship.sh [--close] <issue>...` does 2 to 4 in order, stops at the first failure,
+   checks the live site, and reports on the issues. Main site: commit by hand first (its `./deploy.sh` commits with a
+   generic message), then `./deploy.sh`, which lints, pushes, builds, swaps and health-checks.
+5. **Verify live, then report on the issue** (what shipped, which commit, what was checked) and close it when done.
+
+Deploy scripts are approved to run without asking (Brad, 2026-10-14).
+
 ## Key Conventions
 
 1. **Kit classes + kit tokens only** (`panel`, `prose`, `rail`, `ledger`, `readout`, `btn`, `tag`, `crumb`, `page-head`; `--color-*`, `--text-*`, `--u`). Site-specific additions are `beta-*` classes in `app/kit.css`. Never hardcode hex in components — the exceptions are `lib/beta/chart-theme.ts` (MapLibre, documented) and `app/terminal.css` (the CRT, documented).
