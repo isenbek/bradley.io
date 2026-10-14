@@ -1,9 +1,9 @@
 {
-  "generated": "2026-10-14T16:01:27.291078+00:00",
+  "generated": "2026-10-14T20:01:45.417892+00:00",
   "stats": {
     "totalProjects": 84,
-    "totalSessions": 1136,
-    "totalMessages": 1225188,
+    "totalSessions": 1183,
+    "totalMessages": 1229456,
     "activeDays": 199,
     "streak": 140,
     "coverage": {
@@ -26,14 +26,14 @@
   "activityFeed": [
     {
       "type": "claude-code",
-      "title": "Claude Code: 4,073 transcript records",
-      "description": "195 sessions active, 1,176 tool calls",
+      "title": "Claude Code: 8,341 transcript records",
+      "description": "247 sessions active, 2,496 tool calls",
       "projectSlug": null,
       "category": null,
-      "date": "2026-10-14T15:58:56.819000Z",
+      "date": "2026-10-14T19:59:41.734000Z",
       "metadata": {
-        "messages": 4073,
-        "sessions": 195
+        "messages": 8341,
+        "sessions": 247
       }
     },
     {
@@ -42,7 +42,7 @@
       "description": "Repository hotbits",
       "projectSlug": "hotbits",
       "category": "creative",
-      "date": "2026-10-14T14:34:31Z",
+      "date": "2026-10-14T18:06:04Z",
       "metadata": {
         "repo": "tinymachines/hotbits"
       }
@@ -633,7 +633,7 @@
       "isFeatured": true,
       "status": "active",
       "technologies": [],
-      "lastActivity": "2026-10-14T14:34:31Z",
+      "lastActivity": "2026-10-14T18:06:04Z",
       "totalMessages": 0,
       "sources": {
         "github": {
@@ -741,11 +741,11 @@
         "TypeScript"
       ],
       "lastActivity": "2026-10-14",
-      "totalMessages": 59950,
+      "totalMessages": 60031,
       "sources": {
         "claudeCode": {
           "totalSessions": 2,
-          "totalMessages": 59950,
+          "totalMessages": 60031,
           "lastSession": "2026-10-14"
         }
       },
@@ -781,6 +781,68 @@
       "categoryBasis": "default"
     },
     {
+      "slug": "cbapex",
+      "name": "cbapex",
+      "tagline": "A container application for shared layers and charters",
+      "description": "The cbapex repository is a container application that serves as a central hub for managing shared layers and charters across several related apps, including cbprospect, cbnight, and cbpublic. It utilizes a kit system to manage UI elements and configurations, with a focus on maintaining consistency and tracking changes within the Apex ecosystem.",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-10-14",
+      "totalMessages": 62669,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 5,
+          "totalMessages": 62669,
+          "lastSession": "2026-10-14"
+        },
+        "timeline": {
+          "org": "Nominate-AI",
+          "repo": "cbapex",
+          "commits": 945,
+          "descriptionSource": "reused"
+        }
+      },
+      "provenance": {
+        "tagline": "ai-cached",
+        "description": "timeline"
+      },
+      "categoryBasis": "default"
+    },
+    {
+      "slug": "cbmodels",
+      "name": "cbmodels",
+      "tagline": "Political data engine built with Python.",
+      "description": "The cbmodels repository is a political data engine built with Python, utilizing technologies like FastAPI, DuckDB, and Snowflake to provide voter segment analysis, election results, and audience builder capabilities. It includes components for data extraction, transformation, and visualization, supporting operational workflows through operator blocks and various data pipelines.",
+      "category": "data",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-10-14",
+      "totalMessages": 59899,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 14,
+          "totalMessages": 59899,
+          "lastSession": "2026-10-14"
+        },
+        "timeline": {
+          "org": "Nominate-AI",
+          "repo": "cbmodels",
+          "commits": 1420,
+          "descriptionSource": "ai"
+        }
+      },
+      "provenance": {
+        "tagline": "ai-cached",
+        "description": "timeline"
+      },
+      "categoryBasis": "keywords"
+    },
+    {
       "slug": "public",
       "name": "public",
       "tagline": "TypeScript project for a 6502 work",
@@ -812,6 +874,37 @@
       "categoryBasis": "keywords"
     },
     {
+      "slug": "cbelections",
+      "name": "cbelections",
+      "tagline": "Simulates and analyzes US election results.",
+      "description": "The cbelections repository contains code for simulating and analyzing election results, primarily focused on the United States, with a strong emphasis on Michigan and Georgia. It utilizes data from various sources including county registries, FEC filings, and simulated scenarios to produce election outcome predictions and reports.",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-10-14",
+      "totalMessages": 42681,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 7,
+          "totalMessages": 42681,
+          "lastSession": "2026-10-14"
+        },
+        "timeline": {
+          "org": "Nominate-AI",
+          "repo": "cbelections",
+          "commits": 812,
+          "descriptionSource": "reused"
+        }
+      },
+      "provenance": {
+        "tagline": "ai-cached",
+        "description": "timeline"
+      },
+      "categoryBasis": "default"
+    },
+    {
       "slug": "bradleyio",
       "name": "bradleyio",
       "tagline": "Bradley.io: TypeScript terminal experience for data analysis.",
@@ -822,8 +915,8 @@
       "status": "active",
       "technologies": [
         "Next.js",
-        "systemd",
         "React",
+        "systemd",
         "Tailwind CSS",
         "TypeScript",
         "Nginx",
@@ -831,11 +924,11 @@
         "Socket.IO"
       ],
       "lastActivity": "2026-10-14",
-      "totalMessages": 39597,
+      "totalMessages": 40200,
       "sources": {
         "claudeCode": {
           "totalSessions": 6,
-          "totalMessages": 39597,
+          "totalMessages": 40200,
           "lastSession": "2026-10-14"
         },
         "timeline": {
@@ -862,11 +955,11 @@
       "status": "active",
       "technologies": [],
       "lastActivity": "2026-10-14",
-      "totalMessages": 38262,
+      "totalMessages": 38263,
       "sources": {
         "claudeCode": {
           "totalSessions": 2,
-          "totalMessages": 38262,
+          "totalMessages": 38263,
           "lastSession": "2026-10-14"
         },
         "timeline": {
@@ -893,11 +986,11 @@
       "status": "active",
       "technologies": [],
       "lastActivity": "2026-10-14",
-      "totalMessages": 17923,
+      "totalMessages": 18476,
       "sources": {
         "claudeCode": {
-          "totalSessions": 762,
-          "totalMessages": 17923,
+          "totalSessions": 808,
+          "totalMessages": 18476,
           "lastSession": "2026-10-14"
         }
       },
@@ -929,99 +1022,6 @@
       "provenance": {
         "tagline": "none",
         "description": "none"
-      },
-      "categoryBasis": "default"
-    },
-    {
-      "slug": "cbmodels",
-      "name": "cbmodels",
-      "tagline": "Political data engine built with Python.",
-      "description": "The cbmodels repository is a political data engine built with Python, utilizing technologies like FastAPI, DuckDB, and Snowflake to provide voter segment analysis, election results, and audience builder capabilities. It includes components for data extraction, transformation, and visualization, supporting operational workflows through operator blocks and various data pipelines.",
-      "category": "data",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-10-13",
-      "totalMessages": 59476,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 14,
-          "totalMessages": 59476,
-          "lastSession": "2026-10-13"
-        },
-        "timeline": {
-          "org": "Nominate-AI",
-          "repo": "cbmodels",
-          "commits": 1420,
-          "descriptionSource": "ai"
-        }
-      },
-      "provenance": {
-        "tagline": "ai-cached",
-        "description": "timeline"
-      },
-      "categoryBasis": "keywords"
-    },
-    {
-      "slug": "cbelections",
-      "name": "cbelections",
-      "tagline": "Simulates and analyzes US election results.",
-      "description": "The cbelections repository contains code for simulating and analyzing election results, primarily focused on the United States, with a strong emphasis on Michigan and Georgia. It utilizes data from various sources including county registries, FEC filings, and simulated scenarios to produce election outcome predictions and reports.",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-10-13",
-      "totalMessages": 42438,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 7,
-          "totalMessages": 42438,
-          "lastSession": "2026-10-13"
-        },
-        "timeline": {
-          "org": "Nominate-AI",
-          "repo": "cbelections",
-          "commits": 812,
-          "descriptionSource": "reused"
-        }
-      },
-      "provenance": {
-        "tagline": "ai-cached",
-        "description": "timeline"
-      },
-      "categoryBasis": "default"
-    },
-    {
-      "slug": "cbapex",
-      "name": "cbapex",
-      "tagline": "A container application for shared layers and charters",
-      "description": "The cbapex repository is a container application that serves as a central hub for managing shared layers and charters across several related apps, including cbprospect, cbnight, and cbpublic. It utilizes a kit system to manage UI elements and configurations, with a focus on maintaining consistency and tracking changes within the Apex ecosystem.",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-10-12",
-      "totalMessages": 62469,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 5,
-          "totalMessages": 62469,
-          "lastSession": "2026-10-12"
-        },
-        "timeline": {
-          "org": "Nominate-AI",
-          "repo": "cbapex",
-          "commits": 945,
-          "descriptionSource": "reused"
-        }
-      },
-      "provenance": {
-        "tagline": "ai-cached",
-        "description": "timeline"
       },
       "categoryBasis": "default"
     },
@@ -2558,11 +2558,11 @@
       "Anthropic",
       "React",
       "Markdown",
-      "FastAPI",
       "Pytest",
+      "FastAPI",
       "GPIO",
-      "ESP32",
       "YAML",
+      "ESP32",
       "TypeScript",
       "Ollama",
       "TOML",
@@ -2603,7 +2603,7 @@
       "isFeatured": true,
       "status": "active",
       "technologies": [],
-      "lastActivity": "2026-10-14T14:34:31Z",
+      "lastActivity": "2026-10-14T18:06:04Z",
       "totalMessages": 0,
       "sources": {
         "github": {
