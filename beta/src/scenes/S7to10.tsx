@@ -1,7 +1,7 @@
 // Scenes 7 to 10 (issue #9): the record, the craft, how a job runs, the ask. Short, and mostly ports.
 import { onLink } from "@tinymachines/kit/lib/router";
 import { Builder, Cap, Chip } from "../components/bits";
-import type { Record } from "../data";
+import { useData, type Record } from "../data";
 import { FAMILY } from "../../../components/kit/family-data";
 
 const MAIN = "https://bradley.io";
@@ -45,21 +45,32 @@ export function S7Record({ record }: { record: Record | null }) {
   );
 }
 
+/** public/family/marks.json (scripts/data.sh): the one-colour mark of each site that has one, by hue. */
+type Marks = { [hue: string]: { name: string; file: string; from: string } };
+
+/** A site as its mark in its own colour (the one-colour SVG used as a mask), or its dot when it has no mark yet. */
+function Mark({ file, hex, name }: { file?: string; hex: string; name: string }) {
+  return file
+    ? <span className="bio-mark" role="img" aria-label={`${name} mark`} style={{ background: hex, WebkitMaskImage: `url(${file})`, maskImage: `url(${file})` }} />
+    : <i style={{ background: hex }} aria-hidden="true" />;
+}
+
 export function S8Craft() {
   const sites = FAMILY.filter((f) => f.name);
+  const marks = useData<Marks>("/family/marks.json");
   return (
     <section className="bio-scene" id="craft" aria-labelledby="craft-h">
       <h2 id="craft-h">The craft.</h2>
       <ul className="bio-shelf" aria-label="Meatball Labs and family">
         {sites.map((f) => (
           <li key={f.hue}>
-            <i style={{ background: f.hex }} aria-hidden="true" />
+            <Mark file={marks?.[f.hue]?.file} hex={f.hex} name={f.name ?? f.hue} />
             {f.href && !f.reserved ? <a href={f.href}>{f.name}</a> : <span>{f.name}</span>}
             <Builder><small>{f.hue}</small></Builder>
           </li>
         ))}
       </ul>
-      <p className="bio-lead">Design and copy are part of delivery, not an upsell. Every site above wears its own mark and colour from one family guide, at <a href="https://meatball.ai/family/">meatball.ai</a>, <a href="https://meatball.ai/#boneyard">and twelve experiments retired on purpose</a>.</p>
+      <p className="bio-lead">Design and copy are part of delivery, not an upsell. Every site above wears its own mark and colour from one family guide (the marks are the brand library's, from meatball-labs), at <a href="https://meatball.ai/family/">meatball.ai</a>, <a href="https://meatball.ai/#boneyard">and twelve experiments retired on purpose</a>.</p>
     </section>
   );
 }

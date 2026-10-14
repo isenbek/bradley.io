@@ -52,12 +52,20 @@ export const APP: AppConfig = {
     { path: "/account", title: "Your account", card: "plain", index: false, kicker: "account", description: "Sign in with a passkey." },
     { path: "/share", title: "Shared with bradley.io", card: "plain", index: false, kicker: "share", description: "What you have shared here from other apps. It stays on your device." },
   ],
-  outside: /^\/(api|data)\//,
+  // the API, the build data, and the main site's pages linked from "The record" door (a full load, not a route here)
+  outside: /^(https?:|\/(api|data)\/)/,
   notHere: "the shell for now; the content is on its way.",
   doors: [
     { id: "site", title: "bradley.io", hint: "The site, as it is built.", pages: [
       { href: "/", title: "Home", hint: "Ten scenes, top to bottom." },
       { href: "/contact", title: "Start a conversation", hint: "brad@bradley.io, and what helps a first email." },
+    ] },
+    // Issue #1's pages stay on the main site until the cutover (isenbek/bradley.io #11, item 3); this door reaches them.
+    // Cost Analysis first: it is the one a potential client reads. Architecture was never built (#1 waits on a sketch).
+    { id: "record", title: "The record", hint: "The long versions, on the main site for now.", pages: [
+      { href: "https://bradley.io/cost-analysis", title: "Cost analysis", hint: "What the work cost, counted." },
+      { href: "https://bradley.io/the-shift", title: "The shift", hint: "How the way of working changed." },
+      { href: "https://bradley.io/work", title: "The work", hint: "Every org, every repository, counted." },
     ] },
     { id: "kit", title: "The kit", hint: "Every piece of the app kit, working.", pages: [
       { href: "/zoo", title: "Widget zoo", hint: "Every component, live, with its markup." },

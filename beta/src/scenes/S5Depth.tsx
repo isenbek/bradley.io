@@ -4,7 +4,10 @@
 // (tinymachines/public deploy/tinymachines.ai.nginx, $tmapex_frame_ancestors).
 import { Cap, PosterFrame, Stack } from "../components/bits";
 
-const CART = "https://games.tinymachines.ai/b/tinymachines/die-runner";
+// The console's own address, not games.tinymachines.ai/b/tinymachines/die-runner: that one 301s here without its query
+// string, which would drop power=1. power=1 (tinymachines/6502 0d1002e) boots the cartridge as soon as it loads, so
+// Boot is one press; until tinymachines.ai serves a 6502 release with it, the console ignores it and waits for power.
+const CART = "https://tinymachines.ai/6502/games?cart=" + encodeURIComponent("https://tinymachines.ai/6502/api/v1/registry/b/tinymachines/roms/die-runner/cart") + "&power=1";
 
 export function S5Depth() {
   return (

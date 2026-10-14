@@ -28,7 +28,13 @@ import { Play, Square } from "lucide-react"
  * /b/<builder>/<slug> is the console with that cartridge already loaded.
  */
 
-const CART = "https://games.tinymachines.ai/b/tinymachines/die-runner"
+// The console's own address: games.tinymachines.ai/b/tinymachines/die-runner 301s here WITHOUT its query string,
+// which would drop power=1. power=1 (tinymachines/6502 0d1002e) boots the cartridge once it loads, so Boot is one
+// press; until tinymachines.ai serves a 6502 release with it, the console ignores it and waits for its power button.
+const CART =
+  "https://tinymachines.ai/6502/games?cart=" +
+  encodeURIComponent("https://tinymachines.ai/6502/api/v1/registry/b/tinymachines/roms/die-runner/cart") +
+  "&power=1"
 
 export function DieRunner() {
   const [on, setOn] = useState(false)

@@ -145,3 +145,8 @@ html[data-theme="datasheet"] .bio-hero .bio-mark, html[data-theme="instrument"] 
   .bio-frame { max-width: 560px; }
   .bio-pair .bio-frame { max-width: none; }
 }
+@layer kiosk {
+  /* a family site as its own mark, in its own colour: the one-colour SVG is the mask, the site's hex is the fill */
+  .bio-mark { display: inline-block; width: 34px; height: 22px; -webkit-mask: center / contain no-repeat; mask: center / contain no-repeat; }
+  .bio-shelf li { padding-left: 10px; }
+}

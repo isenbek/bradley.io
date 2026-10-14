@@ -47,6 +47,8 @@ await page.waitForFunction(() => /\d/.test(document.querySelector(".bio-live__n 
 ok(/\d+\s*of \d+ services up/.test(await text(".bio-live__n")), `scene 4's live number: "${await text(".bio-live__n")}"`);
 ok((await count("#record .bio-months rect")) >= 12, "scene 7 draws the commits a month");
 ok((await count("#craft .bio-shelf li")) >= 5, "scene 8 lists the family");
+await page.waitForFunction(() => document.querySelectorAll("#craft .bio-mark").length >= 5, { timeout: 10_000 }).catch(() => null);
+ok((await count("#craft .bio-mark")) >= 5, `scene 8 draws the sites as their own marks (${await count("#craft .bio-mark")})`);
 // the zoom: Beginner by default, Builder shows the stack tags, kept across a reload
 const z0 = await page.evaluate(() => document.documentElement.dataset.zoom);
 const cap0 = await text("#depth .bio-cap");
