@@ -38,6 +38,7 @@ export default tseslint.config(
   },
   {
     ignores: [
+      "beta/**",
       "archive/**",
       ".next/**",
       // deploy.sh builds into .next-staging and keeps the last build at

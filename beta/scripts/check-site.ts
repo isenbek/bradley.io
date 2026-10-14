@@ -1,0 +1,92 @@
+// The done-check, in headless Chrome, against a built dist/ (scripts/serve.ts) or the live site: every page opens with
+// no error and the frame carries the name and the mark; the Menu lists the doors; the zoo renders every specimen with
+// its markup read back; the busy portal covers and settles; every widget on the bench is a defined custom element and
+// the scrubber has the real data; the sensors page has its tiles; the account service answers and offers passkeys;
+// a theme pick survives a reload; the app opens offline. Ends in ALL OK or a failure.
+//   bun run scripts/check-site.ts [origin]      default http://127.0.0.1:4451
+import puppeteer, { type Page } from "puppeteer-core";
+
+const origin = (process.argv[2] ?? "http://127.0.0.1:4451").replace(/\/$/, "");
+let fails = 0;
+const ok = (good: boolean, what: string) => { if (!good) fails++; console.log(`${good ? "OK  " : "FAIL"} ${what}`); };
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+const browser = await puppeteer.launch({ executablePath: process.env.CHROME ?? "/usr/bin/google-chrome", headless: true, args: ["--no-sandbox", "--disable-gpu"] });
+const ctx = await browser.createBrowserContext();
+const page: Page = await ctx.newPage();
+const errors: string[] = [];
+let offline = false;
+page.on("pageerror", (e) => errors.push(e.message));
+page.on("console", (m) => { const t = m.text(); if (m.type() === "error" && !offline && !/401|Not signed in/.test(t)) errors.push(t); });
+await page.setViewport({ width: 390, height: 844 });
+const text = (sel: string) => page.evaluate((s) => document.querySelector(s)?.textContent?.trim() ?? "", sel);
+const clickText = (sel: string, t: string) => page.evaluate((s, t) => { const el = [...document.querySelectorAll<HTMLElement>(s)].find((e) => e.textContent?.includes(t)); el?.click(); return !!el; }, sel, t);
+
+// 1. every page
+for (const p of ["/", "/zoo", "/zoo/widgets", "/sensors", "/start", "/theme", "/app", "/account", "/share", "/nowhere"]) {
+  await page.goto(`${origin}${p}`, { waitUntil: "networkidle0" });
+  const h1 = await text("main h1"), brand = await text("header .brand");
+  const logo = await page.evaluate(() => (document.querySelector("header .brand img") as HTMLImageElement | null)?.naturalWidth ?? 0);
+  const wide = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth);
+  ok(h1.length > 0 && brand === "bradley.io" && logo > 0 && !wide, `${p}: "${h1}", brand "${brand}", logo ${logo}px, ${wide ? "SCROLLS SIDEWAYS" : "fits a phone"}`);
+}
+ok((await page.title()) === "Not here · bradley.io", `an unknown address says Not here (${await page.title()})`);
+await page.goto(`${origin}/`, { waitUntil: "networkidle0" });
+await page.click("header .menu-btn"); await sleep(300);
+const doors = await page.evaluate(() => [...(document.getElementById("tc-menu")?.shadowRoot?.querySelectorAll("button, a") ?? [])].map((b) => b.textContent?.trim() ?? "").filter(Boolean));
+ok(doors.some((d) => d.startsWith("The kit")) && doors.some((d) => d.startsWith("bradley.io")) && doors.some((d) => d.startsWith("You")), `the Menu lists the doors: ${doors.slice(0, 4).join(" | ")}`);
+ok(/commits in the last 60 days/.test(await text("main .src")), "the front page carries the commit count from the git logs");
+
+// 2. the zoo
+await page.goto(`${origin}/zoo`, { waitUntil: "networkidle0" }); await sleep(500);
+const specs = await page.$$eval(".zoo-spec", (els) => els.map((e) => ({ id: e.id, code: (e.querySelector(".zoo-code code")?.textContent ?? "").length })));
+ok(specs.length >= 20 && specs.every((s) => s.code > 10), `the zoo renders ${specs.length} specimens, every one with its markup read back`);
+ok((await page.$$eval("#bars .bars i", (b) => b.length)) === 60, "the per-day bars carry 60 real days");
+// nothing on the zoo may hold a cover once the page has loaded: the cover is fixed across the whole pane
+ok(!(await page.evaluate(() => !!document.querySelector(".busy-cover"))), "nothing covers the zoo once it has loaded");
+await clickText("button", "Hold the view for 3 seconds"); await sleep(600);
+const covered = await page.evaluate(() => !!document.querySelector("#busy .busy-cover"));
+await sleep(3200);
+const settled = await page.evaluate(() => !document.querySelector(".busy-cover"));
+ok(covered && settled, `the busy portal covers the view (${covered}) and settles by itself (${settled})`);
+await clickText("button", "Show a first load for 3 seconds"); await sleep(600);
+const faceOn = await page.evaluate(() => !!document.querySelector(".busy-cover"));
+await sleep(3200);
+const faceOff = await page.evaluate(() => !document.querySelector(".busy-cover"));
+ok(faceOn && faceOff, `the busy face shows on demand (${faceOn}) and clears by itself (${faceOff})`);
+
+// 3. the widget bench
+await page.goto(`${origin}/zoo/widgets`, { waitUntil: "networkidle0" }); await sleep(800);
+const defined = await page.evaluate(() => ["tc-ticker", "tc-scrub", "tc-dial", "tc-hold", "tc-compass", "tc-level", "tc-gyro", "tc-accel"].map((t) => [t, !!customElements.get(t) && !!document.querySelector(t)]));
+ok(defined.every(([, d]) => d), `every widget is defined and on the page: ${defined.map(([t, d]) => `${t}${d ? "" : " MISSING"}`).join(", ")}`);
+const scrubN = await page.evaluate(() => ((document.getElementById("wb-scrub") as unknown as { data?: unknown[] })?.data ?? []).length);
+ok(scrubN === 60, `the scrubber has the 60 real days (${scrubN})`);
+
+// the knob is inside the dial's shadow root (role=slider); arrow keys there step it, and the page's readout follows
+await page.evaluate(() => (document.getElementById("wb-dial")?.shadowRoot?.querySelector(".dial") as HTMLElement | null)?.focus());
+await page.keyboard.press("ArrowUp"); await page.keyboard.press("ArrowUp"); await sleep(200);
+ok(/^3[12] days/.test(await text("#wb-dial-out")), `the dial steps with the arrow keys and reports it: ${await text("#wb-dial-out")}`);
+
+// 4. sensors, sign-in, a theme, offline
+await page.goto(`${origin}/sensors`, { waitUntil: "networkidle0" });
+const tiles = await page.evaluate(() => document.querySelectorAll("tc-gps, tc-motion, tc-sound, tc-battery, tc-network, tc-clock, tc-compass").length);
+ok(tiles >= 6, `the sensors page has ${tiles} tiles`);
+const auth = await page.evaluate(async () => { const r = await fetch("/api/v1/auth"); return r.ok ? r.json() : r.status; });
+ok((auth as { passkey?: boolean })?.passkey === true, `the account service answers and offers passkeys: ${JSON.stringify(auth)}`);
+await page.goto(`${origin}/account`, { waitUntil: "networkidle0" });
+ok(/passkey/i.test(await text("main")), "the account page offers a passkey");
+await page.goto(`${origin}/theme`, { waitUntil: "networkidle0" });
+ok(await clickText(".theme-pick", "Instrument"), "the theme page offers Instrument"); await sleep(200);
+await page.goto(`${origin}/zoo`, { waitUntil: "domcontentloaded" });
+const early = await page.evaluate(() => getComputedStyle(document.body).backgroundColor);
+ok(early === "rgb(11, 11, 10)", `a theme pick survives a reload with no light flash (${early})`);
+await page.goto(`${origin}/app`, { waitUntil: "networkidle0" }); await sleep(1500);
+await page.reload({ waitUntil: "networkidle0" }); await sleep(1000);
+offline = true; await page.setOfflineMode(true);
+await page.goto(`${origin}/zoo/widgets`, { waitUntil: "domcontentloaded" }).catch(() => null); await sleep(500);
+ok((await text("main h1")) === "Widget bench", `offline: the bench opens from the cache ("${await text("main h1")}")`);
+await page.setOfflineMode(false); offline = false;
+
+ok(errors.length === 0, errors.length ? `page errors: ${errors.join(" | ").slice(0, 600)}` : "no page errors anywhere");
+await browser.close();
+console.log(fails ? `check-site: ${fails} FAILED` : "check-site: ALL OK");
+process.exit(fails ? 1 : 0);

@@ -66,6 +66,9 @@ bradleyio/
 ├── scripts/                # data pipelines (activity, pilot, mcp-catalog,
 │                           # visitors/worldevent collectors), vendor/sync helpers
 ├── public/data/            # pipeline output the pages read (committed by deploy)
+├── beta/                   # beta.bradley.io: the simplified site as a @tinymachines/kit app (Vite + React,
+│                           #   its own package.json, checks and deploy: beta/scripts/check.sh then
+│                           #   beta/scripts/site-deploy.sh; NOT built by ./deploy.sh; excluded from Next's tsc + eslint)
 ├── bradley-io.service      # systemd unit (Next.js production)
 └── deploy.sh               # THE deploy path — see below
 ```

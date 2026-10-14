@@ -1,0 +1,22 @@
+# bradleyio-beta-api: the account service behind beta.bradley.io's sign-in. It is tinychase's account API (FastAPI,
+# ~/projects/tinychase/api) run as a SECOND, separate instance: its own SQLite (StateDirectory), its own session
+# secret, bound to this site (TC_SITE sets the passkey relying party and the allowed origin). No GitHub sign-in (no
+# client id): passkeys only. Nothing is shared with tinychase.com's or tinykit's accounts. Installed by scripts/site-setup.sh.
+[Unit]
+Description=bradley.io beta account API (tinychase's account service, a separate instance)
+After=network.target
+
+[Service]
+Type=simple
+User=bisenbek
+WorkingDirectory=/home/bisenbek/projects/tinychase
+Environment=PYTHONUNBUFFERED=1
+Environment=PATH=/usr/local/bin:/usr/bin:/bin
+Environment=TC_SITE=https://beta.bradley.io
+StateDirectory=bradleyio-beta-api
+ExecStart=/home/bisenbek/projects/tinychase/api/.venv/bin/python -m uvicorn app:app --app-dir api --host 127.0.0.1 --port 8115 --root-path /api
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
