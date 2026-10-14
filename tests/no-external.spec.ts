@@ -70,8 +70,9 @@ for (const path of CORE_PATHS) {
     })
 
     await page.goto(path, { waitUntil: "domcontentloaded", timeout: 25_000 })
-    await page.waitForSelector(".v3-nav", { timeout: 10_000 })
-    await page.waitForSelector(".v3-footer", { timeout: 10_000 })
+    // the kit's shell (components/KitNav.tsx, KitShell.tsx); the v3 chrome these waited for was deleted 2026-08-30
+    await page.waitForSelector(".app-head", { timeout: 10_000 })
+    await page.waitForSelector(".app-foot", { timeout: 10_000 })
     await page.waitForLoadState("load").catch(() => {})
     // Hold a moment so any deferred fetches / lazy-loaded resources fire too.
     await page.waitForTimeout(1500)
