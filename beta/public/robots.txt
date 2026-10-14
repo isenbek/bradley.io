@@ -1,6 +1,6 @@
-# beta.bradley.io: readable by people, crawlers and agents (the remote agent that files this site's issues reads it).
-# It is not for search results yet: every page carries <meta name="robots" content="noindex, follow"> instead, set in
-# index.html and kept current by the kit (src/lib/head.ts). /api/ is the sign-in service and the main site's handlers.
+# beta.bradley.io: open to search engines and agents (the kit's standard robots.txt, tinymachines/kit scripts/new-app.sh).
+# A page kept out of search results says index: false in src/app.config.ts; the kit writes its noindex.
+# Every page is noindex for now (index.html and app.config.ts), until the beta replaces bradley.io.
 User-agent: *
 Allow: /
 Disallow: /api/
