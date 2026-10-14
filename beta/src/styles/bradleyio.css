@@ -140,3 +140,8 @@ html[data-theme="datasheet"] .bio-hero .bio-mark, html[data-theme="instrument"] 
   .bio-three { padding-left: 1.3em; font: 17px/1.55 var(--sans); }
   .bio-three li { margin: 0 0 6px; }
 }
+@layer kiosk {
+  /* a portrait frame on a wide screen: as tall as the screen allows, never wider than its ratio needs */
+  .bio-frame { max-width: 560px; }
+  .bio-pair .bio-frame { max-width: none; }
+}
