@@ -1,10 +1,10 @@
 {
-  "generated": "2026-10-13T09:10:05.543844+00:00",
+  "generated": "2026-10-14T09:09:07.193440+00:00",
   "org": "tinymachines",
   "totalRepos": 77,
   "firstCommit": "2016-02-27T16:07:26Z",
-  "latestCommit": "2026-10-13T05:10:58Z",
-  "totalCommits": 7162,
+  "latestCommit": "2026-10-14T05:12:27Z",
+  "totalCommits": 7167,
   "languages": {
     "Python": 28,
     "C": 8,
@@ -7105,8 +7105,14 @@
     },
     {
       "date": "2026-10-13",
-      "commits": 5,
-      "repos": 3,
+      "commits": 9,
+      "repos": 4,
+      "intensity": 1
+    },
+    {
+      "date": "2026-10-14",
+      "commits": 1,
+      "repos": 1,
       "intensity": 1
     }
   ],
@@ -7495,7 +7501,7 @@
         }
       ],
       "category": "hardware",
-      "source": "ai",
+      "source": "reused",
       "generatedAt": "2026-10-13",
       "model": "ollama:gemma3:4b"
     }
@@ -8163,14 +8169,14 @@
     },
     {
       "name": "infrastructure",
-      "description": "This repository manages the data center infrastructure, primarily through systemd units, SOPS scripts, and related tools like certbot and BIND zones. It supports deployment and maintenance of services across multiple DC environments, with a focus on operational stability and reproducibility.",
+      "description": "This repository manages the infrastructure for a distributed network of servers, likely used for a high-availability service or platform. It includes configuration management through systemd units, scripts for monitoring and maintenance, and documentation outlining deployment procedures. The repository's core purpose is to provide a versioned and reproducible environment for deploying and operating this infrastructure across multiple data centers.",
       "language": "Shell",
-      "commits": 350,
+      "commits": 351,
       "firstCommit": "2026-03-01T15:16:40Z",
-      "lastCommit": "2026-07-21T16:48:49Z",
+      "lastCommit": "2026-10-13T23:18:07Z",
       "phase": "Early Tinymachines Development",
-      "descriptionSource": "reused",
-      "descriptionGeneratedAt": "2026-10-03",
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-14",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
@@ -8181,7 +8187,7 @@
       "firstCommit": "2026-05-04T03:01:06Z",
       "lastCommit": "2026-10-13T04:11:39Z",
       "phase": "Early Tinymachines Development",
-      "descriptionSource": "ai",
+      "descriptionSource": "reused",
       "descriptionGeneratedAt": "2026-10-13",
       "descriptionModel": "ollama:gemma3:4b"
     },
@@ -8253,7 +8259,7 @@
       "firstCommit": "2026-08-12T16:38:57Z",
       "lastCommit": "2026-10-12T15:53:10Z",
       "phase": "Tinymachine Ecosystem Development Phases",
-      "descriptionSource": "ai",
+      "descriptionSource": "reused",
       "descriptionGeneratedAt": "2026-10-13",
       "descriptionModel": "ollama:gemma3:4b"
     },
@@ -8271,14 +8277,14 @@
     },
     {
       "name": "public",
-      "description": "This repository contains the development work for a project focused on creating interactive audio experiences, likely related to music or sound design, using a web-based interface. The codebase includes tools and documentation for building these experiences, with a strong emphasis on experimentation and iterative development, particularly around a 'tinypeek' platform.",
+      "description": "This repository is a TypeScript project focused on creating a site, API, and documentation for a 6502 work, likely related to retro gaming or emulation. The development involves building out various aspects of the user interface, managing tokens, and structuring the codebase with tools like AstroStack and MDX.",
       "language": "TypeScript",
-      "commits": 978,
+      "commits": 981,
       "firstCommit": "2026-08-22T15:44:09Z",
-      "lastCommit": "2026-10-13T05:01:41Z",
+      "lastCommit": "2026-10-13T15:45:16Z",
       "phase": "NES Simulation Development",
       "descriptionSource": "ai",
-      "descriptionGeneratedAt": "2026-10-13",
+      "descriptionGeneratedAt": "2026-10-14",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
@@ -8337,7 +8343,7 @@
       "firstCommit": "2026-09-05T16:29:39Z",
       "lastCommit": "2026-10-12T13:58:32Z",
       "phase": "NES Simulation Development",
-      "descriptionSource": "ai",
+      "descriptionSource": "reused",
       "descriptionGeneratedAt": "2026-10-13",
       "descriptionModel": "ollama:gemma3:4b"
     },
@@ -8361,7 +8367,7 @@
       "firstCommit": "2026-10-08T17:35:49Z",
       "lastCommit": "2026-10-12T23:26:01Z",
       "phase": "Retro System Development",
-      "descriptionSource": "ai",
+      "descriptionSource": "reused",
       "descriptionGeneratedAt": "2026-10-13",
       "descriptionModel": "ollama:gemma3:4b"
     },
@@ -8373,7 +8379,7 @@
       "firstCommit": "2026-10-11T01:10:45Z",
       "lastCommit": "2026-10-12T22:26:45Z",
       "phase": "Retro System Development",
-      "descriptionSource": "ai",
+      "descriptionSource": "reused",
       "descriptionGeneratedAt": "2026-10-13",
       "descriptionModel": "ollama:gemma3:4b"
     },
@@ -8385,20 +8391,20 @@
       "firstCommit": "2026-10-11T03:11:50Z",
       "lastCommit": "2026-10-12T20:25:47Z",
       "phase": "Retro System Development",
-      "descriptionSource": "ai",
+      "descriptionSource": "reused",
       "descriptionGeneratedAt": "2026-10-13",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "kit",
-      "description": "The `kit` repository provides the TypeScript source code for the tinychase app, which is a Vite + React application focused on providing a customizable user interface with themes, offline capabilities, sharing features, and account management. It includes components like sensors and widgets, along with tools for creating new apps and managing installation from a private Git repository.",
+      "description": "The tinychase repository is a project focused on creating a web application, initially built with AstroStack, that allows users to manage their accounts and access various features through a theme system. It provides a framework for building applications with customizable themes, including dark mode support, and integrates account management functionalities.",
       "language": "TypeScript",
-      "commits": 11,
+      "commits": 12,
       "firstCommit": "2026-10-12T14:56:49Z",
-      "lastCommit": "2026-10-12T22:02:54Z",
+      "lastCommit": "2026-10-14T05:12:27Z",
       "phase": "Retro System Development",
       "descriptionSource": "ai",
-      "descriptionGeneratedAt": "2026-10-13",
+      "descriptionGeneratedAt": "2026-10-14",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
@@ -8409,7 +8415,7 @@
       "firstCommit": "2026-10-12T18:08:56Z",
       "lastCommit": "2026-10-13T05:10:58Z",
       "phase": "Retro System Development",
-      "descriptionSource": "ai",
+      "descriptionSource": "reused",
       "descriptionGeneratedAt": "2026-10-13",
       "descriptionModel": "ollama:gemma3:4b"
     },
@@ -8427,24 +8433,23 @@
     }
   ],
   "aiSummary": {
-    "callsOk": 10,
+    "callsOk": 3,
     "callsFailed": 0,
-    "reused": 50,
+    "reused": 57,
     "kept": 0,
     "skippedByLimit": 0,
     "skippedByBudget": 0,
     "skippedBackendsDown": 0,
     "withoutModelText": 0,
     "phaseSources": {
-      "reused": 10,
-      "ai": 1
+      "reused": 11
     },
     "descriptionSources": {
-      "reused": 40,
+      "reused": 46,
       "github": 13,
       "commits": 11,
       "none": 4,
-      "ai": 9
+      "ai": 3
     },
     "limitAi": null,
     "budgetMin": 15.0,
