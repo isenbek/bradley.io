@@ -6,8 +6,8 @@
 // (19 and 4 commits under app/housecalls on those days); the local engine (housecalls-harness, Rust + DuckDB, seed
 // phrase and vault) began on 6 Sep. Live at bradley.io/housecalls/tools; free, no account.
 //
-// State of Race, taken to be Nominate-AI/cbnight ("Election Night": the live board, headline races, the full ballot,
-// race tracker, kiosk) because no repository carries the name; flagged on issue #5. Its CLAUDE.md: spawned 2026-08-17
+// State of Race is Nominate-AI/cbnight, "Election Night" (confirmed by Bradley on issue #5, 14 Oct 2026): the live
+// board, headline races, the full ballot, race tracker, kiosk. Its CLAUDE.md: spawned 2026-08-17
 // and "As of 2026-08-18 this is a LIVE election night ... Five physical screens are on boards driven by this vertical
 // right now" (Florida's primary). Git: 15 commits on 17 Aug, 38 on 18 Aug, 407 to 13 Oct.
 //
