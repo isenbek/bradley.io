@@ -1,9 +1,15 @@
 /* bradley.io beta: its own rules, in the kiosk vocabulary, tokens only. */
+/* The footer's wave crest is the kit's yellow (tinychase's duck bill) unless an app says otherwise: on bradley.io's
+   themes it is Ocean over the instrument panel. Outside the layer and keyed on the theme, so it beats the kit's own
+   theme variables; a reader's own theme keeps the kit's. */
+html[data-theme="datasheet"], html[data-theme="instrument"] { --wave: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='14' viewBox='0 0 120 14'%3E%3Cpath d='M0 8C20 2 40 2 60 8S100 14 120 8V14H0Z' fill='%23131311'/%3E%3Cpath d='M0 8C20 2 40 2 60 8S100 14 120 8' fill='none' stroke='%235FB8C0' stroke-width='2'/%3E%3C/svg%3E"); }
+html[data-theme="datasheet"] .bio-hero .bio-mark, html[data-theme="instrument"] .bio-hero .bio-mark { background: none; padding: 0; }
+
 @layer kiosk {
   .bio-sec { margin-bottom: 12px; }
   .bio-sec h2 { margin: 0 0 8px; }
   .bio-hero { display: flex; gap: 20px; align-items: flex-start; margin: 0 0 14px; }
-  .bio-hero .bio-mark { flex: 0 0 auto; width: 96px; height: 96px; background: var(--logo-plate, transparent); padding: var(--logo-pad, 0); border-radius: 12px; }
+  .bio-hero .bio-mark { flex: 0 0 auto; width: 96px; height: 96px; border-radius: 12px; }   /* no plate: the dark theme has its own mark */
   @media (max-width: 480px) { .bio-hero { flex-direction: column; } }
   .bio-kv { display: grid; grid-template-columns: minmax(0, 11em) minmax(0, 1fr); gap: 8px 18px; margin: 0; }
   .bio-kv dt { font: 600 16px/1.5 var(--sans); color: var(--ink); }
