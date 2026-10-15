@@ -16,7 +16,12 @@ const page: Page = await ctx.newPage();
 const errors: string[] = [];
 let offline = false;
 page.on("pageerror", (e) => errors.push(e.message));
-page.on("console", (m) => { const t = m.text(); if (m.type() === "error" && !offline && !/401|Not signed in/.test(t)) errors.push(t); });
+// Run locally (kit check serves the build on 127.0.0.1), the 6502 console refuses to be framed: its frame-ancestors
+// names bradley.io and beta.bradley.io only, as it should. Whether Chrome logs that before the check ends is timing,
+// so the refusal is not counted locally; against the live site it is still a failure.
+const local = /^http:\/\/(127\.0\.0\.1|localhost)[:/]/.test(origin);
+const framedOffSite = (t: string) => local && /^Framing 'https:\/\/tinymachines\.ai\/' violates the following Content Security Policy directive: "frame-ancestors/.test(t);
+page.on("console", (m) => { const t = m.text(); if (m.type() === "error" && !offline && !/401|Not signed in/.test(t) && !framedOffSite(t)) errors.push(t); });
 await page.setViewport({ width: 390, height: 844 });
 const text = (sel: string) => page.evaluate((s) => document.querySelector(s)?.textContent?.trim() ?? "", sel);
 const count = (sel: string) => page.evaluate((s) => document.querySelectorAll(s).length, sel);
