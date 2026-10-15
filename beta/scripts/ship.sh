@@ -28,7 +28,7 @@ dirty=$(git status --porcelain -- . | grep -v -E '^\?\? (out|public/data)/' || t
 head=$(git rev-parse --short HEAD); echo "HEAD $head: $(git log -1 --format=%s)"
 
 say "2. test and lint"
-bun run check 2>&1 | tail -3
+bun run check 2>&1 | grep -E "^(FAIL|== )|ALL OK|FAILED" || true   # every FAIL line shows, not only the last few
 [[ "$(cat out/check-ok 2>/dev/null)" == "$head" ]] || { echo "refusing: the check did not pass on $head"; exit 1; }
 
 say "3. push"
