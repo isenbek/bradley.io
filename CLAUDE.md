@@ -67,8 +67,9 @@ bradleyio/
 │                           # visitors/worldevent collectors), vendor/sync helpers
 ├── public/data/            # pipeline output the pages read (committed by deploy)
 ├── beta/                   # beta.bradley.io: the simplified site as a @tinymachines/kit app (Vite + React,
-│                           #   its own package.json, checks and deploy: beta/scripts/check.sh then
-│                           #   beta/scripts/site-deploy.sh; NOT built by ./deploy.sh; excluded from Next's tsc + eslint)
+│                           #   its own package.json, checks and deploy: `bun run check` then `bun run deploy` in beta/
+│                           #   (the kit's `kit` command); sign-in is the kit's shared account service (accounts.tinymachines.ai);
+│                           #   NOT built by ./deploy.sh; excluded from Next's tsc + eslint)
 ├── bradley-io.service      # systemd unit (Next.js production)
 └── deploy.sh               # THE deploy path — see below
 ```
@@ -108,7 +109,7 @@ Brad files work as issues on `isenbek/bradley.io` (often written by a remote age
 
 1. **Work the issue.** A question for the person who wrote it goes on the issue, not only in chat; a fact the issue
    gets wrong is corrected from the source and said on the issue.
-2. **Test and lint.** beta: `beta/scripts/check.sh` (typecheck, lint with zero warnings, build, the site in headless
+2. **Test and lint.** beta: `bun run check` in `beta/` (the kit's `kit check`: data, typecheck, lint with zero warnings, build, the site in headless
    Chrome). Main site: `bun run lint`, `npx tsc --noEmit`, and the Playwright specs the work touches
    (`PLAYWRIGHT_BROWSERS_PATH=/mnt/ursa/bradleyio/ms-playwright BASE_URL=... npx playwright test tests/<spec>`).
 3. **Commit with a real message and push to GitHub.**

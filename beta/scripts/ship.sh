@@ -3,9 +3,9 @@
 # after testing + linting, push and commit to github, then deploy the site"):
 #
 #   1. refuse unless the work is committed (a real message, written by hand; nothing here writes one)
-#   2. the check: data, typecheck, lint with zero warnings, build, the site in headless Chrome   (scripts/check.sh)
+#   2. the check: data, typecheck, lint with zero warnings, build, the site in headless Chrome   (bun run check: kit check)
 #   3. push to GitHub
-#   4. deploy                                                                                    (scripts/site-deploy.sh)
+#   4. deploy                                                                                    (bun run deploy: kit deploy)
 #   5. the same browser check against the LIVE site
 #   6. report on each issue named: live, which commit, checked; --close closes them as well
 #
@@ -28,14 +28,14 @@ dirty=$(git status --porcelain -- . | grep -v -E '^\?\? (out|public/data)/' || t
 head=$(git rev-parse --short HEAD); echo "HEAD $head: $(git log -1 --format=%s)"
 
 say "2. test and lint"
-./scripts/check.sh | tail -3
+bun run check 2>&1 | tail -3
 [[ "$(cat out/check-ok 2>/dev/null)" == "$head" ]] || { echo "refusing: the check did not pass on $head"; exit 1; }
 
 say "3. push"
 git push -q && echo "pushed $head to $(git rev-parse --abbrev-ref --symbolic-full-name @{u})"
 
 say "4. deploy"
-./scripts/site-deploy.sh | tail -2
+bun run deploy 2>&1 | tail -2
 
 say "5. check the live site"
 bun run scripts/check-site.ts "$SITE" | tail -1 | tee /tmp/ship-live.$$ | grep -q "ALL OK" || { cat /tmp/ship-live.$$; rm -f /tmp/ship-live.$$; echo "the live check FAILED: deployed but not verified; look before reporting"; exit 1; }
