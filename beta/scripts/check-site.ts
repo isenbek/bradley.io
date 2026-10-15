@@ -5,6 +5,9 @@
 // a theme pick survives a reload; the app opens offline. Ends in ALL OK or a failure.
 //   bun run scripts/check-site.ts [origin]      default http://127.0.0.1:4451
 import puppeteer, { type Page } from "puppeteer-core";
+import { mkdtempSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
 
 const origin = (process.argv[2] ?? "http://127.0.0.1:4451").replace(/\/$/, "");
 let fails = 0;
@@ -28,7 +31,7 @@ const count = (sel: string) => page.evaluate((s) => document.querySelectorAll(s)
 const clickText = (sel: string, t: string) => page.evaluate((s, t) => { const el = [...document.querySelectorAll<HTMLElement>(s)].find((e) => e.textContent?.includes(t)); el?.click(); return !!el; }, sel, t);
 
 // 1. every page
-for (const p of ["/", "/contact", "/zoo", "/zoo/widgets", "/sensors", "/start", "/theme", "/app", "/account", "/share", "/nowhere"]) {
+for (const p of ["/", "/contact", "/zoo", "/zoo/widgets", "/sensors", "/start", "/theme", "/app", "/account", "/files", "/share", "/nowhere"]) {
   await page.goto(`${origin}${p}`, { waitUntil: "networkidle0" });
   const h1 = await text("main h1"), brand = await text("header .brand");
   const logo = await page.evaluate(() => (document.querySelector("header .brand img") as HTMLImageElement | null)?.naturalWidth ?? 0);
@@ -110,6 +113,35 @@ const auth = await page.evaluate(async () => { const r = await fetch("/api/v1/au
 ok((auth as { passkey?: boolean })?.passkey === true, `the account service answers and offers passkeys: ${JSON.stringify(auth)}`);
 await page.goto(`${origin}/account`, { waitUntil: "networkidle0" });
 ok(/passkey/i.test(await text("main")), "the account page offers a passkey");
+
+// Your files, signed out: a picked file is kept on this device and opens; a file shared from another app (the Share
+// menu's multipart POST, taken by the service worker) lands there too
+const sample = join(mkdtempSync(join(tmpdir(), "beta-check-")), "hello.txt");
+writeFileSync(sample, "hello from beta's check\n");
+const names = () => page.evaluate(() => [...document.querySelectorAll(".kfiles li")].map((li) => `${li.querySelector(".open")?.textContent} | ${li.querySelector(".state")?.textContent}`));
+const waitName = async (n: string) => { let r: string[] = []; for (let i = 0; i < 40 && !r.some((x) => x.startsWith(n)); i++) { await sleep(250); r = await names(); } return r; };
+await page.goto(`${origin}/files`, { waitUntil: "networkidle0" });
+const input = await page.evaluateHandle(() => document.querySelector("tc-pick")!.shadowRoot!.querySelector("input.files"));
+await (input as unknown as { uploadFile(p: string): Promise<void> }).uploadFile(sample);
+let rows = await waitName("hello.txt");
+ok(rows.some((r) => /^hello\.txt \| On this device/.test(r)), `your files: a picked file is kept on this device (${rows.join("; ")})`);
+await clickText(".kfiles .open", "hello.txt");
+await page.waitForSelector(".kfile-view pre", { timeout: 4000 }).catch(() => null);
+ok((await text(".kfile-view pre")).startsWith("hello from beta's check"), "your files: opening it shows what it holds");
+await page.goto(`${origin}/app`, { waitUntil: "networkidle0" });
+await page.evaluate(() => navigator.serviceWorker.ready);
+const landed = await page.evaluate(async () => {
+  const form = new FormData();
+  form.append("files", new File(["shared from another app\n"], "shared note.txt", { type: "text/plain" }));
+  const r = await fetch("/share", { method: "POST", body: form });
+  return new URL(r.url).pathname + new URL(r.url).search;
+});
+await page.goto(`${origin}${landed}`, { waitUntil: "networkidle0" });
+await page.waitForFunction(() => /Open it in Your files/.test(document.querySelector("main")?.textContent ?? ""), { timeout: 8000 }).catch(() => null);
+ok(/Open it in Your files/.test(await text("main")), `share: the share page says the file went to Your files (${landed})`);
+await page.goto(`${origin}/files`, { waitUntil: "networkidle0" });
+rows = await waitName("shared note.txt");
+ok(rows.some((r) => r.startsWith("shared note.txt")), `share: it is in Your files (${rows.join("; ")})`);
 await page.goto(`${origin}/theme`, { waitUntil: "networkidle0" });
 ok(await clickText(".theme-pick", "Instrument"), "the theme page offers Instrument"); await sleep(200);
 await page.goto(`${origin}/zoo`, { waitUntil: "domcontentloaded" });

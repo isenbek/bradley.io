@@ -16,6 +16,7 @@ export const APP: AppConfig = {
   tagline: "production software in days, from ready-made parts",
   site: "https://beta.bradley.io",
   prefix: "bradleyio",
+  yourFiles: "/files",
   logo: "/logo.svg",
   logoDark: "/logo-dark.svg",
   protocol: "web+bradleyio",
@@ -50,6 +51,7 @@ export const APP: AppConfig = {
       description: "Datasheet or Instrument, or one of your own: every theme is checked for contrast before it can be kept." },
     { path: "/app", title: "This app", card: "plain", index: false, kicker: "app", description: "Install bradley.io on your phone or computer. It works offline." },
     { path: "/account", title: "Your account", card: "plain", index: false, kicker: "account", description: "Sign in with a passkey." },
+    { path: "/files", title: "Your files", card: "plain", index: false, kicker: "files", description: "Your files, kept on this device and, signed in, in your account, so every device you sign in on has them." },
     { path: "/share", title: "Shared with bradley.io", card: "plain", index: false, kicker: "share", description: "What you have shared here from other apps. It stays on your device." },
   ],
   // the API, the build data, and the main site's pages linked from "The record" door (a full load, not a route here)
@@ -75,6 +77,7 @@ export const APP: AppConfig = {
     ] },
     { id: "you", title: "You", hint: "Your account, how the app looks, this device.", pages: [
       { href: "/account", title: "Your account", hint: "A passkey.", me: true },
+      { href: "/files", title: "Your files", hint: "Kept here and in your account." },
       { href: "/theme", title: "Themes", hint: "Datasheet, Instrument, or your own." },
       { href: "/share", title: "Shared with bradley.io", hint: "What other apps sent here." },
       { href: "/app", title: "This app", hint: "Install it, and it works offline." },

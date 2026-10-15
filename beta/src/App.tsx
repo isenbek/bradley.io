@@ -12,6 +12,7 @@ import SensorsPage from "@tinymachines/kit/pages/SensorsPage";
 import SharePage from "@tinymachines/kit/pages/SharePage";
 import AppPage from "@tinymachines/kit/pages/AppPage";
 import Account from "@tinymachines/kit/pages/Account";
+import FilesPage from "@tinymachines/kit/pages/FilesPage";
 import Home from "./pages/Home";
 import Zoo, { Widgets } from "./pages/Zoo";
 import Start from "./pages/Start";
@@ -36,6 +37,7 @@ export function App() {
   else if (path === "/share") page = <SharePage />;
   else if (path === "/app") page = <AppPage />;
   else if (path === "/account") page = <Account />;
+  else if (path === "/files") page = <FilesPage />;
   else page = <NotHere path={path} />;
   return (
     <>
