@@ -1,10 +1,10 @@
 {
-  "generated": "2026-10-14T09:07:31.352259+00:00",
+  "generated": "2026-10-15T09:06:57.996401+00:00",
   "org": "Nominate-AI",
   "totalRepos": 176,
   "firstCommit": "2022-12-09T19:55:42Z",
-  "latestCommit": "2026-10-14T09:03:28Z",
-  "totalCommits": 37946,
+  "latestCommit": "2026-10-15T09:03:17Z",
+  "totalCommits": 38052,
   "languages": {
     "Python": 116,
     "TypeScript": 30,
@@ -8120,8 +8120,14 @@
     },
     {
       "date": "2026-10-14",
-      "commits": 6,
-      "repos": 4,
+      "commits": 64,
+      "repos": 14,
+      "intensity": 1
+    },
+    {
+      "date": "2026-10-15",
+      "commits": 48,
+      "repos": 13,
       "intensity": 1
     }
   ],
@@ -9370,14 +9376,14 @@
     },
     {
       "name": "cbmodels",
-      "description": "The cbmodels repository is a political data engine built with Python, utilizing technologies like FastAPI, DuckDB, and Snowflake to provide voter segment analysis, election results, and audience builder capabilities. It includes components for data extraction, transformation, and visualization, supporting operational workflows through operator blocks and various data pipelines.",
+      "description": "The cbmodels repository is a Python-based political data engine designed to provide insights into voter segments, election results, and audience building. It utilizes technologies like FastAPI, DuckDB, Snowflake, and Claude for analysis and reporting, with a focus on generating actionable intelligence from political data. The project includes features such as segment creation, model deployment, and data ingestion pipelines.",
       "language": "Python",
-      "commits": 1420,
+      "commits": 1446,
       "firstCommit": "2025-12-17T05:45:49Z",
-      "lastCommit": "2026-10-13T13:29:01Z",
+      "lastCommit": "2026-10-15T00:42:54Z",
       "phase": "Data Pipeline and Core Components",
       "descriptionSource": "ai",
-      "descriptionGeneratedAt": "2026-10-14",
+      "descriptionGeneratedAt": "2026-10-15",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
@@ -9418,14 +9424,14 @@
     },
     {
       "name": "cbinfra",
-      "description": "This repository appears to be an infrastructure project, likely related to deploying and managing NGINX configurations for various domains within a cloud environment. It focuses on automating the deployment of NGINX reverse proxies, including configuration management, health checks, and traffic routing, with a strong emphasis on security features like PIN gates and authorization bypasses. The codebase includes tools for generating API documentation, managing releases, and monitoring system performance.",
+      "description": "This repository appears to be an infrastructure management system, likely for deploying and managing NGINX web servers within a cloud environment. It provides tools for configuring NGINX backends, handling secrets securely, monitoring performance metrics (specifically mesh data), and orchestrating deployments across multiple services. The codebase suggests a focus on high availability, automated configuration, and integration with various service tiers.",
       "language": "Python",
-      "commits": 403,
+      "commits": 404,
       "firstCommit": "2025-12-21T21:41:51Z",
-      "lastCommit": "2026-10-13T18:44:07Z",
+      "lastCommit": "2026-10-15T01:17:39Z",
       "phase": "Data Pipeline and Core Components",
       "descriptionSource": "ai",
-      "descriptionGeneratedAt": "2026-10-14",
+      "descriptionGeneratedAt": "2026-10-15",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
@@ -9442,14 +9448,14 @@
     },
     {
       "name": "cbdocs",
-      "description": "The `cbdocs` repository is the central documentation hub for the Campaign Brain platform, which comprises 46 projects and 22 APIs with over 200 endpoints. The primary activity within this repository involves regularly refreshing documentation for these components, alongside occasional updates to the underlying infrastructure and tooling. It has evolved from a previous system to use MkDocs and incorporates features like incremental refresh and CDN integration.",
+      "description": "The `cbdocs` repository is the central documentation hub for the Campaign Brain platform, which comprises 46 projects and 22 APIs. It primarily focuses on refreshing documentation for these components, alongside implementing features like an incremental refresh system and migrating fonts to an internal CDN. The repository has evolved from a previous documentation platform to MkDocs and includes various modules and API documentation updates.",
       "language": "Shell",
-      "commits": 361,
+      "commits": 362,
       "firstCommit": "2025-12-24T20:06:09Z",
-      "lastCommit": "2026-10-14T08:50:15Z",
+      "lastCommit": "2026-10-15T08:50:04Z",
       "phase": "Data Pipeline and Core Components",
       "descriptionSource": "ai",
-      "descriptionGeneratedAt": "2026-10-14",
+      "descriptionGeneratedAt": "2026-10-15",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
@@ -9568,7 +9574,7 @@
       "firstCommit": "2026-01-20T23:28:03Z",
       "lastCommit": "2026-10-13T23:11:15Z",
       "phase": "Nominate-AI Infrastructure & Development",
-      "descriptionSource": "ai",
+      "descriptionSource": "reused",
       "descriptionGeneratedAt": "2026-10-14",
       "descriptionModel": "ollama:gemma3:4b"
     },
@@ -9634,14 +9640,14 @@
     },
     {
       "name": "cbcli",
-      "description": "The cbcli repository provides a unified command-line interface (CLI) for managing various Nominate AI services, including cloud infrastructure and service deployments. It allows users to interact with these services through a single tool, streamlining operations and simplifying access to different functionalities. The project includes features like service registration, authentication, routing, and deployment management, all designed to be compatible with the AWS CLI style.",
+      "description": "The cbcli repository provides a unified command-line interface (CLI) for interacting with Nominate AI services, modeled after the AWS CLI. It manages fleet nodes, service configurations, and authentication across multiple data centers, offering features like watching events, profiling remote connections, and managing service specifications. The project has evolved from an initial implementation to include advanced routing, health checks, and OAuth2/Bearer authentication support.",
       "language": "Python",
-      "commits": 234,
+      "commits": 242,
       "firstCommit": "2026-01-26T17:26:41Z",
-      "lastCommit": "2026-10-12T17:52:16Z",
+      "lastCommit": "2026-10-15T03:47:06Z",
       "phase": "Campaign Brain Development Pipeline",
-      "descriptionSource": "reused",
-      "descriptionGeneratedAt": "2026-10-13",
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-15",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
@@ -9742,14 +9748,14 @@
     },
     {
       "name": "cbpulse",
-      "description": "This repository is a real-time system health and activity monitoring dashboard for VIP hospitality businesses, primarily focused on data aggregation from sources like Clover, Homebase, and Cloudbeds. It provides operational workflows including order management, invoicing, and ticket tracking, alongside intelligence features such as alerts, financial summaries, and audit trails. The system's architecture is designed with a phased approach, starting with core authentication and database layers and expanding to include integrations and advanced analytics.",
+      "description": "This repository represents the core codebase for a VIP hospitality platform designed to monitor and manage business operations, particularly focusing on retail sales data from various integrations like Clover, Homebase, and Cloudbeds. The system provides real-time health monitoring, financial summaries, alerts, and audit trails, enabling businesses to proactively address issues and optimize performance.",
       "language": "Python",
-      "commits": 974,
+      "commits": 981,
       "firstCommit": "2026-02-06T17:48:36Z",
-      "lastCommit": "2026-10-14T02:21:34Z",
+      "lastCommit": "2026-10-15T00:01:11Z",
       "phase": "Campaign Brain Ecosystem",
       "descriptionSource": "ai",
-      "descriptionGeneratedAt": "2026-10-14",
+      "descriptionGeneratedAt": "2026-10-15",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
@@ -9814,14 +9820,14 @@
     },
     {
       "name": "cbexecutive",
-      "description": "The cbexecutive repository is a Python project focused on generating executive summaries, likely related to financial or business data analysis. It incorporates dependency management, analytics reporting, and nightly scan processes, with a strong emphasis on license compliance and cost modeling. The codebase utilizes tools like NetworkX, NumPy, and PyMuPDF for data processing and visualization.",
+      "description": "The cbexecutive repository is a Python project focused on generating executive summaries, likely related to financial or business data analysis. It incorporates dependency management, analytics reporting, and nightly scan processing, with an emphasis on license compliance and cost modeling. The codebase utilizes tools like NetworkX, NumPy, and PyMuPDF for data manipulation and visualization.",
       "language": "Python",
-      "commits": 255,
+      "commits": 256,
       "firstCommit": "2026-02-20T15:15:58Z",
-      "lastCommit": "2026-10-13T09:54:40Z",
+      "lastCommit": "2026-10-14T09:54:29Z",
       "phase": "Development & Iteration of Nominate-AI Core Components",
       "descriptionSource": "ai",
-      "descriptionGeneratedAt": "2026-10-14",
+      "descriptionGeneratedAt": "2026-10-15",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
@@ -9880,7 +9886,7 @@
       "firstCommit": "2026-02-23T03:34:14Z",
       "lastCommit": "2026-10-13T13:50:02Z",
       "phase": "Core Infrastructure & Tooling",
-      "descriptionSource": "ai",
+      "descriptionSource": "reused",
       "descriptionGeneratedAt": "2026-10-14",
       "descriptionModel": "ollama:gemma3:4b"
     },
@@ -9904,7 +9910,7 @@
       "firstCommit": "2026-02-26T16:28:21Z",
       "lastCommit": "2026-10-13T11:45:45Z",
       "phase": "Core Infrastructure & Tooling",
-      "descriptionSource": "ai",
+      "descriptionSource": "reused",
       "descriptionGeneratedAt": "2026-10-14",
       "descriptionModel": "ollama:gemma3:4b"
     },
@@ -9994,14 +10000,14 @@
     },
     {
       "name": "infrastructure",
-      "description": "This repository appears to be a core infrastructure project, likely related to network management and system monitoring, focused on migrating various components (cbcore, cbinfra, cboverseer, cbdc) into a new 'sysforge' framework. The commits demonstrate an ongoing effort to refactor and consolidate these services, along with associated documentation and operational procedures, suggesting a significant transition or modernization project.",
+      "description": "This repository appears to be a collection of infrastructure tools and documentation related to a system named 'sysforge', likely used for managing and monitoring network services. It contains submodules for various components like cbcore, cbinfra, cbdc, and cboverseer, alongside scripts for maintenance tasks such as updating submodule pointers and handling alerts. The repository seems to be undergoing a migration from older tools (cbnetwork, cbos) into the sysforge framework.",
       "language": "Python",
-      "commits": 1969,
+      "commits": 1970,
       "firstCommit": "2026-03-12T22:38:20Z",
-      "lastCommit": "2026-10-14T04:30:19Z",
+      "lastCommit": "2026-10-15T04:30:08Z",
       "phase": "Nominate-AI Core Development",
       "descriptionSource": "ai",
-      "descriptionGeneratedAt": "2026-10-14",
+      "descriptionGeneratedAt": "2026-10-15",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
@@ -10066,14 +10072,14 @@
     },
     {
       "name": "cbloom",
-      "description": "The cbloom repository contains the source code for Loom, a Campaign Content & Narrative Engine designed to manage and deliver campaign content. The project includes features for managing user authentication (auth-brand), advertising operations (advertising), data transformation (loom transform layer), and various operational tasks like deployment and documentation. It appears to be an evolving platform with components related to messaging, calendar scheduling, device capabilities, and API integrations.",
+      "description": "The cbloom repository contains the source code for Loom, a campaign content and narrative engine built using HTML. It includes features like user authentication branding, data transformation layers, message routing, device integration, and deployment scripts, all designed to manage and deliver campaign-related information.",
       "language": "HTML",
-      "commits": 3306,
+      "commits": 3308,
       "firstCommit": "2026-03-27T14:52:52Z",
-      "lastCommit": "2026-10-14T09:03:28Z",
+      "lastCommit": "2026-10-15T09:03:17Z",
       "phase": "Operational Infrastructure and Tooling",
       "descriptionSource": "ai",
-      "descriptionGeneratedAt": "2026-10-14",
+      "descriptionGeneratedAt": "2026-10-15",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
@@ -10174,14 +10180,14 @@
     },
     {
       "name": "cbbanking",
-      "description": "This repository appears to be a software project related to processing financial data, specifically focusing on bank transactions and reconciliation processes. It includes components for handling SFTP connections with OpenText, monitoring feeds, managing alerts, and generating reports, likely supporting the operational activities of a banking institution or similar financial services provider.",
+      "description": "This repository appears to be a software project related to processing financial transactions, specifically focusing on handling returns and data feeds from banks like Huntington and potentially others (Checkpoint, Chase). The codebase includes components for managing SFTP connections, monitoring feed shapes, validating API responses, and tracking the status of various processes related to ACH returns. It seems to be in an early stage of development with a focus on infrastructure setup, testing, and documentation.",
       "language": "Python",
-      "commits": 185,
+      "commits": 186,
       "firstCommit": "2026-04-21T17:54:44Z",
-      "lastCommit": "2026-10-12T06:27:12Z",
+      "lastCommit": "2026-10-14T20:20:14Z",
       "phase": "Data & Infrastructure Pipeline - Core Functionality",
-      "descriptionSource": "reused",
-      "descriptionGeneratedAt": "2026-10-12",
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-15",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
@@ -10306,14 +10312,14 @@
     },
     {
       "name": "uv-workspace",
-      "description": "This repository appears to be the development environment for a complex, multi-faceted software project named 'cbcli' (likely short for Campaign Brain CLI), which is used for various services including search indexing, payment processing, and web push notifications. The codebase utilizes several dependencies and tools like DuckDB, pytest, and uv, suggesting a focus on robust testing and efficient data handling within a development workflow. It seems to be a shared workspace intended for multiple components of the overall system.",
+      "description": "The `uv-workspace` repository is a shared Python virtual environment used by Campaign Brain services, specifically those running on the Monroe system. It contains development dependencies and editable sources for various projects like cbcli, cbsearx, and cbpayments, ensuring consistency across the Campaign Brain infrastructure. The workspace manages versions of libraries and tools to support testing and development activities.",
       "language": "Shell",
-      "commits": 26,
+      "commits": 27,
       "firstCommit": "2026-05-19T14:47:15Z",
-      "lastCommit": "2026-10-08T01:40:02Z",
+      "lastCommit": "2026-10-15T01:27:40Z",
       "phase": "System Development & Core Components",
-      "descriptionSource": "reused",
-      "descriptionGeneratedAt": "2026-10-08",
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-15",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
@@ -10642,14 +10648,14 @@
     },
     {
       "name": "cbelections",
-      "description": "The cbelections repository contains code for simulating and analyzing election results, primarily focused on the United States, with a strong emphasis on Michigan and Georgia. It utilizes data from various sources including county registries, FEC filings, and simulated scenarios to produce election outcome predictions and reports.",
+      "description": "This repository appears to be a system for processing election results, primarily focused on Michigan (MI) and potentially other states like Georgia (GA), Texas (TX), New Mexico (NM), and Arizona (AZ). It handles the ingestion of raw vote data, performs calculations related to candidate outcomes, and generates reports based on these results. The system utilizes a modular architecture with components for data processing, rule application, and result presentation.",
       "language": "Python",
-      "commits": 812,
+      "commits": 824,
       "firstCommit": "2026-07-20T18:07:13Z",
-      "lastCommit": "2026-10-12T22:51:58Z",
+      "lastCommit": "2026-10-15T00:46:21Z",
       "phase": "Early Scanner Development",
-      "descriptionSource": "reused",
-      "descriptionGeneratedAt": "2026-10-13",
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-15",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
@@ -10816,32 +10822,32 @@
       "firstCommit": "2026-08-17T00:35:15Z",
       "lastCommit": "2026-10-13T12:44:04Z",
       "phase": "Nominate-AI Development Sprint",
-      "descriptionSource": "ai",
+      "descriptionSource": "reused",
       "descriptionGeneratedAt": "2026-10-14",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "cbnight",
-      "description": "The cbnight repository is a TypeScript implementation of the Loom elections bundle, specifically designed for the cbapex platform and focused on providing topline election results, race tracking, boss mode functionality, and kiosk operation. It appears to be a port of existing election data and UI components, incorporating various layers like matrix ports and model integrations.",
+      "description": "The cbnight repository is a TypeScript implementation of the Loom elections bundle, specifically designed for election night operations. It includes components like topline, race tracker, boss mode, and kiosk functionality, aiming to replicate the features of the original Loom system within the cbapex environment. The codebase demonstrates an ongoing porting effort from Loom, incorporating various data sources and UI elements.",
       "language": "TypeScript",
-      "commits": 407,
+      "commits": 412,
       "firstCommit": "2026-08-17T00:35:29Z",
-      "lastCommit": "2026-10-13T05:22:31Z",
+      "lastCommit": "2026-10-15T00:43:03Z",
       "phase": "Nominate-AI Development Sprint",
-      "descriptionSource": "reused",
-      "descriptionGeneratedAt": "2026-10-13",
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-15",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "cbapex",
-      "description": "The cbapex repository is a container application that serves as a central hub for managing shared layers and charters across several related apps, including cbprospect, cbnight, and cbpublic. It utilizes a kit system to manage UI elements and configurations, with a focus on maintaining consistency and tracking changes within the Apex ecosystem.",
+      "description": "The cbapex repository appears to be the core codebase for a financial trading application, likely named 'cbapex', which includes components for displaying market data, managing user accounts, and potentially executing trades. The project utilizes a modular architecture with a focus on UI elements (referred to as 'kit') and scripting utilities, and maintains detailed documentation regarding its development process and configurations.",
       "language": "TypeScript",
-      "commits": 945,
+      "commits": 947,
       "firstCommit": "2026-08-18T17:07:19Z",
-      "lastCommit": "2026-10-12T19:47:04Z",
+      "lastCommit": "2026-10-14T18:57:33Z",
       "phase": "Nominate-AI Development Sprint",
-      "descriptionSource": "reused",
-      "descriptionGeneratedAt": "2026-10-13",
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-15",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
@@ -10894,14 +10900,14 @@
     },
     {
       "name": "cbvmod",
-      "description": "The cbapex repository contains the source code for a software application named Victory Modeling, which appears to be related to political polling and campaign analysis. It manages data collection through various models (like 'Governor Model') and integrates with systems like DCS Orders and Audience Builder. The codebase utilizes a modular structure with vendor kits and segments to handle different aspects of the application\u2019s functionality.",
+      "description": "The cbvmod repository is a TypeScript application, part of the Victory Modeling project, designed for campaign brain modeling and analysis, specifically focusing on election forecasting. It provides tools for managing models, running projections, and integrating with data sources like registries and survey waves, ultimately supporting strategic decision-making within campaigns.",
       "language": "TypeScript",
-      "commits": 375,
+      "commits": 377,
       "firstCommit": "2026-08-20T16:06:55Z",
-      "lastCommit": "2026-10-13T05:41:08Z",
+      "lastCommit": "2026-10-14T18:33:04Z",
       "phase": "Campaign Brain Initial Development",
-      "descriptionSource": "reused",
-      "descriptionGeneratedAt": "2026-10-13",
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-15",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
@@ -10918,14 +10924,14 @@
     },
     {
       "name": "cbharvest",
-      "description": "This repository appears to be a software project focused on collecting and processing election data from various sources, including state SOS feeds and FEC filings. It utilizes a layered architecture with preflight checks, archive processing, and a core 'ladder' system for matching data. The project aims to provide a unified view of election results by aggregating information from multiple jurisdictions and handling discrepancies through a complex set of rules and transformations.",
+      "description": "This repository manages data related to voter turnout, specifically focusing on state-level election results and their associated metadata. It utilizes a system of artifacts, packages, and handlers to collect, normalize, and publish this information, drawing from various sources including FEC filings and legacy datasets. The core functionality revolves around transforming raw data into structured 'artifacts' suitable for reporting and analysis.",
       "language": "Python",
-      "commits": 50,
+      "commits": 59,
       "firstCommit": "2026-08-21T00:50:45Z",
-      "lastCommit": "2026-10-12T22:54:12Z",
+      "lastCommit": "2026-10-15T00:43:58Z",
       "phase": "Campaign Brain Initial Development",
-      "descriptionSource": "reused",
-      "descriptionGeneratedAt": "2026-10-13",
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-15",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
@@ -10966,26 +10972,26 @@
     },
     {
       "name": "cbvipulse",
-      "description": "The cbvipulse repository is the client surface application for the cbpulse app, referred to as VI Pulse, and focuses on providing a user interface for interacting with the cbpulse backend. It incorporates various vendor kits from cbapex, including components for data display, configuration, and system management, alongside branding updates and documentation.",
+      "description": "The cbvipulse repository is a TypeScript client surface for the cbpulse application, likely an internal app within a larger system (cbapex). It provides various features related to retail operations, including product management, inventory tracking, and potentially OpenTable integration, as evidenced by the diverse commit activities.",
       "language": "TypeScript",
-      "commits": 394,
+      "commits": 398,
       "firstCommit": "2026-08-24T22:34:04Z",
-      "lastCommit": "2026-10-13T12:43:57Z",
+      "lastCommit": "2026-10-15T00:01:15Z",
       "phase": "Victory Text Development",
       "descriptionSource": "ai",
-      "descriptionGeneratedAt": "2026-10-14",
+      "descriptionGeneratedAt": "2026-10-15",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "cbsvi",
-      "description": "This repository appears to be related to the development of an application, likely for managing voter data or campaign information within a USVI (US Virgin Islands) context. The commits demonstrate efforts to integrate various datasets, build out core functionality like search and address lookup, and establish a consistent brand identity across multiple app surfaces. It seems to involve creating apex apps for different aspects of the process, including intake, estates management, and feedback collection.",
+      "description": "This repository appears to be the codebase for an application, likely related to voter registration or data management within a USVI (United States Virgin Islands) context. The commits detail the development of a system that handles signup processes, manages voter records, and integrates with vendor kits like cbapex, focusing on accuracy and efficiency in capturing and utilizing constituent information.",
       "language": "TypeScript",
-      "commits": 552,
+      "commits": 555,
       "firstCommit": "2026-08-26T19:19:03Z",
-      "lastCommit": "2026-10-13T05:13:05Z",
+      "lastCommit": "2026-10-14T15:05:11Z",
       "phase": "Victory Text Development",
-      "descriptionSource": "reused",
-      "descriptionGeneratedAt": "2026-10-13",
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-15",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
@@ -11050,14 +11056,14 @@
     },
     {
       "name": "cbhq",
-      "description": "This repository appears to be a campaign management system, likely for advertising or marketing campaigns across multiple channels like social media and radio. It manages campaign creation, execution, tracking, and reporting, incorporating features such as firm-level targeting, approval workflows, and data integration from various sources including Facebook, Instagram, X, LinkedIn, and radio broadcasts. The codebase includes components for managing campaign assets, user access control based on firms, and a central 'Campaign Brain' HQ.",
+      "description": "The cbhq repository is a TypeScript project focused on managing campaigns, particularly for clients, including budget tracking, vendor integrations, and data collection. It appears to be a system for orchestrating campaign execution with detailed oversight across various stages from initial setup through ongoing management.",
       "language": "TypeScript",
-      "commits": 203,
+      "commits": 223,
       "firstCommit": "2026-09-23T14:19:16Z",
-      "lastCommit": "2026-10-13T23:54:26Z",
+      "lastCommit": "2026-10-15T02:16:46Z",
       "phase": "Apex Campaign Development",
       "descriptionSource": "ai",
-      "descriptionGeneratedAt": "2026-10-14",
+      "descriptionGeneratedAt": "2026-10-15",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
@@ -11068,7 +11074,7 @@
       "firstCommit": "2026-10-05T17:06:46Z",
       "lastCommit": "2026-10-13T14:07:17Z",
       "phase": "Apex Campaign Development",
-      "descriptionSource": "ai",
+      "descriptionSource": "reused",
       "descriptionGeneratedAt": "2026-10-14",
       "descriptionModel": "ollama:gemma3:4b"
     },
@@ -11122,9 +11128,9 @@
     }
   ],
   "aiSummary": {
-    "callsOk": 14,
+    "callsOk": 18,
     "callsFailed": 0,
-    "reused": 166,
+    "reused": 162,
     "kept": 0,
     "skippedByLimit": 0,
     "skippedByBudget": 0,
@@ -11134,11 +11140,11 @@
       "reused": 26
     },
     "descriptionSources": {
-      "reused": 140,
+      "reused": 136,
       "github": 17,
       "commits": 2,
       "none": 3,
-      "ai": 14
+      "ai": 18
     },
     "limitAi": null,
     "budgetMin": 15.0,
