@@ -14,7 +14,7 @@
  * Rules this file keeps, from the same answers: Campaign Brain, the platform
  * built on the SysForge fabric, is named (Brad, 2026-10-16), but no service of
  * it is named; no client, user, customer or revenue claim; MyFinalWishes is named
- * but not linked; nothing about salary except that it is private; no private
+ * and linked at https://mywishes.com (Brad, 2026-10-16; before that, never linked); nothing about salary except that it is private; no private
  * individual is named; no internal hostname, address, port or security
  * detail.
  */
@@ -50,8 +50,8 @@ export const FACTS: Fact[] = [
   // is left to lib/resume.ts, which has the current one).
   {
     topic: "MyFinalWishes",
-    text: "A product shipped through SysForge: a digital estate-planning platform for organizing documents, tracking assets, designating beneficiaries and recording final messages, with encrypted document storage and trusted-contact notifications. Bradley is its only engineer; the resume gives the stack and the build. (No link is given for it here.)",
-    links: ["/resume"],
+    text: "A product shipped through SysForge: a digital estate-planning platform for organizing documents, tracking assets, designating beneficiaries and recording final messages, with encrypted document storage and trusted-contact notifications. Bradley is its only engineer; the resume gives the stack and the build. The live product is at mywishes.com, where it brands itself My Wishes.",
+    links: ["https://mywishes.com", "/resume"],
   },
   // OWNER, answer 2; lib/resume.ts.
   {

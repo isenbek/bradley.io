@@ -55,13 +55,15 @@ export const CLIENTS_MORE: BenchItem[] = [
     tech: ["Python", "FastAPI", "OCR", "Vector search", "MCP"],
   },
   {
-    // Named, never linked (owner's rule, 2026-10-02): the card opens the
-    // resume entry, not the product's live site.
-    href: "/resume",
+    // Linked since 2026-10-16 (owner's word; from 2026-10-02 it was named,
+    // never linked, and the card opened the resume entry). The product brands
+    // itself My Wishes at mywishes.com; myfinalwishes.co redirects there.
+    href: "https://mywishes.com",
+    more: [{ href: "/resume", label: "The build, on the resume" }],
     title: "MyFinalWishes",
     kind: "product",
     state: "production-ready",
-    line: "A digital estate-planning platform shipped through SysForge, rebuilt from an earlier prototype into one TypeScript application, with per-user envelope encryption for identity data and every stored file. The live site is not linked here; the resume has the detail.",
+    line: "A digital estate-planning platform shipped through SysForge, rebuilt from an earlier prototype into one TypeScript application, with per-user envelope encryption for identity data and every stored file. Live at mywishes.com as My Wishes.",
     tech: ["TanStack Start", "React 19", "SQLite + Drizzle", "AES-256-GCM"],
   },
 ]

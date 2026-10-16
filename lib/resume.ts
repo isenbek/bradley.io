@@ -32,7 +32,10 @@
  *   - No salary, rate or range, anywhere. AVAILABILITY carries none on
  *     purpose; a consumer asked about pay declines and points to a
  *     conversation.
- *   - MyFinalWishes is named and never linked.
+ *   - MyFinalWishes is named and LINKED (Brad, 2026-10-16: "MyFinalWishes can be
+ *     linked now"; never linked before that) at https://mywishes.com, where
+ *     the product brands itself My Wishes. myfinalwishes.co redirects there;
+ *     myfinalwishes.com is not ours.
  *   - No users, customers or revenue for anything unless a source proves it.
  *   - No hostnames, addresses, ports or security details.
  *
@@ -226,6 +229,7 @@ export const ROLES: ResumeRole[] = [
       "AI systems and development firm. Since 2026 the work has centred on Campaign Brain, a production-ready platform built on the SysForge fabric, on products shipped through it, and on the self-hosted infrastructure under both.",
     bullets: SYSFORGE_GROUPS.flatMap((g) => g.bullets),
     groups: SYSFORGE_GROUPS,
+    links: [{ label: "MyFinalWishes: mywishes.com", href: "https://mywishes.com" }],
     tech: ["Python", "FastAPI", "TypeScript", "Claude API", "MCP", "SQLite", "ZFS", "WireGuard", "OpenWrt", "systemd", "nginx"],
   },
   {
