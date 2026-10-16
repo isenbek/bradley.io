@@ -45,7 +45,7 @@ export function SnrBars({
             {offline
               ? "receiver offline, no signal to measure"
               : agg
-                ? `${agg.n_used}/${agg.n_visible} used · awaiting per-satellite SNR`
+                ? `${agg.n_used}/${agg.n_visible} used · resolving signal`
                 : "awaiting signal"}
           </div>
         )}

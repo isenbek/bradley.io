@@ -4,8 +4,9 @@ import { snrT, type Sat, type SatAgg } from "./stream"
 import { SEQUENTIAL_HEX } from "@/lib/beta/chart-theme"
 
 // Polar az/el dome: zenith at centre, horizon at the rim. Each satellite is a
-// dot at (az, el), coloured by SNR; used sats get a ring. Empty until per-sat
-// detail flows on /stream (tinymachines/adsb#2).
+// dot at (az, el), coloured by SNR; used sats get a ring. Per-sat detail flows
+// on the /stream `satellites` frame (tinymachines/adsb#2, shipped 2026-06);
+// empty only before the first fix, or when the receiver is offline.
 const SIZE = 320
 const C = SIZE / 2
 const R = 142
@@ -81,7 +82,7 @@ export function Skyplot({
             {offline
               ? "receiver offline, no satellites to plot"
               : agg && agg.n_visible > 0
-                ? `${agg.n_visible} visible · awaiting per-satellite detail`
+                ? `${agg.n_visible} visible · resolving positions`
                 : "awaiting satellite fix"}
           </div>
         )}

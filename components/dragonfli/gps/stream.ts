@@ -6,11 +6,10 @@ import { useEffect, useRef, useState } from "react"
 // `gps` (TPV fix) and `satellites` (count/DOP) frames among the ADS-B traffic.
 export const GPS_STREAM_URL = "wss://dragonfli.tinymachines.ai/stream"
 
-// One satellite for the skyplot / SNR bars. NOTE: the public /stream
-// `satellites` frame is currently aggregate-only (counts + DOP). Per-satellite
-// detail (az/el/snr/used) is requested in tinymachines/adsb#2 — this adapter
-// already reads an optional `satellites` array on the frame, so the panels
-// light up the moment it ships, with no further wiring.
+// One satellite for the skyplot / SNR bars. The public /stream `satellites`
+// frame carries both the aggregate (counts + DOP) and a per-satellite array
+// (prn/az/el/snr/used): the producer suppresses gpsd's DOP-only SKY frames and
+// dragonfli-api forwards the satellite list (tinymachines/adsb#2, shipped).
 export interface Sat {
   prn: number
   az: number // degrees, 0..360 (0 = true north)
@@ -179,8 +178,8 @@ export function useGpsStream(): GpsState {
       }
     }
 
-    // Demote to "searching" when no usable fix has landed recently (the current
-    // reality: satellites frames flow but no TPV).
+    // Demote to "searching" when no usable fix (TPV) has landed recently, even
+    // if satellites frames are still arriving.
     const staleTimer = setInterval(() => {
       setState((s) => {
         if (s.status === "offline" || s.status === "connecting") return s
