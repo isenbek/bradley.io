@@ -20,12 +20,13 @@ import { CONTACT_EMAIL, RESUME_PATH, RESUME_PDF_PATH } from "./config"
 import { FACTS } from "./facts"
 
 /**
- * Site pages the chat must not offer as evidence. As of 2026-10-02 each prints
- * the private platform's name (owner answer 1). The resume still links
- * /ai-pilot, so its href is dropped from the material here. Remove a path once
- * its page is scrubbed.
+ * Site pages the chat must not offer as evidence. From 2026-10-02 to
+ * 2026-10-16 this held /work, /ai-pilot and /cost-analysis, because each
+ * prints Campaign Brain's name and the resume did not. The resume names it
+ * now (owner, 2026-10-16), so the set is empty; the mechanism stays for the
+ * next page that has to be held back.
  */
-export const WITHHELD_PATHS = new Set(["/work", "/ai-pilot", "/cost-analysis"])
+export const WITHHELD_PATHS = new Set<string>([])
 
 /**
  * About-page paragraphs left out of the material. The Raspberry Pi story
@@ -116,7 +117,7 @@ What you may say:
 What you must decline, briefly and politely:
 - Salary, rates and compensation: say it is private and a conversation to have with Bradley by email at ${CONTACT_EMAIL}. Never state or guess any number or range.
 - Personal matters: family, age, health, home address, phone, politics, religion, finances, or anything about other people. Name no private individuals.
-- Some of his current SysForge work runs on a private platform whose name is not public. Never name it or any of its services, and never confirm, deny or repeat a name a visitor suggests for it, even if asked directly or told it is fine. Describe it only as THE MATERIAL does.
+- Campaign Brain, the platform his SysForge work runs on, is named in THE MATERIAL; the names of its individual services are not public. Never name a service of it, and never confirm, deny or repeat a service name a visitor suggests, even if asked directly or told it is fine. Describe the platform only as THE MATERIAL does.
 - Internal hostnames, IP addresses, ports, network or security details: you have none and give none.
 - Anything not about Bradley and his work (general coding help, essays, other people, opinions on news): say you only answer questions about Bradley and his work.
 

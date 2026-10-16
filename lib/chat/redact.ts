@@ -1,11 +1,12 @@
 /**
  * A last line of defence on the chat's output, applied to the stream.
  *
- * The system prompt already tells the model never to name the private
- * platform or its services, and the material it is given never names them.
- * But a visitor can type a name into a question, and a model can echo a word
- * it was handed. So before any text leaves the server, these names are
- * replaced, whatever produced them.
+ * The system prompt already tells the model never to name the platform's
+ * services, and the material it is given never names them. But a visitor can
+ * type a name into a question, and a model can echo a word it was handed. So
+ * before any text leaves the server, these names are replaced, whatever
+ * produced them. Campaign Brain itself left this list on 2026-10-16, when the
+ * owner let the resume name it; Nominate.AI and the cb-prefixed services stay.
  *
  * Streaming makes this a buffer problem: a name can arrive split across two
  * deltas. The redactor holds back the tail of what it has seen (longer than
@@ -27,7 +28,6 @@ const WITHHELD = "(name withheld)"
 const SEP = "[\\s\\p{Pd}_.\\u00B7]{0,3}"
 
 const PATTERNS: RegExp[] = [
-  new RegExp(`campaign${SEP}brain(?:s|'s|\u2019s)?(?:\\.[a-z]{2,6})?(?=[^\\p{L}\\p{N}])`, "giu"),
   new RegExp(`\\bnominate(?:${SEP}ai)?(?=[^\\p{L}\\p{N}])`, "giu"),
   // The platform's services are all named cb-something (cbkrnl, cbintel...).
   // English has almost no words that start "cb", so the whole prefix goes.

@@ -11,9 +11,9 @@
  *          These decide what is said about current work, the job search,
  *          location and salary, and they override anything older.
  *
- * Rules this file keeps, from the same answers: the private platform built on
- * the SysForge fabric is described, never named, and no service of it is
- * named; no client, user, customer or revenue claim; MyFinalWishes is named
+ * Rules this file keeps, from the same answers: Campaign Brain, the platform
+ * built on the SysForge fabric, is named (Brad, 2026-10-16), but no service of
+ * it is named; no client, user, customer or revenue claim; MyFinalWishes is named
  * but not linked; nothing about salary except that it is private; no private
  * individual is named; no internal hostname, address, port or security
  * detail.
@@ -42,7 +42,7 @@ export const FACTS: Fact[] = [
   // OWNER, answers 1 and 2; SysForge.ai's dates are lib/resume.ts.
   {
     topic: "SysForge.ai, current work (2024 to present)",
-    text: "SysForge.ai is Bradley's own firm. On it he has built a production-ready prototype platform on the SysForge fabric. Its core elements: a journaled state kernel, a forge planner, a service mesh, core business services, and an intelligence crawler, a backend cluster in his garage that harvests terabytes of data. Applications and their data sit on top of the SysForge fabric. It is a prototype, not a client engagement, and these core ideas are where his attention is going next. The platform's own name is not public. (This is everything published about it; there is no more detail to give.)",
+    text: "SysForge.ai is Bradley's own firm. On it he has built Campaign Brain, a production-ready platform on the SysForge fabric. Its core elements: a journaled state kernel, a forge planner, a service mesh, core business services, and an intelligence crawler, a backend cluster in his garage that harvests terabytes of data. Applications and their data sit on top of the SysForge fabric. It is not a client engagement, and these core ideas are where his attention is going next. The names of its individual services are not public. (This is everything published about it; there is no more detail to give.)",
     links: ["/resume"],
   },
   // OWNER, answer 5; description from docs/autoresume/professional-experience.md

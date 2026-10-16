@@ -24,8 +24,11 @@
  * SysForge.ai role and the 2026 research role are built from those, and only
  * from those. The owner's rules for them, binding on every consumer:
  *
- *   - The prototype platform is described under SysForge.ai by what it does.
- *     Its own names, and the names of the services in it, never appear.
+ *   - Campaign Brain, the platform built on the SysForge fabric, is NAMED
+ *     (Brad, 2026-10-16: "Resume pages can name Campaign Brain now"; until
+ *     then it was described and never named). The names of the services in
+ *     it still never appear, Nominate.AI is still not named here, and it is
+ *     not called a client: a production-ready platform built on SysForge.
  *   - No salary, rate or range, anywhere. AVAILABILITY carries none on
  *     purpose; a consumer asked about pay declines and points to a
  *     conversation.
@@ -71,7 +74,7 @@ export interface ResumeRole {
   tech?: string[]
 }
 
-export const RESUME_UPDATED = "2026-10-02"
+export const RESUME_UPDATED = "2026-10-16"
 
 export const RESUME_PDF = "/resume.pdf"
 
@@ -80,7 +83,7 @@ export const HEADLINE =
 
 export const SUMMARY: string[] = [
   "AI systems architect and machine learning engineer with more than fifteen years designing secure, large-scale data systems for government and enterprise clients, including a classified project for the United States Government and infrastructure processing billions of records. Expert in AI and ML pipelines, distributed systems, and secure data management.",
-  "Since February 2026: a production-ready prototype platform of 84 self-hosted services on the SysForge fabric, with a journaled state kernel for agents, a declarative execution engine and planner, a service mesh, and an intelligence crawler; MyFinalWishes, a digital estate-planning product shipped through SysForge; a transistor-level 6502 and a switch-level NES at tinymachines.ai; and TerraPulse, an open climate and geophysical data platform. Daily co-development with Claude and other frontier models, with every working session and its cost on the public record.",
+  "Since February 2026: Campaign Brain, a production-ready platform of 84 self-hosted services on the SysForge fabric, with a journaled state kernel for agents, a declarative execution engine and planner, a service mesh, and an intelligence crawler; MyFinalWishes, a digital estate-planning product shipped through SysForge; a transistor-level 6502 and a switch-level NES at tinymachines.ai; and TerraPulse, an open climate and geophysical data platform. Daily co-development with Claude and other frontier models, with every working session and its cost on the public record.",
 ]
 
 /**
@@ -137,9 +140,9 @@ export const AWARDS: { award: string; company: string; years: string }[] = [
  */
 const SYSFORGE_GROUPS: { label: string; bullets: string[] }[] = [
   {
-    label: "The platform",
+    label: "Campaign Brain, the platform",
     bullets: [
-      "Built a production-ready prototype platform on the SysForge fabric: 84 self-hosted Python services exposing about 3,390 documented endpoints, where every read endpoint is also an MCP tool for connected models. More than 20,000 commits of his own across more than 140 repositories since February 2026, pair-programmed with AI, not counting automated chores and merges.",
+      "Built Campaign Brain, a production-ready platform on the SysForge fabric: 84 self-hosted Python services exposing about 3,390 documented endpoints, where every read endpoint is also an MCP tool for connected models. More than 20,000 commits of his own across more than 140 repositories since February 2026, pair-programmed with AI, not counting automated chores and merges.",
       "Designed a journaled state kernel for agents: five classical primitives (frontier, seen set, memo, plan DAG, disjoint groups) behind one loop, where the search strategy is configuration, not code. Every change goes to an append-only journal, so a crashed run replays to its exact next step and a supervisor can read an agent's state without asking it. It ships with a static lint whose three rules were each found first in production graphs.",
       "Built a declarative execution engine that merged three in-house workflow engines into one. Graphs are written as YAML and run once, run durably (a run can sit at an approval gate for days and resume exactly once by replay), or run as long-lived reconcile services.",
       "Built a planner on that engine. Two plain sentences go in. A typed judge picks a catalog template or a model writes a new graph, and a check against the live service catalog rejects any call to an operation that does not exist. Nothing runs until a person clicks Run, and anything that leaves the building waits at an approval gate.",
@@ -220,7 +223,7 @@ export const ROLES: ResumeRole[] = [
     title: "Founder and AI Systems Architect",
     company: "SysForge.ai",
     context:
-      "AI systems and development firm. Since 2026 the work has centred on a production-ready prototype platform built on the SysForge fabric, on products shipped through it, and on the self-hosted infrastructure under both.",
+      "AI systems and development firm. Since 2026 the work has centred on Campaign Brain, a production-ready platform built on the SysForge fabric, on products shipped through it, and on the self-hosted infrastructure under both.",
     bullets: SYSFORGE_GROUPS.flatMap((g) => g.bullets),
     groups: SYSFORGE_GROUPS,
     tech: ["Python", "FastAPI", "TypeScript", "Claude API", "MCP", "SQLite", "ZFS", "WireGuard", "OpenWrt", "systemd", "nginx"],

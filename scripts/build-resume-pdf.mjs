@@ -58,15 +58,15 @@ const FACES = ["800 12px Archivo", "700 12px Archivo", "400 12px 'IBM Plex Sans'
 
 /**
  * Text that must never reach the PDF. The owner's standing rules: no phone
- * number, no salary, no em dash, and the prototype platform is described
- * under SysForge and never named.
+ * number, no salary, no em dash, no service name of the Campaign Brain
+ * platform (the platform itself is named since 2026-10-16), no Nominate.AI.
  */
 const FORBIDDEN = [
   [new RegExp("\\u2014"), "an em dash"],
   [/\(?\b\d{3}\)?[-.\s]\d{3}[-.\s]\d{4}\b/, "a phone number"],
   [/\bsalary\b|\bcompensation\b|\bper year\b|\/\s?yr\b|\bk\s?\/\s?year\b/i, "salary wording"],
   [/\$\s?\d{2,3}(?:,\d{3}|k)\b/i, "a pay figure"],
-  [/campaign\s?brain|nominate|campaignbrain\.dev/i, "a name the owner asked to keep off public pages"],
+  [/nominate|campaignbrain\.dev/i, "a name the owner asked to keep off public pages"],
   [/\bcb[a-z]{2,}\b/i, "a platform service name (described, never named)"],
   [/\bjunior\b/i, "the word the owner asked never to appear"],
   [/\b(?:\d{1,3}\.){3}\d{1,3}\b/, "an IP address"],
