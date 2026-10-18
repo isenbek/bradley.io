@@ -97,5 +97,5 @@ export const APP: AppConfig = {
     { id: "app", label: "This app", href: "/app" },
     { id: "account", label: "Account", href: "/account" },
   ],
-  defaultShortcuts: ["home", "contact", "theme"],
+  defaultShortcuts: ["home", "contact", "theme", "scan"],
 };
