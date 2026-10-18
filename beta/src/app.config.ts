@@ -47,6 +47,8 @@ export const APP: AppConfig = {
       description: "Everything your phone can sense that a web page may read, live. Nothing is recorded or sent." },
     { path: "/start", title: "Start an app", card: "plain", index: false, kicker: "start",
       description: "From nothing to a live app on the kit: one command, one file, a check, a host." },
+    { path: "/scan", title: "Scan a code", card: "plain", index: false, kicker: "scan",
+      description: "Read a QR code with the camera or from a photo, on this phone, and see what it holds before anything opens." },
     { path: "/theme", title: "Themes", card: "theme", index: false, kicker: "theme",
       description: "Datasheet or Instrument, or one of your own: every theme is checked for contrast before it can be kept." },
     { path: "/app", title: "This app", card: "plain", index: false, kicker: "app", description: "Install bradley.io on your phone or computer. It works offline." },
@@ -78,6 +80,7 @@ export const APP: AppConfig = {
     { id: "you", title: "You", hint: "Your account, how the app looks, this device.", pages: [
       { href: "/account", title: "Your account", hint: "A passkey.", me: true },
       { href: "/files", title: "Your files", hint: "Kept here and in your account." },
+      { href: "/scan", title: "Scan a code", hint: "A QR code, with the camera or from a photo." },
       { href: "/theme", title: "Themes", hint: "Datasheet, Instrument, or your own." },
       { href: "/share", title: "Shared with bradley.io", hint: "What other apps sent here." },
       { href: "/app", title: "This app", hint: "Install it, and it works offline." },

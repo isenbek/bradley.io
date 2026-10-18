@@ -8,6 +8,7 @@ import { SiteFooter } from "@tinymachines/kit/components/SiteFooter";
 import { UpdateBar } from "@tinymachines/kit/components/UpdateBar";
 import { SharePanel } from "@tinymachines/kit/components/SharePanel";
 import ThemePage from "@tinymachines/kit/pages/ThemePage";
+import ScanPage from "@tinymachines/kit/pages/ScanPage";
 import SensorsPage from "@tinymachines/kit/pages/SensorsPage";
 import SharePage from "@tinymachines/kit/pages/SharePage";
 import AppPage from "@tinymachines/kit/pages/AppPage";
@@ -33,6 +34,7 @@ export function App() {
   else if (path === "/start") page = <Start />;
   else if (path === "/contact") page = <Contact />;
   else if (path === "/theme") page = <ThemePage />;
+  else if (path === "/scan") page = <ScanPage />;
   else if (path === "/sensors") page = <SensorsPage />;
   else if (path === "/share") page = <SharePage />;
   else if (path === "/app") page = <AppPage />;
