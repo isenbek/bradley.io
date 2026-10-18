@@ -92,6 +92,7 @@ export const APP: AppConfig = {
     { id: "zoo", label: "Zoo", href: "/zoo" },
     { id: "widgets", label: "Widgets", href: "/zoo/widgets" },
     { id: "sensors", label: "Sensors", href: "/sensors" },
+    { id: "scan", label: "Scan", href: "/scan" },
     { id: "theme", label: "Themes", href: "/theme" },
     { id: "app", label: "This app", href: "/app" },
     { id: "account", label: "Account", href: "/account" },
