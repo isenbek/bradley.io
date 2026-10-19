@@ -5,8 +5,8 @@
 # Logs: journalctl -u beta-api.
 #
 # The repo is public, so this file names no user and no home path: @USER@ and @HERE@ (the checkout) are filled in
-# by scripts/api-setup.sh, which installs the result in /etc/systemd/system. Do not `sudo cp` this file as it is,
-# and do not run `kit setup` here (it would copy it as it is).
+# by the kit's `kit unit` (bun run unit), which installs the result in /etc/systemd/system. Do not `sudo cp` this
+# file as it is, and do not run `kit setup` here (the vhost is kept by hand: the rest of /api/ goes to the main site).
 
 [Unit]
 Description=bradley.io API (FastAPI), beta.bradley.io/api

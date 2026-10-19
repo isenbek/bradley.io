@@ -74,7 +74,8 @@ bradleyio/
 │                           #   kitapi, :8180, base routes only; uv), beta/deploy/ (nginx: the kit's account routes to the
 │                           #   account service, the rest of /api/v1/ to beta-api, the rest of /api/ to the main site).
 │                           #   The repo is public: beta/deploy/beta-api.service names no user or home path, and
-│                           #   beta/scripts/api-setup.sh fills them in and installs it. Never `kit setup` there.
+│                           #   `bun run unit` there (the kit's `kit unit`, sudo) fills them in and installs it.
+│                           #   Never `kit setup` there.
 ├── bradley-io.service      # systemd unit (Next.js production)
 └── deploy.sh               # THE deploy path — see below
 ```
