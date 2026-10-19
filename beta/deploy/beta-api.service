@@ -1,0 +1,39 @@
+# beta.bradley.io/api: beta's own API, FastAPI on the kit's kitapi, on 127.0.0.1:8180 behind nginx. nginx
+# (deploy/beta.bradley.io.nginx) sends the kit's account routes to the account service, the rest of /api/v1/ here
+# (path kept, so routes are /api/v1/...), and the rest of /api/ to the main site. `kit deploy` syncs api/'s packages,
+# restarts this unit and waits for /api/v1/health. StateDirectory makes /var/lib/beta-api (0700) as $STATE_DIRECTORY.
+# Logs: journalctl -u beta-api.
+#
+# The repo is public, so this file names no user and no home path: @USER@ and @HERE@ (the checkout) are filled in
+# by scripts/api-setup.sh, which installs the result in /etc/systemd/system. Do not `sudo cp` this file as it is,
+# and do not run `kit setup` here (it would copy it as it is).
+
+[Unit]
+Description=bradley.io API (FastAPI), beta.bradley.io/api
+After=network.target
+
+[Service]
+Type=simple
+User=@USER@
+WorkingDirectory=@HERE@
+Environment=PYTHONUNBUFFERED=1
+Environment=PATH=/usr/local/bin:/usr/bin:/bin
+Environment=KIT_ACCOUNTS=http://127.0.0.1:8120
+Environment=KIT_SITE=https://beta.bradley.io
+
+StateDirectory=beta-api
+StateDirectoryMode=0700
+UMask=0077
+
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectControlGroups=true
+ProtectKernelTunables=true
+RestrictSUIDSGID=true
+ExecStart=@HERE@/api/.venv/bin/python -m uvicorn app:app --app-dir api --host 127.0.0.1 --port 8180
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target

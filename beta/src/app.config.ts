@@ -58,6 +58,9 @@ export const APP: AppConfig = {
   ],
   // the API, the build data, and the main site's pages linked from "The record" door (a full load, not a route here)
   outside: /^(https?:|\/(api|data)\/)/,
+  // beta's own API (api/, beta-api.service), FastAPI on the kit's kitapi: /api/v1/ but the kit's account routes; the
+  // rest of /api/ is the main site's. app.yaml says the same port
+  api: { port: 8180 },
   notHere: "the shell for now; the content is on its way.",
   doors: [
     { id: "site", title: "bradley.io", hint: "The site, as it is built.", pages: [

@@ -1,0 +1,9 @@
+# bradley.io beta's manifest: what the app is, in a few plain fields (the kit's py/src/kitapi/manifest.py says what
+# goes in it). kit check holds it to src/app.config.ts; the API serves it at /api/v1/about; tinykit's Home lists it.
+id: bradleyio
+name: bradley.io
+site: https://beta.bradley.io
+what: "Production software in days, from ready-made parts."
+api: { port: 8180 }
+show: true
+order: 40

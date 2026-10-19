@@ -113,6 +113,15 @@ const auth = await page.evaluate(async () => { const r = await fetch("/api/v1/au
 ok((auth as { passkey?: boolean })?.passkey === true, `the account service answers and offers passkeys: ${JSON.stringify(auth)}`);
 await page.goto(`${origin}/account`, { waitUntil: "networkidle0" });
 ok(/passkey/i.test(await text("main")), "the account page offers a passkey");
+// beta's own API (api/, the kit's kitapi), through the same /api/ the pages use: the base routes, as this app at HEAD
+const head = Bun.spawnSync(["git", "rev-parse", "--short", "HEAD"]).stdout.toString().trim();
+const base = await page.evaluate(async () => {
+  const get = (p: string) => fetch(p, { cache: "no-store" }).then((r) => r.ok ? r.json() : { status: r.status }).catch(() => null);
+  return { health: await get("/api/v1/health"), about: await get("/api/v1/about"), whoami: await get("/api/v1/whoami") };
+}) as { health: { ok?: boolean; app?: string } | null; about: { id?: string; commit?: string; kitapi?: string } | null; whoami: { signed_in?: boolean } | null };
+ok(base.health?.ok === true && base.health.app === "bradleyio", `the API answers /api/v1/health (${JSON.stringify(base.health)})`);
+ok(base.about?.id === "bradleyio" && base.about.commit === head, `/api/v1/about: ${base.about?.id} at ${base.about?.commit ?? "no answer"} (HEAD ${head}), kitapi ${base.about?.kitapi}`);
+ok(base.whoami?.signed_in === false, `/api/v1/whoami, signed out: nobody (${JSON.stringify(base.whoami)})`);
 
 // Your files, signed out: a picked file is kept on this device and opens; a file shared from another app (the Share
 // menu's multipart POST, taken by the service worker) lands there too

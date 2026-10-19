@@ -69,7 +69,12 @@ bradleyio/
 ├── beta/                   # beta.bradley.io: the simplified site as a @tinymachines/kit app (Vite + React,
 │                           #   its own package.json, checks and deploy: `bun run check` then `bun run deploy` in beta/
 │                           #   (the kit's `kit` command); sign-in is the kit's shared account service (accounts.tinymachines.ai);
-│                           #   NOT built by ./deploy.sh; excluded from Next's tsc + eslint)
+│                           #   NOT built by ./deploy.sh; excluded from Next's tsc + eslint). The kit's standard layout
+│                           #   (2026-10-18): beta/app.yaml (the manifest), beta/api/ (its own API, FastAPI on the kit's
+│                           #   kitapi, :8180, base routes only; uv), beta/deploy/ (nginx: the kit's account routes to the
+│                           #   account service, the rest of /api/v1/ to beta-api, the rest of /api/ to the main site).
+│                           #   The repo is public: beta/deploy/beta-api.service names no user or home path, and
+│                           #   beta/scripts/api-setup.sh fills them in and installs it. Never `kit setup` there.
 ├── bradley-io.service      # systemd unit (Next.js production)
 └── deploy.sh               # THE deploy path — see below
 ```
