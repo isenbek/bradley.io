@@ -10,6 +10,10 @@ User=bisenbek
 Group=bisenbek
 ExecStart=/usr/bin/python3 -u /home/bisenbek/projects/bradleyio/scripts/worldevent_collector.py
 Environment=CAM_CACHE_DIR=/var/lib/bradley-cam
+# token unicasts a copy of the firehose to each consumer on impera (2026-10-19;
+# broadcast crossed a Wi-Fi hop and arrived ~170 ms late). :31415 is
+# dragonfli-feed, :31416 dragonfli-api, :31417 this collector.
+Environment=WORLDEVENT_PORT=31417
 Restart=always
 RestartSec=2
 Nice=5

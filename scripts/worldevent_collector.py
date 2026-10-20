@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 """WorldEvent collector — the perception bus snapshot for bradley.io.
 
-Subscribes to the worldevent/1 UDP firehose (broadcast on :31415) and aggregates
+Subscribes to the worldevent/1 UDP firehose (unicast copy on :31417) and aggregates
 it GENERICALLY — it knows nothing about ADS-B, GPS, or any specific producer. It
 groups by event `type`, `host`, and `schema`, tracks rate + a 60s sparkline per
 type, keeps a small rolling tail, and writes an atomic snapshot every second to
 /var/lib/bradley-cam/worldevent.json for the Next.js /api/worldevent route.
 
-Coexists with dragonfli-feed and any other readers via SO_REUSEPORT (the bus is
-a broadcast, so the kernel delivers a copy to every bound socket).
+token sends every event to each consumer's own port (WORLDEVENT_PORT, set in the
+unit). SO_REUSEPORT is kept so a broadcast bus still works if DESTS goes back
+to 13.0.0.255 — under unicast, two sockets on one port would split the stream.
 """
 import json
 import os
@@ -270,7 +271,7 @@ def main():
                 "uptimeSec": int(t - started),
                 "source": {
                     "port": PORT,
-                    "transport": "udp/broadcast",
+                    "transport": "udp/unicast",
                     "schemas": [{"schema": k, "count": v} for k, v in
                                 sorted(schemas.items(), key=lambda kv: -kv[1])],
                 },
