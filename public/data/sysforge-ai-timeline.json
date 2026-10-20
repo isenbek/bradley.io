@@ -1,10 +1,10 @@
 {
-  "generated": "2026-10-15T09:09:18.330210+00:00",
+  "generated": "2026-10-19T09:15:43.014738+00:00",
   "org": "Sysforge-AI",
   "totalRepos": 2,
   "firstCommit": "2026-02-15T03:26:15Z",
-  "latestCommit": "2026-10-15T07:30:14Z",
-  "totalCommits": 283,
+  "latestCommit": "2026-10-19T07:30:17Z",
+  "totalCommits": 291,
   "languages": {
     "TypeScript": 1,
     "HTML": 1
@@ -1374,6 +1374,30 @@
     },
     {
       "date": "2026-10-15",
+      "commits": 4,
+      "repos": 2,
+      "intensity": 2
+    },
+    {
+      "date": "2026-10-16",
+      "commits": 2,
+      "repos": 2,
+      "intensity": 2
+    },
+    {
+      "date": "2026-10-17",
+      "commits": 1,
+      "repos": 1,
+      "intensity": 1
+    },
+    {
+      "date": "2026-10-18",
+      "commits": 1,
+      "repos": 1,
+      "intensity": 1
+    },
+    {
+      "date": "2026-10-19",
       "commits": 1,
       "repos": 1,
       "intensity": 1
@@ -1410,33 +1434,33 @@
   "repos": [
     {
       "name": "sfproject",
-      "description": "The sfproject repository is a TypeScript project focused on setting up a SysForge system, including its backend and deployment configuration. It initially establishes the core project structure and then adds integration tests for Forge Console, along with an agentic API route for mesh interaction. The project also includes production deployment configurations using tools like systemd, nginx, and SSL.",
+      "description": "This repository contains the source code for SysForge, an open-source project focused on creating and deploying Forge servers. It includes a backend agentic API route for mesh interaction, integration tests with the Forge Console, and configuration files for production deployment including systemd, nginx, and SSL certificates. The project aims to provide a streamlined way to develop and deploy Forge-based games.",
       "language": "TypeScript",
-      "commits": 271,
+      "commits": 275,
       "firstCommit": "2026-02-15T03:26:15Z",
-      "lastCommit": "2026-10-15T07:30:14Z",
+      "lastCommit": "2026-10-19T07:30:17Z",
       "phase": "Forge Console Setup",
       "descriptionSource": "ai",
-      "descriptionGeneratedAt": "2026-10-15",
+      "descriptionGeneratedAt": "2026-10-19",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "sysforge-site",
-      "description": "The `sysforge-site` repository is a static HTML website, likely for investors, based on the SysForge brand. It includes elements like branding assets (the 'family' library), SEO optimization, and foundational site components such as mastheads and footers. The site\u2019s content focuses on investor materials and information.",
+      "description": "The `sysforge-site` repository is a static HTML website, likely for investors, built using the SysForge app kit. It incorporates branding elements like color palettes ('Plum', 'Rose', 'Violet') and integrates with various platforms through 'Integrations'. The site includes foundational components such as the masthead, footer, and SEO optimization tools.",
       "language": "HTML",
-      "commits": 12,
+      "commits": 16,
       "firstCommit": "2026-10-03T03:29:50Z",
-      "lastCommit": "2026-10-13T04:58:49Z",
+      "lastCommit": "2026-10-16T00:27:29Z",
       "phase": "Forge Console Setup",
-      "descriptionSource": "ai",
-      "descriptionGeneratedAt": "2026-10-15",
+      "descriptionSource": "reused",
+      "descriptionGeneratedAt": "2026-10-16",
       "descriptionModel": "ollama:gemma3:4b"
     }
   ],
   "aiSummary": {
-    "callsOk": 2,
+    "callsOk": 1,
     "callsFailed": 0,
-    "reused": 1,
+    "reused": 2,
     "kept": 0,
     "skippedByLimit": 0,
     "skippedByBudget": 0,
@@ -1446,7 +1470,8 @@
       "reused": 1
     },
     "descriptionSources": {
-      "ai": 2
+      "ai": 1,
+      "reused": 1
     },
     "limitAi": null,
     "budgetMin": 15.0,
