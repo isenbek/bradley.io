@@ -98,7 +98,7 @@ BOT_RE = re.compile(
     r"gptbot|claudebot|anthropic|perplexity|ccbot|applebot|facebookexternalhit|"
     r"embedly|preview|feedfetcher|zgrab|masscan|nmap|censys|expanse|internet-measurement|"
     # Google ships several agents with no "bot" token at all.
-    r"googleother|google-|lighthouse|chrome-privacy|feedburner|apis-google",
+    r"googleother|google-|lighthouse|chrome-privacy|feedburner|apis-google|lightpanda",
     re.I,
 )
 # Networks that are crawler infrastructure, not people. AS15169 is Google's own
