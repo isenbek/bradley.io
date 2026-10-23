@@ -142,6 +142,15 @@ export const SKILLS: { group: string; items: string[] }[] = [
   },
 ]
 
+/**
+ * The one line over the folded skills list (the /about pass, 2026-10-23). It
+ * names only items in SKILLS, the first of their groups: Python and TypeScript
+ * (Languages), PostgreSQL and Snowflake (Data), Claude (AI and ML), Linux
+ * (Infrastructure).
+ */
+export const SKILLS_LINE =
+  "Mostly Python and TypeScript, PostgreSQL and Snowflake for data, Claude for the AI work, and Linux underneath."
+
 export interface NowLink {
   href: string
   label: string
@@ -250,34 +259,6 @@ export const SITE_ROWS: { id: "geiger" | "bus" | "cameras" | "firewall"; name: s
   { id: "bus", name: "ADS-B and GPS bus", href: "/dragonfli" },
   { id: "cameras", name: "Meatball's camera", href: "/meatball" },
   { id: "firewall", name: "Door logs", href: "/visitors" },
-]
-
-/**
- * The three field notes. Titles and blurbs are app/meatball/page.tsx's own
- * (ENTRIES), so the two pages describe the same notes in the same words.
- */
-export const WRITING: { href: string; kicker: string; title: string; blurb: string }[] = [
-  {
-    href: "/meatball/notes/senses",
-    kicker: "Field note 01",
-    title: "I gave a junk-pile eyes, ears, and a voice",
-    blurb:
-      "The whole build: the salvaged parts list, the bugs that cost an hour each, and the day it first talked back.",
-  },
-  {
-    href: "/meatball/notes/listening",
-    kicker: "Field note 02",
-    title: "The math of listening",
-    blurb:
-      "How a computer tells a voice from background noise, worked from the raw sound samples up. Every number comes from a live run.",
-  },
-  {
-    href: "/meatball/notes/motion",
-    kicker: "Field note 03",
-    title: "Teaching the eyes to ignore a box fan",
-    blurb:
-      "One cheap fan fooled both the eyes and the ears. The fix taught the camera to ignore things that always move, like fans, screens and flickering lights, and notice only what should not.",
-  },
 ]
 
 /**

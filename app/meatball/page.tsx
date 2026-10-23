@@ -139,7 +139,7 @@ export default function MeatballPage() {
         </div>
       </div>
 
-      <Section title="Written up as it was built" />
+      <Section id="notes" title="Written up as it was built" />
 
       <ul className="rail-list">
         {ENTRIES.map((e) => (

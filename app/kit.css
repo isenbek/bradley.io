@@ -3717,71 +3717,8 @@ td > .beta-charts-spark { min-width: calc(var(--u) * 12); }
   .beta-about-skills > div { grid-template-columns: minmax(0, 1fr); }
 }
 
-/* ---- Writing: three notes, each one whole link --------------------------- */
-.beta-about-notes {
-  list-style: none;
-  margin: calc(var(--u) * 6) 0 calc(var(--u) * 8);
-  padding: 0;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: calc(var(--u) * 4);
-}
-/* Three across or one: two and an orphan is the width where it is nearly right. */
-@media (min-width: 56rem) {
-  .beta-about-notes { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-}
-.beta-about-notes li { display: flex; min-width: 0; }
-.beta-about-notes a {
-  display: flex;
-  flex-direction: column;
-  gap: calc(var(--u) * 2);
-  width: 100%;
-  padding: calc(var(--u) * 4);
-  border: 1px solid var(--color-rule);
-  background: var(--color-paper);
-  color: var(--color-ink);
-  text-decoration: none;
-  transition: transform var(--t-snap) var(--ease-detent), box-shadow var(--t-snap) var(--ease-detent);
-}
-.beta-about-notes a:hover { transform: translate(-2px, -2px); box-shadow: 3px 3px 0 var(--color-ink); }
-.beta-about-notes a:active { transform: none; box-shadow: none; }
-.beta-about-notes a:focus-visible { outline: 2px solid var(--color-blue-ink); outline-offset: 2px; }
-.beta-about-notes__kicker {
-  font-family: var(--font-mono);
-  font-size: var(--text-micro);
-  letter-spacing: var(--tracking-caps);
-  text-transform: uppercase;
-  color: var(--color-ink-muted);
-}
-.beta-about-notes b {
-  font-family: var(--font-display);
-  font-size: var(--text-lead);
-  font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: var(--tracking-tight);
-  text-wrap: balance;
-}
-.beta-about-notes__blurb { font-size: var(--text-data); line-height: 1.55; color: var(--color-ink-muted); }
-
 /* ---- How this site is built ---------------------------------------------- */
-/* What the two of us say, on paper, and what the machine counted, on panel,
-   side by side above 60rem: the same two columns the story uses. Below that
-   the panel follows the signatures. */
-.beta-about-built__cols {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: calc(var(--u) * 8);
-  margin: 0 0 calc(var(--u) * 4);
-}
-.beta-about-built__said,
-.beta-about-built__receipts { min-width: 0; }
-@media (min-width: 60rem) {
-  .beta-about-built__cols {
-    grid-template-columns: minmax(0, 68ch) minmax(15rem, 1fr);
-    gap: calc(var(--u) * 12);
-    align-items: start;
-  }
-}
+.beta-about-built__said { min-width: 0; max-width: 68ch; }
 .beta-about-pair {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(16rem, 100%), 1fr));
@@ -3853,14 +3790,13 @@ td > .beta-charts-spark { min-width: calc(var(--u) * 12); }
 .beta-about-chip .measured { display: block; max-width: 100ch; line-height: 1.5; }
 .beta-about-chip .measured::before { margin-right: calc(var(--u) * 1.5); }
 
-.beta-about-ctas { display: flex; flex-wrap: wrap; gap: calc(var(--u) * 3); margin: calc(var(--u) * 10) 0 0; }
+/* The page ends on the hiring line, as home opens on it. */
+.beta-resume-hire.beta-about-hire { margin: calc(var(--u) * 10) 0 calc(var(--u) * 4); }
 
 @media (prefers-reduced-motion: reduce) {
   .beta-about-fig a,
-  .beta-about-rows a,
-  .beta-about-notes a { transition: none; }
-  .beta-about-fig a:hover,
-  .beta-about-notes a:hover { transform: none; }
+  .beta-about-rows a { transition: none; }
+  .beta-about-fig a:hover { transform: none; }
 }
 /* end of block: beta-about-* */
 

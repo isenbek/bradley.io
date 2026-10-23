@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { TenureBars, parseYears, type TenureRow } from "@/app/_charts"
 import { BetaMeasured } from "@/app/_measured"
+import { ReadMore } from "@/components/page"
 import { longDate } from "@/app/_pilot-data"
 import { EARLIER_ROLES, RESUME_UPDATED, ROLES, type ResumeRole } from "@/lib/resume"
 import { CAREER_LINES } from "./content"
@@ -18,7 +19,9 @@ import { CAREER_LINES } from "./content"
  * CAREER_LINES). It is a short list on purpose. /resume tells every role in
  * full, in the resume's sentences and the resume's typography, and this page
  * is not that page again: the bars carry the shape, six lines carry the
- * highlights, and one link carries the rest.
+ * highlights, and one link carries the rest. The six lines sit in a fold
+ * (Brad, 2026-10-23: "bars, lines in a fold"): the chart is the shape a
+ * reader takes in, and the lines stay in the HTML and print.
  *
  * The page used to print four rows from site-data.json with the employers
  * anonymised ("Enterprise Messaging Platform") in a ledger whose cells do not
@@ -70,29 +73,31 @@ export function Career() {
       </div>
       <div className="beta-about-chip">
         <BetaMeasured source="lib/resume.ts">
-          <b>lib/resume.ts</b>, from the resume dated {asOf}. Year resolution: each end of a bar
-          is right to within a year.
+          <b>lib/resume.ts</b>, from the resume dated {asOf}. Year resolution: each end of a bar is
+          right to within a year.
         </BetaMeasured>
       </div>
 
-      <ol className="beta-about-roles" aria-label="Six of the roles, one line each">
-        {told.map((r) => (
-          <li key={`${r.company}-${r.years}`}>
-            <span className="beta-about-roles__when">{r.years}</span>
-            <span className="beta-about-roles__who">
-              <b>{r.company}</b>
-              <span>{r.title}</span>
-            </span>
-            <span className="beta-about-roles__what">{CAREER_LINES[r.company]}</span>
-          </li>
-        ))}
-      </ol>
+      <ReadMore label="Six of the roles, one line each">
+        <ol className="beta-about-roles" aria-label="Six of the roles, one line each">
+          {told.map((r) => (
+            <li key={`${r.company}-${r.years}`}>
+              <span className="beta-about-roles__when">{r.years}</span>
+              <span className="beta-about-roles__who">
+                <b>{r.company}</b>
+                <span>{r.title}</span>
+              </span>
+              <span className="beta-about-roles__what">{CAREER_LINES[r.company]}</span>
+            </li>
+          ))}
+        </ol>
 
-      <p className="beta-about-more">
-        {inWords(untold.length)} more roles between {untoldFrom} and {untoldTo} are bars above and not
-        told here, among them card payments, e-commerce, invoicing, and a case management system
-        for a district attorney. <Link href="/resume">The resume has every one</Link>.
-      </p>
+        <p className="beta-about-more">
+          {inWords(untold.length)} more roles between {untoldFrom} and {untoldTo} are bars above and
+          not told here, among them card payments, e-commerce, invoicing, and a case management
+          system for a district attorney. <Link href="/resume">The resume has every one</Link>.
+        </p>
+      </ReadMore>
     </>
   )
 }

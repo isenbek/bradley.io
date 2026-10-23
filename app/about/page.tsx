@@ -1,5 +1,4 @@
 import Link from "next/link"
-import { loadSiteDataStatic } from "@/lib/site-data"
 import { RESUME_PDF, RESUME_UPDATED, ROLES, EARLIER_ROLES } from "@/lib/resume"
 import { peekNow } from "@/components/live/now-snapshot"
 import { Built } from "@/components/about/Built"
@@ -10,13 +9,13 @@ import {
   NOW,
   PHILOSOPHY,
   SKILLS,
+  SKILLS_LINE,
   STILL_TRUE,
   TITLE,
-  WRITING,
 } from "@/components/about/content"
+import { Actions, ReadMore } from "@/components/page"
 import { BetaMeasured } from "../_measured"
 import { loadPilotData, longDate } from "../_pilot-data"
-import { SiteStatsPanel } from "../_site-stats"
 
 /**
  * /about: the person, in his own words, then the record.
@@ -25,8 +24,14 @@ import { SiteStatsPanel } from "../_site-stats"
  * now, where has he been, what does he know, what has he written, and how is
  * this site itself made.
  *
- * Paper for everything a person wrote. Two panels, both for things that were
- * computed: the career drawn on a time axis, and the site index. The copy and
+ * Paper for everything a person wrote. One panel, for the one thing that was
+ * computed: the career drawn on a time axis.
+ *
+ * THE /about PASS (Brad, 2026-10-23). The repeats came down: the career's six
+ * lines and the skills list sit in folds, Writing is one line to the Meatball
+ * page (which lists the notes), and the site index panel went (home and /work
+ * carry those counts). The page ends on the hiring line, as home opens on it.
+ * The lede and Philosophy stay in his words. The copy and
  * its sources are in components/about/content.ts; the career is lib/resume.ts.
  * Metadata is in ./layout.tsx.
  *
@@ -47,7 +52,7 @@ import { SiteStatsPanel } from "../_site-stats"
 export const dynamic = "force-dynamic"
 
 export default async function AboutPage() {
-  const [data, now] = await Promise.all([loadSiteDataStatic(), peekNow()])
+  const now = await peekNow()
   const pilot = loadPilotData()
 
   // "First role": the resume's earliest role, by its start year. Printed with
@@ -151,9 +156,7 @@ export default async function AboutPage() {
           <div className="rail" key={card.id}>
             <h3>{card.title}</h3>
             <p>{card.body}</p>
-            {card.id === "site" ? (
-              <SiteRows initial={now} />
-            ) : null}
+            {card.id === "site" ? <SiteRows initial={now} /> : null}
             {card.rows ? (
               <ul className="beta-about-rows beta-about-rows--plain">
                 {card.rows.map((r) => (
@@ -170,7 +173,13 @@ export default async function AboutPage() {
             <p className="piece-links">
               {card.links.map((l) =>
                 l.external ? (
-                  <a className="btn" href={l.href} key={l.href} target="_blank" rel="noopener noreferrer">
+                  <a
+                    className="btn"
+                    href={l.href}
+                    key={l.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     {l.label}
                   </a>
                 ) : (
@@ -187,9 +196,7 @@ export default async function AboutPage() {
       {/* ---- The career --------------------------------------------------- */}
       <div className="prose beta-sec">
         <h2>Where the time went</h2>
-        <p>
-          Every role since {firstYear} on one axis, then six of them in a line each.
-        </p>
+        <p>Every role since {firstYear} on one axis, then six of them in a line each.</p>
       </div>
 
       <Career />
@@ -199,35 +206,29 @@ export default async function AboutPage() {
         <h2>What I work in</h2>
       </div>
 
-      <dl className="beta-about-skills">
-        {SKILLS.map((s) => (
-          <div key={s.group}>
-            <dt>{s.group}</dt>
-            <dd>{s.items.join(", ")}</dd>
-          </div>
-        ))}
-      </dl>
+      <div className="prose">
+        <p>{SKILLS_LINE}</p>
+      </div>
+      <ReadMore label="The full list">
+        <dl className="beta-about-skills">
+          {SKILLS.map((s) => (
+            <div key={s.group}>
+              <dt>{s.group}</dt>
+              <dd>{s.items.join(", ")}</dd>
+            </div>
+          ))}
+        </dl>
+      </ReadMore>
 
-      {/* ---- Writing ------------------------------------------------------ */}
+      {/* ---- Writing: one line; /meatball lists the three notes --------- */}
       <div className="prose beta-sec">
         <h2>Writing</h2>
         <p>
-          Three field notes from building Meatball, each written up as it happened, with the
-          numbers from the run that produced them.
+          Three field notes from building Meatball, each written up as it happened, with the numbers
+          from the run that produced them. They are on{" "}
+          <Link href="/meatball#notes">the Meatball page</Link>.
         </p>
       </div>
-
-      <ol className="beta-about-notes">
-        {WRITING.map((w) => (
-          <li key={w.href}>
-            <Link href={w.href}>
-              <span className="beta-about-notes__kicker">{w.kicker}</span>
-              <b>{w.title}</b>
-              <span className="beta-about-notes__blurb">{w.blurb}</span>
-            </Link>
-          </li>
-        ))}
-      </ol>
 
       {/* ---- How this site is built, and its receipts --------------------- */}
       <Built
@@ -235,12 +236,9 @@ export default async function AboutPage() {
         initial={now}
         receipts={
           <>
-            <SiteStatsPanel stats={data.stats} />
             <div className="beta-about-chip">
-              <BetaMeasured source="site-data.json">
-                <b>site-data.json</b>, generated{" "}
-                {longDate(data.generated) ?? "on an unrecorded date"}. Sessions and models in the
-                text: <b>ai-pilot-data.json</b>, generated{" "}
+              <BetaMeasured source="ai-pilot-data.json">
+                Sessions and models in the text: <b>ai-pilot-data.json</b>, generated{" "}
                 {longDate(pilot.generated) ?? "on an unrecorded date"}. The run number is this
                 build&apos;s version.
               </BetaMeasured>
@@ -249,14 +247,22 @@ export default async function AboutPage() {
         }
       />
 
-      <p className="hero-ctas beta-about-ctas">
-        <Link className="btn btn-primary" href="/contact">
+      <p className="beta-resume-hire beta-about-hire">
+        <span>
+          <b>Open to full-time roles</b> in AI systems and data architecture.
+        </span>
+      </p>
+      <Actions>
+        <Link className="btn btn-primary" href="/resume">
+          Read the resume
+        </Link>
+        <Link className="btn btn-ghost" href="/contact">
           Start a conversation
         </Link>
         <Link className="btn btn-ghost" href="/work">
           See the commit record
         </Link>
-      </p>
+      </Actions>
     </div>
   )
 }

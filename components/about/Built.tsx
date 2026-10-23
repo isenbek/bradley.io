@@ -51,10 +51,11 @@ import { SIGNED_ON } from "./content"
  * THE SIGNATURE IS GATED. See SIGNED_ON in ./content.ts: the "Signed" row is
  * rendered only once he has read the block and a date is set there.
  *
- * On paper, because it is two people saying something. The panel beside it
- * (under it on a narrow screen) is passed in by the page: the site index, which
- * is the machine's side of the same statement. The one live thing in it is the
- * dot under Claude's name, which is lit only while a Claude Code session is
+ * On paper, because it is two people saying something. The page passes the
+ * Measured chip for the counts in the text as `receipts`, set under it. The
+ * site index panel that used to stand beside it went in the /about pass
+ * (Brad, 2026-10-23): the home page and /work carry the same counts. The
+ * one live thing in it is the dot under Claude's name, which is lit only while a Claude Code session is
  * known to be writing on this host (components/live/LiveDot.tsx). It starts
  * from the server's snapshot, so if /api/now never answers it still settles
  * on "no activity seen" by the browser's clock instead of "checking" for ever.
@@ -68,7 +69,7 @@ export function Built({
   initial,
 }: {
   pilot: PilotData
-  /** The panel that backs the statement: the site index and its chip. */
+  /** The chip that backs the counts in the text. */
   receipts: React.ReactNode
   /** The server's /api/now snapshot (peekNow), for the dot under Claude's name. */
   initial?: NowSnapshot | null
@@ -85,70 +86,67 @@ export function Built({
         <h2 id="about-built">How this site is built</h2>
       </div>
 
-      <div className="beta-about-built__cols">
-        <div className="beta-about-built__said">
-          <div className="prose">
-            <p>Two of us build this site, and the split is plain.</p>
-          </div>
-
-          <div className="beta-about-pair">
-            <div className="rail">
-              <h3>Bradley Isenbek</h3>
-              <p className="beta-about-pair__sub">Grand Rapids, Michigan</p>
-              <ul className="beta-about-does">
-                <li>Decides what gets built</li>
-                <li>Checks the result on the live site</li>
-                <li>Puts his name on what goes out</li>
-              </ul>
-            </div>
-            <div className="rail">
-              <h3>Claude</h3>
-              <p className="beta-about-pair__sub">
-                <LiveDot label initial={initial} />
-              </p>
-              <ul className="beta-about-does">
-                <li>
-                  Writes most of the code, in sessions logged at{" "}
-                  <Link href="/ai-pilot">/ai-pilot</Link>
-                </li>
-                <li>Writes and maintains the data pipelines, which run on a timer</li>
-                <li>Runs the deploys</li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="prose">
-            <p>
-              Claude is Anthropic&apos;s model, working here as Claude Code: a collaborative
-              development partner, not just a code completion tool. The sessions are counted in
-              public. <Link href="/ai-pilot">The AI pilot record</Link> shows{" "}
-              {began ? "at least " : ""}
-              {nf(pilot.license.totalSessions)} of them on {nf(pilot.license.modelCount)} models
-              {since && through ? `, from ${since} through ${through}` : ""}, across every project
-              on this machine and not this site alone
-              {began ? `. Recording began on ${began}, so the months before it are incomplete` : ""}
-              .
-              {run
-                ? ` The version in the footer counts runs of the deploy script: this is number ${nf(Number(run))}.`
-                : ""}
-            </p>
-            <p>
-              Two rules keep it honest. A number a pipeline counted does not appear without the
-              file it came from and the period it covers. And work is reviewed adversarially before
-              it ships: a second pass reads it with one job, to find what is wrong.
-            </p>
-          </div>
-
-          {signed ? (
-            <p className="beta-about-sig">
-              <span className="beta-about-sig__label">Signed {signed}</span>
-              <b>Bradley Isenbek</b>
-              <b>Claude</b>
-            </p>
-          ) : null}
+      <div className="beta-about-built__said">
+        <div className="prose">
+          <p>Two of us build this site, and the split is plain.</p>
         </div>
 
-        <div className="beta-about-built__receipts">{receipts}</div>
+        <div className="beta-about-pair">
+          <div className="rail">
+            <h3>Bradley Isenbek</h3>
+            <p className="beta-about-pair__sub">Grand Rapids, Michigan</p>
+            <ul className="beta-about-does">
+              <li>Decides what gets built</li>
+              <li>Checks the result on the live site</li>
+              <li>Puts his name on what goes out</li>
+            </ul>
+          </div>
+          <div className="rail">
+            <h3>Claude</h3>
+            <p className="beta-about-pair__sub">
+              <LiveDot label initial={initial} />
+            </p>
+            <ul className="beta-about-does">
+              <li>
+                Writes most of the code, in sessions logged at{" "}
+                <Link href="/ai-pilot">/ai-pilot</Link>
+              </li>
+              <li>Writes and maintains the data pipelines, which run on a timer</li>
+              <li>Runs the deploys</li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="prose">
+          <p>
+            Claude is Anthropic&apos;s model, working here as Claude Code: a collaborative
+            development partner, not just a code completion tool. The sessions are counted in
+            public. <Link href="/ai-pilot">The AI pilot record</Link> shows{" "}
+            {began ? "at least " : ""}
+            {nf(pilot.license.totalSessions)} of them on {nf(pilot.license.modelCount)} models
+            {since && through ? `, from ${since} through ${through}` : ""}, across every project on
+            this machine and not this site alone
+            {began ? `. Recording began on ${began}, so the months before it are incomplete` : ""}.
+            {run
+              ? ` The version in the footer counts runs of the deploy script: this is number ${nf(Number(run))}.`
+              : ""}
+          </p>
+          <p>
+            Two rules keep it honest. A number a pipeline counted does not appear without the file
+            it came from and the period it covers. And work is reviewed adversarially before it
+            ships: a second pass reads it with one job, to find what is wrong.
+          </p>
+        </div>
+
+        {signed ? (
+          <p className="beta-about-sig">
+            <span className="beta-about-sig__label">Signed {signed}</span>
+            <b>Bradley Isenbek</b>
+            <b>Claude</b>
+          </p>
+        ) : null}
+
+        {receipts}
       </div>
     </section>
   )
