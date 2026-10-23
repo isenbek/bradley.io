@@ -2,6 +2,7 @@ import Link from "next/link"
 import { peekNow } from "@/components/live/now-snapshot"
 import { listDocSlugs } from "@/lib/housecalls/docs"
 import { BenchBoard, type BenchInstrument, type BenchPage } from "@/components/projects/BenchBoard"
+import { PageHead, Section } from "@/components/page"
 
 /**
  * The bench: every page this server serves, and whether its instrument is up.
@@ -325,42 +326,35 @@ export default async function BenchPage() {
 
   return (
     <div className="page">
-      <div className="page-head">
-        <nav className="crumb" aria-label="Breadcrumb">
-          <Link href="/">bradley.io</Link>
-          <span>
-            {" / "}
-            <span aria-current="page">The bench</span>
-          </span>
-        </nav>
-        <h1>The bench</h1>
-      </div>
+      <PageHead
+        crumbs={[{ label: "The bench" }]}
+        title="The bench"
+        lede={
+          <>
+            Every page on this site, in one list: {TOTAL} of them, counting this one, plus the {docs}{" "}
+            documents of the House Calls paperwork, which has an index of its own. Where each one is,
+            and for the {INSTRUMENT_PAGES} that sit on an instrument, whether that instrument is
+            answering right now.
+          </>
+        }
+      />
 
-      <p className="lede">
-        Every page on this site, in one list: {TOTAL} of them, counting this one, plus the {docs}{" "}
-        documents of the House Calls paperwork, which has an index of its own. Where each one is,
-        and for the {INSTRUMENT_PAGES} that sit on an instrument, whether that instrument is
-        answering right now.
-      </p>
-
-      <div className="prose beta-sec">
-        <h2>Instruments</h2>
+      <Section title="Instruments">
         <p>
           These pages read real hardware on this network, and hardware goes away. Each instrument
           is judged against how often it is supposed to speak: live, stale or offline, with when it
           was last heard. A page stays up when its instrument does not, and says so itself.
         </p>
-      </div>
+      </Section>
 
       <BenchBoard initial={initial} instruments={INSTRUMENTS} />
 
-      <div className="prose beta-sec">
-        <h2>The rest of the bench</h2>
+      <Section title="The rest of the bench">
         <p>
           Dashboards, field notes, tools, and the pages about the person. Each one is its own page.
           No aggregator, no marketing wrapper.
         </p>
-      </div>
+      </Section>
 
       <div className="beta-bench-index">
         {SHELVES.map((s) => (
@@ -381,12 +375,12 @@ export default async function BenchPage() {
         ))}
       </div>
 
-      <div className="prose beta-sec beta-bench-out">
+      <Section className="beta-bench-out">
         <p>
           This is the inventory. For the short list, with a reason to open each thing and the work
           that lives on other sites, see <Link href="/projects">projects</Link>.
         </p>
-      </div>
+      </Section>
     </div>
   )
 }

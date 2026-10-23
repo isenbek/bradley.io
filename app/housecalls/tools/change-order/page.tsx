@@ -2,6 +2,7 @@ import Link from "next/link"
 import type { Metadata } from "next"
 import { ChangeOrderPad } from "@/components/housecalls/ChangeOrderPad"
 import { BackupPanel } from "@/components/housecalls/BackupPanel"
+import { PageHead, Section } from "@/components/page"
 
 const DESCRIPTION =
   "A free change-order pad for trade workers: describe the change, snap a photo, get it signed on the spot, print or text it. No account, no signup, nothing leaves your phone."
@@ -49,38 +50,30 @@ export default function ChangeOrderPage() {
         }}
       />
       <div className="page">
-        <div className="page-head">
-          <nav className="crumb" aria-label="Breadcrumb">
-            <Link href="/">bradley.io</Link>
-            <span>
-              {" / "}
-              <Link href="/housecalls">House Calls</Link>
-              {" / "}
-              <span aria-current="page">Change-Order Pad</span>
-            </span>
-          </nav>
-          <h1>Get the change signed. Before the work.</h1>
-        </div>
-
-        <p className="lede">
-          Found something behind the wall? Describe the change, snap a photo, name the price, and
-          get a signature on the spot: print it or text it, done. Free, no account, and nothing
-          you type or sign ever leaves the phone.
-        </p>
+        <PageHead
+          crumbs={[{ label: "House Calls", href: "/housecalls" }, { label: "Change-Order Pad" }]}
+          title="Get the change signed. Before the work."
+          lede={
+            <>
+              Found something behind the wall? Describe the change, snap a photo, name the price, and
+              get a signature on the spot: print it or text it, done. Free, no account, and nothing
+              you type or sign ever leaves the phone.
+            </>
+          }
+        />
 
         <ChangeOrderPad />
 
         <BackupPanel />
 
-        <div className="prose beta-sec">
-          <h2>The fine print, still short</h2>
+        <Section title="The fine print, still short">
           <p>
             Another gift from the people at <Link href="/housecalls">House Calls</Link>. Same deal
             as <Link href="/housecalls/tools/quote">the quote pad</Link>, whose shop setup this
             tool shares: no account, no emails collected, everything stored on your own device and
             nowhere else. A signed change order is worth paper; print the ones that matter.
           </p>
-        </div>
+        </Section>
       </div>
     </>
   )

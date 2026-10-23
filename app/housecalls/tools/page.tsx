@@ -1,5 +1,6 @@
 import Link from "next/link"
 import type { Metadata } from "next"
+import { PageHead, Section } from "@/components/page"
 
 const DESCRIPTION =
   "Free field tools for trade workers: a quote pad, a change-order pad with signature, a job photo stamper, and a voice material list. No accounts, no subscriptions, nothing uploads. They work for the person holding the phone and report to no one."
@@ -67,24 +68,17 @@ export default function ToolsIndexPage() {
         }}
       />
       <div className="page">
-        <div className="page-head">
-          <nav className="crumb" aria-label="Breadcrumb">
-            <Link href="/">bradley.io</Link>
-            <span>
-              {" / "}
-              <Link href="/housecalls">House Calls</Link>
-              {" / "}
-              <span aria-current="page">Free Tools</span>
-            </span>
-          </nav>
-          <h1>Free tools for the trades.</h1>
-        </div>
-
-        <p className="lede">
-          Four field tools, free forever: no app store, no account, no subscription, and nothing
-          you type, sign, or photograph ever uploads anywhere. They work for the person holding
-          the phone and report to no one.
-        </p>
+        <PageHead
+          crumbs={[{ label: "House Calls", href: "/housecalls" }, { label: "Free Tools" }]}
+          title="Free tools for the trades."
+          lede={
+            <>
+              Four field tools, free forever: no app store, no account, no subscription, and nothing
+              you type, sign, or photograph ever uploads anywhere. They work for the person holding
+              the phone and report to no one.
+            </>
+          }
+        />
 
         <div className="piece-grid">
           {TOOLS.map((t) => (
@@ -95,8 +89,7 @@ export default function ToolsIndexPage() {
           ))}
         </div>
 
-        <div className="prose beta-sec">
-          <h2>The catch, in full</h2>
+        <Section title="The catch, in full">
           <p>
             There is not one. These are the electronic form of a tradeshow giveaway from{" "}
             <Link href="/housecalls">House Calls</Link>, where an AI hunts for honest work for a
@@ -104,7 +97,7 @@ export default function ToolsIndexPage() {
             saves you twenty minutes, the name on it is the whole transaction. Add this page to
             your home screen and every tool works from the truck, signal or not.
           </p>
-        </div>
+        </Section>
       </div>
     </>
   )

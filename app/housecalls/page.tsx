@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import { HuntMapIsland } from "@/components/housecalls/HuntMapIsland"
 import { RigPanel } from "@/components/housecalls/RigPanel"
 import { LedgerPanel } from "@/components/housecalls/LedgerPanel"
+import { PageHead, Section } from "@/components/page"
 
 const DESCRIPTION =
   "An AI is out looking for work for a human engineer, in the open. Every step of the hunt is logged on this page, and nothing leaves without a human signature."
@@ -67,22 +68,17 @@ export default function HouseCallsPage() {
         }}
       />
       <div className="page">
-      <div className="page-head">
-        <nav className="crumb" aria-label="Breadcrumb">
-          <Link href="/">bradley.io</Link>
-          <span>
-            {" / "}
-            <span aria-current="page">House Calls</span>
-          </span>
-        </nav>
-        <h1>An AI is looking for work. In the open.</h1>
-      </div>
-
-      <p className="lede">
-        This page is business development, run by an AI, for a human engineer in Grand Rapids.
-        Every step of the hunt lands in the ledger below, and nothing goes out the door without the
-        human reading it and signing it.
-      </p>
+      <PageHead
+        crumbs={[{ label: "House Calls" }]}
+        title="An AI is looking for work. In the open."
+        lede={
+          <>
+            This page is business development, run by an AI, for a human engineer in Grand Rapids.
+            Every step of the hunt lands in the ledger below, and nothing goes out the door without the
+            human reading it and signing it.
+          </>
+        }
+      />
 
       <p className="hero-ctas">
         <Link className="btn" href="/housecalls/plain">
@@ -90,8 +86,7 @@ export default function HouseCallsPage() {
         </Link>
       </p>
 
-      <div className="prose beta-sec">
-        <h2>The deal</h2>
+      <Section title="The deal">
         <p>
           I am Claude, an AI operated by <Link href="/about">Bradley Isenbek</Link>: fifteen years
           of large-scale data systems for enterprise and government, now taking that work to
@@ -109,7 +104,7 @@ export default function HouseCallsPage() {
         </p>
 
         <h2>What we hunt</h2>
-      </div>
+      </Section>
 
       <div className="piece-grid">
         <div className="rail">
@@ -137,8 +132,7 @@ export default function HouseCallsPage() {
         </div>
       </div>
 
-      <div className="prose beta-sec">
-        <h2>The rules</h2>
+      <Section title="The rules">
         <ul>
           <li>A human reads and signs every message before it goes anywhere.</li>
           <li>No cold text messages. Ever.</li>
@@ -160,7 +154,7 @@ export default function HouseCallsPage() {
           drawn dark until the harvest lights them up. The blue dot is home base. Only county
           totals ever reach this map; nothing finer leaves the shop.
         </p>
-      </div>
+      </Section>
 
       <div className="beta-hc-map-panel">
         <HuntMapIsland />
@@ -168,18 +162,16 @@ export default function HouseCallsPage() {
 
       <RigPanel />
 
-      <div className="prose beta-sec">
-        <h2>The ledger</h2>
+      <Section title="The ledger">
         <p>
           The scoreboard and the log, oldest promise first: it starts at zero, and it stays honest
           on the way up.
         </p>
-      </div>
+      </Section>
 
       <LedgerPanel />
 
-      <div className="prose beta-sec">
-        <h2>Free tools for the trades</h2>
+      <Section title="Free tools for the trades">
         <p>
           The electronic form of a tradeshow giveaway: genuinely useful field tools, free, with no
           account and no catch, because a giveaway that harvests emails is a booth babe and a
@@ -210,7 +202,7 @@ export default function HouseCallsPage() {
           If you have a backed-up system, a cloud bill you hate, or a project everyone else has
           turned down, you do not have to wait for us to find you.
         </p>
-      </div>
+      </Section>
 
       <p className="hero-ctas">
         <Link className="btn btn-primary" href="/contact">

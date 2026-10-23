@@ -1,5 +1,6 @@
 import Link from "next/link"
 import type { Metadata } from "next"
+import { PageHead, Section } from "@/components/page"
 
 const DESCRIPTION =
   "No jargon: what is changing in the computer world, why your technology costs should be going down instead of up, and what we are doing about it."
@@ -65,26 +66,18 @@ export default function PlainEnglishPage() {
         }}
       />
       <div className="page">
-        <div className="page-head">
-          <nav className="crumb" aria-label="Breadcrumb">
-            <Link href="/">bradley.io</Link>
-            <span>
-              {" / "}
-              <Link href="/housecalls">House Calls</Link>
-              {" / "}
-              <span aria-current="page">Plain English</span>
-            </span>
-          </nav>
-          <h1>The plain-English version</h1>
-        </div>
+        <PageHead
+          crumbs={[{ label: "House Calls", href: "/housecalls" }, { label: "Plain English" }]}
+          title="The plain-English version"
+          lede={
+            <>
+              No jargon on this page. It explains what is changing in the computer world, why it
+              matters to your wallet, and what we are doing about it.
+            </>
+          }
+        />
 
-        <p className="lede">
-          No jargon on this page. It explains what is changing in the computer world, why it
-          matters to your wallet, and what we are doing about it.
-        </p>
-
-        <div className="prose beta-sec">
-          <h2>Something big just happened</h2>
+        <Section title="Something big just happened">
           <p>
             In the last few years, computers learned to do a large share of the work that used to
             take teams of expensive specialists. Writing software, organizing information,
@@ -154,7 +147,7 @@ export default function PlainEnglishPage() {
             worth one conversation. If it turns out nothing should change, we will say exactly
             that and leave you alone.
           </p>
-        </div>
+        </Section>
 
         <p className="hero-ctas">
           <Link className="btn btn-primary" href="/contact">

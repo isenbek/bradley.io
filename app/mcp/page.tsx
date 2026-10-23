@@ -1,10 +1,10 @@
 import { readFileSync } from "fs"
 import { join } from "path"
-import Link from "next/link"
 import type { Metadata } from "next"
 import { RowChart, RampKey } from "../_charts"
 import { BetaMeasured } from "../_measured"
 import { RESUME_MCP_LISTING } from "@/lib/resume-mcp"
+import { PageHead, Section } from "@/components/page"
 
 export const revalidate = 3600
 
@@ -84,24 +84,18 @@ export default function BetaMcpPage() {
 
   return (
     <div className="page">
-      <div className="page-head">
-        <nav className="crumb" aria-label="Breadcrumb">
-          <Link href="/">bradley.io</Link>
-          <span>
-            {" / "}
-            <span aria-current="page">MCP catalog</span>
-          </span>
-        </nav>
-        <h1>MCP catalog</h1>
-      </div>
+      <PageHead
+        crumbs={[{ label: "MCP catalog" }]}
+        title="MCP catalog"
+        lede={
+          <>
+            {servers.length} Model Context Protocol servers, and the {st.fleetServices}-service REST
+            fleet behind them.
+          </>
+        }
+      />
 
-      <p className="lede">
-        {servers.length} Model Context Protocol servers, and the {st.fleetServices}-service REST
-        fleet behind them.
-      </p>
-
-      <div className="prose beta-sec">
-        <h2>The MCP servers</h2>
+      <Section title="The MCP servers">
         <p>
           Each was asked for its tool list when this page was built, so what is below is what the
           server answered with, not what a README claims.
@@ -110,7 +104,7 @@ export default function BetaMcpPage() {
                correct behaviour and is recorded as such rather than as an outage.`
             : ""}
         </p>
-      </div>
+      </Section>
 
       <div className="beta-orggrid">
         {servers.map((s) => (
@@ -159,14 +153,13 @@ export default function BetaMcpPage() {
         ))}
       </div>
 
-      <div className="prose beta-sec">
-        <h2>The REST fleet</h2>
+      <Section title="The REST fleet">
         <p>
           {st.fleetServices} services exposing {st.fleetEndpoints.toLocaleString()} operations,
           counted from the unified OpenAPI spec. {st.totalServices} of them carry descriptions and
           are grouped below.
         </p>
-      </div>
+      </Section>
 
       {st.uncataloguedServices > 0 && (
         <div className="notice">
@@ -192,9 +185,7 @@ export default function BetaMcpPage() {
 
       {d.categories.map((c) => (
         <section key={c.id}>
-          <div className="prose beta-sec">
-            <h2>{c.name}</h2>
-          </div>
+          <Section title={<>{c.name}</>} />
           <div className="ledger">
             <div className="scroller" tabIndex={0} role="region" aria-label={c.name}>
               <table>

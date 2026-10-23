@@ -7722,3 +7722,95 @@ a.beta-papers-fig:focus-visible { outline: 2px solid var(--color-blue-ink); outl
 .beta-walkins-log td { white-space: normal; }
 .beta-walkins-log td:first-child { white-space: nowrap; vertical-align: top; }
 .beta-walkins-log td b { font-family: var(--font-sans); }
+
+/* ===========================================================================
+   TEMPLATES (components/page): the parts every templated page is built from.
+   Brad, 2026-10-22: a handful of templates, the same styles in the same
+   spots. One rule per job here; a page-specific copy of any of these is a
+   thing to delete when its page moves onto the templates.
+   =========================================================================== */
+
+/* Cards that reflow: the one auto-fit grid. --t-min is the narrowest a card
+   gets before a column drops, clamped to the container (the sitewide
+   mobile-overflow rule: min(X, 100%), never a bare minmax(Xpx, 1fr)). */
+.beta-t-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(var(--t-min, 18rem), 100%), 1fr));
+  gap: calc(var(--u) * 4);
+  margin: calc(var(--u) * 4) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* A block that is not a Section but needs a Section's gap above it. */
+.beta-t-block { margin-top: calc(var(--u) * 12); }
+
+/* The closing row of buttons, with fine print beside them. */
+.beta-t-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: calc(var(--u) * 4);
+  margin: calc(var(--u) * 12) 0 0;
+}
+.beta-t-actions .btn { flex: none; }
+.beta-t-actions .quiet {
+  flex: 1 1 16rem;
+  max-width: 44ch;
+  font-size: var(--text-fine);
+  line-height: 1.5;
+}
+
+/* On this page: a label, then the section links in mono, wrapping. */
+.beta-t-jump {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: calc(var(--u) * 2) calc(var(--u) * 4);
+  margin: 0 0 calc(var(--u) * 6);
+}
+.beta-t-jump ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: calc(var(--u) * 2) calc(var(--u) * 4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--font-mono);
+  font-size: var(--text-data);
+}
+.beta-t-jump a {
+  color: var(--color-ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-ink-faint);
+}
+.beta-t-jump a:hover { border-bottom-color: var(--color-ink); }
+
+/* Read more: a summary line in mono caps with a turn marker, the rest folded.
+   The text is in the HTML either way; print always opens it. */
+.beta-t-more { margin: calc(var(--u) * 2) 0 0; }
+.beta-t-more > summary {
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--u) * 2);
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--font-mono);
+  font-size: var(--text-data);
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--color-ink);
+  border-bottom: 1px solid var(--color-ink-faint);
+  padding: calc(var(--u) * 1) 0;
+}
+.beta-t-more > summary::-webkit-details-marker { display: none; }
+.beta-t-more > summary::before { content: "+"; font-weight: 700; }
+.beta-t-more[open] > summary::before { content: "\2212"; }
+.beta-t-more[open] > summary { margin-bottom: calc(var(--u) * 4); }
+.beta-t-more > summary:hover { border-bottom-color: var(--color-ink); }
+.beta-t-more > summary:focus-visible { outline: 2px solid var(--color-blue-ink); outline-offset: 2px; }
+@media print {
+  .beta-t-more > summary { display: none; }
+  .beta-t-more::details-content { content-visibility: visible; display: contents; }
+}
+/* TEMPLATES (end block: beta-t-*) */

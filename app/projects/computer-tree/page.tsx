@@ -1,7 +1,7 @@
-import Link from "next/link"
 import { ComputerTree } from "@/components/computer-tree/ComputerTree"
 import { externalRel } from "@/lib/external-rel"
 import { computerTree } from "@/lib/computer-tree"
+import { PageHead, Section } from "@/components/page"
 
 /**
  * The Computer Tree.
@@ -41,32 +41,22 @@ export default function ComputerTreePage() {
 
   return (
     <div className="page">
-      <div className="page-head">
-        <nav className="crumb" aria-label="Breadcrumb">
-          <Link href="/">bradley.io</Link>
-          <span>
-            {" / "}
-            <Link href="/projects">Projects</Link>
-          </span>
-          <span>
-            {" / "}
-            <span aria-current="page">The Computer Tree</span>
-          </span>
-        </nav>
-        <h1>The Computer Tree</h1>
-      </div>
-
-      <p className="lede">
-        In 1961 the US Army drew the family tree of the electronic computer: ENIAC at the trunk,
-        every machine built since hanging off a limb, rings at 1950, 1955 and 1960. This is that
-        chart, transcribed, and grown one ring per decade to 2025. {nodes.length} machines,{" "}
-        {links.length} links. Pick any machine and the tree draws its line back to the root.
-      </p>
+      <PageHead
+        crumbs={[{ label: "Projects", href: "/projects" }, { label: "The Computer Tree" }]}
+        title="The Computer Tree"
+        lede={
+          <>
+            In 1961 the US Army drew the family tree of the electronic computer: ENIAC at the trunk,
+            every machine built since hanging off a limb, rings at 1950, 1955 and 1960. This is that
+            chart, transcribed, and grown one ring per decade to 2025. {nodes.length} machines,{" "}
+            {links.length} links. Pick any machine and the tree draws its line back to the root.
+          </>
+        }
+      />
 
       <ComputerTree data={data} />
 
-      <div className="prose beta-sec">
-        <h2>How to read it</h2>
+      <Section title="How to read it">
         <p>
           Every dot is a machine, a processor or a system, and its ring is the period it arrived in.
           The inner three rings are the 1961 chart&apos;s own; past them there is one ring per
@@ -84,10 +74,9 @@ export default function ComputerTreePage() {
           on the tree is the one it opens on: 26 machines from ENIAC to Fugaku, through SEAC, the
           SDS 940, the Xerox Alto and a run of Sun and Fujitsu SPARC machines.
         </p>
-      </div>
+      </Section>
 
-      <div className="prose beta-sec">
-        <h2>What it cannot carry</h2>
+      <Section title="What it cannot carry">
         <p>
           <b>The 1961 links are shaky.</b> The source was a low-resolution scan. Most labels are
           legible, but many branch attachments in the dense middle are not, so {est(true)}% of the
@@ -109,10 +98,9 @@ export default function ComputerTreePage() {
           a year from other references. Check a 1950s date or ancestry against a primary source
           before citing it.
         </p>
-      </div>
+      </Section>
 
-      <div className="prose beta-sec">
-        <h2>The data</h2>
+      <Section title="The data">
         <p>
           The dataset is a directed acyclic graph: every parent exists, there are no cycles, and no
           parent is dated more than a year after its child. Take it with you; the data card has
@@ -129,7 +117,7 @@ export default function ComputerTreePage() {
           </a>
           , drawn from this same dataset.
         </p>
-      </div>
+      </Section>
       <div className="ledger beta-sec">
         <div className="scroller" tabIndex={0} role="region" aria-label="The dataset's files">
           <table>

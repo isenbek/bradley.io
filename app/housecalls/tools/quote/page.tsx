@@ -2,6 +2,7 @@ import Link from "next/link"
 import type { Metadata } from "next"
 import { QuotePad } from "@/components/housecalls/QuotePad"
 import { BackupPanel } from "@/components/housecalls/BackupPanel"
+import { PageHead, Section } from "@/components/page"
 
 const DESCRIPTION =
   "A free quote pad for trade workers: line items in, a professional quote out, printable or textable from the truck. No account, no signup, and nothing leaves your phone."
@@ -50,30 +51,22 @@ export default function QuotePadPage() {
         }}
       />
       <div className="page">
-        <div className="page-head">
-          <nav className="crumb" aria-label="Breadcrumb">
-            <Link href="/">bradley.io</Link>
-            <span>
-              {" / "}
-              <Link href="/housecalls">House Calls</Link>
-              {" / "}
-              <span aria-current="page">Truck Quote Pad</span>
-            </span>
-          </nav>
-          <h1>Quote it from the truck.</h1>
-        </div>
-
-        <p className="lede">
-          Line items in, a professional quote out: print it, text it, done. Free, no account, no
-          signup, and nothing you type ever leaves your phone. Set your shop once; it remembers.
-        </p>
+        <PageHead
+          crumbs={[{ label: "House Calls", href: "/housecalls" }, { label: "Truck Quote Pad" }]}
+          title="Quote it from the truck."
+          lede={
+            <>
+              Line items in, a professional quote out: print it, text it, done. Free, no account, no
+              signup, and nothing you type ever leaves your phone. Set your shop once; it remembers.
+            </>
+          }
+        />
 
         <QuotePad />
 
         <BackupPanel />
 
-        <div className="prose beta-sec">
-          <h2>The fine print, which is short</h2>
+        <Section title="The fine print, which is short">
           <p>
             This tool is a gift from the people at <Link href="/housecalls">House Calls</Link>,
             where an AI hunts for honest work in public and the prices are readable from the
@@ -81,7 +74,7 @@ export default function QuotePadPage() {
             Your shop details and your quotes are stored on your own device and nowhere else,
             which also means clearing your browser clears them. Print the ones that matter.
           </p>
-        </div>
+        </Section>
       </div>
     </>
   )

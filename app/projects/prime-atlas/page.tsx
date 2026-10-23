@@ -2,6 +2,7 @@ import Link from "next/link"
 import { Compass, Layers, MousePointerClick } from "lucide-react"
 import { ProjectEmbed } from "@/components/projects/ProjectEmbed"
 import { PrimeCompanions } from "@/components/projects/PrimeCompanions"
+import { PageHead } from "@/components/page"
 
 const REGIONS = [
   {
@@ -49,30 +50,21 @@ const TRY = [
 export default function PrimeAtlasPage() {
   return (
     <div className="page">
-      <div className="page-head">
-        <nav className="crumb" aria-label="Breadcrumb">
-          <Link href="/">bradley.io</Link>
-          <span>
-            {" / "}
-            <Link href="/projects">Projects</Link>
-          </span>
-          <span>
-            {" / "}
-            <span aria-current="page">Prime Atlas</span>
-          </span>
-        </nav>
-        <h1>A terrain map of the territory around the primes</h1>
-      </div>
-
-      <p className="lede">
-          Twenty-nine landmarks across seven kinds of ground, from the Euler spring to the
-          parity cliff. It draws what is proven, what is merely believed, what nobody knows,
-          and, most usefully, what has been proven <strong>impossible</strong> by the methods
-          we have. The{" "}
-          <Link href="/projects/prime-orchestra">orchestra</Link> and the{" "}
-          <Link href="/projects/prime-zoo">zoo</Link> are both marked on it, because the map
-          came first and the instruments were built where it pointed.
-      </p>
+      <PageHead
+        crumbs={[{ label: "Projects", href: "/projects" }, { label: "Prime Atlas" }]}
+        title="A terrain map of the territory around the primes"
+        lede={
+          <>
+              Twenty-nine landmarks across seven kinds of ground, from the Euler spring to the
+              parity cliff. It draws what is proven, what is merely believed, what nobody knows,
+              and, most usefully, what has been proven <strong>impossible</strong> by the methods
+              we have. The{" "}
+              <Link href="/projects/prime-orchestra">orchestra</Link> and the{" "}
+              <Link href="/projects/prime-zoo">zoo</Link> are both marked on it, because the map
+              came first and the instruments were built where it pointed.
+          </>
+        }
+      />
       {/* HEADER ========================================================= */}
 
       {/* THE MAP ======================================================== */}

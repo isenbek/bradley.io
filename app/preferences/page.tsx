@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
-import Link from "next/link"
 import { PreferencesClient } from "@/components/preferences/PreferencesClient"
+import { PageHead, Section } from "@/components/page"
 
 export const metadata: Metadata = {
   title: "Preferences: device capabilities",
@@ -12,30 +12,24 @@ export const metadata: Metadata = {
 export default function PreferencesPage() {
   return (
     <div className="page">
-      <div className="page-head">
-        <nav className="crumb" aria-label="Breadcrumb">
-          <Link href="/">bradley.io</Link>
-          <span>
-            {" / "}
-            <span aria-current="page">Preferences</span>
-          </span>
-        </nav>
-        <h1>Device capabilities</h1>
-      </div>
+      <PageHead
+        crumbs={[{ label: "Preferences" }]}
+        title="Device capabilities"
+        lede={
+          <>
+            A scan of every sensor, radio and feature this browser offers. Try the live readings,
+            then save a snapshot. It stays on this device and never reaches a server.
+          </>
+        }
+      />
 
-      <p className="lede">
-        A first-principles scan of every sensor, radio and platform hook this browser exposes.
-        Probe the live readings, then save a snapshot: it persists to this device&apos;s IndexedDB
-        and never reaches a server.
-      </p>
-
-      <div className="prose beta-sec">
+      <Section>
         <p>
           There is also a <a href="/preferences/standalone.html">standalone module</a>, which is
           the same scan in one file with no framework behind it.
         </p>
-      </div>
-        <PreferencesClient />
+      </Section>
+      <PreferencesClient />
     </div>
   )
 }

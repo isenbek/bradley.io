@@ -1,15 +1,14 @@
 import Link from "next/link"
 import { BookOpen, Eye } from "lucide-react"
+import { PageHead, Section } from "@/components/page"
 
 function Sec({ title, children }: { title: string; children: React.ReactNode }) {
   // The kit rules off every h2 (.prose > h2), so the numbered eyebrow the v3
   // version carried is redundant: the sequence is the order of the page.
   return (
     <section>
-      <div className="prose beta-sec">
-        <h2>{title}</h2>
-      </div>
-      <div className="prose beta-sec">{children}</div>
+      <Section title={<>{title}</>} />
+      <Section>{children}</Section>
     </section>
   )
 }
@@ -33,26 +32,17 @@ function Code({ cap, children }: { cap?: string; receipt?: boolean; children: st
 export default function ListeningPage() {
   return (
     <div className="page">
-      <div className="page-head">
-        <nav className="crumb" aria-label="Breadcrumb">
-          <Link href="/">bradley.io</Link>
-          <span>
-            {" / "}
-            <Link href="/meatball">Meatball</Link>
-          </span>
-          <span>
-            {" / "}
-            <span aria-current="page">Field note 02</span>
-          </span>
-        </nav>
-        <h1>The math of listening</h1>
-      </div>
-
-      <p className="lede">
-          How a pile of 16-bit numbers becomes &quot;someone is talking.&quot; A low-level walk from
-          raw samples to the FFT to a working noise gate. Every number here came from a live
-          run on Meatball&apos;s actual microphones.
-      </p>
+      <PageHead
+        crumbs={[{ label: "Meatball", href: "/meatball" }, { label: "Field note 02" }]}
+        title="The math of listening"
+        lede={
+          <>
+              How a pile of 16-bit numbers becomes &quot;someone is talking.&quot; A low-level walk from
+              raw samples to the FFT to a working noise gate. Every number here came from a live
+              run on Meatball&apos;s actual microphones.
+          </>
+        }
+      />
 
       {/* HEADER ======================================================== */}
 

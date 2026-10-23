@@ -1,27 +1,22 @@
-import Link from "next/link"
 import { TrngBoard } from "@/components/trng/TrngBoard"
+import { PageHead, Section } from "@/components/page"
 
 export default function TrngPage() {
   return (
     <div className="page">
-      <div className="page-head">
-        <nav className="crumb" aria-label="Breadcrumb">
-          <Link href="/">bradley.io</Link>
-          <span>
-            {" / "}
-            <span aria-current="page">Hotbits</span>
-          </span>
-        </nav>
-        <h1>Random, from radioactive decay</h1>
-      </div>
+      <PageHead
+        crumbs={[{ label: "Hotbits" }]}
+        title="Random, from radioactive decay"
+        lede={
+          <>
+            A CAJOE Geiger counter, a Raspberry Pi, and a comparison of one gap between decay events
+            with the next. If the first is shorter the bit is a one, if the second is shorter it is a
+            zero, and equal gaps are thrown away.
+          </>
+        }
+      />
 
-      <p className="lede">
-        A CAJOE Geiger counter, a Raspberry Pi, and a comparison of one gap between decay events
-        with the next. If the first is shorter the bit is a one, if the second is shorter it is a
-        zero, and equal gaps are thrown away.
-      </p>
-
-      <div className="prose beta-sec">
+      <Section>
         <p>
           Nothing here generates a number. The bias cancels by symmetry rather than by correction,
           which is why the raw stream is worth measuring at all: everything below is that
@@ -32,7 +27,7 @@ export default function TrngPage() {
           <a href="https://tinymachines.ai/hotbits/space">the entropy views</a> live on
           tinymachines.ai, beside the instrument itself.
         </p>
-      </div>
+      </Section>
 
       <TrngBoard />
     </div>

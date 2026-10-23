@@ -11,6 +11,7 @@ import zooPic from "@/components/projects/thumbs/prime-zoo.webp"
 import stormPic from "@/components/projects/thumbs/storm-plates.webp"
 import collapsePic from "@/components/projects/thumbs/critical-collapse.webp"
 import treePic from "@/components/projects/thumbs/computer-tree.webp"
+import { PageHead, Section } from "@/components/page"
 
 export const metadata: Metadata = {
   title: "Projects",
@@ -366,22 +367,17 @@ export default async function ProjectsPage() {
         }}
       />
 
-      <div className="page-head">
-        <nav className="crumb" aria-label="Breadcrumb">
-          <Link href="/">bradley.io</Link>
-          <span>
-            {" / "}
-            <span aria-current="page">Projects</span>
-          </span>
-        </nav>
-        <h1>Projects</h1>
-      </div>
-
-      <p className="lede">
-        {TOTAL} things on the bench. Chips rebuilt from their own dies, instruments reading real
-        hardware, math you can operate, and a few ideas that might not ship. Most
-        shipped with Claude as co-pilot. The sites are self-hosted; the repositories are on GitHub.
-      </p>
+      <PageHead
+        crumbs={[{ label: "Projects" }]}
+        title="Projects"
+        lede={
+          <>
+            {TOTAL} things on the bench. Chips rebuilt from their own dies, instruments reading real
+            hardware, math you can operate, and a few ideas that might not ship. Most
+            shipped with Claude as co-pilot. The sites are self-hosted; the repositories are on GitHub.
+          </>
+        }
+      />
 
       {/* The door to the Thought Lab (owner's org model, 2026-10-04): this
           page is the lab's work as seen from bradley.io; meatball.ai is the
@@ -408,8 +404,7 @@ export default async function ProjectsPage() {
       </nav>
 
       <section id="chips" className="beta-bench-group" aria-labelledby="chips-h">
-        <div className="prose beta-sec">
-          <h2 id="chips-h">Chips and consoles</h2>
+        <Section id="chips-h" title="Chips and consoles">
           <p>
             A processor and a console, simulated from photographs of their own dies and not from a
             description of what they do. The netlists were traced by the visual6502 project and by
@@ -421,7 +416,7 @@ export default async function ProjectsPage() {
             </a>
             .
           </p>
-        </div>
+        </Section>
 
         <figure className="beta-die beta-bench-plate">
           <div className="beta-die__frame">
@@ -448,62 +443,57 @@ export default async function ProjectsPage() {
       </section>
 
       <section id="platforms" className="beta-bench-group" aria-labelledby="platforms-h">
-        <div className="prose beta-sec">
-          <h2 id="platforms-h">Tools</h2>
+        <Section id="platforms-h" title="Tools">
           <p>
             Things other people can use: the design system under this page, and four tools for
             people who work out of a truck. The platforms I architect and build for clients are
             on <Link href="/work">the work page</Link>.
           </p>
-        </div>
+        </Section>
         <BenchGrid items={PLATFORMS} pairs />
       </section>
 
       <section id="instruments" className="beta-bench-group" aria-labelledby="instruments-h">
-        <div className="prose beta-sec">
-          <h2 id="instruments-h">Instruments on this server</h2>
+        <Section id="instruments-h" title="Instruments on this server">
           <p>
             Dashboards that read real hardware on this network: a Geiger counter, radios, cameras, a
             router. Hardware goes away, and when it does the page says so. Each card carries a dot:
             filled means the instrument is answering right now, hollow means it is not. The detail
             is on <Link href="/bench">the bench</Link>.
           </p>
-        </div>
+        </Section>
         <BenchGrid items={INSTRUMENTS} initial={initial} />
       </section>
 
       <section id="math" className="beta-bench-group" aria-labelledby="math-h">
-        <div className="prose beta-sec">
-          <h2 id="math-h">Math instruments</h2>
+        <Section id="math-h" title="Math instruments">
           <p>
             A map of prime-number theory and four machines built where it pointed: forge zeta, hear
             its zeros play the primes, probe the primes directly, then watch the sieve run as
             weather. All five run in the browser, no dependencies, no network. The sixth is general
             relativity, and it is solved in your browser too.
           </p>
-        </div>
+        </Section>
         <BenchGrid items={MATH} />
       </section>
 
       <section id="history" className="beta-bench-group" aria-labelledby="history-h">
-        <div className="prose beta-sec">
-          <h2 id="history-h">History</h2>
+        <Section id="history-h" title="History">
           <p>
             Where the machines came from. A lineage chart drawn in 1961, carried forward to the
             processors in your pocket and the supercomputers at the top of the list.
           </p>
-        </div>
+        </Section>
         <BenchGrid items={HISTORY} />
       </section>
 
       <section id="ideas" className="beta-bench-group" aria-labelledby="ideas-h">
-        <div className="prose beta-sec">
-          <h2 id="ideas-h">Things that might not ship</h2>
+        <Section id="ideas-h" title="Things that might not ship">
           <p>
             Hardware hacks, signal toys, AI agents off the leash. The room where the next product
             gets sketched, and most of the sketches stay sketches.
           </p>
-        </div>
+        </Section>
         <div className="beta-bench-grid beta-bench-grid--pairs">
           {IDEAS.map((item) => (
             <BenchCard item={item} key={item.href} />
@@ -535,15 +525,14 @@ export default async function ProjectsPage() {
         </div>
       </section>
 
-      <div className="prose beta-sec beta-bench-out">
-        <h2>The rest</h2>
+      <Section className="beta-bench-out" title="The rest">
         <p>
           This is the short list. <Link href="/bench">The bench</Link> lists every page this server
           serves and says which instruments are up. <Link href="/work">The work page</Link> has the
           client projects, and counts every repository across four GitHub organisations from the
           commit log. The lab itself is at <a href="https://meatball.ai">meatball.ai</a>.
         </p>
-      </div>
+      </Section>
     </div>
   )
 }

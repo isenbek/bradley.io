@@ -4,6 +4,7 @@ import { BetaMeasured } from "../_measured"
 import { costNum, costUsd, costUsdTick, costWindow, loadCostModel, utcStamp } from "../_cost-model"
 import { ShiftFigure, ShiftKind } from "@/components/shift/ShiftFigure"
 import { ShiftRows } from "@/components/shift/ShiftRows"
+import { PageHead, Section } from "@/components/page"
 
 export const revalidate = 3600
 
@@ -122,22 +123,17 @@ export default function BetaCostPage() {
 
   return (
     <div className="page">
-      <div className="page-head">
-        <nav className="crumb" aria-label="Breadcrumb">
-          <Link href="/">bradley.io</Link>
-          <span>
-            {" / "}
-            <span aria-current="page">Cost analysis</span>
-          </span>
-        </nav>
-        <h1>Cost analysis</h1>
-      </div>
-
-      <p className="lede">
-        One operator with AI tooling, against a modelled conventional team, over{" "}
-        {d.timespan.days} days of one real project. A bottom-up bill of materials, not a vendor
-        pitch deck.
-      </p>
+      <PageHead
+        crumbs={[{ label: "Cost analysis" }]}
+        title="Cost analysis"
+        lede={
+          <>
+            One operator with AI tooling, against a modelled conventional team, over{" "}
+            {d.timespan.days} days of one real project. A bottom-up bill of materials, not a vendor
+            pitch deck.
+          </>
+        }
+      />
 
       {/* This is a dated case study. Say so before anything else: a reader who
           takes these for current figures has been misled even if every number
@@ -174,15 +170,14 @@ export default function BetaCostPage() {
           ================================================================ */}
       {last && weeks > 1 && (
         <>
-          <div className="prose beta-sec">
-            <h2>The curve</h2>
+          <Section title="The curve">
             <p>
               Two lines over the same {weeks} weeks. The lower one is the recorded work at flat
               rates, {costUsd(weeklyActual)} a week. The upper one is the modelled team,{" "}
               {costUsd(weeklyLegacy)} a week. Both are straight because both are rates, not
               invoices. What separates them is the slope.
             </p>
-          </div>
+          </Section>
 
           <ShiftFigure
             kind="both"
@@ -242,13 +237,12 @@ export default function BetaCostPage() {
           ================================================================ */}
       {last && weeks > 1 && (
         <>
-          <div className="prose beta-sec">
-            <h2>What the weeks held</h2>
+          <Section title="What the weeks held">
             <p>
               A cost line at a flat rate says nothing about whether anything was built. These two
               do. Neither involves the model: both are counts of things that happened.
             </p>
-          </div>
+          </Section>
 
           <div className="beta-shift-two">
             <ShiftFigure
@@ -347,8 +341,7 @@ export default function BetaCostPage() {
       {/* ================================================================
           THE TWO COLUMNS
           ================================================================ */}
-      <div className="prose beta-sec">
-        <h2>The two columns</h2>
+      <Section title="The two columns">
         <p>Scope: {d.scope}.</p>
         {typeof cover?.commitsInWindow === "number" &&
           typeof cover.commitsInWindowAtSnapshot === "number" &&
@@ -364,7 +357,7 @@ export default function BetaCostPage() {
                 : ""}
             </p>
           )}
-      </div>
+      </Section>
 
       <div className="beta-shift-two">
         <ShiftFigure
@@ -506,8 +499,7 @@ export default function BetaCostPage() {
       {/* ================================================================
           THE MODELLED TEAM
           ================================================================ */}
-      <div className="prose beta-sec">
-        <h2>The modelled team</h2>
+      <Section title="The modelled team">
         <p>
           {legacyHeads} people at {costUsd(legacyTotal)} a year fully loaded. Salary figures are
           market rate; the 1.4x loading covers benefits, tax and overhead.
@@ -515,7 +507,7 @@ export default function BetaCostPage() {
             ? ` That is every seat at full time; the cost model counts ${halfTimeRoles === 1 ? "one of them" : `${halfTimeRoles} of them`} at half time.`
             : ""}
         </p>
-      </div>
+      </Section>
 
       <RampKey low="lower cost" high="higher" />
 
@@ -539,8 +531,7 @@ export default function BetaCostPage() {
       {/* ================================================================
           THE GAP
           ================================================================ */}
-      <div className="prose beta-sec">
-        <h2>The gap</h2>
+      <Section title="The gap">
         <p>
           {d.comparison.costSavingsPercent}% below the modelled cost of the whole job
           {legacyMid !== null && typeof legacyLow === "number" && typeof legacyHigh === "number"
@@ -573,7 +564,7 @@ export default function BetaCostPage() {
           domain&rsquo;s vocabulary turns up in project notes, plan files and the technologies
           named in session logs. It shows breadth of work touched, not depth of expertise.
         </p>
-      </div>
+      </Section>
 
       <ShiftFigure
         kind="recorded"
@@ -597,13 +588,12 @@ export default function BetaCostPage() {
         </div>
       </ShiftFigure>
 
-      <div className="prose beta-sec">
-        <h2>What the research says</h2>
+      <Section title="What the research says">
         <p>
           Published findings on AI-assisted development, for calibration against the single project
           above.
         </p>
-      </div>
+      </Section>
 
       <div className="ledger">
         <div className="scroller" tabIndex={0} role="region" aria-label="Industry studies">
@@ -626,15 +616,14 @@ export default function BetaCostPage() {
         </div>
       </div>
 
-      <div className="prose beta-sec">
-        <h2>What this is evidence for</h2>
+      <Section title="What this is evidence for">
         <p>
           The numbers are here. The argument they belong to is on{" "}
           <Link href="/the-shift">the shift</Link>: what changed about teams, cadence, coordination
           and context when the tooling changed, and what one case study can and cannot show about
           it.
         </p>
-      </div>
+      </Section>
 
       <div className="beta-shift-endchip">
         {frozen ? (

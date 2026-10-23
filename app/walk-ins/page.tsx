@@ -3,6 +3,7 @@ import { readFileSync } from "fs"
 import { join } from "path"
 import { CalendarHeat, Sparkline, weekBuckets, type DayDatum } from "../_charts"
 import { BetaMeasured } from "../_measured"
+import { PageHead, Section } from "@/components/page"
 
 /**
  * /walk-ins: the full-time search, in the open.
@@ -116,24 +117,19 @@ export default function WalkInsPage() {
 
   return (
     <div className="page">
-      <div className="page-head">
-        <nav className="crumb" aria-label="Breadcrumb">
-          <Link href="/">bradley.io</Link>
-          <span>
-            {" / "}
-            <span aria-current="page">Walk-ins</span>
-          </span>
-        </nav>
-        <h1>Walk-ins</h1>
-        <p className="lede">
-          A one-page resume, a five-mile circle around home in Kentwood, Michigan, and every door,
-          logged here as it happens. I am looking for a full-time role in AI systems and data
-          architecture, or the right contract, and I would rather do the looking in the open.
-        </p>
-      </div>
+      <PageHead
+        crumbs={[{ label: "Walk-ins" }]}
+        title="Walk-ins"
+        lede={
+          <>
+            A one-page resume, a five-mile circle around home in Kentwood, Michigan, and every door,
+            logged here as it happens. I am looking for a full-time role in AI systems and data
+            architecture, or the right contract, and I would rather do the looking in the open.
+          </>
+        }
+      />
 
-      <div className="prose beta-sec">
-        <h2>The idea</h2>
+      <Section title="The idea">
         <p>
           Me, the front desk, the sheet. No portals, no forms, no recruiter in the middle. Companies
           of every stripe are trying to work out what AI means for them, and most of them are within
@@ -158,17 +154,16 @@ export default function WalkInsPage() {
           </li>
           <li>Every step is dated, including the ones that go nowhere.</li>
         </ul>
-      </div>
+      </Section>
 
-      <div className="prose beta-sec">
-        <h2>The sheet</h2>
+      <Section title="The sheet">
         <p>
           One page, US Letter. The readouts are read from this site&rsquo;s own data files on the day it
           is built, the career is drawn as a band, and the credit for the die photograph is in the
           footer. The full record is on <Link href="/resume">the resume page</Link>; this is the
           version that fits in a hand.
         </p>
-      </div>
+      </Section>
       <figure className="beta-walkins-sheet">
         <a href="/walk-ins/sheet.pdf">
           <img src="/walk-ins/sheet.png" alt="The one-page walk-in resume: readouts with sparklines, a career band, a diagram, and a heat strip of days with Claude Code" width={1020} height={1320} />
@@ -179,8 +174,7 @@ export default function WalkInsPage() {
         </figcaption>
       </figure>
 
-      <div className="prose beta-sec">
-        <h2>The circle</h2>
+      <Section title="The circle">
         <p>
           {fmt(circle.counts.kept)} workplaces within {circle.radiusMiles} miles of home that a person
           might walk into with a resume about AI and data: manufacturers, engineering and software
@@ -189,7 +183,7 @@ export default function WalkInsPage() {
           {fmt(circle.counts.droppedFromOsm)} map entries were dropped (shops, clinics, bars, trades)
           and that cut is on the record in the data file.
         </p>
-      </div>
+      </Section>
       <div className="beta-walkins-bands">
         {circle.bands.map((band) => {
           const rows = circle.rows.filter((r) => r.band === band)
@@ -217,8 +211,7 @@ export default function WalkInsPage() {
         OpenStreetMap (ODbL) and Nominatim, bands only.
       </BetaMeasured>
 
-      <div className="prose beta-sec">
-        <h2>The record behind the sheet</h2>
+      <Section title="The record behind the sheet">
         <p>
           The sheet says how much of this year was built with Claude Code. This is where that number
           comes from, all of it: the old site&rsquo;s committed snapshots for{" "}
@@ -228,7 +221,7 @@ export default function WalkInsPage() {
           which only exists since {record.db.from}; a session&rsquo;s open span is not time, because a
           session here stays open for weeks.
         </p>
-      </div>
+      </Section>
       <div className="panel">
         <div className="panel-face">
           <div className="beta-walkins-readouts">
@@ -275,10 +268,9 @@ export default function WalkInsPage() {
         export from 2026-03-08.
       </BetaMeasured>
 
-      <div className="prose beta-sec">
-        <h2>The log</h2>
+      <Section title="The log">
         <p>Newest first. The date is the day it happened.</p>
-      </div>
+      </Section>
       <div className="ledger beta-walkins-log">
         <div className="scroller">
           <table>
@@ -302,13 +294,12 @@ export default function WalkInsPage() {
         </div>
       </div>
 
-      <div className="prose beta-sec">
-        <h2>Hiring?</h2>
+      <Section title="Hiring?">
         <p>
           The door works both ways. <Link href="/contact">Email</Link> is the front door, and{" "}
           <Link href="/resume">the resume</Link> has the whole record since 1997.
         </p>
-      </div>
+      </Section>
     </div>
   )
 }

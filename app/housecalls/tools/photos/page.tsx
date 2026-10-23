@@ -1,6 +1,7 @@
 import Link from "next/link"
 import type { Metadata } from "next"
 import { PhotoStamper } from "@/components/housecalls/PhotoStamper"
+import { PageHead, Section } from "@/components/page"
 
 const DESCRIPTION =
   "A free job-photo stamper for trade workers: the job label, time, and GPS burned into every photo, grouped by job, exported as one zip. No account, no per-user bill, nothing uploads."
@@ -49,29 +50,21 @@ export default function PhotoStamperPage() {
         }}
       />
       <div className="page">
-        <div className="page-head">
-          <nav className="crumb" aria-label="Breadcrumb">
-            <Link href="/">bradley.io</Link>
-            <span>
-              {" / "}
-              <Link href="/housecalls">House Calls</Link>
-              {" / "}
-              <span aria-current="page">Photo Stamper</span>
-            </span>
-          </nav>
-          <h1>The photo is the proof. Stamp it.</h1>
-        </div>
-
-        <p className="lede">
-          Before, during, after: every job photo gets the job label, the time, and the location
-          burned into the picture itself, so the proof cannot drift away from it. Grouped by job,
-          out as one zip. Free, no account, and nothing uploads anywhere.
-        </p>
+        <PageHead
+          crumbs={[{ label: "House Calls", href: "/housecalls" }, { label: "Photo Stamper" }]}
+          title="The photo is the proof. Stamp it."
+          lede={
+            <>
+              Before, during, after: every job photo gets the job label, the time, and the location
+              burned into the picture itself, so the proof cannot drift away from it. Grouped by job,
+              out as one zip. Free, no account, and nothing uploads anywhere.
+            </>
+          }
+        />
 
         <PhotoStamper />
 
-        <div className="prose beta-sec">
-          <h2>The fine print, short as ever</h2>
+        <Section title="The fine print, short as ever">
           <p>
             Third gift from the people at <Link href="/housecalls">House Calls</Link>. Photos live
             on your own device and nowhere else; the stamping also scrubs the photo&apos;s hidden
@@ -79,7 +72,7 @@ export default function PhotoStamperPage() {
             stamp only if you grant it, and a photo without GPS is still a stamped photo. Export
             the jobs that matter; clearing your browser clears the rest.
           </p>
-        </div>
+        </Section>
       </div>
     </>
   )

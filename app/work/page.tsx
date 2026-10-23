@@ -22,6 +22,7 @@ import { BetaMeasured } from "../_measured"
 import { CHART_INK, SERIES } from "@/lib/beta/chart-theme"
 import { BenchGrid } from "@/components/projects/BenchCard"
 import { CLIENTS_FEATURED, CLIENTS_MORE } from "./_clients"
+import { PageHead, Section } from "@/components/page"
 
 /**
  * /work: the client projects first, then four GitHub organisations, counted
@@ -379,10 +380,10 @@ function OrgSection({ org }: { org: OrgRollup }) {
 
   return (
     <section id={org.slug} className="beta-work-org" aria-labelledby={`${org.slug}-h`}>
-      <div className="prose beta-sec">
+      <Section>
         <h2 id={`${org.slug}-h`}>{org.displayName}</h2>
         {ABOUT[org.slug]}
-      </div>
+      </Section>
 
       <Panel
         name="Activity"
@@ -478,44 +479,37 @@ export default function BetaWorkPage() {
 
   return (
     <div className="page">
-      <div className="page-head">
-        <nav className="crumb" aria-label="Breadcrumb">
-          <Link href="/">bradley.io</Link>
-          <span>
-            {" / "}
-            <span aria-current="page">Work</span>
-          </span>
-        </nav>
-        <h1>Work</h1>
-      </div>
-
-      <p className="lede">
-        The platforms I architect and build for clients, and the record behind them: four GitHub
-        organisations, counted from the log rather than described.
-      </p>
+      <PageHead
+        crumbs={[{ label: "Work" }]}
+        title="Work"
+        lede={
+          <>
+            The platforms I architect and build for clients, and the record behind them: four GitHub
+            organisations, counted from the log rather than described.
+          </>
+        }
+      />
 
       <section id="clients" className="beta-bench-group" aria-labelledby="clients-h">
-        <div className="prose beta-sec">
-          <h2 id="clients-h">Client projects</h2>
+        <Section id="clients-h" title="Client projects">
           <p>
             Five platforms, each built for someone else: two data platforms and three products.
             Each card opens the live site.
           </p>
-        </div>
+        </Section>
         <BenchGrid items={CLIENTS_FEATURED} pairs feature />
         <BenchGrid items={CLIENTS_MORE} />
       </section>
 
       {/* .prose for the text run only; the panels below are siblings. */}
-      <div className="prose beta-sec">
-        <h2 id="record">The record</h2>
+      <Section id="record" title="The record">
         <p>
           Four GitHub organisations, {fmtMonth(earliest)} to now: {nf(totalRepos)} repositories and{" "}
           {nf(commitsSince)} commits. Each is counted from my first commit in it{" "}
           (<a href="#counting">how</a>); work before {earliest.slice(0, 4)} is on the{" "}
           <Link href="/resume">resume</Link>.
         </p>
-      </div>
+      </Section>
 
       {orgs.length < expected && (
         <div className="notice fail">
@@ -571,8 +565,7 @@ export default function BetaWorkPage() {
       </div>
 
       <section id="counting" className="beta-work-org" aria-labelledby="counting-h">
-        <div className="prose beta-sec">
-          <h2 id="counting-h">How this is counted</h2>
+        <Section id="counting-h" title="How this is counted">
           <p>
             A pipeline reads every repository in the four organisations through the GitHub API and
             counts every commit in every log. It does not look at who wrote them, and that matters
@@ -612,7 +605,7 @@ export default function BetaWorkPage() {
             Repositories are named only where they are public, not forks, and mine. Private ones
             are counted and not named. Days are UTC days.
           </p>
-        </div>
+        </Section>
 
         <Panel
           name="Author check"

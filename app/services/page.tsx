@@ -6,6 +6,7 @@ import { NowPanel } from "@/components/live/NowPanel"
 import { peekNow } from "@/components/live/now-snapshot"
 import type { NowId, NowSnapshot } from "@/components/live/types"
 import { GOVERNMENT, ROLES } from "@/lib/resume"
+import { PageHead, Section } from "@/components/page"
 
 // Rendered per request, as the home page is and for the same reason: the panel
 // under the practices opens on the server's snapshot of four instruments, and
@@ -419,21 +420,16 @@ export default async function BetaServicesPage() {
 function ServicesBody({ initial }: { initial: NowSnapshot | null }) {
   return (
     <div className="page">
-      <div className="page-head">
-        <nav className="crumb" aria-label="Breadcrumb">
-          <Link href="/">bradley.io</Link>
-          <span>
-            {" / "}
-            <span aria-current="page">Services</span>
-          </span>
-        </nav>
-        <h1>Services</h1>
-      </div>
-
-      <p className="lede">
-        More than fifteen years architecting production systems at scale, from government and
-        enterprise data infrastructure to garage-lab instruments. Same rigor, both rooms.
-      </p>
+      <PageHead
+        crumbs={[{ label: "Services" }]}
+        title="Services"
+        lede={
+          <>
+            More than fifteen years architecting production systems at scale, from government and
+            enterprise data infrastructure to garage-lab instruments. Same rigor, both rooms.
+          </>
+        }
+      />
 
       <nav className="crumb beta-services-jump" aria-label="On this page">
         {JUMPS.map((j) => (
@@ -443,13 +439,12 @@ function ServicesBody({ initial }: { initial: NowSnapshot | null }) {
         ))}
       </nav>
 
-      <div className="prose beta-sec">
-        <h2 id="practices">Five practices, one practitioner</h2>
+      <Section id="practices" title="Five practices, one practitioner">
         <p>
           Each engagement draws on one or more of these. Nothing is bolted on afterwards. Security,
           monitoring, and a clean way to retire the system come standard.
         </p>
-      </div>
+      </Section>
 
       <div className="beta-services-practices">
         {PRACTICES.map((p, i) => (
@@ -515,13 +510,12 @@ function ServicesBody({ initial }: { initial: NowSnapshot | null }) {
         </span>
       </p>
 
-      <div className="prose beta-sec">
-        <h2 id="prices">Three shapes, and what they cost</h2>
+      <Section id="prices" title="Three shapes, and what they cost">
         <p>
           Most engagements start as a short scoping call, then drop into one of the shapes below.
           Hybrid arrangements are fine. Say so up front.
         </p>
-      </div>
+      </Section>
 
       <div className="beta-services-shapes">
         {ENGAGEMENTS.map((e) => (
@@ -541,13 +535,12 @@ function ServicesBody({ initial }: { initial: NowSnapshot | null }) {
         ))}
       </div>
 
-      <div className="prose beta-sec">
-        <h2 id="process">Four steps, no theatre</h2>
+      <Section id="process" title="Four steps, no theatre">
         <p>
           The same rhythm every time. Discovery is unbillable. If the work doesn&rsquo;t fit,
           I&rsquo;ll say so before we sign anything.
         </p>
-      </div>
+      </Section>
 
       <div className="ledger beta-services-steps">
         {/* The kit's scroller without its tab stop: these cells wrap, so the
@@ -584,9 +577,7 @@ function ServicesBody({ initial }: { initial: NowSnapshot | null }) {
         </div>
       </div>
 
-      <div className="prose beta-sec">
-        <h2 id="different">What you get that doesn&rsquo;t come standard</h2>
-      </div>
+      <Section id="different" title={<>What you get that doesn&rsquo;t come standard</>} />
 
       {/* Each card has one destination, so here the whole card is the link:
           the anchor is the words at the foot and its ::after covers the card
@@ -617,23 +608,21 @@ function ServicesBody({ initial }: { initial: NowSnapshot | null }) {
 
       {/* The machine's turn: the only panel on the page. The rows are named
           as the proof cards above name them. */}
-      <div className="prose beta-sec">
-        <h2 id="live">Four of the proofs above report live</h2>
+      <Section id="live" title="Four of the proofs above report live">
         <p>What each one is doing as you read, asked again every 15 seconds.</p>
-      </div>
+      </Section>
 
       <div className="beta-services-board">
         <NowPanel initial={initial} only={INSTRUMENTS} sentences={false} title="Those four, right now" />
       </div>
 
-      <div className="prose beta-sec">
-        <h2 id="questions">Questions I get</h2>
+      <Section id="questions" title="Questions I get">
         <p>
           Anti-cloud means host-local, and that goes for the practice too. I&rsquo;m based in Grand
           Rapids, Michigan and work with teams across Ada, Cascade, East Grand Rapids, Kentwood, and
           the wider Kent County. On site when it helps, remote when it doesn&rsquo;t.
         </p>
-      </div>
+      </Section>
 
       {/* An accordion rather than three paragraphs. These answer real search
           queries and have to stay on the page for that, but a visitor who came
@@ -647,13 +636,12 @@ function ServicesBody({ initial }: { initial: NowSnapshot | null }) {
         ))}
       </div>
 
-      <div className="prose beta-sec">
-        <h2>Let&rsquo;s sketch it</h2>
+      <Section title={<>Let&rsquo;s sketch it</>}>
         <p>
           Have a project in mind? Let&rsquo;s talk about how I can help. A first email can be one
           paragraph. The contact page lists the four things that make it easy to answer.
         </p>
-      </div>
+      </Section>
 
       <p className="beta-services-actions">
         <Link className="btn btn-primary" href="/contact">

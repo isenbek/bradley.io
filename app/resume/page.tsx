@@ -17,6 +17,7 @@ import {
   SUMMARY_INTRO,
   type ResumeRole,
 } from "@/lib/resume"
+import { PageHead, Section } from "@/components/page"
 
 /**
  * The resume. Paper throughout: this is documentation about a person, not a
@@ -99,18 +100,15 @@ function Role({ role }: { role: ResumeRole }) {
 export default function ResumePage() {
   return (
     <div className="page">
-      <div className="page-head">
-        <nav className="crumb" aria-label="Breadcrumb">
-          <Link href="/">bradley.io</Link>
-          <span>
-            {" / "}
-            <span aria-current="page">Resume</span>
-          </span>
-        </nav>
-        <h1>Bradley S. Isenbek</h1>
-      </div>
-
-      <p className="lede">{HEADLINE} Grand Rapids, Michigan.</p>
+      <PageHead
+        crumbs={[{ label: "Resume" }]}
+        title="Bradley S. Isenbek"
+        lede={
+          <>
+            {HEADLINE} Grand Rapids, Michigan.
+          </>
+        }
+      />
 
       <section className="beta-resume-avail" aria-labelledby="resume-avail">
         <p className="beta-resume-avail__status" id="resume-avail">
@@ -133,8 +131,7 @@ export default function ResumePage() {
         </p>
       </section>
 
-      <div className="prose beta-sec">
-        <h2>Summary</h2>
+      <Section title="Summary">
         <p>{SUMMARY_INTRO}</p>
         <p>{SUMMARY_BUILDS_LEAD}</p>
         <ul>
@@ -147,7 +144,7 @@ export default function ResumePage() {
         <p>{SUMMARY_CLOSE}</p>
 
         <h2>Experience</h2>
-      </div>
+      </Section>
 
       <section className="beta-cv" aria-label="Experience, 2014 to the present">
         {ROLES.map((r) => (
@@ -155,9 +152,7 @@ export default function ResumePage() {
         ))}
       </section>
 
-      <div className="prose beta-sec">
-        <h2>Core strengths</h2>
-      </div>
+      <Section title="Core strengths" />
 
       <div className="beta-resume-strengths">
         {STRENGTHS.map((s) => (
@@ -168,8 +163,7 @@ export default function ResumePage() {
         ))}
       </div>
 
-      <div className="prose beta-sec">
-        <h2>Government and classified work</h2>
+      <Section title="Government and classified work">
         <ul>
           {GOVERNMENT.map((g) => (
             <li key={g}>{g}</li>
@@ -177,7 +171,7 @@ export default function ResumePage() {
         </ul>
 
         <h2>Expertise</h2>
-      </div>
+      </Section>
 
       <div className="piece-grid">
         {EXPERTISE.map((e) => (
@@ -194,13 +188,12 @@ export default function ResumePage() {
         ))}
       </div>
 
-      <div className="prose beta-sec">
-        <h2>Earlier career</h2>
+      <Section title="Earlier career">
         <p>
           Seventeen years before 2014, from co-founding a chat software company in 1997 through
           payments, healthcare, and search. The PDF gives each of these roles one line.
         </p>
-      </div>
+      </Section>
 
       <section className="beta-cv" aria-label="Experience, 1997 to 2014">
         {EARLIER_ROLES.map((r) => (
@@ -208,8 +201,7 @@ export default function ResumePage() {
         ))}
       </section>
 
-      <div className="prose beta-sec">
-        <h2>Open source and projects</h2>
+      <Section title="Open source and projects">
         <ul>
           {PROJECTS.map((p) => (
             <li key={p.name}>
@@ -238,7 +230,7 @@ export default function ResumePage() {
             </li>
           ))}
         </ul>
-      </div>
+      </Section>
 
       <section className="beta-resume-close" aria-label="Hiring">
         <p>

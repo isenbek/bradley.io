@@ -3,6 +3,7 @@ import { LiveEye } from "@/components/meatball/LiveEye"
 import { Greeter } from "@/components/meatball/Greeter"
 import { MotionTrack } from "@/components/meatball/MotionTrack"
 import { EarsTrack } from "@/components/meatball/EarsTrack"
+import { PageHead, Section } from "@/components/page"
 
 const RIG: { junk: string; role: string }[] = [
   { junk: "No case at all", role: "open-air on the bench, a body you can reach into" },
@@ -67,47 +68,32 @@ const ENTRIES = [
 export default function MeatballPage() {
   return (
     <div className="page">
-      <div className="page-head">
-        <nav className="crumb" aria-label="Breadcrumb">
-          <Link href="/">bradley.io</Link>
-          <span>
-            {" / "}
-            <span aria-current="page">Meatball</span>
-          </span>
-        </nav>
-        <h1>Meatball can see, hear, and talk back</h1>
-      </div>
+      <PageHead
+        crumbs={[{ label: "Meatball" }]}
+        title="Meatball can see, hear, and talk back"
+        lede={
+          <>
+            A caseless home server built from other people&apos;s cast-offs: salvaged GPUs, an
+            abandoned-office pile of audio dongles, a &apos;60s microphone, early-&apos;90s speakers.
+            Taught to see, hear, think and speak. Every model runs on the metal and nothing touches the
+            cloud.
+          </>
+        }
+      />
 
-      <p className="lede">
-        A caseless home server built from other people&apos;s cast-offs: salvaged GPUs, an
-        abandoned-office pile of audio dongles, a &apos;60s microphone, early-&apos;90s speakers.
-        Taught to see, hear, think and speak. Every model runs on the metal and nothing touches the
-        cloud.
-      </p>
-
-      <div className="prose beta-sec">
-        <h2>What it sees</h2>
-      </div>
+      <Section title="What it sees" />
         <LiveEye />
 
-      <div className="prose beta-sec">
-        <h2>It can just ask</h2>
-      </div>
+      <Section title="It can just ask" />
         <Greeter />
 
-      <div className="prose beta-sec">
-        <h2>It tracks its own motion</h2>
-      </div>
+      <Section title="It tracks its own motion" />
         <MotionTrack />
 
-      <div className="prose beta-sec">
-        <h2>Always-on ears</h2>
-      </div>
+      <Section title="Always-on ears" />
         <EarsTrack />
 
-      <div className="prose beta-sec">
-        <h2>Four cast-off parts, four working senses</h2>
-      </div>
+      <Section title="Four cast-off parts, four working senses" />
 
       <div className="piece-grid">
         {SENSES.map((s) => (
@@ -125,10 +111,9 @@ export default function MeatballPage() {
         ))}
       </div>
 
-      <div className="prose beta-sec">
-        <h2>The bill of materials</h2>
+      <Section title="The bill of materials">
         <p>Nothing here was bought new for this.</p>
-      </div>
+      </Section>
 
       <div className="ledger">
         <div className="scroller" tabIndex={0} role="region" aria-label="Bill of materials">
@@ -154,9 +139,7 @@ export default function MeatballPage() {
         </div>
       </div>
 
-      <div className="prose beta-sec">
-        <h2>Written up as it was built</h2>
-      </div>
+      <Section title="Written up as it was built" />
 
       <ul className="rail-list">
         {ENTRIES.map((e) => (

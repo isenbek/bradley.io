@@ -1,7 +1,7 @@
-import Link from "next/link"
 import { DiePlates } from "@/components/mos/DiePlates"
 import { DieStack } from "@/components/mos/DieStack"
 import { VITALS, MNEMONICS, MACHINES, GROUPS } from "./_content"
+import { PageHead, Section } from "@/components/page"
 
 const TOTAL = GROUPS.reduce((n, g) => n + g.items.length, 0)
 
@@ -15,36 +15,28 @@ const TOTAL = GROUPS.reduce((n, g) => n + g.items.length, 0)
 export default function Page() {
   return (
     <div className="page">
-      <div className="page-head">
-        <nav className="crumb" aria-label="Breadcrumb">
-          <Link href="/">bradley.io</Link>
-          <span>
-            {" / "}
-            <span aria-current="page">6502</span>
-          </span>
-        </nav>
-        <h1>A photograph of a chip, running</h1>
-      </div>
+      <PageHead
+        crumbs={[{ label: "6502" }]}
+        title="A photograph of a chip, running"
+        lede={
+          <>
+            The 6502 was not the best processor of 1975. It was the one an engineer could afford out of
+            pocket, and that turned out to matter more than everything else combined.
+          </>
+        }
+      />
 
-      <p className="lede">
-        The 6502 was not the best processor of 1975. It was the one an engineer could afford out of
-        pocket, and that turned out to matter more than everything else combined.
-      </p>
-
-      <div className="prose beta-sec">
-        <h2>One chip was destroyed to make this</h2>
+      <Section title="One chip was destroyed to make this">
         <p>
           The visual6502 team decapped a 6502, photographed the die, traced every polygon by hand,
           and gave the result away. Everything below stands on that.
         </p>
-      </div>
+      </Section>
 
       <DiePlates />
       <DieStack />
 
-      <div className="prose beta-sec">
-        <h2>3,510 transistors that moved the industry</h2>
-      </div>
+      <Section title="3,510 transistors that moved the industry" />
 
       <div className="panel">
         <div className="panel-face">
@@ -71,15 +63,14 @@ export default function Page() {
         </div>
       </div>
 
-      <div className="prose beta-sec">
-        <h2>The instruction set</h2>
+      <Section title="The instruction set">
         <p>
           56 mnemonics, 151 documented opcodes, 13 addressing modes. An 8-bit opcode has room for
           256, and the decoder answers to most of the rest as well, because it decodes bit patterns
           rather than consulting a table. The leftovers have been load-bearing in demoscene code
           for forty years.
         </p>
-      </div>
+      </Section>
 
       <p className="chips">
         {MNEMONICS.map((m) => (
@@ -89,9 +80,7 @@ export default function Page() {
         ))}
       </p>
 
-      <div className="prose beta-sec">
-        <h2>Where the part landed</h2>
-      </div>
+      <Section title="Where the part landed" />
 
       <div className="ledger">
         <div className="scroller" tabIndex={0} role="region" aria-label="Machines built on the 6502">
@@ -116,13 +105,12 @@ export default function Page() {
         </div>
       </div>
 
-      <div className="prose beta-sec">
-        <h2>Same polygons, new engine</h2>
+      <Section title="Same polygons, new engine">
         <p>
           The die geometry comes from the visual6502 trace untouched. What changed is how fast it
           can be solved and how it gets drawn.
         </p>
-      </div>
+      </Section>
 
       <div className="piece-grid">
         <div className="rail">
@@ -149,9 +137,7 @@ export default function Page() {
         </div>
       </div>
 
-      <div className="prose beta-sec">
-        <h2>How it is checked</h2>
-      </div>
+      <Section title="How it is checked" />
 
       <div className="panel">
         <div className="panel-face">
@@ -174,8 +160,7 @@ export default function Page() {
         </div>
       </div>
 
-      <div className="prose beta-sec">
-        <h2>The archive is one hosting bill from gone</h2>
+      <Section title="The archive is one hosting bill from gone">
         <p>
           visual6502.org runs, but it has not been touched since January 2012, it is reachable over
           plain HTTP only, and browsers increasingly disagree with that. The chip collection index
@@ -192,14 +177,14 @@ export default function Page() {
           {TOTAL} resources in {GROUPS.length} groups. Anything with a warning chip has a problem
           you would otherwise have to discover yourself.
         </p>
-      </div>
+      </Section>
 
       {GROUPS.map((g) => (
         <section key={g.id}>
-          <div className="prose beta-sec">
+          <Section>
             <h3>{g.title}</h3>
             <p>{g.blurb}</p>
-          </div>
+          </Section>
           <div className="ledger">
             <div className="scroller" tabIndex={0} role="region" aria-label={g.title}>
               <table>
@@ -238,8 +223,7 @@ export default function Page() {
         </section>
       ))}
 
-      <div className="prose beta-sec">
-        <h2>Credit</h2>
+      <Section title="Credit">
         <p>
           This exists because the visual6502 team decapped a 6502, photographed the die, traced it
           by hand, and gave it away: Greg James, Brian Silverman, Barry Silverman, Ed Spittles,
@@ -250,7 +234,7 @@ export default function Page() {
           www.visual6502.org, and those terms carry to this deployment and to anything you take
           from it.
         </p>
-      </div>
+      </Section>
     </div>
   )
 }

@@ -1,15 +1,14 @@
 import Link from "next/link"
 import { BookOpen, Eye } from "lucide-react"
+import { PageHead, Section } from "@/components/page"
 
 function Sec({ title, children }: { title: string; children: React.ReactNode }) {
   // The kit rules off every h2 (.prose > h2), so the numbered eyebrow the v3
   // version carried is redundant: the sequence is the order of the page.
   return (
     <section>
-      <div className="prose beta-sec">
-        <h2>{title}</h2>
-      </div>
-      <div className="prose beta-sec">{children}</div>
+      <Section title={<>{title}</>} />
+      <Section>{children}</Section>
     </section>
   )
 }
@@ -33,27 +32,18 @@ function Code({ cap, children }: { cap?: string; receipt?: boolean; children: st
 export default function MotionPage() {
   return (
     <div className="page">
-      <div className="page-head">
-        <nav className="crumb" aria-label="Breadcrumb">
-          <Link href="/">bradley.io</Link>
-          <span>
-            {" / "}
-            <Link href="/meatball">Meatball</Link>
-          </span>
-          <span>
-            {" / "}
-            <span aria-current="page">Field note 03</span>
-          </span>
-        </nav>
-        <h1>Teaching the eyes to ignore a box fan</h1>
-      </div>
-
-      <p className="lede">
-          A $20 box fan fooled both of Meatball&apos;s senses at once: it hissed on the mic and it
-          waved at the camera, and the camera kept reporting &quot;someone&apos;s here.&quot; The fix
-          is a small lesson in where the leverage actually is: never on the picture you can see,
-          always upstream of it or in the rule that reads it.
-      </p>
+      <PageHead
+        crumbs={[{ label: "Meatball", href: "/meatball" }, { label: "Field note 03" }]}
+        title="Teaching the eyes to ignore a box fan"
+        lede={
+          <>
+              A $20 box fan fooled both of Meatball&apos;s senses at once: it hissed on the mic and it
+              waved at the camera, and the camera kept reporting &quot;someone&apos;s here.&quot; The fix
+              is a small lesson in where the leverage actually is: never on the picture you can see,
+              always upstream of it or in the rule that reads it.
+          </>
+        }
+      />
 
       {/* HEADER ======================================================== */}
 

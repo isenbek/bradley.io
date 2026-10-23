@@ -23,6 +23,7 @@ import { FlightStatus } from "@/components/pilot/FlightStatus"
 import { HourStrips } from "@/components/pilot/HourStrips"
 import { ShareBar, type SharePart } from "@/components/pilot/ShareBar"
 import { SpanRows, type SpanRow, type SpanTick } from "@/components/pilot/SpanRows"
+import { PageHead, Section } from "@/components/page"
 
 /**
  * /ai-pilot: the licence, and the whole record behind it, on one page.
@@ -415,21 +416,16 @@ export default async function AiPilotPage() {
 
   return (
     <div className="page">
-      <div className="page-head">
-        <nav className="crumb" aria-label="Breadcrumb">
-          <Link href="/">bradley.io</Link>
-          <span>
-            {" / "}
-            <span aria-current="page">AI pilot</span>
-          </span>
-        </nav>
-        <h1>AI pilot licence</h1>
-      </div>
-
-      <p className="lede">
-        Every flight, on the record: the work I ship with Claude as co-pilot, counted from the
-        session logs. None of it is self-assessed.
-      </p>
+      <PageHead
+        crumbs={[{ label: "AI pilot" }]}
+        title="AI pilot licence"
+        lede={
+          <>
+            Every flight, on the record: the work I ship with Claude as co-pilot, counted from the
+            session logs. None of it is self-assessed.
+          </>
+        }
+      />
 
       <p className="quiet beta-pilot-fine">
         {coverageText(d)} A message is one transcript record: a prompt, a tool result or one block
@@ -523,14 +519,13 @@ export default async function AiPilotPage() {
       </div>
 
       {/* ============================ LOGBOOK ============================== */}
-      <div className="prose beta-sec">
-        <h2 id="logbook">Logbook</h2>
+      <Section id="logbook" title="Logbook">
         <p>
           The last 24 hours first, counted a minute at a time. Then the whole record: every day
           since {sinceLong ?? "the first entry"}, with each week&apos;s total over its column,
           and the hours of the day the work lands in.
         </p>
-      </div>
+      </Section>
 
       <div className="beta-pilot-stack">
         <ActivityPulse initial={now} />
@@ -600,15 +595,14 @@ export default async function AiPilotPage() {
       {chip("activityHeatmap, hourlyDistribution and streaks")}
 
       {/* ============================ MODELS =============================== */}
-      <div className="prose beta-sec">
-        <h2 id="models">Models flown</h2>
+      <Section id="models" title="Models flown">
         <p>
           {nf(d.typeRatings.length)} models, each drawn from the first day to the last day it
           appears in the record. The figure on the right is its share of all output tokens, and
           the type rating is a band of that share and nothing more: {ratingRule}, Exposure below
           that.
         </p>
-      </div>
+      </Section>
 
       <div className="panel">
         <div className="panel-face">
@@ -630,14 +624,13 @@ export default async function AiPilotPage() {
       </div>
 
       {/* ============================ MISSIONS ============================= */}
-      <div className="prose beta-sec">
-        <h2 id="missions">Mission log</h2>
+      <Section id="missions" title="Mission log">
         <p>
           A mission is a project, and a project is the directory a session started in, so these
           are directory names as they sit on disk. Each bar runs from the first active day to the
           last; the figure on the right is messages. Subagent logs are not counted.
         </p>
-      </div>
+      </Section>
 
       <div className="panel">
         <div className="panel-face">
@@ -675,8 +668,7 @@ export default async function AiPilotPage() {
       {/* ============================ TOOLS ================================ */}
       {tools && headParts.length > 0 && (
         <>
-          <div className="prose beta-sec">
-            <h2 id="tools">Top tools</h2>
+          <Section id="tools" title="Top tools">
             <p>
               What the model reached for.{" "}
               {typeof L.totalToolCalls === "number"
@@ -684,7 +676,7 @@ export default async function AiPilotPage() {
                 : ""}
               Most of flying is the shell.
             </p>
-          </div>
+          </Section>
 
           <div className="panel">
             <div className="panel-face">
@@ -735,8 +727,7 @@ export default async function AiPilotPage() {
       )}
 
       {/* ============================ RATINGS ============================== */}
-      <div className="prose beta-sec">
-        <h2 id="ratings">Ratings</h2>
+      <Section id="ratings" title="Ratings">
         <p>
           Read these as rough. Instrument ratings come from the words in each project&apos;s
           CLAUDE.md, the plan files and the technologies named in the session logs still on disk,
@@ -754,7 +745,7 @@ export default async function AiPilotPage() {
           . Piloting style is two ratios: directive is twice the share of tool calls that were
           Edit or Write, and plan first rises with plan files per session.
         </p>
-      </div>
+      </Section>
 
       <div className="panel">
         <div className="panel-face">
@@ -788,15 +779,14 @@ export default async function AiPilotPage() {
       </div>
 
       {/* ============================ WHAT CAME UP ========================= */}
-      <div className="prose beta-sec">
-        <h2 id="came-up">What came up</h2>
+      <Section id="came-up" title="What came up">
         <p>
           Technologies by how often they appear in a sample of the session logs still on disk
           {typeof sampled === "number" ? ` (${nf(sampled)} files)` : ""}, which reach back about
           30 days, and in each project&apos;s CLAUDE.md. This counts mentions, not proficiency,
           and it describes recent work, not the whole record.
         </p>
-      </div>
+      </Section>
 
       <div className="panel">
         <div className="panel-face">
@@ -824,13 +814,12 @@ export default async function AiPilotPage() {
       )}
 
       {/* ============================ TOKENS =============================== */}
-      <div className="prose beta-sec">
-        <h2 id="tokens">Token economy</h2>
+      <Section id="tokens" title="Token economy">
         <p>
           What the flying burned. Nearly all of it is cache reads: the same context, read again
           on every turn.
         </p>
-      </div>
+      </Section>
 
       <div className="panel">
         <div className="panel-face">
@@ -905,14 +894,13 @@ export default async function AiPilotPage() {
       )}
 
       {/* ============================ RELATED ============================== */}
-      <div className="prose beta-sec">
-        <h2>Keep reading</h2>
+      <Section title="Keep reading">
         <p>
           This page is the receipts. Two longer reads sit beside it:{" "}
           <Link href="/the-shift">The shift</Link>, the argument, and{" "}
           <Link href="/cost-analysis">Cost analysis</Link>, the bottom-up cost model.
         </p>
-      </div>
+      </Section>
     </div>
   )
 }

@@ -1,27 +1,18 @@
-import Link from "next/link"
 import { WorldEventBus } from "@/components/dragonfli/worldevent/WorldEventBus"
+import { PageHead } from "@/components/page"
 
 export default function Page() {
   return (
     <div className="page">
-      <div className="page-head">
-        <nav className="crumb" aria-label="Breadcrumb">
-          <Link href="/">bradley.io</Link>
-          <span>
-            {" / "}
-            <Link href="/dragonfli">Dragonfli</Link>
-          </span>
-          <span>
-            {" / "}
-            <span aria-current="page">Perception bus</span>
-          </span>
-        </nav>
-        <h1>The perception bus</h1>
-      </div>
-
-      <p className="lede">
-        A schema-tagged UDP firehose from every sensor on the network: mesh radios, clocks, GPS, Bluetooth census, ADS-B. Six decoders render what they recognise; anything else falls back to a generic view rather than being dropped.
-      </p>
+      <PageHead
+        crumbs={[{ label: "Dragonfli", href: "/dragonfli" }, { label: "Perception bus" }]}
+        title="The perception bus"
+        lede={
+          <>
+            A live stream of readings from every sensor on the network: radios, clocks, GPS, nearby Bluetooth devices and aircraft. Six decoders draw the kinds they recognise. Anything else still shows, in a plain view, rather than being dropped.
+          </>
+        }
+      />
 
       <WorldEventBus />
     </div>

@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { QR_TOOLS_SVG } from "@/components/housecalls/card-qr"
+import { PageHead, Section } from "@/components/page"
 
 /**
  * The counter cards, printable (docs/housecalls/counter-cards.md is the
@@ -42,29 +43,19 @@ function Card() {
 export default function CounterCardsPage() {
   return (
     <div className="page">
-      <div className="page-head">
-        <nav className="crumb" aria-label="Breadcrumb">
-          <Link href="/">bradley.io</Link>
-          <span>
-            {" / "}
-            <Link href="/housecalls">House Calls</Link>
-            {" / "}
-            <Link href="/housecalls/tools">Free Tools</Link>
-            {" / "}
-            <span aria-current="page">Counter Cards</span>
-          </span>
-        </nav>
-        <h1>The counter cards.</h1>
-      </div>
+      <PageHead
+        crumbs={[{ label: "House Calls", href: "/housecalls" }, { label: "Free Tools", href: "/housecalls/tools" }, { label: "Counter Cards" }]}
+        title="The counter cards."
+        lede={
+          <>
+            The paper form of the giveaway: a letter sheet of eight cards for supply-house counters,
+            black on white because toner is money. Print on cardstock, cut on the lines, ask the
+            counter manager with the three sentences below.
+          </>
+        }
+      />
 
-      <p className="lede">
-        The paper form of the giveaway: a letter sheet of eight cards for supply-house counters,
-        black on white because toner is money. Print on cardstock, cut on the lines, ask the
-        counter manager with the three sentences below.
-      </p>
-
-      <div className="prose beta-sec">
-        <h2>The ask, verbatim</h2>
+      <Section title="The ask, verbatim">
         <p>
           &quot;I am a local engineer giving away free phone tools for the trades: quotes, change
           orders, job photos. No app, no account, nothing to sell your customers. Mind if I leave
@@ -77,7 +68,7 @@ export default function CounterCardsPage() {
           <Link href="/housecalls">open ledger</Link> reports honestly. The full plan is in{" "}
           <Link href="/housecalls/docs/counter-cards">the paperwork</Link>.
         </p>
-      </div>
+      </Section>
 
       <p className="hero-ctas">
         <button className="btn btn-primary" onClick={() => window.print()}>

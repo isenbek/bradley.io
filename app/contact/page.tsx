@@ -2,6 +2,7 @@ import Link from "next/link"
 import type { Metadata } from "next"
 import { ArrowRight, ArrowUpRight } from "lucide-react"
 import { RESUME_PDF, RESUME_UPDATED } from "@/lib/resume"
+import { PageHead, Section } from "@/components/page"
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -67,34 +68,29 @@ const MAILTO =
 export default function BetaContactPage() {
   return (
     <div className="page">
-      <div className="page-head">
-        <nav className="crumb" aria-label="Breadcrumb">
-          <Link href="/">bradley.io</Link>
-          <span>
-            {" / "}
-            <span aria-current="page">Contact</span>
-          </span>
-        </nav>
-        <h1>Contact</h1>
-      </div>
+      <PageHead
+        crumbs={[{ label: "Contact" }]}
+        title="Contact"
+        after={
+          <p className="beta-services-address">
+            <a href={MAILTO_PLAIN}>{ADDRESS}</a>
+          </p>
+        }
+        lede={
+          <>
+            That is the whole contact form. Project, second opinion, weird hardware question, or
+            just a hello. All welcome. Email is the front door and GitHub is the side door. Both
+            lead to the same room.
+          </>
+        }
+      />
 
-      <p className="beta-services-address">
-        <a href={MAILTO_PLAIN}>{ADDRESS}</a>
-      </p>
-
-      <p className="lede">
-        That is the whole contact form. Project, second opinion, weird hardware question, or just a
-        hello. All welcome. Email is the front door; GitHub is the side door; both lead to the same
-        room.
-      </p>
-
-      <div className="prose beta-sec">
-        <h2>What helps a first email</h2>
+      <Section title="What helps a first email">
         <p>
           None of this is required, but a paragraph hitting these four points means I can reply
           with something useful instead of a follow-up question.
         </p>
-      </div>
+      </Section>
 
       <div className="beta-services-first">
         <ol className="beta-services-points">
@@ -138,9 +134,7 @@ export default function BetaContactPage() {
         </aside>
       </div>
 
-      <div className="prose beta-sec">
-        <h2>Before you write</h2>
-      </div>
+      <Section title="Before you write" />
 
       {/* Three link cards: the kit's .rail and the site's shared .beta-linkcard
           for the look and the press. The anchor is the words at the foot and
@@ -200,13 +194,12 @@ export default function BetaContactPage() {
         </article>
       </div>
 
-      <div className="prose beta-sec">
-        <h2>One paragraph. That&rsquo;s all I need.</h2>
+      <Section title={<>One paragraph. That&rsquo;s all I need.</>}>
         <p>
           Bring the problem. I&rsquo;ll bring the questions. Worst case you walk away with a clearer
           picture of what to do next. And that&rsquo;s free.
         </p>
-      </div>
+      </Section>
 
       <p className="beta-services-actions">
         <a className="btn btn-primary" href={MAILTO}>

@@ -1,5 +1,6 @@
 import Link from "next/link"
 import type { Metadata } from "next"
+import { PageHead, Section } from "@/components/page"
 
 const DESCRIPTION =
   "House Calls is a method, and methods replicate. The territory map of who runs the machine where: currently a network of one, stated plainly, with the door open for the second."
@@ -83,27 +84,19 @@ export default function NetworkPage() {
         }}
       />
       <div className="page">
-        <div className="page-head">
-          <nav className="crumb" aria-label="Breadcrumb">
-            <Link href="/">bradley.io</Link>
-            <span>
-              {" / "}
-              <Link href="/housecalls">House Calls</Link>
-              {" / "}
-              <span aria-current="page">The Network</span>
-            </span>
-          </nav>
-          <h1>The network. Population: one.</h1>
-        </div>
+        <PageHead
+          crumbs={[{ label: "House Calls", href: "/housecalls" }, { label: "The Network" }]}
+          title="The network. Population: one."
+          lede={
+            <>
+              House Calls is a method, and methods replicate. This page is the map of who runs the
+              machine where. It has one row, because honesty at every size is the method, and today
+              the size is one.
+            </>
+          }
+        />
 
-        <p className="lede">
-          House Calls is a method, and methods replicate. This page is the map of who runs the
-          machine where. It has one row, because honesty at every size is the method, and today
-          the size is one.
-        </p>
-
-        <div className="prose beta-sec">
-          <h2>What an operator is</h2>
+        <Section title="What an operator is">
           <p>
             One skilled engineer, one territory, one machine on hardware they own. Their AI
             harvests, maps, qualifies, and drafts; they read and sign everything before it goes
@@ -126,7 +119,7 @@ export default function NetworkPage() {
             Territory is counties. One operator per territory, first come, and each machine maps
             only its own.
           </p>
-        </div>
+        </Section>
 
         <div className="ledger">
           <div className="scroller" tabIndex={0} role="region" aria-label="Territory ledger">
@@ -170,8 +163,7 @@ export default function NetworkPage() {
           </div>
         </div>
 
-        <div className="prose beta-sec">
-          <h2>Where this stands, honestly</h2>
+        <Section title="Where this stands, honestly">
           <p>
             The flagship machine is built, public, and mid-hunt; it has not yet won its first
             engagement, and a network sells nothing it has not proven. So the sequence is
@@ -189,7 +181,7 @@ export default function NetworkPage() {
             work-finding in the open, on your own metal, under rules that do not bend, say hello
             and tell us your county.
           </p>
-        </div>
+        </Section>
 
         <p className="hero-ctas">
           <Link className="btn btn-primary" href="/contact">

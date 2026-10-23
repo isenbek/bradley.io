@@ -2,6 +2,7 @@ import Link from "next/link"
 import { Compass, MousePointerClick, Sigma } from "lucide-react"
 import { ProjectEmbed } from "@/components/projects/ProjectEmbed"
 import { PrimeCompanions } from "@/components/projects/PrimeCompanions"
+import { PageHead, Section } from "@/components/page"
 
 const CHANNELS = [
   {
@@ -51,28 +52,19 @@ const TRY = [
 export default function ZetaForgePage() {
   return (
     <div className="page">
-      <div className="page-head">
-        <nav className="crumb" aria-label="Breadcrumb">
-          <Link href="/">bradley.io</Link>
-          <span>
-            {" / "}
-            <Link href="/projects">Projects</Link>
-          </span>
-          <span>
-            {" / "}
-            <span aria-current="page">Zeta Forge</span>
-          </span>
-        </nav>
-        <h1>Build zeta one arrow at a time</h1>
-      </div>
-
-      <p className="lede">
-          ζ(s) = Σ n⁻ˢ is usually handed to you as a finished object. Here it is manufactured
-          in front of you: each term is an arrow, laid head to tail, and the point the walk
-          lands on <strong>is</strong> the value. Drag s around the complex plane and watch
-          convergence, the pole, and the zeros stop being definitions and start being things
-          that visibly happen.
-      </p>
+      <PageHead
+        crumbs={[{ label: "Projects", href: "/projects" }, { label: "Zeta Forge" }]}
+        title="Build zeta one arrow at a time"
+        lede={
+          <>
+              ζ(s) = Σ n⁻ˢ is usually handed to you as a finished object. Here it is manufactured
+              in front of you: each term is an arrow, laid head to tail, and the point the walk
+              lands on <strong>is</strong> the value. Drag s around the complex plane and watch
+              convergence, the pole, and the zeros stop being definitions and start being things
+              that visibly happen.
+          </>
+        }
+      />
       {/* HEADER ========================================================= */}
 
       {/* THE INSTRUMENT ================================================= */}
@@ -161,7 +153,7 @@ export default function ZetaForgePage() {
               <Sigma size={18} strokeWidth={2.2} />
               <h2>Three landmarks, made playable</h2>
             </div>
-          <div className="prose beta-sec">
+          <Section>
               <p>
                 The forge is the western end of the{" "}
                 <Link href="/projects/prime-atlas">atlas</Link>, turned into something you can
@@ -182,7 +174,7 @@ export default function ZetaForgePage() {
                 <Link href="/projects/prime-orchestra">orchestra</Link> follows naturally: each of
                 those zeros becomes one wave, and the waves add up to the primes.
               </p>
-            </div>
+            </Section>
         </div>
       </section>
 

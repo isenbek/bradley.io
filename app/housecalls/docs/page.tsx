@@ -1,6 +1,7 @@
 import Link from "next/link"
 import type { Metadata } from "next"
 import { readAllDocsMeta, type HuntDocMeta } from "@/lib/housecalls/docs"
+import { PageHead } from "@/components/page"
 
 const DESCRIPTION =
   "The hunt's paperwork, readable where the hunt lives: every plan, letter template, rule, and recipe behind housecalls.bradley.io, rendered from the same files the repo carries."
@@ -139,26 +140,19 @@ export default function HuntDocsIndex() {
         }}
       />
       <div className="page">
-        <div className="page-head">
-          <nav className="crumb" aria-label="Breadcrumb">
-            <Link href="/">bradley.io</Link>
-            <span>
-              {" / "}
-              <Link href="/housecalls">House Calls</Link>
-              {" / "}
-              <span aria-current="page">The Paperwork</span>
-            </span>
-          </nav>
-          <h1>The paperwork, in the open too.</h1>
-        </div>
-
-        <p className="lede">
-          {all.length} working documents behind the hunt: plans, letter templates, rules, and
-          recipes, rendered from the same committed files the repo carries. This index derives from
-          the files themselves (latest change {latest}); a new document appears here the moment it
-          ships. What never appears: correspondence, prospects, or anything with a person&apos;s
-          contact details, which live outside the public tree by design.
-        </p>
+        <PageHead
+          crumbs={[{ label: "House Calls", href: "/housecalls" }, { label: "The Paperwork" }]}
+          title="The paperwork, in the open too."
+          lede={
+            <>
+              {all.length} working documents behind the hunt: plans, letter templates, rules, and
+              recipes, rendered from the same committed files the repo carries. This index derives from
+              the files themselves (latest change {latest}); a new document appears here the moment it
+              ships. What never appears: correspondence, prospects, or anything with a person&apos;s
+              contact details, which live outside the public tree by design.
+            </>
+          }
+        />
 
         {SECTIONS.map((sec) => {
           const docs = sec.slugs

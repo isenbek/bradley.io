@@ -1,27 +1,18 @@
-import Link from "next/link"
 import { V3Airspace } from "./V3Airspace"
+import { PageHead } from "@/components/page"
 
 export default function Page() {
   return (
     <div className="page">
-      <div className="page-head">
-        <nav className="crumb" aria-label="Breadcrumb">
-          <Link href="/">bradley.io</Link>
-          <span>
-            {" / "}
-            <Link href="/dragonfli">Dragonfli</Link>
-          </span>
-          <span>
-            {" / "}
-            <span aria-current="page">Airspace</span>
-          </span>
-        </nav>
-        <h1>The airspace map</h1>
-      </div>
-
-      <p className="lede">
-        Aircraft tracks over a local basemap, with a density layer built from what this receiver has heard rather than from a feed. The panel below says whether the antenna is being heard right now.
-      </p>
+      <PageHead
+        crumbs={[{ label: "Dragonfli", href: "/dragonfli" }, { label: "Airspace" }]}
+        title="The airspace map"
+        lede={
+          <>
+            Aircraft tracks over a local map, shaded by how often this receiver has heard planes in each spot. Nothing comes from a feed. The panel below says whether the antenna is hearing anything right now.
+          </>
+        }
+      />
 
       <V3Airspace />
     </div>

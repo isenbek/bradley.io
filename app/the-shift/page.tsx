@@ -6,6 +6,7 @@ import { costNum, costWindow, loadCostModel } from "../_cost-model"
 import { ShiftFigure, ShiftKind } from "@/components/shift/ShiftFigure"
 import { CompoundCycle } from "@/components/shift/CompoundCycle"
 import { ShiftRows } from "@/components/shift/ShiftRows"
+import { PageHead, Section } from "@/components/page"
 
 export const revalidate = 3600
 
@@ -173,21 +174,16 @@ export default function BetaShiftPage() {
 
   return (
     <div className="page">
-      <div className="page-head">
-        <nav className="crumb" aria-label="Breadcrumb">
-          <Link href="/">bradley.io</Link>
-          <span>
-            {" / "}
-            <span aria-current="page">The shift</span>
-          </span>
-        </nav>
-        <h1>The shift</h1>
-      </div>
-
-      <p className="lede">
-        How AI rewrites the economics of building software. Five sections of evidence, not vibes,
-        and a note wherever the evidence runs out.
-      </p>
+      <PageHead
+        crumbs={[{ label: "The shift" }]}
+        title="The shift"
+        lede={
+          <>
+            How AI rewrites the economics of building software. Five sections of evidence, not vibes,
+            and a note wherever the evidence runs out.
+          </>
+        }
+      />
 
       <div className="notice">
         <b>One project, one operator.</b> Everything below is drawn from a single body of work. It
@@ -207,7 +203,7 @@ export default function BetaShiftPage() {
         Each figure names its file and its period underneath.
       </div>
 
-      <div className="prose beta-sec beta-shift-thesis">
+      <Section className="beta-shift-thesis">
         <p>
           The argument runs in five steps. Teams collapse into soloists. Sprints stretch into
           streams. Meetings are replaced by messages. The cache makes a long context affordable.
@@ -236,7 +232,7 @@ export default function BetaShiftPage() {
           work touched rather than depth of expertise. A high score says the month was spent in that
           vocabulary. It does not certify a specialist.
         </p>
-      </div>
+      </Section>
 
       <RampKey low="lower" high="higher" />
 
@@ -262,9 +258,9 @@ export default function BetaShiftPage() {
         </div>
       </ShiftFigure>
 
-      <div className="prose beta-sec">
+      <Section>
         <p>The seats the cost model prices for the same ground:</p>
-      </div>
+      </Section>
       <ul className="beta-shift-seats" aria-label="Roles in the modelled team">
         {cost.legacy.roles.map((r) => (
           <li className="tag" key={r.title}>
@@ -278,10 +274,7 @@ export default function BetaShiftPage() {
       {/* ==============================================================
           02
           ============================================================== */}
-      <div className="prose beta-sec">
-        <h2>
-          <span className="beta-shift-n">02</span>From sprints to streams
-        </h2>
+      <Section title={<><span className="beta-shift-n">02</span>From sprints to streams</>}>
         <p>
           The sprint model assumes work arrives in discrete batches. AI-assisted development is
           continuous: deploy when ready, iterate in real time, no ceremony between idea and
@@ -297,7 +290,7 @@ export default function BetaShiftPage() {
               : ""}
           </p>
         )}
-      </div>
+      </Section>
 
       {calendarOk && since && through && (
         <ShiftFigure
@@ -331,7 +324,7 @@ export default function BetaShiftPage() {
         </ShiftFigure>
       )}
 
-      <div className="prose beta-sec">
+      <Section>
         <p>
           What this cannot show is the counterfactual. Nobody ran the same project in two-week
           sprints to compare. The weekly commit and issue counts for the case-study window are on{" "}
@@ -363,7 +356,7 @@ export default function BetaShiftPage() {
             : ""}{" "}
           What the record does have is when the work happened.
         </p>
-      </div>
+      </Section>
 
       <div className="beta-shift-two">
         {benchKnown && (
@@ -429,10 +422,7 @@ export default function BetaShiftPage() {
       {/* ==============================================================
           04
           ============================================================== */}
-      <div className="prose beta-sec">
-        <h2>
-          <span className="beta-shift-n">04</span>The cache effect
-        </h2>
+      <Section title={<><span className="beta-shift-n">04</span>The cache effect</>}>
         <p>
           {tok.cacheEfficiency.toFixed(1)}% of input came from cache. That is the whole reason a
           long-running context is affordable: re-reading the project each turn is what the cache is
@@ -445,7 +435,7 @@ export default function BetaShiftPage() {
           what makes handing them over affordable. It is closer to say that onboarding happens on
           every turn. The conversation is the knowledge base.
         </p>
-      </div>
+      </Section>
 
       <ShiftFigure
         kind="recorded"
@@ -482,10 +472,7 @@ export default function BetaShiftPage() {
       {/* ==============================================================
           05
           ============================================================== */}
-      <div className="prose beta-sec">
-        <h2>
-          <span className="beta-shift-n">05</span>Compound velocity
-        </h2>
+      <Section title={<><span className="beta-shift-n">05</span>Compound velocity</>}>
         <p>
           {/* The explicit spaces are load-bearing: a JSX text run that starts with a
               space and holds an entity loses the space in this toolchain. */}
@@ -493,7 +480,7 @@ export default function BetaShiftPage() {
           isolated efforts. They&rsquo;re an interconnected ecosystem, and the connection has a
           shape.
         </p>
-      </div>
+      </Section>
 
       <CompoundCycle
         steps={[
@@ -527,7 +514,7 @@ export default function BetaShiftPage() {
         returns="Each pass starts from what the last one built."
       />
 
-      <div className="prose beta-sec">
+      <Section>
         <p>
           Tools built for one project get used by the next. That is the part that compounds, and it
           is also the part this page cannot measure: there is no counter for a script that saved an
@@ -565,7 +552,7 @@ export default function BetaShiftPage() {
           <Link href="/cost-analysis">cost analysis</Link>, and the whole session record is on the{" "}
           <Link href="/ai-pilot">pilot record</Link>.
         </p>
-      </div>
+      </Section>
 
       <div className="beta-shift-endchip">
         <BetaMeasured source="cost-model.json + ai-pilot-data.json">

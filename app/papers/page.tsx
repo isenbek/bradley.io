@@ -1,6 +1,5 @@
 import { existsSync, readFileSync, statSync } from "fs"
 import { join } from "path"
-import Link from "next/link"
 import type { Metadata } from "next"
 import { BarStrip, RampKey, RowChart, type ChartTick, type StripDatum } from "../_charts"
 import { BetaMeasured } from "../_measured"
@@ -23,6 +22,7 @@ import {
   type Figure,
   type PapersData,
 } from "@/components/papers/study"
+import { PageHead, Section } from "@/components/page"
 
 export const revalidate = 3600
 
@@ -128,28 +128,13 @@ function monthRange(from: string, to: string): string[] {
 
 const plural = (n: number, one: string, many: string): string => (n === 1 ? one : many)
 
-function Head() {
-  return (
-    <div className="page-head">
-      <nav className="crumb" aria-label="Breadcrumb">
-        <Link href="/">bradley.io</Link>
-        <span>
-          {" / "}
-          <span aria-current="page">Papers</span>
-        </span>
-      </nav>
-      <h1>Papers</h1>
-    </div>
-  )
-}
-
 export default function BetaPapersPage() {
   const d = load()
 
   if (!d || !Array.isArray(d.studies)) {
     return (
       <div className="page">
-        <Head />
+        <PageHead crumbs={[{ label: "Papers" }]} title="Papers" />
         <div className="notice">
           <b>The index is not readable right now.</b> This page is drawn from a file a pipeline
           writes, and that file is missing or malformed. Nothing is shown rather than something
@@ -276,17 +261,21 @@ export default function BetaPapersPage() {
 
   return (
     <div className="page">
-      <Head />
-
-      <p className="lede">
-        Research notes in environmental data science: seismology, space weather, climate,
-        hydrology, and the cross-domain bits where everything starts to look the same. They are
-        the workspaces of the Data Lab at{" "}
-        <a href="https://terrapulse.info" target="_blank" rel="noopener noreferrer">
-          TerraPulse
-        </a>
-        , a measured-data platform for climate and geophysical data. I am its architect.
-      </p>
+      <PageHead
+        crumbs={[{ label: "Papers" }]}
+        title="Papers"
+        lede={
+          <>
+            Research notes in environmental data science: earthquakes, space weather, climate,
+            water, and the places where one field starts to look like another. They are the
+            workspaces of the Data Lab at{" "}
+            <a href="https://terrapulse.info" target="_blank" rel="noopener noreferrer">
+              TerraPulse
+            </a>
+            , a platform for measured climate and earth-science data. I am its architect.
+          </>
+        }
+      />
 
       {/* The caveat and what is withheld, and nothing else: the counts are in
           the panels below, once. */}
@@ -321,9 +310,7 @@ export default function BetaPapersPage() {
       </div>
 
       {/* ================================================================== */}
-      <div className="prose beta-sec">
-        <h2>The index, counted</h2>
-      </div>
+      <Section title="The index, counted" />
 
       <RampKey low="fewer" high="more" />
 

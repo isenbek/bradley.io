@@ -2,6 +2,7 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import type { Metadata } from "next"
 import { listDocSlugs, readDoc } from "@/lib/housecalls/docs"
+import { PageHead } from "@/components/page"
 
 /**
  * One document from the hunt's paperwork, server-rendered from its
@@ -57,25 +58,16 @@ export default async function HuntDocPage({ params }: { params: Promise<{ slug: 
         }}
       />
       <div className="page">
-        <div className="page-head">
-          <nav className="crumb" aria-label="Breadcrumb">
-            <Link href="/">bradley.io</Link>
-            <span>
-              {" / "}
-              <Link href="/housecalls">House Calls</Link>
-              {" / "}
-              <Link href="/housecalls/docs">The Paperwork</Link>
-              {" / "}
-              <span aria-current="page">{doc.slug}</span>
-            </span>
-          </nav>
-          <h1>{doc.title}</h1>
-        </div>
-
-        <p className="lede">
-          {doc.status ? <span className="tag">{doc.status}</span> : null}
-          {doc.updated ? <span className="tag">{doc.updated}</span> : null}
-        </p>
+        <PageHead
+          crumbs={[{ label: "House Calls", href: "/housecalls" }, { label: "The Paperwork", href: "/housecalls/docs" }, { label: "{doc.slug}" }]}
+          title={<>{doc.title}</>}
+          lede={
+            <>
+              {doc.status ? <span className="tag">{doc.status}</span> : null}
+              {doc.updated ? <span className="tag">{doc.updated}</span> : null}
+            </>
+          }
+        />
 
         <div className="prose beta-sec" dangerouslySetInnerHTML={{ __html: doc.html }} />
 

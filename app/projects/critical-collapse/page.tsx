@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { Sigma, Activity, MousePointerClick, Telescope } from "lucide-react"
 import { ProjectEmbed } from "@/components/projects/ProjectEmbed"
+import { PageHead, Section } from "@/components/page"
 
 const NUMBERS = [
   {
@@ -51,29 +52,20 @@ const TRY = [
 export default function CriticalCollapsePage() {
   return (
     <div className="page">
-      <div className="page-head">
-        <nav className="crumb" aria-label="Breadcrumb">
-          <Link href="/">bradley.io</Link>
-          <span>
-            {" / "}
-            <Link href="/projects">Projects</Link>
-          </span>
-          <span>
-            {" / "}
-            <span aria-current="page">Critical Collapse</span>
-          </span>
-        </nav>
-        <h1>A black hole, forged on the knife edge</h1>
-      </div>
-
-      <p className="lede">
-          Choptuik's 1993 result, running live on your device. A pulse of scalar field falls
-          together under its own gravity. Tuned just right, it hovers on the exact boundary
-          between dispersing back to flat space and collapsing to a black hole, and on that
-          boundary Einstein's equations do something nobody expected: they echo, and the mass
-          obeys a power law with a universal exponent. Nothing below is pre-rendered. Your
-          phone is integrating the field equations.
-      </p>
+      <PageHead
+        crumbs={[{ label: "Projects", href: "/projects" }, { label: "Critical Collapse" }]}
+        title="A black hole, forged on the knife edge"
+        lede={
+          <>
+              Choptuik's 1993 result, running live on your device. A pulse of scalar field falls
+              together under its own gravity. Tuned just right, it hovers on the exact boundary
+              between dispersing back to flat space and collapsing to a black hole, and on that
+              boundary Einstein's equations do something nobody expected: they echo, and the mass
+              obeys a power law with a universal exponent. Nothing below is pre-rendered. Your
+              phone is integrating the field equations.
+          </>
+        }
+      />
       {/* HEADER ========================================================= */}
 
       {/* THE INSTRUMENT ================================================= */}
@@ -165,7 +157,7 @@ export default function CriticalCollapsePage() {
               <Telescope size={18} strokeWidth={2.2} />
               <h2>Why a knife edge matters</h2>
             </div>
-          <div className="prose beta-sec">
+          <Section>
               <p>
                 The critical solution is a naked, self-similar region of spacetime where curvature
                 climbs without bound. Classically it cascades through every scale on the ruler, from
@@ -186,7 +178,7 @@ export default function CriticalCollapsePage() {
                 different threshold assemble itself out of the same equations. More single-file
                 instruments live back on the <Link href="/projects">projects index</Link>.
               </p>
-            </div>
+            </Section>
         </div>
       </section>
     </div>

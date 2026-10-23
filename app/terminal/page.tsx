@@ -1,7 +1,7 @@
-import Link from "next/link"
 import { loadTerminalData } from "./load"
 import { RunWord } from "./RunWord"
 import { V3Terminal } from "./V3Terminal"
+import { PageHead, Section } from "@/components/page"
 
 /* The stats and the org counts are read from files the pipelines rewrite
    between deploys, so the page is rebuilt hourly like /work. */
@@ -12,20 +12,15 @@ export default async function TerminalPage() {
 
   return (
     <div className="page">
-      <div className="page-head">
-        <nav className="crumb" aria-label="Breadcrumb">
-          <Link href="/">bradley.io</Link>
-          <span>
-            {" / "}
-            <span aria-current="page">Terminal</span>
-          </span>
-        </nav>
-        <h1>The site, as a shell</h1>
-      </div>
-
-      <p className="lede">
-        Everything on this site, reachable by typing. Start with <RunWord c="help" />.
-      </p>
+      <PageHead
+        crumbs={[{ label: "Terminal" }]}
+        title="The site, as a shell"
+        lede={
+          <>
+            Everything on this site, reachable by typing. Start with <RunWord c="help" />.
+          </>
+        }
+      />
 
       {/* PERMANENT ISLAND, decided 2026-08-30.
           Every other instrument was ported to the kit; this one is not going to
@@ -39,8 +34,7 @@ export default async function TerminalPage() {
       </div>
 
       {/* Paper: a person wrote this, about the machine above it. */}
-      <div className="prose beta-sec">
-        <h2>What is real in there</h2>
+      <Section title="What is real in there">
         <p>
           All of it. <RunWord c="now" /> and <RunWord c="ping" /> ask this server what its instruments are
           doing at the moment you press Enter, and an instrument that is switched off is printed as
@@ -53,7 +47,7 @@ export default async function TerminalPage() {
           set pieces were scripted and the rest was answered by a language model running here. It was
           retired on 5 October 2026, and the command now says so.
         </p>
-      </div>
+      </Section>
     </div>
   )
 }

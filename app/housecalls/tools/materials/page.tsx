@@ -1,6 +1,7 @@
 import Link from "next/link"
 import type { Metadata } from "next"
 import { MaterialPad } from "@/components/housecalls/MaterialPad"
+import { PageHead, Section } from "@/components/page"
 
 const DESCRIPTION =
   "A free voice material pad for trade workers: say the list in the truck, get a clean printable supply-house list. No account, no signup, and the clever part is honestly not AI."
@@ -48,30 +49,22 @@ export default function MaterialPadPage() {
         }}
       />
       <div className="page">
-        <div className="page-head">
-          <nav className="crumb" aria-label="Breadcrumb">
-            <Link href="/">bradley.io</Link>
-            <span>
-              {" / "}
-              <Link href="/housecalls">House Calls</Link>
-              {" / "}
-              <span aria-current="page">Material Pad</span>
-            </span>
-          </nav>
-          <h1>Say the list. Hand over the list.</h1>
-        </div>
-
-        <p className="lede">
-          Talk the material list into the phone from the truck: three boxes of romex twelve two,
-          twenty feet of half inch EMT, a roll of tape. Out comes a clean list with a checkbox
-          column, ready to print, text, or hand across the supply-house counter. Free, no account,
-          and the draft never leaves your phone.
-        </p>
+        <PageHead
+          crumbs={[{ label: "House Calls", href: "/housecalls" }, { label: "Material Pad" }]}
+          title="Say the list. Hand over the list."
+          lede={
+            <>
+              Talk the material list into the phone from the truck: three boxes of romex twelve two,
+              twenty feet of half inch EMT, a roll of tape. Out comes a clean list with a checkbox
+              column, ready to print, text, or hand across the supply-house counter. Free, no account,
+              and the draft never leaves your phone.
+            </>
+          }
+        />
 
         <MaterialPad />
 
-        <div className="prose beta-sec">
-          <h2>You do not need AI for this</h2>
+        <Section title="You do not need AI for this">
           <p>
             That sentence is the most valuable thing the people behind this page sell, so here it
             is about our own tool: the turning-your-ramble-into-a-list part is plain deterministic
@@ -83,7 +76,7 @@ export default function MaterialPadPage() {
             one from <Link href="/housecalls">House Calls</Link>: no account, nothing collected,
             everything on your device.
           </p>
-        </div>
+        </Section>
       </div>
     </>
   )

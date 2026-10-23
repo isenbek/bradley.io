@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { FlaskConical, Eye } from "lucide-react"
+import { PageHead, Section } from "@/components/page"
 
 // The salvaged rig — junk on the left, the sense it became on the right.
 const RIG: { junk: string; role: string }[] = [
@@ -20,10 +21,8 @@ function Sec({ title, children }: { title: string; children: React.ReactNode }) 
   // version carried is redundant: the sequence is the order of the page.
   return (
     <section>
-      <div className="prose beta-sec">
-        <h2>{title}</h2>
-      </div>
-      <div className="prose beta-sec">{children}</div>
+      <Section title={<>{title}</>} />
+      <Section>{children}</Section>
     </section>
   )
 }
@@ -31,27 +30,18 @@ function Sec({ title, children }: { title: string; children: React.ReactNode }) 
 export default function SensesPage() {
   return (
     <div className="page">
-      <div className="page-head">
-        <nav className="crumb" aria-label="Breadcrumb">
-          <Link href="/">bradley.io</Link>
-          <span>
-            {" / "}
-            <Link href="/meatball">Meatball</Link>
-          </span>
-          <span>
-            {" / "}
-            <span aria-current="page">Field note 01</span>
-          </span>
-        </nav>
-        <h1>I gave a junk-pile eyes, ears, and a voice</h1>
-      </div>
-
-      <p className="lede">
-          The machine these words were written on has no case. Two old GPUs, a wall of
-          second-hand drives, a factory button for a power switch. Over a few nights it
-          learned to see, hear, think, and talk back, every model running on the metal,
-          nothing in the cloud. This is how the frankenstein got its senses.
-      </p>
+      <PageHead
+        crumbs={[{ label: "Meatball", href: "/meatball" }, { label: "Field note 01" }]}
+        title="I gave a junk-pile eyes, ears, and a voice"
+        lede={
+          <>
+              The machine these words were written on has no case. Two old GPUs, a wall of
+              second-hand drives, a factory button for a power switch. Over a few nights it
+              learned to see, hear, think, and talk back, every model running on the metal,
+              nothing in the cloud. This is how the frankenstein got its senses.
+          </>
+        }
+      />
 
       {/* HEADER ========================================================= */}
 

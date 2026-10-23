@@ -2,6 +2,7 @@ import Link from "next/link"
 import { Activity, MousePointerClick, ShieldCheck, Sigma } from "lucide-react"
 import { ProjectEmbed } from "@/components/projects/ProjectEmbed"
 import { PrimeCompanions } from "@/components/projects/PrimeCompanions"
+import { PageHead, Section } from "@/components/page"
 
 const CHANNELS = [
   {
@@ -57,28 +58,19 @@ const TRY = [
 export default function PrimeZooPage() {
   return (
     <div className="page">
-      <div className="page-head">
-        <nav className="crumb" aria-label="Breadcrumb">
-          <Link href="/">bradley.io</Link>
-          <span>
-            {" / "}
-            <Link href="/projects">Projects</Link>
-          </span>
-          <span>
-            {" / "}
-            <span aria-current="page">Prime Zoo</span>
-          </span>
-        </nav>
-        <h1>Three instruments for the structure hiding in the primes</h1>
-      </div>
-
-      <p className="lede">
-          The <Link href="/projects/prime-orchestra">Prime Orchestra</Link> plays the primes
-          back out of the zeros of zeta. The zoo runs the other direction: it sieves two
-          million integers in your browser and interrogates the raw sequence. Which
-          constellations of primes are even allowed to exist, which residue class is ahead in
-          a two-century-old race, and whether one prime remembers the last one.
-      </p>
+      <PageHead
+        crumbs={[{ label: "Projects", href: "/projects" }, { label: "Prime Zoo" }]}
+        title="Three instruments for the structure hiding in the primes"
+        lede={
+          <>
+              The <Link href="/projects/prime-orchestra">Prime Orchestra</Link> plays the primes
+              back out of the zeros of zeta. The zoo runs the other direction: it sieves two
+              million integers in your browser and interrogates the raw sequence. Which
+              constellations of primes are even allowed to exist, which residue class is ahead in
+              a two-century-old race, and whether one prime remembers the last one.
+          </>
+        }
+      />
       {/* HEADER ========================================================= */}
 
       {/* THE INSTRUMENT ================================================= */}
@@ -172,7 +164,7 @@ export default function PrimeZooPage() {
               <Sigma size={18} strokeWidth={2.2} />
               <h2>What the lamp is actually testing</h2>
             </div>
-          <div className="prose beta-sec">
+          <Section>
               <p>
                 A pattern is <strong>admissible</strong> when it never covers a full residue class.
                 For every prime p, count the distinct residues the offsets land on:
@@ -195,7 +187,7 @@ export default function PrimeZooPage() {
                 recurs forever is open for every k ≥ 2, twin primes included. The instrument can
                 tell you a constellation is dead. It cannot tell you one is alive.
               </p>
-            </div>
+            </Section>
         </div>
       </section>
 

@@ -2,6 +2,7 @@ import Link from "next/link"
 import { Waves, Compass, MousePointerClick, Sigma } from "lucide-react"
 import { ProjectEmbed } from "@/components/projects/ProjectEmbed"
 import { PrimeCompanions } from "@/components/projects/PrimeCompanions"
+import { PageHead, Section } from "@/components/page"
 
 const CHANNELS = [
   {
@@ -52,27 +53,18 @@ const TRY = [
 export default function StormPlatesPage() {
   return (
     <div className="page">
-      <div className="page-head">
-        <nav className="crumb" aria-label="Breadcrumb">
-          <Link href="/">bradley.io</Link>
-          <span>
-            {" / "}
-            <Link href="/projects">Projects</Link>
-          </span>
-          <span>
-            {" / "}
-            <span aria-current="page">Storm Plates</span>
-          </span>
-        </nav>
-        <h1>The sieve, drawn as weather</h1>
-      </div>
-
-      <p className="lede">
-          Lay the integers out as a plank bridge and let one wave per prime roll under it.
-          Each crest breaks the plank it lands on, and the planks that survive are the primes.
-          Six cartoon plates take that one picture and push it until record gaps, twin primes
-          and the zeta zeros all fall out of it.
-      </p>
+      <PageHead
+        crumbs={[{ label: "Projects", href: "/projects" }, { label: "Storm Plates" }]}
+        title="The sieve, drawn as weather"
+        lede={
+          <>
+              Lay the integers out as a plank bridge and let one wave per prime roll under it.
+              Each crest breaks the plank it lands on, and the planks that survive are the primes.
+              Six cartoon plates take that one picture and push it until record gaps, twin primes
+              and the zeta zeros all fall out of it.
+          </>
+        }
+      />
       {/* HEADER ========================================================= */}
 
       {/* THE INSTRUMENT ================================================= */}
@@ -163,7 +155,7 @@ export default function StormPlatesPage() {
               <Sigma size={18} strokeWidth={2.2} />
               <h2>Two transcriptions of the same water</h2>
             </div>
-          <div className="prose beta-sec">
+          <Section>
               <p>
                 Plate VI is where this page hands off. The sieve can be written as one square wave
                 per prime, periodic in n, or as one tone per zeta zero, periodic in log x:
@@ -185,7 +177,7 @@ export default function StormPlatesPage() {
                 <Link href="/projects/zeta-forge">forge</Link>, and where all of it sits relative to
                 what is actually proven is the <Link href="/projects/prime-atlas">atlas</Link>.
               </p>
-            </div>
+            </Section>
         </div>
       </section>
 

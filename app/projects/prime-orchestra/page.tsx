@@ -1,7 +1,7 @@
-import Link from "next/link"
 import { Activity, AudioWaveform, MousePointerClick } from "lucide-react"
 import { ProjectEmbed } from "@/components/projects/ProjectEmbed"
 import { PrimeCompanions } from "@/components/projects/PrimeCompanions"
+import { PageHead, Section } from "@/components/page"
 
 const CHANNELS = [
   {
@@ -39,27 +39,18 @@ const TRY = [
 export default function PrimeOrchestraPage() {
   return (
     <div className="page">
-      <div className="page-head">
-        <nav className="crumb" aria-label="Breadcrumb">
-          <Link href="/">bradley.io</Link>
-          <span>
-            {" / "}
-            <Link href="/projects">Projects</Link>
-          </span>
-          <span>
-            {" / "}
-            <span aria-current="page">Prime Orchestra</span>
-          </span>
-        </nav>
-        <h1>The primes, played by the zeros of zeta</h1>
-      </div>
-
-      <p className="lede">
-          Every prime leaves a step in the counting staircase, and Riemann&rsquo;s explicit
-          formula says that staircase is <strong>exactly</strong> a sum of waves, one for each
-          nontrivial zero of the zeta function. This is that sum, live: feed the zeros in one at
-          a time and watch the primes resolve out of pure harmonics.
-      </p>
+      <PageHead
+        crumbs={[{ label: "Projects", href: "/projects" }, { label: "Prime Orchestra" }]}
+        title="The primes, played by the zeros of zeta"
+        lede={
+          <>
+              Every prime leaves a step in the counting staircase, and Riemann&rsquo;s explicit
+              formula says that staircase is <strong>exactly</strong> a sum of waves, one for each
+              nontrivial zero of the zeta function. This is that sum, live: feed the zeros in one at
+              a time and watch the primes resolve out of pure harmonics.
+          </>
+        }
+      />
       {/* HEADER ========================================================= */}
 
       {/* THE INSTRUMENT ================================================= */}
@@ -126,7 +117,7 @@ export default function PrimeOrchestraPage() {
               <AudioWaveform size={18} strokeWidth={2.2} />
               <h2>The formula, spelled out</h2>
             </div>
-          <div className="prose beta-sec">
+          <Section>
               <p>The Riemann–von Mangoldt explicit formula, exactly what the top scope plots:</p>
               <div className="code"><pre>ψ(x) = x − Σ_ρ x^ρ/ρ − log(2π) − ½·log(1 − x⁻²)</pre></div>
               <p>
@@ -140,7 +131,7 @@ export default function PrimeOrchestraPage() {
                 prime jump is Gibbs&rsquo; phenomenon, a truncated Fourier series meeting a
                 discontinuity. That is the demonstration, not a defect.
               </p>
-            </div>
+            </Section>
         </div>
       </section>
 
