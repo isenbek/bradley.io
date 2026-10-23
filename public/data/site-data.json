@@ -1,9 +1,9 @@
 {
-  "generated": "2026-10-23T16:02:01.553247+00:00",
+  "generated": "2026-10-23T20:03:44.853949+00:00",
   "stats": {
     "totalProjects": 84,
-    "totalSessions": 3400,
-    "totalMessages": 1353070,
+    "totalSessions": 3444,
+    "totalMessages": 1358747,
     "activeDays": 208,
     "streak": 149,
     "coverage": {
@@ -26,14 +26,14 @@
   "activityFeed": [
     {
       "type": "claude-code",
-      "title": "Claude Code: 8,478 transcript records",
-      "description": "186 sessions active, 2,699 tool calls",
+      "title": "Claude Code: 14,155 transcript records",
+      "description": "232 sessions active, 4,496 tool calls",
       "projectSlug": null,
       "category": null,
-      "date": "2026-10-23T15:59:50.971000Z",
+      "date": "2026-10-23T20:01:28.180000Z",
       "metadata": {
-        "messages": 8478,
-        "sessions": 186
+        "messages": 14155,
+        "sessions": 232
       }
     },
     {
@@ -42,7 +42,7 @@
       "description": "Climate intelligence platform: ingest, normalize, and serve environmental data",
       "projectSlug": "terrapulse",
       "category": "systems",
-      "date": "2026-10-23T10:32:09Z",
+      "date": "2026-10-23T18:15:52Z",
       "metadata": {
         "repo": "isenbek/terrapulse"
       }
@@ -642,8 +642,8 @@
         "WebSocket",
         "JWT"
       ],
-      "lastActivity": "2026-10-23T10:32:09Z",
-      "totalMessages": 95145,
+      "lastActivity": "2026-10-23T18:15:52Z",
+      "totalMessages": 96021,
       "sources": {
         "github": {
           "repo": "isenbek/terrapulse",
@@ -652,9 +652,9 @@
           "lastPush": "2026-10-23"
         },
         "claudeCode": {
-          "totalSessions": 21,
-          "totalMessages": 95145,
-          "lastSession": "2026-10-22"
+          "totalSessions": 22,
+          "totalMessages": 96021,
+          "lastSession": "2026-10-23"
         }
       },
       "provenance": {
@@ -755,6 +755,68 @@
       "categoryBasis": "default"
     },
     {
+      "slug": "infra",
+      "name": "infra",
+      "tagline": "Infrastructure management and operational tasks.",
+      "description": "The `infra` repository contains Python code related to infrastructure management and operational tasks, primarily focused on managing and monitoring systems, particularly those involving network configurations, security updates, and application deployments. It includes components for running background processes, managing system health, and handling specific hardware integrations like the Epson V600 scanner. The repository also incorporates documentation and processes for tracking deployments and addressing operational issues.",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-10-23",
+      "totalMessages": 118318,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 12,
+          "totalMessages": 118318,
+          "lastSession": "2026-10-23"
+        },
+        "timeline": {
+          "org": "tinymachines",
+          "repo": "infra",
+          "commits": 58,
+          "descriptionSource": "ai"
+        }
+      },
+      "provenance": {
+        "tagline": "ai-cached",
+        "description": "timeline"
+      },
+      "categoryBasis": "keywords"
+    },
+    {
+      "slug": "cbapex",
+      "name": "cbapex",
+      "tagline": "cbapex: Managing cross-app charter ownership and data.",
+      "description": "The cbapex repository is a TypeScript container application designed to manage cross-app charter ownership and shared-layer functionality, supporting applications like cbprospect, cbnight, and cbpublic. It utilizes a containerized architecture and a kit component for managing various features and data exploration, with a focus on streamlining workflows and data access across different applications.",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-10-23",
+      "totalMessages": 65728,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 5,
+          "totalMessages": 65728,
+          "lastSession": "2026-10-23"
+        },
+        "timeline": {
+          "org": "Nominate-AI",
+          "repo": "cbapex",
+          "commits": 960,
+          "descriptionSource": "ai"
+        }
+      },
+      "provenance": {
+        "tagline": "ai-cached",
+        "description": "timeline"
+      },
+      "categoryBasis": "default"
+    },
+    {
       "slug": "cbmodels",
       "name": "cbmodels",
       "tagline": "Political data engine for segments, results, and insights",
@@ -765,11 +827,11 @@
       "status": "active",
       "technologies": [],
       "lastActivity": "2026-10-23",
-      "totalMessages": 62253,
+      "totalMessages": 62306,
       "sources": {
         "claudeCode": {
           "totalSessions": 14,
-          "totalMessages": 62253,
+          "totalMessages": 62306,
           "lastSession": "2026-10-23"
         },
         "timeline": {
@@ -796,11 +858,11 @@
       "status": "active",
       "technologies": [],
       "lastActivity": "2026-10-23",
-      "totalMessages": 45795,
+      "totalMessages": 45890,
       "sources": {
         "claudeCode": {
           "totalSessions": 1,
-          "totalMessages": 45795,
+          "totalMessages": 45890,
           "lastSession": "2026-10-23"
         },
         "timeline": {
@@ -813,6 +875,31 @@
       "provenance": {
         "tagline": "ai-cached",
         "description": "timeline"
+      },
+      "categoryBasis": "keywords"
+    },
+    {
+      "slug": "context-agent",
+      "name": "context-agent",
+      "tagline": "",
+      "description": "",
+      "category": "ai-ml",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-10-23",
+      "totalMessages": 44695,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 3044,
+          "totalMessages": 44695,
+          "lastSession": "2026-10-23"
+        }
+      },
+      "provenance": {
+        "tagline": "none",
+        "description": "none"
       },
       "categoryBasis": "keywords"
     },
@@ -836,11 +923,11 @@
         "DuckDB"
       ],
       "lastActivity": "2026-10-23",
-      "totalMessages": 44188,
+      "totalMessages": 44413,
       "sources": {
         "claudeCode": {
           "totalSessions": 7,
-          "totalMessages": 44188,
+          "totalMessages": 44413,
           "lastSession": "2026-10-23"
         },
         "timeline": {
@@ -857,31 +944,6 @@
       "categoryBasis": "keywords"
     },
     {
-      "slug": "context-agent",
-      "name": "context-agent",
-      "tagline": "",
-      "description": "",
-      "category": "ai-ml",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-10-23",
-      "totalMessages": 44068,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 3001,
-          "totalMessages": 44068,
-          "lastSession": "2026-10-23"
-        }
-      },
-      "provenance": {
-        "tagline": "none",
-        "description": "none"
-      },
-      "categoryBasis": "keywords"
-    },
-    {
       "slug": "cbrural",
       "name": "cbrural",
       "tagline": "cbrural: Rural AM.FM application",
@@ -892,11 +954,11 @@
       "status": "active",
       "technologies": [],
       "lastActivity": "2026-10-23",
-      "totalMessages": 30699,
+      "totalMessages": 31196,
       "sources": {
         "claudeCode": {
           "totalSessions": 6,
-          "totalMessages": 30699,
+          "totalMessages": 31196,
           "lastSession": "2026-10-23"
         },
         "timeline": {
@@ -923,11 +985,11 @@
       "status": "active",
       "technologies": [],
       "lastActivity": "2026-10-23",
-      "totalMessages": 22505,
+      "totalMessages": 22653,
       "sources": {
         "claudeCode": {
           "totalSessions": 2,
-          "totalMessages": 22505,
+          "totalMessages": 22653,
           "lastSession": "2026-10-23"
         }
       },
@@ -948,79 +1010,17 @@
       "status": "active",
       "technologies": [],
       "lastActivity": "2026-10-23",
-      "totalMessages": 19312,
+      "totalMessages": 19321,
       "sources": {
         "claudeCode": {
           "totalSessions": 5,
-          "totalMessages": 19312,
+          "totalMessages": 19321,
           "lastSession": "2026-10-23"
         }
       },
       "provenance": {
         "tagline": "none",
         "description": "none"
-      },
-      "categoryBasis": "default"
-    },
-    {
-      "slug": "infra",
-      "name": "infra",
-      "tagline": "Infrastructure management and operational tasks.",
-      "description": "The `infra` repository contains Python code related to infrastructure management and operational tasks, primarily focused on managing and monitoring systems, particularly those involving network configurations, security updates, and application deployments. It includes components for running background processes, managing system health, and handling specific hardware integrations like the Epson V600 scanner. The repository also incorporates documentation and processes for tracking deployments and addressing operational issues.",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-10-22",
-      "totalMessages": 118316,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 12,
-          "totalMessages": 118316,
-          "lastSession": "2026-10-22"
-        },
-        "timeline": {
-          "org": "tinymachines",
-          "repo": "infra",
-          "commits": 58,
-          "descriptionSource": "ai"
-        }
-      },
-      "provenance": {
-        "tagline": "ai-cached",
-        "description": "timeline"
-      },
-      "categoryBasis": "keywords"
-    },
-    {
-      "slug": "cbapex",
-      "name": "cbapex",
-      "tagline": "cbapex: Managing cross-app charter ownership and data.",
-      "description": "The cbapex repository is a TypeScript container application designed to manage cross-app charter ownership and shared-layer functionality, supporting applications like cbprospect, cbnight, and cbpublic. It utilizes a containerized architecture and a kit component for managing various features and data exploration, with a focus on streamlining workflows and data access across different applications.",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-10-22",
-      "totalMessages": 65701,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 5,
-          "totalMessages": 65701,
-          "lastSession": "2026-10-22"
-        },
-        "timeline": {
-          "org": "Nominate-AI",
-          "repo": "cbapex",
-          "commits": 960,
-          "descriptionSource": "ai"
-        }
-      },
-      "provenance": {
-        "tagline": "ai-cached",
-        "description": "timeline"
       },
       "categoryBasis": "default"
     },
@@ -2557,8 +2557,8 @@
       "SPI",
       "SQLite",
       "systemd",
-      "DuckDB",
       "AWS",
+      "DuckDB",
       "Anthropic",
       "CSV",
       "YAML",
