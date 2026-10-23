@@ -1,18 +1,17 @@
-import { ogV3ImageResponse, OG_V3_SIZE, OG_V3_CONTENT_TYPE } from "@/lib/og-card-v3"
+import { ogKitImageResponse, OG_KIT_SIZE, OG_KIT_CONTENT_TYPE } from "@/lib/og-card-kit"
 
 export const runtime = "nodejs"
-export const alt = "Bradley Isenbek · bradley.io"
-export const size = OG_V3_SIZE
-export const contentType = OG_V3_CONTENT_TYPE
+export const alt =
+  "Bradley Isenbek, Grand Rapids, Michigan: AI pilot, data architect, hardware hacker. Open to full-time roles in AI systems and data architecture."
+export const size = OG_KIT_SIZE
+export const contentType = OG_KIT_CONTENT_TYPE
 
+/** The home card, in the kit's style: the hero's words, as the page opens. */
 export default function OG() {
-  return ogV3ImageResponse({
-    eyebrow: "Grand Rapids, Michigan",
-    title: "AI pilot. Data architect. Hardware hacker.",
-    subtitle:
-      "Building at the seam where enterprise scale meets maker culture: ESP32 mesh to Fortune-500 warehouses, with Claude as co-pilot.",
-    tags: ["Anti-cloud", "Host local", "Think global"],
-    accent: "blue",
-    cta: "Explore bradley.io →",
+  return ogKitImageResponse({
+    eyebrow: "Bradley Isenbek · Grand Rapids, Michigan",
+    lines: ["AI pilot.", "Data architect.", "Hardware hacker."],
+    sentence: "Open to full-time roles in AI systems and data architecture.",
+    foot: "ANTI-CLOUD · HOST LOCAL",
   })
 }
