@@ -77,16 +77,44 @@ export interface ResumeRole {
   tech?: string[]
 }
 
-export const RESUME_UPDATED = "2026-10-16"
+export const RESUME_UPDATED = "2026-10-22"
 
 export const RESUME_PDF = "/resume.pdf"
 
 export const HEADLINE =
   "AI systems architect and machine learning engineer: agent platforms, data architecture, and the hardware they run on."
 
+/**
+ * The summary, in the plain voice Brad approved on 2026-10-22 (the language
+ * scrub): short sentences, no semicolon chains, no internal names a reader
+ * would have to look up. The page and the print render it in parts, the
+ * builds as a list; SUMMARY is the same words as plain lines for everything
+ * that reads text (the JSON, the MCP resume, the chat, the terminal, and the
+ * PDF check, which finds each line word for word in the printed sheet, so a
+ * build renders as "<b>name</b>: text").
+ */
+export const SUMMARY_INTRO =
+  "AI systems architect and machine learning engineer. More than fifteen years designing secure, large-scale data systems for government and enterprise clients, including a classified project for the United States Government and systems that process billions of records."
+
+export const SUMMARY_BUILDS_LEAD = "Since February 2026, building with Claude and other AI models every day:"
+
+export const SUMMARY_BUILDS: { name: string; text: string }[] = [
+  {
+    name: "Campaign Brain",
+    text: "84 self-hosted services, ready for production. They give AI agents a memory, plan and run their work, and gather public information.",
+  },
+  { name: "MyFinalWishes (mywishes.com)", text: "digital estate planning, shipped on the SysForge platform." },
+  { name: "A 6502 chip and an NES", text: "simulated transistor by transistor, at tinymachines.ai." },
+  { name: "TerraPulse", text: "an open platform for measured climate and earth-science data." },
+]
+
+export const SUMMARY_CLOSE = "Every working session, and what it cost, is on the public record."
+
 export const SUMMARY: string[] = [
-  "AI systems architect and machine learning engineer with more than fifteen years designing secure, large-scale data systems for government and enterprise clients, including a classified project for the United States Government and infrastructure processing billions of records. Expert in AI and ML pipelines, distributed systems, and secure data management.",
-  "Since February 2026: Campaign Brain, a production-ready platform of 84 self-hosted services on the SysForge fabric, with a journaled state kernel for agents, a declarative execution engine and planner, a service mesh, and an intelligence crawler; MyFinalWishes, a digital estate-planning product shipped through SysForge; a transistor-level 6502 and a switch-level NES at tinymachines.ai; and TerraPulse, an open climate and geophysical data platform. Daily co-development with Claude and other frontier models, with every working session and its cost on the public record.",
+  SUMMARY_INTRO,
+  SUMMARY_BUILDS_LEAD,
+  ...SUMMARY_BUILDS.map((b) => `${b.name}: ${b.text}`),
+  SUMMARY_CLOSE,
 ]
 
 /**

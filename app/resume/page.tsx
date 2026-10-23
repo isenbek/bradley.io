@@ -11,7 +11,10 @@ import {
   RESUME_UPDATED,
   ROLES,
   STRENGTHS,
-  SUMMARY,
+  SUMMARY_BUILDS,
+  SUMMARY_BUILDS_LEAD,
+  SUMMARY_CLOSE,
+  SUMMARY_INTRO,
   type ResumeRole,
 } from "@/lib/resume"
 
@@ -132,9 +135,16 @@ export default function ResumePage() {
 
       <div className="prose beta-sec">
         <h2>Summary</h2>
-        {SUMMARY.map((p) => (
-          <p key={p}>{p}</p>
-        ))}
+        <p>{SUMMARY_INTRO}</p>
+        <p>{SUMMARY_BUILDS_LEAD}</p>
+        <ul>
+          {SUMMARY_BUILDS.map((b) => (
+            <li key={b.name}>
+              <b>{b.name}</b>: {b.text}
+            </li>
+          ))}
+        </ul>
+        <p>{SUMMARY_CLOSE}</p>
 
         <h2>Experience</h2>
       </div>

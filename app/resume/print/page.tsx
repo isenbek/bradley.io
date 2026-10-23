@@ -10,7 +10,10 @@ import {
   RESUME_PDF,
   RESUME_UPDATED,
   ROLES,
-  SUMMARY,
+  SUMMARY_BUILDS,
+  SUMMARY_BUILDS_LEAD,
+  SUMMARY_CLOSE,
+  SUMMARY_INTRO,
   type ResumeRole,
 } from "@/lib/resume"
 
@@ -137,11 +140,16 @@ export default function ResumePrintPage() {
 
       <section className="beta-cvp-sec">
         <h2>Summary</h2>
-        {SUMMARY.map((p) => (
-          <p className="beta-cvp-prose" key={p}>
-            {p}
-          </p>
-        ))}
+        <p className="beta-cvp-prose">{SUMMARY_INTRO}</p>
+        <p className="beta-cvp-prose">{SUMMARY_BUILDS_LEAD}</p>
+        <ul className="beta-cvp-prose">
+          {SUMMARY_BUILDS.map((b) => (
+            <li key={b.name}>
+              <b>{b.name}</b>: {b.text}
+            </li>
+          ))}
+        </ul>
+        <p className="beta-cvp-prose">{SUMMARY_CLOSE}</p>
       </section>
 
       <section className="beta-cvp-sec">
