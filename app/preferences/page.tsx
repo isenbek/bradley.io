@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import { PreferencesClient } from "@/components/preferences/PreferencesClient"
-import { PageHead, Section } from "@/components/page"
+import { PageHead, Panel, Section } from "@/components/page"
 
 export const metadata: Metadata = {
   title: "Preferences: device capabilities",
@@ -29,7 +29,9 @@ export default function PreferencesPage() {
           the same scan in one file with no framework behind it.
         </p>
       </Section>
-      <PreferencesClient />
+      <Panel name="Device capabilities" note="this browser, now">
+        <PreferencesClient />
+      </Panel>
     </div>
   )
 }

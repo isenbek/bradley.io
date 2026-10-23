@@ -184,8 +184,10 @@ body:has(.beta-root) {
   font-size: var(--text-micro);
   letter-spacing: var(--tracking-caps);
   text-transform: uppercase;
-  color: var(--color-glass-muted);
+  /* Ink on paper, where the key usually sits; glass inside a panel. */
+  color: var(--color-ink-muted);
 }
+.panel .beta-ramp { color: var(--color-glass-muted); }
 .beta-ramp__swatches { display: flex; gap: 2px; }
 .beta-ramp__swatches i {
   display: block;
@@ -745,13 +747,37 @@ body:has(.beta-root) {
 /* ---- The capability scanner --------------------------------------------- */
 /* Dark by design: it is a readout of what the device exposes, and the tool
    inside draws its own tables. */
-.beta-scanner__mount {
-  margin-top: calc(var(--u) * 2);
-  border: 1px solid var(--color-rule-panel);
-  border-radius: var(--radius-mod);
-  background: var(--color-panel-sunk);
-  padding: calc(var(--u) * 4);
+/* /preferences: the capability scanner (public/preferences/scanner.js) brings
+   its own v3-era dark styles, which read at about 1.5:1 when the page set it
+   on paper. It reads the device, so it sits on a Panel, and these restate its
+   colours in kit tokens (two classes, so they beat its one-class rules). A
+   supported capability is a filled dot, an unsupported one hollow: state,
+   never green against grey. The panel bar names it, so its own title goes. */
+.beta-scanner .bsc { font-family: var(--font-mono); color: var(--color-glass); }
+.beta-scanner .bsc__title { display: none; }
+.beta-scanner .bsc__meta { font-size: var(--text-fine); color: var(--color-glass-muted); }
+.beta-scanner .bsc__group {
+  font-size: var(--text-micro);
+  letter-spacing: var(--tracking-caps);
+  color: var(--color-glass-muted);
+  border-top-color: var(--color-rule-panel);
 }
+.beta-scanner .bsc__row { font-size: var(--text-data); border-bottom-color: var(--color-rule-panel); }
+.beta-scanner .bsc__name { color: var(--color-glass-muted); }
+.beta-scanner .bsc__val { color: var(--color-glass); }
+.beta-scanner .bsc__led { background: transparent; border: 1.5px solid var(--color-glass-muted); box-shadow: none; }
+.beta-scanner .bsc__led.on { background: var(--color-ocean); border-color: var(--color-ocean); box-shadow: none; }
+.beta-scanner .bsc__btn,
+.beta-scanner .bsc__probe {
+  font-family: var(--font-mono);
+  font-size: var(--text-fine);
+  color: var(--color-glass);
+  background: var(--color-panel-raised);
+  border: 1px solid var(--color-rule-panel);
+  border-radius: var(--radius-hair);
+}
+.beta-scanner .bsc__btn:hover,
+.beta-scanner .bsc__probe:hover { border-color: var(--color-ocean); background: var(--color-panel-raised); }
 
 /* ===========================================================================
    MEATBALL: THE LIVE SENSES
@@ -7719,3 +7745,29 @@ a.beta-papers-fig:focus-visible { outline: 2px solid var(--color-blue-ink); outl
 .beta-t-measured > span { min-width: 0; overflow-wrap: anywhere; }
 .beta-t-nowrap { white-space: nowrap; }
 /* TEMPLATES (end block: beta-t-*) */
+
+/* ===========================================================================
+   READING FLOOR (Brad, 2026-10-23: "start on the overall site style"; the
+   earlier note was that some combinations were hard to read)
+
+   Two voices, two sizes. LABELS (tags, crumbs, axis ticks, panel bars, the
+   Measured chip: short mono caps) keep the kit's 11 to 12px. SENTENCES, the
+   text a person actually reads, never go below --text-body (15px). Measured
+   before this block: 47% of the site's text was 13px or under, and most of
+   it was sentences set in a label size (card lines, chart notes, captions).
+   Tables go from 12 to 13px, the kit's own size for mono readouts.
+
+   Kept at the end of the file so it wins over the rules it corrects. A new
+   sentence-bearing class in a small size belongs in this list, not in its
+   own font-size.
+   --------------------------------------------------------------------------- */
+.piece-grid .rail p, .rail-list span, .beta-chart__note, .beta-org__what, .beta-bench-pages__blurb,
+.beta-bench-inst__note, .beta-bench-inst__say, .beta-services-facts p, .beta-shift-cycle .step p, .beta-stats-note,
+.beta-motion-note, .beta-greet__note, .beta-greet__verdict-body, .beta-work-card__desc,
+.beta-papers-absnote, .beta-chat-note, .beta-chat-disclose, .beta-search__snip,
+.beta-about-fig figcaption, .beta-stack__cap, .beta-die figcaption, .beta-t-actions .quiet,
+.beta-live-say, .beta-runner__caption {
+  font-size: var(--text-body);
+  line-height: 1.5;
+}
+.ledger table { font-size: var(--text-data); }
