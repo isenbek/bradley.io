@@ -1,9 +1,9 @@
 {
-  "generated": "2026-10-23T04:02:29.149483+00:00",
+  "generated": "2026-10-23T12:01:51.339626+00:00",
   "stats": {
     "totalProjects": 84,
-    "totalSessions": 3275,
-    "totalMessages": 1348069,
+    "totalSessions": 3356,
+    "totalMessages": 1349066,
     "activeDays": 208,
     "streak": 149,
     "coverage": {
@@ -26,14 +26,36 @@
   "activityFeed": [
     {
       "type": "claude-code",
-      "title": "Claude Code: 3,477 transcript records",
-      "description": "56 sessions active, 1,148 tool calls",
+      "title": "Claude Code: 4,474 transcript records",
+      "description": "137 sessions active, 1,442 tool calls",
       "projectSlug": null,
       "category": null,
-      "date": "2026-10-23T04:00:21.260000Z",
+      "date": "2026-10-23T11:54:56.433000Z",
       "metadata": {
-        "messages": 3477,
-        "sessions": 56
+        "messages": 4474,
+        "sessions": 137
+      }
+    },
+    {
+      "type": "github",
+      "title": "Activity on isenbek/terrapulse",
+      "description": "Climate intelligence platform: ingest, normalize, and serve environmental data",
+      "projectSlug": "terrapulse",
+      "category": "systems",
+      "date": "2026-10-23T10:32:09Z",
+      "metadata": {
+        "repo": "isenbek/terrapulse"
+      }
+    },
+    {
+      "type": "github",
+      "title": "Activity on Sysforge-AI/sfproject",
+      "description": "Repository sfproject",
+      "projectSlug": "sysforge",
+      "category": "systems",
+      "date": "2026-10-23T07:30:14Z",
+      "metadata": {
+        "repo": "Sysforge-AI/sfproject"
       }
     },
     {
@@ -49,17 +71,6 @@
       }
     },
     {
-      "type": "github",
-      "title": "Activity on isenbek/terrapulse",
-      "description": "Climate intelligence platform: ingest, normalize, and serve environmental data",
-      "projectSlug": "terrapulse",
-      "category": "systems",
-      "date": "2026-10-22T10:34:33Z",
-      "metadata": {
-        "repo": "isenbek/terrapulse"
-      }
-    },
-    {
       "type": "claude-code",
       "title": "Claude Code: 11,839 transcript records",
       "description": "265 sessions active, 3,819 tool calls",
@@ -69,17 +80,6 @@
       "metadata": {
         "messages": 11839,
         "sessions": 265
-      }
-    },
-    {
-      "type": "github",
-      "title": "Activity on Sysforge-AI/sfproject",
-      "description": "Repository sfproject",
-      "projectSlug": "sysforge",
-      "category": "systems",
-      "date": "2026-10-21T07:30:14Z",
-      "metadata": {
-        "repo": "Sysforge-AI/sfproject"
       }
     },
     {
@@ -624,6 +624,78 @@
   ],
   "projects": [
     {
+      "slug": "terrapulse",
+      "name": "terrapulse",
+      "tagline": "Climate intelligence platform: ingest, normalize, and serve environmental data",
+      "description": "Climate intelligence platform: ingest, normalize, and serve environmental data",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": true,
+      "status": "active",
+      "technologies": [
+        "PostgreSQL",
+        "DuckDB",
+        "Python",
+        "systemd",
+        "FastAPI",
+        "Nginx",
+        "WebSocket",
+        "JWT"
+      ],
+      "lastActivity": "2026-10-23T10:32:09Z",
+      "totalMessages": 95145,
+      "sources": {
+        "github": {
+          "repo": "isenbek/terrapulse",
+          "stars": 1,
+          "language": "HTML",
+          "lastPush": "2026-10-23"
+        },
+        "claudeCode": {
+          "totalSessions": 21,
+          "totalMessages": 95145,
+          "lastSession": "2026-10-22"
+        }
+      },
+      "provenance": {
+        "tagline": "github",
+        "description": "github"
+      },
+      "categoryBasis": "keywords"
+    },
+    {
+      "slug": "sysforge",
+      "name": "sfproject",
+      "tagline": "Building resilient systems, reliably.",
+      "description": "The sfproject repository is a TypeScript project that initially set up a SysForge project, and has since added a Forge Console backend with an agentic API route for mesh interaction. It includes integration tests for the deployment pipeline and a production deployment configuration with systemd, nginx, and SSL. The project is currently at version 0.1.6.",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": true,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-10-23T07:30:14Z",
+      "totalMessages": 0,
+      "sources": {
+        "github": {
+          "repo": "Sysforge-AI/sfproject",
+          "stars": 0,
+          "language": "TypeScript",
+          "lastPush": "2026-10-23"
+        },
+        "timeline": {
+          "org": "Sysforge-AI",
+          "repo": "sfproject",
+          "commits": 278,
+          "descriptionSource": "ai"
+        }
+      },
+      "provenance": {
+        "tagline": "previous",
+        "description": "timeline"
+      },
+      "categoryBasis": "keywords"
+    },
+    {
       "slug": "6502",
       "name": "6502",
       "tagline": "Want to build 6502 apps.",
@@ -651,30 +723,30 @@
     {
       "slug": "cbmodels",
       "name": "cbmodels",
-      "tagline": "Political data engine for voter segments and analysis",
-      "description": "The cbmodels repository is a political data engine built with Python, designed to provide voter segments, election results analysis, and audience building capabilities. It utilizes technologies like FastAPI, DuckDB, Snowflake, and Claude for data processing and insights generation, supporting features such as i360 models and segment creation.",
+      "tagline": "Political data engine for segments, results, and insights",
+      "description": "The cbmodels repository is a political data engine focused on voter segments, election results, and audience building. It utilizes technologies like FastAPI, DuckDB, and Snowflake to process and analyze data, and includes features such as segment creation, reporting, and API integrations. The project incorporates data pipelines, documentation, and code quality tools to support its analytical capabilities.",
       "category": "data",
       "isResearch": false,
       "isFeatured": false,
       "status": "active",
       "technologies": [],
       "lastActivity": "2026-10-23",
-      "totalMessages": 62229,
+      "totalMessages": 62245,
       "sources": {
         "claudeCode": {
           "totalSessions": 14,
-          "totalMessages": 62229,
+          "totalMessages": 62245,
           "lastSession": "2026-10-23"
         },
         "timeline": {
           "org": "Nominate-AI",
           "repo": "cbmodels",
-          "commits": 1513,
+          "commits": 1517,
           "descriptionSource": "ai"
         }
       },
       "provenance": {
-        "tagline": "ai-cached",
+        "tagline": "ai",
         "description": "timeline"
       },
       "categoryBasis": "keywords"
@@ -682,8 +754,8 @@
     {
       "slug": "public",
       "name": "public",
-      "tagline": "NES console experience emulation and analysis",
-      "description": "This repository is a software project focused on recreating the NES console experience, specifically targeting emulation and analysis of games. It involves building a system that can run NES code, monitor its behavior, and provide tools for developers to debug and understand the hardware and software interactions within the original console.",
+      "tagline": "6502 microprocessor documentation and development",
+      "description": "This repository, named tinymachines.ai, documents and develops a project centered around the 6502 microprocessor, likely for educational or research purposes. The work involves creating a site, API, and documentation, with a focus on simulating and analyzing 6502-based systems, including their performance and behavior.",
       "category": "systems",
       "isResearch": false,
       "isFeatured": false,
@@ -700,15 +772,40 @@
         "timeline": {
           "org": "tinymachines",
           "repo": "public",
-          "commits": 1054,
+          "commits": 1066,
           "descriptionSource": "ai"
         }
       },
       "provenance": {
-        "tagline": "ai-cached",
+        "tagline": "ai",
         "description": "timeline"
       },
-      "categoryBasis": "default"
+      "categoryBasis": "keywords"
+    },
+    {
+      "slug": "context-agent",
+      "name": "context-agent",
+      "tagline": "",
+      "description": "",
+      "category": "ai-ml",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-10-23",
+      "totalMessages": 43489,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 2958,
+          "totalMessages": 43489,
+          "lastSession": "2026-10-23"
+        }
+      },
+      "provenance": {
+        "tagline": "none",
+        "description": "none"
+      },
+      "categoryBasis": "keywords"
     },
     {
       "slug": "bradleyio",
@@ -730,11 +827,11 @@
         "DuckDB"
       ],
       "lastActivity": "2026-10-23",
-      "totalMessages": 43326,
+      "totalMessages": 43421,
       "sources": {
         "claudeCode": {
           "totalSessions": 7,
-          "totalMessages": 43326,
+          "totalMessages": 43421,
           "lastSession": "2026-10-23"
         },
         "timeline": {
@@ -751,35 +848,10 @@
       "categoryBasis": "keywords"
     },
     {
-      "slug": "context-agent",
-      "name": "context-agent",
-      "tagline": "",
-      "description": "",
-      "category": "ai-ml",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-10-23",
-      "totalMessages": 42720,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 2877,
-          "totalMessages": 42720,
-          "lastSession": "2026-10-23"
-        }
-      },
-      "provenance": {
-        "tagline": "none",
-        "description": "none"
-      },
-      "categoryBasis": "keywords"
-    },
-    {
       "slug": "cbrural",
       "name": "cbrural",
-      "tagline": "cbrural: Rural AM.FM radio streaming on Apex.",
-      "description": "The cbrural repository implements Rural AM.FM., a radio streaming application, running on the Apex frame and accessible via port 32295. The codebase focuses on managing radio plans, client interactions, and data processing related to broadcast schedules and promotions.",
+      "tagline": "cbrural: Rural AM.FM application",
+      "description": "The cbrural repository is a TypeScript application for Rural AM.FM., running on the Apex frame and accessible at rural.campaignbrain.dev, port 32295. It appears to manage radio station plans, pricing, and coverage data, drawing heavily from a related system named cbradio2, and incorporates elements of sales and operational workflows. The application utilizes a modular design with components for handling user authentication, navigation, and data rendering.",
       "category": "hardware",
       "isResearch": false,
       "isFeatured": false,
@@ -796,12 +868,12 @@
         "timeline": {
           "org": "Nominate-AI",
           "repo": "cbrural",
-          "commits": 759,
+          "commits": 785,
           "descriptionSource": "ai"
         }
       },
       "provenance": {
-        "tagline": "ai-cached",
+        "tagline": "ai",
         "description": "timeline"
       },
       "categoryBasis": "keywords"
@@ -830,46 +902,6 @@
         "description": "none"
       },
       "categoryBasis": "default"
-    },
-    {
-      "slug": "terrapulse",
-      "name": "terrapulse",
-      "tagline": "Climate intelligence platform: ingest, normalize, and serve environmental data",
-      "description": "Climate intelligence platform: ingest, normalize, and serve environmental data",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": true,
-      "status": "active",
-      "technologies": [
-        "PostgreSQL",
-        "DuckDB",
-        "Python",
-        "systemd",
-        "FastAPI",
-        "Nginx",
-        "WebSocket",
-        "JWT"
-      ],
-      "lastActivity": "2026-10-22T10:34:33Z",
-      "totalMessages": 95145,
-      "sources": {
-        "github": {
-          "repo": "isenbek/terrapulse",
-          "stars": 1,
-          "language": "HTML",
-          "lastPush": "2026-10-22"
-        },
-        "claudeCode": {
-          "totalSessions": 21,
-          "totalMessages": 95145,
-          "lastSession": "2026-10-22"
-        }
-      },
-      "provenance": {
-        "tagline": "github",
-        "description": "github"
-      },
-      "categoryBasis": "keywords"
     },
     {
       "slug": "myfw",
@@ -908,8 +940,8 @@
     {
       "slug": "infra",
       "name": "infra",
-      "tagline": "Scanning application infrastructure management",
-      "description": "This repository appears to be related to a scanning application, likely named 'masayuki', that processes scanned documents and images. It manages the infrastructure for this scanner, including DNS, Nginx proxying, and OCR processing using tools like ocrmypdf. The project involves managing various scan types, handling user authentication, and integrating with backend databases for data storage and analysis.",
+      "tagline": "Infrastructure management and operational tasks.",
+      "description": "The `infra` repository contains Python code related to infrastructure management and operational tasks, primarily focused on managing and monitoring systems, particularly those involving network configurations, security updates, and application deployments. It includes components for running background processes, managing system health, and handling specific hardware integrations like the Epson V600 scanner. The repository also incorporates documentation and processes for tracking deployments and addressing operational issues.",
       "category": "systems",
       "isResearch": false,
       "isFeatured": false,
@@ -926,12 +958,12 @@
         "timeline": {
           "org": "tinymachines",
           "repo": "infra",
-          "commits": 27,
+          "commits": 58,
           "descriptionSource": "ai"
         }
       },
       "provenance": {
-        "tagline": "ai-cached",
+        "tagline": "ai",
         "description": "timeline"
       },
       "categoryBasis": "keywords"
@@ -939,8 +971,8 @@
     {
       "slug": "cbapex",
       "name": "cbapex",
-      "tagline": "cbapex manages app charter ownership data",
-      "description": "The cbapex repository is a containerized application designed to manage cross-app charter ownership and shared-layer functionality, primarily supporting the cbprospect, cbnight, and cbpublic applications. It maintains a central record of these apps' charters, processes, and related data, facilitating coordinated development efforts across multiple applications within the larger system.",
+      "tagline": "cbapex: Managing cross-app charter ownership and data.",
+      "description": "The cbapex repository is a TypeScript container application designed to manage cross-app charter ownership and shared-layer functionality, supporting applications like cbprospect, cbnight, and cbpublic. It utilizes a containerized architecture and a kit component for managing various features and data exploration, with a focus on streamlining workflows and data access across different applications.",
       "category": "systems",
       "isResearch": false,
       "isFeatured": false,
@@ -957,12 +989,12 @@
         "timeline": {
           "org": "Nominate-AI",
           "repo": "cbapex",
-          "commits": 959,
-          "descriptionSource": "reused"
+          "commits": 960,
+          "descriptionSource": "ai"
         }
       },
       "provenance": {
-        "tagline": "ai-cached",
+        "tagline": "ai",
         "description": "timeline"
       },
       "categoryBasis": "default"
@@ -997,38 +1029,6 @@
         "description": "timeline"
       },
       "categoryBasis": "default"
-    },
-    {
-      "slug": "sysforge",
-      "name": "sfproject",
-      "tagline": "Building resilient systems, reliably.",
-      "description": "This repository contains the source code for SysForge, an open-source project focused on creating and deploying Forge servers. It includes a backend agentic API route for mesh interaction, integration tests with the Forge Console, and configuration files for production deployment using systemd, nginx, and SSL certificates. The project aims to provide a streamlined way to develop and deploy Forge-based applications.",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": true,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-10-21T07:30:14Z",
-      "totalMessages": 0,
-      "sources": {
-        "github": {
-          "repo": "Sysforge-AI/sfproject",
-          "stars": 0,
-          "language": "TypeScript",
-          "lastPush": "2026-10-21"
-        },
-        "timeline": {
-          "org": "Sysforge-AI",
-          "repo": "sfproject",
-          "commits": 277,
-          "descriptionSource": "reused"
-        }
-      },
-      "provenance": {
-        "tagline": "previous",
-        "description": "timeline"
-      },
-      "categoryBasis": "keywords"
     },
     {
       "slug": "cbweb",
@@ -1177,8 +1177,8 @@
     {
       "slug": "cbloom",
       "name": "cbloom",
-      "tagline": "Loom Campaign Content & Narrative Engine",
-      "description": "The cbloom repository contains the source code for Loom, a Campaign Content & Narrative Engine developed in HTML. The project includes features like campaign content creation, data transformation, and integration with various APIs, as well as infrastructure tooling for deployment and development. It also manages branding elements and supports device capabilities.",
+      "tagline": "Loom: Campaign content and narrative engine.",
+      "description": "The cbloom repository contains the source code for Loom, a Campaign Content & Narrative Engine built using HTML. It manages campaign content, narrative elements, and related data, including features like channel status checks, brand assets, and device integration. The project utilizes a series of automated processes and infrastructure components to support its functionality.",
       "category": "systems",
       "isResearch": false,
       "isFeatured": false,
@@ -1195,12 +1195,12 @@
         "timeline": {
           "org": "Nominate-AI",
           "repo": "cbloom",
-          "commits": 3310,
-          "descriptionSource": "reused"
+          "commits": 3311,
+          "descriptionSource": "ai"
         }
       },
       "provenance": {
-        "tagline": "ai-cached",
+        "tagline": "ai",
         "description": "timeline"
       },
       "categoryBasis": "keywords"
@@ -2691,9 +2691,9 @@
     }
   ],
   "aiSummary": {
-    "succeeded": 0,
+    "succeeded": 6,
     "failed": 0,
-    "reused": 14,
+    "reused": 8,
     "keptPrevious": 63,
     "notAttempted": 0,
     "skippedByLimit": 0,
@@ -2703,9 +2703,9 @@
     "limit": null,
     "budgetMin": 15.0,
     "skipped": false,
-    "calls": 0,
+    "calls": 6,
     "answeredByGateway": 0,
-    "answeredByOllama": 0,
+    "answeredByOllama": 6,
     "fallbackModel": "gemma3:4b",
     "scope": "Taglines only. Descriptions are never written by the model."
   }

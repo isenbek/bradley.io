@@ -1,13 +1,13 @@
 {
-  "generated": "2026-10-22T09:08:30.365401+00:00",
+  "generated": "2026-10-23T09:13:33.823632+00:00",
   "org": "tinymachines",
-  "totalRepos": 83,
+  "totalRepos": 84,
   "firstCommit": "2016-02-27T16:07:26Z",
-  "latestCommit": "2026-10-22T05:45:50Z",
-  "totalCommits": 7658,
+  "latestCommit": "2026-10-23T04:08:04Z",
+  "totalCommits": 7771,
   "languages": {
     "Python": 31,
-    "TypeScript": 12,
+    "TypeScript": 13,
     "C": 8,
     "Rust": 7,
     "HTML": 6,
@@ -7159,9 +7159,15 @@
     },
     {
       "date": "2026-10-22",
-      "commits": 14,
-      "repos": 4,
-      "intensity": 1
+      "commits": 108,
+      "repos": 11,
+      "intensity": 4
+    },
+    {
+      "date": "2026-10-23",
+      "commits": 19,
+      "repos": 7,
+      "intensity": 2
     }
   ],
   "phases": [
@@ -7554,22 +7560,23 @@
       "model": "ollama:gemma3:4b"
     },
     {
-      "name": "Initial Kit Development",
+      "name": "Early Kit Development",
       "startDate": "2026-10-14",
       "endDate": "2026-10-22",
-      "description": "This period focused on establishing the core functionality of the @tinymachines/kit framework across several projects. The team built a demonstration site, sensor data collection tools, and an initial book writing application, laying the groundwork for future expansion.",
+      "description": "This development period focused on building core components and integrations around the @tinymachines/kit framework. The team explored sensor data collection, UI development, and system monitoring, laying the groundwork for future applications.",
       "repos": [
         "tinykit",
         "events",
         "infra",
         "amy-io",
         "sprites",
-        "traffic"
+        "traffic",
+        "scan"
       ],
       "milestones": [
         {
           "date": "2026-10-14",
-          "title": "Initial Demo Setup",
+          "title": "Initial Release",
           "repo": "tinykit"
         },
         {
@@ -7579,18 +7586,18 @@
         },
         {
           "date": "2026-10-16",
-          "title": "Sign-in and File Handling",
-          "repo": "tinykit"
+          "title": "Sign-in and File Access",
+          "repo": "events"
         },
         {
-          "date": "2026-10-18",
-          "title": "API Backend Implementation",
-          "repo": "amy-io"
+          "date": "2026-10-17",
+          "title": "Sensors and Audio Features",
+          "repo": "tinykit"
         }
       ],
-      "category": "creative",
+      "category": "systems",
       "source": "ai",
-      "generatedAt": "2026-10-22",
+      "generatedAt": "2026-10-23",
       "model": "ollama:gemma3:4b"
     }
   ],
@@ -8353,14 +8360,14 @@
     },
     {
       "name": "public",
-      "description": "This repository is a software project focused on recreating the NES console experience, specifically targeting emulation and analysis of games. It involves building a system that can run NES code, monitor its behavior, and provide tools for developers to debug and understand the hardware and software interactions within the original console.",
+      "description": "This repository, named tinymachines.ai, documents and develops a project centered around the 6502 microprocessor, likely for educational or research purposes. The work involves creating a site, API, and documentation, with a focus on simulating and analyzing 6502-based systems, including their performance and behavior.",
       "language": "TypeScript",
-      "commits": 1054,
+      "commits": 1066,
       "firstCommit": "2026-08-22T15:44:09Z",
-      "lastCommit": "2026-10-22T04:40:37Z",
+      "lastCommit": "2026-10-23T04:08:04Z",
       "phase": "NES Simulation Development",
       "descriptionSource": "ai",
-      "descriptionGeneratedAt": "2026-10-22",
+      "descriptionGeneratedAt": "2026-10-23",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
@@ -8419,7 +8426,7 @@
       "firstCommit": "2026-09-05T16:29:39Z",
       "lastCommit": "2026-10-20T22:15:28Z",
       "phase": "NES Simulation Development",
-      "descriptionSource": "ai",
+      "descriptionSource": "reused",
       "descriptionGeneratedAt": "2026-10-22",
       "descriptionModel": "ollama:gemma3:4b"
     },
@@ -8431,32 +8438,32 @@
       "firstCommit": "2026-09-07T01:23:48Z",
       "lastCommit": "2026-10-20T21:49:01Z",
       "phase": "Retro System Development",
-      "descriptionSource": "ai",
+      "descriptionSource": "reused",
       "descriptionGeneratedAt": "2026-10-22",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "tinypeek",
-      "description": "The tinypeek repository appears to be a TypeScript project focused on developing a system involving protocols, mounts, and data management. It includes components like 'Kit' for application configuration and API setup, alongside specifications for the 'tm://' protocol and various lens/layer structures. The work involves managing entities, files, and potentially server interactions through a series of interconnected modules and versions.",
+      "description": "The tinypeek repository is a TypeScript project focused on a system involving mounts, maps, and data processing, likely related to web content or data retrieval. It includes features like sitemap parsing, robot exclusion handling, and various data transformations, with a focus on managing connections and resolving names. The project appears to be evolving through several versions, incorporating components like QR scanners and data tables, and managing different data types and protocols.",
       "language": "TypeScript",
-      "commits": 75,
+      "commits": 84,
       "firstCommit": "2026-10-08T17:35:49Z",
-      "lastCommit": "2026-10-22T04:40:35Z",
+      "lastCommit": "2026-10-23T04:06:29Z",
       "phase": "Retro System Development",
       "descriptionSource": "ai",
-      "descriptionGeneratedAt": "2026-10-22",
+      "descriptionGeneratedAt": "2026-10-23",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "astrostack",
-      "description": "The astrostack repository is a C-based software project focused on stacking phone photographs, utilizing Rust and tinygrad within a WebAssembly module. It provides tools for processing images taken with mobile devices, allowing users to create star stacks from multiple exposures. The project incorporates features like image shooting guidance, theme customization, and various scanning methods, all designed around the tinychase platform.",
+      "description": "The astrostack repository is a project focused on creating a mobile phone photography stacking application using Rust and tinygrad, compiled as a WebAssembly module. It allows users to stack phone night photographs, with features including preference settings, data tables, and a visual interface for controlling the stacking process. The project originated from experiments within the tinychase lab, aiming to create a system for processing and presenting photographic data from mobile devices.",
       "language": "C",
-      "commits": 51,
+      "commits": 53,
       "firstCommit": "2026-10-11T01:10:45Z",
-      "lastCommit": "2026-10-19T22:41:58Z",
+      "lastCommit": "2026-10-22T20:01:40Z",
       "phase": "Retro System Development",
-      "descriptionSource": "reused",
-      "descriptionGeneratedAt": "2026-10-20",
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-23",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
@@ -8473,14 +8480,14 @@
     },
     {
       "name": "kit",
-      "description": "This repository contains the source code for 'tinychase', a web application framework designed to create and manage applications with customizable themes, data management features, and user accounts. The framework provides tools for building apps from scratch, including app templates, configuration options, and APIs for interacting with data. It utilizes a modular architecture with a focus on developer productivity and flexibility.",
+      "description": "The kit repository provides the core components and tools for building the tinychase application, a Vite + React app focused on features like offline access, themes, widgets, accounts, and data visualization. It serves as a modular system for creating various app experiences, including a reader, data tables, and configurable parameters, and is designed for easy installation and deployment.",
       "language": "TypeScript",
-      "commits": 60,
+      "commits": 72,
       "firstCommit": "2026-10-12T14:56:49Z",
-      "lastCommit": "2026-10-21T01:09:37Z",
+      "lastCommit": "2026-10-23T01:56:30Z",
       "phase": "Retro System Development",
-      "descriptionSource": "reused",
-      "descriptionGeneratedAt": "2026-10-21",
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-23",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
@@ -8497,15 +8504,15 @@
     },
     {
       "name": "tinyhelper",
-      "description": "Commits: serve: a read without the token sees only what ask made, so fronting the service opens nothing a console driver keeps; env.example: each comment on its own line, since systemd keeps a comment beside a value as part of it; The core, the store, the tm://helper/ mount and the ask driver; The index driver: all crawling and generating lives here; The helper pattern: ask, keep the raw result, give it an address",
+      "description": "The `tinyhelper` repository is a Python-based project that appears to be a utility or helper system, likely for managing data or interacting with a service. It includes an index driver for crawling and generating data, a core component, and a mechanism for handling requests and storing results. The system utilizes a 'helper pattern' involving asking for data, preserving the raw result, and then addressing it.",
       "language": "Python",
-      "commits": 5,
+      "commits": 6,
       "firstCommit": "2026-10-12T20:54:19Z",
-      "lastCommit": "2026-10-15T03:14:44Z",
+      "lastCommit": "2026-10-22T20:35:01Z",
       "phase": "Retro System Development",
-      "descriptionSource": "commits",
-      "descriptionGeneratedAt": null,
-      "descriptionModel": null
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-23",
+      "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "hotbits",
@@ -8521,14 +8528,14 @@
     },
     {
       "name": "tinykit",
-      "description": "The tinykit repository contains the source code for a demonstration site showcasing various components of the @tinymachines/kit, including widgets, sensors, themes, offline functionality, and passkey sign-in. It provides a live environment to explore these features, allowing users to interact with the demo site at tinykit.tinymachines.ai.",
+      "description": "The tinykit repository is a TypeScript-based project that serves as a demonstration and development environment for the @tinymachines/kit, a widget zoo, bench, and sensor system. It allows for the creation and testing of interactive applications, including features like offline functionality, passkey sign-in, and integration with various data sources, all showcased on the tinykit.tinymachines.ai website.",
       "language": "TypeScript",
-      "commits": 53,
+      "commits": 61,
       "firstCommit": "2026-10-14T16:27:00Z",
-      "lastCommit": "2026-10-20T03:12:21Z",
-      "phase": "Initial Kit Development",
-      "descriptionSource": "reused",
-      "descriptionGeneratedAt": "2026-10-20",
+      "lastCommit": "2026-10-23T01:57:07Z",
+      "phase": "Early Kit Development",
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-23",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
@@ -8538,64 +8545,76 @@
       "commits": 39,
       "firstCommit": "2026-10-15T00:03:46Z",
       "lastCommit": "2026-10-19T22:37:39Z",
-      "phase": "Initial Kit Development",
+      "phase": "Early Kit Development",
       "descriptionSource": "reused",
       "descriptionGeneratedAt": "2026-10-20",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "infra",
-      "description": "This repository appears to be related to a scanning application, likely named 'masayuki', that processes scanned documents and images. It manages the infrastructure for this scanner, including DNS, Nginx proxying, and OCR processing using tools like ocrmypdf. The project involves managing various scan types, handling user authentication, and integrating with backend databases for data storage and analysis.",
+      "description": "The `infra` repository contains Python code related to infrastructure management and operational tasks, primarily focused on managing and monitoring systems, particularly those involving network configurations, security updates, and application deployments. It includes components for running background processes, managing system health, and handling specific hardware integrations like the Epson V600 scanner. The repository also incorporates documentation and processes for tracking deployments and addressing operational issues.",
       "language": "Python",
-      "commits": 27,
+      "commits": 58,
       "firstCommit": "2026-10-15T17:13:29Z",
-      "lastCommit": "2026-10-22T05:45:50Z",
-      "phase": "Initial Kit Development",
+      "lastCommit": "2026-10-23T02:00:01Z",
+      "phase": "Early Kit Development",
       "descriptionSource": "ai",
-      "descriptionGeneratedAt": "2026-10-22",
+      "descriptionGeneratedAt": "2026-10-23",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "amy-io",
-      "description": "The amy-io repository is a Python application built on the @tinymachines/kit framework, designed for writing and editing books. It includes features like a word processor, a brand identity system, and an API backend to manage user accounts and data, with a focus on iterative development and experimentation.",
+      "description": "The amy-io repository is a Python application built using the @tinymachines/kit framework, focused on managing and interacting with books and their associated content. It appears to be an evolving project centered around a system for reading, annotating, and potentially publishing books, incorporating features like user accounts, search, and data management within the kit.",
       "language": "Python",
-      "commits": 52,
+      "commits": 67,
       "firstCommit": "2026-10-16T07:04:42Z",
-      "lastCommit": "2026-10-21T13:52:00Z",
-      "phase": "Initial Kit Development",
+      "lastCommit": "2026-10-23T03:58:50Z",
+      "phase": "Early Kit Development",
       "descriptionSource": "ai",
-      "descriptionGeneratedAt": "2026-10-22",
+      "descriptionGeneratedAt": "2026-10-23",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
       "name": "sprites",
       "description": "A picture made into NES sprite tiles, on the kit",
       "language": "TypeScript",
-      "commits": 3,
+      "commits": 5,
       "firstCommit": "2026-10-20T02:56:13Z",
-      "lastCommit": "2026-10-20T03:25:26Z",
-      "phase": "Initial Kit Development",
+      "lastCommit": "2026-10-22T19:55:29Z",
+      "phase": "Early Kit Development",
       "descriptionSource": "github",
       "descriptionGeneratedAt": null,
       "descriptionModel": null
     },
     {
       "name": "traffic",
-      "description": "Who is knocking on impera: nginx access-log history in DuckDB plus the kit app at traffic.tinymachines.ai",
+      "description": "The `traffic` repository analyzes nginx access logs using DuckDB, combined with data from the `kit` application, to provide insights into user activity and system performance. It ingests data from various sources, including nginx logs, DNS queries, and bot activity, and presents this information through visualizations and APIs. The project focuses on monitoring and analyzing traffic patterns, particularly within the context of the 'impera' system.",
       "language": "TypeScript",
-      "commits": 4,
+      "commits": 19,
       "firstCommit": "2026-10-22T01:07:16Z",
-      "lastCommit": "2026-10-22T02:35:08Z",
-      "phase": "Initial Kit Development",
-      "descriptionSource": "github",
-      "descriptionGeneratedAt": null,
-      "descriptionModel": null
+      "lastCommit": "2026-10-23T02:09:04Z",
+      "phase": "Early Kit Development",
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-23",
+      "descriptionModel": "ollama:gemma3:4b"
+    },
+    {
+      "name": "scan",
+      "description": "This repository, named `scan`, is a TypeScript application developed for controlling an Epson V600 scanner, likely for use with a mobile phone app. The scanner's web UI has been integrated into the @tinymachines/kit framework, allowing for operation from a phone. The project involves managing the scanner's picks, tile display, and user information within the kit environment.",
+      "language": "TypeScript",
+      "commits": 6,
+      "firstCommit": "2026-10-22T16:27:08Z",
+      "lastCommit": "2026-10-22T20:53:02Z",
+      "phase": "Early Kit Development",
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-23",
+      "descriptionModel": "ollama:gemma3:4b"
     }
   ],
   "aiSummary": {
-    "callsOk": 7,
+    "callsOk": 11,
     "callsFailed": 0,
-    "reused": 58,
+    "reused": 57,
     "kept": 0,
     "skippedByLimit": 0,
     "skippedByBudget": 0,
@@ -8606,11 +8625,11 @@
       "ai": 1
     },
     "descriptionSources": {
-      "reused": 47,
-      "github": 15,
-      "commits": 11,
+      "reused": 46,
+      "github": 14,
+      "commits": 10,
       "none": 4,
-      "ai": 6
+      "ai": 10
     },
     "limitAi": null,
     "budgetMin": 15.0,

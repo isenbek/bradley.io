@@ -1,10 +1,10 @@
 {
-  "generated": "2026-10-22T09:08:33.737176+00:00",
+  "generated": "2026-10-23T09:13:48.998396+00:00",
   "org": "Sysforge-AI",
   "totalRepos": 2,
   "firstCommit": "2026-02-15T03:26:15Z",
-  "latestCommit": "2026-10-21T07:30:13Z",
-  "totalCommits": 295,
+  "latestCommit": "2026-10-23T07:30:13Z",
+  "totalCommits": 296,
   "languages": {
     "TypeScript": 1,
     "HTML": 1
@@ -1413,6 +1413,12 @@
       "commits": 1,
       "repos": 1,
       "intensity": 1
+    },
+    {
+      "date": "2026-10-23",
+      "commits": 1,
+      "repos": 1,
+      "intensity": 1
     }
   ],
   "phases": [
@@ -1446,14 +1452,14 @@
   "repos": [
     {
       "name": "sfproject",
-      "description": "This repository contains the source code for SysForge, an open-source project focused on creating and deploying Forge servers. It includes a backend agentic API route for mesh interaction, integration tests with the Forge Console, and configuration files for production deployment using systemd, nginx, and SSL certificates. The project aims to provide a streamlined way to develop and deploy Forge-based applications.",
+      "description": "The sfproject repository is a TypeScript project that initially set up a SysForge project, and has since added a Forge Console backend with an agentic API route for mesh interaction. It includes integration tests for the deployment pipeline and a production deployment configuration with systemd, nginx, and SSL. The project is currently at version 0.1.6.",
       "language": "TypeScript",
-      "commits": 277,
+      "commits": 278,
       "firstCommit": "2026-02-15T03:26:15Z",
-      "lastCommit": "2026-10-21T07:30:13Z",
+      "lastCommit": "2026-10-23T07:30:13Z",
       "phase": "Forge Console Setup",
-      "descriptionSource": "reused",
-      "descriptionGeneratedAt": "2026-10-21",
+      "descriptionSource": "ai",
+      "descriptionGeneratedAt": "2026-10-23",
       "descriptionModel": "ollama:gemma3:4b"
     },
     {
@@ -1470,9 +1476,9 @@
     }
   ],
   "aiSummary": {
-    "callsOk": 0,
+    "callsOk": 1,
     "callsFailed": 0,
-    "reused": 3,
+    "reused": 2,
     "kept": 0,
     "skippedByLimit": 0,
     "skippedByBudget": 0,
@@ -1482,7 +1488,8 @@
       "reused": 1
     },
     "descriptionSources": {
-      "reused": 2
+      "ai": 1,
+      "reused": 1
     },
     "limitAi": null,
     "budgetMin": 15.0,
