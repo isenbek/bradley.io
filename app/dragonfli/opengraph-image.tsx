@@ -4,7 +4,7 @@ import { ogV3ImageResponse, OG_V3_SIZE, OG_V3_CONTENT_TYPE } from "@/lib/og-card
 
 export const runtime = "nodejs"
 export const alt =
-  "Dragonfli: a live ADS-B radar scope with range rings and aircraft plotted around the receiver. bio·bradley.io"
+  "Dragonfli: a live ADS-B radar scope with range rings and aircraft plotted around the receiver. bradley.io"
 export const size = OG_V3_SIZE
 export const contentType = OG_V3_CONTENT_TYPE
 

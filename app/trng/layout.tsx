@@ -6,7 +6,7 @@ export const metadata: Metadata = {
     "Live status for the HOTBITS true random number generator: radioactive decay timing from a CAJOE Geiger counter, with NIST-style continuous health checks.",
   alternates: { canonical: "/trng" },
   openGraph: {
-    title: "TRNG · bio·bradley.io",
+    title: "TRNG | Bradley Isenbek",
     description:
       "Live entropy from radioactive decay: bias, ones %, pileup, NIST continuous health.",
     url: "https://bradley.io/trng",
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "TRNG · bio·bradley.io",
+    title: "TRNG | Bradley Isenbek",
     description:
       "Live entropy from radioactive decay: bias, ones %, pileup, NIST continuous health.",
   },

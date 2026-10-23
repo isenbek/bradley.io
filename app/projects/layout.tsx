@@ -19,14 +19,14 @@ export const metadata: Metadata = {
   description: DESCRIPTION,
   alternates: { canonical: "/projects" },
   openGraph: {
-    title: "Projects · bio·bradley.io",
+    title: "Projects | Bradley Isenbek",
     description: DESCRIPTION,
     url: "https://bradley.io/projects",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Projects · bio·bradley.io",
+    title: "Projects | Bradley Isenbek",
     description: DESCRIPTION,
   },
 }

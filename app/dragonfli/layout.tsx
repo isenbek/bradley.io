@@ -6,7 +6,7 @@ export const metadata: Metadata = {
     "Live ADS-B receiver at 1090 MHz: local radar, active aircraft, FAA registry breakdown, and trajectory predictor.",
   alternates: { canonical: "/dragonfli" },
   openGraph: {
-    title: "Dragonfli · bio·bradley.io",
+    title: "Dragonfli | Bradley Isenbek",
     description:
       "Live 1090 MHz ADS-B receiver: radar, active aircraft, FAA registry, predictor.",
     url: "https://bradley.io/dragonfli",
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Dragonfli · bio·bradley.io",
+    title: "Dragonfli | Bradley Isenbek",
     description:
       "Live 1090 MHz ADS-B receiver: radar, active aircraft, FAA registry, predictor.",
   },

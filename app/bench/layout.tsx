@@ -15,14 +15,14 @@ export const metadata: Metadata = {
   description: DESCRIPTION,
   alternates: { canonical: "/bench" },
   openGraph: {
-    title: "The bench · bradley.io",
+    title: "The bench | Bradley Isenbek",
     description: DESCRIPTION,
     url: "https://bradley.io/bench",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "The bench · bradley.io",
+    title: "The bench | Bradley Isenbek",
     description: DESCRIPTION,
   },
 }

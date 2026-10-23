@@ -2,7 +2,7 @@ import { ogV3ImageResponse, OG_V3_SIZE, OG_V3_CONTENT_TYPE } from "@/lib/og-card
 
 export const runtime = "nodejs"
 export const alt =
-  "Critical Collapse: a live numerical relativity lab that solves Einstein's equations in your browser and finds a black hole on the knife edge. bio·bradley.io"
+  "Critical Collapse: a live numerical relativity lab that solves Einstein's equations in your browser and finds a black hole on the knife edge. bradley.io"
 export const size = OG_V3_SIZE
 export const contentType = OG_V3_CONTENT_TYPE
 

@@ -2,7 +2,7 @@ import { ogV3ImageResponse, OG_V3_SIZE, OG_V3_CONTENT_TYPE } from "@/lib/og-card
 
 export const runtime = "nodejs"
 export const alt =
-  "Storm Plates: the prime sieve drawn as wave interference, in six interactive plates. bio·bradley.io"
+  "Storm Plates: the prime sieve drawn as wave interference, in six interactive plates. bradley.io"
 export const size = OG_V3_SIZE
 export const contentType = OG_V3_CONTENT_TYPE
 

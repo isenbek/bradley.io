@@ -6,7 +6,7 @@ export const metadata: Metadata = {
     "Live health for the collector fleet behind the WorldEvent bus: per-node vitals, an attention layer, and a self-healing auto-medic.",
   alternates: { canonical: "/fleet" },
   openGraph: {
-    title: "Fleet Health · bio·bradley.io",
+    title: "Fleet Health | Bradley Isenbek",
     description:
       "Live collector-fleet health: per-node vitals, attention gating, and a self-healing medic. Powered by worldsink.",
     url: "https://bradley.io/fleet",
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Fleet Health · bio·bradley.io",
+    title: "Fleet Health | Bradley Isenbek",
     description:
       "Live collector-fleet health: per-node vitals, attention gating, and a self-healing medic. Powered by worldsink.",
   },

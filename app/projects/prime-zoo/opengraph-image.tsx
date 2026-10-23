@@ -2,7 +2,7 @@ import { ogV3ImageResponse, OG_V3_SIZE, OG_V3_CONTENT_TYPE } from "@/lib/og-card
 
 export const runtime = "nodejs"
 export const alt =
-  "Primality Zoo: three interactive field instruments for prime structure. bio·bradley.io"
+  "Primality Zoo: three interactive field instruments for prime structure. bradley.io"
 export const size = OG_V3_SIZE
 export const contentType = OG_V3_CONTENT_TYPE
 

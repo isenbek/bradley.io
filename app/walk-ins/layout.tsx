@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description: DESCRIPTION,
   alternates: { canonical: "/walk-ins" },
   openGraph: {
-    title: "Walk-ins · Bradley Isenbek",
+    title: "Walk-ins | Bradley Isenbek",
     description: DESCRIPTION,
     url: "https://bradley.io/walk-ins",
     type: "website",
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Walk-ins · Bradley Isenbek",
+    title: "Walk-ins | Bradley Isenbek",
     description: DESCRIPTION,
     images: [IMAGE],
   },

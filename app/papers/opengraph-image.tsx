@@ -9,7 +9,7 @@ import {
 } from "@/components/papers/study"
 
 export const runtime = "nodejs"
-export const alt = "Papers · bio·bradley.io"
+export const alt = "Papers · bradley.io"
 export const size = OG_V3_SIZE
 export const contentType = OG_V3_CONTENT_TYPE
 

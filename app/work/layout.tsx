@@ -5,14 +5,14 @@ const DESCRIPTION =
 
 /* The site's own card. A route-level openGraph object replaces the root one
    whole, so without this /work would share with no image at all. */
-const IMAGE = { url: "/opengraph-image", width: 1200, height: 630, alt: "Bradley Isenbek · bio·bradley.io" }
+const IMAGE = { url: "/opengraph-image", width: 1200, height: 630, alt: "Bradley Isenbek · bradley.io" }
 
 export const metadata: Metadata = {
   title: "Work",
   description: DESCRIPTION,
   alternates: { canonical: "/work" },
   openGraph: {
-    title: "Work · Bradley Isenbek",
+    title: "Work | Bradley Isenbek",
     description: DESCRIPTION,
     url: "https://bradley.io/work",
     type: "website",
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Work · Bradley Isenbek",
+    title: "Work | Bradley Isenbek",
     description: DESCRIPTION,
     images: [IMAGE],
   },

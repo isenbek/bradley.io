@@ -2,7 +2,7 @@ import { ogV3ImageResponse, OG_V3_SIZE, OG_V3_CONTENT_TYPE } from "@/lib/og-card
 
 export const runtime = "nodejs"
 export const alt =
-  "Primality Atlas: an interactive terrain map of prime-number theory. bio·bradley.io"
+  "Primality Atlas: an interactive terrain map of prime-number theory. bradley.io"
 export const size = OG_V3_SIZE
 export const contentType = OG_V3_CONTENT_TYPE
 

@@ -2,7 +2,7 @@ import { ogV3ImageResponse, OG_V3_SIZE, OG_V3_CONTENT_TYPE } from "@/lib/og-card
 
 export const runtime = "nodejs"
 export const alt =
-  "Zeta Forge: an interactive builder for the zeta function, one term at a time. bio·bradley.io"
+  "Zeta Forge: an interactive builder for the zeta function, one term at a time. bradley.io"
 export const size = OG_V3_SIZE
 export const contentType = OG_V3_CONTENT_TYPE
 

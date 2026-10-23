@@ -17,14 +17,14 @@ export const metadata: Metadata = {
   description: SHARE,
   alternates: { canonical: "/papers" },
   openGraph: {
-    title: "Papers · bio·bradley.io",
+    title: "Papers | Bradley Isenbek",
     description: SHARE,
     url: "https://bradley.io/papers",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Papers · bio·bradley.io",
+    title: "Papers | Bradley Isenbek",
     description: SHARE,
   },
 }

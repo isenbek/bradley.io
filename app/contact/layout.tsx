@@ -6,7 +6,7 @@ export const metadata: Metadata = {
     "Get in touch with Bradley Isenbek: email, GitHub, project inquiries. Based in Grand Rapids, MI. Replies within ~24 hours.",
   alternates: { canonical: "/contact" },
   openGraph: {
-    title: "Contact · bio·bradley.io",
+    title: "Contact | Bradley Isenbek",
     description:
       "Drop me a line. Email, GitHub, or just a sketch. Based in Grand Rapids, MI.",
     url: "https://bradley.io/contact",
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Contact · bio·bradley.io",
+    title: "Contact | Bradley Isenbek",
     description:
       "Drop me a line. Email, GitHub, or just a sketch. Based in Grand Rapids, MI.",
   },

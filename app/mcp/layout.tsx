@@ -6,7 +6,7 @@ export const metadata: Metadata = {
     "Campaign Brain MCP catalog: FastAPI microservices for AI, data, communication, infrastructure, and business operations.",
   alternates: { canonical: "/mcp" },
   openGraph: {
-    title: "MCP Catalog · bio·bradley.io",
+    title: "MCP Catalog | Bradley Isenbek",
     description:
       "Campaign Brain MCP services: AI, data, communication, infrastructure, business. All open via MCP to LLM agents.",
     url: "https://bradley.io/mcp",
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "MCP Catalog · bio·bradley.io",
+    title: "MCP Catalog | Bradley Isenbek",
     description:
       "Campaign Brain MCP services: AI, data, communication, infrastructure, business. All open via MCP to LLM agents.",
   },

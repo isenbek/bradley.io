@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     "The site as a command line. Type help: the resume, the projects, live instrument status, and the build that is answering you.",
   alternates: { canonical: "/terminal" },
   openGraph: {
-    title: "Terminal · bio·bradley.io",
+    title: "Terminal | Bradley Isenbek",
     description:
       "The site as a command line. Type help to start poking around.",
     url: "https://bradley.io/terminal",
@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Terminal · bio·bradley.io",
+    title: "Terminal | Bradley Isenbek",
     description:
       "The site as a command line. Type help to start poking around.",
   },

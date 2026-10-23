@@ -75,7 +75,7 @@ export const metadata: Metadata = {
     description:
       "AI Systems Architect & frontier technologist. Building at the intersection of enterprise scale and maker culture: from ESP32 mesh networks to Fortune 500 data warehouses.",
     url: "https://bradley.io",
-    siteName: "bio·bradley.io",
+    siteName: "bradley.io",
     locale: "en_US",
     type: "website",
   },

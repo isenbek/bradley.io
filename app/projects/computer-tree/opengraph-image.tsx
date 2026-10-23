@@ -2,7 +2,7 @@ import { ogV3ImageResponse, OG_V3_SIZE, OG_V3_CONTENT_TYPE } from "@/lib/og-card
 
 export const runtime = "nodejs"
 export const alt =
-  "The Computer Tree: the US Army's 1961 family tree of the computer, grown to 2025, 542 machines from ENIAC to Fugaku. bio·bradley.io"
+  "The Computer Tree: the US Army's 1961 family tree of the computer, grown to 2025, 542 machines from ENIAC to Fugaku. bradley.io"
 export const size = OG_V3_SIZE
 export const contentType = OG_V3_CONTENT_TYPE
 
