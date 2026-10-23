@@ -73,25 +73,25 @@ export default function MeatballPage() {
         title="Meatball can see, hear, and talk back"
         lede={
           <>
-            A caseless home server built from other people&apos;s cast-offs: salvaged GPUs, an
-            abandoned-office pile of audio dongles, a &apos;60s microphone, early-&apos;90s speakers.
-            Taught to see, hear, think and speak. Every model runs on the metal and nothing touches the
-            cloud.
+            A home server with no case, built from other people&apos;s cast-offs: salvaged graphics
+            cards, a pile of USB audio adapters from an abandoned office, a &apos;60s microphone and
+            early-&apos;90s speakers. It was taught to see, hear, think and speak. Every AI model
+            runs on the machine itself, and nothing touches the cloud.
           </>
         }
       />
 
       <Section title="What it sees" />
-        <LiveEye />
+      <LiveEye />
 
       <Section title="It can just ask" />
-        <Greeter />
+      <Greeter />
 
       <Section title="It tracks its own motion" />
-        <MotionTrack />
+      <MotionTrack />
 
       <Section title="Always-on ears" />
-        <EarsTrack />
+      <EarsTrack />
 
       <Section title="Four cast-off parts, four working senses" />
 

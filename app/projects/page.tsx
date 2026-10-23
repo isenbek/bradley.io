@@ -11,7 +11,7 @@ import zooPic from "@/components/projects/thumbs/prime-zoo.webp"
 import stormPic from "@/components/projects/thumbs/storm-plates.webp"
 import collapsePic from "@/components/projects/thumbs/critical-collapse.webp"
 import treePic from "@/components/projects/thumbs/computer-tree.webp"
-import { PageHead, Section } from "@/components/page"
+import { JumpNav, PageHead, Section } from "@/components/page"
 
 export const metadata: Metadata = {
   title: "Projects",
@@ -395,13 +395,7 @@ export default async function ProjectsPage() {
         </LinkCard>
       </div>
 
-      <nav className="beta-bench-jump" aria-label="Groups on this page">
-        {GROUPS.map((g) => (
-          <a className="tag" href={`#${g.id}`} key={g.id}>
-            {g.title} <b>{g.count}</b>
-          </a>
-        ))}
-      </nav>
+      <JumpNav items={GROUPS.map((g) => ({ id: g.id, label: g.title, count: g.count }))} />
 
       <section id="chips" className="beta-bench-group" aria-labelledby="chips-h">
         <Section id="chips-h" title="Chips and consoles">

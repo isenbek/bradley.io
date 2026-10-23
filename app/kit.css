@@ -211,7 +211,9 @@ body:has(.beta-root) {
    class on bradley.io's own wrapper, and .prose is untouched everywhere else.
    --------------------------------------------------------------------------- */
 .beta-sec { max-width: none; }
-.beta-sec > p { max-width: 68ch; }
+.beta-sec > p,
+.beta-sec > ul,
+.beta-sec > ol { max-width: 68ch; }
 
 /* A chart's own footnote: what the chart does not cover. Sits on panel with the
    chart it belongs to, quieter than the axis labels because it is prose. */
@@ -3411,8 +3413,6 @@ td > .beta-charts-spark { min-width: calc(var(--u) * 12); }
 /* The chip that closes a page: same treatment as a figure's chip, so at 320px
    its mark stays beside the first line instead of alone above it. */
 .beta-shift-endchip { margin: calc(var(--u) * 6) 0 0; }
-.beta-shift-endchip > .measured { flex-wrap: nowrap; }
-.beta-shift-endchip > .measured > span { min-width: 0; overflow-wrap: anywhere; }
 /* end of block: beta-shift-* */
 
 /* ===========================================================================
@@ -3869,13 +3869,6 @@ td > .beta-charts-spark { min-width: calc(var(--u) * 12); }
    The page is long on a phone, and the visitor who came for the prices should
    not have to scroll five practices to find them. The kit's .crumb voice,
    as a row that wraps. */
-.beta-services-jump {
-  display: flex;
-  flex-wrap: wrap;
-  gap: calc(var(--u) * 2) calc(var(--u) * 5);
-  margin: 0 0 calc(var(--u) * 2);
-}
-.beta-services-jump a { padding: calc(var(--u) * 1) 0; }
 
 /* ---- The five practices --------------------------------------------------
    Open rows under a rule. One column on a phone; the description across the
@@ -5155,8 +5148,6 @@ a.beta-papers-fig:focus-visible { outline: 2px solid var(--color-blue-ink); outl
 }
 .beta-work-org { gap: calc(var(--u) * 5); }
 .beta-work-org > .prose > :last-child { margin-bottom: 0; }
-/* .beta-sec holds its paragraphs to the reading measure; a list is reading too. */
-.beta-work-org > .prose > ul { max-width: 68ch; }
 .beta-work-org > .measured { justify-self: start; margin: 0; }
 
 /* ---- The board: one panel per org --------------------------------------- */
@@ -5868,15 +5859,6 @@ a.beta-papers-fig:focus-visible { outline: 2px solid var(--color-blue-ink); outl
    the page already sets scroll-padding-top for the sticky masthead, and a
    margin here would be counted on top of it. */
 
-.beta-bench-jump {
-  display: flex;
-  flex-wrap: wrap;
-  gap: calc(var(--u) * 2);
-  margin: calc(var(--u) * 5) 0 calc(var(--u) * 2);
-}
-/* The count rides inside the tag, one step heavier than the name. */
-.beta-bench-jump .tag b { font-weight: 700; margin-left: calc(var(--u) * 1); }
-.beta-bench-jump .tag:focus-visible { outline: 2px solid var(--color-blue-ink); outline-offset: 2px; }
 
 /* ---- The card grid ------------------------------------------------------- */
 /* Explicit column counts, not auto-fill, so the page knows how many cards a
@@ -7687,30 +7669,16 @@ a.beta-papers-fig:focus-visible { outline: 2px solid var(--color-blue-ink); outl
   line-height: 1.5;
 }
 
-/* On this page: a label, then the section links in mono, wrapping. */
+/* On this page: the sections as tags, wrapping; a count inside a tag is one
+   step heavier than its name. */
 .beta-t-jump {
   display: flex;
   flex-wrap: wrap;
-  align-items: baseline;
-  gap: calc(var(--u) * 2) calc(var(--u) * 4);
-  margin: 0 0 calc(var(--u) * 6);
+  gap: calc(var(--u) * 2);
+  margin: 0 0 calc(var(--u) * 2);
 }
-.beta-t-jump ul {
-  display: flex;
-  flex-wrap: wrap;
-  gap: calc(var(--u) * 2) calc(var(--u) * 4);
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  font-family: var(--font-mono);
-  font-size: var(--text-data);
-}
-.beta-t-jump a {
-  color: var(--color-ink);
-  text-decoration: none;
-  border-bottom: 1px solid var(--color-ink-faint);
-}
-.beta-t-jump a:hover { border-bottom-color: var(--color-ink); }
+.beta-t-jump .tag b { font-weight: 700; margin-left: calc(var(--u) * 1); }
+.beta-t-jump .tag:focus-visible { outline: 2px solid var(--color-blue-ink); outline-offset: 2px; }
 
 /* Read more: a summary line in mono caps with a turn marker, the rest folded.
    The text is in the HTML either way; print always opens it. */
@@ -7732,7 +7700,9 @@ a.beta-papers-fig:focus-visible { outline: 2px solid var(--color-blue-ink); outl
 .beta-t-more > summary::-webkit-details-marker { display: none; }
 .beta-t-more > summary::before { content: "+"; font-weight: 700; }
 .beta-t-more[open] > summary::before { content: "\2212"; }
-.beta-t-more[open] > summary { margin-bottom: calc(var(--u) * 4); }
+.beta-t-more[open] > summary { margin-bottom: calc(var(--u) * 2); }
+/* The first heading inside the fold opens it, so it needs no rule above it. */
+.beta-t-more__body > .prose:first-child > h2:first-child { margin-top: 0; }
 .beta-t-more > summary:hover { border-bottom-color: var(--color-ink); }
 .beta-t-more > summary:focus-visible { outline: 2px solid var(--color-blue-ink); outline-offset: 2px; }
 @media print {

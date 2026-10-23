@@ -22,7 +22,7 @@ import { BetaMeasured } from "../_measured"
 import { CHART_INK, SERIES } from "@/lib/beta/chart-theme"
 import { BenchGrid } from "@/components/projects/BenchCard"
 import { CLIENTS_FEATURED, CLIENTS_MORE } from "./_clients"
-import { PageHead, Panel, Section } from "@/components/page"
+import { PageHead, Panel, ReadMore, Section } from "@/components/page"
 
 /**
  * /work: the client projects first, then four GitHub organisations, counted
@@ -429,8 +429,8 @@ function OrgSection({ org }: { org: OrgRollup }) {
       {org.listed && org.listed.length > 0 && <RepoCards org={org} repos={org.listed} s={s} />}
 
       <BetaMeasured generated={org.generated} source={`${org.slug}-timeline.json`}>
-        <b>{org.slug}-timeline.json</b>
-        generated {org.generated.slice(0, 16).replace("T", " ")} UTC. Commits by UTC day,{" "}
+        <b>{org.slug}-timeline.json</b>, generated{" "}
+        {org.generated.slice(0, 16).replace("T", " ")} UTC. Commits by UTC day,{" "}
         {org.since} to {s.end}.
       </BetaMeasured>
     </section>
@@ -547,87 +547,91 @@ export default function BetaWorkPage() {
             counts every commit in every log. It does not look at who wrote them, and that matters
             in three ways.
           </p>
-          <ul>
-            <li>
-              <strong>Forks and imports.</strong>{" "}
-              A fork arrives with its whole history:
-              tinymachines holds a fork of ripgrep whose log starts in 2016, and isenbek holds forks
-              that go back to 2014. So each organisation here starts at the first commit under my
-              name:{" "}
-              {bySince.map((o, i) => (
-                <span key={o.slug}>
-                  {i > 0 && (i === bySince.length - 1 ? " and " : ", ")}
-                  {fmtDay(o.since)} for {o.displayName}
-                </span>
-              ))}
-              . The {nf(upstream)} commits dated before those are in no number or chart on this page.
-            </li>
-            <li>
-              <strong>Scripts.</strong>{" "}
-              A commit made by a script counts the same as one made by
-              hand. This site&apos;s deploy script writes a version bump and a build stamp every
-              time it ships, and those are more than half of its log; Sysforge-AI&apos;s nightly
-              refresh is the other case.
-            </li>
-            <li>
-              <strong>Other authors.</strong>{" "}
-              Inside the period the logs still hold commits under
-              other names: fork and import history dated after my first commit, and other authors.
-              The published data has no author field, so the charts cannot take them out. The panel
-              below is the one time it was measured.
-            </li>
-          </ul>
-          <p>
-            Repositories are named only where they are public, not forks, and mine. Private ones
-            are counted and not named. Days are UTC days.
-          </p>
         </Section>
 
-        <Panel
-          name="Author check"
-          note={`all four, ${fmtDay(AUTHOR_AUDIT.measured)}`}
-          className="beta-work-audit"
-        >
-          <table className="readout beta-work-totals">
-            <tbody>
-              <tr>
-                <td>In the four logs that day</td>
-                <td className="num">{nf(audit.total)}</td>
-              </tr>
-              <tr>
-                <td className="beta-work-sub">before each start, left out</td>
-                <td className="num">{nf(audit.upstream)}</td>
-              </tr>
-              <tr>
-                <td className="beta-work-sub">in the period, counted</td>
-                <td className="num">{nf(inPeriod)}</td>
-              </tr>
-              <tr>
-                <td className="beta-work-sub beta-work-sub2">under my name</td>
-                <td className="num">{nf(audit.owner)}</td>
-              </tr>
-              <tr>
-                <td className="beta-work-sub beta-work-sub2">under Claude&apos;s name</td>
-                <td className="num">{nf(audit.claude)}</td>
-              </tr>
-              <tr>
-                <td className="beta-work-sub beta-work-sub2">under other names</td>
-                <td className="num">{nf(audit.others)}</td>
-              </tr>
-            </tbody>
-          </table>
-          <p className="beta-chart__note">
-            Counted once, by author name, from the pipeline&apos;s cache, and it does not update:
-            the files on this page were generated {fmtDay(today)} and hold {nf(totalInFiles)}{" "}
-            commits.
-          </p>
-        </Panel>
+        <ReadMore>
+          <Section>
+            <ul>
+              <li>
+                <strong>Forks and imports.</strong>{" "}
+                A fork arrives with its whole history:
+                tinymachines holds a fork of ripgrep whose log starts in 2016, and isenbek holds forks
+                that go back to 2014. So each organisation here starts at the first commit under my
+                name:{" "}
+                {bySince.map((o, i) => (
+                  <span key={o.slug}>
+                    {i > 0 && (i === bySince.length - 1 ? " and " : ", ")}
+                    {fmtDay(o.since)} for {o.displayName}
+                  </span>
+                ))}
+                . The {nf(upstream)} commits dated before those are in no number or chart on this page.
+              </li>
+              <li>
+                <strong>Scripts.</strong>{" "}
+                A commit made by a script counts the same as one made by
+                hand. This site&apos;s deploy script writes a version bump and a build stamp every
+                time it ships, and those are more than half of its log; Sysforge-AI&apos;s nightly
+                refresh is the other case.
+              </li>
+              <li>
+                <strong>Other authors.</strong>{" "}
+                Inside the period the logs still hold commits under
+                other names: fork and import history dated after my first commit, and other authors.
+                The published data has no author field, so the charts cannot take them out. The panel
+                below is the one time it was measured.
+              </li>
+            </ul>
+            <p>
+              Repositories are named only where they are public, not forks, and mine. Private ones
+              are counted and not named. Days are UTC days.
+            </p>
+            </Section>
 
-        <BetaMeasured generated={newest} source="four mission timelines">
-          <b>public/data/*-timeline.json</b>
-          four files, newest generated {newest.slice(0, 16).replace("T", " ")} UTC. Author check:
-          pipeline cache, {AUTHOR_AUDIT.measured}.
-        </BetaMeasured>
+          <Panel
+            name="Author check"
+            note={`all four, ${fmtDay(AUTHOR_AUDIT.measured)}`}
+            className="beta-work-audit"
+          >
+            <table className="readout beta-work-totals">
+              <tbody>
+                <tr>
+                  <td>In the four logs that day</td>
+                  <td className="num">{nf(audit.total)}</td>
+                </tr>
+                <tr>
+                  <td className="beta-work-sub">before each start, left out</td>
+                  <td className="num">{nf(audit.upstream)}</td>
+                </tr>
+                <tr>
+                  <td className="beta-work-sub">in the period, counted</td>
+                  <td className="num">{nf(inPeriod)}</td>
+                </tr>
+                <tr>
+                  <td className="beta-work-sub beta-work-sub2">under my name</td>
+                  <td className="num">{nf(audit.owner)}</td>
+                </tr>
+                <tr>
+                  <td className="beta-work-sub beta-work-sub2">under Claude&apos;s name</td>
+                  <td className="num">{nf(audit.claude)}</td>
+                </tr>
+                <tr>
+                  <td className="beta-work-sub beta-work-sub2">under other names</td>
+                  <td className="num">{nf(audit.others)}</td>
+                </tr>
+              </tbody>
+            </table>
+            <p className="beta-chart__note">
+              Counted once, by author name, from the pipeline&apos;s cache, and it does not update:
+              the files on this page were generated {fmtDay(today)} and hold {nf(totalInFiles)}{" "}
+              commits.
+            </p>
+          </Panel>
+
+          <BetaMeasured generated={newest} source="four mission timelines">
+            <b>public/data/*-timeline.json</b>: four files, newest generated {newest.slice(0, 16).replace("T", " ")} UTC. Author check:
+            pipeline cache, {AUTHOR_AUDIT.measured}.
+          </BetaMeasured>
+        </ReadMore>
       </section>
     </div>
   )

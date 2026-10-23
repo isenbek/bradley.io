@@ -126,6 +126,17 @@ Brad files work as issues on `isenbek/bradley.io` (often written by a remote age
 
 Deploy scripts are approved to run without asking (Brad, 2026-10-14).
 
+## Page templates (2026-10-22)
+
+Every page except four one-offs (home, `/about`, `/projects/turfy`, `/resume/print`) is built from the parts in
+`components/page` (styles: `app/kit.css`, block `beta-t-*`): `PageHead`, `Section` (prose, optional `icon`), `Panel`,
+`Grid`, `Block`, `Actions` (the one closing button row), `JumpNav`, `ReadMore` (a `<details>` fold: the text stays in
+the HTML and prints), `Code`, `Measured`. Five templates use them: **Instrument** (head, one live component, a short
+closing Section), **Article** (Section + one sibling block, repeated, then Actions), **Project** (Article with the
+embed first), **Report** (Panels, each with a Measured chip), **Index** (JumpNav, then Section + Grid). A new page
+uses these; a page-specific spacing, grid, panel or CTA rule is a duplicate to avoid. Copy follows
+`docs/language-scrub.md` (short sentences, no semicolon chains, plain words over internal names).
+
 ## Key Conventions
 
 1. **Kit classes + kit tokens only** (`panel`, `prose`, `rail`, `ledger`, `readout`, `btn`, `tag`, `crumb`, `page-head`; `--color-*`, `--text-*`, `--u`). Site-specific additions are `beta-*` classes in `app/kit.css`. Never hardcode hex in components — the exceptions are `lib/beta/chart-theme.ts` (MapLibre, documented) and `app/terminal.css` (the CRT, documented).

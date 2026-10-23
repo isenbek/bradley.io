@@ -196,27 +196,29 @@ export function Actions({ note, children }: { note?: ReactNode; children: ReactN
   )
 }
 
-/** "On this page": links to the page's own sections, set above the first one. */
-export function JumpNav({ items }: { items: { id: string; label: string }[] }) {
+/**
+ * "On this page": the page's own sections as a row of tags, set above the
+ * first one. A count, where given, rides inside its tag (/projects' groups).
+ */
+export function JumpNav({ items }: { items: { id: string; label: string; count?: number }[] }) {
   return (
     <nav className="beta-t-jump" aria-label="On this page">
-      <span className="crumb">On this page</span>
-      <ul>
-        {items.map((it) => (
-          <li key={it.id}>
-            <a href={`#${it.id}`}>{it.label}</a>
-          </li>
-        ))}
-      </ul>
+      {items.map((it) => (
+        <a className="tag" href={`#${it.id}`} key={it.id}>
+          {it.label}
+          {it.count !== undefined ? <b>{it.count}</b> : null}
+        </a>
+      ))}
     </nav>
   )
 }
 
 /**
- * Read more: the opening shows, the rest folds. The folded text is still in
+ * Read more: the opening shows, the rest folds. The folded part is still in
  * the HTML (a <details>), so search, tinypeek and the site search read all of
- * it, and print opens it (app/kit.css). Put the first paragraph or two in a
- * Section before it, and the rest here.
+ * it, and print opens it (app/kit.css). Put the opening in a Section before
+ * it; inside, use Sections and kit blocks as anywhere else (prose stays in a
+ * Section, panels beside it).
  */
 export function ReadMore({
   label = "Read more",
@@ -228,7 +230,7 @@ export function ReadMore({
   return (
     <details className="beta-t-more">
       <summary>{label}</summary>
-      <div className="prose beta-sec">{children}</div>
+      <div className="beta-t-more__body">{children}</div>
     </details>
   )
 }

@@ -6,7 +6,7 @@ import { NowPanel } from "@/components/live/NowPanel"
 import { peekNow } from "@/components/live/now-snapshot"
 import type { NowId, NowSnapshot } from "@/components/live/types"
 import { GOVERNMENT, ROLES } from "@/lib/resume"
-import { Actions, PageHead, Section } from "@/components/page"
+import { Actions, JumpNav, PageHead, Section } from "@/components/page"
 
 // Rendered per request, as the home page is and for the same reason: the panel
 // under the practices opens on the server's snapshot of four instruments, and
@@ -431,13 +431,7 @@ function ServicesBody({ initial }: { initial: NowSnapshot | null }) {
         }
       />
 
-      <nav className="crumb beta-services-jump" aria-label="On this page">
-        {JUMPS.map((j) => (
-          <a href={`#${j.id}`} key={j.id}>
-            {j.label}
-          </a>
-        ))}
-      </nav>
+      <JumpNav items={JUMPS} />
 
       <Section id="practices" title="Five practices, one practitioner">
         <p>
