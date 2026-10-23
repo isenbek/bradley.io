@@ -40,17 +40,17 @@ const NOTES = [
   {
     href: "/meatball/notes/senses",
     title: "I gave a junk-pile eyes, ears, and a voice",
-    blurb: "Field note 01. The salvaged bill of materials, the traps that cost an hour each, and talking to it out loud.",
+    blurb: "Field note 01. The salvaged parts list, the bugs that cost an hour each, and the day it first talked back.",
   },
   {
     href: "/meatball/notes/listening",
     title: "The math of listening",
-    blurb: "Field note 02. DSP from raw samples to a working voice gate, every number from a live run.",
+    blurb: "Field note 02. How a computer tells a voice from background noise. Every number comes from a live run.",
   },
   {
     href: "/meatball/notes/motion",
     title: "Teaching the eyes to ignore a box fan",
-    blurb: "Field note 03. One cheap fan fooled both senses, and what it took to make them stop caring.",
+    blurb: "Field note 03. One cheap fan fooled both the eyes and the ears, and what it took to make them ignore it.",
   },
 ]
 
@@ -175,10 +175,10 @@ export default async function Home() {
           ))}
         </nav>
         <p className="lede">
-          I build at the seam where enterprise scale meets maker culture: ESP32 mesh networks,
-          Fortune 500 data warehouses, and a lot of Claude as co-pilot. This site runs on my own
-          hardware, and the panels below are this server and the instruments around it reporting
-          in.
+          I build where big-company data work meets the maker&apos;s garage: wireless sensor
+          networks, Fortune 500 data warehouses, and a lot of Claude as co-pilot. This site runs on
+          my own hardware. The panels below are this server and its instruments, reporting in
+          live.
         </p>
         <p className="quiet beta-home-where">
           <b>Bradley Isenbek.</b> Grand Rapids, Michigan. On site across Kent County and West
@@ -201,9 +201,9 @@ export default async function Home() {
       <div className="prose beta-sec">
         <h2>Selected work</h2>
         <p>
-          Three threads, one practice: edge hardware, data architecture, and AI piloting. Each
-          ships its own systems, but they cross-pollinate: the lab feeds the consulting, the
-          consulting funds the lab. Six places to see it.
+          Three threads, one practice: hardware, data architecture, and AI. Each ships its own
+          systems, and each feeds the others. The lab feeds the consulting, and the consulting
+          funds the lab. Here are six places to see it.
         </p>
       </div>
 
@@ -222,9 +222,10 @@ export default async function Home() {
         <div className="beta-home-silicon__words">
           <div className="prose">
             <p>
-              Nothing in it models what a 6502 does. There are wires and switches, traced from a
-              photograph of a decapped die, and the behaviour falls out of them. Every register
-              you read is pulled back out of storage nodes; every cycle count is emergent.
+              This is not a program that imitates a 6502. It is the chip&apos;s actual wires and
+              switches, traced from a photograph of the silicon, and the chip&apos;s behaviour comes
+              out of them on its own. Every value you read, and every step it takes, is the
+              circuit working.
             </p>
             <p>
               The photograph is not mine. The visual6502 team decapped a 6502, photographed the
@@ -281,12 +282,11 @@ export default async function Home() {
       <div className="prose beta-sec">
         <h2>Play it: Die Runner</h2>
         <p>
-          A console on that chip. The game is a 339-byte ROM, the screen is a page of the
-          6502&apos;s memory, and the browser draws it. There is no emulator in the frame: every
-          frame settles the 3,510 switches above through the engine at tinymachines.ai, and the
-          gates you thread are pass transistors on the die, open or shut by the state of the chip
-          running the game. Boot it when you are ready; it makes a request a frame and nothing
-          until you press.
+          A game console built on that chip. The game is 339 bytes, and the screen is a page of
+          the chip&apos;s memory that the browser draws. Nothing here is faked: every frame runs
+          the 3,510 switches above on the engine at tinymachines.ai. The gates you steer through
+          are real transistors on the chip, open or shut by the game as it runs. It sends nothing
+          until you press start.
         </p>
       </div>
       <DieRunner />
@@ -305,10 +305,10 @@ export default async function Home() {
               {nf(totals.ownCommits)} of them under my name
             </>
           ) : null}
-          . Each organisation&apos;s count starts at my first commit in it, and what is still in
-          the count that I did not type is <Link href="/work#counting">spelled out on the work
-          page</Link>. Under them, the index of my Claude Code sessions, with the period it covers.
-          Anything older is on the <Link href="/resume">resume</Link>.
+          . Each count starts at my first commit in that organisation. The{" "}
+          <Link href="/work#counting">work page</Link> spells out which commits in it are not mine.
+          Below them is the index of my Claude Code sessions and the period it covers. Anything
+          older is on the <Link href="/resume">resume</Link>.
         </p>
       </div>
 

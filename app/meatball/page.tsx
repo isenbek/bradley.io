@@ -46,21 +46,21 @@ const ENTRIES = [
     kicker: "field note 01",
     title: "I gave a junk-pile eyes, ears, and a voice",
     blurb:
-      "The whole saga: the salvaged bill of materials, the debugging traps that cost an hour each, the calibration insight, and finally talking to the WOPR out loud.",
+      "The whole build: the salvaged parts list, the bugs that cost an hour each, and the day it first talked back.",
   },
   {
     href: "/meatball/notes/listening",
     kicker: "field note 02",
     title: "The math of listening",
     blurb:
-      "Low-level DSP from raw samples to a working voice gate: the real FFT, windowing (200x less leakage), spectral-subtraction denoise and its U-curve. Every number from a live run.",
+      "How a computer tells a voice from background noise, worked from the raw sound samples up. Every number comes from a live run.",
   },
   {
     href: "/meatball/notes/motion",
     kicker: "field note 03",
     title: "Teaching the eyes to ignore a box fan",
     blurb:
-      "One cheap fan fooled both senses. Locking the camera's auto-exposure, then an adaptive per-cell gate that self-mutes the fan, the monitors and lighting blips, so it only fires on what should not move.",
+      "One cheap fan fooled both the eyes and the ears. The fix taught the camera to ignore things that always move, like fans, screens and flickering lights, and notice only what should not.",
   },
 ]
 

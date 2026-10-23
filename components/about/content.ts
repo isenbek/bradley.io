@@ -5,6 +5,11 @@
  *
  * TWO KINDS OF TEXT, AND WHICH IS WHICH
  *
+ *   LANGUAGE SCRUB (Brad, 2026-10-22, docs/language-scrub.md): PHILOSOPHY's
+ *   first and third paragraphs, the NOW card bodies, the field-note blurbs and
+ *   the SysForge line were rewritten in the plain voice at his request. The
+ *   notes below describe where the text came from, not its current wording.
+ *
  *   The operator's own words. LEDE, PHILOSOPHY and five of the six
  *   CAREER_LINES are the original site's About page (git show
  *   63d43d0:app/about/page.tsx), which he wrote. They are reused verbatim
@@ -40,9 +45,9 @@ export const LEDE =
 
 /** 63d43d0:app/about/page.tsx, the Philosophy section, in order. */
 export const PHILOSOPHY: string[] = [
-  "Case in point: I scored 60 Raspberry Pis from a failed business. Most people would resell them. I built a distributed investigation tool with 40 Pi4 workers running a VPN cluster with Tor DNS lookup and headless browser automation. It's messy, it's scrappy, and it works.",
+  "Case in point: I scored 60 Raspberry Pis from a failed business. Most people would resell them. I built a research tool instead: 40 of them working together, each one browsing the web on its own, privately and automatically. It's messy, it's scrappy, and it works.",
   "I'm an integrator at heart. I dumpster dive for gear because working within constraints forces creative solutions. I run my own DNS server on a Frankenstein Linux box I built from salvaged parts. I host everything locally because I want to understand how it all fits together.",
-  "I bring this same mindset to production work: find elegant solutions, question assumptions, build tools that last. Whether it's processing 4.9 billion data points, architecting high-availability messaging platforms, or leading classified government projects, I approach every problem as an opportunity to build something that actually works.",
+  "I bring the same mindset to production work. Find elegant solutions, question assumptions, and build tools that last. I've processed 4.9 billion data points, designed messaging platforms that stay up, and led classified government projects. Every one was a chance to build something that actually works.",
 ]
 
 /**
@@ -192,7 +197,7 @@ export const NOW: NowCard[] = [
   {
     id: "chips",
     title: "Chips, from their photographs",
-    body: "A MOS 6502 simulated at the transistor level from photographs of its die, then the two chips of an NES done the same way, and a console that plays in the browser on fast models derived from those simulations and checked against them.",
+    body: "A MOS 6502 chip, simulated transistor by transistor from photographs of its die. Then the two chips of an NES, done the same way. A console plays NES games in the browser, on faster models built from those simulations and checked against them.",
     note: "The die photographs and netlists are other people's work: visual6502.org (CC BY-NC-SA) and Quietust's Visual 2A03 and Visual 2C02.",
     links: [
       { href: "https://tinymachines.ai", label: "tinymachines.ai", external: true },
@@ -202,7 +207,7 @@ export const NOW: NowCard[] = [
   {
     id: "terrapulse",
     title: "TerraPulse",
-    body: "A platform for measured climate and geophysical data: readings from public instruments, no models and no forecasts, with a public read-only MCP server so an AI agent can ask it questions. I am its architect. I also engineered tinychase, which runs small models on that measured data in the visitor's own browser.",
+    body: "A platform for measured climate and earth-science data. It holds readings from public instruments, never models or forecasts. AI assistants can ask it questions directly, through a public read-only connection. I am its architect. I also built tinychase, which runs small AI models on the same data in your own browser.",
     links: [
       { href: "https://terrapulse.info", label: "terrapulse.info", external: true },
       { href: "https://tinychase.com", label: "tinychase.com", external: true },
@@ -211,7 +216,7 @@ export const NOW: NowCard[] = [
   {
     id: "site",
     title: "This site and its instruments",
-    body: "The pages here read real hardware on my network: a Geiger counter, an ADS-B receiver and a GPS on one bus, Meatball's camera, and the logs of who tried the doors at the router and the web server. When a box is switched off, its page says so, and so does this card.",
+    body: "The pages here read real hardware on my network. There is a Geiger counter, an aircraft-tracking radio (ADS-B) and a GPS, Meatball's camera, and the logs of who tried to get in at the router and the web server. When a box is switched off, its page says so, and so does this card.",
     links: [{ href: "/bench", label: "The bench: every live page" }],
   },
   {
@@ -257,21 +262,21 @@ export const WRITING: { href: string; kicker: string; title: string; blurb: stri
     kicker: "Field note 01",
     title: "I gave a junk-pile eyes, ears, and a voice",
     blurb:
-      "The whole saga: the salvaged bill of materials, the debugging traps that cost an hour each, the calibration insight, and finally talking to the WOPR out loud.",
+      "The whole build: the salvaged parts list, the bugs that cost an hour each, and the day it first talked back.",
   },
   {
     href: "/meatball/notes/listening",
     kicker: "Field note 02",
     title: "The math of listening",
     blurb:
-      "Low-level DSP from raw samples to a working voice gate: the real FFT, windowing (200x less leakage), spectral-subtraction denoise and its U-curve. Every number from a live run.",
+      "How a computer tells a voice from background noise, worked from the raw sound samples up. Every number comes from a live run.",
   },
   {
     href: "/meatball/notes/motion",
     kicker: "Field note 03",
     title: "Teaching the eyes to ignore a box fan",
     blurb:
-      "One cheap fan fooled both senses. Locking the camera's auto-exposure, then an adaptive per-cell gate that self-mutes the fan, the monitors and lighting blips, so it only fires on what should not move.",
+      "One cheap fan fooled both the eyes and the ears. The fix taught the camera to ignore things that always move, like fans, screens and flickering lights, and notice only what should not.",
   },
 ]
 
@@ -301,7 +306,7 @@ export const WRITING: { href: string; kicker: string; title: string; blurb: stri
  */
 export const CAREER_LINES: Record<string, string> = {
   "SysForge.ai":
-    "My own firm: AI consulting and development, agentic pipelines and AI-augmented toolchains for enterprise clients.",
+    "My own firm: AI consulting and development for enterprise clients. AI agents that do real work, and tools that bring AI into a team's daily work.",
   "VictoryText, LLC":
     "High-volume messaging platform with FastAPI, DynamoDB, and multi-carrier integration.",
   "ConservativeConnector, LLC":
