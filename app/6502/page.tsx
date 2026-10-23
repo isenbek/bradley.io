@@ -1,7 +1,7 @@
 import { DiePlates } from "@/components/mos/DiePlates"
 import { DieStack } from "@/components/mos/DieStack"
 import { VITALS, MNEMONICS, MACHINES, GROUPS } from "./_content"
-import { PageHead, Section } from "@/components/page"
+import { PageHead, Panel, Section } from "@/components/page"
 
 const TOTAL = GROUPS.reduce((n, g) => n + g.items.length, 0)
 
@@ -38,30 +38,24 @@ export default function Page() {
 
       <Section title="3,510 transistors that moved the industry" />
 
-      <div className="panel">
-        <div className="panel-face">
-          <div className="panel-bar">
-            <b>The part</b>
-            <span>MOS Technology, 1975</span>
-          </div>
-          <table className="readout">
-            <tbody>
-              {VITALS.map((v) => (
-                <tr key={v.k}>
-                  <td>
-                    {v.k}
-                    <br />
-                    <span style={{ color: "var(--color-glass-muted)", fontSize: "var(--text-fine)" }}>
-                      {v.sub}
-                    </span>
-                  </td>
-                  <td className="num">{v.v}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <Panel name="The part" note="MOS Technology, 1975">
+        <table className="readout">
+          <tbody>
+            {VITALS.map((v) => (
+              <tr key={v.k}>
+                <td>
+                  {v.k}
+                  <br />
+                  <span style={{ color: "var(--color-glass-muted)", fontSize: "var(--text-fine)" }}>
+                    {v.sub}
+                  </span>
+                </td>
+                <td className="num">{v.v}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </Panel>
 
       <Section title="The instruction set">
         <p>
@@ -139,26 +133,20 @@ export default function Page() {
 
       <Section title="How it is checked" />
 
-      <div className="panel">
-        <div className="panel-face">
-          <div className="panel-bar">
-            <b>Verification</b>
-            <span>against the original</span>
-          </div>
-          <p className="beta-org__what">
-            A headless harness runs the original visual6502 JavaScript and dumps the level of all
-            1,725 nodes at every half-cycle. This engine matches bit for bit. Matching registers
-            would only show agreement about the 6502; matching every node shows agreement about the
-            silicon.
-          </p>
-          <p className="beta-chart__note">
-            Then the datasheet oracle: documented cycle counts including page-crossing and branch
-            penalties, the read-modify-write double write, JSR and RTS stack layout, ADC and SBC
-            flags, decimal mode. A shared misreading of the die data would pass the first test and
-            fail this one.
-          </p>
-        </div>
-      </div>
+      <Panel name="Verification" note="against the original">
+        <p className="beta-org__what">
+          A headless harness runs the original visual6502 JavaScript and dumps the level of all
+          1,725 nodes at every half-cycle. This engine matches bit for bit. Matching registers
+          would only show agreement about the 6502; matching every node shows agreement about the
+          silicon.
+        </p>
+        <p className="beta-chart__note">
+          Then the datasheet oracle: documented cycle counts including page-crossing and branch
+          penalties, the read-modify-write double write, JSR and RTS stack layout, ADC and SBC
+          flags, decimal mode. A shared misreading of the die data would pass the first test and
+          fail this one.
+        </p>
+      </Panel>
 
       <Section title="The archive is one hosting bill from gone">
         <p>

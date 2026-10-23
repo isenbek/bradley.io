@@ -11,6 +11,7 @@ import { OrgCards } from "@/components/home/OrgCards"
 import { RunningNow } from "@/components/home/RunningNow"
 import { SelectedWork, WORK_CHECKED } from "@/components/home/SelectedWork"
 import { RESUME_PDF } from "@/lib/resume"
+import { BetaMeasured } from "./_measured"
 import { SiteStatsPanel } from "./_site-stats"
 import { AUTHOR_AUDIT, auditTotals, isoYear, loadOrgRollups } from "./work/_orgs"
 
@@ -69,22 +70,6 @@ function shortDate(iso: string): string {
   if (!m) return iso
   const month = MONTHS[Number(m[2]) - 1]
   return month ? `${Number(m[3])} ${month} ${m[1]}` : iso
-}
-
-/**
- * A provenance chip whose text is one sentence. The kit's .measured is a flex
- * row that wraps its children as whole items, so a sentence given as a bare
- * text node beside the <b> drops under the mark on a phone. One child and no
- * wrap keeps the mark beside the first line (the same fix NowPanel uses).
- * app/_measured.tsx is still used below where its default "file, generated
- * date" form is all that is needed.
- */
-function Measured({ children }: { children: React.ReactNode }) {
-  return (
-    <p className="measured beta-home-measured">
-      <span>{children}</span>
-    </p>
-  )
 }
 
 /**
@@ -208,10 +193,10 @@ export default async function Home() {
       </div>
 
       <SelectedWork />
-      <Measured>
+      <BetaMeasured>
         <b>Each figure</b> is from that project&apos;s own repository or live API, checked{" "}
         {shortDate(WORK_CHECKED)}
-      </Measured>
+      </BetaMeasured>
 
       <div className="prose beta-sec">
         <h2>The 6502, switch by switch</h2>
@@ -258,10 +243,10 @@ export default async function Home() {
               </table>
             </div>
           </div>
-          <Measured>
+          <BetaMeasured>
             <b>tinymachines/6502</b>: its README and its golden-trace test, checked{" "}
             {shortDate(WORK_CHECKED)}
-          </Measured>
+          </BetaMeasured>
 
           <div className="beta-home-row">
             <Link className="btn btn-ghost" href="/6502">
@@ -290,10 +275,10 @@ export default async function Home() {
         </p>
       </div>
       <DieRunner />
-      <Measured>
+      <BetaMeasured>
         <b>tinymachines/6502</b>: games/README.md, the ROM at rom/dierunner.s and the mint
         report, checked {shortDate(WORK_CHECKED)}
-      </Measured>
+      </BetaMeasured>
 
       <div className="prose beta-sec">
         <h2>The record</h2>
@@ -313,13 +298,13 @@ export default async function Home() {
       </div>
 
       <OrgCards orgs={orgs} end={timelinesAt.slice(0, 10)} />
-      <Measured>
+      <BetaMeasured>
         <b>public/data/*-timeline.json</b>
         {timelinesAt ? `, generated ${shortDate(timelinesAt)}` : ", generation date not recorded"}.
         Every author is counted. Each strip has its own scale, and its last month is still in
         progress
         {orgs.length < expected ? `. ${expected - orgs.length} of ${expected} files did not load` : ""}
-      </Measured>
+      </BetaMeasured>
 
       {/* Panel, because every number in it came out of a pipeline rather than
           off a slide. The chip underneath names the file and when it last ran;
@@ -327,9 +312,9 @@ export default async function Home() {
       <div className="beta-home-index">
         <SiteStatsPanel stats={stats} streak />
       </div>
-      <Measured>
+      <BetaMeasured>
         <b>public/data/site-data.json</b>, generated {shortDate(data.generated)}
-      </Measured>
+      </BetaMeasured>
 
       <ul className="rail-list beta-home-more">
         <li>

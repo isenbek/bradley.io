@@ -18,8 +18,8 @@ export function BetaMeasured({
 }: {
   /** ISO timestamp from the data file itself, not the build. */
   generated?: string
-  /** The file the numbers came out of. */
-  source: string
+  /** The file the numbers came out of. Not needed when children say it. */
+  source?: string
   children?: React.ReactNode
 }) {
   const when = generated
@@ -31,14 +31,24 @@ export function BetaMeasured({
       })
     : null
 
+  // ONE child, and the row does not wrap. The kit's .measured is a flex row
+  // that wraps its children as whole items, so a file name and a date given
+  // as two nodes put the date on its own line at 320px, starting with a
+  // comma. One span wraps like a sentence, with the date kept whole. (/papers
+  // and the home page each carried a local copy to get this; they use this
+  // one now.)
   return (
-    <p className="measured">
-      {children ?? (
-        <>
-          <b>{source}</b>
-          {when ? `, generated ${when}` : ", generation date not recorded"}
-        </>
-      )}
+    <p className="measured beta-t-measured">
+      <span>
+        {children ?? (
+          <>
+            <b>{source}</b>,{" "}
+            <span className="beta-t-nowrap">
+              {when ? `generated ${when}` : "generation date not recorded"}
+            </span>
+          </>
+        )}
+      </span>
     </p>
   )
 }

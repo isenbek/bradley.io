@@ -4,7 +4,7 @@ import type { Metadata } from "next"
 import { RowChart, RampKey } from "../_charts"
 import { BetaMeasured } from "../_measured"
 import { RESUME_MCP_LISTING } from "@/lib/resume-mcp"
-import { PageHead, Section } from "@/components/page"
+import { PageHead, Panel, Section } from "@/components/page"
 
 export const revalidate = 3600
 
@@ -173,15 +173,9 @@ export default function BetaMcpPage() {
 
       <RampKey low="fewer endpoints" high="more" />
 
-      <div className="panel">
-        <div className="panel-face">
-          <div className="panel-bar">
-            <b>By group</b>
-            <span>endpoints</span>
-          </div>
-          <RowChart caption="Operations per group" data={byCategory} />
-        </div>
-      </div>
+      <Panel name="By group" note="endpoints">
+        <RowChart caption="Operations per group" data={byCategory} />
+      </Panel>
 
       {d.categories.map((c) => (
         <section key={c.id}>

@@ -3181,12 +3181,9 @@ td > .beta-charts-spark { min-width: calc(var(--u) * 12); }
 
 /* Two figures side by side where each has room for a readable plot, one
    column otherwise. Clamped, so a 320px phone is one column and never wider. */
+/* Columns, gap and spacing: Grid (components/page). */
 .beta-shift-two {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(26rem, 100%), 1fr));
-  gap: 0 calc(var(--u) * 6);
   align-items: start;
-  margin: calc(var(--u) * 5) 0 calc(var(--u) * 8);
 }
 .beta-shift-two > .beta-shift-fig { margin: 0 0 calc(var(--u) * 6); min-width: 0; }
 .beta-shift-two > .beta-shift-fig:last-child { margin-bottom: 0; }
@@ -4250,12 +4247,7 @@ td > .beta-charts-spark { min-width: calc(var(--u) * 12); }
    ======================================================================== */
 
 /* ---- The two count panels ------------------------------------------------ */
-.beta-papers-counts {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(22rem, 100%), 1fr));
-  gap: calc(var(--u) * 4);
-  margin: calc(var(--u) * 3) 0 calc(var(--u) * 4);
-}
+/* beta-papers-counts: columns, gap and spacing are Grid's (components/page). */
 /* A grid item's min-width is auto: without this a chart's own minimum holds
    the track open and the panel leaves the page at 320px. */
 .beta-papers-counts > .panel { min-width: 0; display: flex; }
@@ -4282,7 +4274,6 @@ td > .beta-charts-spark { min-width: calc(var(--u) * 12); }
   .beta-papers-counts .beta-chart__row { grid-template-columns: minmax(0, 1fr) auto; }
 }
 /* The date in a provenance chip never breaks in the middle. */
-.beta-papers-nowrap { white-space: nowrap; }
 
 /* ---- The domain filter --------------------------------------------------- */
 /* The bar is meant to stay under the masthead while the grid scrolls: forty-
@@ -4389,12 +4380,7 @@ td > .beta-charts-spark { min-width: calc(var(--u) * 12); }
 /* auto-fill, not auto-fit: a filtered view of two cards keeps them card-sized
    instead of stretching each across half the page. min() clamps the floor so
    one column never pushes the page sideways at 320px. */
-.beta-papers-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(19rem, 100%), 1fr));
-  gap: calc(var(--u) * 4);
-  margin: 0 0 calc(var(--u) * 6);
-}
+/* beta-papers-grid: columns, gap and spacing are Grid's (components/page). FilterHash finds the grid by this class. */
 
 /* ---- One study ----------------------------------------------------------- */
 .beta-papers-card {
@@ -5145,8 +5131,6 @@ a.beta-papers-fig:focus-visible { outline: 2px solid var(--color-blue-ink); outl
 .prose + .rail-list.beta-home-more { margin-top: calc(var(--u) * 5); }
 /* A provenance chip that is one sentence: the mark stays beside its first
    line and the sentence wraps inside itself (see Measured in app/page.tsx). */
-.beta-home-measured { flex-wrap: nowrap; }
-.beta-home-measured > span { min-width: 0; overflow-wrap: anywhere; }
 /* HOME (end block: beta-home-*) */
 
 /* ===========================================================================
@@ -5570,12 +5554,7 @@ a.beta-papers-fig:focus-visible { outline: 2px solid var(--color-blue-ink); outl
 }
 
 /* Two strips side by side where there is room for both, stacked where not. */
-.beta-pilot-pair {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(24rem, 100%), 1fr));
-  gap: 0 calc(var(--u) * 8);
-}
-.beta-pilot-pair > * { min-width: 0; }
+/* beta-pilot-pair: columns, gap and spacing are Grid's (components/page). */
 
 /* SpanRows (components/pilot/SpanRows.tsx) borrows the TenureBars layout and
    changes two things. The value column is a figure, not a date range: glass,
@@ -7202,12 +7181,7 @@ a.beta-papers-fig:focus-visible { outline: 2px solid var(--color-blue-ink); outl
 .beta-resume-links a:hover { text-decoration-color: var(--color-ink); }
 
 /* Core strengths: three cards, one column on a phone. */
-.beta-resume-strengths {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(16rem, 100%), 1fr));
-  gap: calc(var(--u) * 4);
-  margin: calc(var(--u) * 4) 0 calc(var(--u) * 10);
-}
+/* beta-resume-strengths: columns, gap and spacing are Grid's (components/page). */
 .beta-resume-strengths .rail p { margin: 0; font-size: var(--text-body); line-height: 1.55; }
 
 /* The closing hiring line, after the record and before the provenance note. */
@@ -7635,12 +7609,9 @@ a.beta-papers-fig:focus-visible { outline: 2px solid var(--color-blue-ink); outl
 .beta-walkins-sheet { margin: calc(var(--u) * 4) 0 calc(var(--u) * 2); }
 .beta-walkins-sheet img { display: block; width: min(100%, 44rem); height: auto; border: 1px solid var(--color-rule); background: #fff; }
 .beta-walkins-sheet figcaption { font-family: var(--font-mono); font-size: var(--text-fine); color: var(--color-ink-muted); margin-top: calc(var(--u) * 2); }
+/* Columns, gap and spacing: Grid (components/page). */
 .beta-walkins-bands {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
   align-items: start; /* three lists of different lengths: no panel stretches to the longest */
-  gap: calc(var(--u) * 4);
-  margin: calc(var(--u) * 4) 0 calc(var(--u) * 2);
 }
 .beta-walkins-list { list-style: none; margin: 0; padding: 0; }
 .beta-walkins-list > li {
@@ -7688,6 +7659,11 @@ a.beta-papers-fig:focus-visible { outline: 2px solid var(--color-blue-ink); outl
   padding: 0;
   list-style: none;
 }
+
+/* Children of a grid may shrink below their content (a chart's own minimum
+   would otherwise hold the track open and push the page wide at 320px). */
+.beta-t-grid > * { min-width: 0; }
+.beta-t-grid--fill { grid-template-columns: repeat(auto-fill, minmax(min(var(--t-min, 18rem), 100%), 1fr)); }
 
 /* A block that is not a Section but needs a Section's gap above it. */
 .beta-t-block { margin-top: calc(var(--u) * 12); }
@@ -7767,4 +7743,9 @@ a.beta-papers-fig:focus-visible { outline: 2px solid var(--color-blue-ink); outl
    ruled .prose > h2 is untouched; this only sets the icon beside the words. */
 .prose > h2.beta-t-icon { display: flex; align-items: center; gap: calc(var(--u) * 3); }
 .prose > h2.beta-t-icon svg { flex: 0 0 auto; color: var(--color-accent-ink); }
+/* The provenance chip (app/_measured.tsx): one child that wraps like text,
+   beside the mark, never under it. */
+.beta-t-measured { flex-wrap: nowrap; }
+.beta-t-measured > span { min-width: 0; overflow-wrap: anywhere; }
+.beta-t-nowrap { white-space: nowrap; }
 /* TEMPLATES (end block: beta-t-*) */

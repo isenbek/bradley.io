@@ -108,15 +108,21 @@ export function Section({
   )
 }
 
-/** The kit's panel: the machine talking. A bar with a name and a note, then the face. */
+/**
+ * The kit's panel: the machine talking. A bar with a name and a note, then
+ * the face. `aside` is the note's place for an element that is its own mark
+ * (a kind chip, a status), set as it is rather than wrapped in a span.
+ */
 export function Panel({
   name,
   note,
+  aside,
   className,
   children,
 }: {
   name: ReactNode
   note?: ReactNode
+  aside?: ReactNode
   className?: string
   children: ReactNode
 }) {
@@ -126,6 +132,7 @@ export function Panel({
         <div className="panel-bar">
           <b>{name}</b>
           {note ? <span>{note}</span> : null}
+          {aside}
         </div>
         {children}
       </div>
@@ -141,20 +148,24 @@ export function Panel({
  */
 export function Grid({
   min = "18rem",
+  fill = false,
   className,
   as: Tag = "div",
   label,
   children,
 }: {
   min?: string
+  /** Keep empty tracks (auto-fill), so a short list does not stretch: a filtered card list. */
+  fill?: boolean
   className?: string
   as?: "div" | "ul" | "section"
   label?: string
   children: ReactNode
 }) {
+  const cls = ["beta-t-grid", fill ? "beta-t-grid--fill" : "", className ?? ""].filter(Boolean).join(" ")
   return (
     <Tag
-      className={className ? `beta-t-grid ${className}` : "beta-t-grid"}
+      className={cls}
       style={{ "--t-min": min } as CSSProperties}
       aria-label={label}
     >

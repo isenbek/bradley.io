@@ -17,7 +17,7 @@ import {
   SUMMARY_INTRO,
   type ResumeRole,
 } from "@/lib/resume"
-import { PageHead, Section } from "@/components/page"
+import { Grid, PageHead, Section } from "@/components/page"
 
 /**
  * The resume. Paper throughout: this is documentation about a person, not a
@@ -154,14 +154,14 @@ export default function ResumePage() {
 
       <Section title="Core strengths" />
 
-      <div className="beta-resume-strengths">
+      <Grid min="16rem" className="beta-resume-strengths">
         {STRENGTHS.map((s) => (
           <div className="rail" key={s.title}>
             <h3>{s.title}</h3>
             <p>{s.description}</p>
           </div>
         ))}
-      </div>
+      </Grid>
 
       <Section title="Government and classified work">
         <ul>

@@ -22,7 +22,7 @@ import { BetaMeasured } from "../_measured"
 import { CHART_INK, SERIES } from "@/lib/beta/chart-theme"
 import { BenchGrid } from "@/components/projects/BenchCard"
 import { CLIENTS_FEATURED, CLIENTS_MORE } from "./_clients"
-import { PageHead, Section } from "@/components/page"
+import { PageHead, Panel, Section } from "@/components/page"
 
 /**
  * /work: the client projects first, then four GitHub organisations, counted
@@ -202,30 +202,6 @@ const ABOUT: Record<string, ReactNode> = {
 const UNLISTED: Record<string, string> = {
   tinymachines: "private repositories, a fork of ripgrep and one imported project",
   isenbek: "forks I kept of other people's projects, and a few small repositories that are not mine to list",
-}
-
-function Panel({
-  name,
-  note,
-  className,
-  children,
-}: {
-  name: string
-  note?: string
-  className?: string
-  children: ReactNode
-}) {
-  return (
-    <div className={className ? `panel ${className}` : "panel"}>
-      <div className="panel-face">
-        <div className="panel-bar">
-          <b>{name}</b>
-          {note && <span>{note}</span>}
-        </div>
-        {children}
-      </div>
-    </div>
-  )
 }
 
 /** One figure on a board: what it is, the number, and what qualifies it. */

@@ -2,6 +2,7 @@
 
 import { BarStrip, type ChartTick } from "@/app/_charts"
 import { useNow } from "@/components/kit/InstrumentStatus"
+import { Grid } from "@/components/page"
 
 /**
  * HourStrips: the record by hour of day, with the present hour marked.
@@ -74,7 +75,7 @@ export function HourStrips({ hours, zone }: { hours: Hour[]; zone: string }) {
   const byStarts = hours.reduce((a, b) => (b.count > a.count ? b : a), hours[0])
 
   return (
-    <div className="beta-pilot-pair">
+    <Grid min="24rem" className="beta-pilot-pair">
       {hasRecords && (
         <BarStrip
           caption={`Transcript records by hour of day (${zoneText})`}
@@ -93,6 +94,6 @@ export function HourStrips({ hours, zone }: { hours: Hour[]; zone: string }) {
         ticks={ticks}
         highlight={highlight}
       />
-    </div>
+    </Grid>
   )
 }

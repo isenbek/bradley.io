@@ -6,7 +6,7 @@ import { costNum, costWindow, loadCostModel } from "../_cost-model"
 import { ShiftFigure, ShiftKind } from "@/components/shift/ShiftFigure"
 import { CompoundCycle } from "@/components/shift/CompoundCycle"
 import { ShiftRows } from "@/components/shift/ShiftRows"
-import { PageHead, Section } from "@/components/page"
+import { Grid, PageHead, Panel, Section } from "@/components/page"
 
 export const revalidate = 3600
 
@@ -242,20 +242,14 @@ export default function BetaShiftPage() {
         source="ai-pilot-data.json"
         note={`, instrumentRatings${typeof sampled === "number" ? `, ${sampled} session logs sampled` : ""}, about the last 30 days${pilotChip}`}
       >
-        <div className="panel">
-          <div className="panel-face">
-            <div className="panel-bar">
-              <b>Domain coverage, 0 to 100</b>
-              <ShiftKind kind="recorded" />
-            </div>
-            <ShiftRows
-              caption="Keyword coverage by engineering domain, about the last 30 days of session logs"
-              data={domains}
-              max={100}
-              axis={["0", "50", "100"]}
-            />
-          </div>
-        </div>
+        <Panel name="Domain coverage, 0 to 100" aside={<ShiftKind kind="recorded" />}>
+          <ShiftRows
+            caption="Keyword coverage by engineering domain, about the last 30 days of session logs"
+            data={domains}
+            max={100}
+            axis={["0", "50", "100"]}
+          />
+        </Panel>
       </ShiftFigure>
 
       <Section>
@@ -298,29 +292,23 @@ export default function BetaShiftPage() {
           source="ai-pilot-data.json"
           note={`, activityHeatmap, ${pilotPeriod}, ${dayZone} days${pilotChip}`}
         >
-          <div className="panel">
-            <div className="panel-face">
-              <div className="panel-bar">
-                <b>Days a session ran</b>
-                <ShiftKind kind="recorded" />
-              </div>
-              <CalendarHeat
-                caption={`Transcript records per ${dayZone} day, ${pilotPeriod}`}
-                summary={`Sessions ran on ${activeDays} of ${periodDays} days${
-                  runStart ? `, every day since ${longDate(runStart)}` : ""
-                }.`}
-                days={sessionDays}
-                start={since}
-                end={through}
-                unit="records"
-                cellIs={`one ${dayZone} day`}
-              />
-              <p className="beta-chart__note">
-                A day is shaded when any session wrote a record to it, which says sessions were
-                running, not that anyone was at a desk.
-              </p>
-            </div>
-          </div>
+          <Panel name="Days a session ran" aside={<ShiftKind kind="recorded" />}>
+            <CalendarHeat
+              caption={`Transcript records per ${dayZone} day, ${pilotPeriod}`}
+              summary={`Sessions ran on ${activeDays} of ${periodDays} days${
+                runStart ? `, every day since ${longDate(runStart)}` : ""
+              }.`}
+              days={sessionDays}
+              start={since}
+              end={through}
+              unit="records"
+              cellIs={`one ${dayZone} day`}
+            />
+            <p className="beta-chart__note">
+              A day is shaded when any session wrote a record to it, which says sessions were
+              running, not that anyone was at a desk.
+            </p>
+          </Panel>
         </ShiftFigure>
       )}
 
@@ -358,7 +346,7 @@ export default function BetaShiftPage() {
         </p>
       </Section>
 
-      <div className="beta-shift-two">
+      <Grid min="26rem" className="beta-shift-two">
         {benchKnown && (
           <ShiftFigure
             kind="modelled"
@@ -366,25 +354,19 @@ export default function BetaShiftPage() {
             source="cost-model.json"
             note=", industryBenchmarks: assumptions written into the model, not measurements"
           >
-            <div className="panel">
-              <div className="panel-face">
-                <div className="panel-bar">
-                  <b>A developer&rsquo;s week</b>
-                  <ShiftKind kind="modelled" />
-                </div>
-                <ShiftRows
-                  caption="Share of working time on a conventional team, as the cost model assumes it"
-                  data={benchRows}
-                  max={100}
-                  axis={["0%", "50%", "100%"]}
-                />
-                <p className="beta-chart__note">
-                  Three shares are written into the model. The remaining {benchRest}% is not broken
-                  down there, so it is not broken down here: its row is an outline, not a
-                  measurement.
-                </p>
-              </div>
-            </div>
+            <Panel name={<>A developer&rsquo;s week</>} aside={<ShiftKind kind="modelled" />}>
+              <ShiftRows
+                caption="Share of working time on a conventional team, as the cost model assumes it"
+                data={benchRows}
+                max={100}
+                axis={["0%", "50%", "100%"]}
+              />
+              <p className="beta-chart__note">
+                Three shares are written into the model. The remaining {benchRest}% is not broken
+                down there, so it is not broken down here: its row is an outline, not a
+                measurement.
+              </p>
+            </Panel>
           </ShiftFigure>
         )}
 
@@ -394,30 +376,24 @@ export default function BetaShiftPage() {
             source="ai-pilot-data.json"
             note={`, hourlyDistribution, ${pilotPeriod}, hours in ${hourZone}${pilotChip}`}
           >
-            <div className="panel">
-              <div className="panel-face">
-                <div className="panel-bar">
-                  <b>When the work happened</b>
-                  <ShiftKind kind="recorded" />
-                </div>
-                <BarStrip
-                  caption={`Transcript records by hour of day, ${hourZone}, ${pilotPeriod}`}
-                  summary={`${costNum(hourTotal)} transcript records by hour of day. The busiest hour is ${peakHour.label} with ${costNum(peakHour.records ?? 0)}; ${share(hourTotal - officeHours, hourTotal)} fall outside 09:00 to 17:00.`}
-                  data={hours.map((h) => ({ label: h.label, value: h.records ?? 0 }))}
-                  unit="records"
-                  ticks={hourTicks}
-                  height={88}
-                />
-                <p className="beta-chart__note">
-                  {share(hourTotal - officeHours, hourTotal)} of the records fall outside 09:00 to
-                  17:00. A record is a prompt, a tool result or one block of a model reply, so this
-                  is when sessions were running, not when anyone was typing.
-                </p>
-              </div>
-            </div>
+            <Panel name="When the work happened" aside={<ShiftKind kind="recorded" />}>
+              <BarStrip
+                caption={`Transcript records by hour of day, ${hourZone}, ${pilotPeriod}`}
+                summary={`${costNum(hourTotal)} transcript records by hour of day. The busiest hour is ${peakHour.label} with ${costNum(peakHour.records ?? 0)}; ${share(hourTotal - officeHours, hourTotal)} fall outside 09:00 to 17:00.`}
+                data={hours.map((h) => ({ label: h.label, value: h.records ?? 0 }))}
+                unit="records"
+                ticks={hourTicks}
+                height={88}
+              />
+              <p className="beta-chart__note">
+                {share(hourTotal - officeHours, hourTotal)} of the records fall outside 09:00 to
+                17:00. A record is a prompt, a tool result or one block of a model reply, so this
+                is when sessions were running, not when anyone was typing.
+              </p>
+            </Panel>
           </ShiftFigure>
         )}
-      </div>
+      </Grid>
 
       {/* ==============================================================
           04
@@ -442,31 +418,25 @@ export default function BetaShiftPage() {
         source="ai-pilot-data.json"
         note={`, tokenEconomy, ${pilotPeriod}${pilotChip}`}
       >
-        <div className="panel">
-          <div className="panel-face">
-            <div className="panel-bar">
-              <b>Input tokens by source</b>
-              <ShiftKind kind="recorded" />
-            </div>
-            <ShiftRows
-              caption={`Share of all input tokens, ${pilotPeriod}`}
-              data={inputRows}
-              max={100}
-              axis={["0%", "50%", "100%"]}
-            />
-            <p className="beta-chart__note">
-              {tokens(tok.totalCacheReadTokens)} tokens read from cache,{" "}
-              {tokens(tok.totalCacheCreateTokens)} written to it and{" "}
-              {tokens(tok.totalInputTokens)} fresh. The rows are drawn to scale: the write to cache
-              is a sliver
-              {freshTimes !== null && freshTimes > 1
-                ? `, and fresh input, about ${freshTimes} times smaller again, is the two-pixel mark`
-                : ""}
-              . Output over the same period was {tokens(tok.totalOutputTokens)} tokens. Tokens used
-              by subagents are not in the record.
-            </p>
-          </div>
-        </div>
+        <Panel name="Input tokens by source" aside={<ShiftKind kind="recorded" />}>
+          <ShiftRows
+            caption={`Share of all input tokens, ${pilotPeriod}`}
+            data={inputRows}
+            max={100}
+            axis={["0%", "50%", "100%"]}
+          />
+          <p className="beta-chart__note">
+            {tokens(tok.totalCacheReadTokens)} tokens read from cache,{" "}
+            {tokens(tok.totalCacheCreateTokens)} written to it and{" "}
+            {tokens(tok.totalInputTokens)} fresh. The rows are drawn to scale: the write to cache
+            is a sliver
+            {freshTimes !== null && freshTimes > 1
+              ? `, and fresh input, about ${freshTimes} times smaller again, is the two-pixel mark`
+              : ""}
+            . Output over the same period was {tokens(tok.totalOutputTokens)} tokens. Tokens used
+            by subagents are not in the record.
+          </p>
+        </Panel>
       </ShiftFigure>
 
       {/* ==============================================================

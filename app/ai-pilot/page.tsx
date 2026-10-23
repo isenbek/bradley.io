@@ -23,7 +23,7 @@ import { FlightStatus } from "@/components/pilot/FlightStatus"
 import { HourStrips } from "@/components/pilot/HourStrips"
 import { ShareBar, type SharePart } from "@/components/pilot/ShareBar"
 import { SpanRows, type SpanRow, type SpanTick } from "@/components/pilot/SpanRows"
-import { PageHead, Section } from "@/components/page"
+import { Grid, PageHead, Panel, Section } from "@/components/page"
 
 /**
  * /ai-pilot: the licence, and the whole record behind it, on one page.
@@ -530,67 +530,53 @@ export default async function AiPilotPage() {
       <div className="beta-pilot-stack">
         <ActivityPulse initial={now} />
 
-        <div className="panel">
-          <div className="panel-face">
-            <div className="panel-bar">
-              <b>Every day on the record</b>
-              <span>
-                {nf(d.activityHeatmap.length)} active days
-                {periodDays ? ` of ${nf(periodDays)}` : ""}
-              </span>
-            </div>
-            <dl className="beta-pilot-cells beta-pilot-cells--big beta-pilot-cells--lead beta-pilot-streaks">
-              {streakCells.map((c) => (
-                <div key={c.label}>
-                  <dt>{c.label}</dt>
-                  <dd>{c.value}</dd>
-                  <dd className="beta-pilot-cells__sub">{c.sub}</dd>
-                </div>
-              ))}
-            </dl>
-            <DayCalendar
-              caption={`Transcript records per day and per calendar week, ${period}`}
-              summary={`${nf(L.totalMessages)} transcript records on ${nf(d.activityHeatmap.length)} days between ${period}. The busiest day is ${longDate(S.peakDay) ?? S.peakDay} with ${nf(S.peakDayCount)}${S.peakWeek && typeof S.peakWeekCount === "number" ? `, and the busiest week begins ${longDate(S.peakWeek) ?? S.peakWeek} with ${nf(S.peakWeekCount)}` : ""}.`}
-              unit="records"
-              cellIs={dayZone === "UTC" ? "one UTC day" : "one day"}
-              days={days}
-              start={since}
-              end={through}
-              mark={S.peakDay ? { date: S.peakDay, label: "busiest day" } : undefined}
-              split={
-                splitOk
-                  ? {
-                      date: began!,
-                      before: `incomplete before ${shortDate(began)}`,
-                      after: `recorded from ${shortDate(began)}`,
-                    }
-                  : undefined
-              }
-            />
-            <p className="beta-chart__note">
-              A streak is consecutive{dayZone ? ` ${dayZone}` : ""} days with at least one record.
-              The bar over each column is that calendar week, Monday to Sunday; the first and last
-              are part weeks.
-              {longDate(began)
-                ? ` The pale months at the start are not a slow start: the record has been kept since ${longDate(began)}, and before that it holds only the sessions whose logs were still on disk.`
-                : ""}
-            </p>
-          </div>
-        </div>
+        <Panel name="Every day on the record" note={<>{nf(d.activityHeatmap.length)} active days
+                {periodDays ? ` of ${nf(periodDays)}` : ""}</>}>
+          <dl className="beta-pilot-cells beta-pilot-cells--big beta-pilot-cells--lead beta-pilot-streaks">
+            {streakCells.map((c) => (
+              <div key={c.label}>
+                <dt>{c.label}</dt>
+                <dd>{c.value}</dd>
+                <dd className="beta-pilot-cells__sub">{c.sub}</dd>
+              </div>
+            ))}
+          </dl>
+          <DayCalendar
+            caption={`Transcript records per day and per calendar week, ${period}`}
+            summary={`${nf(L.totalMessages)} transcript records on ${nf(d.activityHeatmap.length)} days between ${period}. The busiest day is ${longDate(S.peakDay) ?? S.peakDay} with ${nf(S.peakDayCount)}${S.peakWeek && typeof S.peakWeekCount === "number" ? `, and the busiest week begins ${longDate(S.peakWeek) ?? S.peakWeek} with ${nf(S.peakWeekCount)}` : ""}.`}
+            unit="records"
+            cellIs={dayZone === "UTC" ? "one UTC day" : "one day"}
+            days={days}
+            start={since}
+            end={through}
+            mark={S.peakDay ? { date: S.peakDay, label: "busiest day" } : undefined}
+            split={
+              splitOk
+                ? {
+                    date: began!,
+                    before: `incomplete before ${shortDate(began)}`,
+                    after: `recorded from ${shortDate(began)}`,
+                  }
+                : undefined
+            }
+          />
+          <p className="beta-chart__note">
+            A streak is consecutive{dayZone ? ` ${dayZone}` : ""} days with at least one record.
+            The bar over each column is that calendar week, Monday to Sunday; the first and last
+            are part weeks.
+            {longDate(began)
+              ? ` The pale months at the start are not a slow start: the record has been kept since ${longDate(began)}, and before that it holds only the sessions whose logs were still on disk.`
+              : ""}
+          </p>
+        </Panel>
 
-        <div className="panel">
-          <div className="panel-face">
-            <div className="panel-bar">
-              <b>Hours of the day</b>
-              <span>{hourZone.replace(/_/g, " ")}</span>
-            </div>
-            <HourStrips hours={d.hourlyDistribution.hours} zone={hourZone} />
-            <p className="beta-chart__note">
-              Hours of the day in {hourZone.replace(/_/g, " ")}, summed over the whole period. The
-              bar marked now is the hour it is there as you read this.
-            </p>
-          </div>
-        </div>
+        <Panel name="Hours of the day" note={hourZone.replace(/_/g, " ")}>
+          <HourStrips hours={d.hourlyDistribution.hours} zone={hourZone} />
+          <p className="beta-chart__note">
+            Hours of the day in {hourZone.replace(/_/g, " ")}, summed over the whole period. The
+            bar marked now is the hour it is there as you read this.
+          </p>
+        </Panel>
       </div>
       {chip("activityHeatmap, hourlyDistribution and streaks")}
 
@@ -604,24 +590,18 @@ export default async function AiPilotPage() {
         </p>
       </Section>
 
-      <div className="panel">
-        <div className="panel-face">
-          <div className="panel-bar">
-            <b>Type ratings</b>
-            <span>share of output tokens</span>
-          </div>
-          <SpanRows
-            caption={`When each model was flown, ${period}`}
-            summary={
-              lead
-                ? `${nf(d.typeRatings.length)} models between ${period}. ${modelName(lead)} wrote the largest share of output tokens, ${pctText(modelShare(lead))}.`
-                : "No models recorded."
-            }
-            rows={modelRows}
-            ticks={monthTicks}
-          />
-        </div>
-      </div>
+      <Panel name="Type ratings" note="share of output tokens">
+        <SpanRows
+          caption={`When each model was flown, ${period}`}
+          summary={
+            lead
+              ? `${nf(d.typeRatings.length)} models between ${period}. ${modelName(lead)} wrote the largest share of output tokens, ${pctText(modelShare(lead))}.`
+              : "No models recorded."
+          }
+          rows={modelRows}
+          ticks={monthTicks}
+        />
+      </Panel>
 
       {/* ============================ MISSIONS ============================= */}
       <Section id="missions" title="Mission log">
@@ -632,37 +612,29 @@ export default async function AiPilotPage() {
         </p>
       </Section>
 
-      <div className="panel">
-        <div className="panel-face">
-          <div className="panel-bar">
-            <b>Missions</b>
-            <span>
-              busiest {nf(d.missionLog.length)} of {nf(projectTotal)} projects
-            </span>
-          </div>
-          <SpanRows
-            caption={`First to last active day, and messages, ${period}`}
-            summary={`The busiest ${nf(d.missionLog.length)} of ${nf(projectTotal)} projects by transcript records, in ${nf(missionRows.length)} rows, with the span of days each was active.`}
-            rows={missionRows}
-            ticks={monthTicks}
-          />
-          <p className="beta-chart__note">
-            The busiest {nf(d.missionLog.length)} of {nf(projectTotal)} projects by messages.
-            {grouped > 0 && (
-              <>
-                {" "}
-                The row marked cb* is {nf(grouped)} directories whose names begin with cb, summed.
-                Most are repositories in the Nominate-AI organisation, which are private;{" "}
-                <Link href="/work#nominate-ai">/work</Link>
-                {" gives that organisation's totals without naming its repositories, and so does this log."}
-              </>
-            )}
-            {withheld > 0
-              ? ` ${withheld === 1 ? "One more is" : `${nf(withheld)} more are`} not listed at all; ${withheld === 1 ? "its" : "their"} sessions and messages are still in every total on this page.`
-              : ""}
-          </p>
-        </div>
-      </div>
+      <Panel name="Missions" note={<>busiest {nf(d.missionLog.length)} of {nf(projectTotal)} projects</>}>
+        <SpanRows
+          caption={`First to last active day, and messages, ${period}`}
+          summary={`The busiest ${nf(d.missionLog.length)} of ${nf(projectTotal)} projects by transcript records, in ${nf(missionRows.length)} rows, with the span of days each was active.`}
+          rows={missionRows}
+          ticks={monthTicks}
+        />
+        <p className="beta-chart__note">
+          The busiest {nf(d.missionLog.length)} of {nf(projectTotal)} projects by messages.
+          {grouped > 0 && (
+            <>
+              {" "}
+              The row marked cb* is {nf(grouped)} directories whose names begin with cb, summed.
+              Most are repositories in the Nominate-AI organisation, which are private;{" "}
+              <Link href="/work#nominate-ai">/work</Link>
+              {" gives that organisation's totals without naming its repositories, and so does this log."}
+            </>
+          )}
+          {withheld > 0
+            ? ` ${withheld === 1 ? "One more is" : `${nf(withheld)} more are`} not listed at all; ${withheld === 1 ? "its" : "their"} sessions and messages are still in every total on this page.`
+            : ""}
+        </p>
+      </Panel>
       {chip("typeRatings and missionLog")}
 
       {/* ============================ TOOLS ================================ */}
@@ -678,43 +650,37 @@ export default async function AiPilotPage() {
             </p>
           </Section>
 
-          <div className="panel">
-            <div className="panel-face">
-              <div className="panel-bar">
-                <b>Tools</b>
-                <span>share of all calls</span>
+          <Panel name="Tools" note="share of all calls">
+            <ShareBar
+              caption="Share of all tool calls, by tool"
+              summary={`${headParts[0].label} is ${headParts[0].display} of all tool calls${headParts.length > 1 ? `; the next ${headParts.length - 1} together are ${pctText((headShare - headParts[0].share) * 100)}` : ""}.`}
+              parts={headParts}
+              rest={restPart}
+            />
+            {tailRows.length > 0 && (
+              <div className="beta-pilot-tail">
+                <RowChart
+                  caption={
+                    tools.exact
+                      ? `The next ${tailRows.length}, calls`
+                      : `The next ${tailRows.length}, share of all tool calls`
+                  }
+                  data={tailRows}
+                />
               </div>
-              <ShareBar
-                caption="Share of all tool calls, by tool"
-                summary={`${headParts[0].label} is ${headParts[0].display} of all tool calls${headParts.length > 1 ? `; the next ${headParts.length - 1} together are ${pctText((headShare - headParts[0].share) * 100)}` : ""}.`}
-                parts={headParts}
-                rest={restPart}
-              />
-              {tailRows.length > 0 && (
-                <div className="beta-pilot-tail">
-                  <RowChart
-                    caption={
-                      tools.exact
-                        ? `The next ${tailRows.length}, calls`
-                        : `The next ${tailRows.length}, share of all tool calls`
-                    }
-                    data={tailRows}
-                  />
-                </div>
-              )}
-              {!tools.exact && (
-                <p className="beta-chart__note">
-                  Shares, not counts, on purpose. This list is read from the raw tool-call table,
-                  which holds some rows twice
-                  {toolOverPct !== null && toolOverPct > 0
-                    ? ` (it runs about ${toolOverPct.toFixed(1)}% over the corrected total above)`
-                    : ""}
-                  . The duplicates are spread evenly enough that the shares hold; the counts would
-                  not.
-                </p>
-              )}
-            </div>
-          </div>
+            )}
+            {!tools.exact && (
+              <p className="beta-chart__note">
+                Shares, not counts, on purpose. This list is read from the raw tool-call table,
+                which holds some rows twice
+                {toolOverPct !== null && toolOverPct > 0
+                  ? ` (it runs about ${toolOverPct.toFixed(1)}% over the corrected total above)`
+                  : ""}
+                . The duplicates are spread evenly enough that the shares hold; the counts would
+                not.
+              </p>
+            )}
+          </Panel>
           <p className="measured beta-pilot-chip">
             <span>
               <b>{tools.source}</b> {tools.exact ? "toolUsage" : "by_tool"}
@@ -747,36 +713,30 @@ export default async function AiPilotPage() {
         </p>
       </Section>
 
-      <div className="panel">
-        <div className="panel-face">
-          <div className="panel-bar">
-            <b>Ratings</b>
-            <span>0 to 100</span>
-          </div>
-          <div className="beta-pilot-pair beta-pilot-pair--wide">
+      <Panel name="Ratings" note="0 to 100">
+        <Grid min="24rem" className="beta-pilot-pair beta-pilot-pair--wide">
+          <SpanRows
+            caption="Instrument ratings, by domain"
+            summary={`${nf(instrumentRows.length)} domains scored 0 to 100, half keyword coverage and half mentions. The highest is ${instrumentRows[0]?.label ?? "none"} at ${instrumentRows[0]?.value ?? "0"}.`}
+            rows={instrumentRows}
+            ticks={scoreTicks}
+          />
+          <div>
             <SpanRows
-              caption="Instrument ratings, by domain"
-              summary={`${nf(instrumentRows.length)} domains scored 0 to 100, half keyword coverage and half mentions. The highest is ${instrumentRows[0]?.label ?? "none"} at ${instrumentRows[0]?.value ?? "0"}.`}
-              rows={instrumentRows}
+              caption="Competency profile"
+              summary={`${nf(competencyRows.length)} competency scores, 0 to 100, each computed from a count.`}
+              rows={competencyRows}
               ticks={scoreTicks}
             />
-            <div>
-              <SpanRows
-                caption="Competency profile"
-                summary={`${nf(competencyRows.length)} competency scores, 0 to 100, each computed from a count.`}
-                rows={competencyRows}
-                ticks={scoreTicks}
-              />
-              <SpanRows
-                caption={`Piloting style: ${P.label}`}
-                summary={`Piloting style is ${P.label}: ${P.collaborative}% collaborative against ${P.directive}% directive, and ${P.planFirst}% plan first against ${P.iterate}% iterate.`}
-                rows={styleRows}
-                ticks={scoreTicks}
-              />
-            </div>
+            <SpanRows
+              caption={`Piloting style: ${P.label}`}
+              summary={`Piloting style is ${P.label}: ${P.collaborative}% collaborative against ${P.directive}% directive, and ${P.planFirst}% plan first against ${P.iterate}% iterate.`}
+              rows={styleRows}
+              ticks={scoreTicks}
+            />
           </div>
-        </div>
-      </div>
+        </Grid>
+      </Panel>
 
       {/* ============================ WHAT CAME UP ========================= */}
       <Section id="came-up" title="What came up">
@@ -788,26 +748,18 @@ export default async function AiPilotPage() {
         </p>
       </Section>
 
-      <div className="panel">
-        <div className="panel-face">
-          <div className="panel-bar">
-            <b>Skills cloud</b>
-            <span>
-              top {skillRows.length} of {skills.length}
-            </span>
-          </div>
-          <RowChart caption="Mentions in session transcripts" data={skillRows} />
-          {dropped.length > 0 && (
-            <p className="beta-chart__note">
-              {dropped.join(", ")} {dropped.length === 1 ? "is" : "are"} left out. The count
-              matches a name anywhere inside a word, and those{" "}
-              {dropped.length === 1 ? "letters turn" : "names turn"} up inside ordinary English
-              (going, digit, trust, despite, draws), so their totals are not mentions of the
-              technology.
-            </p>
-          )}
-        </div>
-      </div>
+      <Panel name="Skills cloud" note={<>top {skillRows.length} of {skills.length}</>}>
+        <RowChart caption="Mentions in session transcripts" data={skillRows} />
+        {dropped.length > 0 && (
+          <p className="beta-chart__note">
+            {dropped.join(", ")} {dropped.length === 1 ? "is" : "are"} left out. The count
+            matches a name anywhere inside a word, and those{" "}
+            {dropped.length === 1 ? "letters turn" : "names turn"} up inside ordinary English
+            (going, digit, trust, despite, draws), so their totals are not mentions of the
+            technology.
+          </p>
+        )}
+      </Panel>
       {chip(
         "competencyRadar and pilotingStyle",
         `${periodShort}; instrumentRatings and skillsCloud, a sample of the logs still on disk (about the last 30 days)`,
@@ -821,65 +773,59 @@ export default async function AiPilotPage() {
         </p>
       </Section>
 
-      <div className="panel">
-        <div className="panel-face">
-          <div className="panel-bar">
-            <b>Tokens</b>
-            <span>{sinceLong ? `since ${sinceLong}` : "period not recorded"}</span>
-          </div>
-          <div className="beta-pilot-pair beta-pilot-pair--wide">
-            <table className="readout beta-pilot-tokens">
-              <caption className="sr-only">Token totals, {period}</caption>
-              <tbody>
-                {tokenRows.map((r) => (
-                  <tr key={r.label}>
-                    <td>{r.label}</td>
-                    <td className="num">
-                      {tokens(r.n)}
-                      <span className="beta-pilot-exact">{nf(r.n)}</span>
-                    </td>
-                  </tr>
-                ))}
-                <tr>
-                  <td>Cache efficiency</td>
+      <Panel name="Tokens" note={sinceLong ? `since ${sinceLong}` : "period not recorded"}>
+        <Grid min="24rem" className="beta-pilot-pair beta-pilot-pair--wide">
+          <table className="readout beta-pilot-tokens">
+            <caption className="sr-only">Token totals, {period}</caption>
+            <tbody>
+              {tokenRows.map((r) => (
+                <tr key={r.label}>
+                  <td>{r.label}</td>
                   <td className="num">
-                    {T.cacheEfficiency.toFixed(1)}%
-                    <span className="beta-pilot-exact">of the input side</span>
+                    {tokens(r.n)}
+                    <span className="beta-pilot-exact">{nf(r.n)}</span>
                   </td>
                 </tr>
-                {typeof L.totalApiCalls === "number" && (
-                  <tr>
-                    <td>Model responses</td>
-                    <td className="num">{nf(L.totalApiCalls)}</td>
-                  </tr>
-                )}
+              ))}
+              <tr>
+                <td>Cache efficiency</td>
+                <td className="num">
+                  {T.cacheEfficiency.toFixed(1)}%
+                  <span className="beta-pilot-exact">of the input side</span>
+                </td>
+              </tr>
+              {typeof L.totalApiCalls === "number" && (
                 <tr>
-                  <td>Cost at API list price</td>
-                  <td className="num">{cost ?? COST_NOT_COMPUTED}</td>
+                  <td>Model responses</td>
+                  <td className="num">{nf(L.totalApiCalls)}</td>
                 </tr>
-              </tbody>
-            </table>
-            {daily.length > 0 && (
-              <div>
-                <BarStrip
-                  caption={`Input plus output tokens per day, last ${nf(daily.length)} active days`}
-                  summary={`Input plus output tokens per day over the last ${nf(daily.length)} active days. The heaviest is ${longDate(dailyPeak.date) ?? dailyPeak.date} with ${nf(dailyPeak.tokens)}.`}
-                  unit="tokens"
-                  data={daily.map((t) => ({ label: longDate(t.date) ?? t.date, value: t.tokens }))}
-                  ticks={dailyTicks}
-                  height={96}
-                />
-                <p className="beta-chart__note">
-                  Cache tokens are not in these bars.
-                  {lastDailyIsRunDay
-                    ? " The last bar is the day the file was generated, so it is a part day."
-                    : ""}
-                </p>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
+              )}
+              <tr>
+                <td>Cost at API list price</td>
+                <td className="num">{cost ?? COST_NOT_COMPUTED}</td>
+              </tr>
+            </tbody>
+          </table>
+          {daily.length > 0 && (
+            <div>
+              <BarStrip
+                caption={`Input plus output tokens per day, last ${nf(daily.length)} active days`}
+                summary={`Input plus output tokens per day over the last ${nf(daily.length)} active days. The heaviest is ${longDate(dailyPeak.date) ?? dailyPeak.date} with ${nf(dailyPeak.tokens)}.`}
+                unit="tokens"
+                data={daily.map((t) => ({ label: longDate(t.date) ?? t.date, value: t.tokens }))}
+                ticks={dailyTicks}
+                height={96}
+              />
+              <p className="beta-chart__note">
+                Cache tokens are not in these bars.
+                {lastDailyIsRunDay
+                  ? " The last bar is the day the file was generated, so it is a part day."
+                  : ""}
+              </p>
+            </div>
+          )}
+        </Grid>
+      </Panel>
       {chip("tokenEconomy")}
 
       <p className="quiet beta-pilot-fine">

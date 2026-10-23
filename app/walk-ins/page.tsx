@@ -3,7 +3,7 @@ import { readFileSync } from "fs"
 import { join } from "path"
 import { CalendarHeat, Sparkline, weekBuckets, type DayDatum } from "../_charts"
 import { BetaMeasured } from "../_measured"
-import { PageHead, Section } from "@/components/page"
+import { Grid, PageHead, Section } from "@/components/page"
 
 /**
  * /walk-ins: the full-time search, in the open.
@@ -184,7 +184,7 @@ export default function WalkInsPage() {
           and that cut is on the record in the data file.
         </p>
       </Section>
-      <div className="beta-walkins-bands">
+      <Grid min="18rem" className="beta-walkins-bands">
         {circle.bands.map((band) => {
           const rows = circle.rows.filter((r) => r.band === band)
           return (
@@ -206,7 +206,7 @@ export default function WalkInsPage() {
             </section>
           )
         })}
-      </div>
+      </Grid>
       <BetaMeasured generated={circle.generated} source="public/data/walk-ins.json">
         OpenStreetMap (ODbL) and Nominatim, bands only.
       </BetaMeasured>

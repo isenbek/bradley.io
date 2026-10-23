@@ -4,7 +4,7 @@ import { BetaMeasured } from "../_measured"
 import { costNum, costUsd, costUsdTick, costWindow, loadCostModel, utcStamp } from "../_cost-model"
 import { ShiftFigure, ShiftKind } from "@/components/shift/ShiftFigure"
 import { ShiftRows } from "@/components/shift/ShiftRows"
-import { PageHead, Section } from "@/components/page"
+import { Grid, PageHead, Panel, Section } from "@/components/page"
 
 export const revalidate = 3600
 
@@ -184,50 +184,49 @@ export default function BetaCostPage() {
             source="cost-model.json"
             note={`, timeSeries, ${weeks} ISO weeks, ${windowLabel}, frozen as recorded ${recorded}`}
           >
-            <div className="panel">
-              <div className="panel-face">
-                <div className="panel-bar">
-                  <b>Cumulative cost</b>
-                  <span className="beta-shift-kinds">
-                    <ShiftKind kind="recorded" />
-                    <ShiftKind kind="modelled" />
-                  </span>
-                </div>
-                <div className="beta-shift-curve">
-                  <LineChart
-                    caption={`Cumulative cost in US dollars by ISO week, ${windowLabel}`}
-                    summary={`By ${last.week} the recorded work has cost ${costUsd(last.cumulativeCostActual)} at flat rates and the modelled team ${costUsd(last.cumulativeCostLegacy)}, a difference of ${costUsd(costGap)}. The modelled team was never hired.`}
-                    x={ts.map((t) => t.week)}
-                    series={[
-                      {
-                        name: "Recorded work, flat rates",
-                        values: ts.map((t) => t.cumulativeCostActual),
-                      },
-                      {
-                        name: "Modelled team, never hired",
-                        values: ts.map((t) => t.cumulativeCostLegacy),
-                      },
-                    ]}
-                    ticks={weekTicks}
-                    format={costUsd}
-                    formatTick={costUsdTick}
-                    gap={{ label: `${costUsd(costGap)} apart` }}
-                    height={260}
-                  />
-                </div>
-                <p className="beta-chart__note">
-                  The gap at week {weeks} is spend to date, not a saving
-                  {modelledWeeks !== null
-                    ? `: in the model the team is ${weeks} weeks into a job of about ${modelledWeeks} and has not shipped`
-                    : ""}
-                  . The solid line is {costUsd(d.actual.operatorCost)} of operator time and{" "}
-                  {costUsd(d.actual.aiCost)} of AI plan, spread evenly over the window. The dashed
-                  line is the midpoint of the modelled cost
-                  {legacyMid !== null ? `, ${costUsd(legacyMid)},` : ""} spread evenly over the
-                  midpoint of the modelled duration.
-                </p>
+            <Panel
+              name="Cumulative cost"
+              aside={
+                <span className="beta-shift-kinds">
+                  <ShiftKind kind="recorded" />
+                  <ShiftKind kind="modelled" />
+                </span>
+              }
+            >
+              <div className="beta-shift-curve">
+                <LineChart
+                  caption={`Cumulative cost in US dollars by ISO week, ${windowLabel}`}
+                  summary={`By ${last.week} the recorded work has cost ${costUsd(last.cumulativeCostActual)} at flat rates and the modelled team ${costUsd(last.cumulativeCostLegacy)}, a difference of ${costUsd(costGap)}. The modelled team was never hired.`}
+                  x={ts.map((t) => t.week)}
+                  series={[
+                    {
+                      name: "Recorded work, flat rates",
+                      values: ts.map((t) => t.cumulativeCostActual),
+                    },
+                    {
+                      name: "Modelled team, never hired",
+                      values: ts.map((t) => t.cumulativeCostLegacy),
+                    },
+                  ]}
+                  ticks={weekTicks}
+                  format={costUsd}
+                  formatTick={costUsdTick}
+                  gap={{ label: `${costUsd(costGap)} apart` }}
+                  height={260}
+                />
               </div>
-            </div>
+              <p className="beta-chart__note">
+                The gap at week {weeks} is spend to date, not a saving
+                {modelledWeeks !== null
+                  ? `: in the model the team is ${weeks} weeks into a job of about ${modelledWeeks} and has not shipped`
+                  : ""}
+                . The solid line is {costUsd(d.actual.operatorCost)} of operator time and{" "}
+                {costUsd(d.actual.aiCost)} of AI plan, spread evenly over the window. The dashed
+                line is the midpoint of the modelled cost
+                {legacyMid !== null ? `, ${costUsd(legacyMid)},` : ""} spread evenly over the
+                midpoint of the modelled duration.
+              </p>
+            </Panel>
           </ShiftFigure>
         </>
       )}
@@ -244,50 +243,44 @@ export default function BetaCostPage() {
             </p>
           </Section>
 
-          <div className="beta-shift-two">
+          <Grid min="26rem" className="beta-shift-two">
             <ShiftFigure
               kind="recorded"
               source="cost-model.json"
               note={`, timeSeries.commits, all authors, ${windowLabel}${commitsCountedOn ? `, counted ${commitsCountedOn}` : ""}`}
             >
-              <div className="panel">
-                <div className="panel-face">
-                  <div className="panel-bar">
-                    <b>Commits per week</b>
-                    <ShiftKind kind="recorded" />
-                  </div>
-                  <BarStrip
-                    caption={`Commits per ISO week, all authors${
-                      typeof cover?.commitsInWindowRepos === "number"
-                        ? `, all ${cover.commitsInWindowRepos} org repositories`
-                        : ""
-                    }, UTC days`}
-                    summary={`${costNum(commitTotal)} commits over ${weeks} weeks${
-                      busiest && quietest
-                        ? `. The busiest week, ${busiest.week}, had ${costNum(busiest.commits)}; the quietest, ${quietest.week}, had ${costNum(quietest.commits)}`
-                        : ""
-                    }.`}
-                    data={ts.map((t) => ({
-                      label: `${t.week}, week of ${t.weekStart}`,
-                      value: t.commits,
-                    }))}
-                    unit="commits"
-                    ticks={weekTicks}
-                    height={150}
-                  />
-                  <p className="beta-chart__note">
-                    {costNum(commitTotal)} commits in {weeks} weeks
-                    {typeof cover?.commitDaysInWindow === "number"
-                      ? `, on ${cover.commitDaysInWindow} of the window’s ${d.timespan.days} days`
-                      : ""}
-                    . The count includes every author: other contributors, and the upstream history
-                    of forked repositories.
-                    {lastWeekDays !== null && lastWeekDays < 7
-                      ? ` The last bar is a ${lastWeekDays}-day week: the window closes mid-week.`
-                      : ""}
-                  </p>
-                </div>
-              </div>
+              <Panel name="Commits per week" aside={<ShiftKind kind="recorded" />}>
+                <BarStrip
+                  caption={`Commits per ISO week, all authors${
+                    typeof cover?.commitsInWindowRepos === "number"
+                      ? `, all ${cover.commitsInWindowRepos} org repositories`
+                      : ""
+                  }, UTC days`}
+                  summary={`${costNum(commitTotal)} commits over ${weeks} weeks${
+                    busiest && quietest
+                      ? `. The busiest week, ${busiest.week}, had ${costNum(busiest.commits)}; the quietest, ${quietest.week}, had ${costNum(quietest.commits)}`
+                      : ""
+                  }.`}
+                  data={ts.map((t) => ({
+                    label: `${t.week}, week of ${t.weekStart}`,
+                    value: t.commits,
+                  }))}
+                  unit="commits"
+                  ticks={weekTicks}
+                  height={150}
+                />
+                <p className="beta-chart__note">
+                  {costNum(commitTotal)} commits in {weeks} weeks
+                  {typeof cover?.commitDaysInWindow === "number"
+                    ? `, on ${cover.commitDaysInWindow} of the window’s ${d.timespan.days} days`
+                    : ""}
+                  . The count includes every author: other contributors, and the upstream history
+                  of forked repositories.
+                  {lastWeekDays !== null && lastWeekDays < 7
+                    ? ` The last bar is a ${lastWeekDays}-day week: the window closes mid-week.`
+                    : ""}
+                </p>
+              </Panel>
             </ShiftFigure>
 
             <ShiftFigure
@@ -295,46 +288,40 @@ export default function BetaCostPage() {
               source="cost-model.json"
               note={`, timeSeries issues, cb* repositories, ${windowLabel}, fetched ${recorded}`}
             >
-              <div className="panel">
-                <div className="panel-face">
-                  <div className="panel-bar">
-                    <b>Issues per week</b>
-                    <ShiftKind kind="recorded" />
-                  </div>
-                  <BarStrip
-                    caption="GitHub issues opened per ISO week, cb* repositories"
-                    summary={`${costNum(last.cumulativeIssuesOpened)} issues opened over ${weeks} weeks.`}
-                    data={ts.map((t) => ({
-                      label: `${t.week}, week of ${t.weekStart}`,
-                      value: t.issuesOpened,
-                    }))}
-                    unit="opened"
-                    height={54}
-                  />
-                  <BarStrip
-                    caption="GitHub issues closed per ISO week, cb* repositories"
-                    summary={`${costNum(last.cumulativeIssuesClosed)} issues closed over ${weeks} weeks.`}
-                    data={ts.map((t) => ({
-                      label: `${t.week}, week of ${t.weekStart}`,
-                      value: t.issuesClosed,
-                    }))}
-                    unit="closed"
-                    ticks={weekTicks}
-                    height={54}
-                  />
-                  <p className="beta-chart__note">
-                    {costNum(last.cumulativeIssuesOpened)} opened and{" "}
-                    {costNum(last.cumulativeIssuesClosed)} closed: closing never caught up, and the
-                    backlog grew by {costNum(issueGap)}.
-                    {closedAhead.length === 1
-                      ? ` One week closed more than it opened, ${closedAhead[0].week} (${costNum(closedAhead[0].issuesClosed)} against ${costNum(closedAhead[0].issuesOpened)}).`
-                      : ""}{" "}
-                    The fetch read at most 500 issues per repository.
-                  </p>
-                </div>
-              </div>
+              <Panel name="Issues per week" aside={<ShiftKind kind="recorded" />}>
+                <BarStrip
+                  caption="GitHub issues opened per ISO week, cb* repositories"
+                  summary={`${costNum(last.cumulativeIssuesOpened)} issues opened over ${weeks} weeks.`}
+                  data={ts.map((t) => ({
+                    label: `${t.week}, week of ${t.weekStart}`,
+                    value: t.issuesOpened,
+                  }))}
+                  unit="opened"
+                  height={54}
+                />
+                <BarStrip
+                  caption="GitHub issues closed per ISO week, cb* repositories"
+                  summary={`${costNum(last.cumulativeIssuesClosed)} issues closed over ${weeks} weeks.`}
+                  data={ts.map((t) => ({
+                    label: `${t.week}, week of ${t.weekStart}`,
+                    value: t.issuesClosed,
+                  }))}
+                  unit="closed"
+                  ticks={weekTicks}
+                  height={54}
+                />
+                <p className="beta-chart__note">
+                  {costNum(last.cumulativeIssuesOpened)} opened and{" "}
+                  {costNum(last.cumulativeIssuesClosed)} closed: closing never caught up, and the
+                  backlog grew by {costNum(issueGap)}.
+                  {closedAhead.length === 1
+                    ? ` One week closed more than it opened, ${closedAhead[0].week} (${costNum(closedAhead[0].issuesClosed)} against ${costNum(closedAhead[0].issuesOpened)}).`
+                    : ""}{" "}
+                  The fetch read at most 500 issues per repository.
+                </p>
+              </Panel>
             </ShiftFigure>
-          </div>
+          </Grid>
         </>
       )}
 
@@ -359,75 +346,69 @@ export default function BetaCostPage() {
           )}
       </Section>
 
-      <div className="beta-shift-two">
+      <Grid min="26rem" className="beta-shift-two">
         <ShiftFigure
           kind="recorded"
           source="cost-model.json"
           note={`, actual and issues, ${windowLabel}, recorded ${recorded}`}
         >
-          <div className="panel">
-            <div className="panel-face">
-              <div className="panel-bar">
-                <b>What happened</b>
-                <ShiftKind kind="recorded" />
-              </div>
-              <table className="readout">
-                <tbody>
+          <Panel name="What happened" aside={<ShiftKind kind="recorded" />}>
+            <table className="readout">
+              <tbody>
+                <tr>
+                  <td>Team size</td>
+                  <td className="num">{d.actual.teamSize}</td>
+                </tr>
+                {typeof cover?.commitsInWindow === "number" && (
                   <tr>
-                    <td>Team size</td>
-                    <td className="num">{d.actual.teamSize}</td>
+                    <td>Commits in the window, all authors</td>
+                    <td className="num">{costNum(cover.commitsInWindow)}</td>
                   </tr>
-                  {typeof cover?.commitsInWindow === "number" && (
-                    <tr>
-                      <td>Commits in the window, all authors</td>
-                      <td className="num">{costNum(cover.commitsInWindow)}</td>
-                    </tr>
-                  )}
-                  <tr>
-                    <td>Commits, full history, all authors</td>
-                    <td className="num">{costNum(d.actual.commits)}</td>
-                  </tr>
-                  <tr>
-                    <td>cb* repositories active in the window</td>
-                    <td className="num">{costNum(d.actual.repos)}</td>
-                  </tr>
-                  <tr>
-                    <td>Issues opened, cb*</td>
-                    <td className="num">{costNum(d.issues.opened)}</td>
-                  </tr>
-                  <tr>
-                    <td>Issues closed, cb*</td>
-                    <td className="num">{costNum(d.issues.closed)}</td>
-                  </tr>
-                  <tr>
-                    <td>Operator, flat rate</td>
-                    <td className="num">{costUsd(d.actual.operatorCost)}</td>
-                  </tr>
-                  <tr>
-                    <td>AI plan, flat rate</td>
-                    <td className="num">{costUsd(d.actual.aiCost)}</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <b>Total</b>
-                    </td>
-                    <td className="num">
-                      <b>{costUsd(d.actual.totalCost)}</b>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-              <p className="beta-chart__note">
-                {typeof cover?.commitsInWindowRepos === "number"
-                  ? `In the window: all ${cover.commitsInWindowRepos} org repositories${commitsCountedOn ? `, counted ${commitsCountedOn}` : ""}. `
-                  : ""}
-                Full history: the {d.actual.repos} cb* repositories active in the window, from
-                their first commits{fullHistoryThrough ? ` to ${fullHistoryThrough}` : ""}. Both
-                commit counts include every author: other contributors, and the upstream history
-                of forked repositories.
-              </p>
-            </div>
-          </div>
+                )}
+                <tr>
+                  <td>Commits, full history, all authors</td>
+                  <td className="num">{costNum(d.actual.commits)}</td>
+                </tr>
+                <tr>
+                  <td>cb* repositories active in the window</td>
+                  <td className="num">{costNum(d.actual.repos)}</td>
+                </tr>
+                <tr>
+                  <td>Issues opened, cb*</td>
+                  <td className="num">{costNum(d.issues.opened)}</td>
+                </tr>
+                <tr>
+                  <td>Issues closed, cb*</td>
+                  <td className="num">{costNum(d.issues.closed)}</td>
+                </tr>
+                <tr>
+                  <td>Operator, flat rate</td>
+                  <td className="num">{costUsd(d.actual.operatorCost)}</td>
+                </tr>
+                <tr>
+                  <td>AI plan, flat rate</td>
+                  <td className="num">{costUsd(d.actual.aiCost)}</td>
+                </tr>
+                <tr>
+                  <td>
+                    <b>Total</b>
+                  </td>
+                  <td className="num">
+                    <b>{costUsd(d.actual.totalCost)}</b>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <p className="beta-chart__note">
+              {typeof cover?.commitsInWindowRepos === "number"
+                ? `In the window: all ${cover.commitsInWindowRepos} org repositories${commitsCountedOn ? `, counted ${commitsCountedOn}` : ""}. `
+                : ""}
+              Full history: the {d.actual.repos} cb* repositories active in the window, from
+              their first commits{fullHistoryThrough ? ` to ${fullHistoryThrough}` : ""}. Both
+              commit counts include every author: other contributors, and the upstream history
+              of forked repositories.
+            </p>
+          </Panel>
         </ShiftFigure>
 
         {typeof d.legacy.teamSize === "number" &&
@@ -441,60 +422,54 @@ export default function BetaCostPage() {
               source="cost-model.json"
               note=", legacy: assumptions written into the model, not observations"
             >
-              <div className="panel">
-                <div className="panel-face">
-                  <div className="panel-bar">
-                    <b>What it was compared with</b>
-                    <ShiftKind kind="modelled" />
-                  </div>
-                  <table className="readout">
-                    <tbody>
+              <Panel name="What it was compared with" aside={<ShiftKind kind="modelled" />}>
+                <table className="readout">
+                  <tbody>
+                    <tr>
+                      <td>Team size, one seat at half time</td>
+                      <td className="num">{d.legacy.teamSize}</td>
+                    </tr>
+                    <tr>
+                      <td>Duration, months</td>
+                      <td className="num">
+                        {months.low} to {months.high}
+                      </td>
+                    </tr>
+                    {d.legacy.personMonths && (
                       <tr>
-                        <td>Team size, one seat at half time</td>
-                        <td className="num">{d.legacy.teamSize}</td>
-                      </tr>
-                      <tr>
-                        <td>Duration, months</td>
+                        <td>Person-months</td>
                         <td className="num">
-                          {months.low} to {months.high}
+                          {d.legacy.personMonths.low} to {d.legacy.personMonths.high}
                         </td>
                       </tr>
-                      {d.legacy.personMonths && (
-                        <tr>
-                          <td>Person-months</td>
-                          <td className="num">
-                            {d.legacy.personMonths.low} to {d.legacy.personMonths.high}
-                          </td>
-                        </tr>
-                      )}
-                      <tr>
-                        <td>Rate per person-month</td>
-                        <td className="num">{costUsd(rate)}</td>
-                      </tr>
-                      <tr>
-                        <td>Cost at {months.low} months</td>
-                        <td className="num">{costUsd(legacyLow)}</td>
-                      </tr>
-                      <tr>
-                        <td>Cost at {months.high} months</td>
-                        <td className="num">{costUsd(legacyHigh)}</td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <b>Midpoint</b>
-                        </td>
-                        <td className="num">
-                          <b>{costUsd(legacyMid)}</b>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <p className="beta-chart__note">Nobody was hired and nothing was invoiced.</p>
-                </div>
-              </div>
+                    )}
+                    <tr>
+                      <td>Rate per person-month</td>
+                      <td className="num">{costUsd(rate)}</td>
+                    </tr>
+                    <tr>
+                      <td>Cost at {months.low} months</td>
+                      <td className="num">{costUsd(legacyLow)}</td>
+                    </tr>
+                    <tr>
+                      <td>Cost at {months.high} months</td>
+                      <td className="num">{costUsd(legacyHigh)}</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <b>Midpoint</b>
+                      </td>
+                      <td className="num">
+                        <b>{costUsd(legacyMid)}</b>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p className="beta-chart__note">Nobody was hired and nothing was invoiced.</p>
+              </Panel>
             </ShiftFigure>
           )}
-      </div>
+      </Grid>
 
       {/* ================================================================
           THE MODELLED TEAM
@@ -517,15 +492,9 @@ export default function BetaCostPage() {
         source="cost-model.json"
         note=", legacy.roles: market salary times 1.4, per year, as written into the model"
       >
-        <div className="panel">
-          <div className="panel-face">
-            <div className="panel-bar">
-              <b>Loaded cost by role, annual</b>
-              <ShiftKind kind="modelled" />
-            </div>
-            <RowChart caption="Fully loaded annual cost in US dollars, by role" data={roles} />
-          </div>
-        </div>
+        <Panel name="Loaded cost by role, annual" aside={<ShiftKind kind="modelled" />}>
+          <RowChart caption="Fully loaded annual cost in US dollars, by role" data={roles} />
+        </Panel>
       </ShiftFigure>
 
       {/* ================================================================
@@ -572,20 +541,14 @@ export default function BetaCostPage() {
         source="cost-model.json"
         note={`, actual.domains, keyword coverage over recent session logs, as recorded ${recorded}`}
       >
-        <div className="panel">
-          <div className="panel-face">
-            <div className="panel-bar">
-              <b>Domain coverage, 0 to 100</b>
-              <ShiftKind kind="recorded" />
-            </div>
-            <ShiftRows
-              caption={`Keyword coverage by domain, recent session logs as recorded ${recorded}`}
-              data={domains}
-              max={100}
-              axis={["0", "50", "100"]}
-            />
-          </div>
-        </div>
+        <Panel name="Domain coverage, 0 to 100" aside={<ShiftKind kind="recorded" />}>
+          <ShiftRows
+            caption={`Keyword coverage by domain, recent session logs as recorded ${recorded}`}
+            data={domains}
+            max={100}
+            axis={["0", "50", "100"]}
+          />
+        </Panel>
       </ShiftFigure>
 
       <Section title="What the research says">

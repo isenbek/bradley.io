@@ -11,7 +11,6 @@ import {
   DOMAIN_FALLBACK,
   STATUS_ORDER,
   cleanTitle,
-  dayMonthYear,
   domainLabel,
   hasResults,
   isAgentAuthored,
@@ -22,7 +21,7 @@ import {
   type Figure,
   type PapersData,
 } from "@/components/papers/study"
-import { PageHead, Section } from "@/components/page"
+import { Grid, PageHead, Panel, Section } from "@/components/page"
 
 export const revalidate = 3600
 
@@ -70,26 +69,6 @@ function figureIn(url: string | null | undefined): Figure | null {
   if (!src) return null
   const size = imageSize(join(process.cwd(), "public", src))
   return { src, width: size?.width ?? null, height: size?.height ?? null }
-}
-
-/**
- * The provenance chip. The shared BetaMeasured prints the file name and the
- * date as two flex items, and at 320px the second one wraps to a line that
- * starts with a comma. Passing children as ONE item lets the text wrap like
- * text, and the date is kept whole.
- */
-function Measured({ generated }: { generated: string | null | undefined }) {
-  const when = dayMonthYear(generated)
-  return (
-    <BetaMeasured source="papers-data.json">
-      <span>
-        <b>papers-data.json</b>,{" "}
-        <span className="beta-papers-nowrap">
-          {when ? `generated ${when}` : "generation date not recorded"}
-        </span>
-      </span>
-    </BetaMeasured>
-  )
 }
 
 const MONTH_NAMES = [
@@ -317,94 +296,80 @@ export default function BetaPapersPage() {
       {/* Three measurements, each said once. The domain counts are not here:
           the filter chips below carry them, and a chart of the same seven
           numbers one screen above the chips said nothing the chips do not. */}
-      <div className="beta-papers-counts">
-        <div className="panel">
-          <div className="panel-face">
-            <div className="panel-bar">
-              <b>Where each note stands</b>
-              <span>{n} listed</span>
-            </div>
-            <RowChart caption="Notes per status" data={statuses} />
-            <p className="beta-chart__note">
-              A note&rsquo;s place in the lab&rsquo;s own workflow. Accepted means the lab&rsquo;s
-              internal review passed it; no journal was involved.
-            </p>
-          </div>
-        </div>
+      <Grid min="22rem" className="beta-papers-counts">
+        <Panel name="Where each note stands" note={<>{n} listed</>}>
+          <RowChart caption="Notes per status" data={statuses} />
+          <p className="beta-chart__note">
+            A note&rsquo;s place in the lab&rsquo;s own workflow. Accepted means the lab&rsquo;s
+            internal review passed it; no journal was involved.
+          </p>
+        </Panel>
 
-        <div className="panel">
-          <div className="panel-face">
-            <div className="panel-bar">
-              <b>What is in it</b>
-              <span>on this site</span>
-            </div>
-            <table className="readout beta-papers-readout">
-              <tbody>
+        <Panel name="What is in it" note="on this site">
+          <table className="readout beta-papers-readout">
+            <tbody>
+              <tr>
+                <td>Listed here</td>
+                <td className="num">{n}</td>
+              </tr>
+              <tr>
+                <td>Figure shown</td>
+                <td className="num">
+                  {shownFigures} of {n}
+                </td>
+              </tr>
+              <tr>
+                <td>Paper PDF on this site</td>
+                <td className="num">
+                  {mirroredPapers} of {n}
+                </td>
+              </tr>
+              {withdrawnOmitted > 0 && (
                 <tr>
-                  <td>Listed here</td>
-                  <td className="num">{n}</td>
+                  <td>Withdrawn at source, not shown</td>
+                  <td className="num">{withdrawnOmitted}</td>
                 </tr>
-                <tr>
-                  <td>Figure shown</td>
-                  <td className="num">
-                    {shownFigures} of {n}
-                  </td>
-                </tr>
-                <tr>
-                  <td>Paper PDF on this site</td>
-                  <td className="num">
-                    {mirroredPapers} of {n}
-                  </td>
-                </tr>
-                {withdrawnOmitted > 0 && (
-                  <tr>
-                    <td>Withdrawn at source, not shown</td>
-                    <td className="num">{withdrawnOmitted}</td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-            <p className="beta-chart__note">
-              These count what is mirrored on this site. More of the notes have figures and a
-              compiled paper in their workspace at the lab than are shown here.
-            </p>
-          </div>
-        </div>
+              )}
+            </tbody>
+          </table>
+          <p className="beta-chart__note">
+            These count what is mirrored on this site. More of the notes have figures and a
+            compiled paper in their workspace at the lab than are shown here.
+          </p>
+        </Panel>
 
-        <div className="panel beta-papers-counts__wide">
-          <div className="panel-face">
-            <div className="panel-bar">
-              <b>When each was started</b>
-              {newest && <span>newest {monthYear(newest.createdAt)}</span>}
-            </div>
-            <BarStrip
-              caption={
-                months.length > 0
-                  ? `Notes started per month, ${months[0].label} to ${months[months.length - 1].label}`
-                  : "Notes started per month"
-              }
-              summary={
-                peak
-                  ? `${dated.length} of ${n} notes carry a start date. The busiest month is ${peak.label} with ${peak.value}.`
-                  : "No note carries a start date."
-              }
-              unit="notes"
-              data={months}
-              ticks={monthTicks}
-              height={88}
-              emptyNote="No note in the file carries a start date."
-            />
-            <p className="beta-chart__note">
-              Counted by the date each workspace was created. Only the notes still listed are
-              counted, so a month can look quieter here than it was.
-              {undated > 0 &&
-                ` ${undated} ${plural(undated, "note has", "notes have")} no start date in the source and ${plural(undated, "is", "are")} not drawn.`}
-            </p>
-          </div>
-        </div>
-      </div>
+        <Panel
+          name="When each was started"
+          note={newest ? `newest ${monthYear(newest.createdAt)}` : undefined}
+          className="beta-papers-counts__wide"
+        >
+          <BarStrip
+            caption={
+              months.length > 0
+                ? `Notes started per month, ${months[0].label} to ${months[months.length - 1].label}`
+                : "Notes started per month"
+            }
+            summary={
+              peak
+                ? `${dated.length} of ${n} notes carry a start date. The busiest month is ${peak.label} with ${peak.value}.`
+                : "No note carries a start date."
+            }
+            unit="notes"
+            data={months}
+            ticks={monthTicks}
+            height={88}
+            emptyNote="No note in the file carries a start date."
+          />
+          <p className="beta-chart__note">
+            Counted by the date each workspace was created. Only the notes still listed are
+            counted, so a month can look quieter here than it was.
+            {undated > 0 &&
+              ` ${undated} ${plural(undated, "note has", "notes have")} no start date in the source and ${plural(undated, "is", "are")} not drawn.`}
+          </p>
+        </Panel>
+      </Grid>
 
-      <Measured generated={d.generated} />
+      <BetaMeasured generated={d.generated ?? undefined} source="papers-data.json" />
 
       {/* ================================================================== */}
       <div className="prose beta-sec" id="notes">
@@ -462,11 +427,11 @@ export default function BetaPapersPage() {
           ))}
         </p>
 
-        <div className="beta-papers-grid">
+        <Grid min="19rem" fill className="beta-papers-grid">
           {cards.map((c) => (
             <StudyCard key={c.study.slug} {...c} />
           ))}
-        </div>
+        </Grid>
 
         {/* With scripts on, FilterHash puts a "back to the filter" control in
             reach anywhere in the grid. With them off, this plain link at the
@@ -492,7 +457,7 @@ export default function BetaPapersPage() {
         </details>
       )}
 
-      <Measured generated={d.generated} />
+      <BetaMeasured generated={d.generated ?? undefined} source="papers-data.json" />
     </div>
   )
 }
