@@ -2451,16 +2451,27 @@ body:has(.beta-root) {
 }
 /* ---- The locked footer -------------------------------------------------- */
 
-/* One block, left justified (owner's design, 2026-10-22): the flag spanning
-   two lines of where it is made, then a hairline, then the build in small
-   mono. An inline grid, so the hairline is as wide as the label and not the
-   window. The rows have fixed heights and the flag is their sum, so it meets
-   the top of the first line and the foot of the second in any face; its own
-   hairline keeps the white stripes off the paper. The bar's height is
-   measured live (KitNav), so the main region's padding follows. */
-.beta-foot {
-  display: inline-grid;
-  justify-items: start;
+/* Two rows, centred (owner's design, 2026-10-22): the flag spanning two
+   lines of where it is made, with air above and below, then the build in
+   small mono under a hairline that runs edge to edge. That hairline is
+   ink-faint, lighter than the ink rule over the whole bar, so it divides the
+   footer without competing with the line that ends the page. The flag's
+   rows have fixed heights and the flag is their sum, so it meets the top of
+   the first line and the foot of the second in any face; its own hairline
+   keeps the white stripes off the paper. The bar's height is measured live
+   (KitNav), so the main region's padding follows. Three classes on the made
+   row so the kit's short-viewport squeeze of .app-shell .band cannot take
+   its air away. */
+.app-foot .band.beta-foot__made {
+  display: flex;
+  justify-content: center;
+  padding-top: calc(var(--u) * 3);
+  padding-bottom: calc(var(--u) * 3);
+}
+.beta-foot__rule { border-top: 1px solid var(--color-ink-faint); }
+.app-foot .beta-foot__rule > .band {
+  padding-top: calc(var(--u) * 1.25);
+  padding-bottom: calc(var(--u) * 1.25);
 }
 .beta-made-in {
   margin: 0;
@@ -2495,10 +2506,8 @@ body:has(.beta-root) {
   color: var(--color-ink-muted);
 }
 .beta-foot__build {
-  justify-self: stretch;
-  margin: calc(var(--u) * 1) 0 0;
-  padding-top: calc(var(--u) * 1);
-  border-top: 1px solid var(--color-rule);
+  margin: 0;
+  text-align: center;
   font-family: var(--font-mono);
   font-size: 0.56rem;
   line-height: 1.2;

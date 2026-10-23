@@ -83,19 +83,22 @@ export function KitShell({ children }: { children: React.ReactNode }) {
         </section>
 
         {/* The locked footer (owner's design, 2026-10-22): where it is made,
-            the flag spanning both lines, and under a hairline the build. The
+            centred, the flag spanning both lines, and under an edge-to-edge
+            hairline the build. The
             version is the visible "did this ship?" signal. The flag is
             self-hosted from Wikimedia Commons (public domain), so the chrome
             makes no outside request. The family strip and the name link left
             the footer the same day, on the owner's word. */}
         <footer className="app-foot">
-          <div className="band">
-            <div className="beta-foot">
-              <p className="beta-made-in">
-                <img src="/images/flag-us.svg" alt="" width="29" height="15" />
-                <span className="beta-made-in__where">Made in the USA</span>
-                <span className="beta-made-in__city">Grand Rapids, Michigan</span>
-              </p>
+          <div className="band beta-foot__made">
+            <p className="beta-made-in">
+              <img src="/images/flag-us.svg" alt="" width="29" height="15" />
+              <span className="beta-made-in__where">Made in the USA</span>
+              <span className="beta-made-in__city">Grand Rapids, Michigan</span>
+            </p>
+          </div>
+          <div className="beta-foot__rule">
+            <div className="band">
               <p className="beta-foot__build">
                 <a
                   href={`https://github.com/isenbek/bradley.io/commit/${buildInfo.commitHashFull}`}
