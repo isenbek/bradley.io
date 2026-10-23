@@ -1,7 +1,8 @@
 import { DiePlates } from "@/components/mos/DiePlates"
 import { DieStack } from "@/components/mos/DieStack"
 import { VITALS, MNEMONICS, MACHINES, GROUPS } from "./_content"
-import { PageHead, Panel, Section } from "@/components/page"
+import { DieRunner } from "@/components/home/DieRunner"
+import { Measured, PageHead, Panel, Section } from "@/components/page"
 
 const TOTAL = GROUPS.reduce((n, g) => n + g.items.length, 0)
 
@@ -130,6 +131,20 @@ export default function Page() {
           </p>
         </div>
       </div>
+
+      {/* Die Runner moved here from the home page (Brad, 2026-10-23): the game
+          is this chip running, so it lives with the chip. */}
+      <Section id="die-runner" title="Play it">
+        <p>
+          Die Runner is a 339-byte game on this chip. Every frame runs the 3,510 switches, and the
+          gates you steer through are real transistors. Nothing is sent until you press start.
+        </p>
+      </Section>
+      <DieRunner />
+      <Measured>
+        <b>tinymachines/6502</b>: games/README.md, the ROM at rom/dierunner.s and the mint report,
+        checked 2 Oct 2026
+      </Measured>
 
       <Section title="How it is checked" />
 

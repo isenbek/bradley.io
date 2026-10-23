@@ -4,7 +4,7 @@ import { useState } from "react"
 import { Play, Square } from "lucide-react"
 
 /**
- * DieRunner: the console on the front page, booted by the reader.
+ * DieRunner: the console on /6502 (it was on the front page until 2026-10-23), booted by the reader.
  *
  * games.tinymachines.ai is a console on the transistor-level 6502: the game
  * is a 339-byte ROM, the screen is a page of the chip's memory, and every

@@ -4,7 +4,6 @@ import { loadSiteDataStatic } from "@/lib/site-data"
 import { peekNow } from "@/components/live/now-snapshot"
 import type { NowId } from "@/components/live/types"
 import { DieFigure } from "@/components/home/DieFigure"
-import { DieRunner } from "@/components/home/DieRunner"
 import { HeroChips, type OrgTotals } from "@/components/home/HeroChips"
 import { LinkCard } from "@/components/home/LinkCard"
 import { RunningNow } from "@/components/home/RunningNow"
@@ -245,6 +244,9 @@ export default async function Home() {
             <Link className="btn btn-ghost" href="/6502">
               The chip and its archive
             </Link>
+            <Link className="btn btn-ghost" href="/6502#die-runner">
+              Play Die Runner on it
+            </Link>
             <a
               className="btn btn-ghost"
               href="https://tinymachines.ai/6502"
@@ -256,21 +258,6 @@ export default async function Home() {
           </div>
         </div>
       </div>
-
-      {/* Die Runner is part of the 6502 section, not a section of its own
-          (Brad, 2026-10-23: "cut to about half"): a line, then the game. */}
-      <div className="prose beta-home-runner">
-        <p>
-          <b>Play it.</b> Die Runner is a 339-byte game on that chip. Every frame runs the 3,510
-          switches above, and the gates you steer through are real transistors. Nothing is sent
-          until you press start.
-        </p>
-      </div>
-      <DieRunner />
-      <BetaMeasured>
-        <b>tinymachines/6502</b>: games/README.md, the ROM at rom/dierunner.s and the mint
-        report, checked {shortDate(WORK_CHECKED)}
-      </BetaMeasured>
 
       {/* The record, as one panel: the detail (calendars, languages, the
           author check) is /work's, and this page points there rather than

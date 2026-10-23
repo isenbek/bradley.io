@@ -4980,8 +4980,6 @@ a.beta-papers-fig:focus-visible { outline: 2px solid var(--color-blue-ink); outl
 }
 /* Die Runner's one-line intro, inside the 6502 section: the gap of a
    paragraph, not of a new section. */
-.beta-home-runner { margin: calc(var(--u) * 10) 0 calc(var(--u) * 4); }
-.beta-home-runner p { margin: 0; }
 @media print { .beta-doors { display: none; } }
 
 /* ---- The Thought Lab door on /projects ---------------------------------
@@ -5113,7 +5111,7 @@ a.beta-papers-fig:focus-visible { outline: 2px solid var(--color-blue-ink); outl
    only inside .hero). */
 .beta-home-row { display: flex; flex-wrap: wrap; gap: calc(var(--u) * 3); }
 
-/* ---- Die Runner on the front page (components/home/DieRunner.tsx) ---------
+/* ---- Die Runner on /6502 (components/home/DieRunner.tsx) ---------
    One frame with two states. Off: a poster on the sunk panel, the console's
    tag and the button. On: the console's own page in an iframe. The frame has
    the same height in both states so pressing the button moves nothing below
