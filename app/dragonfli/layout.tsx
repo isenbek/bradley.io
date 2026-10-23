@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Dragonfli · bio·bradley.io",
+  title: "Dragonfli",
   description:
     "Live ADS-B receiver at 1090 MHz: local radar, active aircraft, FAA registry breakdown, and trajectory predictor.",
   alternates: { canonical: "/dragonfli" },

@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Fleet Health · bio·bradley.io",
+  title: "Fleet Health",
   description:
     "Live health for the collector fleet behind the WorldEvent bus: per-node vitals, an attention layer, and a self-healing auto-medic.",
   alternates: { canonical: "/fleet" },

@@ -4,7 +4,7 @@ const DESC =
   "A transistor-level 6502 you can run in a browser, rebuilt on the visual6502 die trace, plus an archived, link-checked collection of every 6502 resource worth keeping: the original simulators, the 1976 MOS manuals, the undocumented opcodes, and the machines it powered."
 
 export const metadata: Metadata = {
-  title: "The 6502, switch by switch · bradley.io",
+  title: "The 6502, switch by switch",
   description: DESC,
   keywords: [
     "6502",

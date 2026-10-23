@@ -15,7 +15,7 @@ const DESCRIPTION =
   "What is on the bench: chips rebuilt from their own dies, instruments reading real hardware, math instruments that run in the browser, and a few ideas that might not ship."
 
 export const metadata: Metadata = {
-  title: "Projects · bio·bradley.io",
+  title: "Projects",
   description: DESCRIPTION,
   alternates: { canonical: "/projects" },
   openGraph: {

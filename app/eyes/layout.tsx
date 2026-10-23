@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Eyes · bio·bradley.io",
+  title: "Eyes",
   description:
     "A live frame from the camera on the bradley.io box, grabbed once a minute with ffmpeg, cached locally, and served straight off the metal. Anti-cloud, host local.",
   alternates: { canonical: "/eyes" },

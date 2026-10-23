@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "I gave a junk-pile eyes, ears, and a voice · bio·bradley.io",
+  title: "I gave a junk-pile eyes, ears, and a voice",
   description:
     "A caseless home server built from salvaged GPUs, an abandoned-office pile of USB audio dongles, '60s and thrift-store mics, and early-'90s Altec Lansings, taught to see, hear, think, and speak, every model running locally. Anti-cloud, host local.",
   alternates: { canonical: "/meatball/notes/senses" },

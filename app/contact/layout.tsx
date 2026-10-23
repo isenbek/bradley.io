@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Contact · bio·bradley.io",
+  title: "Contact",
   description:
     "Get in touch with Bradley Isenbek: email, GitHub, project inquiries. Based in Grand Rapids, MI. Replies within ~24 hours.",
   alternates: { canonical: "/contact" },

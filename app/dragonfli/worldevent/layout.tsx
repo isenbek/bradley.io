@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "WorldEvent bus · bio·bradley.io",
+  title: "WorldEvent bus",
   description:
     "The perception bus: a live, schema-tagged firehose of everything the sensors notice: every event type, host, and rate on one wire. A new sense, not a single feed.",
   alternates: { canonical: "/dragonfli/worldevent" },

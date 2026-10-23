@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "The bio mark: vector x-ray · bradley.io",
+  title: "The bio mark: vector x-ray",
   description:
     "An interactive decomposition of the bio·bradley.io wordmark: the b/i/o ligature rendered as chords, Bézier offset handles, anchors, the i-tittle plumb line, and the implied ∞. Drag the dot, morph chords↔curves, measure the alignment live.",
   alternates: { canonical: "/lab/bio-mark" },

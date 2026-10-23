@@ -13,7 +13,7 @@ const SHARE =
   "Research notes from the TerraPulse lab, each with its figure and its status: seismology, space weather, climate, hydrology and cross-domain work. Mostly drafts, none peer reviewed."
 
 export const metadata: Metadata = {
-  title: "Papers · bio·bradley.io",
+  title: "Papers",
   description: SHARE,
   alternates: { canonical: "/papers" },
   openGraph: {

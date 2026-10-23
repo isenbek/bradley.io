@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Meatball's memory: moments lined up · bradley.io",
+  title: "Meatball's memory: moments lined up",
   description:
     "A multimodal timeline: Meatball's motion and speech events folded onto one line, each keeping the scene before and after, with cross-modal events nearby. The substrate for relating image patches to speech over time.",
   alternates: { canonical: "/meatball/memory" },

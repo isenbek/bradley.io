@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Meatball: the sensory machine · bradley.io",
+  title: "Meatball: the sensory machine",
   description:
     "A caseless home server built from salvaged GPUs, an abandoned-office pile of audio dongles, a '60s microphone and early-'90s speakers, taught to see, hear, think, and speak, every model running locally. The project home: a live eye, the bill of materials, and the field notes.",
   alternates: { canonical: "/meatball" },

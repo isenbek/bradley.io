@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "GPS · bio·bradley.io",
+  title: "GPS",
   description:
     "Live GNSS from the Dragonfli receiver: a satellite skyplot by SNR, the signal spectrum, the fix-precision cloud, and the ground track on a self-hosted vector basemap.",
   alternates: { canonical: "/dragonfli/gps" },

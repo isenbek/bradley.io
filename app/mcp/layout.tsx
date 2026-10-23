@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "MCP Catalog · bio·bradley.io",
+  title: "MCP Catalog",
   description:
     "Campaign Brain MCP catalog: FastAPI microservices for AI, data, communication, infrastructure, and business operations.",
   alternates: { canonical: "/mcp" },

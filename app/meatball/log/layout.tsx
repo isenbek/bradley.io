@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Meatball's logbook: what it noticed · bradley.io",
+  title: "Meatball's logbook: what it noticed",
   description:
     "A live log of every motion Meatball's cameras caught and the vision model named: the cropped region, the label, the camera, and the time. Built as it happens.",
   alternates: { canonical: "/meatball/log" },

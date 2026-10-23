@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "TRNG · bio·bradley.io",
+  title: "TRNG",
   description:
     "Live status for the HOTBITS true random number generator: radioactive decay timing from a CAJOE Geiger counter, with NIST-style continuous health checks.",
   alternates: { canonical: "/trng" },

@@ -2,7 +2,7 @@ import "../terminal.css"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Terminal · bio·bradley.io",
+  title: "Terminal",
   description:
     "The site as a command line. Type help: the resume, the projects, live instrument status, and the build that is answering you.",
   alternates: { canonical: "/terminal" },
