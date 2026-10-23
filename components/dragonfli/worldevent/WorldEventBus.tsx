@@ -344,6 +344,9 @@ export function WorldEventBus() {
 
       {/* HOSTS + TAIL =========================================== */}
       <div className="beta-we-grid2">
+        {/* The page goes title, then these two; a heading for screen readers
+            keeps the outline from jumping h1 to h3. */}
+        <h2 className="sr-only">Hosts and recent events</h2>
         <div className="beta-we-panel">
           <h3 className="beta-we-panel__h">Producers</h3>
           <ul className="beta-we-hosts">

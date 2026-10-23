@@ -7818,3 +7818,32 @@ a.beta-papers-fig:focus-visible { outline: 2px solid var(--color-blue-ink); outl
    320px phone, /mcp) wraps the note under the name instead of running it
    past the panel's edge. */
 .panel-bar { flex-wrap: wrap; }
+
+/* ===========================================================================
+   CARD TITLES (Brad, 2026-10-23: "bold, sentence case")
+
+   The kit sets a card's title (.rail h3) in thin capitals; under the site's
+   bold sentence-case section headings that read as a second heading system,
+   switching style mid-page. Here every card title is the section heading's
+   voice one step down: display face, bold, as written, --text-lead. The
+   feature cards keep their larger size (more specific rules above win on
+   size). The papers cards were their own variant and fold in. Mono caps stay
+   the LABEL voice (eyebrows, .beta-services-k), and on a panel the heading
+   voice is the panel bar's (mono caps), so the live-event panels'
+   headings (.beta-we-panel__h) keep it.
+   --------------------------------------------------------------------------- */
+.rail h3, .beta-papers-card h3 {
+  font-family: var(--font-display);
+  font-size: var(--text-lead);
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: var(--tracking-tight);
+  line-height: 1.2;
+}
+/* The papers feature card's title stays a step above the others once its
+   card is wide enough to lay out as a feature (the container query above). */
+@container (min-width: 38rem) {
+  .beta-papers-card.beta-papers-card--feature h3 { font-size: var(--text-h3); }
+}
+/* /services' five practice names: the same voice, at their larger size. */
+.beta-services-what h3 { font-weight: 700; text-transform: none; }

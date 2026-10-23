@@ -80,6 +80,7 @@ export default function ToolsIndexPage() {
           }
         />
 
+        <h2 className="sr-only">The four tools</h2>
         <div className="piece-grid">
           {TOOLS.map((t) => (
             <Link className="rail beta-tool-rail" href={t.href} key={t.href}>

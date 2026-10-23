@@ -384,6 +384,7 @@ export default async function ProjectsPage() {
           lab itself, where every lab site is shown in its own style. One
           card, full width, before the groups, so a builder finds it first. */}
       <div className="beta-labdoor">
+        <h2 className="sr-only">The lab</h2>
         <LinkCard
           href="https://meatball.ai"
           title="The Thought Lab"
