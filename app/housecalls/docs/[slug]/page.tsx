@@ -2,7 +2,7 @@ import Link from "next/link"
 import { notFound } from "next/navigation"
 import type { Metadata } from "next"
 import { listDocSlugs, readDoc } from "@/lib/housecalls/docs"
-import { PageHead } from "@/components/page"
+import { Actions, PageHead } from "@/components/page"
 
 /**
  * One document from the hunt's paperwork, server-rendered from its
@@ -71,14 +71,14 @@ export default async function HuntDocPage({ params }: { params: Promise<{ slug: 
 
         <div className="prose beta-sec" dangerouslySetInnerHTML={{ __html: doc.html }} />
 
-        <p className="hero-ctas">
+        <Actions>
           <Link className="btn" href="/housecalls/docs">
             All the paperwork
           </Link>
           <Link className="btn" href="/housecalls">
             Back to the hunt
           </Link>
-        </p>
+        </Actions>
       </div>
     </>
   )

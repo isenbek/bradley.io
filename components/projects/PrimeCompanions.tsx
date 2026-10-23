@@ -47,7 +47,7 @@ export function PrimeCompanions({ current }: { current: string }) {
   const others = INSTRUMENTS.filter((i) => i.slug !== current)
 
   return (
-    <section className="beta-note-sec" style={{ paddingTop: 8, paddingBottom: 48 }}>
+    <section className="beta-t-block">
       <div className="beta-promo-stack">
         {others.map(({ slug, Icon, title, blurb }) => (
           <Link key={slug} href={`/projects/${slug}`} className="beta-promo">

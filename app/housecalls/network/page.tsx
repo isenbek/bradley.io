@@ -1,6 +1,6 @@
 import Link from "next/link"
 import type { Metadata } from "next"
-import { PageHead, Section } from "@/components/page"
+import { Actions, PageHead, Section } from "@/components/page"
 
 const DESCRIPTION =
   "House Calls is a method, and methods replicate. The territory map of who runs the machine where: currently a network of one, stated plainly, with the door open for the second."
@@ -183,14 +183,14 @@ export default function NetworkPage() {
           </p>
         </Section>
 
-        <p className="hero-ctas">
+        <Actions>
           <Link className="btn btn-primary" href="/contact">
             Say hello
           </Link>
           <Link className="btn" href="/housecalls">
             Watch the flagship hunt
           </Link>
-        </p>
+        </Actions>
       </div>
     </>
   )

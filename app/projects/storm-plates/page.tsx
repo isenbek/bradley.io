@@ -58,128 +58,95 @@ export default function StormPlatesPage() {
         title="The sieve, drawn as weather"
         lede={
           <>
-              Lay the integers out as a plank bridge and let one wave per prime roll under it.
-              Each crest breaks the plank it lands on, and the planks that survive are the primes.
-              Six cartoon plates take that one picture and push it until record gaps, twin primes
-              and the zeta zeros all fall out of it.
+            Lay the integers out as a plank bridge and let one wave per prime roll under it.
+            Each crest breaks the plank it lands on, and the planks that survive are the primes.
+            Six cartoon plates take that one picture and push it until record gaps, twin primes
+            and the zeta zeros all fall out of it.
           </>
         }
       />
-      {/* HEADER ========================================================= */}
 
       {/* THE INSTRUMENT ================================================= */}
-      <section className="beta-note-sec" style={{ paddingTop: 6, paddingBottom: 10 }}>
-        <div >
-          <ProjectEmbed
-              src="/storm-plates.html"
-              title="Storm Plates: wave presentations of the sieve"
-              initialHeight={2300}
-            />
-          <p className="quiet">
-            One HTML file, no build step, no network. Every broken plank is re-derived by trial
-            division against a live sieve rather than painted in, and each plate carries its own
-            guard: Mertens density, the record gap at 113, the π(√x) staircase, the first three
-            zeta zeros.
-          </p>
-        </div>
-      </section>
+      <ProjectEmbed
+          src="/storm-plates.html"
+          title="Storm Plates: wave presentations of the sieve"
+          initialHeight={2300}
+        />
+      <p className="quiet">
+        One HTML file, no build step, no network. Every broken plank is re-derived by trial
+        division against a live sieve rather than painted in, and each plate carries its own
+        guard: Mertens density, the record gap at 113, the π(√x) staircase, the first three
+        zeta zeros.
+      </p>
 
       {/* THE CHANNELS ================================================== */}
-      <section className="beta-note-sec" style={{ paddingTop: 24 }}>
-        <div >
-          <div className="beta-sechead">
-              <Compass size={18} strokeWidth={2.2} />
-              <h2>The whole idea, twice</h2>
+      <Section title="The whole idea, twice" icon={<Compass size={18} strokeWidth={2.2} />} />
+      <div className="piece-grid">
+        {CHANNELS.map((c) => (
+          <div className="rail" key={c.k}>
+              <span className="beta-proj-k">{c.k}</span>
+              <h3>{c.title}</h3>
+              <p className="beta-proj-q">{c.q}</p>
+              <p>{c.body}</p>
             </div>
-          <div className="piece-grid">
-            {CHANNELS.map((c) => (
-              <div className="rail" key={c.k}>
-                  <span className="beta-proj-k">{c.k}</span>
-                  <h3>{c.title}</h3>
-                  <p className="beta-proj-q">{c.q}</p>
-                  <p>{c.body}</p>
-                </div>
-            ))}
-          </div>
-        </div>
-      </section>
+        ))}
+      </div>
 
       {/* SIX PLATES ==================================================== */}
-      <section className="beta-note-sec" style={{ paddingTop: 24 }}>
-        <div >
-          <div className="beta-sechead">
-              <Waves size={18} strokeWidth={2.2} />
-              <h2>Six plates, one storm</h2>
+      <Section title="Six plates, one storm" icon={<Waves size={18} strokeWidth={2.2} />}>
+        <p>
+          The plates are ordered so each one only needs the one before it. Nothing here
+          requires complex analysis until the very last panel, and by then the analysis is
+          just a second way of drawing what you have already watched happen.
+        </p>
+      </Section>
+      <div className="piece-grid">
+        {PLATES.map((m) => (
+          <div className="rail" key={m.n}>
+              <span className="beta-proj-k">{m.n}</span>
+              <h3>{m.title}</h3>
+              <p>{m.body}</p>
             </div>
-          <p className="lede">
-              The plates are ordered so each one only needs the one before it. Nothing here requires
-              complex analysis until the very last panel, and by then the analysis is just a second
-              way of drawing what you have already watched happen.
-            </p>
-          <div className="piece-grid">
-            {PLATES.map((m) => (
-              <div className="rail" key={m.n}>
-                  <span className="beta-proj-k">{m.n}</span>
-                  <h3>{m.title}</h3>
-                  <p>{m.body}</p>
-                </div>
-            ))}
-          </div>
-        </div>
-      </section>
+        ))}
+      </div>
 
       {/* PLAY IT ======================================================= */}
-      <section className="beta-note-sec" style={{ paddingTop: 24 }}>
-        <div >
-          <div className="beta-sechead">
-              <MousePointerClick size={18} strokeWidth={2.2} />
-              <h2>Watch the water</h2>
-            </div>
-          <div className="beta-steps">
-            <ol>
-              {TRY.map((t, i) => (
-                <li key={i}>
-                    <span className="beta-steps__n">{i + 1}</span>
-                    <span>{t}</span>
-                  </li>
-              ))}
-            </ol>
-          </div>
-        </div>
-      </section>
+      <Section title="Watch the water" icon={<MousePointerClick size={18} strokeWidth={2.2} />} />
+      <div className="beta-steps">
+        <ol>
+          {TRY.map((t, i) => (
+            <li key={i}>
+                <span className="beta-steps__n">{i + 1}</span>
+                <span>{t}</span>
+              </li>
+          ))}
+        </ol>
+      </div>
 
       {/* THE BRIDGE TO THE OTHERS ====================================== */}
-      <section className="beta-note-sec" style={{ paddingTop: 24 }}>
-        <div >
-          <div className="beta-sechead">
-              <Sigma size={18} strokeWidth={2.2} />
-              <h2>Two transcriptions of the same water</h2>
-            </div>
-          <Section>
-              <p>
-                Plate VI is where this page hands off. The sieve can be written as one square wave
-                per prime, periodic in n, or as one tone per zeta zero, periodic in log x:
-              </p>
-              <div className="code"><pre>
-                Euler side · ∏ₚ (1 − p⁻ˢ)⁻¹ ⟷ explicit formula · Σ_ρ cos(γ·log x)
-              </pre></div>
-              <p>
-                Neither side is the storm; both are exact transcriptions of it. The{" "}
-                <Link href="/projects/prime-orchestra">orchestra</Link> plays the right-hand side
-                and reassembles the prime staircase out of those tones, while the{" "}
-                <Link href="/projects/prime-zoo">zoo</Link> stays on the left and asks which
-                constellations the swells can even permit. The twin plate here is the zoo&rsquo;s
-                habitat law wearing water: offset {"{0, 2}"} lives because no residue row of any
-                swell covers it.
-              </p>
-              <p>
-                Where those tones come from is a separate question, answered on the{" "}
-                <Link href="/projects/zeta-forge">forge</Link>, and where all of it sits relative to
-                what is actually proven is the <Link href="/projects/prime-atlas">atlas</Link>.
-              </p>
-            </Section>
-        </div>
-      </section>
+      <Section title="Two transcriptions of the same water" icon={<Sigma size={18} strokeWidth={2.2} />}>
+        <p>
+          Plate VI is where this page hands off. The sieve can be written as one square wave
+          per prime, periodic in n, or as one tone per zeta zero, periodic in log x:
+        </p>
+        <div className="code"><pre>
+          Euler side · ∏ₚ (1 − p⁻ˢ)⁻¹ ⟷ explicit formula · Σ_ρ cos(γ·log x)
+        </pre></div>
+        <p>
+          Neither side is the storm; both are exact transcriptions of it. The{" "}
+          <Link href="/projects/prime-orchestra">orchestra</Link> plays the right-hand side
+          and reassembles the prime staircase out of those tones, while the{" "}
+          <Link href="/projects/prime-zoo">zoo</Link> stays on the left and asks which
+          constellations the swells can even permit. The twin plate here is the zoo&rsquo;s
+          habitat law wearing water: offset {"{0, 2}"} lives because no residue row of any
+          swell covers it.
+        </p>
+        <p>
+          Where those tones come from is a separate question, answered on the{" "}
+          <Link href="/projects/zeta-forge">forge</Link>, and where all of it sits relative to
+          what is actually proven is the <Link href="/projects/prime-atlas">atlas</Link>.
+        </p>
+      </Section>
 
       <PrimeCompanions current="storm-plates" />
     </div>

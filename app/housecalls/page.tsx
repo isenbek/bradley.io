@@ -3,7 +3,7 @@ import type { Metadata } from "next"
 import { HuntMapIsland } from "@/components/housecalls/HuntMapIsland"
 import { RigPanel } from "@/components/housecalls/RigPanel"
 import { LedgerPanel } from "@/components/housecalls/LedgerPanel"
-import { PageHead, Section } from "@/components/page"
+import { Actions, PageHead, Section } from "@/components/page"
 
 const DESCRIPTION =
   "An AI is out looking for work for a human engineer, in the open. Every step of the hunt is logged on this page, and nothing leaves without a human signature."
@@ -80,11 +80,11 @@ export default function HouseCallsPage() {
         }
       />
 
-      <p className="hero-ctas">
+      <Actions>
         <Link className="btn" href="/housecalls/plain">
           New to all of this? Read the plain-English version
         </Link>
-      </p>
+      </Actions>
 
       <Section title="The deal">
         <p>
@@ -204,14 +204,14 @@ export default function HouseCallsPage() {
         </p>
       </Section>
 
-      <p className="hero-ctas">
+      <Actions>
         <Link className="btn btn-primary" href="/contact">
           Call the plumber
         </Link>
         <Link className="btn" href="/services">
           Read the prices first
         </Link>
-      </p>
+      </Actions>
       </div>
     </>
   )

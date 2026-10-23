@@ -462,25 +462,10 @@ body:has(.beta-root) {
 /* ---------------------------------------------------------------------------
    LONG-FORM NOTES
 
-   The Meatball field notes and the project write-ups: pages that are mostly
-   prose with a figure or a code block every few paragraphs. They came off v3
-   with their own page-head, section and wrap containers; those are gone, and
-   what is left needs only vertical rhythm, because the kit's .page already
-   supplies the measure and the padding.
+   The Meatball field notes and the project write-ups are the Article and
+   Project templates (components/page, 2026-10-22). What they need beyond the
+   templates is only the caption on a code block (components/page Code).
    --------------------------------------------------------------------------- */
-.beta-note-head { margin-bottom: calc(var(--u) * 6); }
-.beta-note-sec { margin: 0 0 calc(var(--u) * 4); }
-
-/* A paragraph inside a long-form note. .prose sets the serif voice and the
-   68ch measure on the wrapper; this is for the paragraphs that sit outside one,
-   so they still read at the same width instead of running the full page. */
-.beta-note-p {
-  max-width: 68ch;
-  margin: 0 0 calc(var(--u) * 5);
-  font-family: var(--font-serif);
-  font-size: var(--text-prose);
-  line-height: 1.62;
-}
 
 /* A caption on a code block. Sits inside .code, so it is on the panel ground
    and takes the panel's muted ink rather than paper's. */
@@ -498,32 +483,10 @@ body:has(.beta-root) {
    PROJECT WRITE-UPS
 
    The six instrument pages: an embedded single-file tool, then prose about how
-   it works. What the v3 versions needed that the kit has no name for is small:
-   a section heading that carries an icon, a numbered step list, an embed frame,
-   and the atlas legend. Everything else mapped onto .rail, .piece-grid, .lede,
-   .code and .quiet.
+   it works (the Project template). What they need that the kit has no name
+   for is small: a numbered step list, an embed frame, and the atlas legend.
+   The icon headings are Section's icon prop (beta-t-icon).
    --------------------------------------------------------------------------- */
-
-/* A section heading with an icon beside it. The kit's own headings carry no
-   icons, so this is the one place these pages keep a habit of their own: the
-   icon is the only thing distinguishing six pages that are otherwise the same
-   shape. */
-.beta-sechead {
-  display: flex;
-  align-items: center;
-  gap: calc(var(--u) * 3);
-  margin: calc(var(--u) * 10) 0 calc(var(--u) * 4);
-  padding-top: calc(var(--u) * 4);
-  border-top: 1px solid var(--color-rule);
-}
-.beta-sechead h2 {
-  margin: 0;
-  font-family: var(--font-display);
-  font-size: var(--text-h2);
-  font-weight: 700;
-  letter-spacing: var(--tracking-tight);
-}
-.beta-sechead svg { flex: 0 0 auto; color: var(--color-accent-ink); }
 
 /* The embedded tool. A dark well, because what is inside it is the machine
    running rather than a picture of it. */
@@ -4179,22 +4142,6 @@ td > .beta-charts-spark { min-width: calc(var(--u) * 12); }
   color: var(--color-ink-muted);
 }
 
-/* Buttons in a row, with or without a line of fine print beside them. The
-   kit's .hero-ctas is only a row inside .hero. */
-.beta-services-actions {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: calc(var(--u) * 4);
-  margin: calc(var(--u) * 2) 0 0;
-}
-.beta-services-actions .btn { flex: none; }
-.beta-services-actions .quiet {
-  flex: 1 1 16rem;
-  max-width: 44ch;
-  font-size: var(--text-fine);
-  line-height: 1.5;
-}
 
 /* ---- /contact: the address -------------------------------------------------
    The one thing the page is for, so it is the first thing under the title and
@@ -7751,8 +7698,11 @@ a.beta-papers-fig:focus-visible { outline: 2px solid var(--color-blue-ink); outl
   flex-wrap: wrap;
   align-items: center;
   gap: calc(var(--u) * 4);
-  margin: calc(var(--u) * 12) 0 0;
+  margin: calc(var(--u) * 8) 0 0;
 }
+/* Straight under the lede it is the page's first move, not its last: no gap
+   beyond the lede's own. */
+.page > .lede + .beta-t-actions { margin-top: 0; }
 .beta-t-actions .btn { flex: none; }
 .beta-t-actions .quiet {
   flex: 1 1 16rem;
@@ -7813,4 +7763,8 @@ a.beta-papers-fig:focus-visible { outline: 2px solid var(--color-blue-ink); outl
   .beta-t-more > summary { display: none; }
   .beta-t-more::details-content { content-visibility: visible; display: contents; }
 }
+/* A section heading with an icon before it (the project write-ups). The kit's
+   ruled .prose > h2 is untouched; this only sets the icon beside the words. */
+.prose > h2.beta-t-icon { display: flex; align-items: center; gap: calc(var(--u) * 3); }
+.prose > h2.beta-t-icon svg { flex: 0 0 auto; color: var(--color-accent-ink); }
 /* TEMPLATES (end block: beta-t-*) */

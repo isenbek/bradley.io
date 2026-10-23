@@ -2,7 +2,7 @@ import Link from "next/link"
 import type { Metadata } from "next"
 import { ArrowRight, ArrowUpRight } from "lucide-react"
 import { RESUME_PDF, RESUME_UPDATED } from "@/lib/resume"
-import { PageHead, Section } from "@/components/page"
+import { Actions, PageHead, Section } from "@/components/page"
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -201,7 +201,7 @@ export default function BetaContactPage() {
         </p>
       </Section>
 
-      <p className="beta-services-actions">
+      <Actions>
         <a className="btn btn-primary" href={MAILTO}>
           Write to {ADDRESS}
         </a>
@@ -209,7 +209,7 @@ export default function BetaContactPage() {
           Opens your mail program with the four prompts above already in the message. Delete what
           does not apply.
         </span>
-      </p>
+      </Actions>
     </div>
   )
 }

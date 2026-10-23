@@ -57,126 +57,94 @@ export default function ZetaForgePage() {
         title="Build zeta one arrow at a time"
         lede={
           <>
-              ζ(s) = Σ n⁻ˢ is usually handed to you as a finished object. Here it is manufactured
-              in front of you: each term is an arrow, laid head to tail, and the point the walk
-              lands on <strong>is</strong> the value. Drag s around the complex plane and watch
-              convergence, the pole, and the zeros stop being definitions and start being things
-              that visibly happen.
+            ζ(s) = Σ n⁻ˢ is usually handed to you as a finished object. Here it is manufactured
+            in front of you: each term is an arrow, laid head to tail, and the point the walk
+            lands on <strong>is</strong> the value. Drag s around the complex plane and watch
+            convergence, the pole, and the zeros stop being definitions and start being things
+            that visibly happen.
           </>
         }
       />
-      {/* HEADER ========================================================= */}
 
       {/* THE INSTRUMENT ================================================= */}
-      <section className="beta-note-sec" style={{ paddingTop: 6, paddingBottom: 10 }}>
-        <div >
-          <ProjectEmbed
-              src="/zeta-forge.html"
-              title="Zeta Forge: build the zeta function one term at a time"
-              initialHeight={1250}
-            />
-          <p className="quiet">
-            One HTML file, no build step, no network. The amber crosshair is a guard: ζ(s) computed
-            independently by Euler–Maclaurin, so you can see the walk agree with it rather than
-            take the drawing on faith.
-          </p>
-        </div>
-      </section>
+      <ProjectEmbed
+          src="/zeta-forge.html"
+          title="Zeta Forge: build the zeta function one term at a time"
+          initialHeight={1250}
+        />
+      <p className="quiet">
+        One HTML file, no build step, no network. The amber crosshair is a guard: ζ(s) computed
+        independently by Euler–Maclaurin, so you can see the walk agree with it rather than
+        take the drawing on faith.
+      </p>
 
       {/* THE CHANNELS ================================================== */}
-      <section className="beta-note-sec" style={{ paddingTop: 24 }}>
-        <div >
-          <div className="beta-sechead">
-              <Compass size={18} strokeWidth={2.2} />
-              <h2>Two channels</h2>
+      <Section title="Two channels" icon={<Compass size={18} strokeWidth={2.2} />} />
+      <div className="piece-grid">
+        {CHANNELS.map((c) => (
+          <div className="rail" key={c.k}>
+              <span className="beta-proj-k">{c.k}</span>
+              <h3>{c.title}</h3>
+              <p className="beta-proj-q">{c.q}</p>
+              <p>{c.body}</p>
             </div>
-          <div className="piece-grid">
-            {CHANNELS.map((c) => (
-              <div className="rail" key={c.k}>
-                  <span className="beta-proj-k">{c.k}</span>
-                  <h3>{c.title}</h3>
-                  <p className="beta-proj-q">{c.q}</p>
-                  <p>{c.body}</p>
-                </div>
-            ))}
-          </div>
-        </div>
-      </section>
+        ))}
+      </div>
 
       {/* THE THREE KNOBS =============================================== */}
-      <section className="beta-note-sec" style={{ paddingTop: 24 }}>
-        <div >
-          <div className="beta-sechead">
-              <Sigma size={18} strokeWidth={2.2} />
-              <h2>Three moves, and the whole picture</h2>
+      <Section title="Three moves, and the whole picture" icon={<Sigma size={18} strokeWidth={2.2} />}>
+        <p>
+          Everything the forge does reduces to two knobs and one trick. Once those are
+          physical rather than symbolic, most of the mystery around analytic continuation
+          goes with them.
+        </p>
+      </Section>
+      <div className="piece-grid">
+        {MOVES.map((m) => (
+          <div className="rail" key={m.n}>
+              <span className="beta-proj-k">{m.n}</span>
+              <h3>{m.title}</h3>
+              <p>{m.body}</p>
             </div>
-          <p className="lede">
-              Everything the forge does reduces to two knobs and one trick. Once those are physical
-              rather than symbolic, most of the mystery around analytic continuation goes with them.
-            </p>
-          <div className="piece-grid">
-            {MOVES.map((m) => (
-              <div className="rail" key={m.n}>
-                  <span className="beta-proj-k">{m.n}</span>
-                  <h3>{m.title}</h3>
-                  <p>{m.body}</p>
-                </div>
-            ))}
-          </div>
-        </div>
-      </section>
+        ))}
+      </div>
 
       {/* PLAY IT ======================================================= */}
-      <section className="beta-note-sec" style={{ paddingTop: 24 }}>
-        <div >
-          <div className="beta-sechead">
-              <MousePointerClick size={18} strokeWidth={2.2} />
-              <h2>Forge it</h2>
-            </div>
-          <div className="beta-steps">
-            <ol>
-              {TRY.map((t, i) => (
-                <li key={i}>
-                    <span className="beta-steps__n">{i + 1}</span>
-                    <span>{t}</span>
-                  </li>
-              ))}
-            </ol>
-          </div>
-        </div>
-      </section>
+      <Section title="Forge it" icon={<MousePointerClick size={18} strokeWidth={2.2} />} />
+      <div className="beta-steps">
+        <ol>
+          {TRY.map((t, i) => (
+            <li key={i}>
+                <span className="beta-steps__n">{i + 1}</span>
+                <span>{t}</span>
+              </li>
+          ))}
+        </ol>
+      </div>
 
       {/* MAPS ONTO THE ATLAS =========================================== */}
-      <section className="beta-note-sec" style={{ paddingTop: 24 }}>
-        <div >
-          <div className="beta-sechead">
-              <Sigma size={18} strokeWidth={2.2} />
-              <h2>Three landmarks, made playable</h2>
-            </div>
-          <Section>
-              <p>
-                The forge is the western end of the{" "}
-                <Link href="/projects/prime-atlas">atlas</Link>, turned into something you can
-                operate. Three of its landmarks stop being scenery here:
-              </p>
-              <div className="code"><pre>
-                raw series = EULER SPRING · strip edge = CONVERGENCE WALL · η rescale = CONTINUATION BRIDGE
-              </pre></div>
-              <p>
-                The spring is the walk landing while σ &gt; 1. The wall is the exact place it stops
-                landing. The bridge is the sign flip and rescale that carries the <em>value</em>{" "}
-                across a wall the <em>series</em> cannot cross. That gap between what continues and
-                what does not is the whole reason the Riemann Hypothesis is hard, and here you can
-                watch it open up.
-              </p>
-              <p>
-                Once a zero is a closed spiral rather than a claim, the{" "}
-                <Link href="/projects/prime-orchestra">orchestra</Link> follows naturally: each of
-                those zeros becomes one wave, and the waves add up to the primes.
-              </p>
-            </Section>
-        </div>
-      </section>
+      <Section title="Three landmarks, made playable" icon={<Sigma size={18} strokeWidth={2.2} />}>
+        <p>
+          The forge is the western end of the{" "}
+          <Link href="/projects/prime-atlas">atlas</Link>, turned into something you can
+          operate. Three of its landmarks stop being scenery here:
+        </p>
+        <div className="code"><pre>
+          raw series = EULER SPRING · strip edge = CONVERGENCE WALL · η rescale = CONTINUATION BRIDGE
+        </pre></div>
+        <p>
+          The spring is the walk landing while σ &gt; 1. The wall is the exact place it stops
+          landing. The bridge is the sign flip and rescale that carries the <em>value</em>{" "}
+          across a wall the <em>series</em> cannot cross. That gap between what continues and
+          what does not is the whole reason the Riemann Hypothesis is hard, and here you can
+          watch it open up.
+        </p>
+        <p>
+          Once a zero is a closed spiral rather than a claim, the{" "}
+          <Link href="/projects/prime-orchestra">orchestra</Link> follows naturally: each of
+          those zeros becomes one wave, and the waves add up to the primes.
+        </p>
+      </Section>
 
       <PrimeCompanions current="zeta-forge" />
     </div>

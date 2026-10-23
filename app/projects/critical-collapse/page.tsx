@@ -57,130 +57,98 @@ export default function CriticalCollapsePage() {
         title="A black hole, forged on the knife edge"
         lede={
           <>
-              Choptuik's 1993 result, running live on your device. A pulse of scalar field falls
-              together under its own gravity. Tuned just right, it hovers on the exact boundary
-              between dispersing back to flat space and collapsing to a black hole, and on that
-              boundary Einstein's equations do something nobody expected: they echo, and the mass
-              obeys a power law with a universal exponent. Nothing below is pre-rendered. Your
-              phone is integrating the field equations.
+            Choptuik's 1993 result, running live on your device. A pulse of scalar field falls
+            together under its own gravity. Tuned just right, it hovers on the exact boundary
+            between dispersing back to flat space and collapsing to a black hole, and on that
+            boundary Einstein's equations do something nobody expected: they echo, and the mass
+            obeys a power law with a universal exponent. Nothing below is pre-rendered. Your
+            phone is integrating the field equations.
           </>
         }
       />
-      {/* HEADER ========================================================= */}
 
       {/* THE INSTRUMENT ================================================= */}
-      <section className="beta-note-sec" style={{ paddingTop: 6, paddingBottom: 10 }}>
-        <div >
-          <ProjectEmbed
-              src="/critical-collapse.html"
-              title="Choptuik Critical Collapse Lab: a live 1+1D numerical relativity solver"
-              initialHeight={3200}
-            />
-          <p className="quiet">
-            One HTML file. An 800-point radial grid in the polar-areal gauge, SSP-RK3 in time, the
-            two constraint ODEs re-solved fresh on every slice with Kreiss–Oliger dissipation for
-            stability. Every line in the lab log is a genuine solve of Einstein's equations coupled
-            to a massless scalar field, not a lookup. KaTeX is vendored locally, so the whole
-            instrument runs with no network at all.
-          </p>
-        </div>
-      </section>
+      <ProjectEmbed
+          src="/critical-collapse.html"
+          title="Choptuik Critical Collapse Lab: a live 1+1D numerical relativity solver"
+          initialHeight={3200}
+        />
+      <p className="quiet">
+        One HTML file. An 800-point radial grid in the polar-areal gauge, SSP-RK3 in time, the
+        two constraint ODEs re-solved fresh on every slice with Kreiss–Oliger dissipation for
+        stability. Every line in the lab log is a genuine solve of Einstein's equations coupled
+        to a massless scalar field, not a lookup. KaTeX is vendored locally, so the whole
+        instrument runs with no network at all.
+      </p>
 
       {/* THE TWO NUMBERS =============================================== */}
-      <section className="beta-note-sec" style={{ paddingTop: 24 }}>
-        <div >
-          <div className="beta-sechead">
-              <Sigma size={18} strokeWidth={2.2} />
-              <h2>Two numbers fall out of the edge</h2>
+      <Section title="Two numbers fall out of the edge" icon={<Sigma size={18} strokeWidth={2.2} />} />
+      <div className="piece-grid">
+        {NUMBERS.map((c) => (
+          <div className="rail" key={c.k}>
+              <span className="beta-proj-k">{c.k}</span>
+              <h3>{c.title}</h3>
+              <p className="beta-proj-q">{c.q}</p>
+              <p>{c.body}</p>
             </div>
-          <div className="piece-grid">
-            {NUMBERS.map((c) => (
-              <div className="rail" key={c.k}>
-                  <span className="beta-proj-k">{c.k}</span>
-                  <h3>{c.title}</h3>
-                  <p className="beta-proj-q">{c.q}</p>
-                  <p>{c.body}</p>
-                </div>
-            ))}
-          </div>
-        </div>
-      </section>
+        ))}
+      </div>
 
       {/* WHAT THE MACHINE DOES ========================================= */}
-      <section className="beta-note-sec" style={{ paddingTop: 24 }}>
-        <div >
-          <div className="beta-sechead">
-              <Activity size={18} strokeWidth={2.2} />
-              <h2>Three instruments on one solver</h2>
+      <Section title="Three instruments on one solver" icon={<Activity size={18} strokeWidth={2.2} />}>
+        <p>
+          The same field solver drives all three panels. First you watch a single collapse
+          by hand, then you let the machine bisect its way to the threshold, then you make
+          it measure the exponent that lives there. Each step only needs the one before
+          it.
+        </p>
+      </Section>
+      <div className="piece-grid">
+        {STAGES.map((m) => (
+          <div className="rail" key={m.n}>
+              <span className="beta-proj-k">{m.n}</span>
+              <h3>{m.title}</h3>
+              <p>{m.body}</p>
             </div>
-          <p className="lede">
-              The same field solver drives all three panels. First you watch a single collapse by
-              hand, then you let the machine bisect its way to the threshold, then you make it
-              measure the exponent that lives there. Each step only needs the one before it.
-            </p>
-          <div className="piece-grid">
-            {STAGES.map((m) => (
-              <div className="rail" key={m.n}>
-                  <span className="beta-proj-k">{m.n}</span>
-                  <h3>{m.title}</h3>
-                  <p>{m.body}</p>
-                </div>
-            ))}
-          </div>
-        </div>
-      </section>
+        ))}
+      </div>
 
       {/* RUN IT ======================================================== */}
-      <section className="beta-note-sec" style={{ paddingTop: 24 }}>
-        <div >
-          <div className="beta-sechead">
-              <MousePointerClick size={18} strokeWidth={2.2} />
-              <h2>Run it yourself</h2>
-            </div>
-          <div className="beta-steps">
-            <ol>
-              {TRY.map((t, i) => (
-                <li key={i}>
-                    <span className="beta-steps__n">{i + 1}</span>
-                    <span>{t}</span>
-                  </li>
-              ))}
-            </ol>
-          </div>
-        </div>
-      </section>
+      <Section title="Run it yourself" icon={<MousePointerClick size={18} strokeWidth={2.2} />} />
+      <div className="beta-steps">
+        <ol>
+          {TRY.map((t, i) => (
+            <li key={i}>
+                <span className="beta-steps__n">{i + 1}</span>
+                <span>{t}</span>
+              </li>
+          ))}
+        </ol>
+      </div>
 
       {/* WHY IT MATTERS ================================================ */}
-      <section className="beta-note-sec" style={{ paddingTop: 24, paddingBottom: 40 }}>
-        <div >
-          <div className="beta-sechead">
-              <Telescope size={18} strokeWidth={2.2} />
-              <h2>Why a knife edge matters</h2>
-            </div>
-          <Section>
-              <p>
-                The critical solution is a naked, self-similar region of spacetime where curvature
-                climbs without bound. Classically it cascades through every scale on the ruler, from
-                the size of a star all the way down toward the Planck length. It is the cleanest
-                mathematical thread we have that runs continuously into the part of physics no theory
-                has mapped, and whatever finally cuts the cascade off is, by definition, quantum
-                gravity.
-              </p>
-              <p>
-                It is also the same mathematics as boiling water. γ is a critical exponent in the
-                literal sense of phase transitions, the black-hole threshold is a second-order
-                transition with the mass as its order parameter, and the echoes are a discrete
-                version of the scale invariance that shows up at any critical point. The universe
-                reuses the pattern, and here it is running on the metal.
-              </p>
-              <p>
-                It is one file and no build step. Read the source, change the pulse, and watch a
-                different threshold assemble itself out of the same equations. More single-file
-                instruments live back on the <Link href="/projects">projects index</Link>.
-              </p>
-            </Section>
-        </div>
-      </section>
+      <Section title="Why a knife edge matters" icon={<Telescope size={18} strokeWidth={2.2} />}>
+        <p>
+          The critical solution is a naked, self-similar region of spacetime where curvature
+          climbs without bound. Classically it cascades through every scale on the ruler, from
+          the size of a star all the way down toward the Planck length. It is the cleanest
+          mathematical thread we have that runs continuously into the part of physics no theory
+          has mapped, and whatever finally cuts the cascade off is, by definition, quantum
+          gravity.
+        </p>
+        <p>
+          It is also the same mathematics as boiling water. γ is a critical exponent in the
+          literal sense of phase transitions, the black-hole threshold is a second-order
+          transition with the mass as its order parameter, and the echoes are a discrete
+          version of the scale invariance that shows up at any critical point. The universe
+          reuses the pattern, and here it is running on the metal.
+        </p>
+        <p>
+          It is one file and no build step. Read the source, change the pulse, and watch a
+          different threshold assemble itself out of the same equations. More single-file
+          instruments live back on the <Link href="/projects">projects index</Link>.
+        </p>
+      </Section>
     </div>
   )
 }

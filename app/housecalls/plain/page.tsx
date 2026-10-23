@@ -1,6 +1,6 @@
 import Link from "next/link"
 import type { Metadata } from "next"
-import { PageHead, Section } from "@/components/page"
+import { Actions, PageHead, Section } from "@/components/page"
 
 const DESCRIPTION =
   "No jargon: what is changing in the computer world, why your technology costs should be going down instead of up, and what we are doing about it."
@@ -149,14 +149,14 @@ export default function PlainEnglishPage() {
           </p>
         </Section>
 
-        <p className="hero-ctas">
+        <Actions>
           <Link className="btn btn-primary" href="/contact">
             Talk to the human
           </Link>
           <Link className="btn" href="/housecalls">
             See the whole operation
           </Link>
-        </p>
+        </Actions>
       </div>
     </>
   )

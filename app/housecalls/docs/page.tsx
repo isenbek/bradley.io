@@ -1,7 +1,7 @@
 import Link from "next/link"
 import type { Metadata } from "next"
 import { readAllDocsMeta, type HuntDocMeta } from "@/lib/housecalls/docs"
-import { PageHead } from "@/components/page"
+import { Actions, PageHead } from "@/components/page"
 
 const DESCRIPTION =
   "The hunt's paperwork, readable where the hunt lives: every plan, letter template, rule, and recipe behind housecalls.bradley.io, rendered from the same files the repo carries."
@@ -191,11 +191,11 @@ export default function HuntDocsIndex() {
           </section>
         ) : null}
 
-        <p className="hero-ctas">
+        <Actions>
           <Link className="btn" href="/housecalls">
             Back to the hunt
           </Link>
-        </p>
+        </Actions>
       </div>
     </>
   )

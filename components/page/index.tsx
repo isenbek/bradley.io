@@ -78,22 +78,31 @@ export function PageHead({
 /**
  * A run of prose, optionally under a section heading. The h2 is the kit's
  * ruled section heading (.prose > h2). `id` goes on the heading so a JumpNav
- * or a link can land on it. Kit components go AFTER a Section, not in it.
+ * or a link can land on it; `icon` sets a small icon before the heading (the
+ * project write-ups carry one per section). Kit components go AFTER a
+ * Section, not in it.
  */
 export function Section({
   id,
   title,
+  icon,
   className,
   children,
 }: {
   id?: string
   title?: ReactNode
+  icon?: ReactNode
   className?: string
   children?: ReactNode
 }) {
   return (
     <div className={className ? `prose beta-sec ${className}` : "prose beta-sec"}>
-      {title ? <h2 id={id}>{title}</h2> : null}
+      {title ? (
+        <h2 id={id} className={icon ? "beta-t-icon" : undefined}>
+          {icon}
+          {icon ? <span>{title}</span> : title}
+        </h2>
+      ) : null}
       {children}
     </div>
   )
@@ -210,5 +219,19 @@ export function ReadMore({
       <summary>{label}</summary>
       <div className="prose beta-sec">{children}</div>
     </details>
+  )
+}
+
+/**
+ * A code block on the panel ground, with an optional caption. The kit's .code
+ * styles a <pre> child; a bare <code> gets neither padding nor preserved
+ * whitespace. A Section may hold one between its paragraphs.
+ */
+export function Code({ cap, children }: { cap?: string; children: string }) {
+  return (
+    <div className="code">
+      {cap ? <div className="beta-code-cap">{cap}</div> : null}
+      <pre>{children}</pre>
+    </div>
   )
 }

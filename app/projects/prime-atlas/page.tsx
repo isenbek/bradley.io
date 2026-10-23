@@ -2,7 +2,7 @@ import Link from "next/link"
 import { Compass, Layers, MousePointerClick } from "lucide-react"
 import { ProjectEmbed } from "@/components/projects/ProjectEmbed"
 import { PrimeCompanions } from "@/components/projects/PrimeCompanions"
-import { PageHead } from "@/components/page"
+import { PageHead, Section } from "@/components/page"
 
 const REGIONS = [
   {
@@ -55,103 +55,79 @@ export default function PrimeAtlasPage() {
         title="A terrain map of the territory around the primes"
         lede={
           <>
-              Twenty-nine landmarks across seven kinds of ground, from the Euler spring to the
-              parity cliff. It draws what is proven, what is merely believed, what nobody knows,
-              and, most usefully, what has been proven <strong>impossible</strong> by the methods
-              we have. The{" "}
-              <Link href="/projects/prime-orchestra">orchestra</Link> and the{" "}
-              <Link href="/projects/prime-zoo">zoo</Link> are both marked on it, because the map
-              came first and the instruments were built where it pointed.
+            Twenty-nine landmarks across seven kinds of ground, from the Euler spring to the
+            parity cliff. It draws what is proven, what is merely believed, what nobody knows,
+            and, most usefully, what has been proven <strong>impossible</strong> by the methods
+            we have. The{" "}
+            <Link href="/projects/prime-orchestra">orchestra</Link> and the{" "}
+            <Link href="/projects/prime-zoo">zoo</Link> are both marked on it, because the map
+            came first and the instruments were built where it pointed.
           </>
         }
       />
-      {/* HEADER ========================================================= */}
 
       {/* THE MAP ======================================================== */}
-      <section className="beta-note-sec" style={{ paddingTop: 6, paddingBottom: 10 }}>
-        <div >
-          <ProjectEmbed
-              src="/prime-atlas.html"
-              title="Primality Atlas: an interactive terrain map of prime-number theory"
-              fixed
-            />
-          <p className="quiet">
-            Drag to pan, wheel or pinch to zoom, tap any landmark for its dossier. Hand-drawn SVG,
-            no map library, no tiles.{" "}
-            <a href="/prime-atlas.html" target="_blank" rel="noreferrer">
-              Open it full screen
-            </a>{" "}
-            for the whole territory at once.
-          </p>
-        </div>
-      </section>
+      <ProjectEmbed
+          src="/prime-atlas.html"
+          title="Primality Atlas: an interactive terrain map of prime-number theory"
+          fixed
+        />
+      <p className="quiet">
+        Drag to pan, wheel or pinch to zoom, tap any landmark for its dossier. Hand-drawn SVG,
+        no map library, no tiles.{" "}
+        <a href="/prime-atlas.html" target="_blank" rel="noreferrer">
+          Open it full screen
+        </a>{" "}
+        for the whole territory at once.
+      </p>
 
       {/* THE REGIONS =================================================== */}
-      <section className="beta-note-sec" style={{ paddingTop: 24 }}>
-        <div >
-          <div className="beta-sechead">
-              <Compass size={18} strokeWidth={2.2} />
-              <h2>Read the terrain</h2>
+      <Section title="Read the terrain" icon={<Compass size={18} strokeWidth={2.2} />}>
+        <p>
+          The geography is not decorative. Water runs downhill from the Euler spring, and
+          where a channel stops is exactly where a method stops.
+        </p>
+      </Section>
+      <div className="piece-grid">
+        {REGIONS.map((r) => (
+          <div className="rail" key={r.k}>
+              <span className="beta-proj-k">{r.k}</span>
+              <h3>{r.title}</h3>
+              <p>{r.body}</p>
             </div>
-          <p className="lede">
-              The geography is not decorative. Water runs downhill from the Euler spring, and where
-              a channel stops is exactly where a method stops.
-            </p>
-          <div className="piece-grid">
-            {REGIONS.map((r) => (
-              <div className="rail" key={r.k}>
-                  <span className="beta-proj-k">{r.k}</span>
-                  <h3>{r.title}</h3>
-                  <p>{r.body}</p>
-                </div>
-            ))}
-          </div>
-        </div>
-      </section>
+        ))}
+      </div>
 
       {/* THE LEGEND ==================================================== */}
-      <section className="beta-note-sec" style={{ paddingTop: 24 }}>
-        <div >
-          <div className="beta-sechead">
-              <Layers size={18} strokeWidth={2.2} />
-              <h2>Seven kinds of ground</h2>
+      <Section title="Seven kinds of ground" icon={<Layers size={18} strokeWidth={2.2} />}>
+        <p>
+          Most maps of a field draw only the results. This one gives equal weight to the
+          dark rooms and the no-go cliffs, because in number theory the barriers are
+          theorems too, and they are the part that tells you where not to spend a decade.
+        </p>
+      </Section>
+      <div className="beta-legend">
+        {GROUND.map((g) => (
+          <div className="beta-legend__row" key={g.label}>
+              <span className="beta-legend__sw" style={{ background: g.c }} aria-hidden />
+              <span className="beta-legend__lbl">{g.label}</span>
+              <span className="beta-legend__body">{g.body}</span>
             </div>
-          <p className="lede">
-              Most maps of a field draw only the results. This one gives equal weight to the dark
-              rooms and the no-go cliffs, because in number theory the barriers are theorems too,
-              and they are the part that tells you where not to spend a decade.
-            </p>
-          <div className="beta-legend">
-            {GROUND.map((g) => (
-              <div className="beta-legend__row" key={g.label}>
-                  <span className="beta-legend__sw" style={{ background: g.c }} aria-hidden />
-                  <span className="beta-legend__lbl">{g.label}</span>
-                  <span className="beta-legend__body">{g.body}</span>
-                </div>
-            ))}
-          </div>
-        </div>
-      </section>
+        ))}
+      </div>
 
       {/* TRY THIS ====================================================== */}
-      <section className="beta-note-sec" style={{ paddingTop: 24 }}>
-        <div >
-          <div className="beta-sechead">
-              <MousePointerClick size={18} strokeWidth={2.2} />
-              <h2>Three walks worth taking</h2>
-            </div>
-          <div className="beta-steps">
-            <ol>
-              {TRY.map((t, i) => (
-                <li key={i}>
-                    <span className="beta-steps__n">{i + 1}</span>
-                    <span>{t}</span>
-                  </li>
-              ))}
-            </ol>
-          </div>
-        </div>
-      </section>
+      <Section title="Three walks worth taking" icon={<MousePointerClick size={18} strokeWidth={2.2} />} />
+      <div className="beta-steps">
+        <ol>
+          {TRY.map((t, i) => (
+            <li key={i}>
+                <span className="beta-steps__n">{i + 1}</span>
+                <span>{t}</span>
+              </li>
+          ))}
+        </ol>
+      </div>
 
       <PrimeCompanions current="prime-atlas" />
     </div>

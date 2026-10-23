@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { QR_TOOLS_SVG } from "@/components/housecalls/card-qr"
-import { PageHead, Section } from "@/components/page"
+import { Actions, PageHead, Section } from "@/components/page"
 
 /**
  * The counter cards, printable (docs/housecalls/counter-cards.md is the
@@ -70,11 +70,11 @@ export default function CounterCardsPage() {
         </p>
       </Section>
 
-      <p className="hero-ctas">
+      <Actions>
         <button className="btn btn-primary" onClick={() => window.print()}>
           Print the sheet (8 cards)
         </button>
-      </p>
+      </Actions>
 
       <div className="beta-cc-preview">
         <Card />

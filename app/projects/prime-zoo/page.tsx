@@ -63,133 +63,102 @@ export default function PrimeZooPage() {
         title="Three instruments for the structure hiding in the primes"
         lede={
           <>
-              The <Link href="/projects/prime-orchestra">Prime Orchestra</Link> plays the primes
-              back out of the zeros of zeta. The zoo runs the other direction: it sieves two
-              million integers in your browser and interrogates the raw sequence. Which
-              constellations of primes are even allowed to exist, which residue class is ahead in
-              a two-century-old race, and whether one prime remembers the last one.
+            The <Link href="/projects/prime-orchestra">Prime Orchestra</Link> plays the primes
+            back out of the zeros of zeta. The zoo runs the other direction: it sieves two
+            million integers in your browser and interrogates the raw sequence. Which
+            constellations of primes are even allowed to exist, which residue class is ahead in
+            a two-century-old race, and whether one prime remembers the last one.
           </>
         }
       />
-      {/* HEADER ========================================================= */}
 
       {/* THE INSTRUMENT ================================================= */}
-      <section className="beta-note-sec" style={{ paddingTop: 6, paddingBottom: 10 }}>
-        <div >
-          <ProjectEmbed
-              src="/prime-zoo.html"
-              title="Primality Zoo: three field instruments for prime structure"
-              initialHeight={1600}
-            />
-          <p className="quiet">
-            One HTML file, no build step, no network. The sieve to 2,000,000 runs on load, so the
-            first paint takes a beat and everything after it is instant.
-          </p>
-        </div>
-      </section>
+      <ProjectEmbed
+          src="/prime-zoo.html"
+          title="Primality Zoo: three field instruments for prime structure"
+          initialHeight={1600}
+        />
+      <p className="quiet">
+        One HTML file, no build step, no network. The sieve to 2,000,000 runs on load, so the
+        first paint takes a beat and everything after it is instant.
+      </p>
 
       {/* THE CHANNELS ================================================== */}
-      <section className="beta-note-sec" style={{ paddingTop: 24 }}>
-        <div >
-          <div className="beta-sechead">
-              <Activity size={18} strokeWidth={2.2} />
-              <h2>Three channels, three questions</h2>
+      <Section title="Three channels, three questions" icon={<Activity size={18} strokeWidth={2.2} />}>
+        <p>
+          Wing A asks what patterns the primes permit. Wing B asks how they distribute
+          themselves once permitted. Both wings run off the same sieve, live, with no
+          precomputed answers.
+        </p>
+      </Section>
+      <div className="piece-grid">
+        {CHANNELS.map((c) => (
+          <div className="rail" key={c.k}>
+              <span className="beta-proj-k">{c.k}</span>
+              <h3>{c.title}</h3>
+              <p className="beta-proj-q">{c.q}</p>
+              <p>{c.body}</p>
             </div>
-          <p className="lede">
-              Wing A asks what patterns the primes permit. Wing B asks how they distribute
-              themselves once permitted. Both wings run off the same sieve, live, with no
-              precomputed answers.
-            </p>
-          <div className="piece-grid">
-            {CHANNELS.map((c) => (
-              <div className="rail" key={c.k}>
-                  <span className="beta-proj-k">{c.k}</span>
-                  <h3>{c.title}</h3>
-                  <p className="beta-proj-q">{c.q}</p>
-                  <p>{c.body}</p>
-                </div>
-            ))}
-          </div>
-        </div>
-      </section>
+        ))}
+      </div>
 
       {/* THE GUARDS ==================================================== */}
-      <section className="beta-note-sec" style={{ paddingTop: 24 }}>
-        <div >
-          <div className="beta-sechead">
-              <ShieldCheck size={18} strokeWidth={2.2} />
-              <h2>Every channel carries a guard</h2>
+      <Section title="Every channel carries a guard" icon={<ShieldCheck size={18} strokeWidth={2.2} />}>
+        <p>
+          Prime data is unusually good at looking meaningful. So each scope plots an
+          independent prediction next to the measurement: the boring answer, drawn in the
+          same units. If the data does not separate from its guard, there is nothing to
+          report.
+        </p>
+      </Section>
+      <div className="piece-grid">
+        {GUARDS.map((g) => (
+          <div className="rail" key={g.k}>
+              <span className="beta-proj-k">{g.k}</span>
+              <h3>{g.title}</h3>
+              <p>{g.body}</p>
             </div>
-          <p className="lede">
-              Prime data is unusually good at looking meaningful. So each scope plots an
-              independent prediction next to the measurement: the boring answer, drawn in the same
-              units. If the data does not separate from its guard, there is nothing to report.
-            </p>
-          <div className="piece-grid">
-            {GUARDS.map((g) => (
-              <div className="rail" key={g.k}>
-                  <span className="beta-proj-k">{g.k}</span>
-                  <h3>{g.title}</h3>
-                  <p>{g.body}</p>
-                </div>
-            ))}
-          </div>
-        </div>
-      </section>
+        ))}
+      </div>
 
       {/* TRY THIS ====================================================== */}
-      <section className="beta-note-sec" style={{ paddingTop: 24 }}>
-        <div >
-          <div className="beta-sechead">
-              <MousePointerClick size={18} strokeWidth={2.2} />
-              <h2>Play it</h2>
-            </div>
-          <div className="beta-steps">
-            <ol>
-              {TRY.map((t, i) => (
-                <li key={i}>
-                    <span className="beta-steps__n">{i + 1}</span>
-                    <span>{t}</span>
-                  </li>
-              ))}
-            </ol>
-          </div>
-        </div>
-      </section>
+      <Section title="Play it" icon={<MousePointerClick size={18} strokeWidth={2.2} />} />
+      <div className="beta-steps">
+        <ol>
+          {TRY.map((t, i) => (
+            <li key={i}>
+                <span className="beta-steps__n">{i + 1}</span>
+                <span>{t}</span>
+              </li>
+          ))}
+        </ol>
+      </div>
 
       {/* THE MATH ====================================================== */}
-      <section className="beta-note-sec" style={{ paddingTop: 24 }}>
-        <div >
-          <div className="beta-sechead">
-              <Sigma size={18} strokeWidth={2.2} />
-              <h2>What the lamp is actually testing</h2>
-            </div>
-          <Section>
-              <p>
-                A pattern is <strong>admissible</strong> when it never covers a full residue class.
-                For every prime p, count the distinct residues the offsets land on:
-              </p>
-              <div className="code"><pre>ν(p) = |&#123; oᵢ mod p &#125;| &lt; p, for every prime p</pre></div>
-              <p>
-                One p with ν(p) = p and the pattern is finished: every candidate position is
-                divisible by p, so at most one occurrence survives, and only when p itself sits in
-                the pattern. That is the red lamp.
-              </p>
-              <p>
-                Clear the test and Hardy–Littlewood gives the density, with the singular series S
-                collecting a correction from every prime at once:
-              </p>
-              <div className="code"><pre>
-                S = Π_p (1 − ν(p)/p) / (1 − 1/p)ᵏ &nbsp;·&nbsp; count(x) ≈ S · ∫₂ˣ dt/(ln t)ᵏ
-              </pre></div>
-              <p>
-                Admissibility is decidable in a millisecond. Whether an admissible pattern actually
-                recurs forever is open for every k ≥ 2, twin primes included. The instrument can
-                tell you a constellation is dead. It cannot tell you one is alive.
-              </p>
-            </Section>
-        </div>
-      </section>
+      <Section title="What the lamp is actually testing" icon={<Sigma size={18} strokeWidth={2.2} />}>
+        <p>
+          A pattern is <strong>admissible</strong> when it never covers a full residue class.
+          For every prime p, count the distinct residues the offsets land on:
+        </p>
+        <div className="code"><pre>ν(p) = |&#123; oᵢ mod p &#125;| &lt; p, for every prime p</pre></div>
+        <p>
+          One p with ν(p) = p and the pattern is finished: every candidate position is
+          divisible by p, so at most one occurrence survives, and only when p itself sits in
+          the pattern. That is the red lamp.
+        </p>
+        <p>
+          Clear the test and Hardy–Littlewood gives the density, with the singular series S
+          collecting a correction from every prime at once:
+        </p>
+        <div className="code"><pre>
+          S = Π_p (1 − ν(p)/p) / (1 − 1/p)ᵏ &nbsp;·&nbsp; count(x) ≈ S · ∫₂ˣ dt/(ln t)ᵏ
+        </pre></div>
+        <p>
+          Admissibility is decidable in a millisecond. Whether an admissible pattern actually
+          recurs forever is open for every k ≥ 2, twin primes included. The instrument can
+          tell you a constellation is dead. It cannot tell you one is alive.
+        </p>
+      </Section>
 
       <PrimeCompanions current="prime-zoo" />
     </div>
