@@ -1,19 +1,19 @@
 {
-  "generated": "2026-10-23T00:01:53.769694+00:00",
+  "generated": "2026-10-23T04:02:29.149483+00:00",
   "stats": {
     "totalProjects": 84,
-    "totalSessions": 3233,
-    "totalMessages": 1344592,
-    "activeDays": 207,
-    "streak": 148,
+    "totalSessions": 3275,
+    "totalMessages": 1348069,
+    "activeDays": 208,
+    "streak": 149,
     "coverage": {
       "since": "2026-03-08",
-      "through": "2026-10-22",
+      "through": "2026-10-23",
       "source": "claude-activity.duckdb",
       "recordingBegan": "2026-07-07",
       "dayTimezone": "UTC",
       "stale": false,
-      "note": "Sessions, records, active days and the streak are read from the durable activity database and cover 2026-03-08 through 2026-10-22 (UTC days). The database started recording on 2026-07-07. From before that date it holds only the sessions whose logs were still on disk that day, so the earlier months are incomplete and nothing before 2026-03-08 is included.",
+      "note": "Sessions, records, active days and the streak are read from the durable activity database and cover 2026-03-08 through 2026-10-23 (UTC days). The database started recording on 2026-07-07. From before that date it holds only the sessions whose logs were still on disk that day, so the earlier months are incomplete and nothing before 2026-03-08 is included.",
       "definitions": {
         "totalSessions": "Claude Code session logs in the record. Subagent logs are not counted.",
         "totalMessages": "Transcript records in those sessions: a prompt, a tool result, or one content block of a model reply. Not a count of messages somebody typed.",
@@ -24,6 +24,18 @@
     }
   },
   "activityFeed": [
+    {
+      "type": "claude-code",
+      "title": "Claude Code: 3,477 transcript records",
+      "description": "56 sessions active, 1,148 tool calls",
+      "projectSlug": null,
+      "category": null,
+      "date": "2026-10-23T04:00:21.260000Z",
+      "metadata": {
+        "messages": 3477,
+        "sessions": 56
+      }
+    },
     {
       "type": "claude-code",
       "title": "Claude Code: 12,195 transcript records",
@@ -608,21 +620,217 @@
         "messages": 7414,
         "sessions": 9
       }
-    },
-    {
-      "type": "claude-code",
-      "title": "Claude Code: 10,190 transcript records",
-      "description": "15 sessions active, 3,453 tool calls",
-      "projectSlug": null,
-      "category": null,
-      "date": "2026-09-06T23:59:00Z",
-      "metadata": {
-        "messages": 10190,
-        "sessions": 15
-      }
     }
   ],
   "projects": [
+    {
+      "slug": "6502",
+      "name": "6502",
+      "tagline": "Want to build 6502 apps.",
+      "description": "Want to build 6502 apps.",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-10-23",
+      "totalMessages": 65908,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 5,
+          "totalMessages": 65908,
+          "lastSession": "2026-10-23"
+        }
+      },
+      "provenance": {
+        "tagline": "claude-web",
+        "description": "claude-web"
+      },
+      "categoryBasis": "default"
+    },
+    {
+      "slug": "cbmodels",
+      "name": "cbmodels",
+      "tagline": "Political data engine for voter segments and analysis",
+      "description": "The cbmodels repository is a political data engine built with Python, designed to provide voter segments, election results analysis, and audience building capabilities. It utilizes technologies like FastAPI, DuckDB, Snowflake, and Claude for data processing and insights generation, supporting features such as i360 models and segment creation.",
+      "category": "data",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-10-23",
+      "totalMessages": 62229,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 14,
+          "totalMessages": 62229,
+          "lastSession": "2026-10-23"
+        },
+        "timeline": {
+          "org": "Nominate-AI",
+          "repo": "cbmodels",
+          "commits": 1513,
+          "descriptionSource": "ai"
+        }
+      },
+      "provenance": {
+        "tagline": "ai-cached",
+        "description": "timeline"
+      },
+      "categoryBasis": "keywords"
+    },
+    {
+      "slug": "public",
+      "name": "public",
+      "tagline": "NES console experience emulation and analysis",
+      "description": "This repository is a software project focused on recreating the NES console experience, specifically targeting emulation and analysis of games. It involves building a system that can run NES code, monitor its behavior, and provide tools for developers to debug and understand the hardware and software interactions within the original console.",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-10-23",
+      "totalMessages": 45787,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 1,
+          "totalMessages": 45787,
+          "lastSession": "2026-10-23"
+        },
+        "timeline": {
+          "org": "tinymachines",
+          "repo": "public",
+          "commits": 1054,
+          "descriptionSource": "ai"
+        }
+      },
+      "provenance": {
+        "tagline": "ai-cached",
+        "description": "timeline"
+      },
+      "categoryBasis": "default"
+    },
+    {
+      "slug": "bradleyio",
+      "name": "bradleyio",
+      "tagline": "Bradley.io: TypeScript terminal experience for data analysis.",
+      "description": "The bradley.io repository is a TypeScript project focused on developing an interactive terminal experience, likely related to AI and data analysis, as evidenced by features like a \"WOPR\" terminal and integration with services like Claude and GitHub activity aggregators. The codebase includes elements for website development such as Next.js setup, Tailwind styling, and core page creation, alongside experimental features and integrations.",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [
+        "Next.js",
+        "React",
+        "systemd",
+        "Tailwind CSS",
+        "Nginx",
+        "TypeScript",
+        "FastAPI",
+        "DuckDB"
+      ],
+      "lastActivity": "2026-10-23",
+      "totalMessages": 43326,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 7,
+          "totalMessages": 43326,
+          "lastSession": "2026-10-23"
+        },
+        "timeline": {
+          "org": "isenbek",
+          "repo": "bradley.io",
+          "commits": 1381,
+          "descriptionSource": "reused"
+        }
+      },
+      "provenance": {
+        "tagline": "ai-cached",
+        "description": "timeline"
+      },
+      "categoryBasis": "keywords"
+    },
+    {
+      "slug": "context-agent",
+      "name": "context-agent",
+      "tagline": "",
+      "description": "",
+      "category": "ai-ml",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-10-23",
+      "totalMessages": 42720,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 2877,
+          "totalMessages": 42720,
+          "lastSession": "2026-10-23"
+        }
+      },
+      "provenance": {
+        "tagline": "none",
+        "description": "none"
+      },
+      "categoryBasis": "keywords"
+    },
+    {
+      "slug": "cbrural",
+      "name": "cbrural",
+      "tagline": "cbrural: Rural AM.FM radio streaming on Apex.",
+      "description": "The cbrural repository implements Rural AM.FM., a radio streaming application, running on the Apex frame and accessible via port 32295. The codebase focuses on managing radio plans, client interactions, and data processing related to broadcast schedules and promotions.",
+      "category": "hardware",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-10-23",
+      "totalMessages": 30222,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 6,
+          "totalMessages": 30222,
+          "lastSession": "2026-10-23"
+        },
+        "timeline": {
+          "org": "Nominate-AI",
+          "repo": "cbrural",
+          "commits": 759,
+          "descriptionSource": "ai"
+        }
+      },
+      "provenance": {
+        "tagline": "ai-cached",
+        "description": "timeline"
+      },
+      "categoryBasis": "keywords"
+    },
+    {
+      "slug": "cbcc",
+      "name": "cbcc",
+      "tagline": "",
+      "description": "",
+      "category": "systems",
+      "isResearch": false,
+      "isFeatured": false,
+      "status": "active",
+      "technologies": [],
+      "lastActivity": "2026-10-23",
+      "totalMessages": 22344,
+      "sources": {
+        "claudeCode": {
+          "totalSessions": 2,
+          "totalMessages": 22344,
+          "lastSession": "2026-10-23"
+        }
+      },
+      "provenance": {
+        "tagline": "none",
+        "description": "none"
+      },
+      "categoryBasis": "default"
+    },
     {
       "slug": "terrapulse",
       "name": "terrapulse",
@@ -698,31 +906,6 @@
       "categoryBasis": "keywords"
     },
     {
-      "slug": "6502",
-      "name": "6502",
-      "tagline": "Want to build 6502 apps.",
-      "description": "Want to build 6502 apps.",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-10-22",
-      "totalMessages": 65890,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 5,
-          "totalMessages": 65890,
-          "lastSession": "2026-10-22"
-        }
-      },
-      "provenance": {
-        "tagline": "claude-web",
-        "description": "claude-web"
-      },
-      "categoryBasis": "default"
-    },
-    {
       "slug": "infra",
       "name": "infra",
       "tagline": "Scanning application infrastructure management",
@@ -785,68 +968,6 @@
       "categoryBasis": "default"
     },
     {
-      "slug": "cbmodels",
-      "name": "cbmodels",
-      "tagline": "Political data engine for voter segments and analysis",
-      "description": "The cbmodels repository is a political data engine built with Python, designed to provide voter segments, election results analysis, and audience building capabilities. It utilizes technologies like FastAPI, DuckDB, Snowflake, and Claude for data processing and insights generation, supporting features such as i360 models and segment creation.",
-      "category": "data",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-10-22",
-      "totalMessages": 62217,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 14,
-          "totalMessages": 62217,
-          "lastSession": "2026-10-22"
-        },
-        "timeline": {
-          "org": "Nominate-AI",
-          "repo": "cbmodels",
-          "commits": 1513,
-          "descriptionSource": "ai"
-        }
-      },
-      "provenance": {
-        "tagline": "ai-cached",
-        "description": "timeline"
-      },
-      "categoryBasis": "keywords"
-    },
-    {
-      "slug": "public",
-      "name": "public",
-      "tagline": "NES console experience emulation and analysis",
-      "description": "This repository is a software project focused on recreating the NES console experience, specifically targeting emulation and analysis of games. It involves building a system that can run NES code, monitor its behavior, and provide tools for developers to debug and understand the hardware and software interactions within the original console.",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-10-22",
-      "totalMessages": 45569,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 1,
-          "totalMessages": 45569,
-          "lastSession": "2026-10-22"
-        },
-        "timeline": {
-          "org": "tinymachines",
-          "repo": "public",
-          "commits": 1054,
-          "descriptionSource": "ai"
-        }
-      },
-      "provenance": {
-        "tagline": "ai-cached",
-        "description": "timeline"
-      },
-      "categoryBasis": "default"
-    },
-    {
       "slug": "cbelections",
       "name": "cbelections",
       "tagline": "Election data processing for Michigan results",
@@ -874,87 +995,6 @@
       "provenance": {
         "tagline": "ai-cached",
         "description": "timeline"
-      },
-      "categoryBasis": "default"
-    },
-    {
-      "slug": "context-agent",
-      "name": "context-agent",
-      "tagline": "",
-      "description": "",
-      "category": "ai-ml",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-10-22",
-      "totalMessages": 42102,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 2835,
-          "totalMessages": 42102,
-          "lastSession": "2026-10-22"
-        }
-      },
-      "provenance": {
-        "tagline": "none",
-        "description": "none"
-      },
-      "categoryBasis": "keywords"
-    },
-    {
-      "slug": "cbrural",
-      "name": "cbrural",
-      "tagline": "cbrural: Rural AM.FM radio streaming on Apex.",
-      "description": "The cbrural repository implements Rural AM.FM., a radio streaming application, running on the Apex frame and accessible via port 32295. The codebase focuses on managing radio plans, client interactions, and data processing related to broadcast schedules and promotions.",
-      "category": "hardware",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-10-22",
-      "totalMessages": 30136,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 6,
-          "totalMessages": 30136,
-          "lastSession": "2026-10-22"
-        },
-        "timeline": {
-          "org": "Nominate-AI",
-          "repo": "cbrural",
-          "commits": 759,
-          "descriptionSource": "ai"
-        }
-      },
-      "provenance": {
-        "tagline": "ai-cached",
-        "description": "timeline"
-      },
-      "categoryBasis": "keywords"
-    },
-    {
-      "slug": "cbcc",
-      "name": "cbcc",
-      "tagline": "",
-      "description": "",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [],
-      "lastActivity": "2026-10-22",
-      "totalMessages": 22250,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 2,
-          "totalMessages": 22250,
-          "lastSession": "2026-10-22"
-        }
-      },
-      "provenance": {
-        "tagline": "none",
-        "description": "none"
       },
       "categoryBasis": "default"
     },
@@ -1125,46 +1165,6 @@
           "org": "Nominate-AI",
           "repo": "cbcli",
           "commits": 268,
-          "descriptionSource": "reused"
-        }
-      },
-      "provenance": {
-        "tagline": "ai-cached",
-        "description": "timeline"
-      },
-      "categoryBasis": "keywords"
-    },
-    {
-      "slug": "bradleyio",
-      "name": "bradleyio",
-      "tagline": "Bradley.io: TypeScript terminal experience for data analysis.",
-      "description": "The bradley.io repository is a TypeScript project focused on developing an interactive terminal experience, likely related to AI and data analysis, as evidenced by features like a \"WOPR\" terminal and integration with services like Claude and GitHub activity aggregators. The codebase includes elements for website development such as Next.js setup, Tailwind styling, and core page creation, alongside experimental features and integrations.",
-      "category": "systems",
-      "isResearch": false,
-      "isFeatured": false,
-      "status": "active",
-      "technologies": [
-        "Next.js",
-        "React",
-        "systemd",
-        "Tailwind CSS",
-        "Nginx",
-        "TypeScript",
-        "FastAPI",
-        "DuckDB"
-      ],
-      "lastActivity": "2026-10-17",
-      "totalMessages": 42786,
-      "sources": {
-        "claudeCode": {
-          "totalSessions": 7,
-          "totalMessages": 42786,
-          "lastSession": "2026-10-17"
-        },
-        "timeline": {
-          "org": "isenbek",
-          "repo": "bradley.io",
-          "commits": 1381,
           "descriptionSource": "reused"
         }
       },
