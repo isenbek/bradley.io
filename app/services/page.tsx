@@ -320,7 +320,7 @@ const JUMPS = [
 const FAQ = [
   {
     q: "Do you provide AI and data-engineering consulting in Grand Rapids?",
-    a: "Yes. I'm based in Forest Hills, Michigan and work with teams across Grand Rapids and Kent County, on-site or remote, on AI integration, data pipelines, and production systems at scale.",
+    a: "Yes. I'm based in Grand Rapids, Michigan and work with teams across Kent County and West Michigan, on-site or remote, on AI integration, data pipelines, and production systems at scale.",
   },
   {
     q: "What is edge computing, and can you build it for a West Michigan business?",
@@ -328,7 +328,7 @@ const FAQ = [
   },
   {
     q: "Do you work on-site in the Grand Rapids area?",
-    a: "Yes. As a Forest Hills-based technologist I can work on-site across Kent County when it helps, and remotely for everything else.",
+    a: "Yes. As a Grand Rapids-based technologist I can work on-site across Kent County when it helps, and remotely for everything else.",
   },
 ]
 

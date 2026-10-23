@@ -3,12 +3,12 @@ import type { Metadata } from "next"
 export const metadata: Metadata = {
   title: "AI & Edge-Computing Consultant · Grand Rapids, MI",
   description:
-    "AI integration, edge computing, IoT, and data engineering for West Michigan. Based in Forest Hills, serving Grand Rapids and Kent County. Project, hourly, and retainer engagements.",
+    "AI integration, edge computing, IoT, and data engineering for West Michigan. Based in Grand Rapids, serving Kent County and West Michigan. Project, hourly, and retainer engagements.",
   alternates: { canonical: "/services" },
   openGraph: {
     title: "AI & Edge-Computing Consultant · Grand Rapids, MI",
     description:
-      "AI, edge computing, IoT, and data engineering for West Michigan. Based in Forest Hills, serving Grand Rapids and Kent County.",
+      "AI, edge computing, IoT, and data engineering for West Michigan. Based in Grand Rapids, serving Kent County and West Michigan.",
     url: "https://bradley.io/services",
     type: "website",
   },
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "AI & Edge-Computing Consultant · Grand Rapids, MI",
     description:
-      "AI, edge computing, IoT, and data engineering for West Michigan. Based in Forest Hills, serving Grand Rapids and Kent County.",
+      "AI, edge computing, IoT, and data engineering for West Michigan. Based in Grand Rapids, serving Kent County and West Michigan.",
   },
 }
 
