@@ -5,7 +5,7 @@ export default function manifest(): MetadataRoute.Manifest {
     name: "Bradley Isenbek · bradley.io",
     short_name: "bradley.io",
     description:
-      "Hardware hacker, data architect, and AI pilot. Building at the intersection of enterprise scale and maker culture.",
+      "AI pilot, data architect, and hardware hacker. Building at the intersection of enterprise scale and maker culture.",
     start_url: "/",
     scope: "/",
     display: "standalone",

@@ -54,9 +54,9 @@ export async function GET() {
 
         {/* Title */}
         <div style={{ fontSize: "56px", fontWeight: 800, lineHeight: 1.1, marginBottom: "24px", display: "flex", flexDirection: "column" }}>
-          <span style={{ color: "#E8E2D9" }}>Hardware hacker.</span>
+          <span style={{ color: "#E8E2D9" }}>AI pilot.</span>
           <span style={{ color: "#00F5FF" }}>Data architect.</span>
-          <span style={{ color: "#FF6B35" }}>AI pilot.</span>
+          <span style={{ color: "#FF6B35" }}>Hardware hacker.</span>
         </div>
 
         {/* Subtitle */}

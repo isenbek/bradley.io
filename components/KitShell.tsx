@@ -45,9 +45,19 @@ export function KitShell({ children }: { children: React.ReactNode }) {
             /contact; this is not the place a new one gets introduced. */}
         <section className="beta-nav-colophon" aria-label="Colophon">
           <div className="band">
-            <p className="beta-nav-colophon__motto">
-              <span>Anti-cloud.</span> <span>Host local, think global.</span>
-            </p>
+            <div className="beta-nav-colophon__lead">
+              <p className="beta-nav-colophon__motto">
+                <span>Anti-cloud.</span> <span>Host local, think global.</span>
+              </p>
+              {/* Where it is made: the flag spans both lines (owner's wording,
+                  2026-10-22). Self-hosted from Wikimedia Commons (public
+                  domain), so the colophon makes no outside request. */}
+              <p className="beta-made-in">
+                <img src="/images/flag-us.svg" alt="" width="38" height="20" />
+                <span className="beta-made-in__where">Made in the USA</span>
+                <span className="beta-made-in__city">Grand Rapids, Michigan</span>
+              </p>
+            </div>
             <dl className="beta-nav-colophon__list">
               <div>
                 <dt className="crumb">Email</dt>

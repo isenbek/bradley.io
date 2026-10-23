@@ -155,11 +155,11 @@ export default async function Home() {
     <div className="page">
       <div className="hero beta-home-hero">
         <h1 className="hero-title">
-          Hardware hacker.
+          AI pilot.
           <br />
           Data architect.
           <br />
-          AI pilot.
+          Hardware hacker.
         </h1>
         {/* The three doors, first thing under the name. Each reader picks a
             path before reading a word of the rest: an employer wants Me, a

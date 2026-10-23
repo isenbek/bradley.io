@@ -8,7 +8,7 @@ export const contentType = OG_V3_CONTENT_TYPE
 export default function OG() {
   return ogV3ImageResponse({
     eyebrow: "bio · bradley.io",
-    title: "Hardware hacker. Data architect. AI pilot.",
+    title: "AI pilot. Data architect. Hardware hacker.",
     subtitle:
       "Building at the seam where enterprise scale meets maker culture: ESP32 mesh to Fortune-500 warehouses, with Claude as co-pilot.",
     tags: ["Anti-cloud", "Host local", "Think global"],

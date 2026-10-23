@@ -2388,6 +2388,51 @@ body:has(.beta-root) {
 }
 .beta-nav-colophon__motto span { display: inline-block; }
 
+/* The motto and where the site is made, stacked in the left cell. */
+.beta-nav-colophon__lead {
+  display: grid;
+  gap: calc(var(--u) * 4);
+  justify-items: start;
+}
+
+/* Made in the USA: the flag on the left spanning both lines, the claim in the
+   display face, the city under it smaller. The rows have fixed heights and the
+   flag is their sum, so it lines up with the top of the first line and the
+   foot of the second in any face. The hairline keeps the white stripes from
+   dissolving into the paper. */
+.beta-made-in {
+  margin: 0;
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: 1.15rem 0.85rem;
+  column-gap: calc(var(--u) * 2.5);
+  row-gap: 0.1rem;
+  align-items: center;
+  text-transform: uppercase;
+  color: var(--color-ink);
+}
+.beta-made-in img {
+  grid-row: 1 / span 2;
+  display: block;
+  height: 2.1rem;
+  width: auto;
+  outline: 1px solid var(--color-rule);
+}
+.beta-made-in__where {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.05rem;
+  line-height: 1.15rem;
+  letter-spacing: 0.02em;
+}
+.beta-made-in__city {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  line-height: 0.85rem;
+  letter-spacing: 0.08em;
+  color: var(--color-ink-muted);
+}
+
 /* Label over value, four times. Two columns on a phone, because one column
    of four short lines is a tall thin strip next to nothing. minmax(0, 1fr)
    for the reason every grid in this file gives: a track's floor is its
