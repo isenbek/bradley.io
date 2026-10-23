@@ -1,4 +1,3 @@
-import { Family } from "@/components/kit/Family"
 import Link from "next/link"
 import buildInfo from "@/lib/build-info.json"
 import { DeployedAgo } from "@/components/kit/DeployedAgo"
@@ -45,19 +44,9 @@ export function KitShell({ children }: { children: React.ReactNode }) {
             /contact; this is not the place a new one gets introduced. */}
         <section className="beta-nav-colophon" aria-label="Colophon">
           <div className="band">
-            <div className="beta-nav-colophon__lead">
-              <p className="beta-nav-colophon__motto">
-                <span>Anti-cloud.</span> <span>Host local, think global.</span>
-              </p>
-              {/* Where it is made: the flag spans both lines (owner's wording,
-                  2026-10-22). Self-hosted from Wikimedia Commons (public
-                  domain), so the colophon makes no outside request. */}
-              <p className="beta-made-in">
-                <img src="/images/flag-us.svg" alt="" width="38" height="20" />
-                <span className="beta-made-in__where">Made in the USA</span>
-                <span className="beta-made-in__city">Grand Rapids, Michigan</span>
-              </p>
-            </div>
+            <p className="beta-nav-colophon__motto">
+              <span>Anti-cloud.</span> <span>Host local, think global.</span>
+            </p>
             <dl className="beta-nav-colophon__list">
               <div>
                 <dt className="crumb">Email</dt>
@@ -93,17 +82,21 @@ export function KitShell({ children }: { children: React.ReactNode }) {
           </div>
         </section>
 
-        {/* One line: the name, and what is running. The version is the visible
-            "did this ship?" signal, so it keeps the shape it had on v3. */}
+        {/* The locked footer (owner's design, 2026-10-22): where it is made,
+            the flag spanning both lines, and under a hairline the build. The
+            version is the visible "did this ship?" signal. The flag is
+            self-hosted from Wikimedia Commons (public domain), so the chrome
+            makes no outside request. The family strip and the name link left
+            the footer the same day, on the owner's word. */}
         <footer className="app-foot">
           <div className="band">
-            <footer className="crumb site-foot">
-              <Link href="/">bradley.io</Link>
-              {/* The Meatball Labs family: the same strip on every family
-                  site, this site's dot marked (owner's call, 2026-10-02). */}
-              <Family me="steel" />
-              <span>
-                {" / "}
+            <div className="beta-foot">
+              <p className="beta-made-in">
+                <img src="/images/flag-us.svg" alt="" width="29" height="15" />
+                <span className="beta-made-in__where">Made in the USA</span>
+                <span className="beta-made-in__city">Grand Rapids, Michigan</span>
+              </p>
+              <p className="beta-foot__build">
                 <a
                   href={`https://github.com/isenbek/bradley.io/commit/${buildInfo.commitHashFull}`}
                   target="_blank"
@@ -118,8 +111,8 @@ export function KitShell({ children }: { children: React.ReactNode }) {
                     <DeployedAgo iso={buildInfo.buildTime} />
                   </>
                 ) : null}
-              </span>
-            </footer>
+              </p>
+            </div>
           </div>
         </footer>
       </div>
