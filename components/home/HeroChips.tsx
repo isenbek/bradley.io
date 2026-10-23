@@ -1,5 +1,4 @@
 import Link from "next/link"
-import buildInfo from "@/lib/build-info.json"
 import { DeployedAgo } from "@/components/kit/DeployedAgo"
 
 /**
@@ -14,19 +13,20 @@ import { DeployedAgo } from "@/components/kit/DeployedAgo"
  *   totals   the four org rollups and the author check, summed by the page
  *            (null if no timeline file loaded)
  *
- * ONLY WHAT THE PAGE DOES NOT SAY AGAIN. Three chips, each a fact that appears
- * nowhere else on the front page in this form:
- *   1. which build is answering, and when it went out
- *   2. how many commits are under the owner's own name, from /work's author
+ * ONLY WHAT THE PAGE DOES NOT SAY AGAIN. Two chips, each a fact that appears
+ * nowhere else on the front page in this form (the build version was a third;
+ * it went on 2026-10-23, builder detail in the hero's best spot, and the
+ * footer still carries it):
+ *   1. how many commits are under the owner's own name, from /work's author
  *      check (a dated measurement, and the chip says the date). The page's
  *      org panels count every author; this chip is the hero speaking in the
  *      first person, so it counts only what he wrote, and links the method.
- *   3. when the newest commit in any of the four organisations landed
+ *   2. when the newest commit in any of the four organisations landed
  * Claude Code minutes and sessions were here once; the live panels directly
  * under the hero and the record's site index carry them, with their caveats.
  *
- * Two chips carry a relative time, which only a browser can know: they print
- * the absolute date on the server and upgrade after mount
+ * The newest-commit chip carries a relative time, which only a browser can know: it prints
+ * the absolute date on the server and upgrades after mount
  * (components/kit/DeployedAgo.tsx). Dates are sliced from the ISO string.
  */
 
@@ -59,13 +59,6 @@ export function HeroChips({ totals }: { totals: OrgTotals | null }) {
 
   return (
     <div className="chips hero-chips beta-home-chips" role="group" aria-label="Measured facts about this site">
-      <span className="measured">
-        <span>
-          <b>{buildInfo.version}</b> is the build answering you, deployed{" "}
-          <DeployedAgo iso={buildInfo.buildTime} />
-        </span>
-      </span>
-
       {totals ? (
         <>
           <span className="measured">

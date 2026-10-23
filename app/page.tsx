@@ -7,16 +7,15 @@ import { DieFigure } from "@/components/home/DieFigure"
 import { DieRunner } from "@/components/home/DieRunner"
 import { HeroChips, type OrgTotals } from "@/components/home/HeroChips"
 import { LinkCard } from "@/components/home/LinkCard"
-import { OrgCards } from "@/components/home/OrgCards"
 import { RunningNow } from "@/components/home/RunningNow"
 import { SelectedWork, WORK_CHECKED } from "@/components/home/SelectedWork"
 import { RESUME_PDF } from "@/lib/resume"
 import { BetaMeasured } from "./_measured"
-import { SiteStatsPanel } from "./_site-stats"
+import { Actions, Panel, ReadMore } from "@/components/page"
 import { AUTHOR_AUDIT, auditTotals, isoYear, loadOrgRollups } from "./work/_orgs"
 
-// Rendered per request, not cached for an hour as it used to be. The second
-// thing on this page is "Running now", and its first paint is the server's
+// Rendered per request, not cached for an hour as it used to be. "Running
+// now", right after Selected work, first paints from the server's
 // snapshot: served from an hour-old cache, every visit would open on stale
 // readings and then flash the real ones a moment later. peekNow() never waits
 // on the network (see components/live/now-snapshot.ts), so a render costs a few
@@ -139,6 +138,9 @@ export default async function Home() {
   return (
     <div className="page">
       <div className="hero beta-home-hero">
+        {/* Who, then what, then the one line a hiring manager came for
+            (Brad, 2026-10-23: "name + open to roles up top"). */}
+        <p className="eyebrow beta-home-who">Bradley Isenbek · Grand Rapids, Michigan</p>
         <h1 className="hero-title">
           AI pilot.
           <br />
@@ -146,10 +148,15 @@ export default async function Home() {
           <br />
           Hardware hacker.
         </h1>
-        {/* The three doors, first thing under the name. Each reader picks a
-            path before reading a word of the rest: an employer wants Me, a
-            client wants Work, a developer wants Projects. Everything below
-            the hero is the evidence, not the menu. */}
+        <p className="beta-resume-hire">
+          <span>
+            <b>Open to full-time roles</b> in AI systems and data architecture.{" "}
+            <Link href="/resume">The resume</Link>, or <a href={RESUME_PDF}>the PDF</a>.
+          </span>
+        </p>
+        {/* The three doors. Each reader picks a path before reading the rest:
+            an employer wants Me, a client wants Work, a developer wants
+            Projects. Everything below the hero is the evidence. */}
         <nav className="beta-doors" aria-label="Start here">
           {DOORS.map((d) => (
             <Link key={d.href} className="beta-door" href={d.href}>
@@ -162,33 +169,16 @@ export default async function Home() {
         <p className="lede">
           I build where big-company data work meets the maker&apos;s garage: wireless sensor
           networks, Fortune 500 data warehouses, and a lot of Claude as co-pilot. This site runs on
-          my own hardware. The panels below are this server and its instruments, reporting in
-          live.
-        </p>
-        <p className="quiet beta-home-where">
-          <b>Bradley Isenbek.</b> Grand Rapids, Michigan. On site across Kent County and West
-          Michigan, remote everywhere else.
-        </p>
-        <p className="beta-resume-hire">
-          <span>
-            <b>Open to full-time roles</b> in AI systems and data architecture.{" "}
-            <Link href="/resume">The resume</Link>, or <a href={RESUME_PDF}>the PDF</a>.
-          </span>
+          my own hardware, and the panels below are its instruments reporting in live.
         </p>
         <HeroChips totals={totals} />
       </div>
 
-      {/* The panel's own bar says "Running now" to the eye. This is the same
-          heading for the document outline, which a panel bar is not part of. */}
-      <h2 className="sr-only">Running now</h2>
-      <RunningNow initial={initial} ids={NOW_ROWS} />
-
       <div className="prose beta-sec">
         <h2>Selected work</h2>
         <p>
-          Three threads, one practice: hardware, data architecture, and AI. Each ships its own
-          systems, and each feeds the others. The lab feeds the consulting, and the consulting
-          funds the lab. Here are six places to see it.
+          Three threads, one practice: hardware, data architecture, and AI. The lab feeds the
+          consulting, and the consulting funds the lab. Here are six places to see it.
         </p>
       </div>
 
@@ -197,6 +187,11 @@ export default async function Home() {
         <b>Each figure</b> is from that project&apos;s own repository or live API, checked{" "}
         {shortDate(WORK_CHECKED)}
       </BetaMeasured>
+
+      {/* The panel's own bar says "Running now" to the eye. This is the same
+          heading for the document outline, which a panel bar is not part of. */}
+      <h2 className="sr-only">Running now</h2>
+      <RunningNow initial={initial} ids={NOW_ROWS} />
 
       <div className="prose beta-sec">
         <h2>The 6502, switch by switch</h2>
@@ -208,14 +203,12 @@ export default async function Home() {
           <div className="prose">
             <p>
               This is not a program that imitates a 6502. It is the chip&apos;s actual wires and
-              switches, traced from a photograph of the silicon, and the chip&apos;s behaviour comes
-              out of them on its own. Every value you read, and every step it takes, is the
+              switches, traced from a photograph of the silicon. Every value you read is the
               circuit working.
             </p>
             <p>
-              The photograph is not mine. The visual6502 team opened up a 6502, photographed
-              the bare silicon, traced every shape on it by hand, and gave the result away. I rebuilt the engine on
-              their trace, and keep a second copy of their archive on hardware I control.
+              The photograph is the visual6502 team&apos;s: they opened up a 6502, traced every
+              shape on it by hand, and gave the result away. I rebuilt the engine on their trace.
             </p>
           </div>
 
@@ -264,13 +257,12 @@ export default async function Home() {
         </div>
       </div>
 
-      <div className="prose beta-sec">
-        <h2>Play it: Die Runner</h2>
+      {/* Die Runner is part of the 6502 section, not a section of its own
+          (Brad, 2026-10-23: "cut to about half"): a line, then the game. */}
+      <div className="prose beta-home-runner">
         <p>
-          A game console built on that chip. The game is 339 bytes, and the screen is a page of
-          the chip&apos;s memory that the browser draws. Nothing here is faked: every frame runs
-          the 3,510 switches above on the engine at tinymachines.ai. The gates you steer through
-          are real transistors on the chip, open or shut by the game as it runs. It sends nothing
+          <b>Play it.</b> Die Runner is a 339-byte game on that chip. Every frame runs the 3,510
+          switches above, and the gates you steer through are real transistors. Nothing is sent
           until you press start.
         </p>
       </div>
@@ -280,102 +272,137 @@ export default async function Home() {
         report, checked {shortDate(WORK_CHECKED)}
       </BetaMeasured>
 
+      {/* The record, as one panel: the detail (calendars, languages, the
+          author check) is /work's, and this page points there rather than
+          repeating it. */}
       <div className="prose beta-sec">
         <h2>The record</h2>
         <p>
-          Four GitHub organisations, counted rather than described
-          {totals ? (
-            <>
-              : {nf(commits)} commits in {nf(repos)} repositories since {totals.sinceYear},{" "}
-              {nf(totals.ownCommits)} of them under my name
-            </>
-          ) : null}
-          . Each count starts at my first commit in that organisation. The{" "}
-          <Link href="/work#counting">work page</Link> spells out which commits in it are not mine.
-          Below them is the index of my Claude Code sessions and the period it covers. Anything
-          older is on the <Link href="/resume">resume</Link>.
+          Counted from the commit log and the session logs, not described. Each count starts at my
+          first commit in that organisation. Anything older is on the{" "}
+          <Link href="/resume">resume</Link>.
         </p>
       </div>
 
-      <OrgCards orgs={orgs} end={timelinesAt.slice(0, 10)} />
+      <Panel className="beta-home-record" name="Since 2025" note={totals ? `newest commit ${shortDate(totals.latestCommit)}` : undefined}>
+        <table className="readout">
+          <thead>
+            <tr>
+              <th scope="col">
+                <span className="sr-only">Organisation</span>
+              </th>
+              <th scope="col" className="num">
+                repos
+              </th>
+              <th scope="col" className="num">
+                commits
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {orgs.map((o) => (
+              <tr key={o.slug}>
+                <td>{o.displayName}</td>
+                <td className="num">{nf(o.totalRepos)}</td>
+                <td className="num">{nf(o.commitsSince)}</td>
+              </tr>
+            ))}
+            <tr>
+              <td>
+                <b>All four</b>
+              </td>
+              <td className="num">
+                <b>{nf(repos)}</b>
+              </td>
+              <td className="num">
+                <b>{nf(commits)}</b>
+              </td>
+            </tr>
+            <tr>
+              <td>Claude Code sessions</td>
+              <td className="num" colSpan={2}>
+                {nf(stats.totalSessions)}
+              </td>
+            </tr>
+            <tr>
+              <td>Days with work in the log</td>
+              <td className="num" colSpan={2}>
+                {nf(stats.activeDays)}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        {/* The site index's own caveat, kept with its numbers (as on /about's
+            panel): the session log is incomplete before July 2026. */}
+        {stats.coverage?.since && stats.coverage?.through ? (
+          <p className="beta-chart__note">
+            Sessions and days cover {shortDate(stats.coverage.since)} through{" "}
+            {shortDate(stats.coverage.through)}. The record began in July 2026 and earlier months are
+            incomplete.
+          </p>
+        ) : null}
+      </Panel>
       <BetaMeasured>
         <b>public/data/*-timeline.json</b>
-        {timelinesAt ? `, generated ${shortDate(timelinesAt)}` : ", generation date not recorded"}.
-        Every author is counted. Each strip has its own scale, and its last month is still in
-        progress
+        {timelinesAt ? `, generated ${shortDate(timelinesAt)}` : ", generation date not recorded"}
+        . <b>site-data.json</b>, generated {shortDate(data.generated)}
         {orgs.length < expected ? `. ${expected - orgs.length} of ${expected} files did not load` : ""}
       </BetaMeasured>
 
-      {/* Panel, because every number in it came out of a pipeline rather than
-          off a slide. The chip underneath names the file and when it last ran;
-          the panel's own note says what period the counts cover. */}
-      <div className="beta-home-index">
-        <SiteStatsPanel stats={stats} streak />
-      </div>
-      <BetaMeasured>
-        <b>public/data/site-data.json</b>, generated {shortDate(data.generated)}
-      </BetaMeasured>
-
-      <ul className="rail-list beta-home-more">
-        <li>
-          <Link href="/work">Work</Link>
-          <span>The four orgs, commit history and language mix rolled up.</span>
-        </li>
-        <li>
-          <Link href="/ai-pilot">AI pilot licence</Link>
-          <span>Sessions, models, and what the tooling is actually rated at.</span>
-        </li>
-        <li>
-          <Link href="/cost-analysis">Cost analysis</Link>
-          <span>What this way of working costs, modelled against the alternative.</span>
-        </li>
-      </ul>
+      <Actions>
+        <Link className="btn" href="/work">
+          The full record
+        </Link>
+        <Link className="btn btn-ghost" href="/ai-pilot">
+          AI pilot licence
+        </Link>
+        <Link className="btn btn-ghost" href="/cost-analysis">
+          Cost analysis
+        </Link>
+      </Actions>
 
       <div className="prose beta-sec">
-        <h2>Got a build that needs the seam-runner?</h2>
+        <h2>Hiring, or have a project?</h2>
         <p>
           If you have hardware that needs to talk to a warehouse, or a warehouse that needs to
-          talk to an agent, that&apos;s the room I work in.
+          talk to an AI agent, that is the work I do.
         </p>
       </div>
 
       <div className="beta-home-paths">
-        <LinkCard href="/contact" title="Start a conversation" go="/contact">
-          The inbox, and what helps a first email. Let&apos;s sketch it.
-        </LinkCard>
         <LinkCard href="/resume" title="Read the resume" go="/resume">
           The full record since 1997, and the PDF.
         </LinkCard>
+        <LinkCard href="/contact" title="Start a conversation" go="/contact">
+          The inbox, and what helps a first email.
+        </LinkCard>
       </div>
 
-      <div className="prose beta-sec">
-        <h3>Also on this server</h3>
-      </div>
-
-      <ul className="rail-list beta-home-more">
-        <li>
-          <Link href="/bench">The bench</Link>
-          <span>Every live page on this server, and whether it is up.</span>
-        </li>
-        <li>
-          <Link href="/projects#math">Five instruments, one territory</Link>
-          <span>
-            A map of prime-number theory and four machines built where it pointed. All five run in
-            the browser, no dependencies, no network. Beside them, a black hole solved in your
-            browser.
-          </span>
-        </li>
-        <li>
-          <Link href="/bio-mark">The bio mark, decomposed</Link>
-          <span>The wordmark taken apart: drag the dot.</span>
-        </li>
-        {NOTES.map((n) => (
-          <li key={n.href}>
-            <Link href={n.href}>{n.title}</Link>
-            <span>{n.blurb}</span>
+      <ReadMore label="Also on this server">
+        <ul className="rail-list beta-home-more">
+          <li>
+            <Link href="/bench">The bench</Link>
+            <span>Every live page on this server, and whether it is up.</span>
           </li>
-        ))}
-      </ul>
+          <li>
+            <Link href="/projects#math">Five instruments, one territory</Link>
+            <span>
+              A map of prime-number theory and four machines built from it, all running in your
+              browser. Beside them, a black hole solved in your browser too.
+            </span>
+          </li>
+          <li>
+            <Link href="/bio-mark">The bio mark, decomposed</Link>
+            <span>The wordmark taken apart: drag the dot.</span>
+          </li>
+          {NOTES.map((n) => (
+            <li key={n.href}>
+              <Link href={n.href}>{n.title}</Link>
+              <span>{n.blurb}</span>
+            </li>
+          ))}
+        </ul>
+      </ReadMore>
     </div>
   )
 }

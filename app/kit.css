@@ -4864,8 +4864,6 @@ a.beta-papers-fig:focus-visible { outline: 2px solid var(--color-blue-ink); outl
 .beta-linkcard:focus-visible .beta-linkcard__go { color: var(--color-ink); }
 
 /* ---- The hero ----------------------------------------------------------- */
-.beta-home-where { margin: calc(var(--u) * 4) 0 0; font-size: var(--text-body); }
-.beta-home-where b { color: var(--color-ink); font-weight: 600; }
 
 /* The measured chips. Below the kit's 80rem rail they are a grid, not a
    wrapping row: two of them carry a relative time, and
@@ -4889,7 +4887,6 @@ a.beta-papers-fig:focus-visible { outline: 2px solid var(--color-blue-ink); outl
 @media (min-width: 80rem) {
   /* The kit's rail starts at row 2 and spans two rows (lede, buttons). This
      hero has a third thing in the left column, so the rail spans it too. */
-  .hero.beta-home-hero > .beta-home-where { grid-column: 1; }
   .hero.beta-home-hero > .hero-chips {
     grid-row: 2 / span 3;
     grid-template-columns: minmax(0, 1fr);
@@ -4961,9 +4958,30 @@ a.beta-papers-fig:focus-visible { outline: 2px solid var(--color-blue-ink); outl
   .beta-door__blurb { display: block; margin-top: calc(var(--u) * 1); }
 }
 @media (min-width: 80rem) {
-  .hero.beta-home-hero > .beta-doors { grid-column: 1; }
-  .hero.beta-home-hero > .hero-chips { grid-row: 2 / span 4; }
+  /* Rows set by hand (2026-10-23): the name line, then the title, full
+     width; the hiring line, the doors and the lede down the left; the chips
+     beside them on the right. The kit's grid assumes the title is row 1. */
+  .hero.beta-home-hero > .beta-home-who { grid-column: 1 / -1; grid-row: 1; }
+  .hero.beta-home-hero > .hero-title { grid-row: 2; }
+  .hero.beta-home-hero > .beta-resume-hire { grid-column: 1; grid-row: 3; }
+  .hero.beta-home-hero > .beta-doors { grid-column: 1; grid-row: 4; }
+  .hero.beta-home-hero > .lede { grid-column: 1; grid-row: 5; }
+  .hero.beta-home-hero > .hero-chips { grid-row: 3 / span 3; }
 }
+
+/* The name over the headline, in the kit's eyebrow voice (mono caps, the
+   accent, a hairline running out to the right). */
+.beta-home-who { margin: 0 0 calc(var(--u) * 4); }
+/* The hiring line sits between the headline and the doors: room above so
+   it does not touch the headline, room below before the doors. */
+.hero.beta-home-hero > .beta-resume-hire {
+  margin: calc(var(--u) * 5) 0 calc(var(--u) * 6);
+  font-size: var(--text-body);
+}
+/* Die Runner's one-line intro, inside the 6502 section: the gap of a
+   paragraph, not of a new section. */
+.beta-home-runner { margin: calc(var(--u) * 10) 0 calc(var(--u) * 4); }
+.beta-home-runner p { margin: 0; }
 @media print { .beta-doors { display: none; } }
 
 /* ---- The Thought Lab door on /projects ---------------------------------
@@ -5078,41 +5096,9 @@ a.beta-papers-fig:focus-visible { outline: 2px solid var(--color-blue-ink); outl
 .beta-home-die__credit a:focus-visible,
 .beta-home-chips a:focus-visible { outline: 2px solid var(--color-blue-ink); outline-offset: 2px; }
 
-/* ---- The record: four org panels ---------------------------------------- */
-.beta-home-orgs {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(19rem, 100%), 1fr));
-  gap: calc(var(--u) * 6);
-  margin: calc(var(--u) * 6) 0 calc(var(--u) * 3);
-}
-@media (min-width: 64rem) {
-  /* Four panels: two rows of two, never three and one. */
-  .beta-home-orgs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-}
-.beta-home-orgs > section { min-width: 0; }
-/* A date or a count never breaks across lines. In the bar, the org's name
-   and "since <date>" each stay whole: when both do not fit on one line (a
-   phone) the date drops under the name instead of splitting. */
-.beta-home-orgs .readout td.num { white-space: nowrap; }
-.beta-home-orgs .panel-bar { flex-wrap: wrap; row-gap: var(--u); }
-.beta-home-orgs .panel-bar > * { white-space: nowrap; }
-.beta-home-orgs .panel { height: 100%; }
-.beta-home-orgs .panel-face { height: 100%; }
-.beta-home-orgs .readout { margin-bottom: calc(var(--u) * 5); }
-/* A link on the panel ground, as NowPanel draws its instrument names. */
-.beta-home-onpanel {
-  color: inherit;
-  text-decoration: underline;
-  text-decoration-color: var(--color-glass-muted);
-  text-decoration-thickness: 1px;
-  text-underline-offset: 0.2em;
-  transition: text-decoration-color var(--t-snap) var(--ease-snap);
-}
-.beta-home-onpanel:hover { text-decoration-color: var(--color-blue); text-decoration-thickness: 2px; }
-.beta-home-onpanel:focus-visible { outline: 2px solid var(--color-blue); outline-offset: 3px; }
-
-/* ---- The session index, under the org panels ---------------------------- */
-.beta-home-index { margin: calc(var(--u) * 8) 0 calc(var(--u) * 3); }
+/* ---- The record: one panel (2026-10-23; the four org panels went to /work's
+   job). A count never breaks across lines; on a phone the label wraps instead. */
+.beta-home-record .readout .num { white-space: nowrap; }
 
 /* ---- Two ways in -------------------------------------------------------- */
 .beta-home-paths {
