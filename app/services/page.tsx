@@ -629,9 +629,9 @@ function ServicesBody({ initial }: { initial: NowSnapshot | null }) {
       <div className="prose beta-sec">
         <h2 id="questions">Questions I get</h2>
         <p>
-          Anti-cloud means host-local, and that goes for the practice too. I&rsquo;m based in Forest
-          Hills, Michigan and work with teams across Grand Rapids, Ada, Cascade, East Grand Rapids,
-          Kentwood, and the wider Kent County: on-site when it helps, remote when it doesn&rsquo;t.
+          Anti-cloud means host-local, and that goes for the practice too. I&rsquo;m based in Grand
+          Rapids, Michigan and work with teams across Ada, Cascade, East Grand Rapids, Kentwood, and
+          the wider Kent County: on-site when it helps, remote when it doesn&rsquo;t.
         </p>
       </div>
 
