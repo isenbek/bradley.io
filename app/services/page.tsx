@@ -96,13 +96,13 @@ const PRACTICES: Practice[] = [
       {
         href: "/dragonfli/worldevent",
         name: "Perception bus",
-        line: "A schema-tagged UDP firehose from every sensor on the network, decoded as it arrives.",
+        line: "A live stream of readings from every sensor on the network, decoded as it arrives.",
         dot: "bus",
       },
       {
         href: "/visitors",
         name: "Knock knock",
-        line: "Router drops, scanner traps and access logs from every site this host serves, fused into one view.",
+        line: "Who tried to get in: the router's blocks and every site's visitor logs, in one view.",
         dot: "firewall",
       },
     ],
@@ -120,7 +120,7 @@ const PRACTICES: Practice[] = [
       {
         href: "https://terrapulse.info/",
         name: "TerraPulse",
-        line: "A measured-data platform for climate and geophysical data. I am its architect.",
+        line: "A platform for measured climate and earth-science data. I am its architect.",
         external: true,
       },
       {
@@ -149,14 +149,14 @@ const PRACTICES: Practice[] = [
       {
         href: "https://tinymachines.ai/6502/api",
         name: "The 6502 API",
-        line: "A transistor-level 6502 over HTTP, one half-cycle at a time. Stateless: the whole machine travels in each request, and an MCP endpoint sits beside it.",
+        line: "The transistor-level 6502 as a web service, one half-cycle at a time. Each request carries the whole machine, and AI assistants can call it too.",
         external: true,
       },
     ],
   },
   {
     title: "Edge and IoT",
-    what: "AI and data on constrained devices: custom protocols, mesh radios, salvaged hardware.",
+    what: "AI and data on small, low-power devices: custom protocols, wireless sensor networks, salvaged hardware.",
     tags: ["Raspberry Pi", "Custom protocols", "Mesh networks", "Low power"],
     examples: ["60-node Pi cluster", "Custom 802.11 protocols", "LoRa mesh deployments"],
     proof: [
@@ -169,13 +169,13 @@ const PRACTICES: Practice[] = [
       {
         href: "/dragonfli",
         name: "Dragonfli",
-        line: "A Raspberry Pi and a 1090 MHz ADS-B receiver in the garage. Every aircraft listed is one this antenna heard directly.",
+        line: "A Raspberry Pi and an aircraft-tracking radio in the garage. Every aircraft listed is one this antenna heard directly.",
       },
     ],
   },
   {
     title: "AI integration",
-    what: "Production ML: sub-100ms inference, multi-provider orchestration, the plumbing that keeps it safe.",
+    what: "Machine learning in production: answers in under a tenth of a second, several AI providers working together, and the safeguards around them.",
     tags: ["LLM integration", "Model deployment", "Vector search", "ML pipelines"],
     examples: [
       "Multi-provider AI orchestration",
@@ -290,7 +290,7 @@ const DIFFS: Diff[] = [
     : []),
   {
     title: "Maker mentality",
-    body: "Creative problem-solving from building 60-node Pi clusters on salvaged hardware. In the lab now: a 6502 simulated transistor by transistor from photographs of its die, and an NES console that runs fast models of its two chips, each derived from and checked against a switch-level simulation. Lab work, not for sale.",
+    body: "Creative problem-solving, from building a 60-computer Raspberry Pi cluster out of salvaged hardware. In the lab now: a 6502 chip simulated transistor by transistor from photographs of its silicon, and an NES console running fast models of its two chips, each checked against a full simulation. Lab work, not for sale.",
     href: "https://tinymachines.ai/",
     go: "tinymachines.ai",
     external: true,
@@ -446,8 +446,8 @@ function ServicesBody({ initial }: { initial: NowSnapshot | null }) {
       <div className="prose beta-sec">
         <h2 id="practices">Five practices, one practitioner</h2>
         <p>
-          Each engagement draws from one or more of these. Nothing is bolted on after the fact:
-          security, observability, and a graceful retire path come standard.
+          Each engagement draws on one or more of these. Nothing is bolted on afterwards. Security,
+          monitoring, and a clean way to retire the system come standard.
         </p>
       </div>
 
@@ -631,7 +631,7 @@ function ServicesBody({ initial }: { initial: NowSnapshot | null }) {
         <p>
           Anti-cloud means host-local, and that goes for the practice too. I&rsquo;m based in Grand
           Rapids, Michigan and work with teams across Ada, Cascade, East Grand Rapids, Kentwood, and
-          the wider Kent County: on-site when it helps, remote when it doesn&rsquo;t.
+          the wider Kent County. On site when it helps, remote when it doesn&rsquo;t.
         </p>
       </div>
 
@@ -650,8 +650,8 @@ function ServicesBody({ initial }: { initial: NowSnapshot | null }) {
       <div className="prose beta-sec">
         <h2>Let&rsquo;s sketch it</h2>
         <p>
-          Have a project in mind? Let&rsquo;s discuss how I can help. A first email can be one
-          paragraph; the contact page lists the four things that make it easy to answer.
+          Have a project in mind? Let&rsquo;s talk about how I can help. A first email can be one
+          paragraph. The contact page lists the four things that make it easy to answer.
         </p>
       </div>
 

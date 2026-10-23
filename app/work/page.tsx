@@ -163,15 +163,16 @@ type Shape = ReturnType<typeof shape>
 const ABOUT: Record<string, ReactNode> = {
   "nominate-ai": (
     <p>
-      An AI-native sourcing platform: pipelines, vector search, agents. This section names none of
-      its repositories. Its service catalog is on <Link href="/mcp">/mcp</Link>.
+      A platform that finds and gathers information with AI: data pipelines, search and agents.
+      This section names none of its repositories. Its list of services is on{" "}
+      <Link href="/mcp">/mcp</Link>.
     </p>
   ),
   tinymachines: (
     <p>
-      The garage-lab umbrella. ESP32 mesh, software-defined radio, true randomness from radioactive
-      decay, ADS-B receivers. All the hardware-meets-AI experiments live here. Since August 2026 so
-      does the chip work: transistor-level simulations of the{" "}
+      The garage lab, where hardware meets AI: wireless sensor networks, software radio, true
+      random numbers from radioactive decay, and aircraft-tracking receivers. Since August 2026
+      the chip work lives here too: transistor-by-transistor simulations of the{" "}
       <Link href="/6502">MOS 6502</Link> and the chips of the NES, published at{" "}
       <a href="https://tinymachines.ai" target="_blank" rel="noopener">
         tinymachines.ai
@@ -497,9 +498,8 @@ export default function BetaWorkPage() {
         <div className="prose beta-sec">
           <h2 id="clients-h">Client projects</h2>
           <p>
-            Five platforms, each built for someone else: two data platforms, and three products.
-            Each card opens the live site, except one product whose site stays unlinked; that card
-            opens the resume.
+            Five platforms, each built for someone else: two data platforms and three products.
+            Each card opens the live site.
           </p>
         </div>
         <BenchGrid items={CLIENTS_FEATURED} pairs feature />

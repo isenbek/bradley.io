@@ -54,7 +54,7 @@ const WORK: Work[] = [
     href: "https://tinymachines.ai/6502",
     go: "tinymachines.ai/6502",
     line:
-      "No modelled instruction decoder: wires and switches from the die, and faster engines derived from that chip and held to it at the pins. The quickest runs 39.0 million half-cycles a second and replays all 289 recorded pin traces exactly.",
+      "Not a program that imitates the chip: its real wires and switches, traced from the silicon. Faster engines are built from it and checked against it pin by pin. The quickest runs 39.0 million half-cycles a second and matches all 289 recorded test traces exactly.",
     tags: ["Rust", "WebAssembly", "WebGL2"],
   },
   {
@@ -62,7 +62,7 @@ const WORK: Work[] = [
     href: "https://tinymachines.ai/nes",
     go: "tinymachines.ai/nes",
     line:
-      "Switch-level models of both chips in the console, 10,946 and 16,758 transistors, built on Quietust's die traces, and the fast engines measured out of them. On those, 19 of the 20 cartridges dumped from my own collection draw their picture.",
+      "Both chips in the console, 10,946 and 16,758 transistors, modelled switch by switch from Quietust's traces of the silicon, with fast engines built from them. On those, 19 of the 20 cartridges copied from my own collection draw their picture.",
     tags: ["Rust", "WebAssembly", "NTSC signal model"],
   },
   {
@@ -70,7 +70,7 @@ const WORK: Work[] = [
     href: "https://terrapulse.info",
     go: "terrapulse.info",
     line:
-      "A measured-data platform for climate and geophysical records: no models, no forecasts. 80 published indexes, and a public read-only MCP server with 11 tools so an AI agent can query them. I am its architect.",
+      "A platform for measured climate and earth-science records, never models or forecasts. 80 published indexes, and a public, read-only connection with 11 tools that AI assistants use to query them. I am its architect.",
     tags: ["PostgreSQL + PostGIS", "FastAPI", "MCP"],
   },
   {
@@ -78,7 +78,7 @@ const WORK: Work[] = [
     href: "https://tinychase.com",
     go: "tinychase.com",
     line:
-      "Small models on measured public data, run in your own browser. An experimental cyclone-forecast model, 555 KB with its 23 WebGPU kernels, runs on the visitor's GPU, and the data is read by byte range with no query server. I engineered it.",
+      "Small AI models on measured public data, running in your own browser. An experimental hurricane-forecast model, just 555 KB, runs on your own graphics card. The data is read straight from files, with no database server in between. I engineered it.",
     tags: ["WebGPU", "DuckDB-WASM", "tinygrad"],
   },
   {
@@ -86,7 +86,7 @@ const WORK: Work[] = [
     href: "/meatball",
     go: "/meatball",
     line:
-      "A caseless home server built from other people's cast-offs and taught to see, hear, think and speak. Ten salvaged parts, every model on the metal, and nothing touches the cloud.",
+      "A home server with no case, built from other people's cast-offs and taught to see, hear, think and speak. Ten salvaged parts, every AI model running on the machine itself, and nothing touches the cloud.",
     tags: ["local LLM", "Whisper", "neural voice"],
   },
   {
