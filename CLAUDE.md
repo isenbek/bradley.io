@@ -15,6 +15,9 @@ The rules that constrain day-to-day work:
 1. **Paper is documentation, panel is the machine talking.** Prose renders on paper (`--color-paper`); anything computed by a pipeline renders on panel (`--color-panel`). This is a semantic distinction, not a theme.
 2. **No light/dark mode, no theme toggle — deliberately.** The site is a single-ground design. `app/kit.css` pins the ground under `[data-theme]` and carries the reasoning as a comment. Only the bio-mark iframe still reads the attribute.
 3. **Red means an assertion failed and nothing else.** Blue is ACTIVE, orange is ATTENTION. Never a decorative red series; magnitude gets one hue light→dark (never a rainbow); categorical hues come in fixed order (ocean, burnt, mustard, forest), never generated from a hash.
+   The paper-side accent is the logo's steel, not the kit's burnt: `--beta-accent` (marks, link underlines) and
+   `--color-accent-ink` redefined to a darker steel (text, buttons), both at the top of `app/kit.css` (Brad,
+   2026-10-23). Sentences never go below 15px (the READING FLOOR block at the end of `app/kit.css`).
 4. **No em dashes in shipped text.**
 5. **Fix the component, don't fork it.** bradley.io-specific rules go in `app/kit.css` (classes prefixed `beta-*`), never edits inside `app/beta/kit/`.
 6. Fonts are the kit's: **Archivo** (display) + **IBM Plex Sans/Mono/Serif**, self-hosted, `@import`ed via `globals.css`. No Google Fonts at build or runtime.

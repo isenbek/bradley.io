@@ -30,6 +30,30 @@
    the end of this file for sentences. */
 :root { --text-micro: 0.75rem; }
 
+/* The accent is the logo's blue (Brad, 2026-10-23: "use the logo blue"). The
+   kit's paper-side accent was burnt orange; on this site it is the steel of
+   the bio mark (--color-family-steel, the die behind the wordmark), so the
+   brand colour reaches past the logo. Two strengths of the one hue:
+     --beta-accent       the logo's own steel, for marks and lines (heading
+                         ticks, link underlines). 4.46:1 on paper, which is
+                         fine for a mark and short of AA for small text, so:
+     --color-accent-ink  the kit's paper-side accent token, redefined as the
+                         same steel mixed a quarter toward ink, about 6:1 on
+                         paper. Everything the kit colours with it follows:
+                         main buttons, tag links, the current nav item, hovers.
+   The panel side keeps the kit's burnt (--color-accent), and the status
+   colours are untouched: blue-ink is still ACTIVE, orange still ATTENTION.
+   Steel is greyer and darker than ACTIVE blue, so a LIVE tag still reads as
+   its own thing. */
+:root {
+  --beta-accent: var(--color-family-steel);
+  --color-accent-ink: color-mix(in oklab, var(--color-family-steel) 75%, var(--color-ink));
+}
+.prose > h2::before { background: var(--beta-accent); }
+/* The kit underlines prose links in ATTENTION orange; here they take the
+   accent, so orange keeps its one meaning. */
+.prose a { text-decoration-color: var(--beta-accent); }
+
 body:has(.beta-root) {
   background: var(--color-paper);
   color: var(--color-ink);
@@ -3602,7 +3626,7 @@ td > .beta-charts-spark { min-width: calc(var(--u) * 12); }
   text-underline-offset: 3px;
   transition: text-decoration-color var(--t-snap) var(--ease-detent);
 }
-.beta-about-rows a:hover { text-decoration-color: var(--color-orange); }
+.beta-about-rows a:hover { text-decoration-color: var(--beta-accent); }
 .beta-about-rows a:focus-visible { outline: 2px solid var(--color-blue-ink); outline-offset: 2px; }
 .beta-about-rows__state {
   flex: 1 1 12rem;
@@ -3663,7 +3687,7 @@ td > .beta-charts-spark { min-width: calc(var(--u) * 12); }
   line-height: 1.55;
   color: var(--color-ink-muted);
 }
-.beta-about-more a { color: var(--color-ink); text-decoration: underline; text-decoration-color: var(--color-orange); text-underline-offset: 2px; }
+.beta-about-more a { color: var(--color-ink); text-decoration: underline; text-decoration-color: var(--beta-accent); text-underline-offset: 2px; }
 .beta-about-more a:hover { text-decoration-thickness: 2px; }
 
 /* ---- Skills: six rows, a label and its list ------------------------------ */
@@ -3783,7 +3807,7 @@ td > .beta-charts-spark { min-width: calc(var(--u) * 12); }
 @media (max-width: 24rem) {
   .beta-about-pair__sub:has(.beta-live-dotwrap) { min-height: 4.2em; }
 }
-.beta-about-does a { color: var(--color-ink); text-decoration: underline; text-decoration-color: var(--color-orange); text-underline-offset: 2px; }
+.beta-about-does a { color: var(--color-ink); text-decoration: underline; text-decoration-color: var(--beta-accent); text-underline-offset: 2px; }
 .beta-about-does a:hover { text-decoration-thickness: 2px; }
 .beta-about-does {
   list-style: square;
@@ -5044,7 +5068,7 @@ a.beta-papers-fig:focus-visible { outline: 2px solid var(--color-blue-ink); outl
 .beta-home-chips a {
   color: var(--color-ink);
   text-decoration: underline;
-  text-decoration-color: var(--color-orange);
+  text-decoration-color: var(--beta-accent);
   text-decoration-thickness: 1px;
   text-underline-offset: 2px;
   transition: text-decoration-thickness var(--t-snap) var(--ease-snap);
@@ -6513,7 +6537,7 @@ a.beta-papers-fig:focus-visible { outline: 2px solid var(--color-blue-ink); outl
 .beta-turfy-sheet figcaption a {
   color: var(--color-ink);
   text-decoration: underline;
-  text-decoration-color: var(--color-orange);
+  text-decoration-color: var(--beta-accent);
   text-underline-offset: 2px;
   white-space: nowrap;
 }
