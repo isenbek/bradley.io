@@ -181,8 +181,8 @@ export default async function Home() {
           in.
         </p>
         <p className="quiet beta-home-where">
-          <b>Bradley Isenbek.</b> Forest Hills, Michigan. On site across Grand Rapids and Kent
-          County, remote everywhere else.
+          <b>Bradley Isenbek.</b> Grand Rapids, Michigan. On site across Kent County and West
+          Michigan, remote everywhere else.
         </p>
         <p className="beta-resume-hire">
           <span>
