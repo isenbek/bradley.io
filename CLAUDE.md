@@ -120,7 +120,7 @@ Brad files work as issues on `isenbek/bradley.io` (often written by a remote age
    gets wrong is corrected from the source and said on the issue.
 2. **Test and lint.** beta: `bun run check` in `beta/` (the kit's `kit check`: data, typecheck, lint with zero warnings, build, the site in headless
    Chrome). Main site: `bun run lint`, `npx tsc --noEmit`, and the Playwright specs the work touches
-   (`PLAYWRIGHT_BROWSERS_PATH=/mnt/ursa/bradleyio/ms-playwright BASE_URL=... npx playwright test tests/<spec>`).
+   (`PLAYWRIGHT_BROWSERS_PATH=/mnt/ursa/bradleyio/ms-playwright PLAYWRIGHT_BASE_URL=... npx playwright test tests/<spec>`).
 3. **Commit with a real message and push to GitHub.**
 4. **Deploy.** beta: `beta/scripts/ship.sh [--close] <issue>...` does 2 to 4 in order, stops at the first failure,
    checks the live site, and reports on the issues. Main site: commit by hand first (its `./deploy.sh` commits with a

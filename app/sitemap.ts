@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next"
 import { execFileSync } from "node:child_process"
 import { existsSync, readdirSync, statSync } from "node:fs"
 import path from "node:path"
+import { listSitePages } from "@/lib/site-pages"
 
 /**
  * Every public page, found by walking app/ rather than typed by hand, so a
@@ -10,14 +11,8 @@ import path from "node:path"
  * tinymachines/tinypeek#24), only fetches what is listed, and its spec says a
  * collection must be complete. Search engines get the same list.
  *
- * Left out, and why:
- *   - private folders (_x), route groups' internals, api/, preview/ and
- *     beta/ (the vendored kit, no pages);
- *   - pages that are noindex by design: /eyes, /meatball/log,
- *     /meatball/memory, /preferences;
- *   - pages robots.txt disallows: /visitors, /resume/print and the House
- *     Calls paperwork, /housecalls/docs and its docs (app/robots.ts).
- *     tinypeek treats Disallow as its deny list, so keep the two in step.
+ * The list itself is lib/site-pages.ts (what is left out, and why), shared
+ * with the link manifest at /.well-known/tm-manifest.json.
  *
  * lastmod is real. A page that renders pipeline data the deploy commits
  * (DATA_PAGES) changes with every deploy, so it carries the build time. Every
@@ -26,12 +21,7 @@ import path from "node:path"
  */
 
 const BASE = "https://bradley.io"
-const APP = path.join(process.cwd(), "app")
 const BUILT = new Date()
-
-const NOINDEX = new Set(["/eyes", "/meatball/log", "/meatball/memory", "/preferences"])
-const DISALLOWED = new Set(["/visitors", "/resume/print", "/housecalls/docs"])
-const SKIP_DIRS = new Set(["api", "preview", "beta", "fonts"])
 
 /** Pages whose content is pipeline output or a live reading, rebuilt each deploy. */
 const DATA_PAGES = new Set([
@@ -128,32 +118,11 @@ function sourcesOf(route: string, dir: string): string[] {
   return [...ownFiles(dir), ...(comp && existsSync(comp) ? [comp] : []), ...extra]
 }
 
-/** Every static route under app/, as "/a/b", with its folder. */
-function walk(dir: string, route: string, out: { route: string; dir: string }[]) {
-  const entries = readdirSync(dir, { withFileTypes: true })
-  if (entries.some((e) => e.isFile() && e.name === "page.tsx")) out.push({ route: route || "/", dir })
-  for (const e of entries) {
-    if (!e.isDirectory()) continue
-    const name = e.name
-    if (name.startsWith("_") || name.startsWith("[") || name.startsWith("@")) continue
-    if (route === "" && SKIP_DIRS.has(name)) continue
-    // A route group "(x)" adds no segment.
-    const seg = name.startsWith("(") ? "" : `/${name}`
-    walk(path.join(dir, name), route + seg, out)
-  }
-}
-
 export default function sitemap(): MetadataRoute.Sitemap {
-  const found: { route: string; dir: string }[] = []
-  walk(APP, "", found)
-
-  return found
-    .filter((p) => !NOINDEX.has(p.route) && !DISALLOWED.has(p.route))
-    .sort((a, b) => a.route.localeCompare(b.route))
-    .map((p) => {
-      const [changeFrequency, priority] = WEIGHT[p.route] ?? ["monthly", 0.5]
-      const lastModified =
-        FROZEN[p.route] ?? (DATA_PAGES.has(p.route) ? BUILT : lastCommit(sourcesOf(p.route, p.dir)))
-      return { url: p.route === "/" ? BASE : `${BASE}${p.route}`, lastModified, changeFrequency, priority }
-    })
+  return listSitePages().map((p) => {
+    const [changeFrequency, priority] = WEIGHT[p.route] ?? ["monthly", 0.5]
+    const lastModified =
+      FROZEN[p.route] ?? (DATA_PAGES.has(p.route) ? BUILT : lastCommit(sourcesOf(p.route, p.dir)))
+    return { url: p.route === "/" ? BASE : `${BASE}${p.route}`, lastModified, changeFrequency, priority }
+  })
 }
