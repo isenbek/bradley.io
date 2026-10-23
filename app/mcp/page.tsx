@@ -89,8 +89,8 @@ export default function BetaMcpPage() {
         title="MCP catalog"
         lede={
           <>
-            {servers.length} Model Context Protocol servers, and the {st.fleetServices}-service REST
-            fleet behind them.
+            {servers.length} servers that let AI assistants call tools here (the Model Context
+            Protocol), and the {st.fleetServices} web services behind them.
           </>
         }
       />
@@ -100,8 +100,7 @@ export default function BetaMcpPage() {
           Each was asked for its tool list when this page was built, so what is below is what the
           server answered with, not what a README claims.
           {gated > 0
-            ? ` ${gated} of the ${servers.length} require a credential and answered by refusing, which is the
-               correct behaviour and is recorded as such rather than as an outage.`
+            ? ` ${gated} of the ${servers.length} ${gated === 1 ? "requires" : "require"} a key and answered by refusing. That is the correct behaviour, and it is recorded as such, not as an outage.`
             : ""}
         </p>
       </Section>

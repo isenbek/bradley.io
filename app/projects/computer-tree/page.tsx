@@ -59,12 +59,12 @@ export default function ComputerTreePage() {
       <Section title="How to read it">
         <p>
           Every dot is a machine, a processor or a system, and its ring is the period it arrived in.
-          The inner three rings are the 1961 chart&apos;s own; past them there is one ring per
-          decade, and the outermost holds 2021 to 2025. Teal dots ({chart}) were transcribed from
-          the 1961 chart; orange dots ({nodes.length - chart}) were added after it. A machine sits
-          under its primary parent, the one the data names first. {cross} machines have a second
-          parent as well; switch on <b>Cross-links</b> to see them, and watch the late rings, where
-          long-running lines converge on shared processors.
+          The inner three rings are the 1961 chart&apos;s own. Past them there is one ring per
+          decade, and the outermost holds 2021 to 2025. Teal dots ({chart}) were copied from the
+          1961 chart. Orange dots ({nodes.length - chart}) were added after it. A machine sits
+          under its main parent, the one the data names first. {cross} machines have a second
+          parent as well. Switch on <b>Cross-links</b> to see them, and watch the late rings, where
+          long-running lines meet on shared processors.
         </p>
         <p>
           The tree has eight roots. ENIAC is the 1961 chart&apos;s. The other seven start families
@@ -103,7 +103,7 @@ export default function ComputerTreePage() {
       <Section title="The data">
         <p>
           The dataset is a directed acyclic graph: every parent exists, there are no cycles, and no
-          parent is dated more than a year after its child. Take it with you; the data card has
+          parent is dated more than a year after its child. Take it with you. The data card has
           the schema, the counts and how to add a decade.
         </p>
         <p>

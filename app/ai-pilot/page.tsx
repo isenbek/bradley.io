@@ -23,7 +23,7 @@ import { FlightStatus } from "@/components/pilot/FlightStatus"
 import { HourStrips } from "@/components/pilot/HourStrips"
 import { ShareBar, type SharePart } from "@/components/pilot/ShareBar"
 import { SpanRows, type SpanRow, type SpanTick } from "@/components/pilot/SpanRows"
-import { Grid, PageHead, Panel, Section } from "@/components/page"
+import { Grid, PageHead, Panel, ReadMore, Section } from "@/components/page"
 
 /**
  * /ai-pilot: the licence, and the whole record behind it, on one page.
@@ -562,7 +562,7 @@ export default async function AiPilotPage() {
           />
           <p className="beta-chart__note">
             A streak is consecutive{dayZone ? ` ${dayZone}` : ""} days with at least one record.
-            The bar over each column is that calendar week, Monday to Sunday; the first and last
+            The bar over each column is that calendar week, Monday to Sunday. The first and last
             are part weeks.
             {longDate(began)
               ? ` The pale months at the start are not a slow start: the record has been kept since ${longDate(began)}, and before that it holds only the sessions whose logs were still on disk.`
@@ -608,7 +608,7 @@ export default async function AiPilotPage() {
         <p>
           A mission is a project, and a project is the directory a session started in, so these
           are directory names as they sit on disk. Each bar runs from the first active day to the
-          last; the figure on the right is messages. Subagent logs are not counted.
+          last. The figure on the right is messages. Subagent logs are not counted.
         </p>
       </Section>
 
@@ -625,7 +625,7 @@ export default async function AiPilotPage() {
             <>
               {" "}
               The row marked cb* is {nf(grouped)} directories whose names begin with cb, summed.
-              Most are repositories in the Nominate-AI organisation, which are private;{" "}
+              Most are repositories in the Nominate-AI organisation, which are private.{" "}
               <Link href="/work#nominate-ai">/work</Link>
               {" gives that organisation's totals without naming its repositories, and so does this log."}
             </>
@@ -676,8 +676,7 @@ export default async function AiPilotPage() {
                 {toolOverPct !== null && toolOverPct > 0
                   ? ` (it runs about ${toolOverPct.toFixed(1)}% over the corrected total above)`
                   : ""}
-                . The duplicates are spread evenly enough that the shares hold; the counts would
-                not.
+                . The duplicates are spread evenly enough that the shares hold, but the counts would not.
               </p>
             )}
           </Panel>
@@ -695,23 +694,30 @@ export default async function AiPilotPage() {
       {/* ============================ RATINGS ============================== */}
       <Section id="ratings" title="Ratings">
         <p>
-          Read these as rough. Instrument ratings come from the words in each project&apos;s
-          CLAUDE.md, the plan files and the technologies named in the session logs still on disk,
-          which reach back about 30 days. Each domain&apos;s score is half keyword coverage and
-          half its mentions against the busiest domain&apos;s, and keywords are matched as plain
-          substrings. They measure what the work touched rather than how well it went, and they
-          describe recent work, not the whole record.
-        </p>
-        <p>
-          Competency scores are fixed formulas over counts from the record, the plan files on disk
-          and the prompt history, and the count each one was computed from is printed under its
-          name. Debugging assumes every shell, search and read call is debugging, which overstates
-          it. The formulas stop at 95
-          {atCap > 0 ? `, and ${atCap === 1 ? "one score sits" : `${nf(atCap)} scores sit`} at that cap` : ""}
-          . Piloting style is two ratios: directive is twice the share of tool calls that were
-          Edit or Write, and plan first rises with plan files per session.
+          Read these as rough. They measure what the work touched, not how well it went. The
+          instrument ratings describe about the last month, not the whole record.
         </p>
       </Section>
+
+      <ReadMore label="How these are scored">
+        <Section>
+          <p>
+            Instrument ratings come from the words in each project&apos;s CLAUDE.md, the plan files
+            and the technologies named in the session logs still on disk, which reach back about 30
+            days. Each domain&apos;s score is half keyword coverage and half its mentions against the
+            busiest domain&apos;s, and keywords are matched as plain substrings.
+          </p>
+          <p>
+            Competency scores are fixed formulas over counts from the record, the plan files on disk
+            and the prompt history, and the count each one was computed from is printed under its
+            name. Debugging assumes every shell, search and read call is debugging, which overstates
+            it. The formulas stop at 95
+            {atCap > 0 ? `, and ${atCap === 1 ? "one score sits" : `${nf(atCap)} scores sit`} at that cap` : ""}
+            . Piloting style is two ratios: directive is twice the share of tool calls that were
+            Edit or Write, and plan first rises with plan files per session.
+          </p>
+        </Section>
+      </ReadMore>
 
       <Panel name="Ratings" note="0 to 100">
         <Grid min="24rem" className="beta-pilot-pair beta-pilot-pair--wide">

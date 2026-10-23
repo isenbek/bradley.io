@@ -100,7 +100,7 @@ export default function SensesPage() {
         <p>
           The thing that cracked it was a radio. Switched it on, recorded; switched it off,
           recorded. The two were <em>identical</em>. A radio playing in the room moved the meter
-          not at all. The mic wasn&apos;t quiet; it was stone deaf. Then the speaker: I&apos;d
+          not at all. The mic wasn&apos;t quiet. It was stone deaf. Then the speaker: I&apos;d
           guessed which of three identical dongles it was from capture levels, and I was wrong,
           because (and this is the first trap){" "}
           <strong>a speaker crosstalks into its own input and masquerades as the hottest mic in the rack.</strong>{" "}

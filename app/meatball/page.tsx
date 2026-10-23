@@ -21,7 +21,7 @@ const RIG: { junk: string; role: string }[] = [
 const SENSES = [
   {
     label: "Eyes",
-    body: "Two scrounged webcams. One grabs a frame a minute and serves the newest; the vision model narrates what is in front of it.",
+    body: "Two scrounged webcams. One grabs a frame a minute and serves the newest. The vision model narrates what is in front of it.",
     href: "/eyes",
   },
   {

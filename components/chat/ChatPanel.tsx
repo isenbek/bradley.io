@@ -37,7 +37,7 @@ interface Remaining {
 
 type Status = "loading" | "on" | "off" | "closed" | "budget"
 
-const DISCLOSURE = "Claude, an AI, answering from Bradley's resume. It can be wrong; the resume is the record."
+const DISCLOSURE = "Claude, an AI, answering from Bradley's resume. It can be wrong. The resume is the record."
 
 const SUGGESTIONS = [
   "What is Bradley working on now?",

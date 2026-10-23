@@ -51,7 +51,7 @@ const STATUS: { piece: string; note: string; state: string; open: boolean }[] = 
 const PRINCIPLES = [
   {
     title: "Rain Bird keeps authority",
-    body: "The 1990s controller stays wired exactly as it is. Turfy is a sidecar on the station outputs. It never replaces the brain; it borrows it.",
+    body: "The 1990s controller stays wired exactly as it is. Turfy is a sidecar on the station outputs. It never replaces the brain. It borrows it.",
   },
   {
     title: "A hardware dead-man",
@@ -77,7 +77,7 @@ const BOOT = [
   "Pi boots. AUTHORITY GPIO defaults pull-down → Rain Bird stays in control regardless of any GPIO chatter.",
   "MCP23017 powers up all-inputs (POR default) → zone relays held off. Defined state, no init race.",
   "turfy.service self-checks (I²C ack, config sane, time synced), starts the heartbeat, then raises AUTHORITY.",
-  "Watchdog charges within one timeout; the transfer bank engages and Turfy is driving.",
+  "Watchdog charges within one timeout. The transfer bank engages and Turfy is driving.",
 ]
 
 const FAILURES: { failure: string; result: string; by: string; covered: boolean }[] = [
@@ -235,7 +235,7 @@ const PINS: { gpio: string; signal: string; note: string }[] = [
 const ACCEPTANCE = [
   "Transfer bank unpowered: continuity from every Rain Bird station terminal to its valve terminal, all 8 channels. The Rain Bird path is intact.",
   "Power logic only, no 24VAC: boot the Pi and verify every relay stays silent through two full reboots. The GPIO chatter test.",
-  "Start the daemon; confirm the transfer bank engages only after AUTHORITY is high and the heartbeat is running. Kill -9 the daemon: the bank must drop within about 24\u00a0s.",
+  "Start the daemon. Confirm the transfer bank engages only after AUTHORITY is high and the heartbeat is running. Kill -9 the daemon: the bank must drop within about 24\u00a0s.",
   "Pull the heartbeat wire with the daemon running: same result.",
   "Apply 24VAC with a dummy load on channel 1, a 24 V lamp or a spare solenoid: a Rain Bird manual start drives it with authority off, and MCP23017 bit 0 drives it with authority on.",
 ]
@@ -610,8 +610,7 @@ export default function TurfyPage() {
           <h3>What the photographs settled</h3>
           <p>
             The tap point. Field wires land on a screw terminal block on the power board, so the
-            sidecar never touches these boards. The Rain Bird already fuses and clamps its own
-            side; Turfy’s fuse and MOV protect the tap independently. The green wire is earth to
+            sidecar never touches these boards. The Rain Bird already fuses and clamps its own side, and Turfy’s fuse and MOV protect the tap independently. The green wire is earth to
             the chassis: it stays, and Turfy’s logic ground stays unbonded from it.
           </p>
           <h3>What they could not</h3>

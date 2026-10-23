@@ -70,7 +70,7 @@ export default function MaterialPadPage() {
             is about our own tool: the turning-your-ramble-into-a-list part is plain deterministic
             rules, running on this page, the same way every time, no model involved. The one piece
             that is machine learning is the microphone itself, which uses your browser&apos;s
-            built-in speech service; on many phones that means the browser maker processes the
+            built-in speech service. On many phones that means the browser maker processes the
             audio. If that bothers you, type the ramble instead: the pad works identically, and
             typing is the only part we can make promises about. The rest of the deal is the usual
             one from <Link href="/housecalls">House Calls</Link>: no account, nothing collected,

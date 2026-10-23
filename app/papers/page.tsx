@@ -301,7 +301,7 @@ export default function BetaPapersPage() {
           <RowChart caption="Notes per status" data={statuses} />
           <p className="beta-chart__note">
             A note&rsquo;s place in the lab&rsquo;s own workflow. Accepted means the lab&rsquo;s
-            internal review passed it; no journal was involved.
+            internal review passed it. No journal was involved.
           </p>
         </Panel>
 
@@ -376,7 +376,7 @@ export default function BetaPapersPage() {
         <h2>The notes</h2>
         <p>
           {featured > 0
-            ? `The ${plural(featured, "note", "notes")} with a published results table ${plural(featured, "comes", "come")} first; the rest run newest first.`
+            ? `The ${plural(featured, "note", "notes")} with a published results table ${plural(featured, "comes", "come")} first. The rest run newest first.`
             : "Newest first."}{" "}
           A figure opens at full size. Every card links to its workspace on terrapulse.info, where
           the work is written out.

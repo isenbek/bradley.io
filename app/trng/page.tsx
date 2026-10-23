@@ -9,18 +9,20 @@ export default function TrngPage() {
         title="Random, from radioactive decay"
         lede={
           <>
-            A CAJOE Geiger counter, a Raspberry Pi, and a comparison of one gap between decay events
-            with the next. If the first is shorter the bit is a one, if the second is shorter it is a
-            zero, and equal gaps are thrown away.
+            A Geiger counter, a Raspberry Pi, and a simple comparison. Each click is an atom
+            decaying. The Pi times the gap between two clicks, then the next gap. If the first gap
+            is shorter, the bit is a one. If the second is shorter, it is a zero. Equal gaps are
+            thrown away.
           </>
         }
       />
 
       <Section>
         <p>
-          Nothing here generates a number. The bias cancels by symmetry rather than by correction,
-          which is why the raw stream is worth measuring at all: everything below is that
-          measurement, taken continuously and not smoothed.
+          No formula makes up a number here. Comparing two gaps cancels out any lean in the
+          hardware by itself, with no correction applied afterwards. That is why the raw stream is
+          worth measuring at all. Everything below is that measurement, taken around the clock and
+          never smoothed.
         </p>
         <p>
           The same bits, drawn:{" "}

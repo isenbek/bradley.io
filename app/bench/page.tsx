@@ -273,7 +273,7 @@ const SHELVES: Shelf[] = [
       {
         href: "/housecalls/tools/materials",
         name: "The voice material pad",
-        blurb: "Say the list in the truck; hand a printed one across the counter.",
+        blurb: "Say the list in the truck, then hand a printed one across the counter.",
       },
       {
         href: "/housecalls/tools/cards",

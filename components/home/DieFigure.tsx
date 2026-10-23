@@ -44,7 +44,7 @@ const PLATES = [
     src: "/6502/die-surface.webp",
     full: "/6502/die-surface-full.webp",
     alt: "The full MOS 6502 die photographed from above: a dense green-gold grid of circuitry ringed by 40 bond pads",
-    cap: "The die as it came out of the package, metal still on. The ring of dark circles is the 40 bond pads; the “65 0” near the left edge is etched into the silicon itself.",
+    cap: "The die as it came out of the package, metal still on. The ring of dark circles is the 40 bond pads. The “65 0” near the left edge is etched into the silicon itself.",
     lbCap: "MOS 6502 rev D · surface, metal still on · visual6502, CC BY-NC-SA 3.0",
   },
   {

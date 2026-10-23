@@ -41,7 +41,7 @@ const TOOLS = [
   {
     href: "/housecalls/tools/materials",
     name: "The voice material pad",
-    line: "Say the list in the truck; hand a clean printed list across the counter.",
+    line: "Say the list in the truck, then hand a clean printed list across the counter.",
   },
 ]
 

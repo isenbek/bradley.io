@@ -316,7 +316,7 @@ export default function BetaShiftPage() {
         <p>
           What this cannot show is the counterfactual. Nobody ran the same project in two-week
           sprints to compare. The weekly commit and issue counts for the case-study window are on{" "}
-          <Link href="/cost-analysis">cost analysis</Link>; they count every author in the
+          <Link href="/cost-analysis">cost analysis</Link>. They count every author in the
           organisation&rsquo;s repositories, so they describe the project, not one person&rsquo;s
           cadence.
         </p>

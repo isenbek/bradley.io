@@ -25,7 +25,7 @@ const STAGES = [
     n: "01",
     title: "The collapse",
     body:
-      "Pick an amplitude and press Run. The amber field φ(r) implodes toward the origin while the cyan 2m/r curve climbs underneath it. Below threshold the pulse passes through r = 0 and escapes to infinity; above it, 2m/r pins to 1 and a horizon snaps shut.",
+      "Pick an amplitude and press Run. The amber field φ(r) implodes toward the origin while the cyan 2m/r curve climbs underneath it. Below threshold the pulse passes through r = 0 and escapes to infinity. Above it, 2m/r pins to 1 and a horizon snaps shut.",
   },
   {
     n: "02",

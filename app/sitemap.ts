@@ -2,7 +2,6 @@ import type { MetadataRoute } from "next"
 import { execFileSync } from "node:child_process"
 import { existsSync, readdirSync, statSync } from "node:fs"
 import path from "node:path"
-import { listDocSlugs } from "@/lib/housecalls/docs"
 
 /**
  * Every public page, found by walking app/ rather than typed by hand, so a
@@ -16,14 +15,14 @@ import { listDocSlugs } from "@/lib/housecalls/docs"
  *     beta/ (the vendored kit, no pages);
  *   - pages that are noindex by design: /eyes, /meatball/log,
  *     /meatball/memory, /preferences;
- *   - pages robots.txt disallows: /visitors, /resume/print (app/robots.ts).
+ *   - pages robots.txt disallows: /visitors, /resume/print and the House
+ *     Calls paperwork, /housecalls/docs and its docs (app/robots.ts).
  *     tinypeek treats Disallow as its deny list, so keep the two in step.
  *
  * lastmod is real. A page that renders pipeline data the deploy commits
  * (DATA_PAGES) changes with every deploy, so it carries the build time. Every
  * other page carries the date of the last commit to its own files (the files
- * in its folder, not its children's). A House Calls doc carries its markdown
- * file's last commit. When git cannot answer, the build time.
+ * in its folder, not its children's). When git cannot answer, the build time.
  */
 
 const BASE = "https://bradley.io"
@@ -31,7 +30,7 @@ const APP = path.join(process.cwd(), "app")
 const BUILT = new Date()
 
 const NOINDEX = new Set(["/eyes", "/meatball/log", "/meatball/memory", "/preferences"])
-const DISALLOWED = new Set(["/visitors", "/resume/print"])
+const DISALLOWED = new Set(["/visitors", "/resume/print", "/housecalls/docs"])
 const SKIP_DIRS = new Set(["api", "preview", "beta", "fonts"])
 
 /** Pages whose content is pipeline output or a live reading, rebuilt each deploy. */
@@ -148,7 +147,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const found: { route: string; dir: string }[] = []
   walk(APP, "", found)
 
-  const pages: MetadataRoute.Sitemap = found
+  return found
     .filter((p) => !NOINDEX.has(p.route) && !DISALLOWED.has(p.route))
     .sort((a, b) => a.route.localeCompare(b.route))
     .map((p) => {
@@ -157,14 +156,4 @@ export default function sitemap(): MetadataRoute.Sitemap {
         FROZEN[p.route] ?? (DATA_PAGES.has(p.route) ? BUILT : lastCommit(sourcesOf(p.route, p.dir)))
       return { url: p.route === "/" ? BASE : `${BASE}${p.route}`, lastModified, changeFrequency, priority }
     })
-
-  // The one dynamic route: the House Calls docs, one page per markdown file.
-  const docs: MetadataRoute.Sitemap = listDocSlugs().map((slug) => ({
-    url: `${BASE}/housecalls/docs/${slug}`,
-    lastModified: lastCommit([path.join("docs", "housecalls", `${slug}.md`)]),
-    changeFrequency: "monthly",
-    priority: 0.4,
-  }))
-
-  return [...pages, ...docs]
 }

@@ -45,7 +45,7 @@ const PLATES = [
 const TRY = [
   "Start on plate I and cycle the swell through 2, 3, 5, 7. Watch the wavelength track p exactly, and watch plank p stay green while all its multiples snap.",
   "On plate II, mute swell 5. Twenty-five, thirty-five and fifty-five stand back up as counterfeit primes, and the Mertens guard in the stat line drifts away from the real survivor count.",
-  "Read the killer tags under the record gap on plate III. Swell 2 does half the work; the long wavelengths 7 and 11 turn up only for the planks nobody else could reach.",
+  "Read the killer tags under the record gap on plate III. Swell 2 does half the work. The long wavelengths 7 and 11 turn up only for the planks nobody else could reach.",
   "On plate V, follow the amber staircase. Each step is a new swell surfacing at p², which is why the water gets rougher the farther out on the bridge you walk.",
   "Finish on plate VI and look at both clocks at once. The left ticks in n, the right in log x, and the compression rightward is the whole reason the zeros speak in logarithms.",
 ]
@@ -133,11 +133,11 @@ export default function StormPlatesPage() {
           Euler side · ∏ₚ (1 − p⁻ˢ)⁻¹ ⟷ explicit formula · Σ_ρ cos(γ·log x)
         </pre></div>
         <p>
-          Neither side is the storm; both are exact transcriptions of it. The{" "}
+          Neither side is the storm. Both are exact transcriptions of it. The{" "}
           <Link href="/projects/prime-orchestra">orchestra</Link> plays the right-hand side
-          and reassembles the prime staircase out of those tones, while the{" "}
-          <Link href="/projects/prime-zoo">zoo</Link> stays on the left and asks which
-          constellations the swells can even permit. The twin plate here is the zoo&rsquo;s
+          and rebuilds the prime staircase out of those tones. The{" "}
+          <Link href="/projects/prime-zoo">zoo</Link>
+          {" stays on the left and asks which constellations the swells can even permit."} The twin plate here is the zoo&rsquo;s
           habitat law wearing water: offset {"{0, 2}"} lives because no residue row of any
           swell covers it.
         </p>

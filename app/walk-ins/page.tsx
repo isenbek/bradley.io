@@ -149,7 +149,7 @@ export default function WalkInsPage() {
             from this site is <Link href="/contact">email</Link>.
           </li>
           <li>
-            Nothing here is sent, posted or decided by an AI. The walking is mine; the sheet and this
+            Nothing here is sent, posted or decided by an AI. The walking is mine. The sheet and this
             page were written together with Claude Code, and the record of that is on the page too.
           </li>
           <li>Every step is dated, including the ones that go nowhere.</li>
@@ -160,8 +160,7 @@ export default function WalkInsPage() {
         <p>
           One page, US Letter. The readouts are read from this site&rsquo;s own data files on the day it
           is built, the career is drawn as a band, and the credit for the die photograph is in the
-          footer. The full record is on <Link href="/resume">the resume page</Link>; this is the
-          version that fits in a hand.
+          footer. The full record is on <Link href="/resume">the resume page</Link>. This is the version that fits in a hand.
         </p>
       </Section>
       <figure className="beta-walkins-sheet">
@@ -179,7 +178,7 @@ export default function WalkInsPage() {
           {fmt(circle.counts.kept)} workplaces within {circle.radiusMiles} miles of home that a person
           might walk into with a resume about AI and data: manufacturers, engineering and software
           firms, insurers, health systems, universities, publishers, public bodies. From OpenStreetMap
-          and a list of the larger employers known to be there, geocoded by address;{" "}
+          and a list of the larger employers known to be there, located by street address.{" "}
           {fmt(circle.counts.droppedFromOsm)} map entries were dropped (shops, clinics, bars, trades)
           and that cut is on the record in the data file.
         </p>
@@ -218,7 +217,7 @@ export default function WalkInsPage() {
           {record.early.from} to {record.early.to}, which counted the session logs still on disk the
           day they ran, and the activity database from {record.db.from}. Days the snapshots do not
           hold are days with no count. Time is counted as five-minute buckets with a message in them,
-          which only exists since {record.db.from}; a session&rsquo;s open span is not time, because a
+          which only exists since {record.db.from}. A session&rsquo;s open span is not time, because a
           session here stays open for weeks.
         </p>
       </Section>

@@ -213,8 +213,8 @@ export default async function Home() {
               circuit working.
             </p>
             <p>
-              The photograph is not mine. The visual6502 team decapped a 6502, photographed the
-              die, traced every polygon by hand, and gave the result away. I rebuilt the engine on
+              The photograph is not mine. The visual6502 team opened up a 6502, photographed
+              the bare silicon, traced every shape on it by hand, and gave the result away. I rebuilt the engine on
               their trace, and keep a second copy of their archive on hardware I control.
             </p>
           </div>

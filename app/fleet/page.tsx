@@ -9,7 +9,7 @@ export default function FleetPage() {
         title="Fleet health"
         lede={
           <>
-            Every computer in the cluster reports for itself: disk, temperature, load, radio and
+            Every computer on the house network reports for itself: disk, temperature, load, radio and
             internet link. This page reads the collector that gathers those reports.
           </>
         }

@@ -67,10 +67,10 @@ export default function PhotoStamperPage() {
         <Section title="The fine print, short as ever">
           <p>
             Third gift from the people at <Link href="/housecalls">House Calls</Link>. Photos live
-            on your own device and nowhere else; the stamping also scrubs the photo&apos;s hidden
+            on your own device and nowhere else. The stamping also scrubs the photo&apos;s hidden
             metadata, so what it says is exactly what anyone can see on it. Location goes on the
             stamp only if you grant it, and a photo without GPS is still a stamped photo. Export
-            the jobs that matter; clearing your browser clears the rest.
+            the jobs that matter. Clearing your browser clears the rest.
           </p>
         </Section>
       </div>

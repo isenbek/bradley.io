@@ -57,7 +57,7 @@ export default function QuotePadPage() {
           lede={
             <>
               Line items in, a professional quote out: print it, text it, done. Free, no account, no
-              signup, and nothing you type ever leaves your phone. Set your shop once; it remembers.
+              signup, and nothing you type ever leaves your phone. Set your shop once and it remembers.
             </>
           }
         />

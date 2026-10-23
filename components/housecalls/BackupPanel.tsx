@@ -127,7 +127,7 @@ export function BackupPanel() {
             <p className="beta-qp-shopline beta-qp-field--wide">
               Optional, and the pad above never needs it: a real database on your phone for quote
               history, plus backup as a twelve-word code, like a crypto wallet. First activation
-              downloads about 8MB, once; after that it lives on your device. No account, ever.
+              downloads about 8MB, once. After that it lives on your device. No account, ever.
             </p>
             <p className="beta-qp-field--wide">
               <button className="btn" onClick={activate}>Turn on history &amp; backup</button>

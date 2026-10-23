@@ -477,9 +477,9 @@ export default function BetaCostPage() {
       <Section title="The modelled team">
         <p>
           {legacyHeads} people at {costUsd(legacyTotal)} a year fully loaded. Salary figures are
-          market rate; the 1.4x loading covers benefits, tax and overhead.
+          market rate. The 1.4x loading covers benefits, tax and overhead.
           {halfTimeRoles > 0
-            ? ` That is every seat at full time; the cost model counts ${halfTimeRoles === 1 ? "one of them" : `${halfTimeRoles} of them`} at half time.`
+            ? ` That is every seat at full time. The cost model counts ${halfTimeRoles === 1 ? "one of them" : `${halfTimeRoles} of them`} at half time.`
             : ""}
         </p>
       </Section>

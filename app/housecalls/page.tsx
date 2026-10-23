@@ -152,7 +152,7 @@ export default function HouseCallsPage() {
         <p>
           Where the hunt is looking: eighty-three Michigan counties, vendored from the Census and
           drawn dark until the harvest lights them up. The blue dot is home base. Only county
-          totals ever reach this map; nothing finer leaves the shop.
+          totals ever reach this map. Nothing finer leaves the shop.
         </p>
       </Section>
 

@@ -10,7 +10,7 @@ const CHANNELS = [
     q: "Where are you standing?",
     title: "The input plane",
     body:
-      "Pick your s by dragging, with the critical strip drawn as an amber band, the ½ line as a dashed fault, the first zeros as cyan dots, and the pole at s = 1 marked with an ×. Drag near a zero and it snaps. East of the strip the raw series converges; inside it, never.",
+      "Pick your s by dragging, with the critical strip drawn as an amber band, the ½ line as a dashed fault, the first zeros as cyan dots, and the pole at s = 1 marked with an ×. Drag near a zero and it snaps. East of the strip the raw series converges. Inside it, it never does.",
   },
   {
     k: "CH·Σ",

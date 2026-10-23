@@ -70,16 +70,16 @@ bright shirt walks in)        re-mapped brightness
 the fan, the monitors        real pixel change, just         a smarter decision rule
                               not the change you care about   (adaptive per-cell gate)`}</Code>
         <p>
-          No brightness trick fixes a re-metering camera; no camera setting fixes a fan. You want one of
+          No brightness trick fixes a camera that keeps readjusting itself. No camera setting fixes a fan. You want one of
           each.
         </p>
       </Section>
 
       <Section title="Fix one, kill it at the source: lock the camera">
         <p>
-          A webcam left on auto re-meters constantly. Auto-exposure rebalances when a screen flickers or
-          something bright enters frame; auto-white-balance shifts the whole color map; continuous
-          autofocus hunts. Every one of those is a <em>whole-frame</em>{" "}change you then have to fight in
+          A webcam left on automatic keeps readjusting itself. Auto-exposure rebalances when a
+          screen flickers or something bright enters the frame. Auto-white-balance shifts every
+          color at once. Continuous autofocus hunts back and forth. Every one of those is a <em>whole-frame</em>{" "}change you then have to fight in
           software. The cameras expose a whole galaxy of these knobs over v4l2 (29 of them across the
           two we run) and the cure is to stop the automatic ones from moving.
         </p>

@@ -498,7 +498,7 @@ function ServicesBody({ initial }: { initial: NowSnapshot | null }) {
             <span className="beta-live-dot" data-active="false" />
           </span>
           <span>
-            Hollow: quiet or offline; the page still opens.{" "}
+            Hollow: quiet or offline, but the page still opens.{" "}
             <a href="#live">What each one reads</a>
           </span>
         </span>

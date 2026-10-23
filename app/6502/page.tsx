@@ -28,8 +28,8 @@ export default function Page() {
 
       <Section title="One chip was destroyed to make this">
         <p>
-          The visual6502 team decapped a 6502, photographed the die, traced every polygon by hand,
-          and gave the result away. Everything below stands on that.
+          The visual6502 team opened up a 6502, photographed the bare silicon, traced every shape
+          on it by hand, and gave the result away. Everything below stands on that.
         </p>
       </Section>
 
@@ -59,10 +59,10 @@ export default function Page() {
 
       <Section title="The instruction set">
         <p>
-          56 mnemonics, 151 documented opcodes, 13 addressing modes. An 8-bit opcode has room for
-          256, and the decoder answers to most of the rest as well, because it decodes bit patterns
-          rather than consulting a table. The leftovers have been load-bearing in demoscene code
-          for forty years.
+          56 instruction names, 151 documented instruction codes, 13 ways to address memory. An
+          8-bit code has room for 256, and the chip responds to most of the undocumented ones as
+          well, because it reads the bit patterns rather than looking them up in a table. Demo
+          programmers have relied on those leftovers for forty years.
         </p>
       </Section>
 

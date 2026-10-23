@@ -9,7 +9,7 @@ export default function Page() {
         title="The receiver's own fix"
         lede={
           <>
-            Where the antenna thinks it is, and which satellites it is using to decide. A skyplot of the constellation overhead.
+            Where the antenna thinks it is, and which satellites it is using to decide. A map of the sky shows the satellites overhead.
           </>
         }
       />

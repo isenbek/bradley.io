@@ -62,9 +62,9 @@ export default function CounterCardsPage() {
           a few cards by the register?&quot;
         </p>
         <p>
-          The rules ride along: cards only where the counter says yes; never at a shop we are
-          actively pitching until they know us; no tracking codes on the cards, so the only
-          measure is whether people show up, which the{" "}
+          The rules ride along. Cards go only where the counter says yes. Never at a shop we are
+          pitching, until they know us. No tracking codes on the cards, so the only measure is
+          whether people show up, which the{" "}
           <Link href="/housecalls">open ledger</Link> reports honestly. The full plan is in{" "}
           <Link href="/housecalls/docs/counter-cards">the paperwork</Link>.
         </p>

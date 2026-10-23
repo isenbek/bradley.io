@@ -482,7 +482,7 @@ export default function BetaWorkPage() {
         <p>
           Four GitHub organisations, {fmtMonth(earliest)} to now: {nf(totalRepos)} repositories and{" "}
           {nf(commitsSince)} commits. Each is counted from my first commit in it{" "}
-          (<a href="#counting">how</a>); work before {earliest.slice(0, 4)} is on the{" "}
+          (<a href="#counting">how</a>). Work before {earliest.slice(0, 4)} is on the{" "}
           <Link href="/resume">resume</Link>.
         </p>
       </Section>
@@ -570,7 +570,7 @@ export default function BetaWorkPage() {
                 <strong>Scripts.</strong>{" "}
                 A commit made by a script counts the same as one made by
                 hand. This site&apos;s deploy script writes a version bump and a build stamp every
-                time it ships, and those are more than half of its log; Sysforge-AI&apos;s nightly
+                time it ships, and those are more than half of its log, and Sysforge-AI&apos;s nightly
                 refresh is the other case.
               </li>
               <li>

@@ -99,19 +99,27 @@ export default function NetworkPage() {
         <Section title="What an operator is">
           <p>
             One skilled engineer, one territory, one machine on hardware they own. Their AI
-            harvests, maps, qualifies, and drafts; they read and sign everything before it goes
-            anywhere; the whole hunt runs on a public page like{" "}
+            harvests, maps, qualifies, and drafts. They read and sign everything before it goes anywhere. The whole hunt runs on a public page like{" "}
             <Link href="/housecalls">this one</Link>. The kit is the same for everyone. The
             biography is not.
           </p>
 
           <h2>The rules that do not bend</h2>
           <p>
-            Every operator runs the same doctrine, and it is not adjustable: an AI drafts and a
-            human signs; every message discloses the AI; one email, and a no means no forever; no
-            cold text messages, ever; government bodies through procurement only; correspondence
-            stays private; the ledger stays honest, misses included. The shared rules are the
-            network: every operator&apos;s honest ledger vouches for every other one.
+            Every operator runs the same rules, and they are not adjustable:
+          </p>
+          <ul>
+            <li>An AI drafts and a human signs.</li>
+            <li>Every message says an AI helped write it.</li>
+            <li>One email, and a no means no forever.</li>
+            <li>No cold text messages, ever.</li>
+            <li>Government bodies through procurement only.</li>
+            <li>Correspondence stays private.</li>
+            <li>The ledger stays honest, misses included.</li>
+          </ul>
+          <p>
+            The shared rules are the network: every operator&apos;s honest ledger vouches for every
+            other one.
           </p>
 
           <h2>Territories</h2>
@@ -165,7 +173,7 @@ export default function NetworkPage() {
 
         <Section title="Where this stands, honestly">
           <p>
-            The flagship machine is built, public, and mid-hunt; it has not yet won its first
+            The flagship machine is built, public, and mid-hunt. It has not yet won its first
             engagement, and a network sells nothing it has not proven. So the sequence is
             published here the same as everything else: the flagship wins first. Then one pilot
             operator, hand-picked and free, proves the machine transfers to a different human in

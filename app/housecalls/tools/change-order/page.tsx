@@ -71,7 +71,7 @@ export default function ChangeOrderPage() {
             Another gift from the people at <Link href="/housecalls">House Calls</Link>. Same deal
             as <Link href="/housecalls/tools/quote">the quote pad</Link>, whose shop setup this
             tool shares: no account, no emails collected, everything stored on your own device and
-            nowhere else. A signed change order is worth paper; print the ones that matter.
+            nowhere else. A signed change order is worth paper, so print the ones that matter.
           </p>
         </Section>
       </div>
