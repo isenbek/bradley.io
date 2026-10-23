@@ -1,17 +1,17 @@
 {
-  "generated": "2026-10-20T00:02:37.583400+00:00",
+  "generated": "2026-10-23T00:01:55.474734+00:00",
   "sources": {
     "unifiedSpec": "https://mcp.campaignbrain.dev/openapi.json",
     "metadata": "scripts/mcp-catalog-meta.json (pulled 2026-08-29)"
   },
   "stats": {
     "totalServices": 55,
-    "totalEndpoints": 2384,
+    "totalEndpoints": 2470,
     "totalCategories": 5,
     "mcpServers": 3,
     "mcpServersReachable": 3,
-    "fleetServices": 91,
-    "fleetEndpoints": 3661,
+    "fleetServices": 92,
+    "fleetEndpoints": 3794,
     "uncataloguedServices": 51
   },
   "mcpServers": [
@@ -37,7 +37,7 @@
         },
         {
           "name": "resolve",
-          "description": "Read one URI of the tm:// namespace and get its content with typed links to the things around it. Start with tm://tinymachines/ (the mounts), read any URI ending in / to list its children, and read a file or page to get it: tm://tinymachines/fs/docs/nes/pile.md is a file of this checkout, tm://tinymachines/http/tinymachines.ai/docs/nes/pile?as=text is the page it becomes, as its readable text. A notebook page links to its markdown (tm:source) and the file links back (tm:renders-as); up, collection, alternate and describedby are the IANA relations. tm://tinymachines/entity/ holds the autopsy's patterns, games, routines and lessons as things with links between them (entity/pattern/pad-poll names every game and routine it was found in). ?as=stat gives metadata without content, ?as=links every link of a thing a page at a time (a read with more than a hundred ends in a tm:links link to it). A URI that does not resolve is refused with the nearest ones that do, so try the nearest rather than guessing."
+          "description": "Read one URI of the tm:// namespace and get its content with typed links to the things around it. Start with tm://tinymachines/ (the mounts), read any URI ending in / to list its children, and read a file or page to get it: tm://tinymachines/fs/docs/nes/pile.md is a file of this checkout, tm://tinymachines/http/tinymachines.ai/docs/nes/pile?as=text is the page it becomes, as its readable text. A notebook page links to its markdown (tm:source) and the file links back (tm:renders-as); up, collection, alternate and describedby are the IANA relations. tm://tinymachines/entity/ holds the autopsy's patterns, games, routines and lessons as things with links between them (entity/pattern/pad-poll names every game and routine it was found in). tm://tinymachines/mcp/ holds the MCP servers this box reads, each with its tools, resources and prompts as things with addresses (mcp/<server>/tools/<name> is one tool, its schema as the server published it). Every read's mimeType says what kind of thing it is (application/vnd.tm.<kind>+json for a thing this server composes, a file's own type otherwise), tm://tinymachines/kinds/ lists the kinds this host has served, and a link may carry its target's type. ?as=set on an entity, with rel=, reads a set and its members in one. ?as=stat gives metadata without content, ?as=links every link of a thing a page at a time (a read with more than a hundred ends in a tm:links link to it). A URI that does not resolve is refused with the nearest ones that do, so try the nearest rather than guessing."
         }
       ],
       "reachable": true
@@ -227,7 +227,7 @@
             "address-hygiene",
             "mcp-tools"
           ],
-          "endpointCount": 198
+          "endpointCount": 199
         },
         {
           "id": "cbfiles",
@@ -246,6 +246,24 @@
             "mcp-tools"
           ],
           "endpointCount": 77
+        },
+        {
+          "id": "cbdistricts",
+          "name": "Congressional Districts",
+          "url": "https://districts.campaignbrain.dev",
+          "description": "119th Congress, 441 districts. Demographics, GeoJSON boundaries, radio coverage, geographic layers, state data. Embedded MCP at /mcp.",
+          "auth": "None (public)",
+          "capabilities": [
+            "districts",
+            "demographics",
+            "geojson",
+            "states",
+            "radio-coverage",
+            "intersections",
+            "layers",
+            "mcp-tools"
+          ],
+          "endpointCount": 56
         },
         {
           "id": "cbsurveys",
@@ -402,24 +420,6 @@
             "mcp-tools"
           ],
           "endpointCount": 7
-        },
-        {
-          "id": "cbdistricts",
-          "name": "Congressional Districts",
-          "url": "https://districts.campaignbrain.dev",
-          "description": "119th Congress, 441 districts. Demographics, GeoJSON boundaries, radio coverage, geographic layers, state data. Embedded MCP at /mcp.",
-          "auth": "None (public)",
-          "capabilities": [
-            "districts",
-            "demographics",
-            "geojson",
-            "states",
-            "radio-coverage",
-            "intersections",
-            "layers",
-            "mcp-tools"
-          ],
-          "endpointCount": 0
         },
         {
           "id": "sdr",
@@ -823,7 +823,7 @@
             "inbox",
             "mcp-tools"
           ],
-          "endpointCount": 490
+          "endpointCount": 519
         },
         {
           "id": "cbapp",
@@ -1057,7 +1057,7 @@
   "uncatalogued": [
     {
       "id": "cbradio2",
-      "endpointCount": 135
+      "endpointCount": 182
     },
     {
       "id": "cbgreenroom",
