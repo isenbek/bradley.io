@@ -23,6 +23,13 @@
    through the gap, and the page reads as broken at exactly the moment someone is
    flicking through it.
    --------------------------------------------------------------------------- */
+/* Labels one step up (Brad, 2026-10-23: "keep it, a bit bigger"). The kit's
+   smallest size is 11px; on this site the mono caps labels (nav, crumbs,
+   tags, panel bars, axis ticks) read at 12px, the same as --text-fine. The
+   datasheet voice stays; only its smallest size goes. See READING FLOOR at
+   the end of this file for sentences. */
+:root { --text-micro: 0.75rem; }
+
 body:has(.beta-root) {
   background: var(--color-paper);
   color: var(--color-ink);
@@ -198,6 +205,9 @@ body:has(.beta-root) {
 
 /* A panel that holds a chart needs its own vertical rhythm between blocks. */
 .beta-orggrid { display: grid; gap: calc(var(--u) * 6); margin: calc(var(--u) * 6) 0; }
+/* A grid item defaults to min-width:auto and would hold the panel at its
+   content width, past a 320px screen. */
+.beta-orggrid > * { min-width: 0; }
 .beta-org__what { color: var(--color-glass-muted); font-size: var(--text-fine); margin: 0 0 calc(var(--u) * 4); }
 
 /* ---------------------------------------------------------------------------
@@ -310,6 +320,9 @@ body:has(.beta-root) {
    --------------------------------------------------------------------------- */
 .beta-tools {
   display: grid;
+  /* One column, clamped: an implicit column sizes to its widest unbreakable
+     run (a tm:// address in a description) and ran past a 320px screen. */
+  grid-template-columns: minmax(0, 1fr);
   gap: calc(var(--u) * 2);
   margin-top: calc(var(--u) * 4);
   padding-top: calc(var(--u) * 3);
@@ -321,9 +334,12 @@ body:has(.beta-root) {
   font-size: var(--text-data);
   color: var(--color-accent);
   font-weight: 500;
+  /* Tool names are long unbroken identifiers; let them break on a phone. */
+  overflow-wrap: anywhere;
 }
 .beta-tool span {
   display: block;
+  overflow-wrap: anywhere;
   font-size: var(--text-fine);
   line-height: 1.5;
   color: var(--color-glass-muted);
@@ -7687,7 +7703,9 @@ a.beta-papers-fig:focus-visible { outline: 2px solid var(--color-blue-ink); outl
 /* Straight under the lede it is the page's first move, not its last: no gap
    beyond the lede's own. */
 .page > .lede + .beta-t-actions { margin-top: 0; }
-.beta-t-actions .btn { flex: none; }
+/* A button keeps its width until the row runs out; then a long label wraps
+   inside it rather than pushing past a 320px screen (/housecalls). */
+.beta-t-actions .btn { flex: 0 1 auto; max-width: 100%; }
 .beta-t-actions .quiet {
   flex: 1 1 16rem;
   max-width: 44ch;
@@ -7766,8 +7784,13 @@ a.beta-papers-fig:focus-visible { outline: 2px solid var(--color-blue-ink); outl
 .beta-motion-note, .beta-greet__note, .beta-greet__verdict-body, .beta-work-card__desc,
 .beta-papers-absnote, .beta-chat-note, .beta-chat-disclose, .beta-search__snip,
 .beta-about-fig figcaption, .beta-stack__cap, .beta-die figcaption, .beta-t-actions .quiet,
-.beta-live-say, .beta-runner__caption {
+.beta-live-say, .beta-runner__caption, .beta-tool span {
   font-size: var(--text-body);
   line-height: 1.5;
 }
 .ledger table { font-size: var(--text-data); }
+
+/* A panel bar whose name and note do not fit on one line (a narrow card on a
+   320px phone, /mcp) wraps the note under the name instead of running it
+   past the panel's edge. */
+.panel-bar { flex-wrap: wrap; }
