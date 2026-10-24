@@ -1,18 +1,15 @@
-import { ogV3ImageResponse, OG_V3_SIZE, OG_V3_CONTENT_TYPE } from "@/lib/og-card-v3"
+import { ogKitImageResponse, OG_KIT_SIZE, OG_KIT_CONTENT_TYPE } from "@/lib/og-card-kit"
 
 export const runtime = "nodejs"
 export const alt = "I gave a junk-pile eyes, ears, and a voice · bradley.io"
-export const size = OG_V3_SIZE
-export const contentType = OG_V3_CONTENT_TYPE
+export const size = OG_KIT_SIZE
+export const contentType = OG_KIT_CONTENT_TYPE
 
 export default function OG() {
-  return ogV3ImageResponse({
+  return ogKitImageResponse({
     eyebrow: "lab · field notes",
     title: "I gave a junk-pile eyes, ears, and a voice.",
-    subtitle:
+    sentence:
       "A caseless home server of salvaged parts ('60s mics, thrift-store everything, early-'90s Altec Lansings) taught to see, hear, think, and speak. Every model on the metal.",
-    tags: ["anti-cloud", "STT+TTS", "vision", "salvage"],
-    accent: "gold",
-    cta: "Read the field notes →",
   })
 }

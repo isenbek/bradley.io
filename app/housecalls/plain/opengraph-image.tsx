@@ -1,18 +1,15 @@
-import { ogV3ImageResponse, OG_V3_SIZE, OG_V3_CONTENT_TYPE } from "@/lib/og-card-v3"
+import { ogKitImageResponse, OG_KIT_SIZE, OG_KIT_CONTENT_TYPE } from "@/lib/og-card-kit"
 
 export const runtime = "nodejs"
 export const alt = "House Calls, in plain English · bradley.io"
-export const size = OG_V3_SIZE
-export const contentType = OG_V3_CONTENT_TYPE
+export const size = OG_KIT_SIZE
+export const contentType = OG_KIT_CONTENT_TYPE
 
 export default function OG() {
-  return ogV3ImageResponse({
+  return ogKitImageResponse({
     eyebrow: "House Calls",
     title: "The plain-English version.",
-    subtitle:
+    sentence:
       "What is changing in the computer world, why your technology costs should be going down instead of up, and what we are doing about it.",
-    tags: ["No jargon", "Costs down", "Fair prices"],
-    accent: "blue",
-    cta: "Read it →",
   })
 }

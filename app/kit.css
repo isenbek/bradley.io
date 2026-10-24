@@ -4820,15 +4820,6 @@ a.beta-papers-fig:focus-visible { outline: 2px solid var(--color-blue-ink); outl
 .beta-home-chips > .measured > span { min-width: 0; }
 .beta-home-chips time { font-variant-numeric: tabular-nums; }
 
-@media (min-width: 80rem) {
-  /* The kit's rail starts at row 2 and spans two rows (lede, buttons). This
-     hero has a third thing in the left column, so the rail spans it too. */
-  .hero.beta-home-hero > .hero-chips {
-    grid-row: 2 / span 3;
-    grid-template-columns: minmax(0, 1fr);
-    margin: 0;
-  }
-}
 
 /* ---- The three doors (Me, Work, Projects) ------------------------------
    The top level of the site, under the headline, above the fold on a phone.
@@ -4893,25 +4884,24 @@ a.beta-papers-fig:focus-visible { outline: 2px solid var(--color-blue-ink); outl
   .beta-door__label { font-size: min(16cqi, var(--text-h1)); }
   .beta-door__blurb { display: block; margin-top: calc(var(--u) * 1); }
 }
-@media (min-width: 80rem) {
-  /* Rows set by hand (2026-10-23): the name line, then the title, full
-     width; the hiring line, the doors and the lede down the left; the chips
-     beside them on the right. The kit's grid assumes the title is row 1. */
-  .hero.beta-home-hero > .beta-home-who { grid-column: 1 / -1; grid-row: 1; }
-  .hero.beta-home-hero > .hero-title { grid-row: 2; }
-  .hero.beta-home-hero > .beta-resume-hire { grid-column: 1; grid-row: 3; }
-  .hero.beta-home-hero > .beta-doors { grid-column: 1; grid-row: 4; }
-  .hero.beta-home-hero > .lede { grid-column: 1; grid-row: 5; }
-  .hero.beta-home-hero > .hero-chips { grid-row: 3 / span 3; }
+/* The home hero is the tablet layout at every width from a tablet up (Brad,
+   2026-10-23: "lock sizing into tablet for both"). One column, as wide as a
+   tablet's, with the tablet's headline size, so a laptop screen shows the
+   whole hero above the fold. The kit's two-column chip rail at 80rem is
+   switched off for this hero, and its top padding is the page's alone. */
+.hero.beta-home-hero { padding-top: 0; }
+@media (min-width: 48rem) {
+  .hero.beta-home-hero { max-width: 48rem; }
+  .hero.beta-home-hero .hero-title { font-size: 4.1rem; }
 }
-
-/* The name over the headline, in the kit's eyebrow voice (mono caps, the
-   accent, a hairline running out to the right). */
-.beta-home-who { margin: 0 0 calc(var(--u) * 4); }
+@media (min-width: 80rem) {
+  .hero.beta-home-hero:has(> .hero-chips) { display: block; }
+  .hero.beta-home-hero > .hero-chips { display: grid; padding-top: 0; margin: calc(var(--u) * 7) 0 0; }
+}
 /* The hiring line sits between the headline and the doors: room above so
    it does not touch the headline, room below before the doors. */
 .hero.beta-home-hero > .beta-resume-hire {
-  margin: calc(var(--u) * 5) 0 calc(var(--u) * 6);
+  margin: calc(var(--u) * 4) 0 calc(var(--u) * 5);
   font-size: var(--text-body);
 }
 /* Die Runner's one-line intro, inside the 6502 section: the gap of a

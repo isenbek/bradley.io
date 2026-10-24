@@ -1,6 +1,6 @@
 import { existsSync, readFileSync } from "fs"
 import { join } from "path"
-import { ogV3ImageResponse, OG_V3_SIZE, OG_V3_CONTENT_TYPE } from "@/lib/og-card-v3"
+import { ogKitImageResponse, OG_KIT_SIZE, OG_KIT_CONTENT_TYPE } from "@/lib/og-card-kit"
 import {
   DOMAIN_FALLBACK,
   domainLabel,
@@ -10,8 +10,8 @@ import {
 
 export const runtime = "nodejs"
 export const alt = "Papers · bradley.io"
-export const size = OG_V3_SIZE
-export const contentType = OG_V3_CONTENT_TYPE
+export const size = OG_KIT_SIZE
+export const contentType = OG_KIT_CONTENT_TYPE
 
 /** The card's photo frame is 430 by 234. A figure is used only if it fits it. */
 const FRAME = 430 / 234
@@ -74,14 +74,12 @@ export default function OG() {
   // rejected and its data deleted (scripts/papers-pipeline.py), and the page
   // counts them. The card states what is listed, in the same two numbers the
   // page prints.
-  return ogV3ImageResponse({
+  return ogKitImageResponse({
     eyebrow: "Papers · TerraPulse lab",
     title:
       s.notes > 0 ? `${s.notes} research notes. ${s.figures} figures.` : "Research notes, with figures.",
-    subtitle: "From seismology to space weather. Mostly drafts, each with its status.",
-    tags: s.tags,
-    accent: "coral",
-    cta: "Browse the notes →",
+    sentence: "From seismology to space weather. Mostly drafts, each with its status.",
+    note: s.tags.slice(0, 2).join(" · "),
     image: s.image,
     imageFrame: Boolean(s.image),
   })

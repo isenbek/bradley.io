@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og"
 import { promises as fs } from "fs"
-import { ogV3ImageResponse, OG_V3_SIZE, OG_V3_CONTENT_TYPE } from "@/lib/og-card-v3"
+import { ogKitImageResponse, OG_KIT_SIZE, OG_KIT_CONTENT_TYPE } from "@/lib/og-card-kit"
 
 export const runtime = "nodejs"
 // Regenerate on every fetch so a share/unfurl gets the most recent frame
@@ -9,8 +9,8 @@ export const dynamic = "force-dynamic"
 export const revalidate = 0
 
 export const alt = "Eyes: the latest frame from the bradley.io box"
-export const size = OG_V3_SIZE
-export const contentType = OG_V3_CONTENT_TYPE
+export const size = OG_KIT_SIZE
+export const contentType = OG_KIT_CONTENT_TYPE
 
 const CACHE = process.env.CAM_CACHE_DIR || "/var/lib/bradley-cam"
 const BLUE = "#13B8F3"
@@ -39,14 +39,11 @@ export default async function Image() {
     }
   } catch {
     // No frame yet — fall back to the static text card.
-    return ogV3ImageResponse({
+    return ogKitImageResponse({
       eyebrow: "live · eyes",
       title: "A frame, once a minute.",
-      subtitle:
+      sentence:
         "A self-hosted frame grab from the attached camera, cached on the box, refreshed every minute. No stream, no cloud.",
-      tags: ["v4l2", "ffmpeg", "systemd", "self-hosted"],
-      accent: "blue",
-      cta: "See the latest frame →",
     })
   }
 
@@ -137,6 +134,6 @@ export default async function Image() {
         </div>
       </div>
     ),
-    { ...OG_V3_SIZE, headers: { "cache-control": "no-store, max-age=0, must-revalidate" } }
+    { ...OG_KIT_SIZE, headers: { "cache-control": "no-store, max-age=0, must-revalidate" } }
   )
 }

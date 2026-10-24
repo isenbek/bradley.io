@@ -10,16 +10,20 @@ import {
 } from "@/lib/bio-logo-path"
 
 /**
- * The share card in the kit's style (2026-10-23, the home card first; the
- * other routes still use lib/og-card-v3.tsx).
+ * The share card, in the kit's style: every route's opengraph-image.tsx
+ * (2026-10-23; it replaced lib/og-card-v3.tsx, the Bio Blue card).
  *
  * A datasheet page: paper ground, ink type, hairline rules in ink. Archivo
  * for the headline, Plex Mono for labels, Plex Serif for the sentence, and
- * the logo's steel as the one accent, as on the site. No gradient, no glow.
+ * the logo's steel as the one accent, as on the site. No gradient, no glow,
+ * no pills. An image, when a card has one, sits in an ink frame beside the
+ * headline, the way a figure sits on a page.
  *
  * Satori cannot read CSS variables, so the kit's tokens are literal hex here,
  * copied from app/beta/kit/tokens.css and the top of app/kit.css. Fonts are
- * TTF copies of the kit's own (lib/og-fonts/README.md).
+ * TTF copies of the kit's own, latin only (lib/og-fonts/README.md): a card's
+ * words must stay in that range, because a missing glyph would make next/og
+ * fetch a font from the network.
  */
 
 export const OG_KIT_SIZE = { width: 1200, height: 630 }
@@ -35,18 +39,36 @@ const FONTS_DIR = path.join(process.cwd(), "lib/og-fonts")
 const font = (f: string) => readFileSync(path.join(FONTS_DIR, f))
 
 export interface OgKitConfig {
-  /** Mono caps over the headline. */
+  /** Mono caps over the headline: what the page is. */
   eyebrow: string
-  /** The headline, one entry per line. */
-  lines: string[]
-  /** One sentence under it, in the serif. */
+  /** The headline. An array sets one entry per line. */
+  title: string | string[]
+  /** Set the headline in caps, as the home hero is. */
+  caps?: boolean
+  /** One or two sentences under the headline, in the serif. */
   sentence?: string
-  /** Mono caps, bottom right. */
-  foot?: string
+  /** Mono caps in the masthead, right. Short. */
+  note?: string
+  /** A data URI, shown beside the headline. */
+  image?: string
+  /** Frame the image (a photo or a figure). A drawing with its own edge goes bare. */
+  imageFrame?: boolean
+}
+
+/** Headline size from its longest line and the width it has. */
+function titleSize(lines: string[], narrow: boolean): number {
+  const longest = Math.max(...lines.map((l) => l.length))
+  const total = lines.join(" ").length
+  const sizes = narrow ? [72, 60, 52, 46] : [100, 84, 70, 58]
+  const n = lines.length > 1 ? longest : total
+  return n <= 18 ? sizes[0] : n <= 28 ? sizes[1] : n <= 42 ? sizes[2] : sizes[3]
 }
 
 export function ogKitImageResponse(cfg: OgKitConfig): ImageResponse {
-  const big = cfg.lines.length > 2 ? 84 : 100
+  const lines = Array.isArray(cfg.title) ? cfg.title : [cfg.title]
+  const narrow = Boolean(cfg.image)
+  // Three caps lines at the full size overrun the card's height and width.
+  const size = cfg.caps && lines.length > 2 ? 84 : titleSize(lines, narrow)
   return new ImageResponse(
     (
       <div
@@ -57,7 +79,7 @@ export function ogKitImageResponse(cfg: OgKitConfig): ImageResponse {
           flexDirection: "column",
           background: PAPER,
           color: INK,
-          padding: "56px 72px 48px",
+          padding: "52px 72px 46px",
           fontFamily: "Plex Serif",
         }}
       >
@@ -67,7 +89,7 @@ export function ogKitImageResponse(cfg: OgKitConfig): ImageResponse {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            paddingBottom: 22,
+            paddingBottom: 20,
             borderBottom: `2px solid ${INK}`,
           }}
         >
@@ -81,51 +103,76 @@ export function ogKitImageResponse(cfg: OgKitConfig): ImageResponse {
             </svg>
             <div style={{ fontFamily: "Archivo", fontSize: 30, letterSpacing: "-0.01em" }}>bradley.io</div>
           </div>
-          <div style={{ fontFamily: "Plex Mono", fontSize: 18, letterSpacing: "0.12em", color: MUTED }}>
-            {cfg.foot ?? ""}
+          <div
+            style={{
+              fontFamily: "Plex Mono",
+              fontSize: 18,
+              letterSpacing: "0.12em",
+              textTransform: "uppercase",
+              color: MUTED,
+            }}
+          >
+            {cfg.note ?? ""}
           </div>
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", flexGrow: 1, justifyContent: "center" }}>
-          <div
-            style={{
-              display: "flex",
-              fontFamily: "Plex Mono",
-              fontSize: 22,
-              letterSpacing: "0.12em",
-              textTransform: "uppercase",
-              color: STEEL_INK,
-              marginBottom: 22,
-            }}
-          >
-            {cfg.eyebrow}
+        <div style={{ display: "flex", flexGrow: 1, alignItems: "center", gap: 48 }}>
+          <div style={{ display: "flex", flexDirection: "column", flex: 1, minWidth: 0 }}>
+            <div
+              style={{
+                display: "flex",
+                fontFamily: "Plex Mono",
+                fontSize: 22,
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
+                color: STEEL_INK,
+                marginBottom: 20,
+              }}
+            >
+              {cfg.eyebrow}
+            </div>
+            <div style={{ display: "flex", flexDirection: "column" }}>
+              {lines.map((l) => (
+                <div
+                  key={l}
+                  style={{
+                    fontFamily: "Archivo",
+                    fontSize: size,
+                    lineHeight: cfg.caps ? 0.98 : 1.04,
+                    letterSpacing: "-0.02em",
+                    textTransform: cfg.caps ? "uppercase" : "none",
+                  }}
+                >
+                  {l}
+                </div>
+              ))}
+            </div>
           </div>
-          <div style={{ display: "flex", flexDirection: "column" }}>
-            {cfg.lines.map((l) => (
-              <div
-                key={l}
-                style={{
-                  fontFamily: "Archivo",
-                  fontSize: big,
-                  lineHeight: 0.98,
-                  letterSpacing: "-0.02em",
-                  textTransform: "uppercase",
-                }}
-              >
-                {l}
-              </div>
-            ))}
-          </div>
+          {cfg.image ? (
+            <div
+              // Only a framed image carries border and shadow: satori draws
+              // boxShadow "none" as a black box at the card's origin.
+              style={
+                cfg.imageFrame
+                  ? { display: "flex", flexShrink: 0, border: `2px solid ${INK}`, boxShadow: `6px 6px 0 ${INK}` }
+                  : { display: "flex", flexShrink: 0 }
+              }
+            >
+              <img src={cfg.image} width={400} height={218} alt="" style={{ objectFit: "cover" }} />
+            </div>
+          ) : null}
         </div>
 
         {cfg.sentence ? (
           <div
             style={{
               display: "flex",
-              paddingTop: 22,
+              paddingTop: 20,
               borderTop: `1px solid ${INK}`,
-              fontSize: 28,
+              fontSize: 26,
               lineHeight: 1.35,
+              maxHeight: 20 + 26 * 1.35 * 2 + 2,
+              overflow: "hidden",
             }}
           >
             {cfg.sentence}

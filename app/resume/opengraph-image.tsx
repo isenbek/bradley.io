@@ -1,18 +1,15 @@
-import { ogV3ImageResponse, OG_V3_SIZE, OG_V3_CONTENT_TYPE } from "@/lib/og-card-v3"
+import { ogKitImageResponse, OG_KIT_SIZE, OG_KIT_CONTENT_TYPE } from "@/lib/og-card-kit"
 
 export const runtime = "nodejs"
 export const alt = "Resume of Bradley S. Isenbek · bradley.io"
-export const size = OG_V3_SIZE
-export const contentType = OG_V3_CONTENT_TYPE
+export const size = OG_KIT_SIZE
+export const contentType = OG_KIT_CONTENT_TYPE
 
 export default function OG() {
-  return ogV3ImageResponse({
+  return ogKitImageResponse({
     eyebrow: "Resume",
     title: "Bradley S. Isenbek.",
-    subtitle:
+    sentence:
       "AI systems architect and machine learning engineer. Open to full-time roles in AI systems and data architecture.",
-    tags: ["Open to full-time roles", "Remote or Grand Rapids, MI", "AI + data systems"],
-    accent: "blue",
-    cta: "Read the resume →",
   })
 }

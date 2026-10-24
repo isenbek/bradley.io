@@ -1,11 +1,11 @@
 import { readFileSync } from "fs"
 import { join } from "path"
-import { ogV3ImageResponse, OG_V3_SIZE, OG_V3_CONTENT_TYPE } from "@/lib/og-card-v3"
+import { ogKitImageResponse, OG_KIT_SIZE, OG_KIT_CONTENT_TYPE } from "@/lib/og-card-kit"
 
 export const runtime = "nodejs"
 export const alt = "Cost analysis: a frozen case study · bradley.io"
-export const size = OG_V3_SIZE
-export const contentType = OG_V3_CONTENT_TYPE
+export const size = OG_KIT_SIZE
+export const contentType = OG_KIT_CONTENT_TYPE
 
 /**
  * The share card for /cost-analysis. cost-model.json is a FROZEN case study of
@@ -84,12 +84,10 @@ export default function OG() {
     commits !== null ? `${commits.toLocaleString("en-US")} commits in window` : null,
   ].filter((t): t is string => t !== null)
 
-  return ogV3ImageResponse({
+  return ogKitImageResponse({
     eyebrow: windowLabel ? `Case study · ${windowLabel}` : "Cost analysis · case study",
     title,
-    subtitle,
-    tags,
-    accent: "blue",
-    cta: "See the numbers →",
+    sentence: subtitle,
+    note: tags.slice(0, 2).join(" · "),
   })
 }

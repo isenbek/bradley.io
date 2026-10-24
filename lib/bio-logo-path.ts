@@ -8,7 +8,7 @@
  *   - BIO_LOGO_BOWL_PATH — the small inner swoop of the "b" bowl
  *   - BIO_LOGO_DOT       — the dot of the "i" (cx/cy/r for an <circle>)
  *
- * Used by `app/icon*.tsx`, `app/apple-icon.tsx`, `lib/og-card-v3.tsx`, and
+ * Used by `app/icon*.tsx`, `app/apple-icon.tsx`, `lib/og-card-kit.tsx`, and
  * `components/v3/BioLogo.tsx`. When the designer ships another revision,
  * regenerate this file from the new SVG and bump the version comment.
  */

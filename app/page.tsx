@@ -139,7 +139,6 @@ export default async function Home() {
       <div className="hero beta-home-hero">
         {/* Who, then what, then the one line a hiring manager came for
             (Brad, 2026-10-23: "name + open to roles up top"). */}
-        <p className="eyebrow beta-home-who">Bradley Isenbek · Grand Rapids, Michigan</p>
         <h1 className="hero-title">
           AI pilot.
           <br />

@@ -1,11 +1,11 @@
 import { readFileSync } from "fs"
 import { join } from "path"
-import { ogV3ImageResponse, OG_V3_SIZE, OG_V3_CONTENT_TYPE } from "@/lib/og-card-v3"
+import { ogKitImageResponse, OG_KIT_SIZE, OG_KIT_CONTENT_TYPE } from "@/lib/og-card-kit"
 
 export const runtime = "nodejs"
 export const alt = "MCP Catalog · bradley.io"
-export const size = OG_V3_SIZE
-export const contentType = OG_V3_CONTENT_TYPE
+export const size = OG_KIT_SIZE
+export const contentType = OG_KIT_CONTENT_TYPE
 
 function loadStats() {
   try {
@@ -20,13 +20,10 @@ function loadStats() {
 
 export default function OG() {
   const s = loadStats()
-  return ogV3ImageResponse({
+  return ogKitImageResponse({
     eyebrow: "Campaign Brain · MCP",
     title: `${s.totalServices} services. ${s.totalEndpoints} endpoints.`,
-    subtitle:
+    sentence:
       "FastAPI microservices for AI, data, communication, infrastructure, and business: all open via MCP to LLM agents.",
-    tags: ["AI", "Data", "Comms", "Infra", "Business"],
-    accent: "blue",
-    cta: "Browse catalog →",
   })
 }
