@@ -2093,6 +2093,26 @@ body:has(.beta-root) {
   line-height: 1.55;
 }
 .beta-cv-body .chips { margin: 0; }
+/* A role's fold sits between its bullets and its links: room on both sides. */
+.beta-cv-body > .beta-t-more { margin: 0 0 calc(var(--u) * 4); }
+/* The earlier roles, one line each (the /resume pass, 2026-10-23): years in
+   mono on the left, title and company beside them, a hairline between. The
+   full roles are in the fold under it. */
+.beta-cv-brief { list-style: none; margin: calc(var(--u) * 4) 0 calc(var(--u) * 2); padding: 0; max-width: 68rem; }
+.beta-cv-brief li {
+  display: grid;
+  grid-template-columns: minmax(0, 9rem) minmax(0, 1fr);
+  gap: calc(var(--u) * 4);
+  padding: calc(var(--u) * 2) 0;
+  border-top: 1px solid var(--color-rule);
+  font-size: var(--text-body);
+  line-height: 1.5;
+}
+.beta-cv-brief li:last-child { border-bottom: 1px solid var(--color-rule); }
+.beta-cv-brief__when { font-family: var(--font-mono); font-size: var(--text-data); color: var(--color-ink-muted); padding-top: 2px; }
+@media (max-width: 30rem) {
+  .beta-cv-brief li { grid-template-columns: minmax(0, 1fr); gap: calc(var(--u) * 1); }
+}
 @media (max-width: 720px) {
   .beta-cv-role { grid-template-columns: minmax(0, 1fr); }
   .beta-cv-when { display: flex; gap: calc(var(--u) * 1) calc(var(--u) * 4); flex-wrap: wrap; }

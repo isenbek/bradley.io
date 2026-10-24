@@ -17,7 +17,7 @@ import {
   SUMMARY_INTRO,
   type ResumeRole,
 } from "@/lib/resume"
-import { Grid, PageHead, Section } from "@/components/page"
+import { Grid, PageHead, ReadMore, Section } from "@/components/page"
 
 /**
  * The resume. Paper throughout: this is documentation about a person, not a
@@ -29,7 +29,16 @@ import { Grid, PageHead, Section } from "@/components/page"
  * reason most readers are here: what he is open to, where, and the three
  * ways onward (the PDF, a chat about this resume at /ask, and the contact
  * page). It carries no pay figure, by the owner's rule.
+ *
+ * THE /resume PASS (Brad, 2026-10-23), layout only: lib/resume.ts, the PDF
+ * and /ask are untouched. Each role since 2014 shows its first three bullets
+ * and folds the rest. The earlier roles are one line each, as the PDF gives
+ * them, with the full text in one fold. Core strengths moved up under the
+ * Summary. Folds are <details>: the text stays in the HTML and prints.
  */
+
+/** Bullets a role shows before its fold. */
+const SHOWN = 3
 
 function isExternal(href: string): boolean {
   return /^https?:\/\//.test(href)
@@ -45,7 +54,38 @@ function Bullets({ items }: { items: string[] }) {
   )
 }
 
-function Role({ role }: { role: ResumeRole }) {
+/**
+ * A role's groups split at the SHOWN-th bullet: the first part is shown, the
+ * rest folds. A group cut in two keeps its label on both sides.
+ */
+type Group = { label: string; bullets: string[] }
+function splitGroups(groups: Group[], n: number): [Group[], Group[]] {
+  const shown: Group[] = []
+  const rest: Group[] = []
+  let left = n
+  for (const g of groups) {
+    const take = Math.max(0, Math.min(left, g.bullets.length))
+    if (take > 0) shown.push({ label: g.label, bullets: g.bullets.slice(0, take) })
+    if (take < g.bullets.length) rest.push({ label: g.label, bullets: g.bullets.slice(take) })
+    left -= take
+  }
+  return [shown, rest]
+}
+
+function Groups({ groups }: { groups: Group[] }) {
+  return groups.map((g) => (
+    <div className="beta-resume-group" key={g.label}>
+      <h4>{g.label}</h4>
+      <Bullets items={g.bullets} />
+    </div>
+  ))
+}
+
+function Role({ role, fold = false }: { role: ResumeRole; fold?: boolean }) {
+  const [shownGroups, restGroups] = role.groups ? splitGroups(role.groups, fold ? SHOWN : Infinity) : [[], []]
+  const shownBullets = fold ? role.bullets.slice(0, SHOWN) : role.bullets
+  const restBullets = fold ? role.bullets.slice(SHOWN) : []
+  const more = role.groups ? restGroups.reduce((n, g) => n + g.bullets.length, 0) : restBullets.length
   return (
     <article className="beta-cv-role">
       <p className="beta-cv-when">
@@ -58,16 +98,12 @@ function Role({ role }: { role: ResumeRole }) {
           <span>{role.company}</span>
         </h3>
         {role.context ? <p className="quiet">{role.context}</p> : null}
-        {role.groups ? (
-          role.groups.map((g) => (
-            <div className="beta-resume-group" key={g.label}>
-              <h4>{g.label}</h4>
-              <Bullets items={g.bullets} />
-            </div>
-          ))
-        ) : (
-          <Bullets items={role.bullets} />
-        )}
+        {role.groups ? <Groups groups={shownGroups} /> : <Bullets items={shownBullets} />}
+        {more > 0 ? (
+          <ReadMore label={`More from this role (${more})`}>
+            {role.groups ? <Groups groups={restGroups} /> : <Bullets items={restBullets} />}
+          </ReadMore>
+        ) : null}
         {role.links ? (
           <p className="beta-resume-links">
             {role.links.map((l) =>
@@ -143,16 +179,8 @@ export default function ResumePage() {
         </ul>
         <p>{SUMMARY_CLOSE}</p>
 
-        <h2>Experience</h2>
+        <h2>Core strengths</h2>
       </Section>
-
-      <section className="beta-cv" aria-label="Experience, 2014 to the present">
-        {ROLES.map((r) => (
-          <Role role={r} key={`${r.company}-${r.years}`} />
-        ))}
-      </section>
-
-      <Section title="Core strengths" />
 
       <Grid min="16rem" className="beta-resume-strengths">
         {STRENGTHS.map((s) => (
@@ -162,6 +190,14 @@ export default function ResumePage() {
           </div>
         ))}
       </Grid>
+
+      <Section title="Experience" />
+
+      <section className="beta-cv" aria-label="Experience, 2014 to the present">
+        {ROLES.map((r) => (
+          <Role role={r} fold key={`${r.company}-${r.years}`} />
+        ))}
+      </section>
 
       <Section title="Government and classified work">
         <ul>
@@ -191,15 +227,28 @@ export default function ResumePage() {
       <Section title="Earlier career">
         <p>
           Seventeen years before 2014, from co-founding a chat software company in 1997 through
-          payments, healthcare, and search. The PDF gives each of these roles one line.
+          payments, healthcare, and search. One line each, as the PDF gives them.
         </p>
       </Section>
 
-      <section className="beta-cv" aria-label="Experience, 1997 to 2014">
+      <ol className="beta-cv-brief" aria-label="Earlier roles, 1997 to 2014">
         {EARLIER_ROLES.map((r) => (
-          <Role role={r} key={`${r.company}-${r.years}`} />
+          <li key={`${r.company}-${r.years}`}>
+            <span className="beta-cv-brief__when">{r.years}</span>
+            <span>
+              <b>{r.title}</b>, {r.company}
+            </span>
+          </li>
         ))}
-      </section>
+      </ol>
+
+      <ReadMore label="Every earlier role in full">
+        <section className="beta-cv" aria-label="Experience, 1997 to 2014">
+          {EARLIER_ROLES.map((r) => (
+            <Role role={r} key={`${r.company}-${r.years}`} />
+          ))}
+        </section>
+      </ReadMore>
 
       <Section title="Open source and projects">
         <ul>
